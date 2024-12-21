@@ -1,0 +1,16 @@
+.app-layout {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto;
+  /* max-width: 1400px; */
+  min-height: 100vh;
+   
+  & header {
+  }
+
+  & main {
+    display: relative;
+    /* padding-bottom: 1rem; */
+  }
+}
+

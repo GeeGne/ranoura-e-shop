@@ -1,0 +1,84 @@
+:root {
+  --primary-color: #16432C;
+  --secondary-color: #6A9C89;
+  --today-label-color: #00FFFF;
+  --today-label-invert-color: #008B8B;
+
+  --font-heading-color: hsl(0, 0%, 10%);
+  --font-heading-invert-color: hsl(0, 0%, 90%);
+  --font-body-color: hsl(0, 0%, 30%);
+  --font-body-invert-color: hsl(0, 0%, 80%);
+  --font-light-color: hsl(0, 0%, 40%);
+  --font-light-invert-color: hsl(0, 0%, 60%);
+  --font-extra-light-color: hsl(0, 0%, 60%);
+  --font-extra-light-invert-color: hsl(0, 0%, 40%);
+
+  --grey-color: hsl(0, 0%, 30%);
+
+  --background-color: hsl(0, 0%, 100%);
+  --background-invert-color: hsl(0, 0%, 0%);
+  --background-light-color: hsl(0, 0%, 90%);
+  --background-light-invert-color: hsl(0, 0%, 10%);
+  --background-deep-light-color: hsl(0, 0%, 80%);
+  --background-deep-light-invert-color: hsl(0, 0%, 20%);
+  --background-deep-color: hsl(0, 0%, 70%);
+  --background-deep-invert-color: hsl(0, 0%, 30%);
+  --background-light-dark-color: hsl(0, 0%, 60%);
+  --background-deep-dark-color: hsl(0, 0%, 50%);
+  --shade-color: hsla(0, 0%, 0%, 0.3);
+
+  --bounce-bezier: cubic-bezier(0.68,-0.55,0.27,1.55);
+
+  --important-priority-color: hsl(48, 100%, 50%);
+  --none-priority-color: hsl(0, 0%, 60%);
+  --normal-priority-color: hsl(240, 100%, 60%);
+  --critical-priority-color: hsl(0, 100%, 60%);
+
+  --foreground: hsl(0, 0%, 0%);
+  --background-1-url: url(/assets/background-1.jpg);
+  --background-2-url: url(/assets/background-2.jpg);
+  --background-3-url: url(/assets/background-3.jpg);
+  --background-4-url: url(/assets/background-4.jpg);
+  --circular-progress: 20;
+}
+
+.dark {
+  --primary-color: #43d188;
+  --secondary-color: #30473e;
+  --today-label-color: #008B8B;
+  --today-label-invert-color: #00FFFF;
+
+  --font-heading-color: hsl(0, 0%, 90%);
+  --font-heading-invert-color: hsl(0, 0%, 10%);
+  --font-body-color: hsl(0, 0%, 70%);
+  --font-body-invert-color: hsl(0, 0%, 20%);
+  --font-light-color: hsl(0, 0%, 60%);
+  --font-light-invert-color: hsl(0, 0%, 40%);
+  --font-extra-light-color: hsl(0, 0%, 40%);
+  --font-extra-light-color: hsl(0, 0%, 60%);
+
+  --grey-color: hsl(0, 0%, 70%);
+
+  --background-color: hsl(0, 0%, 0%);
+  --background-invert-color: hsl(0, 0%, 100%);
+  --background-light-color: hsl(0, 0%, 10%);
+  --background-light-invert-color: hsl(0, 0%, 90%);
+  --background-deep-light-color: hsl(0, 0%, 20%);
+  --background-deep-light-invert-color: hsl(0, 0%, 80%);
+  --background-deep-color: hsl(0, 0%, 30%);
+  --background-deep-invert-color: hsl(0, 0%, 70%);
+  --background-light-dark-color: hsl(0, 0%, 40%);
+  --background-deep-dark-color: hsl(0, 0%, 50%);
+  --shade-color: hsla(0, 0%, 100%, 0.3);
+
+  --none-priority-color: hsl(0, 0%, 60%);
+  --normal-priority-color: hsl(240, 100%, 60%);
+  --important-priority-color: hsl(48, 100%, 40%);
+  --critical-priority-color: hsl(0, 100%, 60%);
+
+  --foreground: hsl(0, 0%, 100%);
+  --background-1-url: url(/assets/background-1.jpg);
+  --background-2-url: url(/assets/background-2.jpg);
+  --background-3-url: url(/assets/background-3.jpg);
+  --background-4-url: url(/assets/background-4.jpg);
+}
