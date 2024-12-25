@@ -1,6 +1,8 @@
 :root {
-  --primary-color: #16432C;
-  --secondary-color: #6A9C89;
+  --primary-color: #1E1E1E;
+  --secondary-color: #595959;
+  --primary-invert-color: #F1EFEF;
+  --secondary-invert-color: #D0D0D0;
   --today-label-color: #00FFFF;
   --today-label-invert-color: #008B8B;
 
@@ -15,7 +17,7 @@
 
   --grey-color: hsl(0, 0%, 30%);
 
-  --background-color: hsl(0, 0%, 100%);
+  --background-color: #F1EFEF;
   --background-invert-color: hsl(0, 0%, 0%);
   --background-light-color: hsl(0, 0%, 90%);
   --background-light-invert-color: hsl(0, 0%, 10%);
@@ -43,8 +45,11 @@
 }
 
 .dark {
-  --primary-color: #43d188;
-  --secondary-color: #30473e;
+  --primary-color: #F1EFEF;
+  --secondary-color: #D0D0D0;
+  --primary-invert-color: #1E1E1E;
+  --secondary-invert-color: #595959;
+
   --today-label-color: #008B8B;
   --today-label-invert-color: #00FFFF;
 
@@ -59,7 +64,7 @@
 
   --grey-color: hsl(0, 0%, 70%);
 
-  --background-color: hsl(0, 0%, 0%);
+  --background-color: #1E1E1E;
   --background-invert-color: hsl(0, 0%, 100%);
   --background-light-color: hsl(0, 0%, 10%);
   --background-light-invert-color: hsl(0, 0%, 90%);

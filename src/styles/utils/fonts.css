@@ -1,0 +1,9 @@
+@font-face {
+  font-family: 'Sofia Sans Condensed';
+  src: url('/assets/fonts/Sofia_Sans_Semi_Condensed/SofiaSansSemiCondensed-VariableFont_wght.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Sofia Sans';
+  src: url('/assets/fonts/Sofia_Sans/SofiaSans-VariableFont_wght.ttf') format('truetype');
+}
