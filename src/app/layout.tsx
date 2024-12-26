@@ -20,10 +20,10 @@ export default function RootLayout({
         className={`app-layout antialiased`}
       >
         <Header />
-        <Main className=''>
+        <Main>
           {children}
         </Main>
-        <Footer className='' />
+        <Footer />
       </body>
     </html>
   );

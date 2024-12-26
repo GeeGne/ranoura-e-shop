@@ -9,3 +9,7 @@
 .direction-ltr {
   direction: ltr;
 }
+
+.test {
+  clip-path: inset(-200px 0 0 0);
+}
