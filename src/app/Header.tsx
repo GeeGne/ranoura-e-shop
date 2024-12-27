@@ -9,9 +9,9 @@ export default function Header ({ ...props }) {
   return (
     <header 
       className="
-        relative sticky top-0 flex flex-row items-center gap-4 bg-foreground  px-4 py-4
-        before:content-[''] before:absolute before:top-1/2 before:left-1/2 before:translate-x-[-50%] before:translate-y-[-50%]
-        before:w-full before:h-full before:z-[-1]
+        sticky top-0 flex flex-row items-center mx-auto gap-4 bg-foreground px-4 py-4 z-[1000]
+        before:content-[''] before:absolute before:top-0 before:left-1/2 before:translate-x-[-50%] 
+        before:w-[100vw] before:h-full before:bg-foreground before:z-[-1] 
       "
       {...props}
     >

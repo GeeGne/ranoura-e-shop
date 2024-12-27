@@ -1,21 +1,14 @@
 import Image from "next/image";
 import Hero from '@/components/home/Hero';
-import FileTape from '@/components/FilmTape';
+import ImageSlider from '@/components/home/ImageSlider';
 
 export default function Home() {
   return (
-    <div>
-      <Hero
-        className="relative test z-[1]"
-
-      > 
-        <FileTape
-          className="
-            absolute top-1/2 right-0 translate-y-[-50%]   
-            origin-center-right rotate-[45deg]
-          "
-        />
-      </Hero>
+    <div
+      className="flex flex-col"
+    >
+      <Hero /> 
+      <ImageSlider /> 
       <div
         className=""
       >
