@@ -17,13 +17,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`app-layout antialiased`}
+        className={`antialiased`}
       >
-        <Header />
-        <Main>
-          {children}
-        </Main>
-        <Footer />
+        <div 
+          className="app-layout"
+        >
+          <Header />
+          <Main>
+            {children}
+          </Main>
+          <Footer />
+        </div>
       </body>
     </html>
   );
