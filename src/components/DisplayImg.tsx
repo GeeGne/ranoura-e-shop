@@ -1,4 +1,3 @@
-"use client"
 import React, { useState } from 'react';
 
 type Props = {
@@ -12,30 +11,22 @@ type Props = {
 }
 
 function DisplayImg ({
-  className = '', 
-  src = '', 
-  alt = 'Image', 
-  loading = '', 
-  fetchpriority = 'auto', 
-  darkMode, 
-  lan
-}: Props) {
-  const [isLoading, setIsLoading] = useState(true);
+  ...props
+}) {
+  const [isLoading, setIsLoading] = useState(false);
   const handleLoad = () => setIsLoading(false);
 
   return (
     
     <img 
-      className={className} 
-      src={src} 
-      loading={loading} 
-      alt={alt} 
-      fetchPriority={fetchpriority} 
+      alt="A Picture" 
+      loading="lazy" 
       onLoad={handleLoad}
       style={{
         transition: 'filter 0.5s ease-in-out',
         filter: 'blur(' + (isLoading ? '20' : '0') + 'px)',
       }}
+      {...props}
     />
 
   )

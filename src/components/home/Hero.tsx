@@ -12,7 +12,7 @@ export default function Hero ({ className = '', ...props }: Props) {
   return (
     <div
       className={`
-        relative test z-[1] mb-[20px] bg-primary h-[300px] rounded-b-[4rem]
+        relative test z-[1] bg-primary h-[300px] rounded-b-[4rem]
         ${className}
       `}
     >

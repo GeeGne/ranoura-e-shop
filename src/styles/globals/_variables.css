@@ -2,6 +2,7 @@
   --primary-color: #1E1E1E;
   --secondary-color: #595959;
   --primary-invert-color: #F1EFEF;
+  --inbetween-color: #A6A6A6;
   --secondary-invert-color: #D0D0D0;
   --today-label-color: #00FFFF;
   --today-label-invert-color: #008B8B;
@@ -47,6 +48,7 @@
 .dark {
   --primary-color: #F1EFEF;
   --secondary-color: #D0D0D0;
+  --inbetween-color: #A6A6A6;
   --primary-invert-color: #1E1E1E;
   --secondary-invert-color: #595959;
 
