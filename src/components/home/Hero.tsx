@@ -3,6 +3,11 @@ import { ReactNode } from "react";
 
 // COMPONENTS
 import FilmTape from "@/components/FilmTape";
+import DisplayImg from "@/components/DisplayImg";
+
+// ASSETS
+const badgePng = "/assets/img/badge.png";
+const badge2Png = "/assets/img/badge2.png";
 
 type Props = {
   className?: string;
@@ -22,6 +27,18 @@ export default function Hero({ className = "", ...props }: Props) {
           origin-center-right rotate-[45deg]
         "
       />
+
+      <DisplayImg
+        className="
+          absolute top-1/2 left-12 translate-y-[-50%]
+          w-[150px] aspect-auto
+          object-contain origin-top
+          --rotate-ani duration--10s
+        "
+        src={badge2Png}
+        alt="Badge"
+      />
+
       <div className="custom-shape-divider-bottom-1735380083">
         <svg
           data-name="Layer 1"

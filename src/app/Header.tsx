@@ -21,7 +21,7 @@ export default function Header ({ ...props }) {
   }, []);
 
 
-  const handleScroll = (e: React.UIEvent<HTMLElement>) => {
+  const handleScroll = () => {
     const y = window.scrollY;
 
     if (y <= 100) return setIsWindowScrolled(false);

@@ -66,7 +66,9 @@ export default function ImageSlider({
 
   return (
     <section
-      className={`relative flex w-full overflow-hidden ${className}`}
+      className={`
+        relative flex w-full overflow-hidden ${className}
+      `}
       {...props}
     >
       <ul

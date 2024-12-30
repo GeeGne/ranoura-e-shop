@@ -7,6 +7,17 @@
 .delay--1s { animation-delay: 1s !important }
 .delay--1s-05s { animation-delay: 1.5s !important }
 
+.duration--01s { animation-duration: 0.1s !important }
+.duration--015s { animation-duration: 0.15s !important }
+.duration--02s { animation-duration: 0.2s !important }
+.duration--03s { animation-duration: 0.3s !important }
+.duration--04s { animation-duration: 0.4s !important }
+.duration--05s { animation-duration: 0.5s !important }
+.duration--1s { animation-duration: 1s !important }
+.duration--1s-05s { animation-duration: 1.5s !important }
+.duration--5s { animation-duration: 5s !important }
+.duration--10s { animation-duration: 10s !important }
+
 @keyframes infinite-card-slide-ani {
   from {
     transform: translateY(0%);
@@ -17,9 +28,27 @@
   }
 }
 
+@keyframes rotate {
+  from {
+    rotate: 0deg;
+  }
+
+  to {
+    rotate: 360deg;
+  }
+}
+
 .--infinite-card-slide-ani {
   animation-name: infinite-card-slide-ani;
   animation-duration: 5s;
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.--rotate-ani {
+  animation-name: rotate;
+  animation-duration: 1s;
   animation-fill-mode: both;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
