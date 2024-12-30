@@ -72,7 +72,7 @@ export default function ImageSlider({
       <ul
         className={`
           flex w-full
-          transition-all duration-300 ease-out
+          transition-all duration-300 ease-in-out
         `}
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
