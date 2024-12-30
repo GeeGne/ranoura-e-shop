@@ -39,7 +39,7 @@ export default function Hero({ className = "", ...props }: Props) {
         alt="Badge"
       />
 
-      <div className="custom-shape-divider-bottom-1735380083">
+      <div className="hidden custom-shape-divider-bottom-1735380083">
         <svg
           data-name="Layer 1"
           xmlns="http://www.w3.org/2000/svg"
@@ -60,6 +60,21 @@ export default function Hero({ className = "", ...props }: Props) {
             d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"
             className="shape-fill"
           ></path>
+        </svg>
+
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1000 100"
+          fill="currentColor"
+          className={`
+            absolute left-1/2 translate-x-[-50%] top-full w-[100vw] text-green-500
+          `}
+        >
+          <path
+            d="M0 0v99.7C62 69 122.4 48.7 205 66c83.8 17.6 160.5 20.4 240-12 54-22 110-26 173-10a392.2 392.2 0 0 0 222-5c55-17 110.3-36.9 160-27.2V0H0Z"
+            opacity=".5"
+          ></path>
+          <path d="M0 0v74.7C62 44 122.4 28.7 205 46c83.8 17.6 160.5 25.4 240-7 54-22 110-21 173-5 76.5 19.4 146.5 23.3 222 0 55-17 110.3-31.9 160-22.2V0H0Z"></path>
         </svg>
       </div>
     </div>
