@@ -22,8 +22,7 @@ export default function Header({ ...props }) {
   const handleScroll = () => {
     const y = window.scrollY;
 
-    if (y <= 100) return setIsWindowScrolled(false);
-    setIsWindowScrolled(true);
+    setIsWindowScrolled(y <= 100 ? false : true);
   };
 
   return (

@@ -11,7 +11,16 @@
 }
 
 .test {
-  clip-path: inset(-200px 0 0 0);
+  clip-path: inset(-400px 0 0 0);
+}
+
+.test1 {
+  /* clip-path: inset(0 0px 120px 0); */
+  /* background-size: cover; */
+  background: black; /* Or any color to create the mask */
+  mask-image: linear-gradient(to bottom, hsla(0, 0%, 0%, 1) 0%, hsla(0, 0%, 0%, 1) 70%, hsla(0, 0%, 0%, 0) 73%, hsla(0, 0%, 0%, 0) 100%);
+  mask-size: cover;
+  pointer-events: none; /* Ensures the mask doesn't interfere with any interactions */
 }
 
 .custom-shape-divider-bottom-1735380083 {
