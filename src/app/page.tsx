@@ -10,7 +10,7 @@ export default function Home() {
       <Hero /> 
       <ImageSlider /> 
       <div
-        className=""
+        className="bg-background"
       >
         <div
           className="text-2xl"
