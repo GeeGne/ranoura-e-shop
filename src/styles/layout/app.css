@@ -8,7 +8,8 @@
   'footer'
   ;
   height: 100vh;
-
+  overflow-x: hidden;
+  
   & header {
     grid-area: header;
     width: 100%;

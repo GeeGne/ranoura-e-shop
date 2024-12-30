@@ -8,7 +8,7 @@ import DisplayImg from "@/components/DisplayImg";
 // ASSETS
 const badgePng = "/assets/img/badge.png";
 const badge2Png = "/assets/img/badge2.png";
-const cloud = "/assets/img/cloud.png";
+const cloudPng = "/assets/img/cloud.png";
 
 type Props = {
   className?: string;
@@ -21,15 +21,25 @@ export default function Hero({ className = "", ...props }: Props) {
         relative z-[1] bg-primary h-[300px]
         ${className}
       `}
-    >
-      <FilmTape
+    > 
+      <div
         className="
-          absolute top-1/2 right-0 translate-y-[-50%]   
+          absolute top-1/2 right-0 translate-y-[-50%] z-[10] 
           origin-center-right rotate-[45deg]
-          test1
-
+          scale-[50%] md:scale-[100%]
         "
-      />
+      >
+        <FilmTape
+          className="
+            test1
+          "
+        />
+        <DisplayImg 
+          className="absolute bottom-[6rem] w-[30rem] h-auto scale-[150%] rotate-[-45deg] drop-shadow-2xl"
+          src={cloudPng}
+          alt="Cloud"
+        />
+      </div>
 
       <DisplayImg
         className="
@@ -37,6 +47,7 @@ export default function Hero({ className = "", ...props }: Props) {
           w-[150px] aspect-auto
           object-contain origin-top
           --rotate-ani duration--10s
+          opacity-0 lg:opacity-100
         "
         src={badge2Png}
         alt="Badge"
@@ -47,6 +58,7 @@ export default function Hero({ className = "", ...props }: Props) {
           fill="currentColor"
           className={`
             absolute left-1/2 translate-x-[-50%] top-full w-[100vw] text-primary
+            scale-y-[100%] md:scale-y-[50%] origin-top
           `}
         >
           <path

@@ -10,20 +10,22 @@ import SolarCart4Outline from "@/components/svgs/SolarCart4Outline";
 import IconamoonSearchThin from "@/components/svgs/IconamoonSearchThin";
 import EpUser from "@/components/svgs/EpUser";
 
-export default function Header({ ...props }) {
+type Props = {
+  onScroll?: any;
+  layoutRef?: any;
+}
+
+export default function Header({ onScroll, layoutRef, ...props }: Props) {
   const [isWindowScrolled, setIsWindowScrolled] = useState(false);
   const headerRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll, true);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    const y = layoutRef?.scrollTop || 0;
+    setIsWindowScrolled(y <= 10 ? false : true);
 
-  const handleScroll = () => {
-    const y = window.scrollY;
+  },[ onScroll, layoutRef ]);
 
-    setIsWindowScrolled(y <= 100 ? false : true);
-  };
+  // DEBUG
 
   return (
     <header
@@ -79,7 +81,8 @@ export default function Header({ ...props }) {
         viewBox="0 0 1000 100"
         fill="currentColor"
         className={`
-          absolute left-1/2 translate-x-[-50%] top-full w-[100vw] text-primary
+          absolute left-1/2 translate-x-[-50%] top-full w-[100vw] text-primary 
+          scale-y-[100%] md:scale-y-[50%] origin-top
           transition-all ease-out duration-300
           ${
             isWindowScrolled
