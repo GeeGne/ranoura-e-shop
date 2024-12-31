@@ -1,8 +1,11 @@
+// COMPONENTS
+import FooterList from '@/components/FooterList';
+
 export default function Footer ({ ...props }) {
   return (
     <footer 
       className="
-        relative p-4 gap-4
+        relative p-4
         grid grid-cols-1 md:grid-cols-2
       "
       {...props}
@@ -34,71 +37,20 @@ export default function Footer ({ ...props }) {
           >
             Subscribe
           </button>
-        </div><hr className="border-2 border-body-invert my-2" />
+        </div><hr className="border-2 border-body-invert my-4" />
       </div>
-      <div
-        className="flex flex-col gap-4 w-[400px] mx-auto"
-      >
-        <span
-          className="text-heading-invert text-xl text-bold"
-        >
-          COSTUMER SERVICE
-        </span>
-        <ul
-          className="flex flex-col gap-2 text-body-invert"
-        >
-          <li>
-            Privary Policy
-          </li>
-          <li>
-            Return & Refunds
-          </li>
-          <li>
-            Delivery Information and Shipment
-          </li>
-        </ul><hr className="border-2 border-body-invert my-2" />
-      </div>
-      <div
-        className="flex flex-col gap-4 w-[400px] mx-auto"
-      >
-        <span
-          className="text-heading-invert text-xl text-bold"
-        >
-          ABOUT US
-        </span>
-        <ul
-          className="flex flex-col gap-2 text-body-invert"
-        >
-          <li>
-            About Us
-          </li>
-          <li>
-            FAQs
-          </li>
-          <li>
-            Delivery Information and Shipment
-          </li>
-        </ul><hr className="border-2 border-body-invert my-2" />
-      </div>
-      <div
-        className="flex flex-col gap-4 w-[400px] mx-auto"
-      >
-        <span
-          className="text-heading-invert text-xl text-bold"
-        >
-          CONTACT US
-        </span>
-        <ul
-          className="flex flex-col gap-2 text-body-invert"
-        >
-          <li>
-            Phone: 0112339023
-          </li>
-          <li>
-            email: email@email.com
-          </li>
-        </ul><hr className="border-2 border-body-invert" />
-      </div>
+      <FooterList 
+        title={'COSTUMER SERVICE'} 
+        content={['test', 'tessst', 'etest']} 
+      />
+      <FooterList 
+        title={'ABOUT US'} 
+        content={['About Us', 'FAQs']} 
+      />
+      <FooterList 
+        title={'CONTACT US'} 
+        content={['Phone: 01132523', 'Email: 34534']} 
+      />
       <div
         className="flex flex-col gap-4 w-[400px] mx-auto"
       >
