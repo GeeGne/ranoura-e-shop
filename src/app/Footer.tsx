@@ -1,17 +1,20 @@
 // COMPONENTS
 import FooterList from '@/components/FooterList';
+import Facebook from '@/components/svgs/Facebook';
+import Instagram from '@/components/svgs/Instagram';
+import Telegram from '@/components/svgs/Telegram';
 
 export default function Footer ({ ...props }) {
   return (
     <footer 
       className="
         relative p-4
-        grid grid-cols-1 md:grid-cols-2
+        grid grid-cols-1 lg:grid-cols-4
       "
       {...props}
     >
       <div
-        className="flex flex-col gap-2 w-full width-max-[400px] mx-auto"
+        className="flex flex-col gap-2 w-full max-w-[600px] mx-auto"
       >
         <span
           className="text-heading-invert text-2xl text-bold"
@@ -52,7 +55,7 @@ export default function Footer ({ ...props }) {
         content={['Phone: 01132523', 'Email: 34534']} 
       />
       <div
-        className="flex flex-col gap-4 w-[400px] mx-auto"
+        className="lg:col-span-4 flex flex-col gap-4 items-center mx-auto"
       >
         <span
           className="text-heading-invert text-xl text-bold"
@@ -60,13 +63,16 @@ export default function Footer ({ ...props }) {
           SOCIAL LINKS
         </span>
         <ul
-          className="flex flex-col gap-2 text-body-invert"
+          className="flex flex-row gap-2 text-body-invert"
         >
           <li>
-            Phone: 0112339023
+            <Facebook />
           </li>
           <li>
-            email: email@email.com
+            <Instagram />
+          </li>
+          <li>
+            <Telegram />
           </li>
         </ul>
       </div>

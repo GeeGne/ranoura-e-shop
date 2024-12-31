@@ -13,15 +13,15 @@ export default function FooterList ({ title, content, ...props}: Props) {
   const [ toggle, setToggle ] = useState<boolean>(false);
   const uiRef = useRef<any>(null);
 
-  const getScrollHeight = (el: HTMLElement) => el?.scrollHeight || 0;
+  const getScrollHeight = (el: HTMLElement) => el?.scrollHeight + 16 || 0;
 
   // DEBUG
   // console.log('offset height: ', uiRef.current?.offsetHeight)
-  // console.log('scroll height: ', uiRef.current?.scrollHeight)
+  console.log('scroll height: ', uiRef.current?.scrollHeight)
 
   return (
     <div
-      className="flex flex-col w-full w-max-[400px] mx-auto"
+      className="flex flex-col w-full max-w-[600px] mx-auto"
       {...props}
     >
       <button
@@ -41,7 +41,10 @@ export default function FooterList ({ title, content, ...props}: Props) {
           flex flex-col gap-2 text-body-invert overflow-hidden
           transition-all duration-300 ease-in-out
         `}
-        style={{height: `${toggle ? getScrollHeight(uiRef.current) : 0}px`}}
+        style={{
+          maxHeight: `${toggle ? getScrollHeight(uiRef.current) : 0}px`, 
+          paddingBlock: `${toggle ? 16 : 0}px` 
+        }}
         ref={uiRef}
       >
         {content?.map((title, i) => 
