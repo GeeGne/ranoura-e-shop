@@ -21,7 +21,7 @@ export default function FooterList ({ title, content, ...props}: Props) {
 
   return (
     <div
-      className="flex flex-col w-[400px] mx-auto"
+      className="flex flex-col w-full w-max-[400px] mx-auto"
       {...props}
     >
       <button

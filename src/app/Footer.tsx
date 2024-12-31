@@ -11,7 +11,7 @@ export default function Footer ({ ...props }) {
       {...props}
     >
       <div
-        className="flex flex-col gap-2 w-[400px] mx-auto"
+        className="flex flex-col gap-2 w-full width-max-[400px] mx-auto"
       >
         <span
           className="text-heading-invert text-2xl text-bold"
@@ -41,7 +41,7 @@ export default function Footer ({ ...props }) {
       </div>
       <FooterList 
         title={'COSTUMER SERVICE'} 
-        content={['test', 'tessst', 'etest']} 
+        content={['Privacy Policy', 'Returns & Refunds', 'Delivery and Shipment']} 
       />
       <FooterList 
         title={'ABOUT US'} 
@@ -68,7 +68,7 @@ export default function Footer ({ ...props }) {
           <li>
             email: email@email.com
           </li>
-        </ul><hr className="border-2 border-body-invert my-2" />
+        </ul>
       </div>
     </footer>
   )

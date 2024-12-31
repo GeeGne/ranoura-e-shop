@@ -9,7 +9,7 @@
   ;
   height: 100vh;
   overflow-x: hidden;
-  
+
   & header {
     grid-area: header;
     width: 100%;
@@ -26,7 +26,6 @@
     grid-area: footer;
     min-width: 100vw;
     max-width: 1400px;
-    margin-inline: auto;
   }
 }
 
