@@ -16,8 +16,12 @@ export default function FooterList ({ title, content, ...props}: Props) {
   const getScrollHeight = (el: HTMLElement) => el?.scrollHeight + 16 || 0;
 
   // DEBUG
-  // console.log('offset height: ', uiRef.current?.offsetHeight)
-  console.log('scroll height: ', uiRef.current?.scrollHeight)
+  const debug = (toggle = false) => {
+    if (!toggle) return;
+    console.log('offset height: ', uiRef.current?.offsetHeight)
+    console.log('scroll height: ', uiRef.current?.scrollHeight)  
+  }
+  debug();
 
   return (
     <div
@@ -32,14 +36,14 @@ export default function FooterList ({ title, content, ...props}: Props) {
           {title}
         </span>
         {toggle
-          ? <MinusIcon />
-          : <PlusIcon />
+          ? <MinusIcon className="lg:hidden" />
+          : <PlusIcon className="lg:hidden" />
         }
       </button>
       <ul
         className={`
           flex flex-col gap-2 text-body-invert overflow-hidden
-          transition-all duration-300 ease-in-out
+          transition-all duration-300 ease-in-out lg:min-h-full lg:py-4
         `}
         style={{
           maxHeight: `${toggle ? getScrollHeight(uiRef.current) : 0}px`, 
@@ -56,7 +60,7 @@ export default function FooterList ({ title, content, ...props}: Props) {
             {title}
           </li>
         )}
-      </ul><hr className="border-2 border-body-invert my-4" />
+      </ul><hr className="border-2 border-body-invert my-4 lg:hidden" />
     </div>
   )
 }
