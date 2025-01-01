@@ -21,9 +21,10 @@ export default function ImageSlider({
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const array = [cover2, cover1, img1, cover2, cover1];
   const contentUlRef = useRef<any>(null);
+  const slideDuration = 5000;
 
   useEffect(() => {
-    const intervalId = setInterval(indexIncrement, 5000);
+    const intervalId = setInterval(indexIncrement, slideDuration);
     return () => clearInterval(intervalId);
   }, []);
 
@@ -76,8 +77,6 @@ export default function ImageSlider({
     const { type, length } = e.currentTarget.dataset;
     const totalIndex = Number(length) - 1;
 
-    // console.log("type: ", type);
-    // console.log("length: ", length);
     switch (type) {
       case "left_arrow_button_is_clicked":
         indexDecrement();
@@ -148,12 +147,19 @@ export default function ImageSlider({
         {array.map((itm, i) => (
           <li
             className={`
-              w-[32px] h-[7px] rounded-full border-solid border-[1px] border-background
-              transtion-all duration-300 ease-out
-              ${currentIndex === i ? "bg-primary" : "bg-inbetween"}
+              relative w-[40px] h-[7px] bg-inbetween 
+              rounded-full border-solid border-[1px] border-background overflow-hidden
             `}
             key={i}
-          />
+          >
+            <div 
+              className={`
+                absolute top-0 left-0 h-full bg-primary
+                ${currentIndex === i && "--fill-slider-bar"}
+              `}
+              style={{ animationDuration: slideDuration + 'ms' }}
+            />
+          </li>
         ))}
       </ul>
       <EpArrowLeft
