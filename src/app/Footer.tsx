@@ -3,6 +3,8 @@ import FooterList from '@/components/FooterList';
 import Facebook from '@/components/svgs/Facebook';
 import Instagram from '@/components/svgs/Instagram';
 import Telegram from '@/components/svgs/Telegram';
+import Phone from '@/components/svgs/Phone';
+import Email from '@/components/svgs/Email';
 
 export default function Footer ({ ...props }) {
   return (
@@ -56,7 +58,10 @@ export default function Footer ({ ...props }) {
         />
         <FooterList 
           title={'CONTACT US'} 
-          content={['Phone: 01132523', 'Email: 34534']} 
+          content={[
+            <div key="1" className="flex gap-2"><Phone />+9639302942</div>, 
+            <div key="2" className="flex gap-2"><Email />support@ranoura.com</div> 
+          ]} 
         />
       </section>
       <section
@@ -101,7 +106,7 @@ export default function Footer ({ ...props }) {
         </div>
         <div>
           <span
-            className="text-body-light text-sm"
+            className="text-body-light-invert text-sm"
           >
             Syria © 2025 RANOURA all rights reserved
           </span>

@@ -1,11 +1,13 @@
 // HOOKS
-import { useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import PlusIcon from '@/components/svgs/Plus';
 import MinusIcon from '@/components/svgs/Minus';
+import UnderlineStyle from '@/components/UnderlineStyle';
 
 type Props = {
   title: string,
-  content: string[]
+  content: string[] | React.ReactNode[],
+  isHTML?: boolean;
 }
 
 export default function FooterList ({ title, content, ...props}: Props) {
@@ -51,13 +53,21 @@ export default function FooterList ({ title, content, ...props}: Props) {
         }}
         ref={uiRef}
       >
-        {content?.map((title, i) => 
+        {content?.map((itm, i) => 
           <li 
-            className="cursor-pointer"
+            className="
+              text-body-invert hover:text-heading-invert cursor-pointer
+              transition-all ease-out duration-200
+            "
             role="button"
             key={i}
           >
-            {title}
+            <span
+              className="group relative inline-block"
+            >
+              {itm}
+              <UnderlineStyle />
+            </span>
           </li>
         )}
       </ul><hr className="border-2 border-body-invert my-4 lg:hidden" />
