@@ -1,7 +1,7 @@
 "use client";
 // HOOKS
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 // COMPONENTS
 import DisplayImg from "@/components/DisplayImg";
@@ -20,35 +20,64 @@ export default function ImageSlider({
 }) {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const array = [cover2, cover1, img1, cover2, cover1];
+  const contentUlRef = useRef<any>(null);
 
   useEffect(() => {
     const intervalId = setInterval(indexIncrement, 5000);
-
     return () => clearInterval(intervalId);
   }, []);
 
+  useEffect(() => {
+    const setTransitionToNone = () => {
+      setTimeout(() => {
+        contentUlRef.current?.classList.add('transition-none');
+        contentUlRef.current?.classList.remove('transition-all');
+      }, 300);  
+    };
+
+    const setTransitionToAll = () => {
+      setTimeout(() => {
+        contentUlRef.current?.classList.add('transition-all');
+        contentUlRef.current?.classList.remove('transition-none');
+      }, 30);  
+    };
+
+    switch (true) {
+      case currentIndex === totalIndex() + 1:
+        setTransitionToNone();  
+        setTimeout(() => setCurrentIndex(0), 300);
+        break;
+      case currentIndex === -1:
+        setTransitionToNone();  
+        setTimeout(() => setCurrentIndex(totalIndex()), 300);
+        break;
+      default:
+        setTransitionToAll();
+    }
+  }, [currentIndex]);
+
   const indexIncrement = () => {
     setCurrentIndex((val: number) => {
-      const totalIndex = array.length - 1;
-      if (val >= totalIndex) return 0;
+      if (val >= totalIndex() + 1) return totalIndex() + 1;
       return val + 1;
     });
   };
 
   const indexDecrement = () => {
     setCurrentIndex((val: number) => {
-      const totalIndex = array.length - 1 || 0;
-      if (val <= 0) return totalIndex;
+      if (val <= -1) return -1;
       return val - 1;
     });
   };
+
+  const totalIndex = () => array.length - 1 || 0;
 
   const handleClick = (e: React.MouseEvent<HTMLOrSVGElement>) => {
     const { type, length } = e.currentTarget.dataset;
     const totalIndex = Number(length) - 1;
 
-    console.log("type: ", type);
-    console.log("length: ", length);
+    // console.log("type: ", type);
+    // console.log("length: ", length);
     switch (type) {
       case "left_arrow_button_is_clicked":
         indexDecrement();
@@ -74,10 +103,20 @@ export default function ImageSlider({
       <ul
         className={`
           flex w-full
-          transition-all duration-300 ease-in-out
+          duration-300 ease-in-out
         `}
-        style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+        style={{ transform: `translateX(-${(currentIndex + 1) * 100}%)` }}
+        ref={contentUlRef}
       >
+        <li
+          className="w-full aspect-[1/1] md:aspect-[4/3] lg:aspect[16/9] shrink-0"
+        >
+          <DisplayImg
+            className="w-full h-full object-cover object-center"
+            src={array[totalIndex()]}
+            alt="test"
+          />
+        </li>
         {array.map((itm, i) => (
           <li
             className="w-full aspect-[1/1] md:aspect-[4/3] lg:aspect[16/9] shrink-0"
@@ -90,6 +129,15 @@ export default function ImageSlider({
             />
           </li>
         ))}
+        <li
+          className="w-full aspect-[1/1] md:aspect-[4/3] lg:aspect[16/9] shrink-0"
+        >
+          <DisplayImg
+            className="w-full h-full object-cover object-center"
+            src={array[0]}
+            alt="test"
+          />
+        </li>
       </ul>
       <ul
         className="
