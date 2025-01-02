@@ -17,7 +17,7 @@ type Props = {
 
 export default function Hero({ className = "", ...props }: Props) {
   return (
-    <div
+    <section
       className={`
         relative z-[1] bg-primary h-[300px]
         ${className}
@@ -59,6 +59,6 @@ export default function Hero({ className = "", ...props }: Props) {
           text-primary scale-y-[100%] md:scale-y-[50%] origin-top
         `}        
       />
-    </div>
+    </section>
   );
 }

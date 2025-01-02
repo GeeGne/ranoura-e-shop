@@ -20,6 +20,7 @@ export default function RootLayout({
   // DEBUG & UI
   // const handleScroll = (e: any) => console.log('wrokign');
   // console.log(layoutRef);
+  
   return (
     <html lang="en">
       <body

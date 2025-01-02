@@ -11,6 +11,7 @@ export default function FillOnScroll ({ onScroll, layoutRef }: Props) {
   const [ percantage, setPercantage ] = useState<number>(0);
 
   useEffect(() => {
+    if (!layoutRef) return;
     const { scrollHeight, offsetHeight, scrollTop } = layoutRef;
     const wrapperHeight = (scrollHeight - offsetHeight);
   
