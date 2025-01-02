@@ -23,9 +23,6 @@
   pointer-events: none; /* Ensures the mask doesn't interfere with any interactions */
 }
 
-.footer-wrapper {
-  display: grid;
-  grid-template-columns: 1fr;
-  /* justify-content: center; */
-
+.text-outline {
+  -webkit-text-stroke: 1px black;
 }

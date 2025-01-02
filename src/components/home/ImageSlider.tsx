@@ -147,7 +147,7 @@ export default function ImageSlider({
         {array.map((itm, i) => (
           <li
             className={`
-              relative w-[40px] h-[7px] bg-inbetween 
+              relative w-[40px] h-[4px] bg-inbetween 
               rounded-full border-solid border-[1px] border-background overflow-hidden
             `}
             key={i}
