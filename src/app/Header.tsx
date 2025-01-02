@@ -10,6 +10,7 @@ import SolarCart4Outline from "@/components/svgs/SolarCart4Outline";
 import IconamoonSearchThin from "@/components/svgs/IconamoonSearchThin";
 import BottomBorder from "@/components/svgs/BottomBorder";
 import EpUser from "@/components/svgs/EpUser";
+import FillOnScroll from "@/components/FillOnScroll";
 
 type Props = {
   onScroll?: any;
@@ -45,8 +46,12 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
       ref={headerRef}
       {...props}
     >
+      <FillOnScroll 
+        onScroll={onScroll}
+        layoutRef={layoutRef}
+      />
       <LineMdCloseToMenuAltTransition
-        className="text-heading-invert"
+        className="text-heading-invert cursor-pointer"
         width={24}
         height={24}
       />
@@ -67,13 +72,13 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
         </span>
       </div>
       <IconamoonSearchThin
-        className="text-heading-invert"
+        className="text-heading-invert cursor-pointer"
         width={24}
         height={24}
       />
-      <EpUser className="text-heading-invert" width={24} height={24} />
+      <EpUser className="text-heading-invert cursor-pointer" width={24} height={24} />
       <SolarCart4Outline
-        className="text-heading-invert"
+        className="text-heading-invert cursor-pointer"
         width={24}
         height={24}
       />
