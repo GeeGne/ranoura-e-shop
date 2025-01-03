@@ -10,6 +10,7 @@ import BottomBorder from "@/components/svgs/BottomBorder";
 const badgePng = "/assets/img/badge.png";
 const badge2Png = "/assets/img/badge2.png";
 const cloudPng = "/assets/img/cloud.png";
+const introVideo = "/assets/video/intro-video.mp4";
 
 type Props = {
   className?: string;
@@ -23,6 +24,21 @@ export default function Hero({ className = "", ...props }: Props) {
         ${className}
       `}
     > 
+      <video 
+          autoPlay muted loop 
+          className="
+            absolute bottom-0 left-0 w-full h-[calc(100%+60px)] object-cover 
+          "
+        >
+          <source src={introVideo} />
+      </video>
+      <div
+        className="
+          absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-primary
+        "
+      >
+
+      </div>
       <div
         className="
           absolute top-1/2 right-0 translate-y-[-50%] z-[10] 
@@ -58,7 +74,7 @@ export default function Hero({ className = "", ...props }: Props) {
           absolute left-1/2 translate-x-[-50%] top-full w-[100vw]
           text-primary scale-y-[100%] md:scale-y-[50%] origin-top
         `}        
-      />
+      />    
     </section>
   );
 }
