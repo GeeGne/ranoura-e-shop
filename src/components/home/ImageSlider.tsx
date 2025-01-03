@@ -108,7 +108,7 @@ export default function ImageSlider({
         ref={contentUlRef}
       >
         <li
-          className="w-full aspect-[1/1] md:aspect-[4/3] lg:aspect[16/9] shrink-0"
+          className="w-full aspect-[3/4] md:aspect-[4/3] lg:aspect-[1.85/1] shrink-0"
         >
           <DisplayImg
             className="w-full h-full object-cover object-center"
@@ -118,7 +118,7 @@ export default function ImageSlider({
         </li>
         {array.map((itm, i) => (
           <li
-            className="w-full aspect-[1/1] md:aspect-[4/3] lg:aspect[16/9] shrink-0"
+            className="w-full aspect-[3/4] md:aspect-[4/3] lg:aspect-[1.85/1] shrink-0"
             key={i}
           >
             <DisplayImg
@@ -129,7 +129,7 @@ export default function ImageSlider({
           </li>
         ))}
         <li
-          className="w-full aspect-[1/1] md:aspect-[4/3] lg:aspect[16/9] shrink-0"
+          className="w-full aspect-[3/4] md:aspect-[4/3] lg:aspect-[1.85/1] shrink-0"
         >
           <DisplayImg
             className="w-full h-full object-cover object-center"

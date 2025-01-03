@@ -50,11 +50,15 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
         onScroll={onScroll}
         layoutRef={layoutRef}
       />
-      <LineMdCloseToMenuAltTransition
-        className="text-heading-invert cursor-pointer"
-        width={24}
-        height={24}
-      />
+      <button
+        className="nav-hover-effect"
+      >
+        <LineMdCloseToMenuAltTransition
+          className="text-heading-invert cursor-pointer"
+          width={24}
+          height={24}
+        />
+      </button>
       <div className="relative mx-auto">
         <span
           className={`
@@ -71,17 +75,35 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
           RANOURA
         </span>
       </div>
-      <IconamoonSearchThin
-        className="text-heading-invert cursor-pointer"
-        width={24}
-        height={24}
-      />
-      <EpUser className="text-heading-invert cursor-pointer" width={24} height={24} />
-      <SolarCart4Outline
-        className="text-heading-invert cursor-pointer"
-        width={24}
-        height={24}
-      />
+      <button
+        className="nav-hover-effect"
+      >
+        <IconamoonSearchThin
+          className="text-heading-invert cursor-pointer"
+          width={24}
+          height={24}
+        />
+      </button>
+      <button
+        className="nav-hover-effect"
+      >
+        <EpUser 
+          className="text-heading-invert cursor-pointer" 
+          width={24} 
+          height={24} 
+        />      
+      </button>
+      <button
+        className="nav-hover-effect"
+      >
+        <SolarCart4Outline
+          className="
+            text-heading-invert cursor-pointer
+          "
+          width={24}
+          height={24}
+        />
+      </button>
       <BottomBorder 
         className={`
           absolute left-1/2 translate-x-[-50%] top-full w-[100vw] text-primary 

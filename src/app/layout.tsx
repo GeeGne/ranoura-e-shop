@@ -6,6 +6,7 @@ import "./globals.css";
 import Header from '@/app/Header';
 import Main from '@/app/Main';
 import Footer from '@/app/Footer';
+import Cart from '@/components/fixedLayouts/Cart';
 import BottomBorder from '@/components/svgs/BottomBorder';
 
 export default function RootLayout({
@@ -44,6 +45,7 @@ export default function RootLayout({
           </Main>
           <Footer />
         </div>
+        <Cart />
       </body>
     </html>
   );

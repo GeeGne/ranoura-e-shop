@@ -26,3 +26,25 @@
 .text-outline {
   -webkit-text-stroke: 1px black;
 }
+
+.nav-hover-effect {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% + 1rem);
+    height: calc(100% + 1rem);
+    background: transparent;
+    transition: all 0.2s ease-in-out;
+    z-index: -1;
+    border-radius: 100%;  
+  }
+
+  &:hover::before {
+    background: var(--primary-color);
+  }
+}
