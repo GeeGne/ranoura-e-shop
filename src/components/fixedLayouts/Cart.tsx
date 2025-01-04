@@ -1,3 +1,6 @@
+// HOOKS
+import { useState } from "react";
+
 // COMPONENTS
 import SolarCart4Outline from "@/components/svgs/SolarCart4Outline";
 import ArrowUp from "@/components/svgs/ArrowUp";
@@ -5,6 +8,11 @@ import DisplayImg from "@/components/DisplayImg";
 
 // STORES
 import { useCartStore } from '@/stores/index';
+
+// SVG
+import EpArrowLeft from "@/components/svgs/EpArrowLeft";
+import IcOutlineClear from '@/components/svgs/IcOutlineClear';
+import IcOutlineCreate from "@/components/svgs/IcOutlineCreate";
 
 // ASSETS
 const ramdanBanner = "/assets/img/ramadan-nights.webp";
@@ -18,15 +26,41 @@ export default function Cart () {
 
   const toggle = useCartStore((status:any) => status.toggle);
   const setToggle = useCartStore((status:any) => status.setToggle);
- 
+  const [ inputToggle, setInputToggle ] = useState<boolean>(false);
+
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const { type } = e.currentTarget.dataset
+    const { type } = e.currentTarget.dataset;
+
     switch (type) {
       case 'close_button_is_clicked':
         setToggle(false);
         break;
       default:
         console.error('Unknown type: :', type);
+    }
+  }
+
+  const handleFocus = (e: any) => {
+    const { name } = e.currentTarget;
+    console.log('focus');
+    switch (name) {
+      case 'quantity':
+        setInputToggle(true);
+        break;
+      default:
+        console.error('Unknown name: ', name);
+    }
+  }
+
+  const handleBlur = (e: any) => {
+    const { name } = e.currentTarget;
+    console.log('blur');
+    switch (name) {
+      case 'quantity':
+        setInputToggle(false);
+        break;
+      default:
+        console.error('Unknown name: ', name);
     }
   }
 
@@ -70,8 +104,8 @@ export default function Cart () {
         </div>
       </button>
       <hr className="border-inbetween"/>
-      <div
-        className="flex flex-1 flex-col bg-transparent w-[500px] mx-auto"
+      <section
+        className="flex flex-1 flex-col bg-transparent w-[500px] mx-auto overflow-hidden"
       >
         <div
           className="flex items-center justify-between p-4"
@@ -88,23 +122,356 @@ export default function Cart () {
           </span>
         </div>
         <hr className="border-inbetween"/>
-        <ul className="flex flex-col py-4 gap-4">
+        <ul className="flex flex-col py-4 gap-4 overflow-y-scroll">
           <li className="flex">
             <DisplayImg
               className="w-[200px] aspect-[2/3] object-cover rounded-lg"
               src={outfit2}
             />
-            <div className="flex-1"></div>
+            <div className="flex flex-col flex-1 px-4">
+              <div className="flex text-heading text-lg font-bold justify-between">
+                <h3>
+                  Dark Sweater
+                </h3>             
+                <h3>
+                  4000 SYP
+                </h3>
+              </div>
+              <div className="flex items-center gap-2 font-bold py-4">
+                <span>
+                  M
+                </span>
+                <span>|</span>
+                <span className="h-4 w-4 rounded-full bg-black"></span>
+                <span>
+                  BLACK
+                </span>
+              </div>
+                <div className="flex justify-between w-[150px]">
+                  <span className="text-body">
+                    Price: 
+                  </span>
+                  <span className="text-heading font-bold">
+                    200 SYP
+                  </span>
+                </div>       
+                <label 
+                  className="flex justify-between w-[150px]"
+                  htmlFor="quantity"
+                >
+                  <span className="text-body">
+                    Quanitity:
+                  </span>
+                  <div
+                    className="relative"
+                  >
+                    <input 
+                      className="w-12 bg-transparent text-center outline-none border-none"
+                      id="quantity"
+                      name="quantity"
+                      value="1"
+                      onFocus={handleFocus}
+                      onBlur={handleBlur}
+                      readOnly
+                    />
+                    <div 
+                      className="
+                        absolute top-0 left-0 w-full h-full
+                        flex items-center justify-end
+                        border-solid border-b-[2px] border-body
+
+                    ">
+                      <EpArrowLeft className="w-4 h-4 rotate-[265deg]" />
+                    </div>
+                    <ul
+                      className={`
+                        absolute top-full left-0 w-full h-auto py-2
+                        flex-col bg-[var(--background-light-color)] rounded-lg cursor-pointer
+                        ${inputToggle ? 'flex' : 'hidden'}
+                      `}
+                    >
+                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">1</li>
+                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">2</li>
+                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">3</li>
+                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">4</li>
+                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">5</li>
+                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">6</li>
+                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">7</li>
+                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">8</li>
+                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">9</li>
+                    </ul>
+                  </div>
+                </label>
+                <div 
+                  className="
+                    flex flex-col gap-2 text-body mt-auto
+                    translate-all duration-300 ease-in-out
+                  "
+                >
+                <button
+                  className="
+                    flex items-center justify-center gap-1 
+                    border-solid border-body border-[2px] rounded-md
+                    translate-all duration-300 ease-in-out
+                    hover:bg-body hover:text-heading-invert
+                  "
+                >
+                  <IcOutlineCreate
+                    className="w-4 h-4"
+                  />
+                  <span>EDIT</span>
+                </button>
+                <button
+                  className="
+                    flex items-center justify-center gap-1 
+                    border-solid border-body border-[2px] rounded-md
+                    translate-all duration-300 ease-in-out
+                    hover:bg-body hover:text-heading-invert
+                  "
+                >
+                  <IcOutlineClear
+                    className="w-4 h-4"
+                  />
+                  <span>DELETE</span>
+                </button>
+              </div>
+            </div>
           </li>
           <li className="flex">
             <DisplayImg
               className="w-[200px] aspect-[2/3] object-cover rounded-lg"
               src={outfit1}
             />
-            <div className="flex-1"></div>
+            <div className="flex flex-col flex-1 px-4">
+              <div className="flex text-heading text-lg font-bold justify-between">
+                <h3>
+                  Dark Sweater
+                </h3>             
+                <h3>
+                  4000 SYP
+                </h3>
+              </div>
+              <div className="flex items-center gap-2 font-bold py-4">
+                <span>
+                  M
+                </span>
+                <span>|</span>
+                <span className="h-4 w-4 rounded-full bg-black"></span>
+                <span>
+                  BLACK
+                </span>
+              </div>
+                <div className="flex justify-between w-[150px]">
+                  <span className="text-body">
+                    Price: 
+                  </span>
+                  <span className="text-heading font-bold">
+                    200 SYP
+                  </span>
+                </div>       
+                <label 
+                  className="flex justify-between w-[150px]"
+                  htmlFor="quantity"
+                >
+                  <span className="text-body">
+                    Quanitity:
+                  </span>
+                  <div
+                    className="relative"
+                  >
+                    <input 
+                      className="w-12 bg-transparent text-center outline-none border-none"
+                      id="quantity"
+                      name="quantity"
+                      value="1"
+                      onFocus={handleFocus}
+                      onBlur={handleBlur}
+                      readOnly
+                    />
+                    <div 
+                      className="
+                        absolute top-0 left-0 w-full h-full
+                        flex items-center justify-end
+                        border-solid border-b-[2px] border-body
+
+                    ">
+                      <EpArrowLeft className="w-4 h-4 rotate-[265deg]" />
+                    </div>
+                    <ul
+                      className={`
+                        absolute top-full left-0 w-full h-auto py-2
+                        flex-col bg-[var(--background-light-color)] rounded-lg cursor-pointer
+                        ${inputToggle ? 'flex' : 'hidden'}
+                      `}
+                    >
+                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">1</li>
+                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">2</li>
+                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">3</li>
+                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">4</li>
+                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">5</li>
+                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">6</li>
+                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">7</li>
+                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">8</li>
+                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">9</li>
+                    </ul>
+                  </div>
+                </label>
+                <div 
+                  className="
+                    flex flex-col gap-2 text-body mt-auto
+                    translate-all duration-300 ease-in-out
+                  "
+                >
+                <button
+                  className="
+                    flex items-center justify-center gap-1 
+                    border-solid border-body border-[2px] rounded-md
+                    translate-all duration-300 ease-in-out
+                    hover:bg-body hover:text-heading-invert
+                  "
+                >
+                  <IcOutlineCreate
+                    className="w-4 h-4"
+                  />
+                  <span>EDIT</span>
+                </button>
+                <button
+                  className="
+                    flex items-center justify-center gap-1 
+                    border-solid border-body border-[2px] rounded-md
+                    translate-all duration-300 ease-in-out
+                    hover:bg-body hover:text-heading-invert
+                  "
+                >
+                  <IcOutlineClear
+                    className="w-4 h-4"
+                  />
+                  <span>DELETE</span>
+                </button>
+              </div>
+            </div>
+          </li>
+          <li className="flex">
+            <DisplayImg
+              className="w-[200px] aspect-[2/3] object-cover rounded-lg"
+              src={outfit1}
+            />
+            <div className="flex flex-col flex-1 px-4">
+              <div className="flex text-heading text-lg font-bold justify-between">
+                <h3>
+                  Dark Sweater
+                </h3>             
+                <h3>
+                  4000 SYP
+                </h3>
+              </div>
+              <div className="flex items-center gap-2 font-bold py-4">
+                <span>
+                  M
+                </span>
+                <span>|</span>
+                <span className="h-4 w-4 rounded-full bg-black"></span>
+                <span>
+                  BLACK
+                </span>
+              </div>
+                <div className="flex justify-between w-[150px]">
+                  <span className="text-body">
+                    Price: 
+                  </span>
+                  <span className="text-heading font-bold">
+                    200 SYP
+                  </span>
+                </div>       
+                <label 
+                  className="flex justify-between w-[150px]"
+                  htmlFor="quantity"
+                >
+                  <span className="text-body">
+                    Quanitity:
+                  </span>
+                  <div
+                    className="relative"
+                  >
+                    <input 
+                      className="w-12 bg-transparent text-center outline-none border-none"
+                      id="quantity"
+                      name="quantity"
+                      value="1"
+                      onFocus={handleFocus}
+                      onBlur={handleBlur}
+                      readOnly
+                    />
+                    <div 
+                      className="
+                        absolute top-0 left-0 w-full h-full
+                        flex items-center justify-end
+                        border-solid border-b-[2px] border-body
+
+                    ">
+                      <EpArrowLeft className="w-4 h-4 rotate-[265deg]" />
+                    </div>
+                    <ul
+                      className={`
+                        absolute top-full left-0 w-full h-auto py-2
+                        flex-col bg-[var(--background-light-color)] rounded-lg cursor-pointer
+                        ${inputToggle ? 'flex' : 'hidden'}
+                      `}
+                    >
+                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">1</li>
+                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">2</li>
+                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">3</li>
+                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">4</li>
+                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">5</li>
+                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">6</li>
+                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">7</li>
+                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">8</li>
+                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">9</li>
+                    </ul>
+                  </div>
+                </label>
+                <div 
+                  className="
+                    flex flex-col gap-2 text-body mt-auto
+                    translate-all duration-300 ease-in-out
+                  "
+                >
+                <button
+                  className="
+                    flex items-center justify-center gap-1 
+                    border-solid border-body border-[2px] rounded-md
+                    translate-all duration-300 ease-in-out
+                    hover:bg-body hover:text-heading-invert
+                  "
+                >
+                  <IcOutlineCreate
+                    className="w-4 h-4"
+                  />
+                  <span>EDIT</span>
+                </button>
+                <button
+                  className="
+                    flex items-center justify-center gap-1 
+                    border-solid border-body border-[2px] rounded-md
+                    translate-all duration-300 ease-in-out
+                    hover:bg-body hover:text-heading-invert
+                  "
+                >
+                  <IcOutlineClear
+                    className="w-4 h-4"
+                  />
+                  <span>DELETE</span>
+                </button>
+              </div>
+            </div>
           </li>
         </ul>
-      </div>
+        <hr className="border-inbetween"/>
+        <div className="flex flex-row justify-between font-bold text-lg py-4">
+          <h3 className="">Total Price: </h3>
+          <h3 className="">16000 SYP</h3>
+        </div>
+      </section>
     </div>
   )
 }
