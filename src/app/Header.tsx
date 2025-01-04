@@ -12,6 +12,9 @@ import BottomBorder from "@/components/svgs/BottomBorder";
 import EpUser from "@/components/svgs/EpUser";
 import FillOnScroll from "@/components/FillOnScroll";
 
+// STORES
+import { useCartStore } from '@/stores/index';
+
 type Props = {
   onScroll?: any;
   layoutRef?: any;
@@ -20,12 +23,25 @@ type Props = {
 export default function Header({ onScroll, layoutRef, ...props }: Props) {
   const [isWindowScrolled, setIsWindowScrolled] = useState(false);
   const headerRef = useRef<HTMLInputElement>(null);
+  const setToggle = useCartStore((status:any) => status.setToggle);
 
   useEffect(() => {
     const y = layoutRef?.scrollTop || 0;
     setIsWindowScrolled(y <= 10 ? false : true);
 
   },[ onScroll, layoutRef ]);
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const { type } = e.currentTarget.dataset;
+
+    switch (type) {
+      case 'cart_button_is_clicked':
+        setToggle(true);
+        break;
+      default:
+        console.error('Unknown type: ', type);
+    }
+  }
 
   // DEBUG
 
@@ -95,6 +111,8 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
       </button>
       <button
         className="nav-hover-effect"
+        onClick={handleClick}
+        data-type="cart_button_is_clicked"
       >
         <SolarCart4Outline
           className="

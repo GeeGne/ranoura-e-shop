@@ -1,6 +1,8 @@
 // COMPONENTS
 import DisplayImg from "@/components/DisplayImg";
 import BtnA from "@/components/BtnA";
+
+// ASSETS
 const ramdanBanner = "/assets/img/ramadan-nights.webp";
 const ramdanBanner2 = "/assets/img/ramadan-nights-2.jpg";
 const outfit1 = "assets/img/outfit.jpg"
@@ -32,7 +34,7 @@ export default function MainLayout () {
           "
         >
           <h2
-            className="text-xl text-heading-invert font-bold"
+            className="text-xl text-heading-invert font-bold drop-shadow-md"
           >
             RAMADAN NIGHTS
           </h2>
@@ -41,7 +43,9 @@ export default function MainLayout () {
           >
             Illuminate Your Style with Ramadan Nights – Exclusive Deals Await!
           </h3>
-          <BtnA>
+          <BtnA
+            className="drop-shadow-lg"
+          >
             SHOP NOW
           </BtnA>
         </div>
@@ -64,7 +68,7 @@ export default function MainLayout () {
           "
         >
           <h2
-            className="text-xl text-heading-invert font-bold"
+            className="text-xl text-heading-invert font-bold drop-shadow-md"
           >
             HOT DEALS
           </h2>
@@ -73,7 +77,9 @@ export default function MainLayout () {
           >
             "Unbeatable Discounts, Limited Time Offers! Discover exclusive deals on your favorite products. Shop now before they're gone!"
           </h3>
-          <BtnA>
+          <BtnA
+            className="drop-shadow-lg"
+          >
             SHOP NOW
           </BtnA>
         </div>
@@ -96,7 +102,7 @@ export default function MainLayout () {
             "
         >
           <h2
-            className="text-xl text-heading-invert font-bold"
+            className="text-xl text-heading-invert font-bold drop-shadow-md"
           >
             LATEST ARRIVALS
           </h2>
@@ -105,7 +111,9 @@ export default function MainLayout () {
           >
             "Fresh Styles, Hot Prices! Explore our new clothing collection with exclusive deals you won't want to miss. Upgrade your wardrobe today!"
           </h3>
-          <BtnA>
+          <BtnA
+            className="drop-shadow-lg"
+          >
             SHOP NOW
           </BtnA>
         </div>

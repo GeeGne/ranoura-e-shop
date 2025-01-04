@@ -2,12 +2,17 @@ import type { ReactNode } from 'react'
 
 type Props = {
   children: ReactNode;
+  className?: ReactNode;
 }
 
-export default function BtnA ({ children, ...props}: Props) {
+export default function BtnA ({ className = '', children, ...props}: Props) {
   return (
     <button
-      className="relative group bg-background text-heading text-sm font-bold px-4 py-2 rounded-md shaddow-md overflow-hidden"
+      className={`
+        relative group bg-background text-heading text-sm font-bold 
+        px-4 py-2 rounded-md shaddow-md overflow-hidden
+        ${className}
+      `}
       {...props}
     >
       {children}
