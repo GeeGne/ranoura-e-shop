@@ -46,7 +46,7 @@ button {
 button {
   background-color: transparent;
   border: none;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 button:focus-visible,
