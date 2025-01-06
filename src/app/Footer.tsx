@@ -5,6 +5,7 @@ import Instagram from '@/components/svgs/Instagram';
 import Telegram from '@/components/svgs/Telegram';
 import Phone from '@/components/svgs/Phone';
 import Email from '@/components/svgs/Email';
+import BtnA from '@/components/BtnA';
 
 export default function Footer ({ ...props }) {
   return (
@@ -41,11 +42,11 @@ export default function Footer ({ ...props }) {
               "
               placeholder="Enter your email"
             />
-            <button
+            <BtnA
               className="p-2 bg-heading-invert font-bold text-heading border-solid border-[2px] border-heading-invert"
             >
               Subscribe
-            </button>
+            </BtnA>
           </div><hr className="border-2 border-body-invert my-4 lg:hidden" />
         </div>
         <FooterList 

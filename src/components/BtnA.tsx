@@ -9,8 +9,8 @@ export default function BtnA ({ className = '', children, ...props}: Props) {
   return (
     <button
       className={`
-        relative group bg-background text-heading text-sm font-bold 
-        px-4 py-2 rounded-md shaddow-md overflow-hidden
+        relative group
+        overflow-hidden
         ${className}
       `}
       {...props}

@@ -49,10 +49,10 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
     <header
       className={`
         sticky top-0 flex flex-row items-center mx-auto gap-4 px-4 py-4 z-[1000]
-        before:content-[''] before:absolute before:top-0 before:left-1/2 before:translate-x-[-50%] 
-        before:w-[100vw] before:h-full before:z-[-1] 
-        transition-all ease-out duration-300
-        before:transition-all before:ease-out before:duration-300
+        before:content-[''] before:absolute before:top-0 before:left-1/2 before:translate-x-[-50%]
+        before:w-[100vw] before:h-full before:z-[-1]
+        transition-all ease-in-out duration-300
+        before:transition-all before:ease-in-out before:duration-300
         ${
           isWindowScrolled
             ? "bg-primary before:bg-primary"
@@ -126,7 +126,7 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
         className={`
           absolute left-1/2 translate-x-[-50%] top-full w-[100vw] text-primary 
           scale-y-[100%] md:scale-y-[50%] origin-top
-          transition-all ease-out duration-300
+          transition-all ease-in-out duration-300
           ${
             isWindowScrolled
               ? "opacity-100"

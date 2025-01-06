@@ -44,7 +44,7 @@ export default function MainLayout () {
             Illuminate Your Style with Ramadan Nights – Exclusive Deals Await!
           </h3>
           <BtnA
-            className="drop-shadow-lg"
+            className="bg-background text-heading text-sm font-bold px-4 py-2 shadow-md drop-shadow-lg rounded-md"
           >
             SHOP NOW
           </BtnA>
@@ -78,7 +78,7 @@ export default function MainLayout () {
             "Unbeatable Discounts, Limited Time Offers! Discover exclusive deals on your favorite products. Shop now before they're gone!"
           </h3>
           <BtnA
-            className="drop-shadow-lg"
+            className="bg-background text-heading text-sm font-bold px-4 py-2 shadow-md drop-shadow-lg rounded-md"
           >
             SHOP NOW
           </BtnA>
@@ -112,7 +112,8 @@ export default function MainLayout () {
             "Fresh Styles, Hot Prices! Explore our new clothing collection with exclusive deals you won't want to miss. Upgrade your wardrobe today!"
           </h3>
           <BtnA
-            className="drop-shadow-lg"
+            className="bg-background text-heading text-sm font-bold px-4 py-2 shadow-md drop-shadow-lg rounded-md"
+
           >
             SHOP NOW
           </BtnA>
