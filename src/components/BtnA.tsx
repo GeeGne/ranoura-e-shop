@@ -9,8 +9,7 @@ export default function BtnA ({ className = '', children, ...props}: Props) {
   return (
     <button
       className={`
-        relative group
-        overflow-hidden
+        relative group cursor-pointer overflow-hidden
         ${className}
       `}
       {...props}
