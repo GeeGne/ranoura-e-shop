@@ -14,7 +14,7 @@ export default function MainLayout () {
     <section
       className="
         grid grid-cols-10 gap-4 p-4
-        w-full aspect-[3/9] md:aspect-[2/3] lg:aspect-[6/5] 
+        w-full aspect-[2/9] md:aspect-[2/3] lg:aspect-[6/5] 
       "
     >
       <div
@@ -119,7 +119,6 @@ export default function MainLayout () {
           </BtnA>
         </div>
       </div>
-      
     </section>
   )  
 }

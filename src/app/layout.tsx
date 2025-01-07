@@ -40,7 +40,7 @@ export default function RootLayout({
             <BottomBorder
               className="
                 absolute top-[100%] origin-top 
-                scale-y-[50%] md:scale-y-[50%] text-primary rotate-180
+                scale-y-[50%] md:scale-y-[50%] lg:scale-y-[25%] text-primary rotate-180
               "
             />
           </Main>

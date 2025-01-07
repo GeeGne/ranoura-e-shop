@@ -1,13 +1,15 @@
-export default function PriceTag ({ discount = false }) {
+import calculatePriceAfterDiscount from "@/utils/calculatePriceAfterDiscount";
+
+type Props = {
+  price?: number;  
+  discount?: number;
+}
+
+export default function PriceTag ({ price = 0, discount = 0 }: Props) {
   return (
     <div>
-      {discount
-        ?  <div
-            className="text-heading text-lg font-bold"
-          >
-            400 SYP
-          </div>
-        : <div
+      {discount > 0
+        ? <div
             className="flex flex-col"
           >
             <div
@@ -16,19 +18,24 @@ export default function PriceTag ({ discount = false }) {
               <span
                 className="text-red-600 text-lg font-bold"
               >
-                200 SYP
+                {calculatePriceAfterDiscount({ price, discount })} SYP
               </span>
               <s
                 className="text-body-light text-lg font-bold"
               >
-                400 SYP
+                {price} SYP
               </s>
             </div> 
             <span
               className="text-body text-sm font-bold"
             >
-              50% Off
+              {discount}% Off
             </span>
+          </div>
+        : <div
+            className="text-heading text-lg font-bold"
+          >
+            {price} SYP
           </div>
       }
     </div>

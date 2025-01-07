@@ -11,6 +11,7 @@ const badgePng = "/assets/img/badge.png";
 const badge2Png = "/assets/img/badge2.png";
 const cloudPng = "/assets/img/cloud.png";
 const introVideo = "/assets/video/intro-video.mp4";
+const introVideo2 = "/assets/video/intro-video(2).mp4";
 
 type Props = {
   className?: string;
@@ -20,7 +21,7 @@ export default function Hero({ className = "", ...props }: Props) {
   return (
     <section
       className={`
-        relative z-[1] bg-primary h-[300px]
+        relative z-[1] bg-primary w-full aspect-[2/3] md:aspect-[1/1] lg:aspect-[1.85/1]
         ${className}
       `}
     > 
@@ -30,7 +31,7 @@ export default function Hero({ className = "", ...props }: Props) {
             absolute bottom-0 left-0 w-full h-[calc(100%+60px)] object-cover 
           "
         >
-          <source src={introVideo} />
+          <source src={introVideo2} />
       </video>
       <div
         className="
@@ -72,9 +73,9 @@ export default function Hero({ className = "", ...props }: Props) {
       <BottomBorder 
         className={`
           absolute left-1/2 translate-x-[-50%] top-full w-[100vw]
-          text-primary scale-y-[50%] md:scale-y-[50%] origin-top
+          text-primary scale-y-[50%] md:scale-y-[50%] lg:scale-y-[25%] origin-top
         `}        
-      />    
+      />
     </section>
   );
 }

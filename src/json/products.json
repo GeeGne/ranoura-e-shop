@@ -1,0 +1,63 @@
+[
+  {
+    "id": 1,
+    "name": "Long Sweater",
+    "size": ["sm", "md", "lg"],
+    "color": ["green", "orchid", "black", "salamon", "red"],
+    "img": [
+      {
+        "main": "/assets/img/cloth-a-green.jpg",
+        "second": "/assets/img/cloth-a-green-view-b.jpg",
+        "color": "green"
+      },{
+        "main": "/assets/img/cloth-a-orange.jpg",
+        "second": "/assets/img/cloth-a-orange-view-b.jpg",
+        "color": "salamon"
+      },{
+        "main": "/assets/img/cloth-a-pink.jpg",
+        "second": "/assets/img/cloth-a-pink-view-b.jpg",
+        "color": "orchid"
+      },{
+        "main": "/assets/img/cloth-a-red.jpg",
+        "second": "/assets/img/cloth-a-red-view-b.jpg",
+        "color": "red"
+      },{
+        "main": "/assets/img/cloth-a-black.jpg",
+        "second": "/assets/img/cloth-a-black-view-b.jpg",
+        "color": "black"
+      }
+    ],
+    "price": 2000,
+    "discount": 30
+  },{
+    "id": 2,
+    "name": "Long Sweater",
+    "size": ["sm", "md", "lg"],
+    "color": ["green", "orchid", "black", "salmon", "red"],
+    "img": [
+      {
+        "main": "/assets/img/cloth-a-green.jpg",
+        "second": "/assets/img/cloth-a-green-view-b.jpg",
+        "color": "green"
+      },{
+        "main": "/assets/img/cloth-a-orange.jpg",
+        "second": "/assets/img/cloth-a-orange-view-b.jpg",
+        "color": "salmon"
+      },{
+        "main": "/assets/img/cloth-a-pink.jpg",
+        "second": "/assets/img/cloth-a-pink-view-b.jpg",
+        "color": "orchid"
+      },{
+        "main": "/assets/img/cloth-a-red.jpg",
+        "second": "/assets/img/cloth-a-red-view-b.jpg",
+        "color": "red"
+      },{
+        "main": "/assets/img/cloth-a-black.jpg",
+        "second": "/assets/img/cloth-a-black-view-b.jpg",
+        "color": "black"
+      }
+    ],
+    "price": 5000,
+    "discount": 10
+  }
+]

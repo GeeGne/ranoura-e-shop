@@ -1,0 +1,30 @@
+[
+  {
+    "name": "black",
+    "hex": "#000000"
+  },{
+    "name": "green",
+    "hex": "#339933"
+  },{
+    "name": "silver",
+    "hex": "#c0c0c0"
+  },{
+    "name": "white",
+    "hex": "#f2f2f2"
+  },{
+    "name": "orchid",
+    "hex": "#da70d6"
+  },{
+    "name": "salmon",
+    "hex": "#fa8072"
+  },{
+    "name": "pink",
+    "hex": "#ffc0cb"
+  },{
+    "name": "gold",
+    "hex": "#ffd700"
+  },{
+    "name": "red",
+    "hex": "#ff0000"
+  }
+]

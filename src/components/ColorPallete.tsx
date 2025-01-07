@@ -1,22 +1,37 @@
 // HOOKS
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
+
+// JSON
+import colors from "@/json/colors.json";
 
 type Props = {
   colorsArray?: string[];
+  currentColor?: any;
+  productId: number;
 }
 
-export default function ColorPallete ({ colorsArray = [] }: Props) {
+export default function ColorPallete ({ currentColor, productId, colorsArray = [] }: Props) {
 
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [selectedColor, setSelectedColor] = useState<string>("");
+  const getHex = (color: string) => colors.find((itm: any) => itm.name === color)?.hex || '#339933';
+  const isMounted = useRef<boolean>(false);
+
+  useEffect(() => {
+    currentColor(selectedColor, productId);
+  }, [selectedColor]);
+
+  useEffect(() => {
+    setSelectedColor(colorsArray[0])
+  }, [colorsArray]);
 
   return (
     <ul className="flex gap-2">
-      {colorsArray.map((itm, i) => 
+      {colorsArray.map((color, i) => 
         <li
           className={`
             relative w-4 h-4 p-1 border-solid
-            bg-${itm}-400 rounded-full cursor-pointer
-            ${currentIndex === i && `
+            rounded-full cursor-pointer
+            ${selectedColor === color && `
               before:content-[''] before:absolute before:top-1/2 before:left-1/2
               before:translate-x-[-50%] before:translate-y-[-50%]
               before:w-[calc(100%+8px)] before:h-[calc(100%+8px)]
@@ -24,7 +39,8 @@ export default function ColorPallete ({ colorsArray = [] }: Props) {
               before:border-[1px] before:rounded-full  
             `}
           `}
-          onClick={() => setCurrentIndex(i)}
+          style={{backgroundColor: getHex(color)}}
+          onClick={() => setSelectedColor(color)}
           key={i}
         />
       )}
