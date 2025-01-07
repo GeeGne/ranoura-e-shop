@@ -61,7 +61,7 @@ export default function Hero({ className = "", ...props }: Props) {
 
       <DisplayImg
         className="
-          absolute top-1/2 left-12 translate-y-[-50%]
+          absolute hidden top-1/2 left-12 translate-y-[-50%]
           w-[150px] aspect-auto
           object-contain origin-top
           --rotate-ani duration--10s
