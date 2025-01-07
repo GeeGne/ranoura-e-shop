@@ -3,37 +3,7 @@
     "id": 1,
     "name": "Long Sweater",
     "size": ["sm", "md", "lg"],
-    "color": ["green", "orchid", "black", "salamon", "red"],
-    "img": [
-      {
-        "main": "/assets/img/cloth-a-green.jpg",
-        "second": "/assets/img/cloth-a-green-view-b.jpg",
-        "color": "green"
-      },{
-        "main": "/assets/img/cloth-a-orange.jpg",
-        "second": "/assets/img/cloth-a-orange-view-b.jpg",
-        "color": "salamon"
-      },{
-        "main": "/assets/img/cloth-a-pink.jpg",
-        "second": "/assets/img/cloth-a-pink-view-b.jpg",
-        "color": "orchid"
-      },{
-        "main": "/assets/img/cloth-a-red.jpg",
-        "second": "/assets/img/cloth-a-red-view-b.jpg",
-        "color": "red"
-      },{
-        "main": "/assets/img/cloth-a-black.jpg",
-        "second": "/assets/img/cloth-a-black-view-b.jpg",
-        "color": "black"
-      }
-    ],
-    "price": 2000,
-    "discount": 30
-  },{
-    "id": 2,
-    "name": "Long Sweater",
-    "size": ["sm", "md", "lg"],
-    "color": ["green", "orchid", "black", "salmon", "red"],
+    "color": ["green", "orchid", "black", "salmon", "maroon"],
     "img": [
       {
         "main": "/assets/img/cloth-a-green.jpg",
@@ -50,14 +20,58 @@
       },{
         "main": "/assets/img/cloth-a-red.jpg",
         "second": "/assets/img/cloth-a-red-view-b.jpg",
-        "color": "red"
+        "color": "maroon"
       },{
         "main": "/assets/img/cloth-a-black.jpg",
         "second": "/assets/img/cloth-a-black-view-b.jpg",
         "color": "black"
       }
     ],
-    "price": 5000,
-    "discount": 10
+    "price": 2000,
+    "discount": 30
+  },{
+    "id": 2,
+    "name": "Winter Long Sweater",
+    "size": ["sm", "md", "lg"],
+    "color": ["blue", "salmon", "pink", "maroon"],
+    "img": [
+      {
+        "main": "/assets/img/cloth-b-blue.jpg",
+        "second": "/assets/img/cloth-b-blue-view-b.jpg",
+        "color": "blue"
+      },{
+        "main": "/assets/img/cloth-b-orange.jpg",
+        "second": "/assets/img/cloth-b-orange-view-b.jpg",
+        "color": "salmon"
+      },{
+        "main": "/assets/img/cloth-b-pink.jpg",
+        "second": "/assets/img/cloth-b-pink-view-b.jpg",
+        "color": "pink"
+      },{
+        "main": "/assets/img/cloth-b-red.jpg",
+        "second": "/assets/img/cloth-b-red-view-b.jpg",
+        "color": "maroon"
+      }
+    ],
+    "price": 15000,
+    "discount": 20
+  },{
+    "id": 3,
+    "name": "Winter Long Sweater",
+    "size": ["sm", "md", "lg"],
+    "color": ["white", "black"],
+    "img": [
+      {
+        "main": "/assets/img/cloth-c-white.jpg",
+        "second": "/assets/img/cloth-c-white-view-b.jpg",
+        "color": "white"
+      },{
+        "main": "/assets/img/cloth-c-black.jpg",
+        "second": "/assets/img/cloth-c-black-view-b.jpg",
+        "color": "black"
+      }
+    ],
+    "price": 45000,
+    "discount": 45
   }
 ]

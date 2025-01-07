@@ -1,5 +1,8 @@
 [
   {
+    "name": "blue",
+    "hex": "#33ccff"
+  },{
     "name": "black",
     "hex": "#000000"
   },{
@@ -26,5 +29,8 @@
   },{
     "name": "red",
     "hex": "#ff0000"
+  },{
+    "name": "maroon",
+    "hex": "#990000"
   }
 ]

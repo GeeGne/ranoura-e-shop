@@ -39,16 +39,13 @@ export default function AdvertTile () {
   }
 
   const onColorChange = (color: string, productId: number) => {
-    console.log('test');
-    console.log('color:', color);
-    console.log('productId:', productId);
-    const getEL = (refs: any) => refs.find((el: any) => Number(el.dataset.productId) === productId);
     const getProduct = () => products.find(product => product.id === productId);
-    console.log('main url: ', getProduct()?.img.find(itm => itm.color === color)?.main);
-    console.log('main ref: ', getEL(mainImgRefs.current));
-
-    if (getEL(mainImgRefs.current)) getEL(mainImgRefs.current).src = getProduct()?.img.find(itm => itm.color === color)?.main;
-    if (getEL(secondImgRefs.current)) getEL(secondImgRefs.current).src = getProduct()?.img.find(itm => itm.color === color)?.second;
+    const getEL = (refs: any) => refs.find((el: any) => Number(el.dataset.productId) === productId);
+    
+    if (getEL(mainImgRefs.current))
+      getEL(mainImgRefs.current).src = getProduct()?.img.find(itm => itm.color === color)?.main;
+    if (getEL(secondImgRefs.current))
+      getEL(secondImgRefs.current).src = getProduct()?.img.find(itm => itm.color === color)?.second;
   }
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -174,7 +171,7 @@ export default function AdvertTile () {
               >
                 <DisplayImg 
                   className="w-full peer aspect-[2/3] object-cover object-center rounded-lg"
-                  src={getImgUrls(product.img).main}
+                  src={getImgUrls(product.img)?.main}
                   alt="Image"
                   data-product-id={product.id}
                   ref={ (el: any) => {if (mainImgRefs.current) {mainImgRefs.current[i] = el}} }
@@ -187,7 +184,7 @@ export default function AdvertTile () {
                     blur-[20px] hover:blur-[0px]
                     transition-all ease-out duration-200
                   "
-                  src={getImgUrls(product.img).second}
+                  src={getImgUrls(product.img)?.second}
                   alt="Image"
                   data-product-id={product.id}
                   ref={ (el: any) => {if (secondImgRefs.current) {secondImgRefs.current[i] = el}} }
