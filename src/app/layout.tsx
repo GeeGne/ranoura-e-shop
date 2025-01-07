@@ -34,13 +34,13 @@ export default function RootLayout({
         >
           <Header onScroll={onScroll} layoutRef={layoutRef}/>
           <Main
-            className="relative bg-background pb-[2rem] md:pb-[4rem] lg:pb-[6rem]"
+            className="relative bg-background pb-[3rem] md:pb-[4rem] lg:pb-[6rem]"
           >
             {children}
             <BottomBorder
               className="
                 absolute top-[100%] origin-top 
-                scale-y-[100%] md:scale-y-[50%] text-primary rotate-180
+                scale-y-[50%] md:scale-y-[50%] text-primary rotate-180
               "
             />
           </Main>

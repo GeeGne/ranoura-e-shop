@@ -125,7 +125,7 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
       <BottomBorder 
         className={`
           absolute left-1/2 translate-x-[-50%] top-full w-[100vw] text-primary 
-          scale-y-[100%] md:scale-y-[50%] origin-top
+          scale-y-[50%] md:scale-y-[50%] origin-top
           transition-all ease-in-out duration-300
           ${
             isWindowScrolled
