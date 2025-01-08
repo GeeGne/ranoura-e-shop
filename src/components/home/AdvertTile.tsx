@@ -54,6 +54,8 @@ export default function AdvertTile () {
     const ulRefScrollWidth = ulRef.current.scrollWidth
     const liRefWidth = liRefs?.current[0]?.scrollWidth || 0;
     console.log('liRefWidth: ', liRefWidth);
+    console.log('ulRefWidth', ulRefWidth)
+    console.log('ulRefScrollWidth', ulRefScrollWidth)
     const gap = parseFloat(getComputedStyle(ulRef.current).gap);
     const totalTiles = array.length - 1
     const scrollTotalWidth = ulRefWidth / (totalTiles) + gap;
@@ -75,7 +77,7 @@ export default function AdvertTile () {
         break;
       case 'scroll_right_button_is_clicked':
         setScrollWidth((val: number) => {
-          if (-1 * (val - liRefWidth - gap) >= ulRefWidth) { 
+          if (-1 * (val - liRefWidth - gap) >= ulRefScrollWidth - ulRefWidth) { 
             setLeftArrowInactive(false);
             setRightArrowInactive(true);
 
