@@ -61,7 +61,7 @@ export default function AdvertTile () {
     switch (type) {
       case 'scroll_left_button_is_clicked':
         setScrollWidth((val: number) => {
-          if (-1 * (val + liRefWidth + gap) <= scrollTotalWidth) { 
+          if (-1 * (val + liRefWidth + gap) <= 0) { 
             setLeftArrowInactive(true);
             setRightArrowInactive(false);
 
