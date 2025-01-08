@@ -193,7 +193,7 @@ export default function AdvertTile () {
                   ref={ (el: any) => {if (secondImgRefs.current) {secondImgRefs.current[i] = el}} }
                 />
                 <span 
-                  className="absolute bottom-2 left-2 text-xs text-body-invert bg-primary px-2 py-1 rounded-lg z-[10]"
+                  className="absolute bottom-2 left-2 text-xs text-body-invert font-bold bg-primary px-2 py-1 rounded-lg z-[10]"
                 >
                   NEW
                 </span>
