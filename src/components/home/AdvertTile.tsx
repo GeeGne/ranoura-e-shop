@@ -52,7 +52,7 @@ export default function AdvertTile () {
     const { type } = e.currentTarget.dataset;
     const ulRefWidth = ulRef.current.offsetWidth
     const ulRefScrollWidth = ulRef.current.scrollWidth
-    const liRefWidth = liRefs?.current[0].scrollWidth;
+    const liRefWidth = liRefs?.current[0]?.scrollWidth;
     console.log('liRefWidth: ', liRefWidth);
     const gap = parseFloat(getComputedStyle(ulRef.current).gap);
     const totalTiles = array.length - 1
