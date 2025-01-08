@@ -52,6 +52,8 @@ export default function AdvertTile () {
     const { type } = e.currentTarget.dataset;
     const ulRefWidth = ulRef.current.offsetWidth
     const ulRefScrollWidth = ulRef.current.scrollWidth
+    const liRefWidth = liRefs?.current[0].scrollWidth;
+    console.log('liRefWidth: ', liRefWidth);
     const gap = parseFloat(getComputedStyle(ulRef.current).gap);
     const totalTiles = array.length - 1
     const scrollTotalWidth = ulRefWidth / (totalTiles) + gap;
@@ -59,7 +61,7 @@ export default function AdvertTile () {
     switch (type) {
       case 'scroll_left_button_is_clicked':
         setScrollWidth((val: number) => {
-          if (val <= scrollTotalWidth) { 
+          if (-1 * (val + liRefWidth + gap) <= scrollTotalWidth) { 
             setLeftArrowInactive(true);
             setRightArrowInactive(false);
 
@@ -68,13 +70,12 @@ export default function AdvertTile () {
 
           setLeftArrowInactive(false);
           setRightArrowInactive(true);
-          return val + scrollTotalWidth
-          // return -1 * (ulRefScrollWidth - ulRefWidth)
+          return val + liRefWidth + gap
         });
         break;
       case 'scroll_right_button_is_clicked':
         setScrollWidth((val: number) => {
-          if (val - scrollTotalWidth <= ulRefWidth) { 
+          if (-1 * (val - liRefWidth - gap) >= ulRefWidth) { 
             setLeftArrowInactive(false);
             setRightArrowInactive(true);
 
@@ -83,7 +84,7 @@ export default function AdvertTile () {
 
           setLeftArrowInactive(true);
           setRightArrowInactive(false);
-          return val - scrollTotalWidth
+          return val - liRefWidth - gap
         });
         break;
       default:
@@ -92,8 +93,8 @@ export default function AdvertTile () {
   }
 
   // DEBUG
-  console.log('products: ', products);
-  console.log('liRefs: ', liRefs.current);
+  // console.log('products: ', products);
+  // console.log('liRefs: ', liRefs.current);
 
   return (
     <section
@@ -179,10 +180,10 @@ export default function AdvertTile () {
                 <img 
                   className="
                     absolute top-0 left-0 w-full h-full 
-                    object-cover object-center rounded-lg z-[5]
+                    object-cover object-center rounded-lg z-[5] overflow-hidden
                     opacity-0 hover:opacity-100
                     blur-[20px] hover:blur-[0px]
-                    transition-all ease-out duration-200
+                    transition-all ease-in duration-200
                   "
                   src={getImgUrls(product.img)?.second}
                   alt="Image"

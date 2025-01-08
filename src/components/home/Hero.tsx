@@ -38,7 +38,6 @@ export default function Hero({ className = "", ...props }: Props) {
           absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-primary
         "
       >
-
       </div>
       <div
         className="
@@ -58,7 +57,6 @@ export default function Hero({ className = "", ...props }: Props) {
           alt="Cloud"
         />
       </div>
-
       <DisplayImg
         className="
           absolute hidden top-1/2 left-12 translate-y-[-50%]
