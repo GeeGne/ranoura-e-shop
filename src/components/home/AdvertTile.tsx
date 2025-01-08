@@ -22,7 +22,11 @@ const outfit3 = "assets/img/outfit-3.jpg"
 // JSON
 import products from "@/json/products.json";
 
-export default function AdvertTile () {
+type Props = {
+  title?: string;
+}
+
+export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
   
   const array = [1, 2, 3, 4];
   const selectedColor = "green";
@@ -40,7 +44,7 @@ export default function AdvertTile () {
 
   const onColorChange = (color: string, productId: number) => {
     const getProduct = () => products.find(product => product.id === productId);
-    const getEL = (refs: any) => refs.find((el: any) => Number(el.dataset.productId) === productId);
+    const getEL = (refs: ReactNode[] | any[]) => refs.find((el) => Number(el.dataset.productId) === productId);
     
     if (getEL(mainImgRefs.current))
       getEL(mainImgRefs.current).src = getProduct()?.img.find(itm => itm.color === color)?.main;
@@ -100,7 +104,7 @@ export default function AdvertTile () {
 
   return (
     <section
-      className="flex flex-col gap-4 px-4"
+      className="flex flex-col gap-4 px-4 py-8"
     >
       <div
         className="flex justify-between"
@@ -108,7 +112,7 @@ export default function AdvertTile () {
         <span
           className="relative text-3xl text-heading font-bold transform"
         >
-          WHATS NEW?
+          {title}
           <div
             className="absolute bottom-0 left-0 w-[calc(100%+1rem)] h-[40%] backdrop-invert origin-left translate-x-4"
           />

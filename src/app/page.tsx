@@ -12,7 +12,9 @@ export default function Home() {
       <Hero /> 
       <ImageSlider /> 
       <MainLayout />
-      <AdvertTile />
+      <AdvertTile title="WHATS NEW?" />
+      <AdvertTile title="HOT DEALS" />
+      <AdvertTile title="COLLECTION" />
     </div>
   );
 }
