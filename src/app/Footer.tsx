@@ -21,7 +21,7 @@ export default function Footer ({ ...props }) {
         "
     >
         <div
-          className="flex flex-col gap-2 w-full max-w-[600px] lg:max-w-[300px] mx-auto"
+          className="flex flex-col gap-2 w-full max-w-[600px] lg:max-w-[300px] mx-auto pb-4"
         >
           <span
             className="text-heading-invert text-2xl text-bold"
@@ -47,8 +47,8 @@ export default function Footer ({ ...props }) {
             >
               Subscribe
             </BtnA>
-          </div><hr className="border-2 border-body-invert my-4 lg:hidden" />
-        </div>
+          </div>
+        </div><hr className="border-2 border-body-invert w-full max-w-[600px] lg:hidden mx-auto mb-2" />
         <FooterList 
           title={'COSTUMER SERVICE'} 
           content={['Privacy Policy', 'Returns & Refunds', 'Delivery and Shipment']} 
@@ -67,7 +67,7 @@ export default function Footer ({ ...props }) {
       </section>
       <section
         className="flex flex-col items-center gap-4"
-      ><hr className="w-full border-body-light-invert  " />
+      ><hr className="w-full border-body-light-invert" />
         <div
           className="flex flex-col gap-2 items-center"
         >
@@ -96,7 +96,7 @@ export default function Footer ({ ...props }) {
             />
             </li>
             <li>
-              <Telegram 
+              <Telegram
                 className="
                   text-body-invert hover:text-cyan-400 hover:scale-125 cursor-pointer
                   transition-all ease-in-out duration-300
