@@ -2,6 +2,7 @@
 
 // HOOKS
 import { useState, useEffect, useRef } from "react";
+import Link from 'next/link';
 
 // COMPONENTS
 import LineMdCloseToMenuAltTransition from "@/components/svgs/LineMdCloseToMenuAltTransition";
@@ -13,7 +14,7 @@ import EpUser from "@/components/svgs/EpUser";
 import FillOnScroll from "@/components/FillOnScroll";
 
 // STORES
-import { useCartStore } from '@/stores/index';
+import { useCartStore, useTabNameStore } from '@/stores/index';
 
 type Props = {
   onScroll?: any;
@@ -23,7 +24,8 @@ type Props = {
 export default function Header({ onScroll, layoutRef, ...props }: Props) {
   const [isWindowScrolled, setIsWindowScrolled] = useState(false);
   const headerRef = useRef<HTMLInputElement>(null);
-  const setToggle = useCartStore((status:any) => status.setToggle);
+  const setToggle = useCartStore((stats:any) => stats.setToggle);
+  const tabName = useTabNameStore((state: any) => state.tabName);
 
   useEffect(() => {
     const y = layoutRef?.scrollTop || 0;
@@ -54,7 +56,7 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
         transition-all ease-in-out duration-300
         before:transition-all before:ease-in-out before:duration-300
         ${
-          isWindowScrolled
+          isWindowScrolled || (tabName !== 'home')
             ? "bg-primary before:bg-primary"
             : "bg-transparent before:bg-transparent"
         }
@@ -75,22 +77,25 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
           height={24}
         />
       </button>
-      <div className="relative mx-auto">
-        <span
-          className={`
-            absolute top-1/2 left-1/2 translate-y-[-50%] translate-x-[-50%]
-            text-heading-invert text-2xl text-bold z-10
-            transition-all ease-in-out duration-500
-            ${
-              isWindowScrolled
-                ? "top-1/2 scale-[100%]"
-                : "top-[calc(100%+120px)] scale-[200%]"
-            }
-          `}
+        <Link 
+          href="/"
+          className="relative mx-auto"
         >
-          RANOURA
-        </span>
-      </div>
+          <span
+            className={`
+              absolute top-1/2 left-1/2 translate-y-[-50%] translate-x-[-50%]
+              text-heading-invert text-2xl text-bold z-10
+              transition-all ease-in-out duration-500
+              ${
+                isWindowScrolled || (tabName !== 'home')
+                  ? "top-1/2 scale-[100%]"
+                  : "top-[calc(100%+120px)] scale-[200%]"
+              }
+            `}
+          >
+            RANOURA
+          </span>      
+        </Link>
       <button
         className="nav-hover-effect"
       >
@@ -128,7 +133,7 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
           scale-y-[50%] md:scale-y-[50%] lg:scale-y-[25%] origin-top
           transition-all ease-in-out duration-300
           ${
-            isWindowScrolled
+            isWindowScrolled || (tabName !== 'home')
               ? "opacity-100"
               : "opacity-0"
           }

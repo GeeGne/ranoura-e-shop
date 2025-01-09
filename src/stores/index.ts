@@ -6,6 +6,13 @@ const useCartStore = create(
     toggle: false,
     setToggle: (toggle: boolean) => set({ toggle })
   })
-)
+);
 
-export { useCartStore };
+const useTabNameStore = create(
+  (set) => ({
+    tabName: 'home',
+    setTabName: (tabName: string) => set({ tabName })
+  })
+);
+
+export { useCartStore, useTabNameStore };
