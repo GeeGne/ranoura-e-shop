@@ -2,6 +2,7 @@
 
 // HOOKS
 import { ReactNode, useState, useRef } from 'react';
+import Link from 'next/link';
 
 // COMPONENTS
 import DisplayImg from '@/components/DisplayImg';
@@ -21,6 +22,9 @@ const outfit3 = "assets/img/outfit-3.jpg"
 
 // JSON
 import products from "@/json/products.json";
+
+// UTILS
+import strSlugForProducts from '@/utils/strSlugForProducts';
 
 type Props = {
   title?: string;
@@ -101,7 +105,6 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
   // DEBUG
   // console.log('products: ', products);
   // console.log('liRefs: ', liRefs.current);
-
   return (
     <section
       className="flex flex-col gap-4 px-4 py-8"
@@ -173,8 +176,9 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
               data-product-id={product.id}
               ref={ (el: any) => {if (liRefs.current) {liRefs.current[i] = el}} }
             >
-              <div
+              <Link
                 className="relative"
+                href={`/product/${strSlugForProducts(product.name, product.id)}`}
               >
                 <DisplayImg 
                   className="w-full peer aspect-[2/3] object-cover object-center rounded-lg"
@@ -204,12 +208,13 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
                 <LineMdHeart 
                   className="absolute top-2 right-2 w-6 h-6 text-pink-500 cursor-pointer z-[10]"
                 />
-              </div>
-              <h3
+              </Link>
+              <Link
                 className="text-heading text-md mb-auto"
+                href={`/product/${strSlugForProducts(product.name, product.id)}`}
               >
                 {product.name}
-              </h3>
+              </Link>
               <PriceTag 
                 price={product.price} 
                 discount={product.discount}
