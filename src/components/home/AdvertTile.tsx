@@ -102,6 +102,7 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
     }
   }
 
+
   // DEBUG
   // console.log('products: ', products);
   // console.log('liRefs: ', liRefs.current);
@@ -187,7 +188,7 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
                   alt="Image"
                   data-product-id={product.id}
                   ref={ (el: any) => {if (mainImgRefs.current) {mainImgRefs.current[i] = el}} }
-              />
+                />
                 <img 
                   className="
                     absolute top-0 left-0 w-full h-full 

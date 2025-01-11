@@ -5,14 +5,17 @@ import { useState, useEffect, useRef } from 'react';
 import colors from "@/json/colors.json";
 
 type Props = {
+  width?: string;
+  height?: string;
   colorsArray?: string[];
   currentColor?: any;
   productId: number;
 }
 
-export default function ColorPallete ({ currentColor, productId, colorsArray = [] }: Props) {
+export default function ColorPallete ({ currentColor, width = 'w-4', height = 'h-4', productId, colorsArray = [] }: Props) {
 
-  const [selectedColor, setSelectedColor] = useState<string>("");
+  const [ selectedColor, setSelectedColor ] = useState<string>("");
+  const [ clickedColor, setClickedColor ] = useState<string>("");
   const getHex = (color: string) => colors.find((itm: any) => itm.name === color)?.hex || '#339933';
   const isMounted = useRef<boolean>(false);
 
@@ -22,6 +25,7 @@ export default function ColorPallete ({ currentColor, productId, colorsArray = [
 
   useEffect(() => {
     setSelectedColor(colorsArray[0])
+    setClickedColor(colorsArray[0])
   }, [colorsArray]);
 
   return (
@@ -29,18 +33,24 @@ export default function ColorPallete ({ currentColor, productId, colorsArray = [
       {colorsArray.map((color, i) => 
         <li
           className={`
-            relative w-4 h-4 p-1 border-solid
+            relative ${width} ${height} p-1 border-solid
             rounded-full cursor-pointer
-            ${selectedColor === color && `
-              before:content-[''] before:absolute before:top-1/2 before:left-1/2
-              before:translate-x-[-50%] before:translate-y-[-50%]
-              before:w-[calc(100%+8px)] before:h-[calc(100%+8px)]
-              before:border-solid before:border-primary
-              before:border-[1px] before:rounded-full  
-            `}
+            before:content-[''] before:absolute before:top-1/2 before:left-1/2
+            before:translate-x-[-50%] before:translate-y-[-50%]
+            before:w-[calc(100%+8px)] before:h-[calc(100%+8px)]
+            before:border-solid
+            before:border-[1px] before:rounded-full 
+            hover:before:opacity-100
+            ${selectedColor === color ? `before:border-body-light` : 'before:border-transparent'}
+            ${clickedColor === color ? `before:border-heading` : 'before:border-transparent'}
           `}
           style={{backgroundColor: getHex(color)}}
-          onClick={() => setSelectedColor(color)}
+          onMouseEnter={() => setSelectedColor(color)}
+          onMouseLeave={() => setSelectedColor(clickedColor)}
+          onClick={() => {
+            setSelectedColor(color);
+            setClickedColor(color)
+          }}
           key={i}
         />
       )}

@@ -8,9 +8,10 @@ import { useEffect } from 'react';
 import ProductDisplay from '@/components/productPage/ProductDisplay';
 import ProductSize from '@/components/productPage/ProductSize';
 import BreadCrumb from '@/components/BreadCrumb';
+import ColorPallete from '@/components/ColorPallete';
 import PriceTag from '@/components/PriceTag';
 import BtnA from '@/components/BtnA';
-import EpArrowLeft from '@/components/svgs/EpArrowLeft';
+import FamiconsBagAddOutlineBold from '@/components/svgs/FamiconsBagAddOutlineBold';
 
 // STORES
 import { useTabNameStore } from '@/stores/index';
@@ -43,6 +44,10 @@ export default function ProductPage () {
     setTabName('product');
   }, []);
 
+  const onColorChange = () => {
+
+  }
+
   // DEBUG
   // console.log('slug:', slugArray);
   // console.log('productName:', productName);
@@ -65,15 +70,29 @@ export default function ProductPage () {
         <PriceTag price={2000} discount={10}/>
       </section>
       <ProductSize />
-      <hr className="border-inbetween" />
+
+      <ColorPallete 
+        width="w-6"
+        height="h-6"
+        colorsArray={['black', 'red']}
+        productId={2}
+        currentColor={onColorChange}
+      />
+
       <BtnA
         className="
-          font-bold text-md text-heading-invert 
+          flex justify-center items-center gap-2 font-bold text-md text-heading-invert 
           bg-gradient-to-r from-primary to-inbetween py-2 rounded-lg
         "
       >
+        <FamiconsBagAddOutlineBold 
+          width={16} 
+          height={16}
+        />
         ADD TO BAG
       </BtnA>
+      <hr className="border-inbetween" />
+
     </section>
   )
 }

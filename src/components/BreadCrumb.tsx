@@ -13,6 +13,8 @@ type Props = {
 
 export default function BreadCrumb ({ slugNameAndLinkArray, className, ...props }: Props) {
   
+  const scrollToTop = () => document.querySelector('.app-layout')?.scrollTo({ top:0, left:0, behavior: 'smooth'});
+
   return (
     <ul
       className={`
