@@ -3,16 +3,17 @@ import type { ReactNode } from 'react'
 type Props = {
   children: ReactNode;
   className?: ReactNode;
+  display?: string;
   effect?: boolean;
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
-export default function BtnA ({ className = '', effect = true, children, ...props}: Props) {
+export default function BtnA ({ className = '', display = 'relative', effect = true, children, ...props}: Props) {
   return (
     <button
       className={`
-        absolute group overflow-hidden
-        ${className}
+        group overflow-hidden
+        ${className} ${display}
       `}
       {...props}
     >

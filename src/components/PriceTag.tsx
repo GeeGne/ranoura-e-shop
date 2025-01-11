@@ -21,7 +21,7 @@ export default function PriceTag ({ price = 0, discount = 0 }: Props) {
                 {calculatePriceAfterDiscount({ price, discount })} SYP
               </span>
               <s
-                className="text-body-light text-lg font-bold"
+                className="text-body-light text-md font-bold"
               >
                 {price} SYP
               </s>

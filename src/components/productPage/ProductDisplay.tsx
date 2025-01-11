@@ -27,12 +27,13 @@ export default function ProductDisplay () {
         />
         <BtnA
           className={`
-            absolute top-1/2 left-[-0.5rem] 
+            top-1/2 left-[-0.5rem] 
             translate-y-[-50%]
             w-12 h-12 rounded-full
             flex items-center justify-center
             ${leftArrowInactive ? 'bg-inbetween cursor-not-allowed' : 'bg-primary cursor-pointer'}
           `}
+          display="absolute"
           effect={!leftArrowInactive}
           data-type="scroll_left_button_is_clicked"
         >
@@ -54,6 +55,7 @@ export default function ProductDisplay () {
               flex items-center justify-center
               ${leftArrowInactive ? 'bg-inbetween cursor-not-allowed' : 'bg-primary cursor-pointer'}
             `}
+            display="absolute"
             effect={!leftArrowInactive}
             data-type="scroll_left_button_is_clicked"
           >
