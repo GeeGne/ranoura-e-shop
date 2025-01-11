@@ -1,5 +1,5 @@
 // HOOKS
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PlusIcon from '@/components/svgs/Plus';
 import MinusIcon from '@/components/svgs/Minus';
 import UnderlineStyle from '@/components/UnderlineStyle';
@@ -13,6 +13,7 @@ type Props = {
 export default function FooterList ({ title, content, ...props}: Props) {
 
   const [ toggle, setToggle ] = useState<boolean>(false);
+  const [ overflowToggle, setOverflowToggle ] = useState<boolean>(false);
   const uiRef = useRef<any>(null);
 
   const getScrollHeight = (el: HTMLElement) => el?.scrollHeight + 16 || 0;
@@ -33,7 +34,12 @@ export default function FooterList ({ title, content, ...props}: Props) {
     >
       <button
         className="flex flex-row text-heading-invert text-xl text-bold cursor-pointer justify-between"
-        onClick={() => setToggle(val => !val)}
+        onClick={() => {
+          setToggle(val => !val);
+          overflowToggle
+            ? setOverflowToggle(val => !val)
+            : setTimeout(() => setOverflowToggle(val => !val), 200)
+        }}
       >
         <span>
           {title}
@@ -50,7 +56,7 @@ export default function FooterList ({ title, content, ...props}: Props) {
         `}
         style={{
           maxHeight: `${toggle ? getScrollHeight(uiRef.current) : 0}px`, 
-          overflow: toggle ? `visible` : 'hidden', 
+          overflow: overflowToggle ? `visible` : 'hidden', 
         }}
         ref={uiRef}
       >
