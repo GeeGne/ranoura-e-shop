@@ -5,7 +5,10 @@ import { useParams } from 'next/navigation';
 import { useEffect } from 'react';
 
 // COMPONENT
+import ProductDisplay from '@/components/productPage/ProductDisplay';
 import BreadCrumb from '@/components/BreadCrumb';
+import BtnA from '@/components/BtnA';
+import EpArrowLeft from '@/components/svgs/EpArrowLeft';
 
 // STORES
 import { useTabNameStore } from '@/stores/index';
@@ -35,7 +38,7 @@ export default function ProductPage () {
 
   useEffect(() => {
     setTabName('product');
-  }, [])
+  }, []);
 
   // DEBUG
   // console.log('slug:', slugArray);
@@ -49,23 +52,12 @@ export default function ProductPage () {
       <BreadCrumb
         slugNameAndLinkArray={slugNameAndLinkArray} 
       />
-      <div
-        className="flex flex-col gap-4"
-      >
-        <img 
-          className="w-full ratio[2/3] rounded-lg"
-          src={outfit1}
-          alt="Image"
-        />
-        <ul
-          className="flex flex-row w-full items-center justify-center gap-2"
-        >
-          <li className="w-4 h-4 bg-inbetween rounded-full cursor-pointer" />
-          <li className="w-4 h-4 bg-primary rounded-full cursor-pointer" />
-          <li className="w-4 h-4 bg-inbetween rounded-full cursor-pointer" />
-        </ul>
-      </div>
-
+      <ProductDisplay />
+      <section>
+        <h2>
+          Long Jeans With a Skirt
+        </h2>
+      </section>
     </section>
   )
 }

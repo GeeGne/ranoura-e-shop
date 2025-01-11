@@ -105,6 +105,7 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
   // DEBUG
   // console.log('products: ', products);
   // console.log('liRefs: ', liRefs.current);
+  
   return (
     <section
       className="flex flex-col gap-4 px-4 py-8"

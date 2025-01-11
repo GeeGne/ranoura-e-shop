@@ -11,7 +11,7 @@ export default function BtnA ({ className = '', effect = true, children, ...prop
   return (
     <button
       className={`
-        relative group overflow-hidden
+        absolute group overflow-hidden
         ${className}
       `}
       {...props}
