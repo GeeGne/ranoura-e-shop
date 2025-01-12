@@ -41,8 +41,12 @@ export default function ColorPallete ({ currentColor, width = 'w-4', height = 'h
             before:border-solid
             before:border-[1px] before:rounded-full 
             hover:before:opacity-100
-            ${selectedColor === color ? `before:border-body-light` : 'before:border-transparent'}
-            ${clickedColor === color ? `before:border-heading` : 'before:border-transparent'}
+            ${clickedColor === color 
+              ? `before:border-heading`
+              : selectedColor === color 
+                ? `before:border-body-extra-light`
+                : `before:border-transparent`
+            }
           `}
           style={{backgroundColor: getHex(color)}}
           onMouseEnter={() => setSelectedColor(color)}
