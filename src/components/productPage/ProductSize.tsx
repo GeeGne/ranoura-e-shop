@@ -1,68 +1,80 @@
+import { useState } from 'react';
+
 export default function ProductSize () {
   
-  const active = true;
+  const [ active, setActive ] = useState<any[]>([]);
+
+  // const active = true;
+  const available = false;
+  const sizesArray = [
+    {
+      size: "XS",
+      available: true,
+    },{
+      size: "SM",
+      available: true,
+    },{
+      size: "LG",
+      available: false,
+    },{
+      size: "XL",
+      available: true,
+    },{
+      size: "2XL",
+      available: false, 
+    }
+  ]
+
+  const handleActive = (e: React.MouseEvent<HTMLElement>) => {
+    
+    const index = Number(e.currentTarget.dataset.index);
+    const { available, size } = e.currentTarget.dataset;
+    if (available === "false") return;
+    
+    const isExist = active.some(itm => itm === index);
+    setActive((val) => isExist ? val.filter(itm => itm !== index) : [...val, index])
+  }
+
+  // DEBUG
+  // console.log('active: ', active);
 
   return (
     <section>
       <ul
         className="flex flex-row flex-wrap gap-2"
       >
-        <li
-          className="
-            flex items-center justify-center 
-            font-bold text-lg text-body-light hover:text-heading 
-            w-12 h-12 rounded-md cursor-pointer
-            border-solid border-body-light hover:border-heading border-[2px]
-            transition-all duration-300 ease-out
-          "
-        >
-          XS
-        </li>
-        <li
-          className={`
-            flex items-center justify-center 
-            font-bold text-lg hover:text-heading 
-            w-12 h-12 rounded-md cursor-pointer
-            border-solid hover:border-heading border-[2px]
-            transition-all duration-300 ease-out
-            ${active ? 'text-heading-invert bg-heading border-heading' : 'text-body-light border-body-light'}
-          `}
-        >
-          SM
-        </li>
-        <li
-          className="
-            flex items-center justify-center 
-            font-bold text-lg text-body-light hover:text-heading 
-            w-12 h-12 rounded-md cursor-pointer
-            border-solid border-body-light hover:border-heading border-[2px]
-            transition-all duration-300 ease-out
-          "
-        >
-          LG
-        </li>
-        <li
-          className="
-            flex items-center justify-center 
-            font-bold text-lg text-body-light hover:text-heading 
-            w-12 h-12 rounded-md cursor-pointer
-            border-solid border-body-light hover:border-heading border-[2px]
-            transition-all duration-300 ease-out
-          "
-        >
-          XL
-        </li>
-        <li
-          className="
-            flex items-center justify-center 
-            font-bold text-lg text-body-light hover:text-heading 
-            w-12 h-12 rounded-md cursor-pointer
-            border-solid border-body-light hover:border-heading border-[2px]
-            transition-all duration-300 ease-out
-          "
-        >
-          2XL
-        </li>
+        {sizesArray.map(({size, available}, i) =>
+          <li
+            key={i}
+            className={`
+              flex items-center justify-center 
+              font-bold text-lg 
+              w-12 h-12 rounded-md
+              border-solid border-[2px]
+              transition-all duration-300 ease-out z-[5]
+              ${available 
+                ? active.some(index => index === i) 
+                  ? 'text-heading-invert bg-heading hover:bg-[var(--background-deep-light-invert-color)] border-heading hover:border-heading cursor-pointer' 
+                  : 'text-body-light border-body-light hover:text-heading hover:border-heading cursor-pointer'
+                : ` relative text-body-extra-light
+                    border-body-extra-light cursor-not-allowed
+                    before:content-[''] before:absolute before:top-1/2 before:left-1/2
+                    before:translate-x-[-50%] before:translate-y-[-50%] before:rotate-[45deg] before:origin-center
+                    before:w-[2px] before:h-[calc(100%+1rem)] before:bg-body-extra-light before:z-[-1]
+                  `
+              }
+            `}
+            data-index={i}
+            data-active={i}
+            data-size={size}
+            data-available={available}
+            onClick={handleActive}
+          >
+            <span>
+              {size}
+            </span>
+          </li>
+        )}
       </ul>
     </section>
   )

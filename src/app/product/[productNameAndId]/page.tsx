@@ -124,9 +124,9 @@ export default function ProductPage () {
           ]}
         />
         <ProductLists 
-          title="ABOUT RANOURA"
+          title="ABOUT RANOURA✧･ﾟ*"
           descArray={[
-            'I am not arrogant. I know my limitations, but I also believe in my abilities. When we are united and work sincerely, we can overcome difficulties. Cooperation and mutual understanding bring light to our path. Life is a continuous journey of learning and improvement. Together, we can achieve great things and leave a meaningful impact.'
+            'Welcome to Ranoura – where elegance meets excellence. At Ranoura, we pride ourselves on crafting garments from the finest high-end fabrics, designed for those who appreciate quality, style, and sophistication. Each piece is meticulously tailored to provide a perfect blend of comfort and luxury, ensuring you feel confident and radiant in every moment. Discover timeless designs and impeccable craftsmanship that redefine fashion, only at Ranoura.'
           ]}
         />
         <ProductLists 
