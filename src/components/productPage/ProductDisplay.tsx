@@ -9,13 +9,21 @@ const outfit1 = "/assets/img/outfit.jpg";
 const outfit2 = "/assets/img/outfit-2.jpg";
 const outfit3 = "/assets/img/outfit-3.jpg";
 
-export default function ProductDisplay () {
+type Props = {
+  className?: string;
+}
+
+export default function ProductDisplay ({ className, ...props }: Props) {
 
   const leftArrowInactive = false;
 
   return (
     <section
-      className="w-full flex flex-col gap-4"
+      className={`
+        w-full flex flex-col gap-4
+        ${className}
+      `}
+      {...props}
     >
       <div
         className="relative"

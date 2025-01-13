@@ -56,17 +56,18 @@ export default function ProductPage () {
 
   return (
     <div
-      className="flex flex-col gap-4 pt-[4rem] px-4"
-    
+      className="
+        flex flex-col gap-4 lg:gap-8 pt-[4rem] px-4
+        lg:grid lg:grid-cols-2 lg:max-w-[1400px] lg:mx-auto
+      "
     >
-      <section
-        className="flex flex-col gap-4"
-      >
-        <BreadCrumb
-          slugNameAndLinkArray={slugNameAndLinkArray} 
-        />
-        <ProductDisplay />
-      </section>
+      <BreadCrumb
+        className="lg:col-span-2"
+        slugNameAndLinkArray={slugNameAndLinkArray} 
+      />
+      <ProductDisplay 
+        className="lg:row-span-2 lg:max-w-[600px] lg:mx-auto"
+      />
       <section
         className="flex flex-col gap-4"
       >
