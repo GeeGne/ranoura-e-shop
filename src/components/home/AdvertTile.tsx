@@ -16,6 +16,7 @@ import LineMdHeartFilled from '@/components/svgs/LineMdHeartFilled';
 import HugeiconsRotateLeft01 from '@/components/svgs/HugeiconsRotateLeft01';
 import HugeiconsRotateRight01 from '@/components/svgs/HugeiconsRotateRight01';
 import MaterialSymbolsPinchZoomInRounded from '@/components/svgs/MaterialSymbolsPinchZoomInRounded';
+import LineMdArrowsDiagonalRotated from '@/components/svgs/LineMdArrowsDiagonalRotated';
 
 // ASSETS
 const ramdanBanner = "/assets/img/ramadan-nights.webp";
@@ -226,17 +227,23 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
                 <LineMdHeart 
                   className="absolute top-2 right-2 w-6 h-6 text-pink-500 cursor-pointer z-[10]"
                 />
-                <MaterialSymbolsPinchZoomInRounded 
-                  className={`
-                    peer absolute bottom-2 right-2 
-                    w-8 h-8 transform-style-3d transform group-hover:transform-style-3d 
-                    cursor-pointer z-[10] rounded-full p-1
-                    ${imgScaleToggle === i ? 'text-heading-invert bg-heading' : 'text-body hover:text-heading'}
-                  `}
-                  data-type="scale_button_is_clicked"
-                  data-index={i}
-                  onClick={(e: any) => { e.stopPropagation(); handleClick(e) }}
-                />
+                <nav
+                className={`
+                  absolute bottom-2 right-2 z-[10]
+                  flex flex-col
+                `}
+                >
+                  <LineMdArrowsDiagonalRotated 
+                    className={`
+                      w-8 h-8 transform-style-3d transform group-hover:transform-style-3d 
+                      cursor-pointer rounded-full p-1
+                      ${imgScaleToggle === i ? 'text-heading-invert bg-heading' : 'text-body hover:text-heading'}
+                    `}
+                    data-type="scale_button_is_clicked"
+                    data-index={i}
+                    onClick={(e: any) => { e.stopPropagation(); handleClick(e) }}
+                  />
+                </nav>
               </div>
               <Link
                 className="text-heading text-md mb-auto"
