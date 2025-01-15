@@ -3,6 +3,7 @@
 // HOOKS
 import { ReactNode, useState, useRef } from 'react';
 import Link from 'next/link';
+import { useRouter } from "next/navigation";
 
 // COMPONENTS
 import DisplayImg from '@/components/DisplayImg';
@@ -12,6 +13,9 @@ import BtnA from '@/components/BtnA';
 import EpArrowLeft from '@/components/svgs/EpArrowLeft';
 import LineMdHeart from '@/components/svgs/LineMdHeart';
 import LineMdHeartFilled from '@/components/svgs/LineMdHeartFilled';
+import HugeiconsRotateLeft01 from '@/components/svgs/HugeiconsRotateLeft01';
+import HugeiconsRotateRight01 from '@/components/svgs/HugeiconsRotateRight01';
+import MaterialSymbolsPinchZoomInRounded from '@/components/svgs/MaterialSymbolsPinchZoomInRounded';
 
 // ASSETS
 const ramdanBanner = "/assets/img/ramadan-nights.webp";
@@ -32,11 +36,13 @@ type Props = {
 
 export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
   
+  const router = useRouter();
   const array = [1, 2, 3, 4];
   const selectedColor = "green";
   const [scrollWidth, setScrollWidth] = useState<number>(0);
   const [leftArrowInactive, setLeftArrowInactive] = useState<boolean>(true);
   const [rightArrowInactive, setRightArrowInactive] = useState<boolean>(false);
+  const [imgScaleToggle, setImgScaleToggle] = useState<boolean | number>(false);
   const ulRef = useRef<any>(null);
   const liRefs = useRef<(HTMLElement | null)[]>([]);
   const mainImgRefs = useRef<(HTMLElement | null)[]>([]);
@@ -57,7 +63,7 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
   }
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    const { type } = e.currentTarget.dataset;
+    const { type, index, productUri } = e.currentTarget.dataset;
     const ulRefWidth = ulRef.current.offsetWidth
     const ulRefScrollWidth = ulRef.current.scrollWidth
     const liRefWidth = liRefs?.current[0]?.scrollWidth || 0;
@@ -67,8 +73,10 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
     const gap = parseFloat(getComputedStyle(ulRef.current).gap);
     const totalTiles = array.length - 1
     const scrollTotalWidth = ulRefWidth / (totalTiles) + gap;
-
     switch (type) {
+      case 'navigate_to_product':
+        setImgScaleToggle(val => val === Number(index) ? false : Number(index))
+        break;
       case 'scroll_left_button_is_clicked':
         setScrollWidth((val: number) => {
           if (-1 * (val + liRefWidth + gap) <= 0) { 
@@ -97,11 +105,13 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
           return val - liRefWidth - gap
         });
         break;
+      case 'scale_button_is_clicked':
+        setImgScaleToggle(val => val === Number(index) ? false : Number(index))
+        break;
       default:
         console.error('Unknown type: ', type);
     }
   }
-
 
   // DEBUG
   // console.log('products: ', products);
@@ -178,14 +188,20 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
               data-product-id={product.id}
               ref={ (el: any) => {if (liRefs.current) {liRefs.current[i] = el}} }
             >
-              <Link
-                className="relative"
-                href={`/product/${strSlugForProducts(product.name, product.id)}`}
+              <div
+                className={`
+                  relative group cursor-pointer
+                  transition-all duraiton-200 ease-in-out
+                  ${imgScaleToggle === i? 'scale-[130%] z-[10]' : 'scale-[100%]'}  
+                `}
+                data-type="navigate_to_product"
+                data-index={i}
+                onClick={handleClick}
               >
                 <DisplayImg 
                   className="w-full peer aspect-[2/3] object-cover object-center rounded-lg"
                   src={getImgUrls(product.img)?.main}
-                  alt="Image"
+                  alt={product.name}
                   data-product-id={product.id}
                   ref={ (el: any) => {if (mainImgRefs.current) {mainImgRefs.current[i] = el}} }
                 />
@@ -193,14 +209,14 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
                   className="
                     absolute top-0 left-0 w-full h-full 
                     object-cover object-center rounded-lg z-[5] overflow-hidden
-                    opacity-0 hover:opacity-100
-                    blur-[20px] hover:blur-[0px]
+                    opacity-0 peer-hover:opacity-100 group-hover:opacity-100
+                    blur-[20px] peer-hover:blur-[0px] group-hover:blur-[0px]
                     transition-all ease-in duration-200
                   "
                   src={getImgUrls(product.img)?.second}
                   alt="Image"
                   data-product-id={product.id}
-                  ref={ (el: any) => {if (secondImgRefs.current) {secondImgRefs.current[i] = el}} }
+                  ref={ (el: any) => { if (secondImgRefs.current) {secondImgRefs.current[i] = el}} }
                 />
                 <span 
                   className="absolute bottom-2 left-2 text-xs text-body-invert font-bold bg-primary px-2 py-1 rounded-lg z-[10]"
@@ -210,7 +226,18 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
                 <LineMdHeart 
                   className="absolute top-2 right-2 w-6 h-6 text-pink-500 cursor-pointer z-[10]"
                 />
-              </Link>
+                <MaterialSymbolsPinchZoomInRounded 
+                  className={`
+                    peer absolute bottom-2 right-2 
+                    w-8 h-8 transform-style-3d transform group-hover:transform-style-3d 
+                    cursor-pointer z-[10] rounded-full p-1
+                    ${imgScaleToggle === i ? 'text-heading-invert bg-heading' : 'text-body hover:text-heading'}
+                  `}
+                  data-type="scale_button_is_clicked"
+                  data-index={i}
+                  onClick={(e: any) => { e.stopPropagation(); handleClick(e) }}
+                />
+              </div>
               <Link
                 className="text-heading text-md mb-auto"
                 href={`/product/${strSlugForProducts(product.name, product.id)}`}
@@ -226,7 +253,7 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
                 productId={product.id}
                 currentColor={onColorChange}
               />
-            </li>    
+            </li>
           )}
         </ul>
       </div>

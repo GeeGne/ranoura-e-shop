@@ -36,7 +36,7 @@ export default function ProductPage () {
     },{
       name: "Jeans",
       href: "/product/jeans"
-    }
+    } 
   ]
 
   const setTabName = useTabNameStore((state: any) => state.setTabName);
