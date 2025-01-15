@@ -57,19 +57,19 @@ export default function ProductPage () {
   return (
     <div
       className="
-        flex flex-col gap-4 lg:gap-8 pt-[4rem] px-4
-        lg:grid lg:grid-cols-2 lg:max-w-[1400px] lg:mx-auto
+        flex flex-col gap-8 md:gap-8 pt-[4rem] px-4 
+        md:grid md:grid-cols-2 md:max-w-[1400px] md:mx-auto
       "
     >
       <BreadCrumb
-        className="lg:col-span-2"
+        className="md:col-span-2"
         slugNameAndLinkArray={slugNameAndLinkArray} 
       />
       <ProductDisplay 
-        className="lg:row-span-2 lg:max-w-[600px] lg:mx-auto"
+        className="md:row-span-2 md:max-w-[600px] md:mx-auto"
       />
       <section
-        className="flex flex-col gap-4"
+        className="flex flex-col gap-4 md:row-span-2 md:py-8 lg:row-span-1"
       >
         <h2
           className="text-lg font-bold text-heading"
@@ -79,6 +79,7 @@ export default function ProductPage () {
         <PriceTag price={2000} discount={10}/>
         <ProductSize />
         <ColorPallete 
+          className="mb-8"
           width="w-6"
           height="h-6"
           colorsArray={['black', 'red']}
@@ -89,7 +90,7 @@ export default function ProductPage () {
         <BtnA
           className="
             flex justify-center items-center gap-2 font-bold text-md text-heading-invert 
-            bg-gradient-to-r from-primary to-inbetween py-2 rounded-lg
+            bg-gradient-to-r from-primary to-inbetween py-2 rounded-lg mt-auto
           "
         >
           <FamiconsBagAddOutlineBold 
@@ -100,7 +101,7 @@ export default function ProductPage () {
         </BtnA>
       </section>
       <section
-        className=""
+        className="md:col-span-2 lg:col-span-1"
       >
         <ProductLists 
           title="PRODUCT DETAILS"

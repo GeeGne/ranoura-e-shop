@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from 'react';
 import colors from "@/json/colors.json";
 
 type Props = {
+  className?: string;
   width?: string;
   height?: string;
   colorsArray?: string[];
@@ -12,7 +13,7 @@ type Props = {
   productId: number;
 }
 
-export default function ColorPallete ({ currentColor, width = 'w-4', height = 'h-4', productId, colorsArray = [] }: Props) {
+export default function ColorPallete ({ className, currentColor, width = 'w-4', height = 'h-4', productId, colorsArray = [] }: Props) {
 
   const [ selectedColor, setSelectedColor ] = useState<string>("");
   const [ clickedColor, setClickedColor ] = useState<string>("");
@@ -41,6 +42,7 @@ export default function ColorPallete ({ currentColor, width = 'w-4', height = 'h
             before:border-solid
             before:border-[1px] before:rounded-full 
             hover:before:opacity-100
+            ${className}
             ${clickedColor === color 
               ? `before:border-heading`
               : selectedColor === color 
