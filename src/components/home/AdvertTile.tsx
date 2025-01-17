@@ -125,14 +125,15 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
       <div
         className="flex justify-between"
       >
-        <span
+        <Link
           className="relative text-3xl text-heading font-bold transform"
+          href="/categories/test"
         >
           {title}
           <div
             className="absolute bottom-0 left-0 w-[calc(100%+1rem)] h-[40%] backdrop-invert origin-left translate-x-4"
           />
-        </span>
+        </Link>
         <div className="flex gap-4">
           <BtnA
             className={`

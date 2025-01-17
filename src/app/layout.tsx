@@ -7,6 +7,7 @@ import Header from '@/app/Header';
 import Main from '@/app/Main';
 import Footer from '@/app/Footer';
 import Cart from '@/components/fixedLayouts/Cart';
+import FilterWindow from '@/components/fixedLayouts/FilterWindow';
 import BottomBorder from '@/components/svgs/BottomBorder';
 
 export default function RootLayout({
@@ -47,6 +48,7 @@ export default function RootLayout({
           <Footer />
         </div>
         <Cart />
+        <FilterWindow />
       </body>
     </html>
   );

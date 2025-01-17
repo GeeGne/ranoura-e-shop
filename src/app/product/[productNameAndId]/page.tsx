@@ -86,7 +86,6 @@ export default function ProductPage () {
           productId={2}
           currentColor={onColorChange}
         />
-
         <BtnA
           className="
             flex justify-center items-center gap-2 font-bold text-md text-heading-invert 
