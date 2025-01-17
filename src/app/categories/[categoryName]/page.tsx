@@ -29,7 +29,6 @@ export default function page () {
     } 
   ];
 
-
   useEffect(() => {
     setTabName('product');
   }, []);
@@ -45,7 +44,9 @@ export default function page () {
       <CategoryTitle 
         className="px-4"
       />
-      <FilterTile />
+      <FilterTile 
+        className="px-4"
+      />
       <AdvertList />
     </div>
   )
