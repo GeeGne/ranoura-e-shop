@@ -4,7 +4,11 @@ import { useState, useRef } from 'react';
 // COMPONENTS
 import LineMdChevronSmallRight from '@/components/svgs/LineMdChevronSmallRight';
 
-export default function FilterExpandWrapper () {
+type Props = {
+  title?: string;
+}
+
+export default function FilterExpandWrapper ({ title = 'SECTION' }: Props) {
   const [ toggle, setToggle ] = useState<boolean>(false);
 
   const descRef = useRef<any>(null);
@@ -30,7 +34,7 @@ export default function FilterExpandWrapper () {
             ${toggle ? 'text-heading font-bold' : 'text-body font-normal'}
           `}
         >
-          SECTION
+          {title}
         </h2>
         <LineMdChevronSmallRight 
           className={`
@@ -53,7 +57,26 @@ export default function FilterExpandWrapper () {
         ref={descRef}
       >
         <li>
-          this
+          <label
+            className="relative flex gap-2 group"
+            htmlFor="test"
+          >
+            <input 
+              className="invisible peer"
+              type="checkbox"
+              id="test"
+              name="test"
+            />
+            <div
+              className="
+                absolute top-1/2 left-[0]
+                translate-y-[-50%] w-4 h-4 bg-red-500
+              "
+            />
+            <span>
+              this is text
+            </span>
+          </label>
         </li>
         <li>
           is

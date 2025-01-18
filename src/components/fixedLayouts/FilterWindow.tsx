@@ -123,11 +123,18 @@ export default function FilterWindow () {
       <section
         className="divide-y divide-inbetween px-4"
       >
-        <FilterExpandWrapper />
-        <FilterExpandWrapper />
-        <FilterExpandWrapper />
-        <FilterExpandWrapper />
-        <FilterExpandWrapper />
+        <FilterExpandWrapper 
+          title="SORT"
+        />
+        <FilterExpandWrapper 
+          title="COLORS"
+        />
+        <FilterExpandWrapper 
+          title="PRICE"
+        />
+        <FilterExpandWrapper 
+          title="SIZE"
+        />
       </section>
       <hr className="border-inbetween mx-4"/>
     </div>
