@@ -123,7 +123,7 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
       className="flex flex-col gap-4 px-4"
     >
       <ul
-        className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 transition-all duration-200 ease-in-out"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 transition-all duration-200 ease-in-out"
         style={{transform: `translateX(${scrollWidth}px)`}}
         ref={ulRef}
       >

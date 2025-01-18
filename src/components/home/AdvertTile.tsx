@@ -12,10 +12,7 @@ import ColorPallete from '@/components/ColorPallete';
 import BtnA from '@/components/BtnA';
 import EpArrowLeft from '@/components/svgs/EpArrowLeft';
 import LineMdHeart from '@/components/svgs/LineMdHeart';
-import LineMdHeartFilled from '@/components/svgs/LineMdHeartFilled';
-import HugeiconsRotateLeft01 from '@/components/svgs/HugeiconsRotateLeft01';
-import HugeiconsRotateRight01 from '@/components/svgs/HugeiconsRotateRight01';
-import MaterialSymbolsPinchZoomInRounded from '@/components/svgs/MaterialSymbolsPinchZoomInRounded';
+import PepiconsPencilOpenCircleFilled from '@/components/svgs/PepiconsPencilOpenCircleFilled';
 import LineMdArrowsDiagonalRotated from '@/components/svgs/LineMdArrowsDiagonalRotated';
 
 // ASSETS
@@ -123,18 +120,30 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
       className="flex flex-col gap-4 px-4 py-8"
     >
       <div
-        className="flex justify-between"
+        className="flex items-center justify-between"
       >
         <Link
-          className="relative text-3xl text-heading font-bold transform"
+          className="relative flex items-center text-3xl text-heading font-bold transform"
           href="/categories/test"
         >
-          {title}
+          <span>
+            {title}
+          </span>
           <div
             className="absolute bottom-0 left-0 w-[calc(100%+1rem)] h-[40%] backdrop-invert origin-left translate-x-4"
           />
         </Link>
-        <div className="flex gap-4">
+        <div className="flex items-center gap-4">
+          <Link
+            href="/categories/test"
+          >
+            <PepiconsPencilOpenCircleFilled
+              className="cursor-pointer my-auto text-heading"
+              role="button"
+              width={32}
+              height={32}
+            />        
+          </Link>
           <BtnA
             className={`
               w-8 h-8 rounded-full

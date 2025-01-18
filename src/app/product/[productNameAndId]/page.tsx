@@ -13,6 +13,7 @@ import ColorPallete from '@/components/ColorPallete';
 import PriceTag from '@/components/PriceTag';
 import BtnA from '@/components/BtnA';
 import FamiconsBagAddOutlineBold from '@/components/svgs/FamiconsBagAddOutlineBold';
+import IonNavigate from '@/components/svgs/PepiconsPencilOpenCircleFilled';
 
 // STORES
 import { useTabNameStore } from '@/stores/index';
@@ -37,7 +38,7 @@ export default function ProductPage () {
       name: "Jeans",
       href: "/product/jeans"
     } 
-  ]
+  ];
 
   const setTabName = useTabNameStore((state: any) => state.setTabName);
 
