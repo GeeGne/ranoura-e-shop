@@ -1,20 +1,67 @@
 // HOOKS
 import { useState, useRef } from 'react';
 
-// COMPONENTS
+// SVGS
 import LineMdChevronSmallRight from '@/components/svgs/LineMdChevronSmallRight';
+import LineMdConfirmCircleTwotone from '@/components/svgs/LineMdConfirmCircleTwotone';
+import LineMdConfirmCircleTwotoneToCircleTwotoneTransition from '@/components/svgs/LineMdConfirmCircleTwotoneToCircleTwotoneTransition';
 
 type Props = {
   title?: string;
+  inputsArray?: object[];
 }
 
-export default function FilterExpandWrapper ({ title = 'SECTION' }: Props) {
+export default function FilterExpandWrapper ({ 
+  title = 'SECTION',
+  inputsArray = [
+    {title: 'this', key: 'this'}, 
+    {title: 'is', key: 'is'}, 
+    {title: 'test', key: 'test'}
+  ]
+}: Props
+) {
   const [ toggle, setToggle ] = useState<boolean>(false);
-
+  const [ selectedCategories, setSelectedCategories ] = useState<any[]>([]);
   const descRef = useRef<any>(null);
   const getScrollHeight = (el: HTMLElement) => el?.scrollHeight + 16 || 0;
-
   
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = e.currentTarget;
+    const { key, title, index } = e.currentTarget.dataset;
+    const isInputChecked = (ref: any) => ref?.checked;
+    
+    switch (name) {
+      case 'category':
+        setSelectedCategories((val: any) => {
+          if (checked) return addCategory(val, { key, title, index });
+
+          return removeCategory(val, { key, title, index });
+        });
+        break;
+      default:
+        console.error('Unknown Name: ', name);
+    }
+  }
+
+  const addCategory = (array: any[], category: any) => {
+    const { key } = category;
+    const isCategoryExist = array.some((itm: any) => itm.key === key);
+
+    return isCategoryExist 
+      ? array
+      : [ ...array, category ]
+  }
+
+  const removeCategory = (array: any[], category: any) => {
+    const { key } = category;
+    const isCategoryExist = array.some((itm: any) => itm.key === key);
+
+    return isCategoryExist 
+      ? array.filter(itm => itm.key !== key)
+      : array
+  }
+
+  console.log('selectedCategories: ', selectedCategories);
   return (
     <div
       className={`
@@ -56,34 +103,45 @@ export default function FilterExpandWrapper ({ title = 'SECTION' }: Props) {
         }}
         ref={descRef}
       >
-        <li>
-          <label
-            className="relative flex gap-2 group"
-            htmlFor="test"
+        {inputsArray.map((itm: any, i) => 
+          <li
+            key={i}
           >
-            <input 
-              className="invisible peer"
-              type="checkbox"
-              id="test"
-              name="test"
-            />
-            <div
-              className="
-                absolute top-1/2 left-[0]
-                translate-y-[-50%] w-4 h-4 bg-red-500
-              "
-            />
-            <span>
-              this is text
-            </span>
-          </label>
-        </li>
-        <li>
-          is
-        </li>
-        <li>
-          test
-        </li>
+            <label
+              className="relative flex gap-2 group"
+              htmlFor={itm.key}
+            >
+              <input 
+                className="invisible peer"
+                type="checkbox"
+                id={itm.key}
+                name="category"
+                data-index={i}
+                data-key={itm.key}
+                data-title={itm.title}
+                onChange={handleChange}
+              />
+              {selectedCategories.some(val => val.key === itm.key)
+                ? <LineMdConfirmCircleTwotone
+                    className={`
+                      absolute top-1/2 left-[0]
+                      translate-y-[-50%] w-4 h-4 text-body
+                    `}
+                  />
+                : <LineMdConfirmCircleTwotoneToCircleTwotoneTransition
+                    className={`
+                      absolute top-1/2 left-[0]
+                      translate-y-[-50%] w-4 h-4 text-body
+                    `}
+                  />
+              }
+              
+              <span>
+                {itm.title}
+              </span>
+            </label>
+          </li>
+        )}
       </ul>
     </div>  
   )
