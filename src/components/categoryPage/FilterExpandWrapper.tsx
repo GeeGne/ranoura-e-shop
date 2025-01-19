@@ -6,14 +6,17 @@ import LineMdChevronSmallRight from '@/components/svgs/LineMdChevronSmallRight';
 import LineMdConfirmCircleTwotone from '@/components/svgs/LineMdConfirmCircleTwotone';
 import LineMdConfirmCircleTwotoneToCircleTwotoneTransition from '@/components/svgs/LineMdConfirmCircleTwotoneToCircleTwotoneTransition';
 
+// STORES
+import { useFilterWindowStore } from '@/stores/index';
+
 type Props = {
-  title?: string;
-  inputsArray?: object[];
+  sectionName?: string;
+  categoriesArray?: object[];
 }
 
 export default function FilterExpandWrapper ({ 
-  title = 'SECTION',
-  inputsArray = [
+  sectionName = 'SECTION',
+  categoriesArray = [
     {title: 'this', key: 'this'}, 
     {title: 'is', key: 'is'}, 
     {title: 'test', key: 'test'}
@@ -21,7 +24,9 @@ export default function FilterExpandWrapper ({
 }: Props
 ) {
   const [ toggle, setToggle ] = useState<boolean>(false);
-  const [ selectedCategories, setSelectedCategories ] = useState<any[]>([]);
+  // const [ selectedCategories, setSelectedCategories ] = useState<any[]>([]);
+  const selectedCategories = useFilterWindowStore(state => state.selectedCategories);
+  const setSelectedCategories = useFilterWindowStore(state => state.setSelectedCategories);
   const descRef = useRef<any>(null);
   const getScrollHeight = (el: HTMLElement) => el?.scrollHeight + 16 || 0;
   
@@ -32,12 +37,14 @@ export default function FilterExpandWrapper ({
     
     switch (name) {
       case 'category':
-        setSelectedCategories((val: any) => {
-          if (checked) return addCategory(val, { key, title, index });
+        if (checked) 
+          return setSelectedCategories(
+            addCategory(selectedCategories, { sectionName, key, title, index }
+          ));
 
-          return removeCategory(val, { key, title, index });
-        });
-        break;
+        return setSelectedCategories(
+          removeCategory(selectedCategories, { sectionName, key, title, index }
+        ));
       default:
         console.error('Unknown Name: ', name);
     }
@@ -81,7 +88,7 @@ export default function FilterExpandWrapper ({
             ${toggle ? 'text-heading font-bold' : 'text-body font-normal'}
           `}
         >
-          {title}
+          {sectionName}
         </h2>
         <LineMdChevronSmallRight 
           className={`
@@ -103,7 +110,7 @@ export default function FilterExpandWrapper ({
         }}
         ref={descRef}
       >
-        {inputsArray.map((itm: any, i) => 
+        {categoriesArray.map((itm: any, i) => 
           <li
             key={i}
           >
@@ -125,7 +132,7 @@ export default function FilterExpandWrapper ({
                 ? <LineMdConfirmCircleTwotone
                     className={`
                       absolute top-1/2 left-[0]
-                      translate-y-[-50%] w-4 h-4 text-body
+                      translate-y-[-50%] w-4 h-4 text-heading
                     `}
                   />
                 : <LineMdConfirmCircleTwotoneToCircleTwotoneTransition
@@ -134,9 +141,16 @@ export default function FilterExpandWrapper ({
                       translate-y-[-50%] w-4 h-4 text-body
                     `}
                   />
-              }
-              
-              <span>
+              } 
+              <span
+                className={`
+                  transition-all duration-300 ease-in-out
+                  ${selectedCategories.some(val => val.key === itm.key)
+                    ? 'text-heading'
+                    : 'text-body'
+                  }
+                `}
+              >
                 {itm.title}
               </span>
             </label>
