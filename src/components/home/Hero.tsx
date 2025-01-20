@@ -39,11 +39,12 @@ export default function Hero({ className = "", ...props }: Props) {
         "
       >
       </div>
-      <div
+    <div
         className="
-          absolute top-1/2 right-0 translate-y-[-50%] z-[10] 
-          origin-center-right rotate-[45deg]
-          scale-[50%] md:scale-[100%]
+          absolute top-[80%] left-1/2 
+          translate-y-[-50%] translate-x-[-50%] z-[10] 
+          rotate-[80deg] origin-center
+          scale-[100%] md:scale-[100%]
         "
       >
         <FilmTape
@@ -52,7 +53,7 @@ export default function Hero({ className = "", ...props }: Props) {
           "
         />
         <DisplayImg 
-          className="absolute bottom-[6rem] w-[30rem] h-auto scale-[150%] rotate-[-45deg] drop-shadow-2xl"
+          className="hidden absolute bottom-[6rem] w-[30rem] h-auto scale-[150%] rotate-[-45deg] drop-shadow-2xl"
           src={cloudPng}
           alt="Cloud"
         />
@@ -70,7 +71,7 @@ export default function Hero({ className = "", ...props }: Props) {
       />
       <BottomBorder 
         className={`
-          absolute left-1/2 translate-x-[-50%] top-full w-[100vw]
+          hidden absolute left-1/2 translate-x-[-50%] top-full w-[100vw]
           text-primary scale-x-[105%] scale-y-[50%] md:scale-y-[35%] lg:scale-y-[25%] origin-top
         `}        
       />

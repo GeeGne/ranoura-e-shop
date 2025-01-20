@@ -15,7 +15,9 @@ export default function FilmTape ({ className = '', ...props }: Props) {
   return (
     <div
       className={`  
-        w-[150px] h-[600px] bg-secondary text-black overflow-hidden 
+        w-[100px] h-[700px] md:w-[125px] md:h-[1000px] lg:h-[2050px] 
+        bg-[hsl(0,7%,94%,0.2)] backdrop-blur-sm text-black overflow-hidden
+         
         ${className}
       `}
     >
@@ -26,7 +28,7 @@ export default function FilmTape ({ className = '', ...props }: Props) {
         `}
       >
         <li
-          className="w-full aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
+          className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
           <Image 
             src={img1}
@@ -34,7 +36,7 @@ export default function FilmTape ({ className = '', ...props }: Props) {
           />
         </li>
         <li
-          className="w-full aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
+          className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
           <Image 
             src={img2}
@@ -42,7 +44,7 @@ export default function FilmTape ({ className = '', ...props }: Props) {
           />
         </li>
         <li
-          className="w-full aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
+          className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
           <Image 
             src={img3}
@@ -50,7 +52,7 @@ export default function FilmTape ({ className = '', ...props }: Props) {
           />
         </li>
         <li
-          className="w-full aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
+          className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
           <Image 
             src={img1}
@@ -58,7 +60,7 @@ export default function FilmTape ({ className = '', ...props }: Props) {
           />
         </li>
         <li
-          className="w-full aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
+          className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
           <Image 
             src={img2}
@@ -66,7 +68,151 @@ export default function FilmTape ({ className = '', ...props }: Props) {
           />
         </li>
         <li
-          className="w-full aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
+          className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
+        >
+          <Image 
+            src={img3}
+            alt="test"
+          />
+        </li>
+        <li
+          className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
+        >
+          <Image 
+            src={img1}
+            alt="test"
+          />
+        </li>
+        <li
+          className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
+        >
+          <Image 
+            src={img2}
+            alt="test"
+          />
+        </li>
+        <li
+          className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
+        >
+          <Image 
+            src={img2}
+            alt="test"
+          />
+        </li>
+        <li
+          className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
+        >
+          <Image 
+            src={img1}
+            alt="test"
+          />
+        </li>
+        <li
+          className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
+        >
+          <Image 
+            src={img3}
+            alt="test"
+          />
+        </li>
+        <li
+          className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
+        >
+          <Image 
+            src={img3}
+            alt="test"
+          />
+        </li>
+        <li
+          className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
+        >
+          <Image 
+            src={img1}
+            alt="test"
+          />
+        </li>
+        <li
+          className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
+        >
+          <Image 
+            src={img2}
+            alt="test"
+          />
+        </li>
+        <li
+          className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
+        >
+          <Image 
+            src={img3}
+            alt="test"
+          />
+        </li>
+        <li
+          className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
+        >
+          <Image 
+            src={img1}
+            alt="test"
+          />
+        </li>
+        <li
+          className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
+        >
+          <Image 
+            src={img2}
+            alt="test"
+          />
+        </li>
+        <li
+          className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
+        >
+          <Image 
+            src={img3}
+            alt="test"
+          />
+        </li>
+        <li
+          className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
+        >
+          <Image 
+            src={img1}
+            alt="test"
+          />
+        </li>
+        <li
+          className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
+        >
+          <Image 
+            src={img2}
+            alt="test"
+          />
+        </li>
+        <li
+          className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
+        >
+          <Image 
+            src={img2}
+            alt="test"
+          />
+        </li>
+        <li
+          className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
+        >
+          <Image 
+            src={img1}
+            alt="test"
+          />
+        </li>
+        <li
+          className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
+        >
+          <Image 
+            src={img3}
+            alt="test"
+          />
+        </li>
+        <li
+          className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
           <Image 
             src={img3}

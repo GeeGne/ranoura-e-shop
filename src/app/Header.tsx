@@ -130,7 +130,7 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
       </button>
       <BottomBorder 
         className={`
-          absolute left-1/2 translate-x-[-50%] top-full w-[100vw] text-primary 
+          hidden absolute left-1/2 translate-x-[-50%] top-full w-[100vw] text-primary 
           scale-x-[105%] scale-y-[50%] md:scale-y-[35%] lg:scale-y-[25%] origin-top
           transition-all ease-in-out duration-300
           ${

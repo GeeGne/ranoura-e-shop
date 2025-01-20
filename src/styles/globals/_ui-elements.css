@@ -14,7 +14,7 @@
   clip-path: inset(-400px 0 0 0);
 }
 
-.test1 {
+.test11 {
   /* clip-path: inset(0 0px 120px 0); */
   /* background-size: cover; */
   background: black; /* Or any color to create the mask */

@@ -50,7 +50,7 @@
 
 .--infinite-card-slide-ani {
   animation-name: infinite-card-slide-ani;
-  animation-duration: 5s;
+  animation-duration: 10s;
   animation-fill-mode: both;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
