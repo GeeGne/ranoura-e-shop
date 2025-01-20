@@ -13,9 +13,11 @@ type Props = {
 export default function FilterTile ({ className = '' }: Props) {
   
   const setToggle = useFilterWindowStore(state => state.setToggle);
+  const selectedCategories = useFilterWindowStore(state => state.selectedCategories);
+  const setSelectedCategories = useFilterWindowStore(state => state.setSelectedCategories);
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    const { type } = e.currentTarget.dataset;
+    const { type, key } = e.currentTarget.dataset;
     
     switch (type) {
       case 'colors_button_is_clicked':
@@ -24,15 +26,21 @@ export default function FilterTile ({ className = '' }: Props) {
       case 'size_button_is_clicked':
         setToggle(true);
         break;
+      case 'clear_filter_button_is_clicked':
+        setSelectedCategories(removeCategory(selectedCategories, key));
+        break;  
       default:
         console.error('Unknown Type: ', type);
     }
   }
 
+  const removeCategory = (array: any[], key: any) =>  array.filter(itm => itm.key !== key);
+
+
   return (
     <section
       className={`
-        flex flex-row
+        flex flex-col gap-2
         ${className}
       `}
     >
@@ -100,6 +108,36 @@ export default function FilterTile ({ className = '' }: Props) {
           />
         </li>
       </ul>
+      {selectedCategories.length > 0 &&
+        <ul
+          className="flex flex-row flex-wrap gap-2 p-4 bg-[var(--background-deep-light-color)] rounded-lg"
+        >
+          {selectedCategories?.map((itm: any, i: number) =>
+            <li
+              className="
+                flex items-center text-sm text-heading-invert 
+                bg-heading gap-2 px-2 py-1 cursor-pointer
+                hover:opacity-80
+                transition-all duraiton-200 ease-in-out
+              "
+              role="button"
+              data-type="clear_filter_button_is_clicked"
+              data-key={itm.key}
+              key={i}
+              onClick={handleClick}
+            >
+              <span>
+                {itm.title}
+              </span>
+              <span
+                className="text-xs border border-heading-invert px-[0.3rem] rounded-full"
+              >
+                x
+              </span>
+            </li>
+          )}
+        </ul>
+      }
     </section>
   )
 }

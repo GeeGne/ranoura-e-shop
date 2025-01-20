@@ -68,7 +68,8 @@ export default function FilterExpandWrapper ({
       : array
   }
 
-  console.log('selectedCategories: ', selectedCategories);
+  // DEBUG
+  // console.log('selectedCategories: ', selectedCategories);
   return (
     <div
       className={`
@@ -110,7 +111,8 @@ export default function FilterExpandWrapper ({
         }}
         ref={descRef}
       >
-        {categoriesArray.map((itm: any, i) => 
+        {categoriesArray.length > 0 &&
+          categoriesArray.map((itm: any, i) => 
           <li
             key={i}
           >

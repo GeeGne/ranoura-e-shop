@@ -11,17 +11,26 @@ export default function FilterWindow () {
   const selectedCategories = useFilterWindowStore(state => state.selectedCategories);
   const setSelectedCategories = useFilterWindowStore(state => state.setSelectedCategories);
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const { type } = e.currentTarget.dataset;
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    const { type, key } = e.currentTarget.dataset;
+    console.log('click: ')
 
     switch (type) {
       case 'close_button_is_clicked':
         setToggle(false);
         break;
+      case 'clear_all_filters_button_is_clicked':
+        setSelectedCategories([]);
+        break;
+      case 'clear_filter_button_is_clicked':
+        setSelectedCategories(removeCategory(selectedCategories, key));
+        break;
       default:
         console.error('Unknown Type: ', type);
     }
   }
+
+  const removeCategory = (array: any[], key: any) =>  array.filter(itm => itm.key !== key);
 
   // DEBUG
   // console.log('test: ', selectedCategories);
@@ -57,37 +66,51 @@ export default function FilterWindow () {
       <section
         className="flex gap-8 p-4"
       >
-        <ul
-          className="flex flex-row flex-wrap gap-2"
-        >
-          {selectedCategories?.map((itm: any) =>
-            <li
-              className="
-                flex items-center text-sm text-heading-invert 
-                bg-heading gap-2 px-2 py-1 cursor-pointer
-                hover:opacity-80
-                transition-all duraiton-200 ease-in-out
-              "
-              role="button"
-            >
-              <span>
-                {itm.title}
-              </span>
-              <span
-                className="text-xs border border-heading-invert px-1"
+        {selectedCategories.length > 0 &&
+          <ul
+            className="flex flex-row flex-wrap gap-2"
+          >
+            {selectedCategories?.map((itm: any, i: number) =>
+              <li
+                className="
+                  flex items-center text-sm text-heading-invert 
+                  bg-heading gap-2 px-2 py-1 cursor-pointer
+                  hover:opacity-80
+                  transition-all duraiton-200 ease-in-out
+                "
+                role="button"
+                data-type="clear_filter_button_is_clicked"
+                data-key={itm.key}
+                key={i}
+                onClick={handleClick}
               >
-                x
-              </span>
-            </li>
-          )}
-        </ul>
+                <span>
+                  {itm.title}
+                </span>
+                <span
+                  className="text-xs border border-heading-invert px-[0.3rem] rounded-full"
+                >
+                  x
+                </span>
+              </li>
+            )}
+          </ul>
+        }
         <button
-          className="
-            shrink-0 underline text-md text-heading hover:font-bold cursor-pointer whitespace-nowrap
+          className={`
+            shrink-0 underline text-md text-heading whitespace-nowrap
+            ${selectedCategories.length > 0 ? 'hover:font-bold cursor-pointer' : 'hover:font-normal cursor-default'}
             transition-all duration-200 ease-in-out  
-          "
+          `}
+          style={{ textDecoration: selectedCategories.length > 0 ? 'underline' : 'none'}}
+          data-type="clear_all_filters_button_is_clicked"
+          onClick={handleClick}
         >
-          Clear all filters
+          {selectedCategories.length > 0 
+           ? 'Clear all filters'
+           : 'No Filters are selected'
+          }
+          
         </button>
       </section>
       <hr className="border-inbetween mx-4"/>
