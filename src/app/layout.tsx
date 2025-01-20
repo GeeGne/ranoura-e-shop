@@ -41,8 +41,8 @@ export default function RootLayout({
             {children}
             <BottomBorder
               className="
-                absolute top-[100%] origin-top 
-                scale-y-[50%] md:scale-y-[50%] lg:scale-y-[25%] text-primary rotate-180
+                absolute top-[100%] origin-top scale-x-[105%]
+                scale-y-[50%] md:scale-y-[35%] lg:scale-y-[25%] text-primary rotate-180
               "
             />
           </Main>

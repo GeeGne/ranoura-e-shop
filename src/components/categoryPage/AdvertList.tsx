@@ -49,9 +49,7 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
   const mainImgRefs = useRef<(HTMLElement | null)[]>([]);
   const secondImgRefs = useRef<(HTMLElement | null)[]>([]);
 
-  const getImgUrls = (imgArray: any) => {
-    return imgArray.find((itm: any) => itm.color === selectedColor);
-  }
+  const getImgUrls = (imgArray: any) => imgArray.find((itm: any) => itm.color === selectedColor);
 
   const onColorChange = (color: string, productId: number) => {
     const getProduct = () => products.find(product => product.id === productId);
@@ -120,7 +118,7 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
   
   return (
     <section
-      className="flex flex-col gap-4 px-4"
+      className="flex flex-col gap-4 px-4 z-[5]"
     >
       <ul
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 transition-all duration-200 ease-in-out"

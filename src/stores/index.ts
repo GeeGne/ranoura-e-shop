@@ -14,6 +14,8 @@ type FilterWindowProps = {
   setToggle: (value: boolean) => void;
   selectedCategories: any[];
   setSelectedCategories: (value: any[]) => void;
+  clickedCategory: string;
+  setClickedCategory: (value: string) => void;
 };
 
 const useFilterWindowStore = create<FilterWindowProps>(
@@ -21,7 +23,9 @@ const useFilterWindowStore = create<FilterWindowProps>(
     toggle: false,
     setToggle: (toggle: boolean) => set({ toggle }),
     selectedCategories: [],
-    setSelectedCategories: (selectedCategories: any[]) => set({ selectedCategories })
+    setSelectedCategories: (selectedCategories: any[]) => set({ selectedCategories }),
+    clickedCategory: '',
+    setClickedCategory: (clickedCategory: string) => set({ clickedCategory })
   })
 );
 

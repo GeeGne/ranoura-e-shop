@@ -71,7 +71,7 @@ export default function Hero({ className = "", ...props }: Props) {
       <BottomBorder 
         className={`
           absolute left-1/2 translate-x-[-50%] top-full w-[100vw]
-          text-primary scale-y-[50%] md:scale-y-[50%] lg:scale-y-[25%] origin-top
+          text-primary scale-x-[105%] scale-y-[50%] md:scale-y-[35%] lg:scale-y-[25%] origin-top
         `}        
       />
     </section>

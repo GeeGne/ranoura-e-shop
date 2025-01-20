@@ -1,5 +1,5 @@
 // HOOKS
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 // SVGS
 import LineMdChevronSmallRight from '@/components/svgs/LineMdChevronSmallRight';
@@ -24,12 +24,19 @@ export default function FilterExpandWrapper ({
 }: Props
 ) {
   const [ toggle, setToggle ] = useState<boolean>(false);
-  // const [ selectedCategories, setSelectedCategories ] = useState<any[]>([]);
+
   const selectedCategories = useFilterWindowStore(state => state.selectedCategories);
   const setSelectedCategories = useFilterWindowStore(state => state.setSelectedCategories);
+  const clickedCategory = useFilterWindowStore(state => state.clickedCategory);
+  const setClickedCategory = useFilterWindowStore(state => state.setClickedCategory);
   const descRef = useRef<any>(null);
   const getScrollHeight = (el: HTMLElement) => el?.scrollHeight + 16 || 0;
   
+  useEffect(() => {
+    setToggle(false);
+    if (clickedCategory === sectionName.toLowerCase()) setToggle(true) 
+  }, [clickedCategory]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.currentTarget;
     const { key, title, index } = e.currentTarget.dataset;
@@ -111,13 +118,12 @@ export default function FilterExpandWrapper ({
         }}
         ref={descRef}
       >
-        {categoriesArray.length > 0 &&
-          categoriesArray.map((itm: any, i) => 
+        {categoriesArray.map((itm: any, i) => 
           <li
             key={i}
           >
             <label
-              className="relative flex gap-2 group"
+              className="relative flex gap-2 group cursor-pointer"
               htmlFor={itm.key}
             >
               <input 
