@@ -1,0 +1,24 @@
+[
+  {
+    "categoryName": "JEANS",
+    "imgURL": "/assets/img/jeans.webp"
+  },{
+    "categoryName": "JACKETS",
+    "imgURL": "/assets/img/jacket.webp"
+  },{
+    "categoryName": "BAGS",
+    "imgURL": "/assets/img/bag.webp"
+  },{
+    "categoryName": "DRESSES",
+    "imgURL": "/assets/img/dress.webp"
+  },{
+    "categoryName": "SUITS",
+    "imgURL": "/assets/img/suite.webp"
+  },{
+    "categoryName": "SKIRTS",
+    "imgURL": "/assets/img/skirt.webp"
+  },{
+    "categoryName": "ROBES",
+    "imgURL": "/assets/img/robe.webp"
+  }
+]

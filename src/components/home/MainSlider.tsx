@@ -2,7 +2,6 @@
 import FilmTape from "@/components/FilmTape";
 import DisplayImg from "@/components/DisplayImg";
 
-
 export default function MainSlider () {
 
   return (
