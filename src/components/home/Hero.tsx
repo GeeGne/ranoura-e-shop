@@ -41,7 +41,7 @@ export default function Hero({ className = "", ...props }: Props) {
       </div>
     <div
         className="
-          absolute top-[80%] left-1/2 
+          hidden absolute top-[80%] left-1/2 
           translate-y-[-50%] translate-x-[-50%] z-[10] 
           rotate-[80deg] origin-center
           scale-[100%] md:scale-[100%]

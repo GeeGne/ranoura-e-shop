@@ -15,15 +15,15 @@ export default function FilmTape ({ className = '', ...props }: Props) {
   return (
     <div
       className={`  
-        w-[100px] h-[700px] md:w-[125px] md:h-[1000px] lg:h-[2050px] 
-        bg-[hsl(0,7%,94%,0.2)] backdrop-blur-sm text-black overflow-hidden
+        w-[50px] h-[750px] md:w-[125px] md:h-[1050px] lg:h-[2050px] 
+        bg-[hsl(0,7%,6%,0.3)] backdrop-blur-sm text-black overflow-hidden
          
         ${className}
       `}
     >
       <ul
         className={`
-          --infinite-card-slide-ani flex flex-col items-center p-4 gap-8 
+          --infinite-card-slide-ani flex flex-col items-center p-1 md:p-4 gap-8 
           w-full
         `}
       >

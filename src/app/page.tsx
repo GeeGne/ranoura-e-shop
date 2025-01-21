@@ -7,6 +7,8 @@ import { useEffect } from 'react';
 import Image from "next/image";
 import Hero from '@/components/home/Hero';
 import ImageSlider from '@/components/home/ImageSlider';
+import MainSlider from '@/components/home/MainSlider';
+import CategoryPicker from '@/components/home/CategoryPicker';
 import MainLayout from '@/components/home/MainLayout';
 import AdvertTile from '@/components/home/AdvertTile';
 
@@ -26,7 +28,9 @@ export default function Home() {
       className="flex flex-col"
     >
       <Hero /> 
-      <ImageSlider /> 
+      <MainSlider /> 
+      <ImageSlider />
+      <CategoryPicker />
       <MainLayout />
       <AdvertTile title="WHATS NEW?" />
       <AdvertTile title="HOT DEALS" />

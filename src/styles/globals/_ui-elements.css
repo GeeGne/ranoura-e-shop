@@ -71,3 +71,16 @@
   transform-style: preserve-3d;
   transform: rotateY(180deg);
 }
+
+.masked-object-center-to-right {
+  -webkit-mask-iamge: linear-gradient(to right, transparent 51%, black 49%);
+  mask-image: linear-gradient(to right, transparent 51%, black 49%);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.text-clip {
+  background-clip: text;
+}
