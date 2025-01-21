@@ -14,14 +14,17 @@ export default function MainSlider () {
     >
       <span
         className="
-          w-full text-[23vw] text-center font-bold text-clip text-[var(--primary-invert-color)]
+          w-full text-[23vw] text-center font-bold text-clip text-transparent
+          bg-gradient-to-t from-transparent to-[var(--primary-invert-color)] from-30% to-60%
           "
       >
         RAN
       </span>
       <span
         className="
-          w-full text-[23vw] text-center font-bold text-[var(--primary-invert-color)] z-[14]
+          w-full text-[23vw] text-center font-bold text-clip text-transparent z-[14]
+          bg-gradient-to-t from-transparent to-[var(--primary-invert-color)] from-30% to-60%
+
 
         "
       >
