@@ -48,7 +48,7 @@ export default function CategoryPicker () {
                 --category-rotate absolute top-0 left-0 bottom-0 right-0
                 w-[calc(100%)] h-[calc(100%)] 
                 flex items-center justify-center rounded-full
-                border border-primary border-[8px] border-dashed
+                border border-primary border-[4px] md:border-[8px] border-dashed
                 transition-all duration-300 ease-in-out
                 transform scale-[50%] group-hover:scale-[100%]
                 opacity-0 group-hover:opacity-100 z-[1]
@@ -63,7 +63,7 @@ export default function CategoryPicker () {
               "          
             >
               <h3
-                className="text-lg text-heading-invert font-bold drop-shadow-md"
+                className="text-lg text-heading-invert font-bold drop-shadow-md outlined-text"
               >
                 {itm.categoryName}
               </h3>            
