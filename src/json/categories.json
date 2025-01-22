@@ -1,0 +1,15 @@
+[
+  {
+    "title": "New",
+    "key": "new"
+  },{
+    "title": "Clothing",
+    "key": "clothing"
+  },{
+    "title": "Sale",
+    "key": "sale"
+  },{
+    "title": "Flash Events",
+    "key": "event"
+  }
+]

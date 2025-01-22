@@ -16,6 +16,9 @@ import FillOnScroll from "@/components/FillOnScroll";
 // STORES
 import { useCartStore, useNavbarStore, useTabNameStore } from '@/stores/index';
 
+// JSON
+import categories from '@/json/categories.json';
+
 type Props = {
   onScroll?: any;
   layoutRef?: any;
@@ -36,7 +39,7 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
 
   },[ onScroll, layoutRef ]);
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     const { type } = e.currentTarget.dataset;
 
     switch (type) {
@@ -75,7 +78,7 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
         layoutRef={layoutRef}
       />
       <button
-        className="nav-hover-effect"
+        className="nav-hover-effect lg:hidden"
         data-type="navbar_button_is_clicked"
         onClick={handleClick}
       >
@@ -85,6 +88,20 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
           height={24}
         />
       </button>
+      <ul
+        className="hidden lg:flex gap-4"
+        data-type="ar_button_is_clicked"
+        onClick={handleClick}
+      >
+        {categories.map((category, i) => 
+          <span
+            className="nav-button-hover-effect text-lg text-heading-invert cursor-pointer"
+            key={i}
+          >
+            {category.title}
+          </span>  
+        )}
+      </ul>
         <Link 
           href="/"
           className="relative mx-auto"

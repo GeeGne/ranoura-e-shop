@@ -49,6 +49,28 @@
   }
 }
 
+.nav-button-hover-effect {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% + 1rem);
+    height: calc(100% + 1rem);
+    background: transparent;
+    transition: all 0.2s ease-in-out;
+    z-index: -1;
+    border-radius: 0.5rem;  
+  }
+
+  &:hover::before {
+    background: var(--primary-color);
+  }
+}
+
 .nav-active-effect {
   position: relative;
 
