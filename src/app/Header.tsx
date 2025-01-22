@@ -14,7 +14,7 @@ import EpUser from "@/components/svgs/EpUser";
 import FillOnScroll from "@/components/FillOnScroll";
 
 // STORES
-import { useCartStore, useTabNameStore } from '@/stores/index';
+import { useCartStore, useNavbarStore, useTabNameStore } from '@/stores/index';
 
 type Props = {
   onScroll?: any;
@@ -25,7 +25,9 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
   
   const [ isWindowScrolled, setIsWindowScrolled ] = useState(false);
   const headerRef = useRef<HTMLInputElement>(null);
-  const setToggle = useCartStore((stats:any) => stats.setToggle);
+  const setCartToggle = useCartStore((stats:any) => stats.setToggle);
+  const setNavbarToggle = useNavbarStore((status:any) => status.setToggle);
+
   const tabName = useTabNameStore((state: any) => state.tabName);
 
   useEffect(() => {
@@ -39,7 +41,10 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
 
     switch (type) {
       case 'cart_button_is_clicked':
-        setToggle(true);
+        setCartToggle(true);
+        break;
+      case 'navbar_button_is_clicked':
+        setNavbarToggle(true);
         break;
       default:
         console.error('Unknown type: ', type);
@@ -71,6 +76,8 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
       />
       <button
         className="nav-hover-effect"
+        data-type="navbar_button_is_clicked"
+        onClick={handleClick}
       >
         <LineMdCloseToMenuAltTransition
           className="text-heading-invert cursor-pointer"

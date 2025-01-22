@@ -7,12 +7,13 @@ import ArrowUp from "@/components/svgs/ArrowUp";
 import DisplayImg from "@/components/DisplayImg";
 
 // STORES
-import { useCartStore } from '@/stores/index';
+import { useNavbarStore } from '@/stores/index';
 
 // SVG
 import EpArrowLeft from "@/components/svgs/EpArrowLeft";
 import IcOutlineClear from '@/components/svgs/IcOutlineClear';
 import IcOutlineCreate from "@/components/svgs/IcOutlineCreate";
+import LineMdMenuToCloseAltTransition from "@/components/svgs/LineMdMenuToCloseAltTransition";
 
 // ASSETS
 const ramdanBanner = "/assets/img/ramadan-nights.webp";
@@ -22,10 +23,10 @@ const outfit2 = "assets/img/outfit-2.jpg"
 const outfit3 = "assets/img/outfit-3.jpg"
 
 
-export default function Cart () {
+export default function Navbar () {
 
-  const toggle = useCartStore((status:any) => status.toggle);
-  const setToggle = useCartStore((status:any) => status.setToggle);
+  const toggle = useNavbarStore((status:any) => status.toggle);
+  const setToggle = useNavbarStore((status:any) => status.setToggle);
   const [ inputToggle, setInputToggle ] = useState<boolean>(false);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -76,15 +77,15 @@ export default function Cart () {
     >
       <button
         className="
-        relative flex items-center justify-end 
-        w-full max-w-[1400px] mx-auto p-4 opacity-100 cursor-pointer"
+          relative flex items-center justify-start 
+          w-full max-w-[1400px] mx-auto p-4 opacity-100 cursor-pointer"
         onClick={handleClick}
         data-type="close_button_is_clicked"
       >
         <div
           className="nav-active-effect z-10"
         >
-          <SolarCart4Outline
+          <LineMdMenuToCloseAltTransition
             className="
               text-heading-invert cursor-pointer
             "

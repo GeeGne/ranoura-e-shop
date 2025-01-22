@@ -86,7 +86,6 @@
 }
 
 .outlined-text {
-  color: whtie;
   text-shadow:
     -1px -1px 1px var(--font-body-color),
     1px -1px 1px var(--font-body-color),

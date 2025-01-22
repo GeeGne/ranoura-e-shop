@@ -7,6 +7,7 @@ import Header from '@/app/Header';
 import Main from '@/app/Main';
 import Footer from '@/app/Footer';
 import Cart from '@/components/fixedLayouts/Cart';
+import Navbar from '@/components/fixedLayouts/Navbar';
 import FilterWindow from '@/components/fixedLayouts/FilterWindow';
 import FixedLayouts from '@/components/fixedLayouts/Index';
 import BottomBorder from '@/components/svgs/BottomBorder';
@@ -50,6 +51,7 @@ export default function RootLayout({
         </div>
         <FixedLayouts>
           <Cart />
+          <Navbar />
           <FilterWindow />          
         </FixedLayouts>
       </body>

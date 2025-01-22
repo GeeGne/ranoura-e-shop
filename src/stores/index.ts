@@ -9,6 +9,13 @@ const useCartStore = create(
   })
 );
 
+const useNavbarStore = create(
+  (set) => ({
+    toggle: false,
+    setToggle: (toggle: boolean) => set({ toggle })
+  })
+);
+
 type FilterWindowProps = {
   toggle: boolean;
   setToggle: (value: boolean) => void;
@@ -36,4 +43,4 @@ const useTabNameStore = create(
   })
 );
 
-export { useCartStore, useTabNameStore, useFilterWindowStore };
+export { useCartStore, useNavbarStore, useTabNameStore, useFilterWindowStore };
