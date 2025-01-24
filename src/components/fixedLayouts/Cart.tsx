@@ -68,7 +68,7 @@ export default function Cart () {
     <div
       className={`
         fixed top-0 left-0 
-        flex flex-col w-full h-full bg-[var(--shade-v2-color)] z-[2000]
+        flex flex-col w-full h-screen bg-[var(--shade-v2-color)] z-[2000]
         transition-all duration-300 ease-in-out
         backdrop-blur-[2px]
         ${toggle ? 'translate-y-[0%]' : 'translate-y-[-100%]'}

@@ -1,10 +1,10 @@
 [
   {
-    "title": "New",
-    "key": "new"
-  },{
     "title": "Clothing",
     "key": "clothing"
+  },{
+    "title": "New",
+    "key": "new"
   },{
     "title": "Sale",
     "key": "sale"
