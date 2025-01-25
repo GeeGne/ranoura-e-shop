@@ -9,10 +9,25 @@ const useCartStore = create(
   })
 );
 
-const useNavbarStore = create(
+type NavbarStoreProps = {
+  toggle: boolean;
+  setToggle: (value: boolean) => void;
+  categoryToggle: boolean;
+  setCategoryToggle: (value: boolean) => void;
+  selectedCategory: string;
+  setSelectedCategory: (value: string) => void;
+};
+
+
+const useNavbarStore = create<NavbarStoreProps>(
   (set) => ({
     toggle: false,
-    setToggle: (toggle: boolean) => set({ toggle })
+    setToggle: (toggle: boolean) => set({ toggle }),
+    categoryToggle: false,
+    setCategoryToggle: (categoryToggle: boolean) => set({ categoryToggle }),
+    selectedCategory: '',
+    setSelectedCategory: (selectedCategory: string) => set({ selectedCategory })
+
   })
 );
 
@@ -32,7 +47,7 @@ const useFilterWindowStore = create<FilterWindowProps>(
     selectedCategories: [],
     setSelectedCategories: (selectedCategories: any[]) => set({ selectedCategories }),
     clickedCategory: '',
-    setClickedCategory: (clickedCategory: string) => set({ clickedCategory })
+    setClickedCategory: (clickedCategory: string) => set({ clickedCategory }),
   })
 );
 
@@ -43,4 +58,7 @@ const useTabNameStore = create(
   })
 );
 
-export { useCartStore, useNavbarStore, useTabNameStore, useFilterWindowStore };
+export { 
+  useCartStore, useNavbarStore, 
+  useTabNameStore, useFilterWindowStore
+};

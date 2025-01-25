@@ -29,7 +29,7 @@ export default function ProductDisplay ({ className, ...props }: Props) {
         className="relative"
       >
         <img 
-          className="w-full ratio[2/3] rounded-lg"
+          className="w-full aspect-[2/3] rounded-lg object-cover object-center"
           src={outfit1}
           alt="Image"
         />

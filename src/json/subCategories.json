@@ -1,0 +1,49 @@
+[
+  {
+    "name": "Jeans",
+    "key": "jeans",
+    "categoryKey": "clothing"
+  },{
+    "name": "Jackets",
+    "key": "jackets",
+    "categoryKey": "clothing"
+  
+  },{
+    "name": "Bags",
+    "key": "bags",
+    "categoryKey": "clothing"
+  
+  },{
+    "name": "Dresses",
+    "key": "dresses",
+    "categoryKey": "clothing"
+  
+  },{
+    "name": "Suits",
+    "key": "suits",
+    "categoryKey": "clothing"
+  
+  },{
+    "name": "Skirts",
+    "key": "skirts",
+    "categoryKey": "clothing"
+  
+  },{
+    "name": "Robes",
+    "key": "robes",
+    "categoryKey": "clothing"
+  
+  },{
+    "name": "What's New?",
+    "key": "what-is-new",
+    "categoryKey": "new"
+  },{
+    "name": "Latest Arrivals",
+    "key": "latest-arrivals",
+    "categoryKey": "sale"
+  },{
+    "name": "Ramadan Nights",
+    "key": "ramadan-nights",
+    "categoryKey": "special"
+  }
+]

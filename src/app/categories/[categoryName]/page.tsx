@@ -1,7 +1,7 @@
 "use client"
 
 // HOOKS
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 // COMPONENTS
 import AdvertList from '@/components/categoryPage/AdvertList';
@@ -18,7 +18,7 @@ import products from "@/json/products.json";
 export default function page () {
 
   const setTabName = useTabNameStore((state: any) => state.setTabName);
- 
+
   const slugNameAndLinkArray = [
     {
       name: "Categories",
@@ -33,9 +33,10 @@ export default function page () {
     setTabName('product');
   }, []);
 
+
   return (
     <div
-      className="flex flex-col pt-[4rem] gap-4"
+      className="flex flex-col gap-4 py-4"
     >
       <BreadCrumb
         className="px-4"
