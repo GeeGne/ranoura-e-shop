@@ -72,15 +72,15 @@ const useFavouritesStore = create<FavouritesProps>(
 );
 
 type FavouriteConfettiToggleProps = {
-  toggle: string;
-  setToggle: (value: string) => void;
+  toggle: boolean;
+  setToggle: (value: boolean) => void;
 };
 
 
 const useFavouriteConfettiToggle = create<FavouriteConfettiToggleProps>(
   (set) => ({
-    toggle: "",
-    setToggle: (toggle: string) => set({ toggle })
+    toggle: false,
+    setToggle: (toggle: boolean) => set({ toggle })
   })
 );
 

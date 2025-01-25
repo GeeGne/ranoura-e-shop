@@ -72,7 +72,7 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
     }, 400)
 
 
-    clearTimeout(confettiTimerId?.current);
+    // clearTimeout(confettiTimerId?.current);
     // confettiTimerId?.current = setTimeout(() => {
     setTimeout(() => {
       setConfettiToggle(false);
