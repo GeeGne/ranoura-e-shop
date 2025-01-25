@@ -58,7 +58,21 @@ const useTabNameStore = create(
   })
 );
 
+type FavouritesProps = {
+  favourites: number[];
+  setFavourites: (value: number[]) => void;
+};
+
+
+const useFavouritesStore = create<FavouritesProps>(
+  (set) => ({
+    favourites: [],
+    setFavourites: (favourites: number[]) => set({ favourites })
+  })
+);
+
 export { 
   useCartStore, useNavbarStore, 
-  useTabNameStore, useFilterWindowStore
+  useTabNameStore, useFilterWindowStore,
+  useFavouritesStore
 };

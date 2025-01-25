@@ -12,6 +12,7 @@ import ColorPallete from '@/components/ColorPallete';
 import BtnA from '@/components/BtnA';
 import EpArrowLeft from '@/components/svgs/EpArrowLeft';
 import LineMdHeart from '@/components/svgs/LineMdHeart';
+import LineMdHeartFilled from '@/components/svgs/LineMdHeartFilled';
 import PepiconsPencilOpenCircleFilled from '@/components/svgs/PepiconsPencilOpenCircleFilled';
 import LineMdArrowsDiagonalRotated from '@/components/svgs/LineMdArrowsDiagonalRotated';
 
@@ -28,6 +29,9 @@ import products from "@/json/products.json";
 // UTILS
 import strSlugForProducts from '@/utils/strSlugForProducts';
 
+// STORES
+import { useFavouritesStore } from '@/stores/index';
+
 type Props = {
   title?: string;
 }
@@ -37,10 +41,15 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
   const router = useRouter();
   const array = [1, 2, 3, 4];
   const selectedColor = "green";
+
+  const favourites = useFavouritesStore(state => state.favourites);
+  const setFavourites = useFavouritesStore(state => state.setFavourites);
+
   const [scrollWidth, setScrollWidth] = useState<number>(0);
   const [leftArrowInactive, setLeftArrowInactive] = useState<boolean>(true);
   const [rightArrowInactive, setRightArrowInactive] = useState<boolean>(false);
   const [imgScaleToggle, setImgScaleToggle] = useState<boolean | number>(false);
+
   const ulRef = useRef<any>(null);
   const liRefs = useRef<(HTMLElement | null)[]>([]);
   const mainImgRefs = useRef<(HTMLElement | null)[]>([]);
@@ -60,17 +69,16 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
       getEL(secondImgRefs.current).src = getProduct()?.img.find(itm => itm.color === color)?.second;
   }
 
-  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    const { type, index, productUri } = e.currentTarget.dataset;
+  const handleClick = (e: React.MouseEvent<HTMLElement | any>) => {
+    e.stopPropagation();
+    const { type, index, productUri, productId } = e.currentTarget.dataset;
     const ulRefWidth = ulRef.current.offsetWidth
     const ulRefScrollWidth = ulRef.current.scrollWidth
     const liRefWidth = liRefs?.current[0]?.scrollWidth || 0;
-    console.log('liRefWidth: ', liRefWidth);
-    console.log('ulRefWidth', ulRefWidth)
-    console.log('ulRefScrollWidth', ulRefScrollWidth)
     const gap = parseFloat(getComputedStyle(ulRef.current).gap);
     const totalTiles = array.length - 1
     const scrollTotalWidth = ulRefWidth / (totalTiles) + gap;
+
     switch (type) {
       case 'navigate_to_product':
         setImgScaleToggle(val => val === Number(index) ? false : Number(index))
@@ -106,6 +114,14 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
       case 'scale_button_is_clicked':
         setImgScaleToggle(val => val === Number(index) ? false : Number(index))
         break;
+      case 'heart_button_is_clicked':
+        const isProductInFavourites = favourites.some(productID => productID === Number(productId));
+        setFavourites(
+          isProductInFavourites
+            ? favourites.filter(productID => productID !== Number(productId))
+            : [...favourites, Number(productId)] 
+        )        
+        break;
       default:
         console.error('Unknown type: ', type);
     }
@@ -114,6 +130,10 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
   // DEBUG
   // console.log('products: ', products);
   // console.log('liRefs: ', liRefs.current);
+  // console.log('liRefWidth: ', liRefWidth);
+  // console.log('ulRefWidth', ulRefWidth)
+  // console.log('ulRefScrollWidth', ulRefScrollWidth)
+  console.log('favourites: ', favourites);
   
   return (
     <section
@@ -234,9 +254,22 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
                 >
                   NEW
                 </span>
-                <LineMdHeart 
-                  className="absolute top-2 right-2 w-6 h-6 text-pink-500 cursor-pointer z-[10]"
-                />
+                {favourites.some(productId => productId === product.id)
+                  ? <LineMdHeartFilled 
+                      className="absolute top-2 right-2 w-6 h-6 text-pink-500 cursor-pointer z-[10]"
+                      role="button"
+                      data-type="heart_button_is_clicked"
+                      data-product-id={product.id}
+                      onClick={handleClick}
+                    />
+                  : <LineMdHeart
+                      className="absolute top-2 right-2 w-6 h-6 text-pink-500 cursor-pointer z-[10]"
+                      role="button"
+                      data-type="heart_button_is_clicked"
+                      data-product-id={product.id}
+                      onClick={handleClick}
+                    />
+                }
                 <nav
                 className={`
                   absolute bottom-2 right-2 z-[10]
@@ -251,7 +284,7 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
                     `}
                     data-type="scale_button_is_clicked"
                     data-index={i}
-                    onClick={(e: any) => { e.stopPropagation(); handleClick(e) }}
+                    onClick={handleClick}
                   />
                 </nav>
               </div>
