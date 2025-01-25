@@ -31,6 +31,12 @@ import products from "@/json/products.json";
 // UTILS
 import strSlugForProducts from '@/utils/strSlugForProducts';
 
+// STORES
+import { useFavouritesStore, useFavouriteConfettiToggle } from '@/stores/index';
+
+// CONFETTI 
+import Confetti from "react-canvas-confetti/dist/presets/explosion";
+
 type Props = {
   title?: string;
 }
@@ -40,16 +46,38 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
   const router = useRouter();
   const array = [1, 2, 3, 4];
   const selectedColor = "green";
-  const [scrollWidth, setScrollWidth] = useState<number>(0);
-  const [leftArrowInactive, setLeftArrowInactive] = useState<boolean>(true);
-  const [rightArrowInactive, setRightArrowInactive] = useState<boolean>(false);
-  const [imgScaleToggle, setImgScaleToggle] = useState<boolean | number>(false);
+  const [ scrollWidth, setScrollWidth ] = useState<number>(0);
+  const [ leftArrowInactive, setLeftArrowInactive ] = useState<boolean>(true);
+  const [ rightArrowInactive, setRightArrowInactive ] = useState<boolean>(false);
+  const [ imgScaleToggle, setImgScaleToggle ] = useState<boolean | number>(false);
+  const [ heartActiveId, setHeartActiveId ] = useState<number | null>(null);
+
+  const favourites = useFavouritesStore(state => state.favourites);
+  const setFavourites = useFavouritesStore(state => state.setFavourites);
+
+  const setConfettiToggle = useFavouriteConfettiToggle(state => state.setToggle);
+  const confettiToggle = useFavouriteConfettiToggle(state => state.toggle);
+  const confettiTimerId = useRef<any>(0);
+
   const ulRef = useRef<any>(null);
   const liRefs = useRef<(HTMLElement | null)[]>([]);
   const mainImgRefs = useRef<(HTMLElement | null)[]>([]);
   const secondImgRefs = useRef<(HTMLElement | null)[]>([]);
 
   const getImgUrls = (imgArray: any) => imgArray.find((itm: any) => itm.color === selectedColor);
+
+  const displayPrideConfetti = () => {
+    setTimeout(() => {
+      setConfettiToggle(true);
+    }, 400)
+
+
+    clearTimeout(confettiTimerId?.current);
+    // confettiTimerId?.current = setTimeout(() => {
+    setTimeout(() => {
+      setConfettiToggle(false);
+    }, 1000)
+  };
 
   const onColorChange = (color: string, productId: number) => {
     const getProduct = () => products.find(product => product.id === productId);
@@ -62,13 +90,12 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
   }
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    const { type, index, productUri } = e.currentTarget.dataset;
+    e.stopPropagation();
+
+    const { type, index, productUri, productId } = e.currentTarget.dataset;
     const ulRefWidth = ulRef.current.offsetWidth
     const ulRefScrollWidth = ulRef.current.scrollWidth
     const liRefWidth = liRefs?.current[0]?.scrollWidth || 0;
-    console.log('liRefWidth: ', liRefWidth);
-    console.log('ulRefWidth', ulRefWidth)
-    console.log('ulRefScrollWidth', ulRefScrollWidth)
     const gap = parseFloat(getComputedStyle(ulRef.current).gap);
     const totalTiles = array.length - 1
     const scrollTotalWidth = ulRefWidth / (totalTiles) + gap;
@@ -107,6 +134,23 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
       case 'scale_button_is_clicked':
         setImgScaleToggle(val => val === Number(index) ? false : Number(index))
         break;
+      case 'scale_button_is_clicked':
+        setImgScaleToggle(val => val === Number(index) ? false : Number(index))
+        break;
+      case 'heart_button_is_clicked':
+        const isProductInFavourites = favourites.some(productID => productID === Number(productId));
+        
+        if (!isProductInFavourites) {
+          displayPrideConfetti();
+          setHeartActiveId(Number(index));
+        }
+
+        setFavourites(
+          isProductInFavourites
+            ? favourites.filter(productID => productID !== Number(productId))
+            : [...favourites, Number(productId)] 
+        )
+        break;
       default:
         console.error('Unknown type: ', type);
     }
@@ -115,7 +159,10 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
   // DEBUG
   // console.log('products: ', products);
   // console.log('liRefs: ', liRefs.current);
-  
+  // console.log('liRefWidth: ', liRefWidth);
+  // console.log('ulRefWidth', ulRefWidth)
+  // console.log('ulRefScrollWidth', ulRefScrollWidth)
+
   return (
     <section
       className="flex flex-col gap-4 px-4 z-[5]"
@@ -167,9 +214,49 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
               >
                 NEW
               </span>
-              <LineMdHeart 
-                className="absolute top-2 right-2 w-6 h-6 text-pink-500 cursor-pointer z-[10]"
-              />
+              <div
+                className={`
+                  absolute top-2 right-2 w-6 h-6 text-pink-500 cursor-pointer z-[10]
+                  ${favourites.some(productId => productId === product.id)
+                    && heartActiveId === i 
+                    && '--heart-ani'
+                  }
+                `}
+                data-index={i}
+                data-type="heart_button_is_clicked"
+                data-product-id={product.id}
+                onClick={handleClick}
+              >
+                <LineMdHeart
+                  className="z-[5]"
+                />
+                <LineMdHeartFilled
+                    className={`
+                      absolute top-1/2 left-1/2 
+                      translate-x-[-50%] translate-y-[-50%] z-[10]
+                      transition-all ease-in-out duration-200
+                      ${favourites.some(productId => productId === product.id)
+                        ? 'opacity-100'
+                        : 'opacity-0'
+                      }
+                    `}
+                />
+                {favourites.some(productId => productId === product.id) 
+                  && confettiToggle 
+                  && heartActiveId === i 
+                  && <Confetti
+                    className={`
+                      absolute top-1/2 left-1/2 
+                      translate-x-[-50%] translate-y-[-50%] 
+                      w-[1000px] h-[1000px] scale-[100%]
+                    `}
+                    autorun={{ speed: 1 }}
+                    decorateOptions={(options) => (
+                      { ...options, colors: ['#ed4a9b'] }
+                    )}
+                  />
+                }
+              </div>
               <nav
               className={`
                 absolute bottom-2 right-2 z-[10]

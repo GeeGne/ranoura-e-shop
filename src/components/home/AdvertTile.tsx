@@ -30,7 +30,10 @@ import products from "@/json/products.json";
 import strSlugForProducts from '@/utils/strSlugForProducts';
 
 // STORES
-import { useFavouritesStore } from '@/stores/index';
+import { useFavouritesStore, useFavouriteConfettiToggle } from '@/stores/index';
+
+// CONFETTI 
+import Confetti from "react-canvas-confetti/dist/presets/explosion";
 
 type Props = {
   title?: string;
@@ -44,11 +47,16 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
 
   const favourites = useFavouritesStore(state => state.favourites);
   const setFavourites = useFavouritesStore(state => state.setFavourites);
+  
+  const setConfettiToggle = useFavouriteConfettiToggle(state => state.setToggle);
+  const confettiToggle = useFavouriteConfettiToggle(state => state.toggle);
+  const confettiTimerId = useRef<any>(0);
 
-  const [scrollWidth, setScrollWidth] = useState<number>(0);
-  const [leftArrowInactive, setLeftArrowInactive] = useState<boolean>(true);
-  const [rightArrowInactive, setRightArrowInactive] = useState<boolean>(false);
-  const [imgScaleToggle, setImgScaleToggle] = useState<boolean | number>(false);
+  const [ scrollWidth, setScrollWidth ] = useState<number>(0);
+  const [ leftArrowInactive, setLeftArrowInactive ] = useState<boolean>(true);
+  const [ rightArrowInactive, setRightArrowInactive ] = useState<boolean>(false);
+  const [ imgScaleToggle, setImgScaleToggle ] = useState<boolean | number>(false);
+  const [ heartActiveId, setHeartActiveId ] = useState<number | null>(null);
 
   const ulRef = useRef<any>(null);
   const liRefs = useRef<(HTMLElement | null)[]>([]);
@@ -57,6 +65,19 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
 
   const getImgUrls = (imgArray: any) => {
     return imgArray.find((itm: any) => itm.color === selectedColor);
+  }
+
+  const displayPrideConfetti = () => {
+    setTimeout(() => {
+      setConfettiToggle(true);
+    }, 400)
+
+
+    clearTimeout(confettiTimerId?.current);
+    // confettiTimerId?.current = setTimeout(() => {
+    setTimeout(() => {
+      setConfettiToggle(false);
+    }, 1000)
   }
 
   const onColorChange = (color: string, productId: number) => {
@@ -71,6 +92,7 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
 
   const handleClick = (e: React.MouseEvent<HTMLElement | any>) => {
     e.stopPropagation();
+  
     const { type, index, productUri, productId } = e.currentTarget.dataset;
     const ulRefWidth = ulRef.current.offsetWidth
     const ulRefScrollWidth = ulRef.current.scrollWidth
@@ -116,11 +138,17 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
         break;
       case 'heart_button_is_clicked':
         const isProductInFavourites = favourites.some(productID => productID === Number(productId));
+        
+        if (!isProductInFavourites) {
+          displayPrideConfetti();
+          setHeartActiveId(Number(index));
+        }
+
         setFavourites(
           isProductInFavourites
             ? favourites.filter(productID => productID !== Number(productId))
             : [...favourites, Number(productId)] 
-        )        
+        )
         break;
       default:
         console.error('Unknown type: ', type);
@@ -133,7 +161,7 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
   // console.log('liRefWidth: ', liRefWidth);
   // console.log('ulRefWidth', ulRefWidth)
   // console.log('ulRefScrollWidth', ulRefScrollWidth)
-  console.log('favourites: ', favourites);
+  // console.log('favourites: ', favourites);
   
   return (
     <section
@@ -254,22 +282,49 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
                 >
                   NEW
                 </span>
-                {favourites.some(productId => productId === product.id)
-                  ? <LineMdHeartFilled 
-                      className="absolute top-2 right-2 w-6 h-6 text-pink-500 cursor-pointer z-[10]"
-                      role="button"
-                      data-type="heart_button_is_clicked"
-                      data-product-id={product.id}
-                      onClick={handleClick}
+                <div
+                  className={`
+                    absolute top-2 right-2 w-6 h-6 text-pink-500 cursor-pointer z-[10]
+                    ${favourites.some(productId => productId === product.id)
+                      && heartActiveId === i 
+                      && '--heart-ani'
+                    }
+                  `}
+                  data-index={i}
+                  data-type="heart_button_is_clicked"
+                  data-product-id={product.id}
+                  onClick={handleClick}
+                >
+                  <LineMdHeart
+                    className="z-[5]"
+                  />
+                  <LineMdHeartFilled
+                      className={`
+                        absolute top-1/2 left-1/2 
+                        translate-x-[-50%] translate-y-[-50%] z-[10]
+                        transition-all ease-in-out duration-200
+                        ${favourites.some(productId => productId === product.id)
+                          ? 'opacity-100'
+                          : 'opacity-0'
+                        }
+                      `}
+                  />
+                  {favourites.some(productId => productId === product.id) 
+                    && confettiToggle 
+                    && heartActiveId === i 
+                    && <Confetti
+                      className={`
+                        absolute top-1/2 left-1/2 
+                        translate-x-[-50%] translate-y-[-50%] 
+                        w-[1000px] h-[1000px] scale-[100%]
+                      `}
+                      autorun={{ speed: 1 }}
+                      decorateOptions={(options) => (
+                        { ...options, colors: ['#ed4a9b'] }
+                      )}
                     />
-                  : <LineMdHeart
-                      className="absolute top-2 right-2 w-6 h-6 text-pink-500 cursor-pointer z-[10]"
-                      role="button"
-                      data-type="heart_button_is_clicked"
-                      data-product-id={product.id}
-                      onClick={handleClick}
-                    />
-                }
+                  }
+                </div>
                 <nav
                 className={`
                   absolute bottom-2 right-2 z-[10]
@@ -305,6 +360,7 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
               />
             </li>
           )}
+          
         </ul>
       </div>
     </section>

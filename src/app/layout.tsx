@@ -1,8 +1,10 @@
 "use client"
-import type { Metadata } from "next";
-import { useState, useRef } from 'react';
+
+// HOOKS
+import { useState } from 'react';
 import "./globals.css";
 
+// COMPONENTS
 import Header from '@/app/Header';
 import Main from '@/app/Main';
 import Footer from '@/app/Footer';

@@ -122,3 +122,11 @@
   mask: url(#meteoconsStarFill0);
   -webkit-mask: url(#meteoconsStarFill0);
 }
+
+.confetti-class {
+  display: none;
+}
+
+.favourite-is-toggled .confetti-class {
+  display: initial !important;
+}

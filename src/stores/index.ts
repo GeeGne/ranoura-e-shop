@@ -71,8 +71,21 @@ const useFavouritesStore = create<FavouritesProps>(
   })
 );
 
+type FavouriteConfettiToggleProps = {
+  toggle: string;
+  setToggle: (value: string) => void;
+};
+
+
+const useFavouriteConfettiToggle = create<FavouriteConfettiToggleProps>(
+  (set) => ({
+    toggle: "",
+    setToggle: (toggle: string) => set({ toggle })
+  })
+);
+
 export { 
   useCartStore, useNavbarStore, 
   useTabNameStore, useFilterWindowStore,
-  useFavouritesStore
+  useFavouritesStore, useFavouriteConfettiToggle
 };

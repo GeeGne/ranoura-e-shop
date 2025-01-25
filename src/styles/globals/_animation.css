@@ -60,6 +60,23 @@
   }
 }
 
+@keyframes heart-ani {
+  0% {
+    scale: 100%;
+    transform-origin: center;
+  }
+
+  40%, 80% {
+    scale: 50%;
+    transform-origin: center;
+  }
+
+  100% {
+    scale: 100%;
+    transform-origin: center;
+  }
+}
+
 .--infinite-card-slide-ani {
   animation-name: infinite-card-slide-ani;
   animation-duration: 10s;
@@ -88,4 +105,12 @@
   animation-fill-mode: both;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
+}
+
+.--heart-ani {
+  animation-name: heart-ani;
+  animation-duration: 0.4s;
+  animation-fill-mode: ease-out;
+  animation-timing-function: cubic-bezier(.3,.8,.94,.07);
+  ;
 }
