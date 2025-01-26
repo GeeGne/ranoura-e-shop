@@ -18,8 +18,8 @@
 
   --grey-color: hsl(0, 0%, 30%);
 
-  --background-color: hsl(0, 7%, 94%);
-  --background-invert-color: #1E1E1E;
+  --background-color: #f1efef;
+  --background-invert-color: #0e1010;
   --background-light-color: hsl(0, 0%, 90%);
   --background-light-invert-color: hsl(0, 0%, 10%);
   --background-deep-light-color: hsl(0, 0%, 80%);
@@ -38,7 +38,7 @@
   --normal-priority-color: hsl(240, 100%, 60%);
   --critical-priority-color: hsl(0, 100%, 60%);
 
-  --foreground: hsl(0, 0%, 0%);
+  --foreground: hsl(0, 93%, 6%);
   --background-1-url: url(/assets/background-1.jpg);
   --background-2-url: url(/assets/background-2.jpg);
   --background-3-url: url(/assets/background-3.jpg);

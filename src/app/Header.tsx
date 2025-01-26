@@ -29,6 +29,8 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
   const [ isWindowScrolled, setIsWindowScrolled ] = useState(false);
   const headerRef = useRef<HTMLInputElement>(null);
   const setCartToggle = useCartStore((stats:any) => stats.setToggle);
+  // const navbarToggle = useNavbarStore((status:any) => status.toggle);
+  const navbarToggle = true;
   const setNavbarToggle = useNavbarStore((status:any) => status.setToggle);
 
   const tabName = useTabNameStore((state: any) => state.tabName);
@@ -43,10 +45,25 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
     const { type } = e.currentTarget.dataset;
 
     switch (type) {
+      case 'category_button_is_clicked':
+        setNavbarToggle(true);
+        break;
+      default:
+        console.error('Unknown type: ', type);
+    }
+  }
+
+  const handleMouseEnter = (e: React.MouseEvent<HTMLElement>) => {
+    const { type } = e.currentTarget.dataset;
+
+    switch (type) {
       case 'cart_button_is_clicked':
         setCartToggle(true);
         break;
       case 'navbar_button_is_clicked':
+        setNavbarToggle(true);
+        break;
+      case 'category_button_is_clicked':
         setNavbarToggle(true);
         break;
       default:
@@ -83,7 +100,10 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
         onClick={handleClick}
       >
         <LineMdCloseToMenuAltTransition
-          className="text-heading-invert cursor-pointer"
+          className={`
+            cursor-pointer
+            ${navbarToggle ? 'lg:text-heading text-heading-invert' : 'text-heading-invert'}
+          `}
           width={24}
           height={24}
         />
@@ -95,7 +115,13 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
       >
         {categories.map((category, i) => 
           <span
-            className="nav-button-hover-effect text-lg text-heading-invert cursor-pointer"
+            className={`
+              text-lg cursor-pointer z-[25]
+              ${navbarToggle ? 'text-heading' : 'text-heading-invert nav-button-hover-effect'}
+            `}
+            data-type="category_button_is_clicked"
+            onClick={handleClick}
+            onMouseEnter={handleMouseEnter}
             key={i}
           >
             {category.title}
@@ -122,32 +148,48 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
           </span>      
         </Link>
       <button
-        className="nav-hover-effect"
+        className={`
+          z-[25]
+          ${navbarToggle || "nav-hover-effect"}
+        `}
       >
         <IconamoonSearchThin
-          className="text-heading-invert cursor-pointer"
+          className={`
+            cursor-pointer
+            ${navbarToggle ? 'lg:text-heading text-heading-invert' : 'text-heading-invert'}
+          `}
           width={24}
           height={24}
         />
       </button>
       <button
-        className="nav-hover-effect"
+        className={`
+          cursor-pointer z-[25]
+          ${navbarToggle || "nav-hover-effect"}
+        `}
       >
         <EpUser 
-          className="text-heading-invert cursor-pointer" 
+          className={`
+            ${navbarToggle ? 'lg:text-heading text-heading-invert' : 'text-heading-invert'}
+          `}
           width={24} 
           height={24} 
         />      
       </button>
       <button
-        className="nav-hover-effect"
+        className={`
+          z-[25]
+          ${navbarToggle || "nav-hover-effect"}
+        `}
         onClick={handleClick}
         data-type="cart_button_is_clicked"
       >
         <SolarCart4Outline
-          className="
-            text-heading-invert cursor-pointer
-          "
+          className={`
+            cursor-pointer
+            ${navbarToggle ? 'lg:text-heading text-heading-invert' : 'text-heading-invert'}
+
+          `}
           width={24}
           height={24}
         />
@@ -162,6 +204,18 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
               ? "opacity-100"
               : "opacity-0"
           }
+        `}
+      />
+      <div
+        className={`
+          absolute top-0 left-1/2 translate-x-[-50%] 
+          w-[100vw] h-full bg-background z-[20] 
+        `}        
+      />
+      <div
+        className={`
+          absolute top-full left-1/2 translate-x-[-50%] 
+          w-[100vw] h-[400px] bg-background z-[20]
         `}
       />
     </header>

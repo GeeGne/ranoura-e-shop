@@ -76,7 +76,6 @@ type FavouriteConfettiToggleProps = {
   setToggle: (value: boolean) => void;
 };
 
-
 const useFavouriteConfettiToggle = create<FavouriteConfettiToggleProps>(
   (set) => ({
     toggle: false,
