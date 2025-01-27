@@ -29,8 +29,8 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
   const [ isWindowScrolled, setIsWindowScrolled ] = useState(false);
   const headerRef = useRef<HTMLInputElement>(null);
   const setCartToggle = useCartStore((stats:any) => stats.setToggle);
-  // const navbarToggle = useNavbarStore((status:any) => status.toggle);
-  const navbarToggle = true;
+  const navbarToggle = useNavbarStore((status:any) => status.toggle);
+  // const navbarToggle = true;
   const setNavbarToggle = useNavbarStore((status:any) => status.setToggle);
 
   const tabName = useTabNameStore((state: any) => state.tabName);
@@ -57,12 +57,6 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
     const { type } = e.currentTarget.dataset;
 
     switch (type) {
-      case 'cart_button_is_clicked':
-        setCartToggle(true);
-        break;
-      case 'navbar_button_is_clicked':
-        setNavbarToggle(true);
-        break;
       case 'category_button_is_clicked':
         setNavbarToggle(true);
         break;
@@ -121,7 +115,8 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
             `}
             data-type="category_button_is_clicked"
             onClick={handleClick}
-            onMouseEnter={handleMouseEnter}
+            onMouseEnter={() => setNavbarToggle(true)}
+            onMouseLeave={() => setNavbarToggle(false)}
             key={i}
           >
             {category.title}
@@ -210,13 +205,19 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
         className={`
           absolute top-0 left-1/2 translate-x-[-50%] 
           w-[100vw] h-full bg-background z-[20] 
+          transition-all ease-in-out duration-300
+          ${navbarToggle ? 'lg:visible opacity-100' : 'lg:invisible opacity-0'}
         `}        
       />
       <div
         className={`
-          absolute top-full left-1/2 translate-x-[-50%] 
+          hidden lg:flex absolute top-full left-1/2 translate-x-[-50%] 
           w-[100vw] h-[400px] bg-background z-[20]
+          transition-all ease-in-out duration-300
+          ${navbarToggle ? 'lg:visible opacity-100' : 'lg:invisible opacity-0'}
         `}
+        onMouseEnter={() => setNavbarToggle(true)}
+        onMouseLeave={() => setNavbarToggle(false)}
       />
     </header>
   );
