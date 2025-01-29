@@ -4,11 +4,19 @@ import { useCartStore, useNavbarStore, useTabNameStore } from '@/stores/index';
 // ASSETS
 const ramdanBanner = "/assets/img/ramadan-nights.webp";
 
-export default function NavbarLg () {
+// JSON
+import categories from '@/json/categories.json';
+import subCategories from '@/json/subCategories.json';
+
+export default function SubCategoryListLg () {
 
   const navbarToggle = useNavbarStore((status:any) => status.toggle);
-  // const navbarToggle = true;
   const setNavbarToggle = useNavbarStore((status:any) => status.setToggle);
+  const selectedCategory = useNavbarStore((status:any) => status.selectedCategory);
+  const getCategoryTitle = () => categories.find(category => category.key === selectedCategory)?.title || 'Unknown';
+
+  // DEBUG
+  // console.log('selectedCategory', selectedCategory);
   
   return (
     <>
@@ -36,23 +44,21 @@ export default function NavbarLg () {
           <span
             className="text-body-extra-light text-xs"
           >
-            CLOTHING
+            { getCategoryTitle() }
           </span>
           <ul
-            className=""
+            className="flex flex-col"
           >
-            <li>
-              test
-            </li>
-            <li>
-              test1
-            </li>
-            <li>
-              test2
-            </li>
-            <li>
-              test3
-            </li>
+            {subCategories
+              .filter(subCategory => subCategory.categoryKey === selectedCategory)
+              .map((subCategory) => 
+                <li
+                  className="cursor-pointer"
+                >
+                  {subCategory.name}
+                </li>
+              )
+            }            
           </ul>
         </div>
         <img

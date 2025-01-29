@@ -5,8 +5,9 @@ import { useState, useEffect, useRef } from "react";
 import Link from 'next/link';
 
 // COMPONENTS
+import CategoryListLg from "@/components/header/CategoryListLg";
+import SubCategoryListLg from "@/components/header/SubCategoryListLg";
 import LineMdCloseToMenuAltTransition from "@/components/svgs/LineMdCloseToMenuAltTransition";
-import LineMdMenuToCloseAltTransition from "@/components/svgs/LineMdMenuToCloseAltTransition";
 import SolarCart4Outline from "@/components/svgs/SolarCart4Outline";
 import IconamoonSearchThin from "@/components/svgs/IconamoonSearchThin";
 import BottomBorder from "@/components/svgs/BottomBorder";
@@ -15,17 +16,6 @@ import FillOnScroll from "@/components/FillOnScroll";
 
 // STORES
 import { useCartStore, useNavbarStore, useTabNameStore } from '@/stores/index';
-
-// JSON
-import categories from '@/json/categories.json';
-
-// ASSETS
-const ramdanBanner = "/assets/img/ramadan-nights.webp";
-const ramdanBanner2 = "/assets/img/ramadan-nights-2.jpg";
-const outfit1 = "assets/img/outfit.jpg"
-const outfit2 = "assets/img/outfit-2.jpg"
-const outfit3 = "assets/img/outfit-3.jpg"
-
 
 type Props = {
   onScroll?: any;
@@ -38,7 +28,6 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
   const headerRef = useRef<HTMLInputElement>(null);
   const setCartToggle = useCartStore((stats:any) => stats.setToggle);
   const navbarToggle = useNavbarStore((status:any) => status.toggle);
-  // const navbarToggle = true;
   const setNavbarToggle = useNavbarStore((status:any) => status.setToggle);
 
   const tabName = useTabNameStore((state: any) => state.tabName);
@@ -53,6 +42,10 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
     const { type } = e.currentTarget.dataset;
 
     switch (type) {
+      case 'cart_button_is_clicked':
+        setCartToggle(true);
+        break;
+      case 'navbar_button_is_clicked':
       case 'category_button_is_clicked':
         setNavbarToggle(true);
         break;
@@ -97,64 +90,43 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
         layoutRef={layoutRef}
       />
       <button
-        className="nav-hover-effect lg:hidden"
+        className="nav-hover-effect lg:hidden z-[30]"
         data-type="navbar_button_is_clicked"
         onClick={handleClick}
       >
         <LineMdCloseToMenuAltTransition
           className={`
-            cursor-pointer
+            cursor-pointer 
             ${navbarToggle ? 'lg:text-heading text-heading-invert' : 'text-heading-invert'}
           `}
           width={24}
           height={24}
         />
       </button>
-      <ul
-        className="hidden lg:flex gap-4"
-        data-type="ar_button_is_clicked"
-        onClick={handleClick}
+      <CategoryListLg />
+      <Link 
+        href="/"
+        className="relative mx-auto"
       >
-        {categories.map((category, i) => 
-          <span
-            className={`
-              text-lg cursor-pointer z-[25] hover:underline hover:font-bold
-              transition-all ease-in-out duration-200
-              ${navbarToggle ? 'text-heading' : 'text-heading-invert nav-button-hover-effect'}
-            `}
-            data-type="category_button_is_clicked"
-            onClick={handleClick}
-            onMouseEnter={() => setNavbarToggle(true)}
-            onMouseLeave={() => setNavbarToggle(false)}
-            key={i}
-          >
-            {category.title}
-          </span>  
-        )}
-      </ul>
-        <Link 
-          href="/"
-          className="relative mx-auto"
+        <span
+          className={`
+            absolute top-1/2 left-1/2 translate-y-[-50%] translate-x-[-50%]
+            text-heading-invert text-2xl text-bold z-[30]
+            transition-all ease-in-out duration-500
+            ${
+              isWindowScrolled || (tabName !== 'home')
+                ? "top-1/2 scale-[100%]"
+                : "top-[calc(100%+120px)] scale-[200%]"
+            }
+            ${
+              navbarToggle &&
+                "lg:top-1/2 lg:scale-[100%] lg:text-heading"
+            }
+          `}
         >
-          <span
-            className={`
-              absolute top-1/2 left-1/2 translate-y-[-50%] translate-x-[-50%]
-              text-heading-invert text-2xl text-bold z-[30]
-              transition-all ease-in-out duration-500
-              ${
-                isWindowScrolled || (tabName !== 'home')
-                  ? "top-1/2 scale-[100%]"
-                  : "top-[calc(100%+120px)] scale-[200%]"
-              }
-              ${
-                navbarToggle &&
-                  "lg:top-1/2 lg:scale-[100%] lg:text-heading"
-              }
-            `}
-          >
-            RANOURA
-          </span>      
-        </Link>
+          RANOURA
+        </span>      
+      </Link>
       <button
         className={`
           z-[25]
@@ -214,55 +186,7 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
           }
         `}
       />
-      <div
-        className={`
-          absolute top-0 left-1/2 translate-x-[-50%] 
-          w-[100vw] h-full bg-background z-[20] 
-          transition-all ease-in-out duration-300
-          ${navbarToggle ? 'lg:visible opacity-100' : 'lg:invisible opacity-0'}
-        `}        
-      />
-      <div
-        className={`
-          hidden lg:flex absolute top-full left-1/2 translate-x-[-50%] 
-          w-[100vw] bg-background z-[20] p-8 shadow-md rounded-b-[3rem]
-          transition-all ease-in-out duration-300
-          ${navbarToggle ? 'lg:visible opacity-100' : 'lg:invisible opacity-0'}
-        `}
-        onMouseEnter={() => setNavbarToggle(true)}
-        onMouseLeave={() => setNavbarToggle(false)}
-      >
-        <div
-          className="flex flex-col flex-1 text-heading text-3xl font-bold gap-2"
-        >
-          <span
-            className="text-body-extra-light text-xs"
-          >
-            CLOTHING
-          </span>
-          <ul
-            className=""
-          >
-            <li>
-              test
-            </li>
-            <li>
-              test1
-            </li>
-            <li>
-              test2
-            </li>
-            <li>
-              test3
-            </li>
-          </ul>
-        </div>
-        <img
-          className="flex-[2] rounded-lg" 
-          src={ramdanBanner}
-          alt="Image"
-        />
-      </div>
+      <SubCategoryListLg />
     </header>
   );
 }
