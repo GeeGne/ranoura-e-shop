@@ -5,7 +5,7 @@ import { useState } from 'react';
 import "./globals.css";
 
 // COMPONENTS
-import Header from '@/app/Header';
+import Header from '@/components/Header/index';
 import Main from '@/app/Main';
 import Footer from '@/app/Footer';
 import Cart from '@/components/fixedLayouts/Cart';
