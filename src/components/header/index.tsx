@@ -17,6 +17,9 @@ import FillOnScroll from "@/components/FillOnScroll";
 // STORES
 import { useCartStore, useNavbarStore, useTabNameStore } from '@/stores/index';
 
+// ASSETS
+const logo = "/assets/img/ranoura-logo.png";
+
 type Props = {
   onScroll?: any;
   layoutRef?: any;
@@ -71,7 +74,7 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
   return (
     <header
       className={`
-        sticky top-0 flex flex-row items-center mx-auto gap-4 px-4 py-4 z-[1000] bg-transparent
+        sticky top-0 flex flex-row items-center mx-auto gap-4 px-4 py-8 z-[1000] bg-transparent
         before:content-[''] before:absolute before:top-0 before:left-1/2 before:translate-x-[-50%]
         before:w-[100vw] before:h-full before:z-[-1]
         transition-all ease-in-out duration-300
@@ -106,26 +109,27 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
       <CategoryListLg />
       <Link 
         href="/"
-        className="relative mx-auto"
+        className="relative w-[280px] mx-auto"
       >
-        <span
+        <img
+          src={logo}
+          alt="Ranoura Logo Brand for Women Clothing"
+          loading="eager"
           className={`
             absolute top-1/2 left-1/2 translate-y-[-50%] translate-x-[-50%]
-            text-heading-invert text-2xl text-bold z-[30]
+            z-[30] w-full
             transition-all ease-in-out duration-500
             ${
               isWindowScrolled || (tabName !== 'home')
-                ? "top-1/2 scale-[100%]"
-                : "top-[calc(100%+120px)] scale-[200%]"
+                ? "top-1/2 min-w-full"
+                : "top-[calc(100%+120px)] md:top-[calc(100%+150px)] min-w-[150%] md:min-w-[200%]"
             }
             ${
               navbarToggle &&
-                "lg:top-1/2 lg:scale-[100%] lg:text-heading"
+                "lg:top-1/2 lg:min-w-full lg:invert-[100%]"
             }
           `}
-        >
-          RANOURA
-        </span>      
+        />
       </Link>
       <button
         className={`

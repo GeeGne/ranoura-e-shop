@@ -1,6 +1,9 @@
 // STORES
 import { useCartStore, useNavbarStore, useTabNameStore } from '@/stores/index';
 
+// COMPONENTS
+import UnderlineStyle from '@/components/UnderlineStyle';
+
 // ASSETS
 const ramdanBanner = "/assets/img/ramadan-nights.webp";
 
@@ -47,15 +50,23 @@ export default function SubCategoryListLg () {
             { getCategoryTitle() }
           </span>
           <ul
-            className="flex flex-col"
+            className="flex flex-col gap-2"
           >
             {subCategories
               .filter(subCategory => subCategory.categoryKey === selectedCategory)
-              .map((subCategory) => 
+              .map((subCategory, i) => 
                 <li
+                  key={i}
                   className="cursor-pointer"
                 >
-                  {subCategory.name}
+                  <span
+                    className="group relative"
+                  >
+                    {subCategory.name}
+                    <UnderlineStyle 
+                      style={{backgroundColor: 'var(--font-heading-color)'}}
+                    />
+                  </span>
                 </li>
               )
             }            

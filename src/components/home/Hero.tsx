@@ -21,14 +21,16 @@ export default function Hero({ className = "", ...props }: Props) {
   return (
     <section
       className={`
-        relative z-[1] bg-primary w-full aspect-[2/3] md:aspect-[1/1] lg:aspect-[1.85/1]
+        relative z-[1] bg-primary 
+        w-full aspect-[2/3] md:aspect-[1/1] lg:aspect-[1.85/1]
         ${className}
       `}
     > 
       <video 
           autoPlay muted loop 
           className="
-            absolute bottom-0 left-0 w-full h-[calc(100%+60px)] object-cover 
+            absolute bottom-0 left-0 
+            w-full h-[calc(100%+100px)] object-cover 
           "
         >
           <source src={introVideo2} />

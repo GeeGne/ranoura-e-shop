@@ -17,11 +17,11 @@ export default function Footer ({ ...props }) {
     >
       <section
         className="
-          grid grid-cols-1 lg:grid-cols-4 lg:gap-4
+          grid grid-cols-1 lg:grid-cols-5 lg:gap-4
         "
     >
         <div
-          className="flex flex-col gap-2 w-full max-w-[600px] lg:max-w-[300px] mx-auto pb-4"
+          className="lg:col-span-2 flex flex-col gap-2 shirnk-0 w-full max-w-[600px] lg:max-w-auto mx-auto pb-4"
         >
           <span
             className="text-heading-invert text-2xl text-bold"
@@ -33,7 +33,7 @@ export default function Footer ({ ...props }) {
           >
             I am not arrogant. I know my limitations, but I also believe in my abilities. When we are united and work sincerely, we can overcome difficulties. Cooperation and mutual understanding bring light to our path. Life is a continuous journey of learning and improvement. Together, we can achieve great things and leave a meaningful impact.
           </span>
-          <div>
+          <div className="flex shirnk-0">
             <input 
               className="
                 p-2 bg-primary font-bold text-heading-invert border-solid border-[2px] focus:border-[2px] border-heading-invert focus:border-heading-invert outline-none
@@ -93,7 +93,7 @@ export default function Footer ({ ...props }) {
                   text-body-invert hover:text-fuchsia-400 hover:scale-125 cursor-pointer
                   transition-all ease-in-out duration-300
                 "
-            />
+              />
             </li>
             <li>
               <Telegram
@@ -101,7 +101,7 @@ export default function Footer ({ ...props }) {
                   text-body-invert hover:text-cyan-400 hover:scale-125 cursor-pointer
                   transition-all ease-in-out duration-300
                 "
-            />
+              />
             </li>
           </ul>
         </div>

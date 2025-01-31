@@ -56,7 +56,7 @@ export default function CategoryListLg () {
           data-type="category_button_is_clicked"
           data-category-key={category.key}
           onClick={handleClick}
-        onMouseEnter={() => {setNavbarToggle(true); setSelectedCategory(category.key)}}
+          onMouseEnter={() => {setNavbarToggle(true); setSelectedCategory(category.key)}}
           onMouseLeave={() => setNavbarToggle(false)}
           key={i}
         >

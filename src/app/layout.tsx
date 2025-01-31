@@ -39,7 +39,7 @@ export default function RootLayout({
         >
           <Header onScroll={onScroll} layoutRef={layoutRef}/>
           <Main
-            className="relative bg-background pb-[3rem] md:pb-[4rem] lg:pb-[6rem]"
+            className="relative bg-background pb-[2rem] md:pb-[3rem] lg:pb-[3rem]"
           >
             {children}
             <BottomBorder
