@@ -90,3 +90,51 @@
   --background-3-url: url(/assets/background-3.jpg);
   --background-4-url: url(/assets/background-4.jpg);
 }
+
+.black-lightCaramel-theme {
+  --primary-color: #1c1c1c;
+  --secondary-color: #aea594;
+  --primary-invert-color: #f5f5ed;
+  --inbetween-color: #dddad3;
+  --secondary-invert-color: #dddad3;
+  --today-label-color: #00FFFF;
+  --today-label-invert-color: #008B8B;
+
+  --font-heading-color: hsl(0, 0%, 10%);
+  --font-heading-invert-color: hsl(0, 0%, 90%);
+  --font-body-color: hsl(0, 0%, 30%);
+  --font-body-invert-color: hsl(0, 0%, 80%);
+  --font-light-color: hsl(0, 0%, 40%);
+  --font-light-invert-color: hsl(0, 0%, 60%);
+  --font-extra-light-color: hsl(0, 0%, 60%);
+  --font-extra-light-invert-color: hsl(0, 0%, 40%);
+
+  --grey-color: hsl(0, 0%, 30%);
+
+  --background-color: #f6f6ee;
+  --background-invert-color: #1c1c1c;
+  --background-light-color: hsl(0, 0%, 90%);
+  --background-light-invert-color: hsl(0, 0%, 10%);
+  --background-deep-light-color: hsl(0, 0%, 80%);
+  --background-deep-light-invert-color: hsl(0, 0%, 20%);
+  --background-deep-color: hsl(0, 0%, 70%);
+  --background-deep-invert-color: hsl(0, 0%, 30%);
+  --background-light-dark-color: hsl(0, 0%, 60%);
+  --background-deep-dark-color: hsl(0, 0%, 50%);
+  --shade-color: hsla(0, 0%, 0%, 0.3);
+  --shade-v2-color: hsla(0, 7%, 94%, 0.7);
+
+  --bounce-bezier: cubic-bezier(0.68,-0.55,0.27,1.55);
+
+  --important-priority-color: hsl(48, 100%, 50%);
+  --none-priority-color: hsl(0, 0%, 60%);
+  --normal-priority-color: hsl(240, 100%, 60%);
+  --critical-priority-color: hsl(0, 100%, 60%);
+
+  --foreground: #1c1c1c;
+  --background-1-url: url(/assets/background-1.jpg);
+  --background-2-url: url(/assets/background-2.jpg);
+  --background-3-url: url(/assets/background-3.jpg);
+  --background-4-url: url(/assets/background-4.jpg);
+  --circular-progress: 20;
+}

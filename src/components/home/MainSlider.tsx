@@ -2,7 +2,7 @@
 import FilmTape from "@/components/FilmTape";
 import DisplayImg from "@/components/DisplayImg";
 
-export default function MainSlider () {
+export default function MainSlider ({ ...props }) {
 
   return (
     <div
@@ -10,6 +10,7 @@ export default function MainSlider () {
         relative flex w-full 
         bg-primary
       "
+      { ...props }
     >
       <span
         className="

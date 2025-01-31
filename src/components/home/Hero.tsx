@@ -22,7 +22,7 @@ export default function Hero({ className = "", ...props }: Props) {
     <section
       className={`
         relative z-[1] bg-primary 
-        w-full aspect-[2/3] md:aspect-[1/1] lg:aspect-[1.85/1]
+        w-full h-svh
         ${className}
       `}
     > 

@@ -25,7 +25,7 @@ export default function SubCategoryListLg () {
     <>
       <div
         className={`
-          absolute top-0 left-1/2 translate-x-[-50%] 
+          hidden lg:flex absolute top-0 left-1/2 translate-x-[-50%] 
           w-[100vw] h-full bg-background z-[20] 
           transition-all ease-in-out duration-300
           ${navbarToggle ? 'lg:visible opacity-100' : 'lg:invisible opacity-0'}
