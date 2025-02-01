@@ -3,6 +3,7 @@
 // HOOKS
 import { useState, useEffect, useRef } from "react";
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 // COMPONENTS
 import CategoryListLg from "@/components/header/CategoryListLg";
@@ -27,6 +28,8 @@ type Props = {
 
 export default function Header({ onScroll, layoutRef, ...props }: Props) {
   
+  const router = useRouter();
+
   const [ isWindowScrolled, setIsWindowScrolled ] = useState(false);
   const headerRef = useRef<HTMLInputElement>(null);
   const setCartToggle = useCartStore((stats:any) => stats.setToggle);
@@ -46,6 +49,7 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
 
     switch (type) {
       case 'ranoura_logo_is_clicked':
+        router.push("/");
         layoutRef.scrollTo({top: 0, behavior: tabName === 'home' ? "smooth" : "instant"});
         break;
       case 'cart_button_is_clicked':
@@ -96,7 +100,13 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
         layoutRef={layoutRef}
       />
       <button
-        className="nav-hover-effect lg:hidden z-[30]"
+        className={`
+          lg:hidden z-[30]
+          ${navbarToggle 
+            || tabName !== "home" 
+            || "nav-hover-effect"
+          }
+        `}
         data-type="navbar_button_is_clicked"
         onClick={handleClick}
       >
@@ -120,8 +130,7 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
         isWindowScrolled={isWindowScrolled} 
         tabName={tabName}
       />
-      <Link 
-        href="/"
+      <button 
         className="relative w-[280px] mx-auto"
         data-type="ranoura_logo_is_clicked"
         onClick={handleClick}
@@ -144,12 +153,14 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
             }
           `}
         />
-      </Link>
+      </button>
       <button
         className={`
-          z-[25]
-          ${navbarToggle || "nav-hover-effect"}
-            cursor-pointer 
+          z-[25] cursor-pointer 
+          ${navbarToggle 
+            || tabName !== "home" 
+            || "nav-hover-effect"
+          }
         `}
       >
         <IconamoonSearchThin
@@ -171,7 +182,10 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
       <button
         className={`
           cursor-pointer z-[25]
-          ${navbarToggle || "nav-hover-effect"}
+          ${navbarToggle 
+            || tabName !== "home" 
+            || "nav-hover-effect"
+          }
         `}
       >
         <EpUser 
@@ -192,7 +206,10 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
       <button
         className={`
           z-[25]
-          ${navbarToggle || "nav-hover-effect"}
+          ${navbarToggle 
+            || tabName !== "home" 
+            || "nav-hover-effect"
+          }
         `}
         onClick={handleClick}
         data-type="cart_button_is_clicked"

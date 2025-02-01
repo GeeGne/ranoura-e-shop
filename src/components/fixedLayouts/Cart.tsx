@@ -77,7 +77,7 @@ export default function Cart () {
       <button
         className="
         relative flex items-center justify-end 
-        w-full max-w-[1400px] mx-auto p-4 opacity-100 cursor-pointer"
+        w-full max-w-[1400px] mx-auto px-4 py-8 opacity-100 cursor-pointer"
         onClick={handleClick}
         data-type="close_button_is_clicked"
       >
@@ -95,12 +95,12 @@ export default function Cart () {
         <div
           className="
             absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]
-            w-screen h-full text-body text-3xl font-thin
+            w-screen h-full text-body text-4xl font-thin
             flex items-center justify-center gap-2 bg-[hsla(0,0%,80%,0.6)]  
           "
         >
           <ArrowUp 
-            className="w-6 h-6 text-between rounded-full border-solid border-body-light border-[1px] p-1"
+            className="w-8 h-8 text-between rounded-full border-solid border-body-light border-[1px] p-1"
           />
           <h2>
             CLOSE

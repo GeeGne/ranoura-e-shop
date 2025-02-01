@@ -92,7 +92,7 @@ export default function Navbar () {
       <button
         className="
           relative sticky top-0 flex items-center justify-start 
-          w-full max-w-[1400px] mx-auto p-4 
+          w-full max-w-[1400px] mx-auto px-4 py-8
           opacity-100 cursor-pointer z-[20]
         "
         onClick={handleClick}
@@ -112,13 +112,13 @@ export default function Navbar () {
         <div
           className="
             absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]
-            w-screen h-full text-body text-3xl font-thin
+            w-screen h-full text-body text-4xl font-thin
             flex items-center justify-center gap-2 bg-[hsla(0,0%,80%,0.6)]
             border-b border-inbetween backdrop-blur-md
           "
         >
           <ArrowUp 
-            className="w-6 h-6 text-between rounded-full border-solid border-body-light border-[1px] p-1"
+            className="w-8 h-8 text-between rounded-full border-solid border-body-light border-[1px] p-1"
           />
           <h2>
             CLOSE
