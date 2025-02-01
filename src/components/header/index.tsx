@@ -49,8 +49,9 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
 
     switch (type) {
       case 'ranoura_logo_is_clicked':
+        if (tabName === 'home') return layoutRef.scrollTo({top: 0, behavior: "smooth"});
         router.push("/");
-        layoutRef.scrollTo({top: 0, behavior: tabName === 'home' ? "smooth" : "instant"});
+        layoutRef.scrollTo({top: 0, behavior: "instant"});
         break;
       case 'cart_button_is_clicked':
         setCartToggle(true);
