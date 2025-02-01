@@ -28,17 +28,17 @@ export default function CategoryPicker () {
               src={itm.imgURL}
               alt="image"
               className="
-                absolute top-1/2 left-1/2 
-                translate-x-[-50%] translate-y-[-50%] 
-                shrink-0 w-full h-full object-center object-contain 
-                drop-shadow-md z-[15] 
+                absolute top-1/2 left-1/2
+                translate-x-[-50%] translate-y-[-50%]
+                shrink-0 w-full h-full object-center object-contain
+                drop-shadow-md z-[15] drop-shadow-lg
               "
             />
             <div
               className="
                 absolute top-1/2 left-1/2 
                 translate-x-[-50%] translate-y-[-50%] w-[calc(100%-2rem)] h-[calc(100%-2rem)] 
-                flex items-center justify-center bg-[hsla(0,0%,0%,0.3)] rounded-full
+                flex items-center justify-center bg-[var(--primary-color-invert)] rounded-full
                 border border-primary border-[6px] border-double z-[10]
               "
             >
