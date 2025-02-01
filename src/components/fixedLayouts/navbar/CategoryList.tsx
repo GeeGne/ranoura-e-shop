@@ -32,6 +32,9 @@ export default function CategoryList () {
     }
   }
 
+  // DEBUG
+  console.log('categories: ', categories);
+
   return (
     <ul
       className="flex flex-col w-full shrink-0 p-8 gap-8"
@@ -40,7 +43,7 @@ export default function CategoryList () {
         <li
           className={`
             group relative w-full aspect-square bg-foreground 
-            rounded-2xl cursor-pointer overflow-hidden
+            rounded-2xl cursor-pointer overflow-hidden cursor-pointer
             ${categoryToggle && 'h-0'}
           `}
           role="button"
@@ -53,7 +56,7 @@ export default function CategoryList () {
             className="
               absolute top-0 left-0 w-full h-full z-[5]
             "
-            src={backgroundImg3}
+            src={itm.navbarImg}
             alt="An Image"
           />
           <div

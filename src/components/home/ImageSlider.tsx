@@ -8,7 +8,16 @@ import DisplayImg from "@/components/DisplayImg";
 import EpArrowLeft from "@/components/svgs/EpArrowLeft";
 
 // ASSETS
-const img1 = "/assets/img/ex-1.jpg";
+const small1 = "/assets/img/background(4).webp";
+const small2 = "/assets/img/background(3).jpg";
+const small3 = "/assets/img/background(6).jpg";
+const medium1 = "/assets/img/background(4).webp";
+const medium2 = "/assets/img/background(8).webp";
+const medium3 = "/assets/img/background(6).jpg";
+const large1 = "/assets/img/background(7).webp";
+const large2 = "/assets/img/background(9).webp";
+const large3 = "/assets/img/background(10).webp";
+const img1 = "/assets/img/background(7).webp";
 const cover1 = "/assets/img/cover-1.jpg";
 const cover2 = "/assets/img/cover-2.webp";
 
@@ -19,9 +28,23 @@ export default function ImageSlider({
   className?: string;
 }) {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const array = [cover2, cover1, img1, cover2, cover1];
+  const array = [
+    {
+      sm: small1,
+      md: medium1,
+      lg: large1 
+    },{
+      sm: small2,
+      md: medium2,
+      lg: large2 
+    },{
+      sm: small3,
+      md: medium3,
+      lg: large3 
+    }
+  ];
   const contentUlRef = useRef<any>(null);
-  const slideDuration = 5000;
+  const slideDuration = 8000;
 
   useEffect(() => {
     const intervalId = setInterval(indexIncrement, slideDuration);
@@ -108,34 +131,70 @@ export default function ImageSlider({
         ref={contentUlRef}
       >
         <li
-          className="w-full aspect-[3/4] md:aspect-[4/3] lg:aspect-[2/1] shrink-0"
+          className="w-full aspect-[3/4] md:aspect-[4/3] lg:aspect-[2/1] shrink-0 cursor-pointer"
         >
-          <DisplayImg
+          <picture
             className="w-full h-full object-cover object-center"
-            src={array[totalIndex()]}
-            alt="test"
-          />
+          >
+            <source 
+              media="(min-width: 1200px)"
+              srcSet={array[totalIndex()].lg}
+            />
+            <source 
+              media="(min-width: 768px)"
+              srcSet={array[totalIndex()].md}
+            />
+            <img
+              className="w-full h-full object-cover object-center"
+              src={array[totalIndex()].sm}
+              alt="test"
+            />
+          </picture>
         </li>
         {array.map((itm, i) => (
           <li
-            className="w-full aspect-[3/4] md:aspect-[4/3] lg:aspect-[2/1] shrink-0"
+            className="w-full aspect-[3/4] md:aspect-[4/3] lg:aspect-[2/1] shrink-0 cursor-pointer"
             key={i}
           >
-            <DisplayImg
+            <picture
               className="w-full h-full object-cover object-center"
-              src={itm}
-              alt="test"
-            />
+            >
+              <source 
+                media="(min-width: 1200px)"
+                srcSet={itm.lg}
+              />
+              <source 
+                media="(min-width: 768px)"
+                srcSet={itm.md}
+              />
+              <img
+                className="w-full h-full object-cover object-center"
+                src={itm.sm}
+                alt="test"
+              />
+            </picture>
           </li>
         ))}
         <li
-          className="w-full aspect-[3/4] md:aspect-[4/3] lg:aspect-[2/1] shrink-0"
+          className="w-full aspect-[3/4] md:aspect-[4/3] lg:aspect-[2/1] shrink-0 cursor-pointer"
         >
-          <DisplayImg
+          <picture
             className="w-full h-full object-cover object-center"
-            src={array[0]}
-            alt="test"
-          />
+          >
+            <source 
+              media="(min-width: 1200px)"
+              srcSet={array[0].lg}
+            />
+            <source 
+              media="(min-width: 768px)"
+              srcSet={array[0].md}
+            />
+            <img
+              className="w-full h-full object-cover object-center"
+              src={array[0].sm}
+              alt="test"
+            />
+          </picture>
         </li>
       </ul>
       <ul
