@@ -29,7 +29,7 @@ export default function Hero({ className = "", ...props }: Props) {
       <video 
           autoPlay muted loop 
           className="
-            absolute bottom-0 left-0 
+            absolute bottom-0 left-0 bg-primary
             w-full h-[calc(100%+100px)] object-cover 
           "
         >
