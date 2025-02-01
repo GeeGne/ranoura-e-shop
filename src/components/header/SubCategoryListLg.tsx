@@ -73,8 +73,8 @@ export default function SubCategoryListLg () {
           </ul>
         </div>
         <img
-          className="flex-[2] rounded-lg" 
-          src={ramdanBanner}
+          className="flex-[2] w-full aspect-[2/1] rounded-lg cursor-pointer object-contain object-right" 
+          src={categories?.find(itm => selectedCategory === itm.key)?.navbarLgImg || ramdanBanner}
           alt="Image"
         />
       </div>

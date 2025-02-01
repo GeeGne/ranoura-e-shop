@@ -11,7 +11,7 @@ export default function Footer ({ ...props }) {
   return (
     <footer 
       className="
-        relative flex flex-col gap-4 p-4 
+        relative flex flex-col gap-4 p-4 bg-primary
       "
       {...props}
     >

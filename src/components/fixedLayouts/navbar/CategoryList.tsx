@@ -8,11 +8,6 @@ import categories from '@/json/categories.json';
 // STORES
 import { useNavbarStore } from '@/stores/index';
 
-// ASSETS
-// const backgroundImg = "assets/img/background.jpg";
-// const backgroundImg2 = "assets/img/background(2).jpg";
-const backgroundImg3 = "assets/img/background(3).jpg";
-
 export default function CategoryList () {
   
   const categoryToggle = useNavbarStore((status:any) => status.categoryToggle);
@@ -43,7 +38,7 @@ export default function CategoryList () {
         <li
           className={`
             group relative w-full aspect-square bg-foreground 
-            rounded-2xl cursor-pointer overflow-hidden cursor-pointer
+            rounded-2xl cursor-pointer overflow-hidden
             ${categoryToggle && 'h-0'}
           `}
           role="button"

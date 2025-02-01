@@ -9,7 +9,12 @@ import { useCartStore, useNavbarStore } from '@/stores/index';
 // JSON
 import categories from '@/json/categories.json';
 
-export default function CategoryListLg () {
+type Props = {
+  isWindowScrolled?: any;
+  tabName?: string;
+}
+
+export default function CategoryListLg ({ isWindowScrolled, tabName }: Props) {
 
   const navbarToggle = useNavbarStore((status:any) => status.toggle);
   const setNavbarToggle = useNavbarStore((status:any) => status.setToggle);
@@ -51,7 +56,14 @@ export default function CategoryListLg () {
           className={`
             text-lg cursor-pointer z-[25] hover:underline hover:font-bold
             transition-all ease-in-out duration-200
-            ${navbarToggle ? 'text-heading' : 'text-heading-invert nav-button-hover-effect'}
+            ${navbarToggle 
+              ? 'text-heading' 
+              : isWindowScrolled
+                ? "text-heading-invert nav-button-hover-effect"
+                : (tabName === 'home')
+                  ? "text-heading-invert"
+                  : "text-heading"
+            }
           `}
           data-type="category_button_is_clicked"
           data-category-key={category.key}

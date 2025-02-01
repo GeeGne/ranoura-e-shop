@@ -80,7 +80,7 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
         transition-all ease-in-out duration-300
         before:transition-all before:ease-in-out before:duration-300
         ${
-          isWindowScrolled || (tabName !== 'home')
+          isWindowScrolled 
             ? "bg-primary before:bg-primary"
             : "bg-transparent before:bg-transparent"
         }
@@ -100,13 +100,23 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
         <LineMdCloseToMenuAltTransition
           className={`
             cursor-pointer 
-            ${navbarToggle ? 'lg:text-heading text-heading-invert' : 'text-heading-invert'}
+            ${navbarToggle 
+              ? 'lg:text-heading text-heading-invert' 
+              : isWindowScrolled
+                ? "text-heading-invert"
+                : (tabName === 'home')
+                  ? "text-heading-invert"
+                  : "text-heading"
+            }
           `}
           width={24}
           height={24}
         />
       </button>
-      <CategoryListLg />
+      <CategoryListLg 
+        isWindowScrolled={isWindowScrolled} 
+        tabName={tabName}
+      />
       <Link 
         href="/"
         className="relative w-[280px] mx-auto"
@@ -119,14 +129,13 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
             absolute top-1/2 left-1/2 translate-y-[-50%] translate-x-[-50%]
             z-[30] w-full
             transition-all ease-in-out duration-500
-            ${
-              isWindowScrolled || (tabName !== 'home')
+            ${navbarToggle 
+              ? "lg:top-1/2 lg:min-w-full lg:invert-[100%]" 
+              : isWindowScrolled
                 ? "top-1/2 min-w-full"
-                : "top-[calc(100%+120px)] md:top-[calc(100%+150px)] min-w-[150%] md:min-w-[200%]"
-            }
-            ${
-              navbarToggle &&
-                "lg:top-1/2 lg:min-w-full lg:invert-[100%]"
+                : (tabName === 'home')
+                  ? "top-[calc(100%+120px)] md:top-[calc(100%+150px)] min-w-[150%] md:min-w-[200%]"
+                  : "top-1/2 min-w-full top-1/2 min-w-full invert-[100%]"
             }
           `}
         />
@@ -135,12 +144,20 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
         className={`
           z-[25]
           ${navbarToggle || "nav-hover-effect"}
+            cursor-pointer 
         `}
       >
         <IconamoonSearchThin
           className={`
             cursor-pointer
-            ${navbarToggle ? 'lg:text-heading text-heading-invert' : 'text-heading-invert'}
+            ${navbarToggle 
+              ? 'lg:text-heading text-heading-invert' 
+              : isWindowScrolled
+                ? "text-heading-invert"
+                : (tabName === 'home')
+                  ? "text-heading-invert"
+                  : "text-heading"
+            }
           `}
           width={24}
           height={24}
@@ -154,7 +171,14 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
       >
         <EpUser 
           className={`
-            ${navbarToggle ? 'lg:text-heading text-heading-invert' : 'text-heading-invert'}
+            ${navbarToggle 
+              ? 'lg:text-heading text-heading-invert' 
+              : isWindowScrolled
+                ? "text-heading-invert"
+                : (tabName === 'home')
+                  ? "text-heading-invert"
+                  : "text-heading"
+            }
           `}
           width={24} 
           height={24} 
@@ -171,8 +195,14 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
         <SolarCart4Outline
           className={`
             cursor-pointer
-            ${navbarToggle ? 'lg:text-heading text-heading-invert' : 'text-heading-invert'}
-
+            ${navbarToggle 
+              ? 'lg:text-heading text-heading-invert' 
+              : isWindowScrolled
+                ? "text-heading-invert"
+                : (tabName === 'home')
+                  ? "text-heading-invert"
+                  : "text-heading"
+            }
           `}
           width={24}
           height={24}
