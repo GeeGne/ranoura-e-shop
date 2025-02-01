@@ -81,14 +81,14 @@ const useFavouriteConfettiToggle = create<FavouriteConfettiToggleProps>(
 );
 
 type layoutRefProps = {
-  layoutRef?: number;
-  setLayoutRef?: (value: any) => void;
+  layoutRef?: any;
+  setLayoutRef: (value: any) => void;
 };
 
 const useLayoutRefStore = create<layoutRefProps>(
   (set) => ({
-    layoutRef: 3,
-    setLayoutRef: (layoutRef: number) => set({ layoutRef })
+    layoutRef: null,
+    setLayoutRef: (layoutRef: any) => set({ layoutRef })
   })
 );
 
