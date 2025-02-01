@@ -35,6 +35,9 @@ import { useFavouritesStore, useFavouriteConfettiToggle } from '@/stores/index';
 // CONFETTI 
 import Confetti from "react-canvas-confetti/dist/presets/explosion";
 
+// STORES
+import { useLayoutRefStore } from '@/stores/index';
+
 type Props = {
   title?: string;
 }
@@ -51,6 +54,8 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
   const setConfettiToggle = useFavouriteConfettiToggle(state => state.setToggle);
   const confettiToggle = useFavouriteConfettiToggle(state => state.toggle);
   const confettiTimerId = useRef<any>(0);
+
+  const layoutRef = useLayoutRefStore((state: any) => state.layoutRef);
 
   const [ scrollWidth, setScrollWidth ] = useState<number>(0);
   const [ leftArrowInactive, setLeftArrowInactive ] = useState<boolean>(true);
@@ -72,13 +77,12 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
       setConfettiToggle(true);
     }, 400)
 
-
     clearTimeout(confettiTimerId?.current);
     // confettiTimerId?.current = setTimeout(() => {
     setTimeout(() => {
       setConfettiToggle(false);
     }, 1000)
-  }
+  };
 
   const onColorChange = (color: string, productId: number) => {
     const getProduct = () => products.find(product => product.id === productId);
@@ -102,8 +106,14 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
     const scrollTotalWidth = ulRefWidth / (totalTiles) + gap;
 
     switch (type) {
+      case 'navigate_to_category':
       case 'navigate_to_product':
-        setImgScaleToggle(val => val === Number(index) ? false : Number(index))
+        setTimeout(() => 
+          layoutRef.scrollTo({top: 0, behavior: "instant"})
+        ,200);
+        break;
+      case 'product_img_wrapper_is_clicked':
+        setImgScaleToggle(val => val === Number(index) ? false : Number(index));
         break;
       case 'scroll_left_button_is_clicked':
         setScrollWidth((val: number) => {
@@ -162,6 +172,7 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
   // console.log('ulRefWidth', ulRefWidth)
   // console.log('ulRefScrollWidth', ulRefScrollWidth)
   // console.log('favourites: ', favourites);
+  console.log('layoutRef: ', layoutRef);
   
   return (
     <section
@@ -173,6 +184,8 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
         <Link
           className="relative flex items-center text-3xl text-heading font-bold transform"
           href="/categories/test"
+          data-type="navigate_to_category"
+          onClick={handleClick}
         >
           <span>
             {title}
@@ -184,6 +197,8 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
         <div className="flex items-center gap-4">
           <Link
             href="/categories/test"
+            data-type="navigate_to_category"
+            onClick={handleClick}
           >
             <PepiconsPencilOpenCircleFilled
               className="cursor-pointer my-auto text-heading"
@@ -253,7 +268,7 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
                   transition-all duraiton-200 ease-in-out
                   ${imgScaleToggle === i? 'scale-[130%] z-[10]' : 'scale-[100%]'}  
                 `}
-                data-type="navigate_to_product"
+                data-type="product_img_wrapper_is_clicked"
                 data-index={i}
                 onClick={handleClick}
               >
@@ -326,10 +341,10 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
                   }
                 </div>
                 <nav
-                className={`
-                  absolute bottom-2 right-2 z-[10]
-                  flex flex-col
-                `}
+                  className={`
+                    absolute bottom-2 right-2 z-[10]
+                    flex flex-col
+                  `}
                 >
                   <LineMdArrowsDiagonalRotated 
                     className={`
@@ -346,6 +361,8 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
               <Link
                 className="text-heading text-md mb-auto"
                 href={`/product/${strSlugForProducts(product.name, product.id)}`}
+                data-type="navigate_to_product"
+                onClick={handleClick}
               >
                 {product.name}
               </Link>

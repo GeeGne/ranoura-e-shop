@@ -18,7 +18,6 @@ type NavbarStoreProps = {
   setSelectedCategory: (value: string) => void;
 };
 
-
 const useNavbarStore = create<NavbarStoreProps>(
   (set) => ({
     toggle: false,
@@ -27,7 +26,6 @@ const useNavbarStore = create<NavbarStoreProps>(
     setCategoryToggle: (categoryToggle: boolean) => set({ categoryToggle }),
     selectedCategory: '',
     setSelectedCategory: (selectedCategory: string) => set({ selectedCategory })
-
   })
 );
 
@@ -63,7 +61,6 @@ type FavouritesProps = {
   setFavourites: (value: number[]) => void;
 };
 
-
 const useFavouritesStore = create<FavouritesProps>(
   (set) => ({
     favourites: [],
@@ -83,8 +80,21 @@ const useFavouriteConfettiToggle = create<FavouriteConfettiToggleProps>(
   })
 );
 
+type layoutRefProps = {
+  layoutRef?: number;
+  setLayoutRef?: (value: any) => void;
+};
+
+const useLayoutRefStore = create<layoutRefProps>(
+  (set) => ({
+    layoutRef: 3,
+    setLayoutRef: (layoutRef: number) => set({ layoutRef })
+  })
+);
+
 export { 
   useCartStore, useNavbarStore, 
   useTabNameStore, useFilterWindowStore,
-  useFavouritesStore, useFavouriteConfettiToggle
+  useFavouritesStore, useFavouriteConfettiToggle,
+  useLayoutRefStore
 };

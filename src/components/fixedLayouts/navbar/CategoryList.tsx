@@ -28,7 +28,7 @@ export default function CategoryList () {
   }
 
   // DEBUG
-  console.log('categories: ', categories);
+  // console.log('categories: ', categories);
 
   return (
     <ul

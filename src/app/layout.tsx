@@ -14,13 +14,17 @@ import FilterWindow from '@/components/fixedLayouts/FilterWindow';
 import FixedLayouts from '@/components/fixedLayouts/Index';
 import BottomBorder from '@/components/svgs/BottomBorder';
 
+// STORES
+import { useLayoutRefStore } from '@/stores/index';
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
 
-  const [ layoutRef, setLayoutRef ] = useState<any>(null);
+  const layoutRef = useLayoutRefStore(state => state.layoutRef);
+  const setLayoutRef = useLayoutRefStore(state => state.setLayoutRef);
   const [ onScroll, setOnScroll ] = useState<any>(null);
 
   // DEBUG & UI

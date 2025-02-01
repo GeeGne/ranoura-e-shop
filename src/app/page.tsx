@@ -18,7 +18,7 @@ import { useTabNameStore } from '@/stores/index';
 export default function Home() {
 
   const setTabName = useTabNameStore((state: any) => state.setTabName);
-
+  
   useEffect(() => {
     setTabName('home');
   }, []);

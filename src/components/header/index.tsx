@@ -45,6 +45,9 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
     const { type } = e.currentTarget.dataset;
 
     switch (type) {
+      case 'ranoura_logo_is_clicked':
+        layoutRef.scrollTo({top: 0, behavior: tabName === 'home' ? "smooth" : "instant"});
+        break;
       case 'cart_button_is_clicked':
         setCartToggle(true);
         break;
@@ -120,6 +123,8 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
       <Link 
         href="/"
         className="relative w-[280px] mx-auto"
+        data-type="ranoura_logo_is_clicked"
+        onClick={handleClick}
       >
         <img
           src={logo}
