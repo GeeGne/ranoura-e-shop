@@ -36,6 +36,18 @@ export default function AlertMessage () {
   }, [toggle])
 
 
+  const handleClick = (e: any) => {
+    const { type } = e.currentTarget.dataset;
+
+    switch (type) {
+      case 'close_button_is_clicked':
+        wrapperRef.current.style.display = 'none';
+        break;
+      default:
+      console.error('Unknown type: ', type);
+    }
+  }
+
   // DEBUG & UI
   // const type: any = 'error';
   // const type: any = 'warning';
@@ -52,7 +64,7 @@ export default function AlertMessage () {
         hidden fixed top-[10%] left-1/2
         translate-x-[-50%]
         w-[calc(100vw-2rem)] md:w-auto
-        flex flex-col md:flex-row items-center gap-4
+        flex flex-row md:flex-row items-center gap-4
         p-4 bg-[var(--background-light-color)]
         drop-shadow-xl rounded-lg overflow-hidden
         z-[1000]
@@ -66,13 +78,15 @@ export default function AlertMessage () {
           w-5 h-5 flex items-center justify-center bg-inbetween rounded-full
           text-[var(--background-light-color)] text-xs font-bold cursor-pointer
         "
+        data-type="close_button_is_clicked"
+        onClick={handleClick}
       >
         X
       </button>
       {type === 'wishlist' &&
         <Wishlist 
           className={`
-            --alert-messge-content-ani w-[50px] h-[50px] lg:w-[100px] lg:h-[100px]
+            --alert-messge-content-ani w-[75px] h-[75px] lg:w-[100px] lg:h-[100px]
             text-pink-500
           `}
         />

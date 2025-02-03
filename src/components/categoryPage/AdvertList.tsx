@@ -32,7 +32,7 @@ import products from "@/json/products.json";
 import strSlugForProducts from '@/utils/strSlugForProducts';
 
 // STORES
-import { useFavouritesStore, useFavouriteConfettiToggle } from '@/stores/index';
+import { useFavouritesStore, useFavouriteConfettiToggle, useAlertMessageStore } from '@/stores/index';
 
 // CONFETTI 
 import Confetti from "react-canvas-confetti/dist/presets/explosion";
@@ -54,6 +54,9 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
 
   const favourites = useFavouritesStore(state => state.favourites);
   const setFavourites = useFavouritesStore(state => state.setFavourites);
+  const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
+  const setAlertType = useAlertMessageStore((state) => state.setType);
+  const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
 
   const setConfettiToggle = useFavouriteConfettiToggle(state => state.setToggle);
   const confettiToggle = useFavouriteConfettiToggle(state => state.toggle);
@@ -92,13 +95,14 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
 
-    const { type, index, productUri, productId } = e.currentTarget.dataset;
+    const { type, index, productUri, productId, productName } = e.currentTarget.dataset;
     const ulRefWidth = ulRef.current.offsetWidth
     const ulRefScrollWidth = ulRef.current.scrollWidth
     const liRefWidth = liRefs?.current[0]?.scrollWidth || 0;
     const gap = parseFloat(getComputedStyle(ulRef.current).gap);
     const totalTiles = array.length - 1
     const scrollTotalWidth = ulRefWidth / (totalTiles) + gap;
+
     switch (type) {
       case 'navigate_to_product':
         setImgScaleToggle(val => val === Number(index) ? false : Number(index))
@@ -143,6 +147,14 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
         if (!isProductInFavourites) {
           displayPrideConfetti();
           setHeartActiveId(Number(index));
+
+          setAlertToggle(Date.now());
+          setAlertType("wishlist");
+          setAlertMessage(`Following item "${productName}" is added.`);
+        } else {
+          setAlertToggle(Date.now());
+          setAlertType("wishlist");
+          setAlertMessage(`Following item "${productName}" is removed.`);
         }
 
         setFavourites(
@@ -225,6 +237,7 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
                 data-index={i}
                 data-type="heart_button_is_clicked"
                 data-product-id={product.id}
+                data-product-name={product.name}
                 onClick={handleClick}
               >
                 <LineMdHeart

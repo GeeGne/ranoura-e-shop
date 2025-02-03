@@ -30,7 +30,7 @@ import products from "@/json/products.json";
 import strSlugForProducts from '@/utils/strSlugForProducts';
 
 // STORES
-import { useFavouritesStore, useFavouriteConfettiToggle } from '@/stores/index';
+import { useFavouritesStore, useFavouriteConfettiToggle, useAlertMessageStore } from '@/stores/index';
 
 // CONFETTI 
 import Confetti from "react-canvas-confetti/dist/presets/explosion";
@@ -56,6 +56,9 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
   const confettiTimerId = useRef<any>(0);
 
   const layoutRef = useLayoutRefStore((state: any) => state.layoutRef);
+  const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
+  const setAlertType = useAlertMessageStore((state) => state.setType);
+  const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
 
   const [ scrollWidth, setScrollWidth ] = useState<number>(0);
   const [ leftArrowInactive, setLeftArrowInactive ] = useState<boolean>(true);
@@ -97,7 +100,7 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
   const handleClick = (e: React.MouseEvent<HTMLElement | any>) => {
     e.stopPropagation();
   
-    const { type, index, productUri, productId } = e.currentTarget.dataset;
+    const { type, index, productUri, productId, productName } = e.currentTarget.dataset;
     const ulRefWidth = ulRef.current.offsetWidth
     const ulRefScrollWidth = ulRef.current.scrollWidth
     const liRefWidth = liRefs?.current[0]?.scrollWidth || 0;
@@ -148,10 +151,19 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
         break;
       case 'heart_button_is_clicked':
         const isProductInFavourites = favourites.some(productID => productID === Number(productId));
+          
         
         if (!isProductInFavourites) {
           displayPrideConfetti();
           setHeartActiveId(Number(index));
+
+          setAlertToggle(Date.now());
+          setAlertType("wishlist");
+          setAlertMessage(`Following item "${productName}"is added.`);
+        } else {
+          setAlertToggle(Date.now());
+          setAlertType("wishlist");
+          setAlertMessage(`Following item "${productName}" is removed.`);
         }
 
         setFavourites(
@@ -159,6 +171,7 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
             ? favourites.filter(productID => productID !== Number(productId))
             : [...favourites, Number(productId)] 
         )
+
         break;
       default:
         console.error('Unknown type: ', type);
@@ -308,6 +321,7 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
                   data-index={i}
                   data-type="heart_button_is_clicked"
                   data-product-id={product.id}
+                  data-product-name={product.name}
                   onClick={handleClick}
                 >
                   <LineMdHeart
