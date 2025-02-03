@@ -16,7 +16,7 @@ import FamiconsBagAddOutlineBold from '@/components/svgs/FamiconsBagAddOutlineBo
 import IonNavigate from '@/components/svgs/PepiconsPencilOpenCircleFilled';
 
 // STORES
-import { useTabNameStore } from '@/stores/index';
+import { useTabNameStore, useAlertMessageStore } from '@/stores/index';
 
 // ASSETS
 const ramdanBanner = "/assets/img/ramadan-nights.webp";
@@ -41,6 +41,9 @@ export default function ProductPage () {
   ];
 
   const setTabName = useTabNameStore((state: any) => state.setTabName);
+  const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
+  const setAlertType = useAlertMessageStore((state) => state.setType);
+  const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
 
   useEffect(() => {
     setTabName('product');
@@ -48,6 +51,20 @@ export default function ProductPage () {
 
   const onColorChange = () => {
 
+  }
+
+  const handleClick = (e: any) => {
+    const { type, productName } = e.currentTarget.dataset;
+
+    switch (type) {
+      case 'add_to_bag_button_is_clicked':
+        setAlertToggle(Date.now());
+        setAlertType("product added");
+        setAlertMessage(`"${productName}" is Added.` || "Unknown product name");
+        break;
+      default:
+        console.error('Unknown Type: ', type);
+    }
   }
 
   // DEBUG
@@ -92,6 +109,9 @@ export default function ProductPage () {
             flex justify-center items-center gap-2 font-bold text-md text-heading-invert 
             bg-gradient-to-r from-primary to-inbetween py-2 rounded-lg mt-auto
           "
+          data-type="add_to_bag_button_is_clicked"
+          data-product-name="Long Jeans With a Skirt"
+          onClick={handleClick}
         >
           <FamiconsBagAddOutlineBold 
             width={16} 

@@ -77,6 +77,52 @@
   }
 }
 
+@keyframes alert-messge-ani {
+  0% {
+    opacity: 0;
+    scale: 0 0;
+    transform-origin: left;
+  }
+
+  5% {
+    opacity: 1;
+    scale: 10% 100%;
+    transform-origin: left;
+  }
+
+  10%, 90% {
+    opacity: 1;
+    scale: 100% 100%;
+    transform-origin: left;
+  }
+
+  100% {
+    opacity: 0;
+    scale: 100% 100%;
+    transform-origin: left;
+  }
+}
+
+@keyframes alert-messge-content-ani {
+  0%, 10% {
+    opacity: 0;
+  }
+
+  15%, 100% {
+    opacity: 1;
+  }
+}
+
+@keyframes alert-timer-tape-ani {
+  0% {
+    width: 0%;
+  }
+
+  100% {
+    width: 100%;
+  }
+}
+
 .--infinite-card-slide-ani {
   animation-name: infinite-card-slide-ani;
   animation-duration: 10s;
@@ -112,5 +158,25 @@
   animation-duration: 0.4s;
   animation-fill-mode: ease-out;
   animation-timing-function: cubic-bezier(.3,.8,.94,.07);
-  ;
+}
+
+.--alert-messge-ani {
+  animation-name: alert-messge-ani;
+  animation-duration: 10s;
+  animation-fill-mode: linear;
+  animation-fill-mode: both;
+}
+
+.--alert-messge-content-ani {
+  animation-name: alert-messge-content-ani;
+  animation-duration: 10s;
+  animation-fill-mode: linear;
+  animation-fill-mode: both;
+}
+
+.--alert-timer-tape-ani {
+  animation-name: alert-timer-tape-ani;
+  animation-duration: 10s;
+  animation-fill-mode: linear;
+  animation-fill-mode: both;
 }

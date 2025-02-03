@@ -8,10 +8,11 @@ import "./globals.css";
 import Header from '@/components/header/index';
 import Main from '@/app/Main';
 import Footer from '@/app/Footer';
+import FixedLayouts from '@/components/fixedLayouts/Index';
 import Cart from '@/components/fixedLayouts/Cart';
 import Navbar from '@/components/fixedLayouts/navbar/Index';
 import FilterWindow from '@/components/fixedLayouts/FilterWindow';
-import FixedLayouts from '@/components/fixedLayouts/Index';
+import AlertMessage from '@/components/fixedLayouts/AlertMessage';
 import BottomBorder from '@/components/svgs/BottomBorder';
 
 // STORES
@@ -59,6 +60,7 @@ export default function RootLayout({
           <Cart />
           <Navbar />
           <FilterWindow />          
+          <AlertMessage />
         </FixedLayouts>
       </body>
     </html>

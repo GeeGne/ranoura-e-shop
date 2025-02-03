@@ -92,9 +92,28 @@ const useLayoutRefStore = create<layoutRefProps>(
   })
 );
 
+type alertMessageProps = {
+  toggle: number;
+  setToggle: (value: number) => void;
+  type: string;
+  setType: (value: string) => void;
+  message: string;
+  setMessage: (value: string) => void;
+}
+const useAlertMessageStore = create<alertMessageProps>(
+  (set) => ({
+    toggle: 0,
+    setToggle: (toggle: number) => set({ toggle }),
+    type: "",
+    setType: (type: string) => set({ type }),
+    message: "",
+    setMessage: (message: string) => set({ message })
+  })
+);
+
 export { 
   useCartStore, useNavbarStore, 
   useTabNameStore, useFilterWindowStore,
   useFavouritesStore, useFavouriteConfettiToggle,
-  useLayoutRefStore
+  useLayoutRefStore, useAlertMessageStore
 };
