@@ -40,6 +40,7 @@ export default function AlertMessage () {
     const { type } = e.currentTarget.dataset;
 
     switch (type) {
+      case 'wrapper_is_clicked':
       case 'close_button_is_clicked':
         wrapperRef.current.style.display = 'none';
         break;
@@ -64,12 +65,16 @@ export default function AlertMessage () {
         hidden fixed top-[10%] left-1/2
         translate-x-[-50%]
         w-[calc(100vw-2rem)] md:w-auto
-        flex flex-row md:flex-row items-center gap-4
-        p-4 bg-[var(--background-light-color)]
+        flex flex-row md:flex-row items-center justify-center gap-4
+        p-2 bg-[var(--background-light-color)] hover:bg-[var(--background-deep-light-color)] active:bg-[var(--background-deep-color)]
         drop-shadow-xl rounded-lg overflow-hidden
-        z-[1000]
+        transition-all duration-200 ease-in-out
+        cursor-pointer z-[1000]
       "
       ref={wrapperRef}
+
+      data-type="wrapper_is_clicked"
+      onClick={handleClick}
     >
       <button
         className="
