@@ -12,6 +12,8 @@ export default function Footer ({ ...props }) {
     <footer 
       className="
         relative flex flex-col gap-4 p-4 bg-primary
+        before:content-[''] before:absolute before:top-0 before:left-1/2
+        before:translate-x-[-50%] before:w-screen before:h-full before:bg-primary before:z-[-1]
       "
       {...props}
     >

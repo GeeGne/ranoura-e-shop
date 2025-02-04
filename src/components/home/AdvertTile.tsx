@@ -13,6 +13,7 @@ import BtnA from '@/components/BtnA';
 import EpArrowLeft from '@/components/svgs/EpArrowLeft';
 import LineMdHeart from '@/components/svgs/LineMdHeart';
 import LineMdHeartFilled from '@/components/svgs/LineMdHeartFilled';
+import FoundationBurstSale from '@/components/svgs/FoundationBurstSale';
 import PepiconsPencilOpenCircleFilled from '@/components/svgs/PepiconsPencilOpenCircleFilled';
 import LineMdArrowsDiagonalRotated from '@/components/svgs/LineMdArrowsDiagonalRotated';
 
@@ -159,7 +160,7 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
 
           setAlertToggle(Date.now());
           setAlertType("wishlist");
-          setAlertMessage(`Following item "${productName}"is added.`);
+          setAlertMessage(`Following item "${productName}" is added.`);
         } else {
           setAlertToggle(Date.now());
           setAlertType("wishlist");
@@ -310,6 +311,9 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
                 >
                   NEW
                 </span>
+                <FoundationBurstSale 
+                  className="absolute top-0 left-0 text-rose-500 w-14 h-14 z-[10]"
+                />
                 <div
                   className={`
                     absolute top-2 right-2 w-6 h-6 text-pink-500 cursor-pointer z-[10]
