@@ -189,20 +189,24 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
           }
         `}
       >
-        <EpUser 
-          className={`
-            ${navbarToggle 
-              ? 'lg:text-heading text-heading-invert' 
-              : isWindowScrolled
-                ? "text-heading-invert"
-                : (tabName === 'home')
+        <Link
+          href="/user/signin" 
+        >
+          <EpUser 
+            className={`
+              ${navbarToggle 
+                ? 'lg:text-heading text-heading-invert' 
+                : isWindowScrolled
                   ? "text-heading-invert"
-                  : "text-heading"
-            }
-          `}
-          width={24} 
-          height={24} 
-        />      
+                  : (tabName === 'home')
+                    ? "text-heading-invert"
+                    : "text-heading"
+              }
+            `}
+            width={24} 
+            height={24}
+          />            
+        </Link>
       </button>
       <button
         className={`
