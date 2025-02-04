@@ -36,8 +36,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: calc(100% + 1rem);
-    height: calc(100% + 1rem);
+    width: 2.5rem;
+    height: 2.5rem;
     background: transparent;
     transition: all 0.2s ease-in-out;
     z-index: -1;
@@ -58,8 +58,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: calc(100% + 1rem);
-    height: calc(100% + 1rem);
+    width: 2.5rem;
+    height: 2.5rem;
     background: transparent;
     transition: all 0.2s ease-in-out;
     z-index: -1;
