@@ -69,12 +69,13 @@ export default function SigninForm ({ className, ...props }: Props) {
           EMAIL
         </span>
         <input
-          className="
-            bg-transparent border-solid border-[1px] border-inbetween
-            focus:border-[2px] focus:border-body outline-none
+          className={`
+            bg-transparent border-solid
+            outline-none
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
-          " 
+            ${isEmailFocus ? 'border-body border-[2px]' : 'border-[1px] border-inbetween'}
+          `}
           id="email"
           name="email"
           onFocus={handleFocus}
@@ -96,12 +97,13 @@ export default function SigninForm ({ className, ...props }: Props) {
           PASSWORD
         </span>
         <input
-          className="
+          className={`
             bg-transparent border-solid border-[1px] border-inbetween
             focus:border-[2px] focus:border-body outline-none
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
-          " 
+            ${isPasswordFocus ? 'border-body border-[2px]' : 'border-[1px] border-inbetween'}
+          `}
           id="password"
           name="password"
           onFocus={handleFocus}
