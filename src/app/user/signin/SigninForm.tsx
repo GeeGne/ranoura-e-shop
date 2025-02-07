@@ -1,4 +1,6 @@
+// HOOKS
 import { useState, useRef } from "react";
+import Link from "next/link";
 
 type Props = {
   className?: string;
@@ -98,8 +100,8 @@ export default function SigninForm ({ className, ...props }: Props) {
         </span>
         <input
           className={`
-            bg-transparent border-solid border-[1px] border-inbetween
-            focus:border-[2px] focus:border-body outline-none
+            bg-transparent border-solid
+            outline-none
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
             ${isPasswordFocus ? 'border-body border-[2px]' : 'border-[1px] border-inbetween'}
@@ -110,6 +112,36 @@ export default function SigninForm ({ className, ...props }: Props) {
           onBlur={handleBlur}
         />
       </label>
+      <Link
+        href="/user/signup"
+        className="text-heading text-md"
+      >
+        <span
+          className="underline"
+        >
+          New here?
+        </span>{' '}
+        <span
+          className="font-bold"
+        >
+          Create an account.
+        </span>
+      </Link>
+      <Link
+        href="/user/pass-reset"
+        className="text-heading text-md"
+      >
+        <span
+          className="underline"
+        >
+          Forgot password?
+        </span>{' '}
+        <span
+          className="font-bold"
+        >
+          Reset it here
+        </span>
+      </Link>
     </form>
   )
 }
