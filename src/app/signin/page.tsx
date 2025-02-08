@@ -4,8 +4,9 @@
 import { useEffect, useRef } from 'react';
 
 // COMPONENTS
+import AccountBenefitsSection from '@/components/AccountBenefitsSection';
 import BreadCrumb from '@/components/BreadCrumb';
-import SigninForm from '@/app/user/signin/SigninForm';
+import SigninForm from '@/app/signin/SigninForm';
 
 // STORES
 import { useTabNameStore } from '@/stores/index';
@@ -13,14 +14,14 @@ import { useTabNameStore } from '@/stores/index';
 // JSON
 import products from "@/json/products.json";
 
-export default function Page () {
+export default function page () {
 
   const setTabName = useTabNameStore((state: any) => state.setTabName);
 
   const slugNameAndLinkArray = [
     {
       name: "Signin",
-      href: "/user/signin"
+      href: "/signin"
     } 
   ];
 
@@ -39,6 +40,7 @@ export default function Page () {
       <SigninForm 
         className="px-4"
       />
+      <AccountBenefitsSection />
     </div>
   )
 }

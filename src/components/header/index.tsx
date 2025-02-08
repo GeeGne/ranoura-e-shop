@@ -190,7 +190,7 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
         `}
       >
         <Link
-          href="/user/signin" 
+          href="/signin" 
         >
           <EpUser 
             className={`

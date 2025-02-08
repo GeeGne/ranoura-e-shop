@@ -113,7 +113,7 @@ export default function SigninForm ({ className, ...props }: Props) {
         />
       </label>
       <Link
-        href="/user/signup"
+        href="/signup"
         className="text-heading text-md"
       >
         <span
@@ -128,7 +128,7 @@ export default function SigninForm ({ className, ...props }: Props) {
         </span>
       </Link>
       <Link
-        href="/user/pass-reset"
+        href="/pass-reset"
         className="text-heading text-md"
       >
         <span
