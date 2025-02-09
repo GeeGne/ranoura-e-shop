@@ -63,7 +63,7 @@ export default function SigninForm ({ className, ...props }: Props) {
         <span
           className={`
             absolute left-3 translate-y-[-50%]
-            bg-background px-1
+            bg-background px-1 text-heading
             transition-all duration-300 ease-in-out
             ${isEmailFocus ? 'top-0 text-xs font-bold' : 'top-1/2 text-md'}
           `}
@@ -73,7 +73,7 @@ export default function SigninForm ({ className, ...props }: Props) {
         <input
           className={`
             bg-transparent border-solid
-            outline-none
+            outline-none text-heading
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
             ${isEmailFocus ? 'border-body border-[2px]' : 'border-[1px] border-inbetween'}
@@ -91,7 +91,7 @@ export default function SigninForm ({ className, ...props }: Props) {
         <span
           className={`
             absolute left-3 translate-y-[-50%]
-            bg-background px-1
+            bg-background px-1 text-heading
             transition-all duration-300 ease-in-out
             ${isPasswordFocus ? 'top-0 text-xs font-bold' : 'top-1/2 text-md'}
           `}
@@ -101,7 +101,7 @@ export default function SigninForm ({ className, ...props }: Props) {
         <input
           className={`
             bg-transparent border-solid
-            outline-none
+            outline-none text-heading
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
             ${isPasswordFocus ? 'border-body border-[2px]' : 'border-[1px] border-inbetween'}
@@ -124,7 +124,7 @@ export default function SigninForm ({ className, ...props }: Props) {
         <span
           className="font-bold"
         >
-          Create an account.
+          Create an account
         </span>
       </Link>
       <Link

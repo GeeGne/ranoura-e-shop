@@ -4,7 +4,7 @@
 import { useEffect, useRef } from 'react';
 
 // COMPONENTS
-import AccountBenefitsSection from '@/components/AccountBenefitsSection';
+import AccountBenefitsSection from '@/components/AccountBenefitsSection/index';
 import BreadCrumb from '@/components/BreadCrumb';
 import SigninForm from '@/app/signin/SigninForm';
 
@@ -40,7 +40,9 @@ export default function page () {
       <SigninForm 
         className="px-4"
       />
-      <AccountBenefitsSection />
+      <AccountBenefitsSection
+        className="px-4 pb-4"
+      />
     </div>
   )
 }
