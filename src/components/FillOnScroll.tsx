@@ -29,7 +29,7 @@ export default function FillOnScroll ({ onScroll, layoutRef }: Props) {
   return (
     <div
       className={`
-        absolute top-0 left-1/2 w-[100vw] h-1 bg-inbetween
+        absolute top-0 left-1/2 w-[100vw] h-1 bg-content
       `}
       style={{ transform: `translateX(${percantage - 150}%`}}
     />

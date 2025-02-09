@@ -20,6 +20,7 @@ export default {
         'body-extra-light-invert': "var(--font-extra-light-invert-color)",
         primary: "var(--primary-color)",
         secondary: "var(--secondary-color)",  
+        content: "var(--content-color)",  
         inbetween: "var(--inbetween-color)",  
         background: "var(--background-color)",
         foreground: "var(--background-invert-color)",

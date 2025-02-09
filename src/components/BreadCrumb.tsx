@@ -13,7 +13,9 @@ type Props = {
 
 export default function BreadCrumb ({ slugNameAndLinkArray, className, ...props }: Props) {
   
-  const scrollToTop = () => document.querySelector('.app-layout')?.scrollTo({ top:0, left:0, behavior: 'smooth'});
+  const scrollToTop = () => 
+    document.querySelector('.app-layout')
+    ?.scrollTo({ top:0, left:0, behavior: 'smooth'});
 
   return (
     <ul
@@ -46,8 +48,8 @@ export default function BreadCrumb ({ slugNameAndLinkArray, className, ...props 
             className={`
               
               ${slugNameAndLinkArray.length - 1 === i
-                ? "text-blue-600 py-1 px-2 "
-                : "bg-[var(--background-deep-light-color)] py-1 px-2  rounded-md"
+                ? "text-content py-1 px-2 "
+                : "bg-[var(--background-deep-light-color)] py-1 px-2 rounded-md"
               }
             `}
             href={itm.href}
