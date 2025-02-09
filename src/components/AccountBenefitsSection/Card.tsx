@@ -22,7 +22,7 @@ export default function Card ({ svg, title, description , ...props }: Props) {
       { ...props }
     >
       <div
-        className="flex items-center justify-center w-[100px] h-[100px] mx-auto md:row-span-2"
+        className="flex items-center justify-center w-[4rem] h-[4rem] mx-auto md:row-span-2"
       >
         {svg}
       </div>

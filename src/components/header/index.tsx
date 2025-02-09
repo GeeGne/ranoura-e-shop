@@ -13,7 +13,7 @@ import SolarCart4Outline from "@/components/svgs/SolarCart4Outline";
 import IconamoonSearchThin from "@/components/svgs/IconamoonSearchThin";
 import BottomBorder from "@/components/svgs/BottomBorder";
 import EpUser from "@/components/svgs/EpUser";
-import FillOnScroll from "@/components/FillOnScroll";
+import FillOnScroll from "@/components/header/FillOnScroll";
 
 // STORES
 import { useCartStore, useNavbarStore, useTabNameStore } from '@/stores/index';
