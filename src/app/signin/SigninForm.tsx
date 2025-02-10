@@ -2,6 +2,9 @@
 import { useState, useRef } from "react";
 import Link from "next/link";
 
+// COMPONENTS
+import BtnA from '@/components/BtnA';
+
 type Props = {
   className?: string;
 }
@@ -112,6 +115,11 @@ export default function SigninForm ({ className, ...props }: Props) {
           onBlur={handleBlur}
         />
       </label>
+      <BtnA
+        className="bg-primary w-full text-heading-invert font-bold py-2 rounded-md"
+      >
+        CONTINUE
+      </BtnA>
       <Link
         href="/signup"
         className="text-heading text-md"

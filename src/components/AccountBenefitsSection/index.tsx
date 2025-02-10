@@ -17,42 +17,67 @@ export default function AccountBenefitsSection ({ className, ...props }: Props) 
   return (
     <section
       className={`
-        flex flex-col gap-8
+        grid md:grid-cols-4 lg:grid-cols-3 gap-8 max-w-[450px] md:max-w-[1100px] mx-auto
         ${className}
       `}
       { ...props }
     >
       <h2
         className={`
-          text-heading text-center font-bold text-2xl
+          md:col-span-4 lg:col-span-3 text-heading text-center font-bold text-2xl
         `}
       >
         Why Making New Account?
       </h2>
       <UndrawPrivateData 
-        className="w-[300px] h-auto mx-auto text-content"
+        className="md:col-span-2 lg:col-span-2 w-[300px] md:w-[400px] lg:w-[500px] h-auto mx-auto text-content"
       />
-      <ul
+      <section
         className="
-          relative flex flex-col gap-8
-          before:content-[''] before:absolute before:bottom-12 before:left-1/2 
-          before:translate-x-[-50%] before:w-[0.5px] before:h-[100%] before:bg-body-extra-light
-          after:content-[''] after:absolute after:top-[-56px] after:left-1/2 
+          relative grid grid-cols-1 md:col-span-2 lg:col-span-1 gap-8
+          before:content-[''] before:absolute before:bottom-0 before:left-1/2
+          before:translate-x-[-50%] before:w-[0.5px] before:h-full before:bg-body-extra-light
+          after:content-[''] after:absolute after:md:hidden after:top-[-56px] after:left-1/2
           after:translate-x-[-50%] after:w-4 after:h-4 after:bg-body-extra-light after:rounded-full
         "
       >
         <SvgSpinnersPulseRingsMultiple 
           className="
-            absolute top-[-68px] left-1/2 
+            absolute md:hidden top-[-68px] left-1/2 
             translate-x-[-50%] w-10 h-10 text-body
           "
-      
+        />
+        <div
+            className="
+            absolute md:hidden bottom-full left-1/2
+            translate-x-[-50%] w-[0.5px] h-12 bg-body-extra-light
+          "      
         />
         <Card 
           svg={<CloudStorage className="w-full h-auto text-content" />}
           title="Save Personal Data for Faster Checkouts"
           description="Skip filling in details every time! Save your name, address, and payment information securely for isntant checkout. Perfect for busy shoppers who waqnt to worder their favorite styles in seconds." 
-        />
+          className="md:relative"
+        >
+          <div
+            className="
+            absolute invisible md:visible top-1/2 right-full
+            translate-y-[-50%] w-12 h-[0.5px] bg-body-extra-light
+          "      
+          />
+          <SvgSpinnersPulseRingsMultiple
+            className="
+            absolute invisible md:visible top-1/2 right-[calc(100%+20px)]
+            translate-y-[-50%] w-10 h-10 text-body-extra-light
+          "      
+          />
+          <div
+            className="
+            absolute invisible md:visible top-1/2 right-[calc(100%+2rem)]
+            translate-y-[-50%] w-4 h-4 bg-body-extra-light rounded-full
+          "      
+          />
+        </Card>
         <Card 
           svg={<Location className="w-full h-auto text-content" />}
           title="Order Tracking & History"
@@ -73,7 +98,7 @@ export default function AccountBenefitsSection ({ className, ...props }: Props) 
           title="Exclusive Access to Sales & Early lanuches"
           description="Unlock VIP perks like realy access to seasonal sales, limited-edition collections, and members-only discounts. Your account is your key to curated fashion." 
         />
-      </ul>
+      </section>
     </section>
   )
 }

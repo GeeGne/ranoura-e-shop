@@ -31,7 +31,10 @@ export default function page () {
 
   return (
     <div
-      className="flex flex-col gap-4"
+      className="
+        flex flex-col gap-8 md:gap-8 p-4 
+        md:max-w-[1400px] md:mx-auto
+      "
     >
       <BreadCrumb 
         className="px-4"

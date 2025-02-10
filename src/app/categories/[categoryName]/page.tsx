@@ -36,17 +36,19 @@ export default function page () {
 
   return (
     <div
-      className="flex flex-col gap-4 py-4"
+      className="
+        flex flex-col gap-4 py-4
+      "
     >
       <BreadCrumb
-        className="px-4"
+        className="px-4 py-4 w-full max-w-[1400px] mx-auto"
         slugNameAndLinkArray={slugNameAndLinkArray} 
       />
       <CategoryTitle 
-        className="px-4"
+        className="px-4 w-full max-w-[1400px] mx-auto"
       />
       <FilterTile 
-        className="px-4"
+        className="px-4 w-full max-w-[1400px] mx-auto"
       />
       <AdvertList />
     </div>
