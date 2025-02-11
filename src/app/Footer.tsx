@@ -7,7 +7,29 @@ import Phone from '@/components/svgs/Phone';
 import Email from '@/components/svgs/Email';
 import BtnA from '@/components/BtnA';
 
+// STORES
+import { useAlertMessageStore } from '@/stores/index';
+
 export default function Footer ({ ...props }) {
+
+  const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
+  const setAlertType = useAlertMessageStore((state) => state.setType);
+  const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
+
+  const handleClick = (e: any) => {
+    const { type } = e.currentTarget.dataset;
+
+    switch (type) {
+      case 'subscribe_button_is_clicked':
+        setAlertToggle(Date.now());
+        setAlertType("warning");
+        setAlertMessage("Sorry! We're currently working on this feature.");
+        break;
+      default:
+        console.error('Unknown type: ', type);
+    }
+  };
+
   return (
     <footer 
       className="
@@ -46,8 +68,10 @@ export default function Footer ({ ...props }) {
             />
             <BtnA
               className="p-2 bg-heading-invert font-bold text-heading border-solid border-[2px] border-heading-invert"
+              data-type="subscribe_button_is_clicked"
+              onClick={handleClick}
             >
-              Subscribe
+              SUBSCRIBE
             </BtnA>
           </div>
         </div><hr className="border-2 border-body-invert w-full max-w-[600px] lg:hidden mx-auto mb-2" />

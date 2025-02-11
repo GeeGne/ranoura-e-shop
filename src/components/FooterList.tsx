@@ -4,6 +4,9 @@ import PlusIcon from '@/components/svgs/Plus';
 import MinusIcon from '@/components/svgs/Minus';
 import UnderlineStyle from '@/components/UnderlineStyle';
 
+// STORES
+import { useAlertMessageStore } from '@/stores/index';
+
 type Props = {
   title: string,
   content: string[] | React.ReactNode[],
@@ -16,6 +19,10 @@ export default function FooterList ({ title, content, ...props}: Props) {
   const [ overflowToggle, setOverflowToggle ] = useState<boolean>(false);
   const uiRef = useRef<any>(null);
 
+  const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
+  const setAlertType = useAlertMessageStore((state) => state.setType);
+  const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
+
   const getScrollHeight = (el: HTMLElement) => el?.scrollHeight + 16 || 0;
 
   // DEBUG
@@ -26,6 +33,20 @@ export default function FooterList ({ title, content, ...props}: Props) {
     console.log('window width: ', window?.innerWidth)  
   }
   debug();
+
+  const handleClick = (e: React.MouseEvent<HTMLLIElement>) => {
+    const { type } = e.currentTarget.dataset;
+
+    switch (type) {
+      case 'subList_button_is_clicked':
+        setAlertToggle(Date.now());
+        setAlertType("warning");
+        setAlertMessage("Sorry! We're currently working on this feature.");
+        break;
+      default:
+        console.error('Unknown type: ', type);
+    }
+  };
 
   return (
     <div
@@ -68,6 +89,8 @@ export default function FooterList ({ title, content, ...props}: Props) {
             "
             role="button"
             key={i}
+            data-type="subList_button_is_clicked"
+            onClick={handleClick}
           >
             <span
               className="group relative inline-block"

@@ -1,3 +1,6 @@
+// COMPONENTS
+import UnderlineStyle from "@/components/UnderlineStyle";
+
 // SVG
 import ArrowUp from "@/components/svgs/ArrowUp";
 
@@ -48,7 +51,14 @@ export default function SubCategoryList () {
               className="text-heading font-bold text-6xl cursor-pointer"
               key={i}
             >
-              {itm.name.toUpperCase()}
+              <span
+                className="group relative"
+              >
+                {itm.name.toUpperCase()}
+                <UnderlineStyle 
+                  style={{backgroundColor: 'var(--font-heading-color)'}}
+                />
+              </span>
             </li>      
           )}
       </ul>

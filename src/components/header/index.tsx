@@ -8,15 +8,15 @@ import { useRouter } from 'next/navigation';
 // COMPONENTS
 import CategoryListLg from "@/components/header/CategoryListLg";
 import SubCategoryListLg from "@/components/header/SubCategoryListLg";
+import FillOnScroll from "@/components/header/FillOnScroll";
 import LineMdCloseToMenuAltTransition from "@/components/svgs/LineMdCloseToMenuAltTransition";
 import SolarCart4Outline from "@/components/svgs/SolarCart4Outline";
 import IconamoonSearchThin from "@/components/svgs/IconamoonSearchThin";
 import BottomBorder from "@/components/svgs/BottomBorder";
 import EpUser from "@/components/svgs/EpUser";
-import FillOnScroll from "@/components/header/FillOnScroll";
 
 // STORES
-import { useCartStore, useNavbarStore, useTabNameStore } from '@/stores/index';
+import { useCartStore, useNavbarStore, useTabNameStore, useAlertMessageStore } from '@/stores/index';
 
 // ASSETS
 const logo = "/assets/img/ranoura-logo.png";
@@ -35,7 +35,9 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
   const setCartToggle = useCartStore((stats:any) => stats.setToggle);
   const navbarToggle = useNavbarStore((status:any) => status.toggle);
   const setNavbarToggle = useNavbarStore((status:any) => status.setToggle);
-
+  const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
+  const setAlertType = useAlertMessageStore((state) => state.setType);
+  const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
   const tabName = useTabNameStore((state: any) => state.tabName);
 
   useEffect(() => {
@@ -44,7 +46,7 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
 
   },[ onScroll, layoutRef ]);
 
-  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+  const handleClick = (e: any) => {
     const { type } = e.currentTarget.dataset;
 
     switch (type) {
@@ -60,6 +62,11 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
       case 'category_button_is_clicked':
         setNavbarToggle(true);
         break;
+      case 'search_button_is_clicked':
+        setAlertToggle(Date.now());
+        setAlertType("warning");
+        setAlertMessage("Sorry! We're currently working on this feature.");
+        break;  
       default:
         console.error('Unknown type: ', type);
     }
@@ -178,6 +185,8 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
           `}
           width={24}
           height={24}
+          data-type="search_button_is_clicked"
+          onClick={handleClick}
         />
       </button>
       <button

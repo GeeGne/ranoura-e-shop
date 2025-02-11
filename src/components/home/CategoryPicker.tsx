@@ -1,3 +1,6 @@
+// STORES
+import { useAlertMessageStore } from '@/stores/index';
+
 // JSON
 import category from "@/json/category.json";
 
@@ -12,6 +15,25 @@ const jacket = "/assets/img/jacket.png";
 const jeans = "/assets/img/jeans.png";
 
 export default function CategoryPicker () {
+  
+  const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
+  const setAlertType = useAlertMessageStore((state) => state.setType);
+  const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
+
+  const handleClick = (e: React.MouseEvent<HTMLLIElement>) => {
+    const { type } = e.currentTarget.dataset;
+
+    switch (type) {
+      case 'category_list_is_clicked':
+        setAlertToggle(Date.now());
+        setAlertType("warning");
+        setAlertMessage("Sorry! We're currently working on this feature.");
+        break;
+      default:
+        console.error('Unknown type: ', type);
+    }
+  };
+
   return (
     <section
       className="flex p-4"
@@ -23,6 +45,9 @@ export default function CategoryPicker () {
           <li
             className="group relative w-full aspect-[1/1] rounded-full cursor-pointer"
             key={i}
+            role="button"
+            data-type="category_list_is_clicked"
+            onClick={handleClick}
           >
             <img 
               src={itm.imgURL}

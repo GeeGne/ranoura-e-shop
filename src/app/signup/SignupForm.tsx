@@ -78,8 +78,64 @@ export default function SigninForm ({ className, ...props }: Props) {
       <h2
         className="text-center text-5xl text-heading mx-auto"
       >
-        SIGNIN
+        SIGNUP
       </h2>
+      <label
+        className="relative flex w-full"
+        htmlFor="email"
+      >
+        <span
+          className={`
+            absolute left-3 translate-y-[-50%]
+            bg-background px-1 text-heading
+            transition-all duration-300 ease-in-out
+            ${isEmailFocus ? 'top-0 text-xs font-bold' : 'top-1/2 text-md'}
+          `}
+        >
+          FIRST NAME
+        </span>
+        <input
+          className={`
+            bg-transparent border-solid
+            outline-none text-heading
+            transition-all duration-300 ease-in-out
+            w-full py-2 px-4 rounded-md
+            ${isEmailFocus ? 'border-body border-[2px]' : 'border-[1px] border-inbetween'}
+          `}
+          id="email"
+          name="email"
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+        />
+      </label>
+      <label
+        className="relative flex w-full"
+        htmlFor="email"
+      >
+        <span
+          className={`
+            absolute left-3 translate-y-[-50%]
+            bg-background px-1 text-heading
+            transition-all duration-300 ease-in-out
+            ${isEmailFocus ? 'top-0 text-xs font-bold' : 'top-1/2 text-md'}
+          `}
+        >
+          LAST NAME
+        </span>
+        <input
+          className={`
+            bg-transparent border-solid
+            outline-none text-heading
+            transition-all duration-300 ease-in-out
+            w-full py-2 px-4 rounded-md
+            ${isEmailFocus ? 'border-body border-[2px]' : 'border-[1px] border-inbetween'}
+          `}
+          id="email"
+          name="email"
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+        />
+      </label>
       <label
         className="relative flex w-full"
         htmlFor="email"
@@ -136,6 +192,34 @@ export default function SigninForm ({ className, ...props }: Props) {
           onBlur={handleBlur}
         />
       </label>
+      <label
+        className="relative flex w-full"
+        htmlFor="password"
+      >
+        <span
+          className={`
+            absolute left-3 translate-y-[-50%]
+            bg-background px-1 text-heading
+            transition-all duration-300 ease-in-out
+            ${isPasswordFocus ? 'top-0 text-xs font-bold' : 'top-1/2 text-md'}
+          `}
+        >
+          REPEAT PASSWORD
+        </span>
+        <input
+          className={`
+            bg-transparent border-solid
+            outline-none text-heading
+            transition-all duration-300 ease-in-out
+            w-full py-2 px-4 rounded-md
+            ${isPasswordFocus ? 'border-body border-[2px]' : 'border-[1px] border-inbetween'}
+          `}
+          id="password"
+          name="password"
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+        />
+      </label>
       <BtnA
         className="bg-primary w-full text-heading-invert font-bold py-2 rounded-md"
         data-type="signin_button_is_clicked"
@@ -144,33 +228,18 @@ export default function SigninForm ({ className, ...props }: Props) {
         CONTINUE
       </BtnA>
       <Link
-        href="/signup"
+        href="/signin"
         className="text-heading text-md"
       >
         <span
           className="underline"
         >
-          New here?
+          Have an account?
         </span>{' '}
         <span
           className="font-bold"
         >
-          Create an account
-        </span>
-      </Link>
-      <Link
-        href="/pass-reset"
-        className="text-heading text-md"
-      >
-        <span
-          className="underline"
-        >
-          Forgot password?
-        </span>{' '}
-        <span
-          className="font-bold"
-        >
-          Reset it here
+          Signin
         </span>
       </Link>
     </form>

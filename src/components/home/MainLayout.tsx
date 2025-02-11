@@ -2,6 +2,9 @@
 import DisplayImg from "@/components/DisplayImg";
 import BtnA from "@/components/BtnA";
 
+// STORES
+import { useAlertMessageStore } from '@/stores/index';
+
 // ASSETS
 const ramdanBanner = "/assets/img/ramadan-nights.webp";
 const ramdanBanner2 = "/assets/img/ramadan-nights-2.jpg";
@@ -10,6 +13,25 @@ const outfit2 = "assets/img/outfit-2.jpg"
 const outfit3 = "assets/img/outfit-3.jpg"
 
 export default function MainLayout () {
+  
+  const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
+  const setAlertType = useAlertMessageStore((state) => state.setType);
+  const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
+
+  const handleClick = (e: any) => {
+    const { type } = e.currentTarget.dataset;
+
+    switch (type) {
+      case 'shopNow_button_is_clicked':
+        setAlertToggle(Date.now());
+        setAlertType("warning");
+        setAlertMessage("Sorry! We're currently working on this feature.");
+        break;
+      default:
+        console.error('Unknown type: ', type);
+    }
+  };
+  
   return (
     <section
       className="
@@ -45,6 +67,8 @@ export default function MainLayout () {
           </h3>
           <BtnA
             className="bg-background text-heading text-sm font-bold px-4 py-2 shadow-md drop-shadow-lg rounded-md"
+            data-type="shopNow_button_is_clicked"
+            onClick={handleClick}
           >
             SHOP NOW
           </BtnA>
@@ -79,6 +103,8 @@ export default function MainLayout () {
           </h3>
           <BtnA
             className="bg-background text-heading text-sm font-bold px-4 py-2 shadow-md drop-shadow-lg rounded-md"
+            data-type="shopNow_button_is_clicked"
+            onClick={handleClick}
           >
             SHOP NOW
           </BtnA>
@@ -113,7 +139,8 @@ export default function MainLayout () {
           </h3>
           <BtnA
             className="bg-background text-heading text-sm font-bold px-4 py-2 shadow-md drop-shadow-lg rounded-md"
-
+            data-type="shopNow_button_is_clicked"
+            onClick={handleClick}
           >
             SHOP NOW
           </BtnA>

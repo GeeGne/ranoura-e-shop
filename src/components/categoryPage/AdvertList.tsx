@@ -17,6 +17,8 @@ import HugeiconsRotateLeft01 from '@/components/svgs/HugeiconsRotateLeft01';
 import HugeiconsRotateRight01 from '@/components/svgs/HugeiconsRotateRight01';
 import MaterialSymbolsPinchZoomInRounded from '@/components/svgs/MaterialSymbolsPinchZoomInRounded';
 import LineMdArrowsDiagonalRotated from '@/components/svgs/LineMdArrowsDiagonalRotated';
+import FoundationBurstSale from '@/components/svgs/FoundationBurstSale';
+import New from '@/components/svgs/New';
 
 // ASSETS
 const ramdanBanner = "/assets/img/ramadan-nights.webp";
@@ -221,11 +223,16 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
                 data-product-id={product.id}
                 ref={ (el: any) => { if (secondImgRefs.current) {secondImgRefs.current[i] = el}} }
               />
-              <span 
-                className="absolute bottom-2 left-2 text-xs text-body-invert font-bold bg-primary px-2 py-1 rounded-lg z-[10]"
+              <div
+                className="absolute top-0 left-0 flex flex-col z-[10]"
               >
-                NEW
-              </span>
+                <FoundationBurstSale 
+                  className="w-14 h-14"
+                />
+                <New 
+                  className="w-[3.6rem] h-[3.6rem] p-[6px]"
+                />
+              </div>
               <div
                 className={`
                   absolute top-2 right-2 w-6 h-6 text-pink-500 cursor-pointer z-[10]

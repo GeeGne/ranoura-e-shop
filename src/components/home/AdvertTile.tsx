@@ -16,6 +16,7 @@ import LineMdHeartFilled from '@/components/svgs/LineMdHeartFilled';
 import FoundationBurstSale from '@/components/svgs/FoundationBurstSale';
 import PepiconsPencilOpenCircleFilled from '@/components/svgs/PepiconsPencilOpenCircleFilled';
 import LineMdArrowsDiagonalRotated from '@/components/svgs/LineMdArrowsDiagonalRotated';
+import New from '@/components/svgs/New';
 
 // ASSETS
 const ramdanBanner = "/assets/img/ramadan-nights.webp";
@@ -271,7 +272,7 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
         >
           {products.map((product, i) => 
             <li
-              className="flex flex-col shrink-0 gap-2 w-[250px] md:w-[300px]"
+              className="flex flex-col shrink-0 gap-2 w-[250px] md:w-[350px] lg:w-[400px]"
               key={i}
               data-product-id={product.id}
               ref={ (el: any) => {if (liRefs.current) {liRefs.current[i] = el}} }
@@ -306,14 +307,16 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
                   data-product-id={product.id}
                   ref={ (el: any) => { if (secondImgRefs.current) {secondImgRefs.current[i] = el}} }
                 />
-                <span 
-                  className="absolute bottom-2 left-2 text-xs text-body-invert font-bold bg-primary px-2 py-1 rounded-lg z-[10]"
+                <div
+                  className="absolute top-0 left-0 flex flex-col z-[10]"
                 >
-                  NEW
-                </span>
-                <FoundationBurstSale 
-                  className="absolute top-0 left-0 text-rose-500 w-14 h-14 z-[10]"
-                />
+                  <FoundationBurstSale 
+                    className="w-14 h-14"
+                  />
+                  <New 
+                    className="w-[3.6rem] h-[3.6rem] p-[6px]"
+                  />
+                </div>
                 <div
                   className={`
                     absolute top-2 right-2 w-6 h-6 text-pink-500 cursor-pointer z-[10]
