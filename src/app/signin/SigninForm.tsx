@@ -6,7 +6,7 @@ import Link from "next/link";
 import BtnA from '@/components/BtnA';
 
 // STORES
-import { useAlertMessageStore } from '@/stores/index';
+import { useAlertMessageStore, useLayoutRefStore } from '@/stores/index';
 
 type Props = {
   className?: string;
@@ -19,16 +19,22 @@ export default function SigninForm ({ className, ...props }: Props) {
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
+  const layoutRef = useLayoutRefStore((state: any) => state.layoutRef);
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
     const { type } = e.currentTarget.dataset;
 
     switch (type) {
       case 'signin_button_is_clicked':
+        e.preventDefault();
         setAlertToggle(Date.now());
         setAlertType("warning");
         setAlertMessage("Sorry! We're currently working on this feature.");
+        break;
+      case 'navigate_to_signup':
+        setTimeout(() => 
+          layoutRef.scrollTo({top: 0, behavior: "instant"})
+        ,200);
         break;
       default:
         console.error('Unknown type: ', type);
@@ -146,6 +152,8 @@ export default function SigninForm ({ className, ...props }: Props) {
       <Link
         href="/signup"
         className="text-heading text-md"
+        data-type="navigate_to_signup"
+        onClick={handleClick}
       >
         <span
           className="underline"

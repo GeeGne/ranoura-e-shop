@@ -4,32 +4,57 @@ import Link from "next/link";
 
 // COMPONENTS
 import BtnA from '@/components/BtnA';
+import LineMdWatchLoop from '@/components/svgs/LineMdWatchLoop';
+import LineMdWatchTwotoneLoop from '@/components/svgs/LineMdWatchTwotoneLoop';
+import LineMdWatchOffLoop from '@/components/svgs/LineMdWatchOffLoop';
+import LineMdWatchOffTwotoneLoop from '@/components/svgs/LineMdWatchOffTwotoneLoop';
 
 // STORES
-import { useAlertMessageStore } from '@/stores/index';
+import { useAlertMessageStore, useLayoutRefStore } from '@/stores/index';
 
 type Props = {
   className?: string;
 }
 
-export default function SigninForm ({ className, ...props }: Props) {
+export default function SignupForm ({ className, ...props }: Props) {
 
+  const [ isFNameFocus, setIsFNameFocus ] = useState<boolean>(false);
+  const [ isLNameFocus, setIsLNameFocus ] = useState<boolean>(false);
   const [ isEmailFocus, setIsEmailFocus ] = useState<boolean>(false);
   const [ isPasswordFocus, setIsPasswordFocus ] = useState<boolean>(false);
+  const [ isCPasswordFocus, setIsCPasswordFocus ] = useState<boolean>(false);
+
+  const [ isPassEyeActive, setIsPassEyeActive ] = useState<boolean>(false);
+  const [ isCPassEyeActive, setIsCPassEyeActive ] = useState<boolean>(false);
+
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
+  const layoutRef = useLayoutRefStore((state: any) => state.layoutRef);
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
     const { type } = e.currentTarget.dataset;
 
     switch (type) {
       case 'signin_button_is_clicked':
+        e.preventDefault();
         setAlertToggle(Date.now());
         setAlertType("warning");
         setAlertMessage("Sorry! We're currently working on this feature.");
         break;
+      case 'navigate_to_signin':
+        setTimeout(() => 
+          layoutRef.scrollTo({top: 0, behavior: "instant"})
+        ,200);
+        break;  
+      case 'pass_eye_icon_is_clicked':
+        e.preventDefault();
+        setIsPassEyeActive(val => !val);
+        break;  
+      case 'cPass_eye_icon_is_clicked':
+        e.preventDefault();
+        setIsCPassEyeActive(val => !val);
+        break;  
       default:
         console.error('Unknown type: ', type);
     }
@@ -39,11 +64,20 @@ export default function SigninForm ({ className, ...props }: Props) {
     const { name } = e.currentTarget;
 
     switch (name) {
+      case 'firstName':
+        setIsFNameFocus(true);
+        break;
+      case 'lastName':
+        setIsLNameFocus(true);
+        break;
       case 'email':
         setIsEmailFocus(true);
         break;
       case 'password':
         setIsPasswordFocus(true);
+        break;
+      case 'cpassword':
+        setIsCPasswordFocus(true);
         break;
       default:
         console.error('Unknown name: ', name);
@@ -54,17 +88,26 @@ export default function SigninForm ({ className, ...props }: Props) {
     const { name, value } = e.currentTarget;
 
     if (value !== "") return;
-
     switch (name) {
+      case 'firstName':
+        setIsFNameFocus(false);
+        break;
+      case 'lastName':
+        setIsLNameFocus(false);
+        break;
       case 'email':
         setIsEmailFocus(false);
         break;
       case 'password':
         setIsPasswordFocus(false);
         break;
+      case 'cpassword':
+        setIsCPasswordFocus(false);
+        break;
       default:
         console.error('Unknown name: ', name);
     }
+
   };
 
   return (
@@ -82,14 +125,14 @@ export default function SigninForm ({ className, ...props }: Props) {
       </h2>
       <label
         className="relative flex w-full"
-        htmlFor="email"
+        htmlFor="firstName"
       >
         <span
           className={`
             absolute left-3 translate-y-[-50%]
             bg-background px-1 text-heading
             transition-all duration-300 ease-in-out
-            ${isEmailFocus ? 'top-0 text-xs font-bold' : 'top-1/2 text-md'}
+            ${isFNameFocus ? 'top-0 text-xs font-bold' : 'top-1/2 text-md'}
           `}
         >
           FIRST NAME
@@ -100,24 +143,25 @@ export default function SigninForm ({ className, ...props }: Props) {
             outline-none text-heading
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
-            ${isEmailFocus ? 'border-body border-[2px]' : 'border-[1px] border-inbetween'}
+            ${isFNameFocus ? 'border-body border-[2px]' : 'border-[1px] border-inbetween'}
           `}
-          id="email"
-          name="email"
+          id="firstName"
+          name="firstName"
+          type="text"
           onFocus={handleFocus}
           onBlur={handleBlur}
         />
       </label>
       <label
         className="relative flex w-full"
-        htmlFor="email"
+        htmlFor="lastName"
       >
         <span
           className={`
             absolute left-3 translate-y-[-50%]
             bg-background px-1 text-heading
             transition-all duration-300 ease-in-out
-            ${isEmailFocus ? 'top-0 text-xs font-bold' : 'top-1/2 text-md'}
+            ${isLNameFocus ? 'top-0 text-xs font-bold' : 'top-1/2 text-md'}
           `}
         >
           LAST NAME
@@ -128,10 +172,11 @@ export default function SigninForm ({ className, ...props }: Props) {
             outline-none text-heading
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
-            ${isEmailFocus ? 'border-body border-[2px]' : 'border-[1px] border-inbetween'}
+            ${isLNameFocus ? 'border-body border-[2px]' : 'border-[1px] border-inbetween'}
           `}
-          id="email"
-          name="email"
+          id="lastName"
+          name="lastName"
+          type="text"
           onFocus={handleFocus}
           onBlur={handleBlur}
         />
@@ -160,6 +205,7 @@ export default function SigninForm ({ className, ...props }: Props) {
           `}
           id="email"
           name="email"
+          type="email"
           onFocus={handleFocus}
           onBlur={handleBlur}
         />
@@ -185,26 +231,80 @@ export default function SigninForm ({ className, ...props }: Props) {
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
             ${isPasswordFocus ? 'border-body border-[2px]' : 'border-[1px] border-inbetween'}
+            ${isPassEyeActive ? "font-regular" : "font-bold"}
           `}
           id="password"
           name="password"
+          type={isPassEyeActive ? "text" : "password"}
           onFocus={handleFocus}
           onBlur={handleBlur}
         />
+        { isPassEyeActive 
+          ? <button
+              className="
+                group absolute top-1/2 right-4
+                translate-y-[-50%] text-heading cursor-pointer
+              "
+              data-type="pass_eye_icon_is_clicked"
+              onClick={handleClick}
+            > 
+              <LineMdWatchOffLoop
+                className="
+                  absolute top-1/2 right-0
+                  translate-y-[-50%] text-heading cursor-pointer
+                  opacity-100 group-hover:opacity-0
+                  transition-all duration-200 ease-out
+                "
+              />
+              <LineMdWatchOffTwotoneLoop 
+                className="
+                  absolute top-1/2 right-0
+                  translate-y-[-50%] text-heading cursor-pointer
+                  opacity-0 group-hover:opacity-100 z-[5]
+                  transition-all duration-200 ease-out
+                "
+              />
+            </button>
+          : <button
+              className="
+                group absolute top-1/2 right-4
+                translate-y-[-50%] text-heading cursor-pointer
+              "
+              data-type="pass_eye_icon_is_clicked"
+              onClick={handleClick}
+            > 
+              <LineMdWatchLoop 
+                className="
+                  absolute top-1/2 right-0
+                  translate-y-[-50%] text-heading cursor-pointer
+                  opacity-100 group-hover:opacity-0
+                  transition-all duration-200 ease-out
+                "
+              />
+              <LineMdWatchTwotoneLoop 
+                className="
+                  absolute top-1/2 right-0
+                  translate-y-[-50%] text-heading cursor-pointer
+                  opacity-0 group-hover:opacity-100
+                  transition-all duration-200 ease-out z-[5]
+                "
+              />
+            </button>
+        }
       </label>
       <label
         className="relative flex w-full"
-        htmlFor="password"
+        htmlFor="cpassword"
       >
         <span
           className={`
             absolute left-3 translate-y-[-50%]
             bg-background px-1 text-heading
             transition-all duration-300 ease-in-out
-            ${isPasswordFocus ? 'top-0 text-xs font-bold' : 'top-1/2 text-md'}
+            ${isCPasswordFocus ? 'top-0 text-xs font-bold' : 'top-1/2 text-md'}
           `}
         >
-          REPEAT PASSWORD
+          CONFIRM PASSWORD
         </span>
         <input
           className={`
@@ -212,13 +312,67 @@ export default function SigninForm ({ className, ...props }: Props) {
             outline-none text-heading
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
-            ${isPasswordFocus ? 'border-body border-[2px]' : 'border-[1px] border-inbetween'}
+            ${isCPassEyeActive ? "font-regular" : "font-bold"}
+            ${isCPasswordFocus ? 'border-body border-[2px]' : 'border-[1px] border-inbetween'}
           `}
-          id="password"
-          name="password"
+          id="cpassword"
+          name="cpassword"
+          type={isCPassEyeActive ? "text" : "password"}
           onFocus={handleFocus}
           onBlur={handleBlur}
         />
+        { isCPassEyeActive 
+          ? <button
+              className="
+                group absolute top-1/2 right-4
+                translate-y-[-50%] text-heading cursor-pointer
+              "
+              data-type="cPass_eye_icon_is_clicked"
+              onClick={handleClick}
+            > 
+              <LineMdWatchOffLoop
+                className="
+                  absolute top-1/2 right-0
+                  translate-y-[-50%] text-heading cursor-pointer
+                  opacity-100 group-hover:opacity-0
+                  transition-all duration-200 ease-out
+                "
+              />
+              <LineMdWatchOffTwotoneLoop 
+                className="
+                  absolute top-1/2 right-0
+                  translate-y-[-50%] text-heading cursor-pointer
+                  opacity-0 group-hover:opacity-100 z-[5]
+                  transition-all duration-200 ease-out
+                "
+              />
+            </button>
+          : <button
+              className="
+                group absolute top-1/2 right-4
+                translate-y-[-50%] text-heading cursor-pointer
+              "
+              data-type="cPass_eye_icon_is_clicked"
+              onClick={handleClick}
+            > 
+              <LineMdWatchLoop 
+                className="
+                  absolute top-1/2 right-0
+                  translate-y-[-50%] text-heading cursor-pointer
+                  opacity-100 group-hover:opacity-0
+                  transition-all duration-200 ease-in-out
+                "
+              />
+              <LineMdWatchTwotoneLoop 
+                className="
+                  absolute top-1/2 right-0
+                  translate-y-[-50%] text-heading cursor-pointer
+                  opacity-0 group-hover:opacity-100
+                  transition-all duration-200 ease-in-out z-[5]
+                "
+              />
+            </button>
+        }
       </label>
       <BtnA
         className="bg-primary w-full text-heading-invert font-bold py-2 rounded-md"
@@ -230,6 +384,8 @@ export default function SigninForm ({ className, ...props }: Props) {
       <Link
         href="/signin"
         className="text-heading text-md"
+        data-type="navigate_to_signin"
+        onClick={handleClick}
       >
         <span
           className="underline"

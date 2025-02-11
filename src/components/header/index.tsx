@@ -67,6 +67,11 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
         setAlertType("warning");
         setAlertMessage("Sorry! We're currently working on this feature.");
         break;  
+      case 'navigate_to_signin':
+        setTimeout(() => 
+          layoutRef.scrollTo({top: 0, behavior: "instant"})
+        ,200);
+        break;  
       default:
         console.error('Unknown type: ', type);
     }
@@ -214,6 +219,9 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
             `}
             width={24} 
             height={24}
+            role="button"
+            data-type="navigate_to_signin"
+            onClick={handleClick}
           />            
         </Link>
       </button>
