@@ -4,6 +4,10 @@ import Link from "next/link";
 
 // COMPONENTS
 import BtnA from '@/components/BtnA';
+import LineMdWatchLoop from '@/components/svgs/LineMdWatchLoop';
+import LineMdWatchTwotoneLoop from '@/components/svgs/LineMdWatchTwotoneLoop';
+import LineMdWatchOffLoop from '@/components/svgs/LineMdWatchOffLoop';
+import LineMdWatchOffTwotoneLoop from '@/components/svgs/LineMdWatchOffTwotoneLoop';
 
 // STORES
 import { useAlertMessageStore, useLayoutRefStore } from '@/stores/index';
@@ -16,6 +20,9 @@ export default function SigninForm ({ className, ...props }: Props) {
 
   const [ isEmailFocus, setIsEmailFocus ] = useState<boolean>(false);
   const [ isPasswordFocus, setIsPasswordFocus ] = useState<boolean>(false);
+
+  const [ isPassEyeActive, setIsPassEyeActive ] = useState<boolean>(false);
+
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
@@ -36,6 +43,10 @@ export default function SigninForm ({ className, ...props }: Props) {
           layoutRef.scrollTo({top: 0, behavior: "instant"})
         ,200);
         break;
+      case 'pass_eye_icon_is_clicked':
+        e.preventDefault();
+        setIsPassEyeActive(val => !val);
+        break;  
       default:
         console.error('Unknown type: ', type);
     }
@@ -93,9 +104,9 @@ export default function SigninForm ({ className, ...props }: Props) {
         <span
           className={`
             absolute left-3 translate-y-[-50%]
-            bg-background px-1 text-heading
+            px-1 bg-background
             transition-all duration-300 ease-in-out
-            ${isEmailFocus ? 'top-0 text-xs font-bold' : 'top-1/2 text-md'}
+            ${isEmailFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-md text-body-light'}
           `}
         >
           EMAIL
@@ -110,6 +121,7 @@ export default function SigninForm ({ className, ...props }: Props) {
           `}
           id="email"
           name="email"
+          type="email"
           onFocus={handleFocus}
           onBlur={handleBlur}
         />
@@ -121,9 +133,10 @@ export default function SigninForm ({ className, ...props }: Props) {
         <span
           className={`
             absolute left-3 translate-y-[-50%]
-            bg-background px-1 text-heading
+            px-1 bg-background
             transition-all duration-300 ease-in-out
-            ${isPasswordFocus ? 'top-0 text-xs font-bold' : 'top-1/2 text-md'}
+            ${isPasswordFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-md text-body-light'}
+
           `}
         >
           PASSWORD
@@ -134,13 +147,71 @@ export default function SigninForm ({ className, ...props }: Props) {
             outline-none text-heading
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
+            ${isPassEyeActive ? "font-regular" : "font-bold"}
             ${isPasswordFocus ? 'border-body border-[2px]' : 'border-[1px] border-inbetween'}
           `}
           id="password"
           name="password"
+          type={isPassEyeActive ? "text" : "password"}
           onFocus={handleFocus}
           onBlur={handleBlur}
         />
+        { isPassEyeActive 
+          ? <button
+              className="
+                group absolute top-1/2 right-4
+                translate-y-[-50%] text-heading cursor-pointer
+              "
+              data-type="pass_eye_icon_is_clicked"
+              onClick={handleClick}
+            > 
+              <LineMdWatchOffLoop
+                className={`
+                  absolute top-1/2 right-0
+                  translate-y-[-50%] cursor-pointer
+                  opacity-100 group-hover:opacity-0
+                  transition-all duration-200 ease-out
+                  ${isPasswordFocus ? 'text-heading' : 'text-body-light'}
+                `}
+              />
+              <LineMdWatchOffTwotoneLoop 
+                className={`
+                  absolute top-1/2 right-0
+                  translate-y-[-50%] cursor-pointer
+                  opacity-0 group-hover:opacity-100 z-[5]
+                  transition-all duration-200 ease-out
+                  ${isPasswordFocus ? 'text-heading' : 'text-body-light'}
+                `}
+              />
+            </button>
+          : <button
+              className="
+                group absolute top-1/2 right-4
+                translate-y-[-50%] text-heading cursor-pointer
+              "
+              data-type="pass_eye_icon_is_clicked"
+              onClick={handleClick}
+            > 
+              <LineMdWatchLoop 
+                className={`
+                  absolute top-1/2 right-0
+                  translate-y-[-50%] cursor-pointer
+                  opacity-100 group-hover:opacity-0
+                  transition-all duration-200 ease-out
+                  ${isPasswordFocus ? 'text-heading' : 'text-body-light'}
+                `}
+              />
+              <LineMdWatchTwotoneLoop 
+                className={`
+                  absolute top-1/2 right-0
+                  translate-y-[-50%] cursor-pointer
+                  opacity-0 group-hover:opacity-100
+                  transition-all duration-200 ease-out z-[5]
+                  ${isPasswordFocus ? 'text-heading' : 'text-body-light'}
+                `}
+              />
+            </button>
+        }
       </label>
       <BtnA
         className="bg-primary w-full text-heading-invert font-bold py-2 rounded-md"

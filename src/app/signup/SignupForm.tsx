@@ -113,13 +113,14 @@ export default function SignupForm ({ className, ...props }: Props) {
   return (
     <form
       className={`
-        flex flex-col w-[300px] md:w-[400px] mx-auto p-4 gap-4
+        flex flex-col w-[300px] md:w-[500px] mx-auto p-4 gap-4
+        md:grid grid-cols-2
         ${className}
       `}
       { ...props }
     > 
       <h2
-        className="text-center text-5xl text-heading mx-auto"
+        className="md:col-span-2 text-center text-5xl text-heading mx-auto"
       >
         SIGNUP
       </h2>
@@ -130,9 +131,9 @@ export default function SignupForm ({ className, ...props }: Props) {
         <span
           className={`
             absolute left-3 translate-y-[-50%]
-            bg-background px-1 text-heading
+            bg-background px-1
             transition-all duration-300 ease-in-out
-            ${isFNameFocus ? 'top-0 text-xs font-bold' : 'top-1/2 text-md'}
+            ${isFNameFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-md text-body-light'}
           `}
         >
           FIRST NAME
@@ -159,9 +160,9 @@ export default function SignupForm ({ className, ...props }: Props) {
         <span
           className={`
             absolute left-3 translate-y-[-50%]
-            bg-background px-1 text-heading
+            bg-background px-1
             transition-all duration-300 ease-in-out
-            ${isLNameFocus ? 'top-0 text-xs font-bold' : 'top-1/2 text-md'}
+            ${isLNameFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-md text-body-light'}
           `}
         >
           LAST NAME
@@ -182,15 +183,15 @@ export default function SignupForm ({ className, ...props }: Props) {
         />
       </label>
       <label
-        className="relative flex w-full"
+        className="relative flex md:col-span-2 w-full"
         htmlFor="email"
       >
         <span
           className={`
             absolute left-3 translate-y-[-50%]
-            bg-background px-1 text-heading
+            bg-background px-1
             transition-all duration-300 ease-in-out
-            ${isEmailFocus ? 'top-0 text-xs font-bold' : 'top-1/2 text-md'}
+            ${isEmailFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-md text-body-light'}
           `}
         >
           EMAIL
@@ -217,9 +218,9 @@ export default function SignupForm ({ className, ...props }: Props) {
         <span
           className={`
             absolute left-3 translate-y-[-50%]
-            bg-background px-1 text-heading
+            bg-background px-1
             transition-all duration-300 ease-in-out
-            ${isPasswordFocus ? 'top-0 text-xs font-bold' : 'top-1/2 text-md'}
+            ${isPasswordFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-md text-body-light'}
           `}
         >
           PASSWORD
@@ -230,8 +231,8 @@ export default function SignupForm ({ className, ...props }: Props) {
             outline-none text-heading
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
-            ${isPasswordFocus ? 'border-body border-[2px]' : 'border-[1px] border-inbetween'}
             ${isPassEyeActive ? "font-regular" : "font-bold"}
+            ${isPasswordFocus ? 'border-body border-[2px]' : 'border-[1px] border-inbetween'}
           `}
           id="password"
           name="password"
@@ -249,20 +250,22 @@ export default function SignupForm ({ className, ...props }: Props) {
               onClick={handleClick}
             > 
               <LineMdWatchOffLoop
-                className="
+                className={`
                   absolute top-1/2 right-0
-                  translate-y-[-50%] text-heading cursor-pointer
+                  translate-y-[-50%] cursor-pointer
                   opacity-100 group-hover:opacity-0
                   transition-all duration-200 ease-out
-                "
+                  ${isPasswordFocus ? 'text-heading' : 'text-body-light'}
+                `}
               />
               <LineMdWatchOffTwotoneLoop 
-                className="
+                className={`
                   absolute top-1/2 right-0
-                  translate-y-[-50%] text-heading cursor-pointer
+                  translate-y-[-50%] cursor-pointer
                   opacity-0 group-hover:opacity-100 z-[5]
                   transition-all duration-200 ease-out
-                "
+                  ${isPasswordFocus ? 'text-heading' : 'text-body-light'}
+                `}
               />
             </button>
           : <button
@@ -274,20 +277,22 @@ export default function SignupForm ({ className, ...props }: Props) {
               onClick={handleClick}
             > 
               <LineMdWatchLoop 
-                className="
+                className={`
                   absolute top-1/2 right-0
-                  translate-y-[-50%] text-heading cursor-pointer
+                  translate-y-[-50%] cursor-pointer
                   opacity-100 group-hover:opacity-0
                   transition-all duration-200 ease-out
-                "
+                  ${isPasswordFocus ? 'text-heading' : 'text-body-light'}
+                `}
               />
               <LineMdWatchTwotoneLoop 
-                className="
+                className={`
                   absolute top-1/2 right-0
-                  translate-y-[-50%] text-heading cursor-pointer
+                  translate-y-[-50%] cursor-pointer
                   opacity-0 group-hover:opacity-100
                   transition-all duration-200 ease-out z-[5]
-                "
+                  ${isPasswordFocus ? 'text-heading' : 'text-body-light'}
+                `}
               />
             </button>
         }
@@ -299,9 +304,9 @@ export default function SignupForm ({ className, ...props }: Props) {
         <span
           className={`
             absolute left-3 translate-y-[-50%]
-            bg-background px-1 text-heading
+            bg-background px-1
             transition-all duration-300 ease-in-out
-            ${isCPasswordFocus ? 'top-0 text-xs font-bold' : 'top-1/2 text-md'}
+            ${isCPasswordFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-md text-body-light'}
           `}
         >
           CONFIRM PASSWORD
@@ -331,20 +336,22 @@ export default function SignupForm ({ className, ...props }: Props) {
               onClick={handleClick}
             > 
               <LineMdWatchOffLoop
-                className="
+                className={`
                   absolute top-1/2 right-0
-                  translate-y-[-50%] text-heading cursor-pointer
+                  translate-y-[-50%] cursor-pointer
                   opacity-100 group-hover:opacity-0
                   transition-all duration-200 ease-out
-                "
+                  ${isCPasswordFocus ? 'text-heading' : 'text-body-light'}
+                `}
               />
               <LineMdWatchOffTwotoneLoop 
-                className="
+                className={`
                   absolute top-1/2 right-0
                   translate-y-[-50%] text-heading cursor-pointer
                   opacity-0 group-hover:opacity-100 z-[5]
                   transition-all duration-200 ease-out
-                "
+                  ${isCPasswordFocus ? 'text-heading' : 'text-body-light'}
+                `}
               />
             </button>
           : <button
@@ -356,26 +363,28 @@ export default function SignupForm ({ className, ...props }: Props) {
               onClick={handleClick}
             > 
               <LineMdWatchLoop 
-                className="
+                className={`
                   absolute top-1/2 right-0
-                  translate-y-[-50%] text-heading cursor-pointer
+                  translate-y-[-50%] cursor-pointer
                   opacity-100 group-hover:opacity-0
                   transition-all duration-200 ease-in-out
-                "
+                  ${isCPasswordFocus ? 'text-heading' : 'text-body-light'}
+                `}
               />
               <LineMdWatchTwotoneLoop 
-                className="
+                className={`
                   absolute top-1/2 right-0
-                  translate-y-[-50%] text-heading cursor-pointer
+                  translate-y-[-50%] cursor-pointer
                   opacity-0 group-hover:opacity-100
                   transition-all duration-200 ease-in-out z-[5]
-                "
+                  ${isCPasswordFocus ? 'text-heading' : 'text-body-light'}
+                `}
               />
             </button>
         }
       </label>
       <BtnA
-        className="bg-primary w-full text-heading-invert font-bold py-2 rounded-md"
+        className="md:col-span-2 bg-primary w-full text-heading-invert font-bold py-2 rounded-md"
         data-type="signin_button_is_clicked"
         onClick={handleClick}
       >
@@ -383,7 +392,7 @@ export default function SignupForm ({ className, ...props }: Props) {
       </BtnA>
       <Link
         href="/signin"
-        className="text-heading text-md"
+        className="md:col-span-2 text-heading text-md"
         data-type="navigate_to_signin"
         onClick={handleClick}
       >
