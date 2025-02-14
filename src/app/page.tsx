@@ -9,6 +9,7 @@ import Hero from '@/components/home/Hero';
 import ImageSlider from '@/components/home/ImageSlider';
 import MainSlider from '@/components/home/MainSlider';
 import CategoryPicker from '@/components/home/CategoryPicker';
+import CategoryPickerV2 from '@/components/home/CategoryPickerV2';
 import MainLayout from '@/components/home/MainLayout';
 import AdvertTile from '@/components/home/AdvertTile';
 
@@ -30,10 +31,10 @@ export default function Home() {
       <Hero /> 
       <MainSlider /> 
       <ImageSlider />
-      <CategoryPicker />
+      <AdvertTile title="HOT DEALS" />
+      <CategoryPickerV2 />
       <MainLayout />
       <AdvertTile title="WHATS NEW?" />
-      <AdvertTile title="HOT DEALS" />
       <AdvertTile title="COLLECTION" />
     </div>
   );

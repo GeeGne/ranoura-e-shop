@@ -1,6 +1,10 @@
 // STORES
 import { useAlertMessageStore } from '@/stores/index';
 
+// COMPONENTS
+import Blob from "@/components/svgs/layered_shapes/Blob"
+import LayeredStepsHaikeiMd from "@/components/svgs/layered_shapes/LayeredStepsHaikeiMd"
+
 // JSON
 import category from "@/json/category.json";
 
@@ -14,7 +18,7 @@ const bag = "/assets/img/bag.png";
 const jacket = "/assets/img/jacket.png";
 const jeans = "/assets/img/jeans.png";
 
-export default function CategoryPicker () {
+export default function CategoryPickerV2 () {
   
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
@@ -36,10 +40,10 @@ export default function CategoryPicker () {
 
   return (
     <section
-      className="flex flex-col p-4"
+      className="flex flex-col gap-4 py-8"
     >
       <section
-        className="flex"
+        className="flex  px-4"
       >
         <span
             className="relative flex text-3xl text-heading font-bold transform"
@@ -51,60 +55,49 @@ export default function CategoryPicker () {
         </span>
       </section>
       <ul
-        className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 w-full gap-4"
+        className="relative grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 w-full gap-0"
       >
+        <LayeredStepsHaikeiMd
+          className="
+            hidden absolute top-1/2 left-1/2
+            translate-x-[-50%] translate-y-[-50%] scale-[120%]
+            w-full h-full 
+          "
+        />
+
         {category.map((itm, i) => 
           <li
-            className="group relative w-full aspect-[1/1] rounded-full cursor-pointer"
+            className={`
+              group relative flex items-center justify-center w-full h-full aspect-[1/1] cursor-pointer bg-500 drop-shadow-md hover:z-[5]
+            `}
             key={i}
-            role="button"
-            data-type="category_list_is_clicked"
-            onClick={handleClick}
           >
+            <h3
+              className="
+                absolute top-1/2 left-1/2
+                translate-x-[-50%] translate-y-[-50%]
+                text-center flex-1 text-lg text-heading-invert font-bold drop-shadow-md outlined-text z-[10]
+              "
+            >
+              {itm.categoryName}
+            </h3>
             <img 
               src={itm.imgURL}
               alt="image"
               className="
-                absolute top-1/2 left-1/2
-                translate-x-[-50%] translate-y-[-50%]
-                shrink-0 w-full h-full object-center object-contain
-                drop-shadow-md z-[15] drop-shadow-lg
+                w-full h-full object-cover object-center brightness-[90%] hover:brightness-[100%]
+                hover:scale-[110%] hover:z-[5]
+                transition-all duraiton-300 ease-out
               "
             />
             <div
               className="
-                absolute top-1/2 left-1/2 
-                translate-x-[-50%] translate-y-[-50%] w-[calc(100%-2rem)] h-[calc(100%-2rem)] 
-                flex items-center justify-center bg-[var(--primary-color-invert)] rounded-full
-                border border-primary border-[6px] border-double z-[10]
+                hidden absolute top-1/2 left-1/2
+                translate-x-[-50%] translate-y-[-50%]
+                w-full h-full rounded-md
+                bg-primary
               "
-            >
-            </div>
-            <div
-              className="
-                --category-rotate absolute top-0 left-0 bottom-0 right-0
-                w-[calc(100%)] h-[calc(100%)] 
-                flex items-center justify-center rounded-full
-                border border-primary border-[4px] md:border-[8px] border-dashed
-                transition-all duration-300 ease-in-out
-                transform scale-[50%] group-hover:scale-[100%]
-                opacity-0 group-hover:opacity-100 z-[1]
-              "
-            >
-            </div>
-            <div
-              className="
-                absolute top-1/2 left-1/2 
-                translate-x-[-50%] translate-y-[-50%] w-full h-full 
-                flex items-center justify-center z-[20]
-              "          
-            >
-              <h3
-                className="text-lg text-heading-invert font-bold drop-shadow-md outlined-text"
-              >
-                {itm.categoryName}
-              </h3>            
-            </div>
+            />
           </li>
         )}
       </ul>

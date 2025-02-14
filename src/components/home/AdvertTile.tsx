@@ -187,7 +187,7 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
   // console.log('ulRefWidth', ulRefWidth)
   // console.log('ulRefScrollWidth', ulRefScrollWidth)
   // console.log('favourites: ', favourites);
-  console.log('layoutRef: ', layoutRef);
+  // console.log('layoutRef: ', layoutRef);
   
   return (
     <section
@@ -311,10 +311,12 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
                   className="absolute top-0 left-0 flex flex-col z-[10]"
                 >
                   <FoundationBurstSale 
-                    className="w-14 h-14"
+                    className="w-12 h-12"
                   />
                   <New 
-                    className="w-[3.6rem] h-[3.6rem] p-[6px]"
+                    className="
+                      relative w-[3.2rem] h-[3.6rem] p-[6px]
+                    "
                   />
                 </div>
                 <div
@@ -397,8 +399,7 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
                 currentColor={onColorChange}
               />
             </li>
-          )}
-          
+          )}         
         </ul>
       </div>
     </section>
