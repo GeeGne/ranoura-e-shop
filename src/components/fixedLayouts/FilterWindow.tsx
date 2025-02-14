@@ -13,7 +13,6 @@ export default function FilterWindow () {
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     const { type, key } = e.currentTarget.dataset;
-    console.log('click: ')
 
     switch (type) {
       case 'close_button_is_clicked':
@@ -80,8 +79,8 @@ export default function FilterWindow () {
                 "
                 role="button"
                 data-type="clear_filter_button_is_clicked"
-                data-key={itm.key}
-                key={i}
+                data-sectionKey={itm.key}
+                sectionKey={i}
                 onClick={handleClick}
               >
                 <span>
@@ -119,6 +118,7 @@ export default function FilterWindow () {
       >
         <FilterExpandWrapper 
           sectionName="SORT"
+          sectionKey="sort"
           categoriesArray={[
             {title: 'Price:Low To High', key: 'lth'}, 
             {title: 'Price:High To Low', key: 'htl'}, 
@@ -126,16 +126,18 @@ export default function FilterWindow () {
         />
         <FilterExpandWrapper 
           sectionName="COLORS"
+          sectionKey="colors"
           categoriesArray={[
-            {title: 'Black', key: 'black'}, 
-            {title: 'White', key: 'white'}, 
-            {title: 'Grey', key: 'grey'},
-            {title: 'Blue', key: 'blue'},
-            {title: 'Pink', key: 'pink'}
+            {title: 'Black', key: 'black', hex: '#000000'}, 
+            {title: 'White', key: 'white', hex: '#ffffff'}, 
+            {title: 'Grey', key: 'grey', hex: '#7b7b7b'},
+            {title: 'Blue', key: 'blue', hex: '#1d11ff'},
+            {title: 'Pink', key: 'pink', hex: '#f410ff'}
           ]}
         />
         <FilterExpandWrapper 
           sectionName="PRICE"
+          sectionKey="price"
           categoriesArray={[
             {title: '0 - 20,000', key: '0t20'}, 
             {title: '20,000 - 40,000', key: '20t40'}, 
@@ -144,13 +146,14 @@ export default function FilterWindow () {
         />
         <FilterExpandWrapper 
           sectionName="SIZE"
+          sectionKey="size"
           categoriesArray={[
-            {title: 'XS', key: 'this'}, 
-            {title: 'SM', key: 'this'}, 
-            {title: 'MD', key: 'is'}, 
-            {title: 'LG', key: 'test'},
-            {title: 'XL', key: 'test'},
-            {title: 'XXL', key: 'test'}
+            {title: 'XS', key: 'xs'}, 
+            {title: 'SM', key: 'sm'}, 
+            {title: 'MD', key: 'md'}, 
+            {title: 'LG', key: 'lg'},
+            {title: 'XL', key: 'xl'},
+            {title: 'XXL', key: 'xxl'}
           ]}
         />
       </section>

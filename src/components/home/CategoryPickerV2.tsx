@@ -69,6 +69,9 @@ export default function CategoryPickerV2 () {
           <li
             className={`
               group relative flex items-center justify-center w-full h-full aspect-[1/1] cursor-pointer bg-500 drop-shadow-md hover:z-[5]
+              hover:scale-[110%]
+              transition-all duraiton-300 ease-out
+
             `}
             key={i}
           >
@@ -85,8 +88,7 @@ export default function CategoryPickerV2 () {
               src={itm.imgURL}
               alt="image"
               className="
-                w-full h-full object-cover object-center brightness-[90%] hover:brightness-[100%]
-                hover:scale-[110%] hover:z-[5]
+                w-full h-full object-cover object-center brightness-[95%] group-hover:brightness-[100%] group-hover:contrast-[100%]
                 transition-all duraiton-300 ease-out
               "
             />

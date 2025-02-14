@@ -11,11 +11,13 @@ import { useFilterWindowStore } from '@/stores/index';
 
 type Props = {
   sectionName?: string;
+  sectionKey?: string;
   categoriesArray?: object[];
 }
 
 export default function FilterExpandWrapper ({ 
   sectionName = 'SECTION',
+  sectionKey = 'none',
   categoriesArray = [
     {title: 'this', key: 'this'}, 
     {title: 'is', key: 'is'}, 
@@ -123,7 +125,7 @@ export default function FilterExpandWrapper ({
             key={i}
           >
             <label
-              className="relative flex gap-2 group cursor-pointer"
+              className="relative flex items-center gap-2 group cursor-pointer"
               htmlFor={itm.key}
             >
               <input 
@@ -161,7 +163,14 @@ export default function FilterExpandWrapper ({
               >
                 {itm.title}
               </span>
-            </label>
+              {sectionKey === 'colors' &&
+                <div
+                  className={`w-4 h-4 rounded-full drop-shadow-md`}
+                  key={i}
+                  style={{backgroundColor: itm.hex}}
+                />
+              }
+            </label> 
           </li>
         )}
       </ul>
