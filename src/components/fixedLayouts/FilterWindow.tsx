@@ -80,7 +80,7 @@ export default function FilterWindow () {
                 role="button"
                 data-type="clear_filter_button_is_clicked"
                 data-sectionKey={itm.key}
-                sectionKey={i}
+                key={i}
                 onClick={handleClick}
               >
                 <span>
@@ -109,7 +109,6 @@ export default function FilterWindow () {
            ? 'Clear all filters'
            : 'No Filters are selected'
           }
-          
         </button>
       </section>
       <hr className="border-inbetween mx-4"/>
