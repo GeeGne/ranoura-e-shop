@@ -38,6 +38,16 @@
   }
 }
 
+@keyframes rotate-translate-ani {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
 @keyframes fill-slider-bar {
   from {
     width: 0%;
@@ -133,6 +143,14 @@
 
 .--rotate-ani {
   animation-name: rotate;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.--rotate-translate-ani {
+  animation-name: rotate-translate-ani;
   animation-duration: 1s;
   animation-fill-mode: both;
   animation-iteration-count: infinite;
