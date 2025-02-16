@@ -8,7 +8,7 @@ import { useAlertMessageStore } from '@/stores/index';
 // ASSETS
 const ramdanBanner = "/assets/img/ramadan-nights.webp";
 const ramdanBanner2 = "/assets/img/ramadan-nights-2.jpg";
-const outfit1 = "assets/img/outfit.jpg"
+const outfit1 = "assets/img/outfit.webp"
 const outfit2 = "assets/img/outfit-2.jpg"
 const outfit3 = "assets/img/outfit-3.jpg"
 
