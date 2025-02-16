@@ -32,13 +32,13 @@ import products from "@/json/products.json";
 import strSlugForProducts from '@/utils/strSlugForProducts';
 
 // STORES
-import { useFavouritesStore, useFavouriteConfettiToggle, useAlertMessageStore } from '@/stores/index';
+import { 
+  useLayoutRefStore, useFavouritesStore, 
+  useFavouriteConfettiToggle, useAlertMessageStore
+} from '@/stores/index';
 
 // CONFETTI 
 import Confetti from "react-canvas-confetti/dist/presets/explosion";
-
-// STORES
-import { useLayoutRefStore } from '@/stores/index';
 
 type Props = {
   title?: string;
