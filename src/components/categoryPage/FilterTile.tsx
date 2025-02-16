@@ -42,7 +42,7 @@ export default function FilterTile ({ className = '' }: Props) {
   return (
     <section
       className={`
-        flex flex-col gap-2
+        flex flex-col gap-2 items-center
         ${className}
       `}
     >
@@ -116,7 +116,9 @@ export default function FilterTile ({ className = '' }: Props) {
       </ul>
       {selectedCategories.length > 0 &&
         <ul
-          className="flex flex-row flex-wrap gap-2 p-4 bg-[var(--background-deep-light-color)] rounded-lg"
+          className="
+            flex flex-row flex-wrap gap-2 p-4 bg-[var(--background-deep-light-color)] rounded-lg
+          "
         >
           {selectedCategories?.map((itm: any, i: number) =>
             <li

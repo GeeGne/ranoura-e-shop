@@ -12,7 +12,7 @@ export default function FilterWindow () {
   const setSelectedCategories = useFilterWindowStore(state => state.setSelectedCategories);
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    const { type, key } = e.currentTarget.dataset;
+    const { type, sectionKey } = e.currentTarget.dataset;
 
     switch (type) {
       case 'close_button_is_clicked':
@@ -22,7 +22,7 @@ export default function FilterWindow () {
         setSelectedCategories([]);
         break;
       case 'clear_filter_button_is_clicked':
-        setSelectedCategories(removeCategory(selectedCategories, key));
+        setSelectedCategories(removeCategory(selectedCategories, sectionKey));
         break;
       default:
         console.error('Unknown Type: ', type);
@@ -34,11 +34,12 @@ export default function FilterWindow () {
   // DEBUG
   // console.log('test: ', selectedCategories);
   // console.log('test: ', toggle);
+
   return (
     <div
       className={`
         fixed top-0 left-0 
-        flex flex-col w-full h-full bg-[var(--shade-v2-color)] z-[2000]
+        flex flex-col w-full h-full bg-[var(--shade-v3-color)] z-[2000]
         transition-all duration-300 ease-in-out
         backdrop-blur-[2px]
         ${toggle ? 'translate-y-[0%]' : 'translate-y-[100%]'}
@@ -63,7 +64,7 @@ export default function FilterWindow () {
       </button>
       <hr className="border-inbetween"/>
       <section
-        className="flex gap-8 p-4"
+        className="flex gap-8 p-4 w-[700px] mx-auto"
       >
         {selectedCategories.length > 0 &&
           <ul
@@ -79,7 +80,7 @@ export default function FilterWindow () {
                 "
                 role="button"
                 data-type="clear_filter_button_is_clicked"
-                data-sectionKey={itm.key}
+                data-section-key={itm.key}
                 key={i}
                 onClick={handleClick}
               >
@@ -111,9 +112,9 @@ export default function FilterWindow () {
           }
         </button>
       </section>
-      <hr className="border-inbetween mx-4"/>
+      <hr className="border-inbetween mx-4 md:w-[668px] md:mx-auto"/>
       <section
-        className="divide-y divide-inbetween px-4"
+        className="divide-y divide-inbetween px-4 w-full md:w-[700px] mx-auto"
       >
         <FilterExpandWrapper 
           sectionName="SORT"
@@ -156,7 +157,7 @@ export default function FilterWindow () {
           ]}
         />
       </section>
-      <hr className="border-inbetween mx-4"/>
+      <hr className="border-inbetween mx-4 md:w-[668px] md:mx-auto"/>
     </div>
   )
 }

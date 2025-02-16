@@ -6,7 +6,7 @@ export default function CategoryTitle ({ className }: Props) {
   return (
     <div
       className={`
-        text-heading text-2xl font-bold
+        text-heading text-5xl font-light
         ${className}
       `}
     >

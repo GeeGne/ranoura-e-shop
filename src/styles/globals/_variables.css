@@ -32,6 +32,7 @@
   --background-deep-dark-color: hsl(0, 0%, 50%);
   --shade-color: hsla(0, 0%, 0%, 0.3);
   --shade-v2-color: hsla(0, 7%, 94%, 0.7);
+  --shade-v3-color: hsla(0, 7%, 94%, 0.9);
 
   --bounce-bezier: cubic-bezier(0.68,-0.55,0.27,1.55);
 

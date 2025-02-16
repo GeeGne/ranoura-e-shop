@@ -41,14 +41,14 @@ export default function page () {
       "
     >
       <BreadCrumb
-        className="px-4 py-4 w-full max-w-[1400px] mx-auto"
+        className="px-4 w-full max-w-[1400px] mx-auto"
         slugNameAndLinkArray={slugNameAndLinkArray} 
       />
       <CategoryTitle 
-        className="px-4 w-full max-w-[1400px] mx-auto"
+        className="px-4 py-8 w-auto max-w-[auto] mx-auto"
       />
       <FilterTile 
-        className="px-4 w-full max-w-[1400px] mx-auto"
+        className="px-4 w-auto max-w-[auto] mx-auto"
       />
       <AdvertList />
     </div>

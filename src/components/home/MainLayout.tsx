@@ -36,12 +36,12 @@ export default function MainLayout () {
     <section
       className="
         grid grid-cols-10 gap-4 p-4
-        w-full aspect-[2/9] md:aspect-[2/3] lg:aspect-[6/5] 
+        w-full aspect-[2/9] md:aspect-[2/3] lg:aspect-[2.21/1] 
       "
     >
       <div
         className="
-          relative w-full h-full col-span-10 rounded-2xl overflow-hidden
+          relative w-full h-full col-span-10 lg:col-span-4 lg:row-span-2 rounded-2xl overflow-hidden
         "
       >
         <DisplayImg 
@@ -113,7 +113,7 @@ export default function MainLayout () {
       
       <div
         className="
-          relative w-full h-full col-span-10 md:col-span-4 rounded-2xl overflow-hidden
+          relative w-full h-full col-span-10 md:col-span-4 lg:col-span-6 rounded-2xl overflow-hidden
         "
       >
         <DisplayImg 
