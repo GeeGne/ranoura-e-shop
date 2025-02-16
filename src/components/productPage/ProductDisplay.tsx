@@ -5,9 +5,10 @@ import EpArrowLeft from '@/components/svgs/EpArrowLeft';
 // ASSETS
 const ramdanBanner = "/assets/img/ramadan-nights.webp";
 const ramdanBanner2 = "/assets/img/ramadan-nights-2.jpg";
-const outfit1 = "/assets/img/outfit.jpg";
+const outfit1 = "/assets/img/outfit.webp";
 const outfit2 = "/assets/img/outfit-2.jpg";
 const outfit3 = "/assets/img/outfit-3.jpg";
+const outfit5 = "/assets/img/outfit-5.jpg";
 
 type Props = {
   className?: string;
@@ -30,7 +31,7 @@ export default function ProductDisplay ({ className, ...props }: Props) {
       >
         <img 
           className="w-full aspect-[2/3] rounded-lg object-cover object-center"
-          src={outfit1}
+          src={outfit5}
           alt="Image"
         />
         <BtnA
