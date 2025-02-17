@@ -1,13 +1,15 @@
 // HOOKS
+import { useRouter } from 'next/navigation';
 import { useState } from "react";
 
 // COMPONENTS
 import SolarCart4Outline from "@/components/svgs/SolarCart4Outline";
 import ArrowUp from "@/components/svgs/ArrowUp";
 import DisplayImg from "@/components/DisplayImg";
+import BtnA from "@/components/BtnA";
 
 // STORES
-import { useCartStore } from '@/stores/index';
+import { useCartStore, useLayoutRefStore } from '@/stores/index';
 
 // SVG
 import EpArrowLeft from "@/components/svgs/EpArrowLeft";
@@ -24,6 +26,8 @@ const outfit3 = "assets/img/outfit-3.jpg"
 
 export default function Cart () {
 
+  const router = useRouter();
+  const layoutRef = useLayoutRefStore((state: any) => state.layoutRef);
   const toggle = useCartStore((status:any) => status.toggle);
   const setToggle = useCartStore((status:any) => status.setToggle);
   const [ inputToggle, setInputToggle ] = useState<boolean>(false);
@@ -35,6 +39,13 @@ export default function Cart () {
       case 'close_button_is_clicked':
         setToggle(false);
         break;
+      case 'navigate_to_checkout':
+        setToggle(false);
+        router.push('/checkout');
+        setTimeout(() => 
+          layoutRef.scrollTo({top: 0, behavior: "instant"})
+        ,200);
+        break;
       default:
         console.error('Unknown type: :', type);
     }
@@ -42,7 +53,7 @@ export default function Cart () {
 
   const handleFocus = (e: any) => {
     const { name } = e.currentTarget;
-    console.log('focus');
+
     switch (name) {
       case 'quantity':
         setInputToggle(true);
@@ -54,7 +65,7 @@ export default function Cart () {
 
   const handleBlur = (e: any) => {
     const { name } = e.currentTarget;
-    console.log('blur');
+
     switch (name) {
       case 'quantity':
         setInputToggle(false);
@@ -471,10 +482,21 @@ export default function Cart () {
           </li>
         </ul>
         <hr className="border-inbetween"/>
-        <div className="flex flex-row justify-between font-bold text-lg p-4">
-          <h3 className="">Total Price: </h3>
-          <h3 className="">16000 SYP</h3>
-        </div>
+        <section
+          className="flex flex-col items-center gap-4 p-4"
+        >
+          <div className="flex flex-row justify-between w-full font-bold text-lg">
+            <h3 className="">Total Price: </h3>
+            <h3 className="">16000 SYP</h3>
+          </div>
+          <BtnA
+            className="w-full text-md text-heading-invert py-2 px-2 bg-primary rounded-md"
+            data-type="navigate_to_checkout"
+            onClick={handleClick}
+          >
+            Head to Checkout
+          </BtnA>
+        </section>
       </section>
     </div>
   )

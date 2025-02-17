@@ -5,7 +5,7 @@ type Props = {
   className?: ReactNode;
   display?: string;
   effect?: boolean;
-  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
+  onClick?: (e: React.MouseEvent<HTMLElement | HTMLButtonElement> | any) => void;
 }
 
 export default function BtnA ({ className = '', display = 'relative', effect = true, children, ...props}: Props) {
