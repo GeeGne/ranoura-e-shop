@@ -31,7 +31,7 @@ export default function ShowOrderSummary () {
       >
         <span
           className={`
-            text-content
+            text-content text-md
             ${toggle ? 'font-bold' : 'font-medium'}
             transition-all duration-300 ease-in-out
           `}
@@ -68,8 +68,8 @@ export default function ShowOrderSummary () {
               />
             </div>
         }
-        <span className="text-heading font-bold ml-auto">
-          200 SYP
+        <span className="text-lg text-heading font-bold ml-auto">
+          500 SYP
         </span>
       </button>
       <OrderSummary 

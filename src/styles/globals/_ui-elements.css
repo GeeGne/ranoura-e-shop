@@ -130,3 +130,11 @@
 .favourite-is-toggled .confetti-class {
   display: initial !important;
 }
+
+.text-wrapper-clip-path {
+  clip-path: polygon(0% 0%, 100% 0%, 100% 75%, 75% 75%, 75% 100%, 50% 75%, 0% 75%);
+}
+
+.triangle-clip-path {
+  clip-path: polygon(100% 0, 0 0, 100% 100%);
+}
