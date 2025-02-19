@@ -1,10 +1,10 @@
 :root {
-  --primary-color: #1E1E1E;
-  --secondary-color: #595959;
-  --content-color: #AB886D;
-  --content-invert-color: #D6C0B3;
+  --primary-color: #0a0908;
+  --secondary-color: #22333b;
+  --content-color: #cb997e;
+  --content-invert-color: #ffe8d6;
   --primary-invert-color: #F1EFEF;
-  --inbetween-color: #A6A6A6;
+  --inbetween-color: #9999a1;
   --secondary-invert-color: #D0D0D0;
   --today-label-color: #00FFFF;
   --today-label-invert-color: #008B8B;
@@ -20,8 +20,8 @@
 
   --grey-color: hsl(0, 0%, 30%);
 
-  --background-color: #f1efef;
-  --background-invert-color: #0e1010;
+  --background-color: #edf2f4;
+  --background-invert-color: #0a0908;
   --background-light-color: hsl(0, 0%, 90%);
   --background-light-invert-color: hsl(0, 0%, 10%);
   --background-deep-light-color: hsl(0, 0%, 80%);
@@ -41,7 +41,7 @@
   --normal-priority-color: hsl(240, 100%, 60%);
   --critical-priority-color: hsl(0, 100%, 60%);
 
-  --foreground: hsl(0, 93%, 6%);
+  --foreground: #0a0908;
   --background-1-url: url(/assets/background-1.jpg);
   --background-2-url: url(/assets/background-2.jpg);
   --background-3-url: url(/assets/background-3.jpg);
