@@ -138,3 +138,47 @@
 .triangle-clip-path {
   clip-path: polygon(100% 0, 0 0, 100% 100%);
 }
+
+.cool-bg-grad-a {
+  background-image: linear-gradient(to right, #03045e, #00b4d8, #caf0f8);
+}
+
+.cool-bg-grad-b {
+  background-image: linear-gradient(to right, #03071e, #dc2f02, #ffba08);
+}
+
+.cool-bg-grad-c {
+  background-image: linear-gradient(to right, #10002b, #7b2cbf, #10002b);
+}
+
+.cool-bg-grad-d {
+  background-image: linear-gradient(to right, #590d22, #ff4d6d, #ffccd5);
+}
+
+.cool-bg-grad-e {
+  background-image: linear-gradient(to right, #b7094c, #5c4d7d, #0091ad);
+}
+
+.cool-bg-grad-f {
+  background-image: linear-gradient(to right, #7400b8, #48bfe3, #80ffdb);
+}
+
+.cool-bg-grad-g {
+  background-image: linear-gradient(to right, #f72585, #3a0ca3, #3a0ca3);
+}
+
+.cool-bg-grad-h {
+  background-image: linear-gradient(to right, #80ffdb, #7400b8, #80ffdb);
+}
+
+.cool-bg-grad-j {
+  background-image: linear-gradient(to right, #ffccd5, #590d22, #ffccd5);
+}
+
+.cool-bg-grad-k {
+  background-image: linear-gradient(to right, #edc4b3, #7d4f50, #edc4b3);
+}
+
+.cool-bg-grad-l {
+  background-image: linear-gradient(to right, #edf2fb, #abc4ff, #edf2fb);
+}

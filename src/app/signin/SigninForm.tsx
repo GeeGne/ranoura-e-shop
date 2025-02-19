@@ -104,7 +104,7 @@ export default function SigninForm ({ className, ...props }: Props) {
         <span
           className={`
             absolute left-3 translate-y-[-50%]
-            px-1 bg-background
+            px-1 bg-background peer-autofill:top-0
             transition-all duration-300 ease-in-out
             ${isEmailFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-md text-body-light'}
           `}
@@ -114,7 +114,7 @@ export default function SigninForm ({ className, ...props }: Props) {
         <input
           className={`
             bg-transparent border-solid
-            outline-none text-heading
+            outline-none text-heading autofill:bg-red-500
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
             ${isEmailFocus ? 'border-body border-[2px]' : 'border-[1px] border-inbetween'}

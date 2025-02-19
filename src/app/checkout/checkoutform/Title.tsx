@@ -4,12 +4,13 @@ import LineMdAlertCircleTwotoneLoop from '@/components/svgs/activity/LineMdAlert
 type Props = {
   text?: string;
   info?: string;
+  className?: string;
 }
 
-export default function Title ({ text, info, ...props }: Props) {
+export default function Title ({ text, info, className, ...props }: Props) {
   return (
     <div
-      className="flex items-center justify-between"
+      className={`flex items-center justify-between ${className}`}
       { ...props }
     >
       <h2 className="text-3xl text-body font-light">
