@@ -8,7 +8,11 @@ import LineMdDownloadTwotoneLoop from '@/components/svgs/activity/LineMdDownload
 import LineMdUploadOutlineLoop from '@/components/svgs/activity/LineMdUploadOutlineLoop';
 import LineMdUploadTwotoneLoop from '@/components/svgs/activity/LineMdUploadTwotoneLoop';
 
-export default function ShowOrderSummary () {
+type Props = {
+  className?: string;
+} & React.ComponentPropsWithRef<"div">;
+
+export default function ShowOrderSummary ({ className, ...props }: Props) {
   
   const [ toggle, setToggle ] = useState<boolean>(false);
   const orderSummaryRef = useRef<HTMLUListElement>(null);
@@ -22,16 +26,18 @@ export default function ShowOrderSummary () {
   return (
     <div
       className={`
-        flex flex-col py-4 border-solid border-b-[1px] border-inbetween
+        flex flex-col py-4 border-solid border-b-[1px] border-inbetween lg:gap-8
+        ${className}
       `}
+      {...props}
     >
       <button
-        className="group flex gap-2"
+        className="lg:hidden group flex gap-2"
         onClick={() => setToggle(val => !val)}
       >
         <span
           className={`
-            text-content text-md
+            text-content text-base
             ${toggle ? 'font-bold' : 'font-medium'}
             transition-all duration-300 ease-in-out
           `}
@@ -72,9 +78,21 @@ export default function ShowOrderSummary () {
           500 SYP
         </span>
       </button>
+      <section
+        className="hidden lg:flex lg:items-center"
+      >
+        <h2
+          className="text-5xl text-content font-light"
+        >
+          ORDER SUMMARY
+        </h2>
+        <span className="text-lg text-heading font-bold ml-auto">
+          500 SYP
+        </span>
+      </section>
       <OrderSummary 
         className={`
-          overflow-hidden
+          lg:hidden overflow-hidden
           transition-all duration-300 ease-in-out
         `}
         style={{
@@ -82,6 +100,11 @@ export default function ShowOrderSummary () {
           paddingTop: toggle ? '0.5rem' : '0',
         }}
         ref={orderSummaryRef}
+      />
+      <OrderSummary 
+        className={`
+          hidden lg:flex overflow-hidden
+        `}
       />
     </div>
   )

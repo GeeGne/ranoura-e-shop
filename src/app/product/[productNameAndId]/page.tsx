@@ -106,8 +106,8 @@ export default function ProductPage () {
         />
         <BtnA
           className="
-            flex justify-center items-center gap-2 font-bold text-md text-heading-invert 
-            bg-gradient-to-r from-primary to-inbetween py-2 rounded-lg mt-auto
+            flex justify-center items-center gap-2 font-bold text-base text-heading-invert 
+            cool-bg-grad-m py-2 rounded-lg mt-auto
           "
           data-type="add_to_bag_button_is_clicked"
           data-product-name="Long Jeans With a Skirt"
@@ -154,13 +154,13 @@ export default function ProductPage () {
         <ProductLists 
           title="DELIVERY"
           descArray={[
-            'Get your favorite Ranura pieces delivered straight to your doorstep! Enjoy fast and reliable shipping with options for standard delivery (three to five business days) or express delivery (one to two business days) for those last-minute style needs. We carefully package every item to ensure it arrives in perfect condition, ready to shine in your wardrobe.'
+            'Get your favorite Ranoura pieces delivered straight to your doorstep! Enjoy fast and reliable shipping with options for standard delivery (three to five business days) or express delivery (one to two business days) for those last-minute style needs. We carefully package every item to ensure it arrives in perfect condition, ready to shine in your wardrobe.'
           ]}
         />
         <ProductLists 
           title="RETURNS"
           descArray={[
-            `At Ranura, your satisfaction is our priority. If something isn't quite right, you can easily return it within fourteen days of receiving your order. Items must be unworn, unwashed, and with original tags attached. Simply follow our hassle-free returns process, and we'll ensure you get a refund or exchange as quickly as possible.`
+            `At Ranoura, your satisfaction is our priority. If something isn't quite right, you can easily return it within fourteen days of receiving your order. Items must be unworn, unwashed, and with original tags attached. Simply follow our hassle-free returns process, and we'll ensure you get a refund or exchange as quickly as possible.`
           ]}
         />
       </section>

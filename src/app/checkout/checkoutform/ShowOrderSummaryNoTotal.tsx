@@ -10,7 +10,12 @@ import LineMdUploadOutlineLoop from '@/components/svgs/activity/LineMdUploadOutl
 import LineMdUploadTwotoneLoop from '@/components/svgs/activity/LineMdUploadTwotoneLoop';
 
 
-export default function ShowOrderSummaryNoTotal (props: React.HTMLAttributes<HTMLDivElement>) {
+type Props = {
+  className?: string;
+
+}
+
+export default function ShowOrderSummaryNoTotal ({className, ...props}: Props) {
   
   const [ toggle, setToggle ] = useState<boolean>(false);
   const orderSummaryRef = useRef<HTMLUListElement>(null);
@@ -25,7 +30,10 @@ export default function ShowOrderSummaryNoTotal (props: React.HTMLAttributes<HTM
     <div
       className={`
         flex flex-col py-4 border-solid border-b-[1px] border-inbetween
+        ${className}
       `}
+
+      {...props}
     >
       <button
         className="group flex gap-2"
@@ -33,7 +41,7 @@ export default function ShowOrderSummaryNoTotal (props: React.HTMLAttributes<HTM
       >
         <span
           className={`
-            text-content text-md
+            text-content text-base
             ${toggle ? 'font-bold' : 'font-medium'}
             transition-all duration-300 ease-in-out
           `}

@@ -14,7 +14,11 @@ import LineMdSquareToConfirmSquareTwotoneTransition from '@/components/svgs/Line
 import LineMdSquareToConfirmSquareTransition from '@/components/svgs/LineMdSquareToConfirmSquareTransition';
 import LineMdArrowsVerticalAlt from '@/components/svgs/LineMdArrowsVerticalAlt';
 
-export default function CheckoutForm () {
+type Props = {
+  className?: string;
+} & React.ComponentPropsWithRef<"form">;
+
+export default function CheckoutForm ({ className, ...props }: Props) {
   const [ isAddressDetailsFocus, setIsAddressDetailsFocus ] = useState<boolean>(false);
   const [ isSecondAddressFocus, setIsSecondAddressFocus ] = useState<boolean>(false);
   const [ isNotesFocus, setIsNotesFocus ] = useState<boolean>(false);
@@ -92,8 +96,12 @@ export default function CheckoutForm () {
 
   return (
     <form 
-      className="flex flex-col divide-solid divide-inbetween divide-y-[1px]"
+      className={`
+        flex flex-col divide-solid divide-inbetween divide-y-[1px]
+        ${className}
+      `}
       onSubmit={handleSubmit}
+      { ...props }
     >
       <section
         className="py-4 flex flex-col gap-4"
@@ -267,7 +275,7 @@ export default function CheckoutForm () {
             absolute left-3 translate-y-[-50%]
             px-1 bg-background peer-autofill:top-0
             transition-all duration-300 ease-in-out
-            ${isAddressDetailsFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-md text-body-light'}
+            ${isAddressDetailsFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
           `}
         >
           Address Details
@@ -296,7 +304,7 @@ export default function CheckoutForm () {
             absolute left-3 translate-y-[-50%]
             px-1 bg-background peer-autofill:top-0
             transition-all duration-300 ease-in-out
-            ${isSecondAddressFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-md text-body-light'}
+            ${isSecondAddressFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
           `}
         >
           Second Address (optional)
@@ -325,7 +333,7 @@ export default function CheckoutForm () {
               absolute left-3 translate-y-[-50%]
               px-1 bg-background peer-autofill:top-0
               transition-all duration-300 ease-in-out
-              ${isNotesFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-md text-body-light'}
+              ${isNotesFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
             `}
           >
             Notes (optional)
@@ -347,7 +355,7 @@ export default function CheckoutForm () {
         </label>
       </section>
       <section
-        className="flex flex-col gap-4 py-4"
+        className="flex lg:hidden flex-col gap-4 py-4"
       > 
         <div
           className="flex justify-between items-center"

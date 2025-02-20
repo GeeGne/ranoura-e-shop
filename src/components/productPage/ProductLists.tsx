@@ -39,7 +39,7 @@ export default function ProductLists ({ title = 'NO TITLE', descArray = ['Text i
       >
 
         <h3
-          className="text-md "
+          className="text-base"
         >
           {title}
         </h3>

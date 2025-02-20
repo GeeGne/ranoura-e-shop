@@ -130,7 +130,7 @@ export default function AlertMessage () {
       >
         <span
           className={`
-            --alert-messge-content-ani text-md lg:text-xl font-bold
+            --alert-messge-content-ani text-base lg:text-xl font-bold
             ${type === 'success' 
               ? 'text-green-500'
               : type === 'warning'
@@ -157,7 +157,7 @@ export default function AlertMessage () {
           }
         </span>
         <span
-          className="--alert-messge-content-ani text-body text-sm lg:text-md"
+          className="--alert-messge-content-ani text-body text-sm lg:text-base"
         >
           {message}
         </span>

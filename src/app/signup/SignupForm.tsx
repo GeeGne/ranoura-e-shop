@@ -133,7 +133,7 @@ export default function SignupForm ({ className, ...props }: Props) {
             absolute left-3 translate-y-[-50%]
             bg-background px-1
             transition-all duration-300 ease-in-out
-            ${isFNameFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-md text-body-light'}
+            ${isFNameFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
           `}
         >
           FIRST NAME
@@ -162,7 +162,7 @@ export default function SignupForm ({ className, ...props }: Props) {
             absolute left-3 translate-y-[-50%]
             bg-background px-1
             transition-all duration-300 ease-in-out
-            ${isLNameFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-md text-body-light'}
+            ${isLNameFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
           `}
         >
           LAST NAME
@@ -191,7 +191,7 @@ export default function SignupForm ({ className, ...props }: Props) {
             absolute left-3 translate-y-[-50%]
             bg-background px-1
             transition-all duration-300 ease-in-out
-            ${isEmailFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-md text-body-light'}
+            ${isEmailFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
           `}
         >
           EMAIL
@@ -220,7 +220,7 @@ export default function SignupForm ({ className, ...props }: Props) {
             absolute left-3 translate-y-[-50%]
             bg-background px-1
             transition-all duration-300 ease-in-out
-            ${isPasswordFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-md text-body-light'}
+            ${isPasswordFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
           `}
         >
           PASSWORD
@@ -306,7 +306,7 @@ export default function SignupForm ({ className, ...props }: Props) {
             absolute left-3 translate-y-[-50%]
             bg-background px-1
             transition-all duration-300 ease-in-out
-            ${isCPasswordFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-md text-body-light'}
+            ${isCPasswordFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
           `}
         >
           CONFIRM PASSWORD
@@ -392,7 +392,7 @@ export default function SignupForm ({ className, ...props }: Props) {
       </BtnA>
       <Link
         href="/signin"
-        className="md:col-span-2 text-heading text-md"
+        className="md:col-span-2 text-heading text-base"
         data-type="navigate_to_signin"
         onClick={handleClick}
       >

@@ -79,28 +79,28 @@ export default function OrderSummary ({ hideProductsSection = false, hideTotalSe
               <section
                 className="flex flex-col flex-1 gap-2"
               >
-                <h3 className="text-sm md:text-md text-heading">
+                <h3 className="text-sm md:text-base text-heading">
                   Warm Jacket for casual days
                 </h3>
-                <div className="flex gap-2 items-center text-sm md:text-md text-heading font-bold">
+                <div className="flex gap-2 items-center text-sm md:text-base text-heading font-bold">
                   <span>
                     BLACK
                   </span> {' | '}
                   <div className="w-3 md:w-4 h-3 md:h-4 bg-primary rounded-full" />
                 </div>
                 <div className="flex gap-2 items-center text-heading">
-                  <span className="text-sm md:text-md text-body">
+                  <span className="text-sm md:text-base text-body">
                     size:
                   </span>
-                  <span className="text-sm md:text-md font-bold">
+                  <span className="text-sm md:text-base font-bold">
                     M
                   </span>
                 </div>
                 <div className="flex gap-2 items-center text-heading">
-                  <span className="text-sm md:text-md text-body">
+                  <span className="text-sm md:text-base text-body">
                     quantity:
                   </span>
-                  <span className="text-sm md:text-md font-bold">
+                  <span className="text-sm md:text-base font-bold">
                     2
                   </span>
                 </div>
@@ -109,7 +109,7 @@ export default function OrderSummary ({ hideProductsSection = false, hideTotalSe
                   className="flex"
               >
                 <span
-                  className="text-sm md:text-md"
+                  className="text-sm md:text-base"
                 >
                   300 SYP
                 </span>
@@ -123,7 +123,7 @@ export default function OrderSummary ({ hideProductsSection = false, hideTotalSe
 
       {hideTotalSection ||
         <><div
-          className="flex justify-between text-md"
+          className="flex justify-between text-base"
         >
           <span className="text-body">
             Sub Total
@@ -134,7 +134,7 @@ export default function OrderSummary ({ hideProductsSection = false, hideTotalSe
         </div>
 
         <div
-          className="flex justify-between text-md"
+          className="flex justify-between text-base"
         >
           <span className="text-body">
             Shipping fee

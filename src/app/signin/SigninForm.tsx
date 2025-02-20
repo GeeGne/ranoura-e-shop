@@ -106,7 +106,7 @@ export default function SigninForm ({ className, ...props }: Props) {
             absolute left-3 translate-y-[-50%]
             px-1 bg-background peer-autofill:top-0
             transition-all duration-300 ease-in-out
-            ${isEmailFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-md text-body-light'}
+            ${isEmailFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
           `}
         >
           EMAIL
@@ -135,7 +135,7 @@ export default function SigninForm ({ className, ...props }: Props) {
             absolute left-3 translate-y-[-50%]
             px-1 bg-background
             transition-all duration-300 ease-in-out
-            ${isPasswordFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-md text-body-light'}
+            ${isPasswordFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
 
           `}
         >
@@ -222,7 +222,7 @@ export default function SigninForm ({ className, ...props }: Props) {
       </BtnA>
       <Link
         href="/signup"
-        className="text-heading text-md"
+        className="text-heading text-base"
         data-type="navigate_to_signup"
         onClick={handleClick}
       >
@@ -239,7 +239,7 @@ export default function SigninForm ({ className, ...props }: Props) {
       </Link>
       <Link
         href="/pass-reset"
-        className="text-heading text-md"
+        className="text-heading text-base"
       >
         <span
           className="underline"

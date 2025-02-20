@@ -93,7 +93,7 @@ export default function FilterExpandWrapper ({
       >
         <h2 
           className={`
-            text-md
+            text-base
             transition-all duration-300 ease-in-out
             ${toggle ? 'text-heading font-bold' : 'text-body font-normal'}
           `}

@@ -98,7 +98,7 @@ export default function FilterWindow () {
         }
         <button
           className={`
-            shrink-0 underline text-md text-heading whitespace-nowrap
+            shrink-0 underline text-base text-heading whitespace-nowrap
             ${selectedCategories.length > 0 ? 'hover:font-bold cursor-pointer' : 'hover:font-normal cursor-default'}
             transition-all duration-200 ease-in-out  
           `}

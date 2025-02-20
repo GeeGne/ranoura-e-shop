@@ -31,7 +31,7 @@ export default function Card ({ children, className, svg, title, description, ..
         {svg}
       </div>
       <h3
-        className="text-md text-heading md:row-span-1 font-bold text-center"
+        className="text-base text-heading md:row-span-1 font-bold text-center"
       >
         {title}
       </h3>

@@ -296,7 +296,7 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
               </nav>
             </div>
             <Link
-              className="text-heading text-md mb-auto"
+              className="text-heading text-base mb-auto"
               href={`/product/${strSlugForProducts(product.name, product.id)}`}
             >
               {product.name}

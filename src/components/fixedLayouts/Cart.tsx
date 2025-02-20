@@ -219,7 +219,7 @@ export default function Cart () {
                 </label>
                 <div 
                   className="
-                    flex flex-col gap-2 text-sm md:text-md mt-auto pt-8
+                    flex flex-col gap-2 text-sm md:text-base mt-auto pt-8
                     translate-all duration-300 ease-in-out
                   "
                 >
@@ -333,7 +333,7 @@ export default function Cart () {
                 </label>
                 <div 
                   className="
-                    flex flex-col gap-2 text-sm md:text-md mt-auto pt-8
+                    flex flex-col gap-2 text-sm md:text-base mt-auto pt-8
                     translate-all duration-300 ease-in-out
                   "
                 >
@@ -447,7 +447,7 @@ export default function Cart () {
                 </label>
                 <div 
                   className="
-                    flex flex-col gap-2 text-sm md:text-md mt-auto pt-8
+                    flex flex-col gap-2 text-sm md:text-base mt-auto pt-8
                     translate-all duration-300 ease-in-out
                   "
                 >
@@ -490,7 +490,7 @@ export default function Cart () {
             <h3 className="">16000 SYP</h3>
           </div>
           <BtnA
-            className="w-full text-md text-heading-invert py-2 px-2 bg-primary rounded-md"
+            className="w-full text-base text-heading-invert py-2 px-2 bg-primary rounded-md"
             data-type="navigate_to_checkout"
             onClick={handleClick}
           >
