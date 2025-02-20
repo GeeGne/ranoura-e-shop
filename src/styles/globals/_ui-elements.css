@@ -182,3 +182,7 @@
 .cool-bg-grad-l {
   background-image: linear-gradient(to right, #edf2fb, #abc4ff, #edf2fb);
 }
+
+.cool-bg-grad-m {
+  background-image: linear-gradient(to right, #0a0908, #7d4f50, #0a0908);
+}

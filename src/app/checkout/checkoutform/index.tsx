@@ -1,18 +1,57 @@
 // HOOKS
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 // COMPONENTS
 import Title from '@/app/checkout/checkoutform/Title';
+import OrderSummary from '@/components/OrderSummary';
 import BtnA from '@/components/BtnA';
 import LineMdChevronSmallDown from '@/components/svgs/LineMdChevronSmallDown';
 import LineMdConfirmCircleTwotone from '@/components/svgs/LineMdConfirmCircleTwotone';
 import LineMdConfirmCircleTwotoneToCircleTwotoneTransition from '@/components/svgs/LineMdConfirmCircleTwotoneToCircleTwotoneTransition';
+import LineMdSquareTwotoneToConfirmSquareTransition from '@/components/svgs/LineMdSquareTwotoneToConfirmSquareTransition';
+import LineMdConfirmSquareToSquareTransition from '@/components/svgs/LineMdConfirmSquareToSquareTransition';
+import LineMdSquareToConfirmSquareTwotoneTransition from '@/components/svgs/LineMdSquareToConfirmSquareTwotoneTransition';
+import LineMdSquareToConfirmSquareTransition from '@/components/svgs/LineMdSquareToConfirmSquareTransition';
+import LineMdArrowsVerticalAlt from '@/components/svgs/LineMdArrowsVerticalAlt';
 
 export default function CheckoutForm () {
   const [ isAddressDetailsFocus, setIsAddressDetailsFocus ] = useState<boolean>(false);
   const [ isSecondAddressFocus, setIsSecondAddressFocus ] = useState<boolean>(false);
   const [ isNotesFocus, setIsNotesFocus ] = useState<boolean>(false);
+  const [ selectedPhoneNumberRadio, setSelectedPhoneNumberRadio ] = useState<string>('existedPhoneNumber');
+  const [ toggleOrderSummary, setToggleOrderSummary ] = useState<boolean>(false);
   
+  const orderSummaryRef = useRef<HTMLElement>(null);
+  const getRefTotalHeight = (ref: any) => ref.current?.scrollHeight;
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  }
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const { type } = e.currentTarget.dataset;
+
+    switch (type) {
+      case 'toggle_orderSummary_button_is_clicked':
+        setToggleOrderSummary(val => !val);
+        break;
+      default:
+        console.error('Unknown Type: ', type);
+    }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked, value, id } = e.currentTarget;
+    
+    switch (name) {
+      case 'phoneNumber':
+        if (checked) setSelectedPhoneNumberRadio(id);
+        break;
+      default:
+        console.error('Unknown name: ', name);
+    }
+  }
+
   const handleFocus = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name } = e.currentTarget;
 
@@ -51,13 +90,19 @@ export default function CheckoutForm () {
     }
   };
 
-
   return (
-    <form className="flex flex-col divide-solid divide-inbetween divide-y-[1px]">
+    <form 
+      className="flex flex-col divide-solid divide-inbetween divide-y-[1px]"
+      onSubmit={handleSubmit}
+    >
       <section
         className="py-4 flex flex-col gap-4"
       >
-        <Title className="pb-4" text="Deliver To" info="Enter the address where you’d like your order to be delivered. Double-check the details to ensure everything is accurate and up-to-date for a smooth delivery experience!" />
+        <Title 
+          className="pb-4" 
+          text="Deliver To" 
+          info="Enter the address where you’d like your order to be delivered. Double-check the details to ensure everything is accurate and up-to-date for a smooth delivery experience!" 
+        />
         <div
           className="relative"
         >
@@ -83,7 +128,8 @@ export default function CheckoutForm () {
             className="
               absolute hidden peer-focus:flex flex-col 
               top-full left-0 w-full px-1 py-1
-              bg-background text-body drop-shadow-md rounded-md  z-[5]"
+              bg-background text-body drop-shadow-md rounded-md  z-[5]
+            "
           >
             <li
               className="
@@ -118,14 +164,18 @@ export default function CheckoutForm () {
           </ul>
         </div>
         <div className="flex justify-between">
-            <h4 className="text-body">Shipping Fee:</h4>
-            <span className="text-heading font-bold">200</span>
+          <h4 className="text-body">Shipping Fee:</h4>
+          <span className="text-heading font-bold">200</span>
         </div>
       </section>
       <section
         className="flex flex-col gap-4 py-4"
       >
-        <Title className="pb-4" text="Contact Phone Number" info="Please share a phone number where we can contact you about your order. This ensures we can reach you quickly for delivery updates or questions!" />
+        <Title 
+          className="pb-4" 
+          text="Contact Phone Number" 
+          info="Please share a phone number where we can contact you about your order. This ensures we can reach you quickly for delivery updates or questions!" 
+        />
         <label
           className="group relative flex items-center gap-4 group cursor-pointer"
           htmlFor="existedPhoneNumber"
@@ -136,27 +186,27 @@ export default function CheckoutForm () {
             defaultChecked
             id="existedPhoneNumber"
             name="phoneNumber"
-            data-key="none"
             data-title="none"
+            onChange={handleChange}
           />
-          <LineMdConfirmCircleTwotoneToCircleTwotoneTransition
-            className={`
-              flex peer-checked:hidden 
-              absolute top-1/2 left-[0]
-              translate-y-[-50%] w-6 h-6 text-body
-            `}
-          />
-          <LineMdConfirmCircleTwotone
-            className={`
-              hidden peer-checked:flex 
-              absolute top-1/2 left-[0]
-              translate-y-[-50%] w-6 h-6 text-heading
-            `}
-          />
+          {selectedPhoneNumberRadio === 'existedPhoneNumber'
+            ? <LineMdSquareToConfirmSquareTransition
+                className={`
+                  absolute top-1/2 left-[0]
+                  translate-y-[-50%] w-6 h-6 text-heading
+                `}
+              />
+            : <LineMdConfirmSquareToSquareTransition
+                className={`
+                  absolute top-1/2 left-[0]
+                  translate-y-[-50%] w-6 h-6 text-body
+                `}
+              />
+          }
           <span
             className={`
               transition-all duration-300 ease-in-out
-              text-body peer-checked:text-heading
+              text-body peer-checked:text-heading peer-checked:font-bold
               transition-all duration-200 ease-in-out
             `}
           >
@@ -172,27 +222,27 @@ export default function CheckoutForm () {
             type="radio"
             id="newPhoneNumber"
             name="phoneNumber"
-            data-key="none"
             data-title="none"
+            onChange={handleChange}
           />
-          <LineMdConfirmCircleTwotoneToCircleTwotoneTransition
-            className={`
-              flex peer-checked:hidden 
-              absolute top-1/2 left-[0]
-              translate-y-[-50%] w-6 h-6 text-body
-            `}
-          />
-          <LineMdConfirmCircleTwotone
-            className={`
-              hidden peer-checked:flex 
-              absolute top-1/2 left-[0]
-              translate-y-[-50%] w-6 h-6 text-heading
-            `}
-          />
+          {selectedPhoneNumberRadio === 'newPhoneNumber'
+            ? <LineMdSquareToConfirmSquareTransition
+                className={`
+                  absolute top-1/2 left-[0]
+                  translate-y-[-50%] w-6 h-6 text-heading
+                `}
+              />
+            : <LineMdConfirmSquareToSquareTransition
+                className={`
+                  absolute top-1/2 left-[0]
+                  translate-y-[-50%] w-6 h-6 text-body
+                `}
+              />
+          }
           <span
             className={`
               transition-all duration-300 ease-in-out
-              text-body peer-checked:text-heading
+              text-body peer-checked:text-heading peer-checked:font-bold
               transition-all duration-200 ease-in-out
             `}
           >
@@ -203,7 +253,11 @@ export default function CheckoutForm () {
       <section
         className="flex flex-col gap-4 py-4"
       >
-        <Title className="pb-4" text="Shipping Address" info="Where should we send your order? Please provide the full address, including any necessary details like apartment numbers or landmarks, to ensure your package arrives safely and on time." />
+        <Title 
+          className="pb-4" 
+          text="Shipping Address" 
+          info="Where should we send your order? Please provide the full address, including any necessary details like apartment numbers or landmarks, to ensure your package arrives safely and on time."
+        />
         <label
         className="relative flex w-full"
         htmlFor="addressDetails"
@@ -294,11 +348,58 @@ export default function CheckoutForm () {
       </section>
       <section
         className="flex flex-col gap-4 py-4"
+      > 
+        <div
+          className="flex justify-between items-center"
+        >
+          <Title 
+            className="pb-4" 
+            text="Order Summary" 
+            infoEnabled={false}
+          />
+          <button
+            className="flex items-center gap-2"
+            data-type="toggle_orderSummary_button_is_clicked"
+            onClick={handleClick}
+          >
+            <span
+              className="text-sm text-content font-bold"
+            >
+              {toggleOrderSummary ? 'Hide' : 'Show'}
+            </span>
+            <LineMdArrowsVerticalAlt 
+              className="text-content w-5 h-5" 
+            />
+          </button>
+        </div>
+        <div
+          className={`
+            flex flex-col 
+            ${toggleOrderSummary ? 'gap-4' : 'gap-0'}
+            transition-all duration-300 ease-in-out
+          `}          
+        >
+          <OrderSummary
+            className={`
+              overflow-hidden
+              transition-all duration-300 ease-in-out
+            `}
+            hideTotalSection={true}
+            style={{maxHeight: toggleOrderSummary ? `${getRefTotalHeight(orderSummaryRef)}px` : '0'}}
+            ref={orderSummaryRef}
+          />
+          <OrderSummary
+            hideProductsSection={true}
+          />      
+        </div>
+      </section>
+      <section
+        className="flex flex-col gap-4 py-4"
       >
         <BtnA
-          className="cool-bg-grad-k text-heading-invert font-bold rounded-lg p-2"
+          className="cool-bg-grad-m text-heading-invert font-bold rounded-lg p-2"
         >
-          SUBMIT
+          PLACE ORDER
         </BtnA>
       </section>
     </form>
