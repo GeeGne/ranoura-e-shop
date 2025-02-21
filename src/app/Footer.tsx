@@ -10,6 +10,10 @@ import BtnA from '@/components/BtnA';
 // STORES
 import { useAlertMessageStore } from '@/stores/index';
 
+// ASSETS
+const logo = '/assets/img/ranoura-logo(2).png';
+const background = '/public/assets/img/background(2).jpg';
+
 export default function Footer ({ ...props }) {
 
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
@@ -43,15 +47,57 @@ export default function Footer ({ ...props }) {
         className="
           grid grid-cols-1 lg:grid-cols-5 lg:gap-4
         "
-    >
+      >
+        <div
+          className="hidden lg:inline lg:col-span-5 relative w-full [mask-image:linear-gradient(to_top,transparent_10%,black_50%)] overflow-hidden"
+        >
+          <img 
+            src={logo}
+            alt="Ranoura Logo"
+            className="opacity-100 w-full h-auto object-fit object-center [mask-image:linear-gradient(to_top,transparent_10%,black_20%)]"
+          />
+          <div
+            className="opacity-0 absolute w-full h-full inset-0 bg-cover"
+            style={{
+              backgroundImage: `url('/assets/img/background(9).jpg')`,
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'cover',
+              maskImage: `url('/assets/img/ranoura-logo(2).png')`,
+              WebkitMaskImage: `url('/assets/img/ranoura-logo(2).png')`,
+              maskPosition: 'center',
+              maskRepeat: 'no-repeat',
+              maskSize: 'cover'
+            }}
+          />
+        </div>
         <div
           className="lg:col-span-2 flex flex-col gap-2 shirnk-0 w-full max-w-[600px] lg:max-w-auto mx-auto pb-4"
         >
-          <span
-            className="text-heading-invert text-2xl text-bold"
+          <div
+            className="inline lg:hidden relative w-full [mask-image:linear-gradient(to_top,transparent_10%,black_30%)] overflow-hidden"
           >
-            RANOURA
-          </span>
+            <img 
+              src={logo}
+              alt="Ranoura Logo"
+              className="opacity-100 w-full h-auto object-fit object-center [mask-image:linear-gradient(to_top,transparent_10%,black_30%)]"
+            />
+            <div
+              className="opacity-0 absolute w-full h-full inset-0 bg-cover"
+              style={{
+                backgroundImage: `url('/assets/img/background(9).jpg')`,
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover',
+                maskImage: `url('/assets/img/ranoura-logo(2).png')`,
+                WebkitMaskImage: `url('/assets/img/ranoura-logo(2).png')`,
+                maskPosition: 'center',
+                maskRepeat: 'no-repeat',
+                maskSize: 'cover',
+
+              }}
+            />
+          </div>
           <span
             className="text-base text-body-invert"
           >
