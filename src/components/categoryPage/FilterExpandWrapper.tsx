@@ -6,6 +6,10 @@ import LineMdChevronSmallRight from '@/components/svgs/LineMdChevronSmallRight';
 import LineMdConfirmCircleTwotone from '@/components/svgs/LineMdConfirmCircleTwotone';
 import LineMdConfirmCircleTwotoneToCircleTwotoneTransition from '@/components/svgs/LineMdConfirmCircleTwotoneToCircleTwotoneTransition';
 
+import LineMdConfirmSquareToSquareTransition from '@/components/svgs/LineMdConfirmSquareToSquareTransition';
+import LineMdSquareToConfirmSquareTransition from '@/components/svgs/LineMdSquareToConfirmSquareTransition';
+
+
 // STORES
 import { useFilterWindowStore } from '@/stores/index';
 
@@ -139,16 +143,16 @@ export default function FilterExpandWrapper ({
                 onChange={handleChange}
               />
               {selectedCategories.some(val => val.key === itm.key)
-                ? <LineMdConfirmCircleTwotone
+                ? <LineMdSquareToConfirmSquareTransition
                     className={`
                       absolute top-1/2 left-[0]
-                      translate-y-[-50%] w-4 h-4 text-heading
+                      translate-y-[-50%] w-5 h-5 text-heading
                     `}
                   />
-                : <LineMdConfirmCircleTwotoneToCircleTwotoneTransition
+                : <LineMdConfirmSquareToSquareTransition
                     className={`
                       absolute top-1/2 left-[0]
-                      translate-y-[-50%] w-4 h-4 text-body
+                      translate-y-[-50%] w-5 h-5 text-body
                     `}
                   />
               } 

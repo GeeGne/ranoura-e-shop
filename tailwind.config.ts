@@ -21,6 +21,7 @@ export default {
         primary: "var(--primary-color)",
         secondary: "var(--secondary-color)",  
         content: "var(--content-color)",  
+        "content-inbetween": "var(--content-inbetween-color)",  
         "content-invert": "var(--content-invert-color)",  
         inbetween: "var(--inbetween-color)",
         background: "var(--background-color)",

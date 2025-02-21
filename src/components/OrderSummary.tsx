@@ -29,17 +29,25 @@ export default function OrderSummary ({ hideProductsSection = false, hideTotalSe
     >
       {hideProductsSection ||
         <><div
-          className="flex justify-between text-sm font-bold text-body"
+          className="
+            lg:relative lg:sticky lg:top-0 flex justify-between text-sm font-bold text-body lg:z-[5]
+            lg:before:content-[''] lg:before:absolute lg:before:top-0 lg:before:left-0 
+            lg:before:w-full lg:before:h-[calc(100%+0.5rem)] lg:before:bg-background lg:before:z-[5]
+          "
         >
-          <span>
+          <span
+            className="lg:z-[10]"
+          >
             PRODUCT
           </span>
-          <span>
+          <span
+            className="lg:z-[10]"
+          >
             PRICE
           </span>
         </div>
         
-        <hr className="border-inbetween border-[2px]" />
+        <hr className="lg:sticky lg:top-7 border-inbetween border-[2px] lg:z-[10]" />
 
         <ul
           className={`
@@ -106,7 +114,7 @@ export default function OrderSummary ({ hideProductsSection = false, hideTotalSe
                 </div>
               </section>
               <section
-                  className="flex"
+                className="flex"
               >
                 <span
                   className="text-sm md:text-base"
@@ -118,7 +126,7 @@ export default function OrderSummary ({ hideProductsSection = false, hideTotalSe
           )}
         </ul>
 
-        <hr className="border-inbetween border-[2px]" /></>
+        <hr className="lg:sticky lg:bottom-0 border-inbetween border-[2px]" /></>
       }
 
       {hideTotalSection ||

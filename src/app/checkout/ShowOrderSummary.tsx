@@ -101,11 +101,25 @@ export default function ShowOrderSummary ({ className, ...props }: Props) {
         }}
         ref={orderSummaryRef}
       />
-      <OrderSummary 
+      <div
         className={`
-          hidden lg:flex overflow-hidden
+          flex flex-col gap-4 overflow-hidden
         `}
-      />
+      >
+        
+        <OrderSummary
+          className={`
+            hidden lg:flex max-h-[470px] overflow-y-scroll
+          `}        
+          hideTotalSection={true}
+        />
+        <OrderSummary
+          className={`
+            hidden lg:flex 
+          `}
+          hideProductsSection={true}
+        />
+      </div>   
     </div>
   )
 }

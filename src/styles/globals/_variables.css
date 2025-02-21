@@ -1,7 +1,8 @@
 :root {
   --primary-color: #0a0908;
   --secondary-color: #22333b;
-  --content-color: #cb997e;
+  --content-color: #7d4f50;
+  --content-inbetween-color: #cb997e;
   --content-invert-color: #ffe8d6;
   --primary-invert-color: #F1EFEF;
   --inbetween-color: #9999a1;
