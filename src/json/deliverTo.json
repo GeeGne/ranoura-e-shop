@@ -1,0 +1,63 @@
+[
+  {
+    "id": 0,
+    "city": "Damascus",
+    "shippingFee": 200
+  },{
+    "id": 1,
+    "city": "Aleppo",
+    "shippingFee": 400
+  },{
+    "id": 2,
+    "city": "Homs",
+    "shippingFee": 360
+  },{
+    "id": 3,
+    "city": "Hama",
+    "shippingFee": 700
+  },{
+    "id": 4,
+    "city": "Latakia",
+    "shippingFee": 1200
+  },{
+    "id": 5,
+    "city": "Deir ez-Zor",
+    "shippingFee": 2000
+  },{
+    "id": 6,
+    "city": "Daraa",
+    "shippingFee": 900
+  },{
+    "id": 7,
+    "city": "Raqqa",
+    "shippingFee": 100
+  },{
+    "id": 8,
+    "city": "Qamishli",
+    "shippingFee": 600
+  },{
+    "id": 9,
+    "city": "Tartus",
+    "shippingFee": 4000
+  },{
+    "id": 10,
+    "city": "As-Suwayda",
+    "shippingFee": 470
+  },{
+    "id": 11,
+    "city": "Palmyra",
+    "shippingFee": 1200
+  },{
+    "id": 12,
+    "city": "Al-Hasakah",
+    "shippingFee": 2500
+  },{
+    "id": 13,
+    "city": "Manbij",
+    "shippingFee": 700
+  },{
+    "id": 14,
+    "city": "Idlib",
+    "shippingFee": 850
+  }
+]

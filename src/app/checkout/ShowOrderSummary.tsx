@@ -98,6 +98,7 @@ export default function ShowOrderSummary ({ className, ...props }: Props) {
         style={{
           maxHeight: toggle ? getRefTotalHeight(orderSummaryRef) + 8 + 'px' : '0px',
           paddingTop: toggle ? '0.5rem' : '0',
+          opacity: toggle ? '1' : '0',
         }}
         ref={orderSummaryRef}
       />

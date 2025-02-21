@@ -78,6 +78,7 @@ export default function FooterList ({ title, content, ...props}: Props) {
         style={{
           maxHeight: `${toggle ? getScrollHeight(uiRef.current) : 0}px`, 
           overflow: overflowToggle ? `visible` : 'hidden', 
+          opacity: toggle ? '1' : '0',
         }}
         ref={uiRef}
       >

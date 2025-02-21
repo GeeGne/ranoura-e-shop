@@ -14,16 +14,26 @@ import LineMdSquareToConfirmSquareTwotoneTransition from '@/components/svgs/Line
 import LineMdSquareToConfirmSquareTransition from '@/components/svgs/LineMdSquareToConfirmSquareTransition';
 import LineMdArrowsVerticalAlt from '@/components/svgs/LineMdArrowsVerticalAlt';
 
+// JSON
+import deliverTo from '@/json/deliverTo.json';
+
 type Props = {
   className?: string;
 } & React.ComponentPropsWithRef<"form">;
 
 export default function CheckoutForm ({ className, ...props }: Props) {
+
   const [ isAddressDetailsFocus, setIsAddressDetailsFocus ] = useState<boolean>(false);
   const [ isSecondAddressFocus, setIsSecondAddressFocus ] = useState<boolean>(false);
   const [ isNotesFocus, setIsNotesFocus ] = useState<boolean>(false);
   const [ selectedPhoneNumberRadio, setSelectedPhoneNumberRadio ] = useState<string>('existedPhoneNumber');
   const [ toggleOrderSummary, setToggleOrderSummary ] = useState<boolean>(false);
+  const [ selectedDeliverToCity, setSelectedDeliverToCity ] = useState<{
+     city?: string; shippingFee?: string | number 
+    }>({
+    city: 'Pick Your City',
+    shippingFee: '--'
+  });
   
   const orderSummaryRef = useRef<HTMLElement>(null);
   const getRefTotalHeight = (ref: any) => ref.current?.scrollHeight;
@@ -32,12 +42,18 @@ export default function CheckoutForm ({ className, ...props }: Props) {
     e.preventDefault();
   }
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const { type } = e.currentTarget.dataset;
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement | HTMLLIElement>) => {
+    const { type, city, shippingFee } = e.currentTarget.dataset;
 
     switch (type) {
       case 'toggle_orderSummary_button_is_clicked':
         setToggleOrderSummary(val => !val);
+        break;
+      case 'deliverTo_list_is_clicked':
+        setSelectedDeliverToCity({
+          city,
+          shippingFee      
+        });
         break;
       default:
         console.error('Unknown Type: ', type);
@@ -94,6 +110,9 @@ export default function CheckoutForm ({ className, ...props }: Props) {
     }
   };
 
+  // DEBUG & UI
+  console.log('selectedDeliverToCity: ', selectedDeliverToCity);
+
   return (
     <form 
       className={`
@@ -111,13 +130,16 @@ export default function CheckoutForm ({ className, ...props }: Props) {
           text="Deliver To" 
           info="Enter the address where you’d like your order to be delivered. Double-check the details to ensure everything is accurate and up-to-date for a smooth delivery experience!" 
         />
-        <div
+        <label
           className="relative"
+          htmlFor="deliverTo"
         >
           <input 
             type="text"
+            name="deliverTo"
+            id="deliverTo"
             readOnly
-            value="Damascus"
+            value={selectedDeliverToCity.city}
             className="
               peer w-full py-3 px-4 bg-transparent
               border-solid border-inbetween focus:border-primary border-[2px] focus:border-[2px] rounded-lg
@@ -139,41 +161,28 @@ export default function CheckoutForm ({ className, ...props }: Props) {
               bg-background text-body drop-shadow-md rounded-md  z-[5]
             "
           >
-            <li
-              className="
-                py-1 px-3 hover:bg-content-invert hover:text-content hover:font-bold
-                rounded-md
-                transition-all duration-200 ease-in-out
-              "
-              role="button"
-            >
-              this
-            </li>
-            <li
-              className="
-                py-1 px-3 hover:bg-content-invert hover:text-content font-bold
-                rounded-md
-                transition-all duration-200 ease-in-out
-              "
-              role="button"
-            >
-              is
-            </li>
-            <li
-              className="
-                py-1 px-3 hover:bg-content-invert hover:text-content font-bold
-                rounded-md
-                transition-all duration-200 ease-in-out
-              "
-              role="button"
-            >
-              text
-            </li>
+            {deliverTo.map(itm =>
+              <li
+                className="
+                  py-1 px-3 hover:bg-content-invert hover:text-content hover:font-bold
+                  rounded-md
+                  transition-all duration-200 ease-in-out
+                "
+                role="button"
+                data-city={itm.city}
+                data-shipping-fee={itm.shippingFee}
+                data-type="deliverTo_list_is_clicked"
+                key={itm.id}
+                onClick={handleClick}
+              >
+                {itm.city}
+              </li>
+            )}
           </ul>
-        </div>
+        </label>
         <div className="flex justify-between">
           <h4 className="text-body">Shipping Fee:</h4>
-          <span className="text-heading font-bold">200</span>
+          <span className="text-heading font-bold">{selectedDeliverToCity.shippingFee}</span>
         </div>
       </section>
       <section

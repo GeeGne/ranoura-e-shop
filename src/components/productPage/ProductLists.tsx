@@ -61,7 +61,8 @@ export default function ProductLists ({ title = 'NO TITLE', descArray = ['Text i
         style={{
           maxHeight: toggle ? getScrollHeight(descRef?.current) : '0',
           paddingTop: toggle ? '0.5rem' : '0',
-          overflow: overflowToggle ? 'visible' : 'hidden'
+          overflow: overflowToggle ? 'visible' : 'hidden',
+          opacity: toggle ? '1' : '0',
         }}
 
         ref={descRef}

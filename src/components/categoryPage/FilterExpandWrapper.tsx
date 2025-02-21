@@ -121,6 +121,7 @@ export default function FilterExpandWrapper ({
         `}
         style={{
           maxHeight: toggle ? getScrollHeight(descRef?.current) : '0',
+          opacity: toggle ? '1' : '0',
         }}
         ref={descRef}
       >
