@@ -63,6 +63,8 @@ export default function SignupForm ({ className, ...props }: Props) {
   const handleFocus = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name } = e.currentTarget;
 
+    e.currentTarget.scrollIntoView({ block: 'center', behavior: 'smooth' });
+
     switch (name) {
       case 'firstName':
         setIsFNameFocus(true);

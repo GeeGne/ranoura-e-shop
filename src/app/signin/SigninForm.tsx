@@ -55,6 +55,8 @@ export default function SigninForm ({ className, ...props }: Props) {
   const handleFocus = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name } = e.currentTarget;
 
+    e.currentTarget.scrollIntoView({ block: 'center', behavior: 'smooth' });
+
     switch (name) {
       case 'email':
         setIsEmailFocus(true);

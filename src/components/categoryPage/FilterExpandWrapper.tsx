@@ -9,7 +9,6 @@ import LineMdConfirmCircleTwotoneToCircleTwotoneTransition from '@/components/sv
 import LineMdConfirmSquareToSquareTransition from '@/components/svgs/LineMdConfirmSquareToSquareTransition';
 import LineMdSquareToConfirmSquareTransition from '@/components/svgs/LineMdSquareToConfirmSquareTransition';
 
-
 // STORES
 import { useFilterWindowStore } from '@/stores/index';
 
@@ -29,6 +28,7 @@ export default function FilterExpandWrapper ({
   ]
 }: Props
 ) {
+  
   const [ toggle, setToggle ] = useState<boolean>(false);
 
   const selectedCategories = useFilterWindowStore(state => state.selectedCategories);

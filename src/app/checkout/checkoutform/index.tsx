@@ -75,6 +75,8 @@ export default function CheckoutForm ({ className, ...props }: Props) {
   const handleFocus = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name } = e.currentTarget;
 
+    e.currentTarget.scrollIntoView({ block: 'center', behavior: 'smooth' });
+
     switch (name) {
       case 'addressDetails':
         setIsAddressDetailsFocus(true);
@@ -146,6 +148,7 @@ export default function CheckoutForm ({ className, ...props }: Props) {
               text-heading text-lg font-bold
               transition-all duration-200 ease-in-out
             "
+            onFocus={handleFocus}
           />
           <LineMdChevronSmallDown
             className="
