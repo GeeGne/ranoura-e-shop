@@ -93,7 +93,7 @@ export default function CheckoutForm ({ className, ...props }: Props) {
   const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.currentTarget;
 
-    if (value !== "") return;
+    if (value !== "" ) return;
 
     switch (name) {
       case 'addressDetails':
@@ -111,7 +111,8 @@ export default function CheckoutForm ({ className, ...props }: Props) {
   };
 
   // DEBUG & UI
-  console.log('selectedDeliverToCity: ', selectedDeliverToCity);
+  // console.log('selectedDeliverToCity: ', selectedDeliverToCity);
+  // console.log('isDeliverToFocus: ', isDeliverToFocus);
 
   return (
     <form 
@@ -130,9 +131,8 @@ export default function CheckoutForm ({ className, ...props }: Props) {
           text="Deliver To" 
           info="Enter the address where you’d like your order to be delivered. Double-check the details to ensure everything is accurate and up-to-date for a smooth delivery experience!" 
         />
-        <label
+        <div
           className="relative"
-          htmlFor="deliverTo"
         >
           <input 
             type="text"
@@ -155,16 +155,19 @@ export default function CheckoutForm ({ className, ...props }: Props) {
             "
          />
           <ul
-            className="
-              absolute hidden peer-focus:flex flex-col 
-              top-full left-0 w-full px-1 py-1
-              bg-background text-body drop-shadow-md rounded-md  z-[5]
-            "
+            className={`
+              absolute flex flex-col 
+              top-full left-0 w-full max-h-[250px] px-1 py-1 overflow-y-scroll
+              bg-background text-body drop-shadow-md rounded-lg z-[5]
+              transition-all delay-100 duration-200 ease-in-out origin-top
+              scale-y-0 peer-focus:scale-y-[100%]
+              opacity-0 peer-focus:opacity-100
+            `}
           >
             {deliverTo.map(itm =>
               <li
                 className="
-                  py-1 px-3 hover:bg-content-invert hover:text-content hover:font-bold
+                  py-2 px-3 hover:bg-content-invert hover:text-content hover:font-bold
                   rounded-md
                   transition-all duration-200 ease-in-out
                 "
@@ -179,7 +182,7 @@ export default function CheckoutForm ({ className, ...props }: Props) {
               </li>
             )}
           </ul>
-        </label>
+        </div>
         <div className="flex justify-between">
           <h4 className="text-body">Shipping Fee:</h4>
           <span className="text-heading font-bold">{selectedDeliverToCity.shippingFee}</span>
