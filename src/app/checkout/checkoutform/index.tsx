@@ -78,6 +78,8 @@ export default function CheckoutForm ({ className, ...props }: Props) {
     e.currentTarget.scrollIntoView({ block: 'center', behavior: 'smooth' });
 
     switch (name) {
+      case 'deliverTo':
+        break;
       case 'addressDetails':
         setIsAddressDetailsFocus(true);
         break;
@@ -143,8 +145,8 @@ export default function CheckoutForm ({ className, ...props }: Props) {
             readOnly
             value={selectedDeliverToCity.city}
             className="
-              peer w-full py-3 px-4 bg-transparent
-              border-solid border-inbetween focus:border-primary border-[2px] focus:border-[2px] rounded-lg
+              peer w-full py-3 px-4 bg-transparent rounded-lg
+              border-solid border-inbetween focus:border-primary border-[2px] focus:border-[2px]
               text-heading text-lg font-bold
               transition-all duration-200 ease-in-out
             "

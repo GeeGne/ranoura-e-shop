@@ -73,12 +73,12 @@ export default function FooterList ({ title, content, ...props}: Props) {
       <ul
         className={`
           flex flex-col gap-2 text-body-invert overflow-hidden
-          transition-all duration-300 ease-in-out lg:min-h-full 
+          transition-all duration-300 ease-in-out lg:min-h-full lg:opacity-100
+          ${toggle ? 'opacity-100' : 'opacity-0'}
         `}
         style={{
           maxHeight: `${toggle ? getScrollHeight(uiRef.current) : 0}px`, 
-          overflow: overflowToggle ? `visible` : 'hidden', 
-          opacity: toggle ? '1' : '0',
+          overflow: overflowToggle ? `visible` : 'hidden'
         }}
         ref={uiRef}
       >
