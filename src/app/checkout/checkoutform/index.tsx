@@ -419,7 +419,7 @@ export default function CheckoutForm ({ className, ...props }: Props) {
         </div>
       </section>
       <section
-        className="flex flex-col gap-4 py-4"
+        className="flex flex-col gap-4 pt-8"
       >
         <BtnA
           className="cool-bg-grad-m text-heading-invert font-bold rounded-lg p-2"

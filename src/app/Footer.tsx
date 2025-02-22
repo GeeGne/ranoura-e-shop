@@ -57,7 +57,7 @@ export default function Footer ({ ...props }) {
             className="opacity-100 w-full h-auto object-fit object-center [mask-image:linear-gradient(to_top,transparent_10%,black_20%)]"
           />
           <div
-            className="opacity-0 absolute w-full h-full inset-0 bg-cover"
+            className="opacity-0 absolute w-full h-full inset-0 bg-cover overflow-hidden"
             style={{
               backgroundImage: `url('/assets/img/background(9).jpg')`,
               backgroundPosition: 'center',
@@ -83,7 +83,7 @@ export default function Footer ({ ...props }) {
               className="opacity-100 w-full h-auto object-fit object-center [mask-image:linear-gradient(to_top,transparent_10%,black_30%)]"
             />
             <div
-              className="opacity-0 absolute w-full h-full inset-0 bg-cover"
+              className="opacity-0 absolute w-full h-full inset-0 bg-cover overflow-hidden"
               style={{
                 backgroundImage: `url('/assets/img/background(9).jpg')`,
                 backgroundPosition: 'center',

@@ -110,7 +110,7 @@ export default function ShowOrderSummary ({ className, ...props }: Props) {
         
         <OrderSummary
           className={`
-            hidden lg:flex max-h-[470px] overflow-y-scroll
+            hidden lg:flex max-h-[486px] overflow-y-scroll
           `}        
           hideTotalSection={true}
         />
