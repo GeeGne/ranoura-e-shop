@@ -186,3 +186,7 @@
 .cool-bg-grad-m {
   background-image: linear-gradient(to right, #0a0908, #7d4f50, #0a0908);
 }
+
+.user-nav-selected {
+  @apply before:content-[''] before:absolute before:bottom-0 before:left-1/2 before:translate-x-[-50%] before:w-12 before:h-2 before:bg-content
+}
