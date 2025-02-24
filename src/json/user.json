@@ -1,0 +1,28 @@
+[
+  {
+    "title": "First Name",
+    "info": "Ahmed",
+    "key": "firstName",
+    "category": "personal"
+  },{
+    "title": "Last Name",
+    "info": "El Ghabra",
+    "key": "lastName",
+    "category": "personal"
+  },{
+    "title": "Email",
+    "info": "bluewhalexweb@outlook.com",
+    "key": "email",
+    "category": "personal"
+  },{
+    "title": "Date of Birth",
+    "info": "1997 / 2 / 27",
+    "key": "birth",
+    "category": "personal"
+  },{
+    "title": "Gender",
+    "info": "Male",
+    "key": "gender",
+    "category": "personal"
+  }
+]

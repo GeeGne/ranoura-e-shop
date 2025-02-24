@@ -410,7 +410,10 @@ export default function CheckoutForm ({ className, ...props }: Props) {
               transition-all duration-300 ease-in-out
             `}
             hideTotalSection={true}
-            style={{maxHeight: toggleOrderSummary ? `${getRefTotalHeight(orderSummaryRef)}px` : '0'}}
+            style={{
+              maxHeight: toggleOrderSummary ? `${getRefTotalHeight(orderSummaryRef)}px` : '0',
+              opacity: toggleOrderSummary ? `1` : '0'
+            }}
             ref={orderSummaryRef}
           />
           <OrderSummary

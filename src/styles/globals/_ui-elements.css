@@ -188,5 +188,8 @@
 }
 
 .user-nav-selected {
-  @apply before:content-[''] before:absolute before:bottom-0 before:left-1/2 before:translate-x-[-50%] before:w-12 before:h-2 before:bg-content
+  @apply 
+    before:content-[''] before:absolute 
+    before:top-[calc(100%+0.1rem)] before:left-1/2 before:translate-x-[-50%] 
+    before:w-8 before:h-[3px] before:bg-content-inbetween before:rounded-full
 }
