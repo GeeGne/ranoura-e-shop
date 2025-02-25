@@ -51,8 +51,7 @@ export default function Hero({ className = "", ...props }: Props) {
       case 'main_wrapper':
         const x = e.clientX;
         const y = e.clientY;
-        setMainWrapperCoordinates({x, y})
-        console.log('x: ', x, 'y: ', y);
+        setMainWrapperCoordinates({ x, y })
         break;
       default:
         console.error("Unknown type:", type);
@@ -66,7 +65,7 @@ export default function Hero({ className = "", ...props }: Props) {
       case 'main_wrapper':
         const x = e.clientX;
         const y = e.clientY;
-        setMainWrapperCoordinates({x, y});
+        setMainWrapperCoordinates({ x, y });
         break;
       default:
         console.error("Unknown type:", type);
@@ -80,7 +79,7 @@ export default function Hero({ className = "", ...props }: Props) {
       case 'main_wrapper':
         const x = e.clientX;
         const y = e.clientY;
-        setMainWrapperCoordinates({x, y})
+        setMainWrapperCoordinates({ x, y })
         break;
       default:
         console.error("Unknown type:", type);

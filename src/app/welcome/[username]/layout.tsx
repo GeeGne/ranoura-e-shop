@@ -14,7 +14,7 @@ import SignOutBtn from '@/app/welcome/[username]/SignOutBtn';
 // STORES
 import { useTabNameStore } from '@/stores/index';
 
-export default function layout ({ children }) {
+export default function layout ({ children }: Readonly<{children: React.ReactNode}>) {
   
   const setTabName = useTabNameStore((state: any) => state.setTabName);
   const tabName = useTabNameStore((state: any) => state.tabName);

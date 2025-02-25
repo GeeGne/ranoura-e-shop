@@ -11,6 +11,10 @@ html {
   padding: 0;
   min-width: 0;
 }
+*::selection {
+  background: #005670;
+  color: #ffffff;
+}
 
 body {
   /* background-color: var(--primary-color); */
