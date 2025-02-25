@@ -1,5 +1,6 @@
 // COMPONENTS
 import LineMdTextBoxToTextBoxMultipleTransition from '@/components/svgs/LineMdTextBoxToTextBoxMultipleTransition';
+import LineMdMapMarkerLoop from '@/components/svgs/LineMdMapMarkerLoop';
 
 type Props = {
   title?: string;
@@ -16,9 +17,16 @@ export default function ProfileLI ({ title, user, ...props }: Props) {
       { ...props }
     >
       <div className="flex items-center gap-2">
-        <LineMdTextBoxToTextBoxMultipleTransition 
-          className="text-heading"
-        />
+        {title === 'personal' &&
+          <LineMdTextBoxToTextBoxMultipleTransition 
+            className="text-heading"
+          />
+        }
+        {title === 'location' &&
+          <LineMdMapMarkerLoop 
+            className="text-heading"
+          />
+        }
         <h3
           className="text-lg text-heading font-bold"
         >

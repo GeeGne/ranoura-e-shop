@@ -24,5 +24,25 @@
     "info": "Male",
     "key": "gender",
     "category": "personal"
+  },{
+    "title": "Adress Details",
+    "info": "Walmart's 20th street Near Alfredo Resturant, 3rd building 25th Apartmant",
+    "key": "addressDetails",
+    "category": "location"
+  },{
+    "title": "Second Address",
+    "info": "20th Street, Infront of Dailbo Resturant, 20th building, 10th Apartmant",
+    "key": "secondAddress",
+    "category": "location"
+  },{
+    "title": "Notes",
+    "info": "I'm available between 5:00PM and 7:00PM",
+    "key": "notes",
+    "category": "location"
+  },{
+    "title": "Phone Number",
+    "info": "+963039562",
+    "key": "phoneNumber",
+    "category": "location"
   }
 ]
