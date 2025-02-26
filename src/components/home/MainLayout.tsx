@@ -45,7 +45,7 @@ export default function MainLayout () {
         "
       >
         <DisplayImg 
-          className="absolute top-0 left-0 w-full h-full object-cover object-right bg-[hsl(255,37%,87%)] z-[5]"
+          className="absolute top-0 left-0 w-full h-full object-cover object-right bg-background-light z-[5]"
           src={outfit1}
           alt="Image"
         />
@@ -61,7 +61,7 @@ export default function MainLayout () {
             RAMADAN NIGHTS
           </h2>
           <h3
-            className="text-md text-heading-invert"
+            className="text-base text-heading-invert"
           >
             Illuminate Your Style with Ramadan Nights – Exclusive Deals Await!
           </h3>
@@ -81,7 +81,7 @@ export default function MainLayout () {
         "
       >
         <DisplayImg 
-          className="absolute top-0 left-0 w-full h-full object-cover bg-green-400"
+          className="absolute top-0 left-0 w-full h-full object-cover bg-background-light"
           src={outfit3}
           alt="Image"
         />
@@ -97,7 +97,7 @@ export default function MainLayout () {
             HOT DEALS
           </h2>
           <h3
-            className="text-md text-heading-invert"
+            className="text-base text-heading-invert"
           >
             "Unbeatable Discounts, Limited Time Offers! Discover exclusive deals on your favorite products. Shop now before they're gone!"
           </h3>
@@ -117,7 +117,7 @@ export default function MainLayout () {
         "
       >
         <DisplayImg 
-          className="absolute top-0 left-0 w-full h-full object-cover bg-blue-400"
+          className="absolute top-0 left-0 w-full h-full object-cover bg-background-light"
           src={outfit2}
           alt="Image"
         />
@@ -133,7 +133,7 @@ export default function MainLayout () {
             LATEST ARRIVALS
           </h2>
           <h3
-            className="text-md text-heading-invert"
+            className="text-base text-heading-invert"
           >
             "Fresh Styles, Hot Prices! Explore our new clothing collection with exclusive deals you won't want to miss. Upgrade your wardrobe today!"
           </h3>

@@ -25,6 +25,8 @@ export default {
         "content-invert": "var(--content-invert-color)",  
         inbetween: "var(--inbetween-color)",
         background: "var(--background-color)",
+        "background-light": "var(--background-light-color)",
+        "background-light-invert": "var(--background-light-invert-color)",
         foreground: "var(--background-invert-color)",
       },
     },

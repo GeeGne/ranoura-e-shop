@@ -29,7 +29,6 @@ const outfit3 = "assets/img/outfit-3.jpg"
 import products from "@/json/products.json";
 
 // UTILS
-import strSlugForProducts from '@/utils/strSlugForProducts';
 import strSpaceToHyphen from '@/utils/strSpaceToHyphen';
 
 // STORES

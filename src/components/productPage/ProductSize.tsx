@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 export default function ProductSize () {
   
-  const [ active, setActive ] = useState<any[]>([]);
+  const [ active, setActive ] = useState<number>(0);
 
   // const active = true;
   const available = false;
@@ -31,8 +31,9 @@ export default function ProductSize () {
     const { available, size } = e.currentTarget.dataset;
     if (available === "false") return;
     
-    const isExist = active.some(itm => itm === index);
-    setActive((val) => isExist ? val.filter(itm => itm !== index) : [...val, index])
+    // const isExist = active.some(itm => itm === index);
+    // setActive((val) => isExist ? val.filter(itm => itm !== index) : [...val, index])
+    setActive(index)
   }
 
   // DEBUG
@@ -53,7 +54,7 @@ export default function ProductSize () {
               border-solid border-[2px]
               transition-all duration-300 ease-out z-[5]
               ${available 
-                ? active.some(index => index === i) 
+                ? active === i 
                   ? 'text-heading-invert bg-heading hover:bg-[var(--background-deep-light-invert-color)] border-heading hover:border-heading cursor-pointer' 
                   : 'text-body-light border-body-light hover:text-heading hover:border-heading cursor-pointer'
                 : ` relative text-body-extra-light
@@ -64,6 +65,7 @@ export default function ProductSize () {
                   `
               }
             `}
+            role="button"
             data-index={i}
             data-active={i}
             data-size={size}

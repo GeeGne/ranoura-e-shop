@@ -18,6 +18,9 @@ import IonNavigate from '@/components/svgs/PepiconsPencilOpenCircleFilled';
 // STORES
 import { useTabNameStore, useAlertMessageStore } from '@/stores/index';
 
+// JSON
+import products from '@/json/products.json';
+
 // ASSETS
 const ramdanBanner = "/assets/img/ramadan-nights.webp";
 const ramdanBanner2 = "/assets/img/ramadan-nights-2.jpg";
@@ -26,9 +29,11 @@ const outfit2 = "/assets/img/outfit-2.jpg";
 const outfit3 = "/assets/img/outfit-3.jpg";
 
 export default function page () {
-  const slugArray = useParams().productNameAndId || [];
+  const { productId } = useParams();
+  const product = products.find(product => product.id === Number(productId));
   // const productName = slugArray[0];
   // const productId = slugArray[1];
+
 
   const slugNameAndLinkArray = [
     {
@@ -69,8 +74,11 @@ export default function page () {
 
   // DEBUG
   // console.log('slug:', slugArray);
+  // console.log('slug:', useParams());
+  // console.log('product ID: ', product_id);
   // console.log('productName:', productName);
   // console.log('productId:', productId);
+  // console.log('product: ', product);
 
   return (
     <div
@@ -92,14 +100,14 @@ export default function page () {
         <h2
           className="text-lg font-bold text-heading"
         >
-          Long Jeans With a Skirt
+          {product?.name}
         </h2>
         <h3
           className="text-md text-body"
         >
-          A luxurious velvet top with a wrap front.
+          {product?.description}
         </h3>
-        <PriceTag price={2000} discount={10}/>
+        <PriceTag price={product?.price} discount={product?.discount}/>
         <ProductSize />
         <ColorPallete 
           className="mb-8"
@@ -128,46 +136,13 @@ export default function page () {
       <section
         className="md:col-span-2 lg:col-span-1"
       >
-        <ProductLists 
-          title="PRODUCT DETAILS"
-          descArray={[
-            'Brand: Ranoura.',
-            'Material: Fabric.',
-            'Fit: Tight to body.',
-            'NeckLine: None.',
-            'Sleeves: Yes.',
-            'Design: Italic'
-          ]}
-        />
-        <ProductLists 
-          title="SIZE INFO"
-          descArray={[
-            'True to size.',
-            'XXS: 0.',
-            'XS: 0-2',
-            'MD: 2-4',
-            'LG: 4-6',
-            'XL: 6-9'
-          ]}
-        />
-        <ProductLists 
-          title="ABOUT RANOURA✧･ﾟ*"
-          descArray={[
-            'Welcome to Ranoura – where elegance meets excellence. At Ranoura, we pride ourselves on crafting garments from the finest high-end fabrics, designed for those who appreciate quality, style, and sophistication. Each piece is meticulously tailored to provide a perfect blend of comfort and luxury, ensuring you feel confident and radiant in every moment. Discover timeless designs and impeccable craftsmanship that redefine fashion, only at Ranoura.'
-          ]}
-        />
-        <ProductLists 
-          title="DELIVERY"
-          descArray={[
-            'Get your favorite Ranoura pieces delivered straight to your doorstep! Enjoy fast and reliable shipping with options for standard delivery (three to five business days) or express delivery (one to two business days) for those last-minute style needs. We carefully package every item to ensure it arrives in perfect condition, ready to shine in your wardrobe.'
-          ]}
-        />
-        <ProductLists 
-          title="RETURNS"
-          descArray={[
-            `At Ranoura, your satisfaction is our priority. If something isn't quite right, you can easily return it within fourteen days of receiving your order. Items must be unworn, unwashed, and with original tags attached. Simply follow our hassle-free returns process, and we'll ensure you get a refund or exchange as quickly as possible.`
-          ]}
-        />
+        {product?.lists.map((itm, i) => 
+          <ProductLists
+            key={i}
+            title={itm.title}
+            descArray={itm.descriptionLists}
+          />
+        )}
       </section>
     </div>
   )
