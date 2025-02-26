@@ -25,18 +25,18 @@ const outfit1 = "/assets/img/outfit.jpg";
 const outfit2 = "/assets/img/outfit-2.jpg";
 const outfit3 = "/assets/img/outfit-3.jpg";
 
-export default function ProductPage () {
+export default function page () {
   const slugArray = useParams().productNameAndId || [];
   // const productName = slugArray[0];
   // const productId = slugArray[1];
 
   const slugNameAndLinkArray = [
     {
-      name: "Product",
-      href: "/product"
+      name: "All Clothes",
+      href: "/shop"
     },{
       name: "Jeans",
-      href: "/product/jeans"
+      href: "/shop/1/jeans"
     } 
   ];
 
@@ -94,6 +94,11 @@ export default function ProductPage () {
         >
           Long Jeans With a Skirt
         </h2>
+        <h3
+          className="text-md text-body"
+        >
+          A luxurious velvet top with a wrap front.
+        </h3>
         <PriceTag price={2000} discount={10}/>
         <ProductSize />
         <ColorPallete 

@@ -32,6 +32,7 @@ import products from "@/json/products.json";
 
 // UTILS
 import strSlugForProducts from '@/utils/strSlugForProducts';
+import strSpaceToHyphen from '@/utils/strSpaceToHyphen';
 
 // STORES
 import { useFavouritesStore, useFavouriteConfettiToggle, useAlertMessageStore } from '@/stores/index';
@@ -76,7 +77,6 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
       setConfettiToggle(true);
     }, 400)
 
-
     // clearTimeout(confettiTimerId?.current);
     // confettiTimerId?.current = setTimeout(() => {
     setTimeout(() => {
@@ -89,9 +89,9 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
     const getEL = (refs: ReactNode[] | any[]) => refs.find((el) => Number(el.dataset.productId) === productId);
     
     if (getEL(mainImgRefs.current))
-      getEL(mainImgRefs.current).src = getProduct()?.img.find(itm => itm.color === color)?.main;
+      getEL(mainImgRefs.current).src = getProduct()?.images.find(itm => itm.color === color)?.main;
     if (getEL(secondImgRefs.current))
-      getEL(secondImgRefs.current).src = getProduct()?.img.find(itm => itm.color === color)?.second;
+      getEL(secondImgRefs.current).src = getProduct()?.images.find(itm => itm.color === color)?.second;
   }
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -128,7 +128,6 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
           if (-1 * (val - liRefWidth - gap) >= ulRefScrollWidth - ulRefWidth) { 
             setLeftArrowInactive(false);
             setRightArrowInactive(true);
-
             return -1 * (ulRefScrollWidth - ulRefWidth)
           };
 
@@ -205,7 +204,7 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
             >
               <DisplayImg 
                 className="w-full peer aspect-[2/3] object-cover object-center rounded-lg"
-                src={getImgUrls(product.img)?.main}
+                src={getImgUrls(product.images)?.main}
                 alt={product.name}
                 data-product-id={product.id}
                 ref={ (el: any) => {if (mainImgRefs.current) {mainImgRefs.current[i] = el}} }
@@ -218,7 +217,7 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
                   blur-[20px] peer-hover:blur-[0px] group-hover:blur-[0px]
                   transition-all ease-in duration-200
                 "
-                src={getImgUrls(product.img)?.second}
+                src={getImgUrls(product.images)?.second}
                 alt="Image"
                 data-product-id={product.id}
                 ref={ (el: any) => { if (secondImgRefs.current) {secondImgRefs.current[i] = el}} }
@@ -297,7 +296,7 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
             </div>
             <Link
               className="text-heading text-base mb-auto"
-              href={`/product/${strSlugForProducts(product.name, product.id)}`}
+              href={`/shop/${product.id}/${strSpaceToHyphen(product.name)}`}
             >
               {product.name}
             </Link>
@@ -306,7 +305,7 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
               discount={product.discount}
             />
             <ColorPallete 
-              colorsArray={product.color}
+              colorsArray={product.colors}
               productId={product.id}
               currentColor={onColorChange}
             />

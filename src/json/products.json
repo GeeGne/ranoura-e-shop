@@ -2,9 +2,10 @@
   {
     "id": 1,
     "name": "Long Sweater",
-    "size": ["sm", "md", "lg"],
-    "color": ["green", "orchid", "black", "salmon", "maroon"],
-    "img": [
+    "description": "A luxurious velvet top with a wrap front.",
+    "sizes": ["sm", "md", "lg"],
+    "colors": ["green", "orchid", "black", "salmon", "maroon"],
+    "images": [
       {
         "main": "/assets/img/cloth-a-green.jpg",
         "second": "/assets/img/cloth-a-green-view-b.jpg",
@@ -27,14 +28,59 @@
         "color": "black"
       }
     ],
+    "stock": {
+      "XS": { "emerald": 5, "black": 3 },
+      "S": { "emerald": 10, "black": 8 },
+      "M": { "emerald": 7, "black": 6 },
+      "L": { "emerald": 4, "black": 2 }
+    },
     "price": 2000,
-    "discount": 30
+    "discount": 30,
+    "lists": [
+      {
+        "title": "PRODUCT DETAILS",
+        "descriptionLists": [
+          "Brand: Ranoura",
+          "Material: Fabric",
+          "Fit: Tight to boy",
+          "NeckLine: None",
+          "Sleeves: Yes",
+          "Design: Italic"
+        ]
+      },{
+        "title": "SIZE INFO",
+        "descriptionLists": [
+          "True to size.",
+          "XXS: 0",
+          "XS: 0-2",
+          "MD: 2-4",
+          "LG: 4-6",
+          "XL: 6-9"
+        ]
+      },{
+        "title": "ABOUT RANOURA✧･ﾟ*",
+        "descriptionLists": [
+          "Welcome to Ranoura – where elegance meets excellence. At Ranoura, we pride ourselves on crafting garments from the finest high-end fabrics, designed for those who appreciate quality, style, and sophistication. Each piece is meticulously tailored to provide a perfect blend of comfort and luxury, ensuring you feel confident and radiant in every moment. Discover timeless designs and impeccable craftsmanship that redefine fashion, only at Ranoura."
+        ]
+      },{
+        "title": "DELIVERY",
+        "descriptionLists": [
+          "Get your favorite Ranoura pieces delivered straight to your doorstep! Enjoy fast and reliable shipping with options for standard delivery (three to five business days) or express delivery (one to two business days) for those last-minute style needs. We carefully package every item to ensure it arrives in perfect condition, ready to shine in your wardrobe."
+        ]
+      },{
+        "title": "RETURNS",
+        "descriptionLists": [
+          "At Ranoura, your satisfaction is our priority. If something isn't quite right, you can easily return it within fourteen days of receiving your order. Items must be unworn, unwashed, and with original tags attached. Simply follow our hassle-free returns process, and we'll ensure you get a refund or exchange as quickly as possible."
+        ]
+      }
+    ]
   },{
     "id": 2,
     "name": "Winter Long Sweater",
-    "size": ["sm", "md", "lg"],
-    "color": ["blue", "salmon", "pink", "maroon"],
-    "img": [
+    "description": "A luxurious velvet top with a wrap front.",
+    "sizes": ["sm", "md", "lg"],
+    "colors": ["blue", "salmon", "pink", "maroon"],
+    "images": [
       {
         "main": "/assets/img/cloth-b-blue.jpg",
         "second": "/assets/img/cloth-b-blue-view-b.jpg",
@@ -53,14 +99,60 @@
         "color": "maroon"
       }
     ],
+    "stock": {
+      "XS": { "emerald": 5, "black": 3 },
+      "S": { "emerald": 10, "black": 8 },
+      "M": { "emerald": 7, "black": 6 },
+      "L": { "emerald": 4, "black": 2 }
+    },
     "price": 15000,
-    "discount": 20
+    "discount": 20,
+    "lists": [
+      {
+        "title": "PRODUCT DETAILS",
+        "descriptionLists": [
+          "Brand: Ranoura",
+          "Material: Fabric",
+          "Fit: Tight to boy",
+          "NeckLine: None",
+          "Sleeves: Yes",
+          "Design: Italic"
+        ]
+      },{
+        "title": "SIZE INFO",
+        "descriptionLists": [
+          "True to size.",
+          "XXS: 0",
+          "XS: 0-2",
+          "MD: 2-4",
+          "LG: 4-6",
+          "XL: 6-9"
+        ]
+      },{
+        "title": "ABOUT RANOURA✧･ﾟ*",
+        "descriptionLists": [
+          "Welcome to Ranoura – where elegance meets excellence. At Ranoura, we pride ourselves on crafting garments from the finest high-end fabrics, designed for those who appreciate quality, style, and sophistication. Each piece is meticulously tailored to provide a perfect blend of comfort and luxury, ensuring you feel confident and radiant in every moment. Discover timeless designs and impeccable craftsmanship that redefine fashion, only at Ranoura."
+        ]
+      },{
+        "title": "DELIVERY",
+        "descriptionLists": [
+          "Get your favorite Ranoura pieces delivered straight to your doorstep! Enjoy fast and reliable shipping with options for standard delivery (three to five business days) or express delivery (one to two business days) for those last-minute style needs. We carefully package every item to ensure it arrives in perfect condition, ready to shine in your wardrobe."
+        ]
+      },{
+        "title": "RETURNS",
+        "descriptionLists": [
+          "At Ranoura, your satisfaction is our priority. If something isn't quite right, you can easily return it within fourteen days of receiving your order. Items must be unworn, unwashed, and with original tags attached. Simply follow our hassle-free returns process, and we'll ensure you get a refund or exchange as quickly as possible."
+        ]
+      }
+    ]
+
   },{
     "id": 3,
     "name": "Winter Long Sweater",
-    "size": ["sm", "md", "lg"],
-    "color": ["white", "black"],
-    "img": [
+    "description": "A luxurious velvet top with a wrap front.",
+    "sizes": ["sm", "md", "lg"],
+    "colors": ["white", "black"],
+    "images": [
       {
         "main": "/assets/img/cloth-c-white.jpg",
         "second": "/assets/img/cloth-c-white-view-b.jpg",
@@ -71,14 +163,60 @@
         "color": "black"
       }
     ],
+    "stock": {
+      "XS": { "emerald": 5, "black": 3 },
+      "S": { "emerald": 10, "black": 8 },
+      "M": { "emerald": 7, "black": 6 },
+      "L": { "emerald": 4, "black": 2 }
+    },
     "price": 45000,
-    "discount": 45
+    "discount": 45,
+    "lists": [
+      {
+        "title": "PRODUCT DETAILS",
+        "descriptionLists": [
+          "Brand: Ranoura",
+          "Material: Fabric",
+          "Fit: Tight to boy",
+          "NeckLine: None",
+          "Sleeves: Yes",
+          "Design: Italic"
+        ]
+      },{
+        "title": "SIZE INFO",
+        "descriptionLists": [
+          "True to size.",
+          "XXS: 0",
+          "XS: 0-2",
+          "MD: 2-4",
+          "LG: 4-6",
+          "XL: 6-9"
+        ]
+      },{
+        "title": "ABOUT RANOURA✧･ﾟ*",
+        "descriptionLists": [
+          "Welcome to Ranoura – where elegance meets excellence. At Ranoura, we pride ourselves on crafting garments from the finest high-end fabrics, designed for those who appreciate quality, style, and sophistication. Each piece is meticulously tailored to provide a perfect blend of comfort and luxury, ensuring you feel confident and radiant in every moment. Discover timeless designs and impeccable craftsmanship that redefine fashion, only at Ranoura."
+        ]
+      },{
+        "title": "DELIVERY",
+        "descriptionLists": [
+          "Get your favorite Ranoura pieces delivered straight to your doorstep! Enjoy fast and reliable shipping with options for standard delivery (three to five business days) or express delivery (one to two business days) for those last-minute style needs. We carefully package every item to ensure it arrives in perfect condition, ready to shine in your wardrobe."
+        ]
+      },{
+        "title": "RETURNS",
+        "descriptionLists": [
+          "At Ranoura, your satisfaction is our priority. If something isn't quite right, you can easily return it within fourteen days of receiving your order. Items must be unworn, unwashed, and with original tags attached. Simply follow our hassle-free returns process, and we'll ensure you get a refund or exchange as quickly as possible."
+        ]
+      }
+    ]
+
   },{
     "id": 4,
     "name": "Long Sweater",
-    "size": ["sm", "md", "lg"],
-    "color": ["green", "orchid", "black", "salmon", "maroon"],
-    "img": [
+    "description": "A luxurious velvet top with a wrap front.",
+    "sizes": ["sm", "md", "lg"],
+    "colors": ["green", "orchid", "black", "salmon", "maroon"],
+    "images": [
       {
         "main": "/assets/img/cloth-a-green.jpg",
         "second": "/assets/img/cloth-a-green-view-b.jpg",
@@ -101,14 +239,60 @@
         "color": "black"
       }
     ],
+    "stock": {
+      "XS": { "emerald": 5, "black": 3 },
+      "S": { "emerald": 10, "black": 8 },
+      "M": { "emerald": 7, "black": 6 },
+      "L": { "emerald": 4, "black": 2 }
+    },
     "price": 2000,
-    "discount": 30
+    "discount": 30,
+    "lists": [
+      {
+        "title": "PRODUCT DETAILS",
+        "descriptionLists": [
+          "Brand: Ranoura",
+          "Material: Fabric",
+          "Fit: Tight to boy",
+          "NeckLine: None",
+          "Sleeves: Yes",
+          "Design: Italic"
+        ]
+      },{
+        "title": "SIZE INFO",
+        "descriptionLists": [
+          "True to size.",
+          "XXS: 0",
+          "XS: 0-2",
+          "MD: 2-4",
+          "LG: 4-6",
+          "XL: 6-9"
+        ]
+      },{
+        "title": "ABOUT RANOURA✧･ﾟ*",
+        "descriptionLists": [
+          "Welcome to Ranoura – where elegance meets excellence. At Ranoura, we pride ourselves on crafting garments from the finest high-end fabrics, designed for those who appreciate quality, style, and sophistication. Each piece is meticulously tailored to provide a perfect blend of comfort and luxury, ensuring you feel confident and radiant in every moment. Discover timeless designs and impeccable craftsmanship that redefine fashion, only at Ranoura."
+        ]
+      },{
+        "title": "DELIVERY",
+        "descriptionLists": [
+          "Get your favorite Ranoura pieces delivered straight to your doorstep! Enjoy fast and reliable shipping with options for standard delivery (three to five business days) or express delivery (one to two business days) for those last-minute style needs. We carefully package every item to ensure it arrives in perfect condition, ready to shine in your wardrobe."
+        ]
+      },{
+        "title": "RETURNS",
+        "descriptionLists": [
+          "At Ranoura, your satisfaction is our priority. If something isn't quite right, you can easily return it within fourteen days of receiving your order. Items must be unworn, unwashed, and with original tags attached. Simply follow our hassle-free returns process, and we'll ensure you get a refund or exchange as quickly as possible."
+        ]
+      }
+    ]
+
   },{
     "id": 5,
     "name": "Winter Long Sweater",
-    "size": ["sm", "md", "lg"],
-    "color": ["blue", "salmon", "pink", "maroon"],
-    "img": [
+    "description": "A luxurious velvet top with a wrap front.",
+    "sizes": ["sm", "md", "lg"],
+    "colors": ["blue", "salmon", "pink", "maroon"],
+    "images": [
       {
         "main": "/assets/img/cloth-b-blue.jpg",
         "second": "/assets/img/cloth-b-blue-view-b.jpg",
@@ -127,14 +311,60 @@
         "color": "maroon"
       }
     ],
+    "stock": {
+      "XS": { "emerald": 5, "black": 3 },
+      "S": { "emerald": 10, "black": 8 },
+      "M": { "emerald": 7, "black": 6 },
+      "L": { "emerald": 4, "black": 2 }
+    },
     "price": 15000,
-    "discount": 20
+    "discount": 0,
+    "lists": [
+      {
+        "title": "PRODUCT DETAILS",
+        "descriptionLists": [
+          "Brand: Ranoura",
+          "Material: Fabric",
+          "Fit: Tight to boy",
+          "NeckLine: None",
+          "Sleeves: Yes",
+          "Design: Italic"
+        ]
+      },{
+        "title": "SIZE INFO",
+        "descriptionLists": [
+          "True to size.",
+          "XXS: 0",
+          "XS: 0-2",
+          "MD: 2-4",
+          "LG: 4-6",
+          "XL: 6-9"
+        ]
+      },{
+        "title": "ABOUT RANOURA✧･ﾟ*",
+        "descriptionLists": [
+          "Welcome to Ranoura – where elegance meets excellence. At Ranoura, we pride ourselves on crafting garments from the finest high-end fabrics, designed for those who appreciate quality, style, and sophistication. Each piece is meticulously tailored to provide a perfect blend of comfort and luxury, ensuring you feel confident and radiant in every moment. Discover timeless designs and impeccable craftsmanship that redefine fashion, only at Ranoura."
+        ]
+      },{
+        "title": "DELIVERY",
+        "descriptionLists": [
+          "Get your favorite Ranoura pieces delivered straight to your doorstep! Enjoy fast and reliable shipping with options for standard delivery (three to five business days) or express delivery (one to two business days) for those last-minute style needs. We carefully package every item to ensure it arrives in perfect condition, ready to shine in your wardrobe."
+        ]
+      },{
+        "title": "RETURNS",
+        "descriptionLists": [
+          "At Ranoura, your satisfaction is our priority. If something isn't quite right, you can easily return it within fourteen days of receiving your order. Items must be unworn, unwashed, and with original tags attached. Simply follow our hassle-free returns process, and we'll ensure you get a refund or exchange as quickly as possible."
+        ]
+      }
+    ]
+
   },{
     "id": 6,
     "name": "Winter Long Sweater",
-    "size": ["sm", "md", "lg"],
-    "color": ["white", "black"],
-    "img": [
+    "description": "A luxurious velvet top with a wrap front.",
+    "sizes": ["sm", "md", "lg"],
+    "colors": ["white", "black"],
+    "images": [
       {
         "main": "/assets/img/cloth-c-white.jpg",
         "second": "/assets/img/cloth-c-white-view-b.jpg",
@@ -145,7 +375,51 @@
         "color": "black"
       }
     ],
+    "stock": {
+      "XS": { "emerald": 5, "black": 3 },
+      "S": { "emerald": 10, "black": 8 },
+      "M": { "emerald": 7, "black": 6 },
+      "L": { "emerald": 4, "black": 2 }
+    },
     "price": 45000,
-    "discount": 45
+    "discount": 45,
+    "lists": [
+      {
+        "title": "PRODUCT DETAILS",
+        "descriptionLists": [
+          "Brand: Ranoura",
+          "Material: Fabric",
+          "Fit: Tight to boy",
+          "NeckLine: None",
+          "Sleeves: Yes",
+          "Design: Italic"
+        ]
+      },{
+        "title": "SIZE INFO",
+        "descriptionLists": [
+          "True to size.",
+          "XXS: 0",
+          "XS: 0-2",
+          "MD: 2-4",
+          "LG: 4-6",
+          "XL: 6-9"
+        ]
+      },{
+        "title": "ABOUT RANOURA✧･ﾟ*",
+        "descriptionLists": [
+          "Welcome to Ranoura – where elegance meets excellence. At Ranoura, we pride ourselves on crafting garments from the finest high-end fabrics, designed for those who appreciate quality, style, and sophistication. Each piece is meticulously tailored to provide a perfect blend of comfort and luxury, ensuring you feel confident and radiant in every moment. Discover timeless designs and impeccable craftsmanship that redefine fashion, only at Ranoura."
+        ]
+      },{
+        "title": "DELIVERY",
+        "descriptionLists": [
+          "Get your favorite Ranoura pieces delivered straight to your doorstep! Enjoy fast and reliable shipping with options for standard delivery (three to five business days) or express delivery (one to two business days) for those last-minute style needs. We carefully package every item to ensure it arrives in perfect condition, ready to shine in your wardrobe."
+        ]
+      },{
+        "title": "RETURNS",
+        "descriptionLists": [
+          "At Ranoura, your satisfaction is our priority. If something isn't quite right, you can easily return it within fourteen days of receiving your order. Items must be unworn, unwashed, and with original tags attached. Simply follow our hassle-free returns process, and we'll ensure you get a refund or exchange as quickly as possible."
+        ]
+      }
+    ]
   }
 ]

@@ -30,6 +30,7 @@ import products from "@/json/products.json";
 
 // UTILS
 import strSlugForProducts from '@/utils/strSlugForProducts';
+import strSpaceToHyphen from '@/utils/strSpaceToHyphen';
 
 // STORES
 import { 
@@ -94,9 +95,9 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
     const getEL = (refs: ReactNode[] | any[]) => refs.find((el) => Number(el.dataset.productId) === productId);
     
     if (getEL(mainImgRefs.current))
-      getEL(mainImgRefs.current).src = getProduct()?.img.find(itm => itm.color === color)?.main;
+      getEL(mainImgRefs.current).src = getProduct()?.images.find(itm => itm.color === color)?.main;
     if (getEL(secondImgRefs.current))
-      getEL(secondImgRefs.current).src = getProduct()?.img.find(itm => itm.color === color)?.second;
+      getEL(secondImgRefs.current).src = getProduct()?.images.find(itm => itm.color === color)?.second;
   }
 
   const handleClick = (e: React.MouseEvent<HTMLElement | any>) => {
@@ -289,7 +290,7 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
               >
                 <DisplayImg 
                   className="w-full peer aspect-[2/3] object-cover object-center rounded-lg"
-                  src={getImgUrls(product.img)?.main}
+                  src={getImgUrls(product.images)?.main}
                   alt={product.name}
                   data-product-id={product.id}
                   ref={ (el: any) => {if (mainImgRefs.current) {mainImgRefs.current[i] = el}} }
@@ -302,7 +303,7 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
                     blur-[20px] peer-hover:blur-[0px] group-hover:blur-[0px]
                     transition-all ease-in duration-200
                   "
-                  src={getImgUrls(product.img)?.second}
+                  src={getImgUrls(product.images)?.second}
                   alt="Image"
                   data-product-id={product.id}
                   ref={ (el: any) => { if (secondImgRefs.current) {secondImgRefs.current[i] = el}} }
@@ -382,8 +383,8 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
                 </nav>
               </div>
               <Link
-                className="text-heading text-md mb-auto"
-                href={`/product/${strSlugForProducts(product.name, product.id)}`}
+                className="text-heading text-base mb-auto"
+                href={`/shop/${product.id}/${strSpaceToHyphen(product.name)}`}
                 data-type="navigate_to_product"
                 onClick={handleClick}
               >
@@ -394,7 +395,7 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
                 discount={product.discount}
               />
               <ColorPallete 
-                colorsArray={product.color}
+                colorsArray={product.colors}
                 productId={product.id}
                 currentColor={onColorChange}
               />
