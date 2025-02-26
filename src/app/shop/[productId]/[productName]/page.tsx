@@ -108,13 +108,13 @@ export default function page () {
           {product?.description}
         </h3>
         <PriceTag price={product?.price} discount={product?.discount}/>
-        <ProductSize />
+        <ProductSize sizes={product?.sizes} />
         <ColorPallete 
           className="mb-8"
           width="w-6"
           height="h-6"
-          colorsArray={['black', 'red']}
-          productId={2}
+          colorsArray={product?.colors}
+          productId={product?.id}
           currentColor={onColorChange}
         />
         <BtnA
@@ -136,11 +136,11 @@ export default function page () {
       <section
         className="md:col-span-2 lg:col-span-1"
       >
-        {product?.lists.map((itm, i) => 
+        {product?.lists.map(({ title, descriptionLists }, i) => 
           <ProductLists
             key={i}
-            title={itm.title}
-            descArray={itm.descriptionLists}
+            title={title}
+            descArray={descriptionLists}
           />
         )}
       </section>

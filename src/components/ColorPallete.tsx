@@ -8,12 +8,13 @@ type Props = {
   className?: string;
   width?: string;
   height?: string;
+  product?: any;
   colorsArray?: string[];
   currentColor?: any;
-  productId: number;
+  productId?: number;
 }
 
-export default function ColorPallete ({ className, currentColor, width = 'w-4', height = 'h-4', productId, colorsArray = [] }: Props) {
+export default function ColorPallete ({ className = '', currentColor, width = 'w-4', height = 'h-4', product, productId, colorsArray = [] }: Props) {
 
   const [ selectedColor, setSelectedColor ] = useState<string>("");
   const [ clickedColor, setClickedColor ] = useState<string>("");

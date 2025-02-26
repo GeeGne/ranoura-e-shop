@@ -3,7 +3,7 @@
     "id": 1,
     "name": "Long Sweater",
     "description": "A luxurious velvet top with a wrap front.",
-    "sizes": ["sm", "md", "lg"],
+    "sizes": ["sm", "2xl"],
     "colors": ["green", "orchid", "black", "salmon", "maroon"],
     "images": [
       {
@@ -150,7 +150,7 @@
     "id": 3,
     "name": "Winter Long Sweater",
     "description": "A luxurious velvet top with a wrap front.",
-    "sizes": ["sm", "md", "lg"],
+    "sizes": ["md", "lg"],
     "colors": ["white", "black"],
     "images": [
       {
@@ -214,7 +214,7 @@
     "id": 4,
     "name": "Long Sweater",
     "description": "A luxurious velvet top with a wrap front.",
-    "sizes": ["sm", "md", "lg"],
+    "sizes": ["sm", "xl"],
     "colors": ["green", "orchid", "black", "salmon", "maroon"],
     "images": [
       {
@@ -289,7 +289,7 @@
     "id": 5,
     "name": "Winter Long Sweater",
     "description": "A luxurious velvet top with a wrap front.",
-    "sizes": ["sm", "md", "lg"],
+    "sizes": ["md", "2xl"],
     "colors": ["blue", "salmon", "pink", "maroon"],
     "images": [
       {
@@ -360,7 +360,7 @@
     "id": 6,
     "name": "Winter Long Sweater",
     "description": "A luxurious velvet top with a wrap front.",
-    "sizes": ["sm", "md", "lg"],
+    "sizes": ["xs", "2xl"],
     "colors": ["white", "black"],
     "images": [
       {

@@ -1,50 +1,38 @@
 import { useState } from 'react';
 
-export default function ProductSize () {
+type Props = {
+  sizes?: string[];
+};
+
+export default function ProductSize ({ sizes }: Props) {
   
   const [ active, setActive ] = useState<number>(0);
 
   // const active = true;
   const available = false;
-  const sizesArray = [
-    {
-      size: "XS",
-      available: true,
-    },{
-      size: "SM",
-      available: true,
-    },{
-      size: "LG",
-      available: false,
-    },{
-      size: "XL",
-      available: true,
-    },{
-      size: "2XL",
-      available: false, 
-    }
-  ]
+  const sizesArray = ['xs', 'sm', 'md', 'lg', 'xl', '2xl'];
 
   const handleActive = (e: React.MouseEvent<HTMLElement>) => {
     
     const index = Number(e.currentTarget.dataset.index);
-    const { available, size } = e.currentTarget.dataset;
-    if (available === "false") return;
+    const { size } = e.currentTarget.dataset;
+    const isSizeAvailable = !sizes?.some(avaliableSize => avaliableSize === size);
+
+    if (isSizeAvailable) return;
     
-    // const isExist = active.some(itm => itm === index);
-    // setActive((val) => isExist ? val.filter(itm => itm !== index) : [...val, index])
-    setActive(index)
+    setActive(index);
   }
 
   // DEBUG
   // console.log('active: ', active);
+  // console.log('sizes: ', sizes);
 
   return (
     <section>
       <ul
         className="flex flex-row flex-wrap gap-2"
       >
-        {sizesArray.map(({size, available}, i) =>
+        {sizesArray.map((size, i) =>
           <li
             key={i}
             className={`
@@ -53,7 +41,7 @@ export default function ProductSize () {
               w-12 h-12 rounded-md
               border-solid border-[2px]
               transition-all duration-300 ease-out z-[5]
-              ${available 
+              ${sizes?.some(clothSize => clothSize === size) 
                 ? active === i 
                   ? 'text-heading-invert bg-heading hover:bg-[var(--background-deep-light-invert-color)] border-heading hover:border-heading cursor-pointer' 
                   : 'text-body-light border-body-light hover:text-heading hover:border-heading cursor-pointer'
@@ -73,7 +61,7 @@ export default function ProductSize () {
             onClick={handleActive}
           >
             <span>
-              {size}
+              {size.toUpperCase()}
             </span>
           </li>
         )}
