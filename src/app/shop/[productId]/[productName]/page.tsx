@@ -54,6 +54,9 @@ export default function page () {
     setTabName('product');
   }, []);
 
+  const getImagesUrls = (array: any[] ) => 
+    array?.reduce((acc: any[] , itm) => [...acc, itm.main, itm.second], []);
+
   const onColorChange = () => {
 
   }
@@ -79,7 +82,9 @@ export default function page () {
   // console.log('productName:', productName);
   // console.log('productId:', productId);
   // console.log('product: ', product);
-
+  // console.log('images: ', 
+    // [].reduce((acc: string[], itm) => [...acc, itm.main, itm.second], [])
+  // );
   return (
     <div
       className="
@@ -93,6 +98,7 @@ export default function page () {
       />
       <ProductDisplay 
         className="md:row-span-2 md:max-w-[600px] md:mx-auto"
+        imagesArray={getImagesUrls(product?.images || [])}
       />
       <section
         className="flex flex-col gap-4 md:row-span-2 md:py-8 lg:row-span-1"
@@ -107,7 +113,7 @@ export default function page () {
         >
           {product?.description}
         </h3>
-        <PriceTag price={product?.price} discount={product?.discount}/>
+        <PriceTag price={product?.price} discount={product?.discount_percent}/>
         <ProductSize sizes={product?.sizes} />
         <ColorPallete 
           className="mb-8"

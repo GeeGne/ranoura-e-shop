@@ -10,7 +10,7 @@ export default function ProductSize ({ sizes }: Props) {
 
   // const active = true;
   const available = false;
-  const sizesArray = ['xs', 'sm', 'md', 'lg', 'xl', '2xl'];
+  const sizesArray = ['XS', 'S', 'M', 'L', 'XL', '2XL'];
 
   const handleActive = (e: React.MouseEvent<HTMLElement>) => {
     
@@ -61,7 +61,7 @@ export default function ProductSize ({ sizes }: Props) {
             onClick={handleActive}
           >
             <span>
-              {size.toUpperCase()}
+              {size}
             </span>
           </li>
         )}

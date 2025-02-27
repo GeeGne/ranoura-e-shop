@@ -301,7 +301,7 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
             </Link>
             <PriceTag 
               price={product.price} 
-              discount={product.discount}
+              discount={product.discount_percent}
             />
             <ColorPallete 
               colorsArray={product.colors}

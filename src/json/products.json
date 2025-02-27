@@ -3,7 +3,8 @@
     "id": 1,
     "name": "Long Sweater",
     "description": "A luxurious velvet top with a wrap front.",
-    "sizes": ["sm", "2xl"],
+    "category": "Sweaters",
+    "sizes": ["S", "2XL"],
     "colors": ["green", "orchid", "black", "salmon", "maroon"],
     "images": [
       {
@@ -35,7 +36,7 @@
       "L": { "emerald": 4, "black": 2 }
     },
     "price": 2000,
-    "discount": 30,
+    "discount_percent": 30,
     "lists": [
       {
         "title": "PRODUCT DETAILS",
@@ -78,7 +79,8 @@
     "id": 2,
     "name": "Winter Long Sweater",
     "description": "A luxurious velvet top with a wrap front.",
-    "sizes": ["sm", "md", "lg"],
+    "category": "Sweaters",
+    "sizes": ["S", "M", "L"],
     "colors": ["blue", "salmon", "pink", "maroon"],
     "images": [
       {
@@ -106,7 +108,7 @@
       "L": { "emerald": 4, "black": 2 }
     },
     "price": 15000,
-    "discount": 20,
+    "discount_percent": 20,
     "lists": [
       {
         "title": "PRODUCT DETAILS",
@@ -145,12 +147,12 @@
         ]
       }
     ]
-
   },{
     "id": 3,
     "name": "Winter Long Sweater",
     "description": "A luxurious velvet top with a wrap front.",
-    "sizes": ["md", "lg"],
+    "category": "Sweaters",
+    "sizes": ["M", "L"],
     "colors": ["white", "black"],
     "images": [
       {
@@ -170,7 +172,7 @@
       "L": { "emerald": 4, "black": 2 }
     },
     "price": 45000,
-    "discount": 45,
+    "discount_percent": 45,
     "lists": [
       {
         "title": "PRODUCT DETAILS",
@@ -209,12 +211,12 @@
         ]
       }
     ]
-
   },{
     "id": 4,
     "name": "Long Sweater",
     "description": "A luxurious velvet top with a wrap front.",
-    "sizes": ["sm", "xl"],
+    "category": "Sweaters",
+    "sizes": ["S", "XL"],
     "colors": ["green", "orchid", "black", "salmon", "maroon"],
     "images": [
       {
@@ -246,7 +248,7 @@
       "L": { "emerald": 4, "black": 2 }
     },
     "price": 2000,
-    "discount": 30,
+    "discount_percent": 30,
     "lists": [
       {
         "title": "PRODUCT DETAILS",
@@ -289,7 +291,8 @@
     "id": 5,
     "name": "Winter Long Sweater",
     "description": "A luxurious velvet top with a wrap front.",
-    "sizes": ["md", "2xl"],
+    "category": "Sweaters",
+    "sizes": ["M", "2XL"],
     "colors": ["blue", "salmon", "pink", "maroon"],
     "images": [
       {
@@ -317,7 +320,7 @@
       "L": { "emerald": 4, "black": 2 }
     },
     "price": 15000,
-    "discount": 0,
+    "discount_percent": 0,
     "lists": [
       {
         "title": "PRODUCT DETAILS",
@@ -360,7 +363,8 @@
     "id": 6,
     "name": "Winter Long Sweater",
     "description": "A luxurious velvet top with a wrap front.",
-    "sizes": ["xs", "2xl"],
+    "category": "Sweaters",
+    "sizes": ["XS", "2XL"],
     "colors": ["white", "black"],
     "images": [
       {
@@ -380,7 +384,7 @@
       "L": { "emerald": 4, "black": 2 }
     },
     "price": 45000,
-    "discount": 45,
+    "discount_percent": 45,
     "lists": [
       {
         "title": "PRODUCT DETAILS",
