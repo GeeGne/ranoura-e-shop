@@ -2,7 +2,7 @@
 
 // HOOKS
 import { useParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 // COMPONENT
 import ProductDisplay from '@/components/productPage/ProductDisplay';
@@ -34,7 +34,6 @@ export default function page () {
   // const productName = slugArray[0];
   // const productId = slugArray[1];
 
-
   const slugNameAndLinkArray = [
     {
       name: "All Clothes",
@@ -49,6 +48,7 @@ export default function page () {
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
+  const [ productListsActiveIndex, setProductListsActiveIndex ] = useState<number | null>(null);
 
   useEffect(() => {
     setTabName('product');
@@ -62,13 +62,16 @@ export default function page () {
   }
 
   const handleClick = (e: any) => {
-    const { type, productName } = e.currentTarget.dataset;
+    const { type, productName, index } = e.currentTarget.dataset;
 
     switch (type) {
       case 'add_to_bag_button_is_clicked':
         setAlertToggle(Date.now());
         setAlertType("product added");
         setAlertMessage(`"${productName}" is Added.` || "Unknown product name");
+        break;
+      case 'productList_is_clicked':
+        setProductListsActiveIndex(val => val === Number(index) ? null : Number(index));
         break;
       default:
         console.error('Unknown Type: ', type);
@@ -83,8 +86,9 @@ export default function page () {
   // console.log('productId:', productId);
   // console.log('product: ', product);
   // console.log('images: ', 
-    // [].reduce((acc: string[], itm) => [...acc, itm.main, itm.second], [])
+  // [].reduce((acc: string[], itm) => [...acc, itm.main, itm.second], [])
   // );
+
   return (
     <div
       className="
@@ -123,6 +127,21 @@ export default function page () {
           productId={product?.id}
           currentColor={onColorChange}
         />
+        <section
+          className="hidden lg:inline md:col-span-2 lg:col-span-2"
+        >
+          {product?.lists.map(({ title, descriptionLists }, i) => 
+            <ProductLists
+              key={i}
+              title={title}
+              descArray={descriptionLists}
+              data-type="productList_is_clicked"
+              data-index={i}
+              toggle={productListsActiveIndex === i ? true : false}
+              onClick={handleClick}
+            />
+          )}
+        </section>
         <BtnA
           className="
             flex justify-center items-center gap-2 font-bold text-base text-heading-invert 
@@ -140,13 +159,17 @@ export default function page () {
         </BtnA>
       </section>
       <section
-        className="md:col-span-2 lg:col-span-1"
+        className="lg:hidden md:col-span-2 lg:col-span-1"
       >
         {product?.lists.map(({ title, descriptionLists }, i) => 
           <ProductLists
             key={i}
             title={title}
             descArray={descriptionLists}
+            data-type="productList_is_clicked"
+            data-index={i}
+            toggle={productListsActiveIndex === i ? true : false}
+            onClick={handleClick}
           />
         )}
       </section>

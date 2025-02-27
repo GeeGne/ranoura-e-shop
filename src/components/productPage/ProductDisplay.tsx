@@ -24,9 +24,93 @@ export default function ProductDisplay ({ className, imagesArray, ...props }: Pr
   const totalLenght = imagesArray.length;
   const sliceArrayInto5 = (array: any[]) => array.slice(0, 5); 
 
-  return (
+  // DEBUG & UI
+  // const array = [outfit1, outfit5, outfit3, outfit2];
+  // const totalLenght = array.length;
+  
+  if (totalLenght === 1) return (
     <section
-      className="grid grid-cols-3 gap-4 w-full h-full"
+      className="w-full"
+    >
+      <img 
+        className="
+          w-full aspect-[2/3] object-cover object-center rounded-lg
+        "
+        alt="Photo"
+        src={imagesArray[0]}
+      />
+    </section>
+  )
+  
+  if (totalLenght === 2) return (
+    <section
+      className="grid grid-cols-3 gap-4 w-full items-center mb-auto"
+    >
+      <img 
+        className="
+          col-span-2 row-span-2 order-2 w-full h-full object-center object-cover
+          rounded-lg
+        "
+        alt="Photo"
+        src={imagesArray[selectedIndex]}
+      />
+      {imagesArray.map((url: string, i: number) => 
+        <img 
+          className={`
+            order-${i === 1 ? 3 : 1} aspect-[2/3] object-center object-cover
+            border-solid border-[2px] 
+            cursor-pointer rounded-lg
+            transition-all duration-300 ease-in-out
+            ${selectedIndex === i 
+              ? 'border-primary' 
+              : 'border-body-extra-light hover:border-primary brightness-75'
+            }
+          `}
+          alt="Photo"
+          src={url}
+          key={i}
+          onClick={() => setSelectedIndex(i)}
+        />    
+      )}
+    </section>
+  )
+
+  if (totalLenght === 3) return (
+    <section
+      className="grid grid-cols-3 gap-4 w-full items-center mb-auto"
+    >
+      <img 
+        className="
+          col-span-2 row-span-3 order-2 w-full h-full object-center object-cover
+          rounded-lg
+        "
+        alt="Photo"
+        src={imagesArray[selectedIndex]}
+      />
+      {imagesArray.map((url: string, i:number) => 
+        <img 
+          className={`
+            order-${i === 1 ? 3 : i + 1} aspect-[1/1] object-center object-cover
+            border-solid border-[2px] 
+            cursor-pointer rounded-lg
+            transition-all duration-300 ease-in-out
+            ${selectedIndex === i 
+              ? 'border-primary' 
+              : 'border-body-extra-light hover:border-primary brightness-75'
+            }
+          `}
+          alt="Photo"
+          src={url}
+          key={i}
+          onClick={() => setSelectedIndex(i)}
+        />    
+      )}
+    </section>
+  )
+
+  if (totalLenght === 4) return (
+    <section
+      className="grid grid-cols-3 grid-rows-4 gap-4 w-full items-center mb-auto"
     >
       <img 
         className="
@@ -36,10 +120,91 @@ export default function ProductDisplay ({ className, imagesArray, ...props }: Pr
         alt="Photo"
         src={imagesArray[selectedIndex]}
       />
+      <img 
+        className={`
+          order-1 aspect-[1/2] row-span-2
+          object-center object-cover
+          border-solid border-[2px] 
+          cursor-pointer rounded-lg
+          transition-all duration-300 ease-in-out
+          ${selectedIndex === 0 
+            ? 'border-primary' 
+            : 'border-body-extra-light hover:border-primary brightness-75'
+          }
+        `}
+        alt="Photo"
+        src={imagesArray[0]}
+        key={0}
+        onClick={() => setSelectedIndex(0)}
+      />    
+      <img 
+        className={`
+          order-2 aspect-[1/1] object-center object-cover
+          border-solid border-[2px] 
+          cursor-pointer rounded-lg
+          transition-all duration-300 ease-in-out
+          ${selectedIndex === 1 
+            ? 'border-primary' 
+            : 'border-body-extra-light hover:border-primary brightness-75'
+          }
+        `}
+        alt="Photo"
+        src={imagesArray[1]}
+        key={1}
+        onClick={() => setSelectedIndex(1)}
+      />    
+      <img 
+        className={`
+          order-3 aspect-[1/1] object-center object-cover
+          border-solid border-[2px] 
+          cursor-pointer rounded-lg
+          transition-all duration-300 ease-in-out
+          ${selectedIndex === 2 
+            ? 'border-primary' 
+            : 'border-body-extra-light hover:border-primary brightness-75'
+          }
+        `}
+        alt="Photo"
+        src={imagesArray[2]}
+        key={2}
+        onClick={() => setSelectedIndex(2)}
+      />    
+      <img 
+        className={`
+          order-5 aspect-[1/2] row-span-2 
+          object-center object-cover
+          border-solid border-[2px] 
+          cursor-pointer rounded-lg
+          transition-all duration-300 ease-in-out
+          ${selectedIndex === 3 
+            ? 'border-primary' 
+            : 'border-body-extra-light hover:border-primary brightness-75'
+          }
+        `}
+        alt="Photo"
+        src={imagesArray[3]}
+        key={3}
+        onClick={() => setSelectedIndex(3)}
+      />    
+    </section>
+  )
+
+  return (
+    <section
+      className="grid grid-cols-3 gap-4 w-full h-full items-center mb-auto"
+    >
+      <img 
+        className="
+          col-span-2 row-span-3 order-2 w-full h-full object-center object-cover
+          rounded-lg
+        "
+        alt="Photo"
+        src={imagesArray[selectedIndex]}
+      />
       {sliceArrayInto5(imagesArray).map((url, i) => 
         <img 
           className={`
-            order-${i === 0 ? 1 : i + 2} aspect-[1/1] object-center object-cover
+            order-${i === 0 ? 1 : i + 1} aspect-[1/1] object-center object-cover
             border-solid border-[2px] 
             cursor-pointer rounded-lg
             transition-all duration-300 ease-in-out

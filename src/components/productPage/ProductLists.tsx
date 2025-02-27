@@ -8,11 +8,12 @@ import LineMdStarPulsatingFilledLoop from '@/components/svgs/LineMdStarPulsating
 type Props = {
   descArray?: string[];
   title?: string;
-}
+  toggle?: boolean;
+} & React.ComponentPropsWithRef<"div">;
 
-export default function ProductLists ({ title = 'NO TITLE', descArray = ['Text is Empty'] }: Props) {
+export default function ProductLists ({ title = 'NO TITLE', descArray = ['Text is Empty'], toggle = false, ...props }: Props) {
   
-  const [ toggle, setToggle ] = useState<boolean>(false);
+  // const [ toggle, setToggle ] = useState<boolean>(false);
   const [ overflowToggle, setOverflowToggle ] = useState<boolean>(false);
   const descRef = useRef<any>(null);
   const getScrollHeight = (el: HTMLElement) => el?.scrollHeight + 16 || 0;
@@ -23,12 +24,13 @@ export default function ProductLists ({ title = 'NO TITLE', descArray = ['Text i
         flex flex-col w-full py-4
         border-solid border-inbetween border-y-[1px] mb-[-1px] 
       "
-      onClick={() => { 
+      /* onClick={() => { 
         setToggle(val => !val); 
         overflowToggle 
         ?  setOverflowToggle(val => !val)
         :  setTimeout(() => setOverflowToggle(val => !val), 300); 
-      }}
+      }} */
+      { ...props }
     >
       <div
         className={`
