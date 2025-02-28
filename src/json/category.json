@@ -1,21 +1,27 @@
 [
   {
     "categoryName": "PANTS",
+    "name": "pants",
     "imgURL": "/assets/img/cat_pants.jpg"
   },{
     "categoryName": "JACKETS",
+    "name": "jackets",
     "imgURL": "/assets/img/cat_jackets.jpg"
   },{
     "categoryName": "DRESSES",
+    "name": "dresses",
     "imgURL": "/assets/img/cat_dresses.jpg"
   },{
     "categoryName": "SUITS",
+    "name": "suits",
     "imgURL": "/assets/img/cat_suits.jpg"
   },{
     "categoryName": "SKIRTS",
+    "name": "skirts",
     "imgURL": "/assets/img/cat_skirts.jpg"
   },{
     "categoryName": "ROBES",
+    "name": "robes",
     "imgURL": "/assets/img/cat_robes.jpg"
   }
 ]

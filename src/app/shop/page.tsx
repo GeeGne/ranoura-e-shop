@@ -21,12 +21,9 @@ export default function page () {
 
   const slugNameAndLinkArray = [
     {
-      name: "Categories",
-      href: "/categories"
-    },{
-      name: "Collection",
-      href: "/product/collection"
-    } 
+      name: "All Clothes",
+      href: "/shop"
+    }
   ];
 
   useEffect(() => {
@@ -45,7 +42,7 @@ export default function page () {
       />
       <CategoryTitle 
         className="px-4 py-8 w-auto max-w-[auto] mx-auto"
-        title={"Collection"}
+        title={"All Clothes"}
       />
       <FilterTile 
         className="px-4 w-auto max-w-[auto] mx-auto"

@@ -2,6 +2,7 @@
 
 // HOOKS
 import { useEffect, useRef } from 'react';
+import { useParams } from 'next/navigation';
 
 // COMPONENTS
 import AdvertList from '@/components/categoryPage/AdvertList';
@@ -15,23 +16,30 @@ import { useTabNameStore } from '@/stores/index';
 // JSON
 import products from "@/json/products.json";
 
+// UTILS
+import strHyphenToSpace from '@/utils/strHyphenToSpace';
+
 export default function page () {
 
+  const { categoryName } = useParams();
   const setTabName = useTabNameStore((state: any) => state.setTabName);
 
   const slugNameAndLinkArray = [
     {
-      name: "Categories",
-      href: "/categories"
+      name: "All Clothes",
+      href: "/shop"
     },{
-      name: "Collection",
-      href: "/product/collection"
+      name: strHyphenToSpace(categoryName).toUpperCase(),
+      href: `/shop/collection/${categoryName}`
     } 
   ];
 
   useEffect(() => {
     setTabName('product');
   }, []);
+
+  // DEBUG & UI
+  console.log('categoryName: ', categoryName);
 
   return (
     <div
@@ -45,7 +53,7 @@ export default function page () {
       />
       <CategoryTitle 
         className="px-4 py-8 w-auto max-w-[auto] mx-auto"
-        title={"Collection"}
+        title={strHyphenToSpace(categoryName).toUpperCase()}
       />
       <FilterTile 
         className="px-4 w-auto max-w-[auto] mx-auto"

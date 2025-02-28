@@ -1,8 +1,9 @@
 type Props = {
   className?: string;
+  title?: string;
 }
 
-export default function CategoryTitle ({ className }: Props) {
+export default function CategoryTitle ({ className, title }: Props) {
   return (
     <div
       className={`
@@ -10,7 +11,7 @@ export default function CategoryTitle ({ className }: Props) {
         ${className}
       `}
     >
-      COLLECTION
+      {title}
     </div>
   )
 }

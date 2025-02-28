@@ -31,11 +31,20 @@ export default function Home() {
       <Hero /> 
       <MainSlider /> 
       <ImageSlider />
-      <AdvertTile title="HOT DEALS" />
+      <AdvertTile 
+        title="HOT DEALS" 
+        name="hot-deals"
+      />
       <CategoryPickerV2 />
       <MainLayout />
-      <AdvertTile title="WHATS NEW?" />
-      <AdvertTile title="COLLECTION" />
+      <AdvertTile 
+        title="WHATS NEW?" 
+        name="whats-new"
+      />
+      <AdvertTile 
+        title="COLLECTION" 
+        name="collection"
+      />
     </div>
   );
 }

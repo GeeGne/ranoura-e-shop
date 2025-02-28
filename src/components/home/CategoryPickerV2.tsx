@@ -1,5 +1,8 @@
+// HOOKS
+import Link from 'next/link';
+
 // STORES
-import { useAlertMessageStore } from '@/stores/index';
+import { useLayoutRefStore,  useAlertMessageStore } from '@/stores/index';
 
 // COMPONENTS
 import Blob from "@/components/svgs/layered_shapes/Blob"
@@ -20,18 +23,19 @@ const jeans = "/assets/img/jeans.png";
 
 export default function CategoryPickerV2 () {
   
+  const layoutRef = useLayoutRefStore((state: any) => state.layoutRef);
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
 
-  const handleClick = (e: React.MouseEvent<HTMLLIElement>) => {
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     const { type } = e.currentTarget.dataset;
 
     switch (type) {
-      case 'category_list_is_clicked':
-        setAlertToggle(Date.now());
-        setAlertType("warning");
-        setAlertMessage("Sorry! We're currently working on this feature.");
+      case 'navigate_to_category':
+          setTimeout(() => 
+            layoutRef.scrollTo({top: 0, behavior: "instant"})
+          ,200);
         break;
       default:
         console.error('Unknown type: ', type);
@@ -43,7 +47,7 @@ export default function CategoryPickerV2 () {
       className="flex flex-col gap-4 py-8"
     >
       <section
-        className="flex  px-4"
+        className="flex px-4"
       >
         <span
             className="relative flex text-3xl text-heading font-bold transform"
@@ -67,14 +71,18 @@ export default function CategoryPickerV2 () {
 
         {category.map((itm, i) => 
           <li
-            className={`
-              group relative flex items-center justify-center w-full h-full aspect-[1/1] cursor-pointer bg-500 drop-shadow-md hover:z-[5]
-              hover:scale-[110%]
-              transition-all duraiton-300 ease-out
-
-            `}
             key={i}
           >
+            <Link
+              className={`
+                group relative flex items-center justify-center w-full h-full aspect-[1/1] cursor-pointer bg-500 drop-shadow-md hover:z-[5]
+                hover:scale-[110%]
+                transition-all duraiton-300 ease-out
+              `}
+              href={`/shop/category/${itm.name}`}
+              data-type="navigate_to_category"
+              onClick={handleClick}
+            >
             <h3
               className="
                 absolute top-1/2 left-1/2
@@ -82,7 +90,7 @@ export default function CategoryPickerV2 () {
                 text-center flex-1 text-lg text-heading-invert font-bold drop-shadow-md outlined-text z-[10]
               "
             >
-              {itm.categoryName}
+              {itm.name.toUpperCase()}
             </h3>
             <img 
               src={itm.imgURL}
@@ -100,6 +108,7 @@ export default function CategoryPickerV2 () {
                 bg-primary
               "
             />
+            </Link>
           </li>
         )}
       </ul>

@@ -42,9 +42,10 @@ import Confetti from "react-canvas-confetti/dist/presets/explosion";
 
 type Props = {
   title?: string;
+  name?: string;
 }
 
-export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
+export default function AdvertTile ({ title = 'COLLECTION', name = 'collection' }: Props) {
   
   const router = useRouter();
   const array = [1, 2, 3, 4];
@@ -198,7 +199,7 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
       >
         <Link
           className="relative flex items-center text-3xl text-heading font-bold transform"
-          href="/categories/test"
+          href={`/shop/category/${name}`}
           data-type="navigate_to_category"
           onClick={handleClick}
         >
@@ -211,7 +212,7 @@ export default function AdvertTile ({ title = 'COLLECTION' }: Props) {
         </Link>
         <div className="flex items-center gap-4">
           <Link
-            href="/categories/test"
+            href={`/shop/category/${name}`}
             data-type="navigate_to_category"
             onClick={handleClick}
           >
