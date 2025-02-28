@@ -29,7 +29,7 @@ export default function ProductDisplay ({ className, imagesArray = [], ...props 
   // const array = [outfit3, outfit2];
   // const array = [outfit1, outfit3, outfit2];
   // const array = [outfit1, outfit5, outfit3, outfit2];
-  // const array = [outfit1, outfit5, outfit3, outfit2, outfit4];
+  // const array = [outfit1, outfit5, outfit3, outfit2, outfit2];
   // const array = [outfit1, outfit5, outfit3, outfit2, outfit1, outfit3];
   // const totalLenght = array.length;
   
@@ -119,7 +119,7 @@ export default function ProductDisplay ({ className, imagesArray = [], ...props 
     >
       <img 
         className="
-          col-span-2 row-span-3 order-3 w-full h-full object-center object-cover
+          col-span-2 row-span-3 order-2 w-full h-full object-center object-cover
           rounded-lg
         "
         alt="Photo"
@@ -127,7 +127,7 @@ export default function ProductDisplay ({ className, imagesArray = [], ...props 
       />
       <img 
         className={`
-          order-1 aspect-[1/2] row-span-2
+          order-1 h-full row-span-2
           object-center object-cover
           border-solid border-[2px] 
           cursor-pointer rounded-lg
@@ -144,7 +144,8 @@ export default function ProductDisplay ({ className, imagesArray = [], ...props 
       />    
       <img 
         className={`
-          order-2 aspect-[1/1] object-center object-cover
+          order-3 h-full row-span-2
+          object-center object-cover
           border-solid border-[2px] 
           cursor-pointer rounded-lg
           transition-all duration-300 ease-in-out
@@ -160,7 +161,7 @@ export default function ProductDisplay ({ className, imagesArray = [], ...props 
       />    
       <img 
         className={`
-          order-3 aspect-[1/1] object-center object-cover
+          order-4 aspect-[1/1] object-center object-cover
           border-solid border-[2px] 
           cursor-pointer rounded-lg
           transition-all duration-300 ease-in-out
@@ -176,7 +177,7 @@ export default function ProductDisplay ({ className, imagesArray = [], ...props 
       />    
       <img 
         className={`
-          order-5 aspect-[1/2] row-span-2 
+          order-5 aspect-[1/1] 
           object-center object-cover
           border-solid border-[2px] 
           cursor-pointer rounded-lg
@@ -191,6 +192,39 @@ export default function ProductDisplay ({ className, imagesArray = [], ...props 
         key={3}
         onClick={() => setSelectedIndex(3)}
       />    
+    </section>
+  )
+
+  if (totalLenght === 5) return (
+    <section
+      className="grid grid-cols-3 gap-4 w-full h-full items-center mb-auto"
+    >
+      <img 
+        className="
+          col-span-2 row-span-2 order-2 w-full h-full object-center object-cover
+          rounded-lg
+        "
+        alt="Photo"
+        src={imagesArray[selectedIndex]}
+      />
+      {imagesArray.map((url: string, i: number) => 
+        <img 
+          className={`
+            order-${(i === 1)? 3 : i + 1} aspect-[${(i === 0 || i === 1 )? '2/3' : '1/1'}] object-center object-cover
+            border-solid border-[2px] 
+            cursor-pointer rounded-lg
+            transition-all duration-300 ease-in-out
+            ${selectedIndex === i 
+              ? 'border-primary' 
+              : 'border-body-extra-light hover:border-primary brightness-75'
+            }
+          `}
+          alt="Photo"
+          src={url}
+          key={i}
+          onClick={() => setSelectedIndex(i)}
+        />    
+      )}
     </section>
   )
 
