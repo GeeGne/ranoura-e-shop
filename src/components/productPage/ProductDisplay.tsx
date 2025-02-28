@@ -18,14 +18,19 @@ type Props = {
   imagesArray?: any;
 }
 
-export default function ProductDisplay ({ className, imagesArray, ...props }: Props) {
+export default function ProductDisplay ({ className, imagesArray = [], ...props }: Props) {
   const [ selectedIndex, setSelectedIndex ] = useState<number>(0);
   const leftArrowInactive = false;
   const totalLenght = imagesArray.length;
   const sliceArrayInto5 = (array: any[]) => array.slice(0, 5); 
 
   // DEBUG & UI
+  // const array = [outfit2];
+  // const array = [outfit3, outfit2];
+  // const array = [outfit1, outfit3, outfit2];
   // const array = [outfit1, outfit5, outfit3, outfit2];
+  // const array = [outfit1, outfit5, outfit3, outfit2, outfit4];
+  // const array = [outfit1, outfit5, outfit3, outfit2, outfit1, outfit3];
   // const totalLenght = array.length;
   
   if (totalLenght === 1) return (
@@ -204,7 +209,7 @@ export default function ProductDisplay ({ className, imagesArray, ...props }: Pr
       {sliceArrayInto5(imagesArray).map((url, i) => 
         <img 
           className={`
-            order-${i === 0 ? 1 : i + 1} aspect-[1/1] object-center object-cover
+            order-${i === 1 ? 3 : i + 1} aspect-[1/1] object-center object-cover
             border-solid border-[2px] 
             cursor-pointer rounded-lg
             transition-all duration-300 ease-in-out
