@@ -19,31 +19,38 @@ type Props = {
 }
 
 export default function ProductDisplay ({ className, imagesArray = [], ...props }: Props) {
+  
   const [ selectedIndex, setSelectedIndex ] = useState<number>(0);
   const leftArrowInactive = false;
   const totalLenght = imagesArray.length;
   const sliceArrayInto5 = (array: any[]) => array.slice(0, 5); 
 
   // DEBUG & UI
-  // const array = [outfit2];
-  // const array = [outfit3, outfit2];
-  // const array = [outfit1, outfit3, outfit2];
-  // const array = [outfit1, outfit5, outfit3, outfit2];
-  // const array = [outfit1, outfit5, outfit3, outfit2, outfit2];
-  // const array = [outfit1, outfit5, outfit3, outfit2, outfit1, outfit3];
-  // const totalLenght = array.length;
+  // imagesArray = [outfit2];
+  // imagesArray = [outfit3, outfit2];
+  // imagesArray = [outfit1, outfit3, outfit2];
+  // imagesArray = [outfit1, outfit5, outfit3, outfit2];
+  // imagesArray = [outfit1, outfit5, outfit3, outfit2, outfit2];
+  // imagesArray = [outfit1, outfit5, outfit3, outfit2, outfit1, outfit3];
+  // const totalLenght = imagesArray.length;
   
   if (totalLenght === 1) return (
     <section
       className="w-full"
     >
-      <img 
+      <div
         className="
-          w-full aspect-[2/3] object-cover object-center rounded-lg
+          w-full aspect-[2/3] rounded-lg overflow-hidden    
         "
-        alt="Photo"
-        src={imagesArray[0]}
-      />
+      >
+        <img 
+          className="
+            w-full h-full obejct-center object-cover
+          "
+          alt="Photo"
+          src={imagesArray[0]}
+        />
+      </div>
     </section>
   )
   
@@ -51,19 +58,25 @@ export default function ProductDisplay ({ className, imagesArray = [], ...props 
     <section
       className="grid grid-cols-3 gap-4 w-full items-center mb-auto"
     >
-      <img 
+      <div
         className="
           col-span-2 row-span-2 order-2 w-full h-full object-center object-cover
-          rounded-lg
+          rounded-lg overflow-hidden
         "
-        alt="Photo"
-        src={imagesArray[selectedIndex]}
-      />
-      {imagesArray.map((url: string, i: number) => 
+      >
         <img 
+          className="
+            w-full h-full obejct-center object-cover
+          "
+          alt="Photo"
+          src={imagesArray[selectedIndex]}
+        />
+      </div>
+      {imagesArray.map((url: string, i: number) => 
+        <div
           className={`
             order-${i === 1 ? 3 : 1} aspect-[2/3] object-center object-cover
-            border-solid border-[2px] 
+            border-solid border-[2px] overflow-hidden
             cursor-pointer rounded-lg
             transition-all duration-300 ease-in-out
             ${selectedIndex === i 
@@ -71,11 +84,17 @@ export default function ProductDisplay ({ className, imagesArray = [], ...props 
               : 'border-body-extra-light hover:border-primary brightness-75'
             }
           `}
-          alt="Photo"
-          src={url}
           key={i}
           onClick={() => setSelectedIndex(i)}
-        />    
+        >
+          <img 
+            className={`
+              w-full h-full obejct-center object-cover
+            `}
+            alt="Photo"
+            src={url}
+          />    
+        </div>
       )}
     </section>
   )
@@ -84,31 +103,43 @@ export default function ProductDisplay ({ className, imagesArray = [], ...props 
     <section
       className="grid grid-cols-3 gap-4 w-full items-center mb-auto"
     >
-      <img 
+      <div
         className="
           col-span-2 row-span-3 order-2 w-full h-full object-center object-cover
-          rounded-lg
+          rounded-lg overflow-hidden
         "
-        alt="Photo"
-        src={imagesArray[selectedIndex]}
-      />
-      {imagesArray.map((url: string, i:number) => 
+      >
         <img 
+          className="
+            w-full h-full obejct-center object-cover
+          "
+          alt="Photo"
+          src={imagesArray[selectedIndex]}
+          />
+        </div>
+      {imagesArray.map((url: string, i:number) => 
+        <div
           className={`
             order-${i === 1 ? 3 : i + 1} aspect-[1/1] object-center object-cover
             border-solid border-[2px] 
-            cursor-pointer rounded-lg
+            cursor-pointer rounded-lg overflow-hidden
             transition-all duration-300 ease-in-out
             ${selectedIndex === i 
               ? 'border-primary' 
               : 'border-body-extra-light hover:border-primary brightness-75'
             }
           `}
-          alt="Photo"
-          src={url}
           key={i}
           onClick={() => setSelectedIndex(i)}
-        />    
+        >
+          <img 
+            className={`
+              w-full h-full obejct-center object-cover
+            `}
+            alt="Photo"
+            src={url}
+          />    
+        </div>
       )}
     </section>
   )
@@ -117,18 +148,24 @@ export default function ProductDisplay ({ className, imagesArray = [], ...props 
     <section
       className="grid grid-cols-3 grid-rows-4 gap-4 w-full items-center mb-auto"
     >
-      <img 
+      <div
         className="
-          col-span-2 row-span-3 order-2 w-full h-full object-center object-cover
-          rounded-lg
+        col-span-2 row-span-3 order-2 w-full h-full object-center object-cover
+        rounded-lg overflow-hidden
         "
-        alt="Photo"
-        src={imagesArray[selectedIndex]}
-      />
-      <img 
+      >
+        <img 
+          className="
+            w-full h-full obejct-center object-cover
+          "
+          alt="Photo"
+          src={imagesArray[selectedIndex]}
+        />
+      </div>
+      <div
         className={`
           order-1 h-full row-span-2
-          object-center object-cover
+          object-center object-cover overflow-hidden
           border-solid border-[2px] 
           cursor-pointer rounded-lg
           transition-all duration-300 ease-in-out
@@ -137,15 +174,21 @@ export default function ProductDisplay ({ className, imagesArray = [], ...props 
             : 'border-body-extra-light hover:border-primary brightness-75'
           }
         `}
-        alt="Photo"
-        src={imagesArray[0]}
         key={0}
         onClick={() => setSelectedIndex(0)}
-      />    
-      <img 
+      >
+        <img 
+          className={`
+            w-full h-full obejct-center object-cover
+          `}
+          alt="Photo"
+          src={imagesArray[0]}
+        />    
+      </div>
+      <div
         className={`
           order-3 h-full row-span-2
-          object-center object-cover
+          object-center object-cover overflow-hidden
           border-solid border-[2px] 
           cursor-pointer rounded-lg
           transition-all duration-300 ease-in-out
@@ -154,15 +197,21 @@ export default function ProductDisplay ({ className, imagesArray = [], ...props 
             : 'border-body-extra-light hover:border-primary brightness-75'
           }
         `}
-        alt="Photo"
-        src={imagesArray[1]}
         key={1}
         onClick={() => setSelectedIndex(1)}
-      />    
-      <img 
+      >
+        <img 
+          className={`
+            w-full h-full obejct-center object-cover
+          `}
+          alt="Photo"
+          src={imagesArray[1]}
+        />    
+      </div>
+      <div
         className={`
           order-4 aspect-[1/1] object-center object-cover
-          border-solid border-[2px] 
+          border-solid border-[2px] overflow-hidden
           cursor-pointer rounded-lg
           transition-all duration-300 ease-in-out
           ${selectedIndex === 2 
@@ -170,15 +219,21 @@ export default function ProductDisplay ({ className, imagesArray = [], ...props 
             : 'border-body-extra-light hover:border-primary brightness-75'
           }
         `}
-        alt="Photo"
-        src={imagesArray[2]}
         key={2}
         onClick={() => setSelectedIndex(2)}
-      />    
-      <img 
+      >
+        <img 
+          className={`
+            w-full h-full obejct-center object-cover
+          `}
+          alt="Photo"
+          src={imagesArray[2]}
+        />    
+      </div>
+      <div
         className={`
           order-5 aspect-[1/1] 
-          object-center object-cover
+          object-center object-cover overflow-hidden
           border-solid border-[2px] 
           cursor-pointer rounded-lg
           transition-all duration-300 ease-in-out
@@ -187,31 +242,43 @@ export default function ProductDisplay ({ className, imagesArray = [], ...props 
             : 'border-body-extra-light hover:border-primary brightness-75'
           }
         `}
-        alt="Photo"
-        src={imagesArray[3]}
         key={3}
         onClick={() => setSelectedIndex(3)}
-      />    
-    </section>
+      >
+        <img 
+          className={`
+            w-full h-full obejct-center object-cover
+          `}
+          alt="Photo"
+          src={imagesArray[3]}
+        />    
+        </div>
+      </section>
   )
 
   if (totalLenght === 5) return (
     <section
       className="grid grid-cols-3 gap-4 w-full h-full items-center mb-auto"
     >
-      <img 
+      <div
         className="
-          col-span-2 row-span-2 order-2 w-full h-full object-center object-cover
-          rounded-lg
-        "
-        alt="Photo"
-        src={imagesArray[selectedIndex]}
-      />
-      {imagesArray.map((url: string, i: number) => 
+        col-span-2 row-span-2 order-2 w-full h-full object-center object-cover
+        rounded-lg overflow-hidden
+      "
+      >
         <img 
           className={`
+            w-full h-full obejct-center object-cover
+          `}
+          alt="Photo"
+          src={imagesArray[selectedIndex]}
+        />
+      </div>
+      {imagesArray.map((url: string, i: number) => 
+        <div
+          className={`
             order-${(i === 1)? 3 : i + 1} aspect-[${(i === 0 || i === 1 )? '2/3' : '1/1'}] object-center object-cover
-            border-solid border-[2px] 
+            border-solid border-[2px] overflow-hidden 
             cursor-pointer rounded-lg
             transition-all duration-300 ease-in-out
             ${selectedIndex === i 
@@ -219,11 +286,17 @@ export default function ProductDisplay ({ className, imagesArray = [], ...props 
               : 'border-body-extra-light hover:border-primary brightness-75'
             }
           `}
-          alt="Photo"
-          src={url}
           key={i}
           onClick={() => setSelectedIndex(i)}
-        />    
+        >
+          <img 
+            className={`
+              w-full h-full obejct-center object-cover
+            `}
+            alt="Photo"
+            src={url}
+          />    
+        </div>
       )}
     </section>
   )
@@ -232,19 +305,25 @@ export default function ProductDisplay ({ className, imagesArray = [], ...props 
     <section
       className="grid grid-cols-3 gap-4 w-full h-full items-center mb-auto"
     >
-      <img 
+      <div
         className="
           col-span-2 row-span-3 order-2 w-full h-full object-center object-cover
-          rounded-lg
+          rounded-lg overflow-hidden
         "
-        alt="Photo"
-        src={imagesArray[selectedIndex]}
-      />
-      {sliceArrayInto5(imagesArray).map((url, i) => 
+      >
         <img 
           className={`
+            w-full h-full obejct-center object-cover
+          `}
+          alt="Photo"
+          src={imagesArray[selectedIndex]}
+        />
+      </div>
+      {sliceArrayInto5(imagesArray).map((url, i) => 
+        <div
+          className={`
             order-${i === 1 ? 3 : i + 1} aspect-[1/1] object-center object-cover
-            border-solid border-[2px] 
+            border-solid border-[2px] overflow-hidden
             cursor-pointer rounded-lg
             transition-all duration-300 ease-in-out
             ${selectedIndex === i 
@@ -252,32 +331,44 @@ export default function ProductDisplay ({ className, imagesArray = [], ...props 
               : 'border-body-extra-light hover:border-primary brightness-75'
             }
           `}
-          alt="Photo"
-          src={url}
           key={i}
           onClick={() => setSelectedIndex(i)}
-        />    
-      )}
-      {totalLenght === 6 
-        ? <img 
+        >
+          <img 
             className={`
-              order-7 aspect-[1/1] object-center object-cover
-              border-solid border-[2px] 
-              cursor-pointer rounded-lg
-              transition-all duration-300 ease-in-out
-              ${selectedIndex === 5 
-                ? 'border-primary' 
-                : 'border-body-extra-light hover:border-primary brightness-75'
-              }
+              w-full h-full obejct-center object-cover
+            `}
+            alt="Photo"
+            src={url}
+          />    
+        </div>
+      )}
+      {totalLenght === 6 ?
+        <div
+          className={`
+            order-7 aspect-[1/1] object-center object-cover
+            border-solid border-[2px] overflow-hidden
+            cursor-pointer rounded-lg
+            transition-all duration-300 ease-in-out
+            ${selectedIndex === 5 
+              ? 'border-primary' 
+              : 'border-body-extra-light hover:border-primary brightness-75'
+            }
+          `}
+          onClick={() => setSelectedIndex(5)}
+        >
+          <img 
+            className={`
+              w-full h-full obejct-center object-cover
             `}
             alt="Photo"
             src={imagesArray[5]}
-            onClick={() => setSelectedIndex(5)}
           />
+        </div> 
         : <div
             className={`
               relative order-7 aspect-[1/1] object-center object-cover
-              border-solid border-[2px] 
+              border-solid border-[2px] overflow-hidden
               border-body-extra-light hover:border-primary
               cursor-pointer rounded-lg overflow-hidden
               transition-all duration-300 ease-in-out
