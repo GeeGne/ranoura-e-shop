@@ -5,15 +5,19 @@ import MinusIcon from '@/components/svgs/Minus';
 import UnderlineStyle from '@/components/UnderlineStyle';
 
 // STORES
-import { useAlertMessageStore } from '@/stores/index';
+import { useAlertMessageStore, useFooterListStore } from '@/stores/index';
 
 type Props = {
   title: string,
   content: string[] | React.ReactNode[],
   isHTML?: boolean;
+  index?: number;
 }
 
-export default function FooterList ({ title, content, ...props}: Props) {
+export default function FooterList ({ title, content, index, ...props}: Props) {
+
+  const toggleIndex = useFooterListStore(state => state.toggleIndex);
+  const setToggleIndex = useFooterListStore(state => state.setToggleIndex);
 
   const [ toggle, setToggle ] = useState<boolean>(false);
   const [ overflowToggle, setOverflowToggle ] = useState<boolean>(false);
@@ -50,35 +54,35 @@ export default function FooterList ({ title, content, ...props}: Props) {
 
   return (
     <div
-      className="flex flex-col gap-2 w-full max-w-[600px] mx-auto py-2"
+      className="
+        flex flex-col lg:gap-4 w-full max-w-[600px] mx-auto py-4 lg:py-0
+        border-solid border-heading-invert border-y-[5px] mb-[-5px] lg:border-none
+      "
       {...props}
     >
       <button
         className="flex flex-row text-heading-invert text-xl text-bold cursor-pointer justify-between"
         onClick={() => {
-          setToggle(val => !val);
-          overflowToggle
-            ? setOverflowToggle(val => !val)
-            : setTimeout(() => setOverflowToggle(val => !val), 200)
+          setToggleIndex(toggleIndex === index ? null : index);
         }}
       >
         <span>
           {title}
         </span>
-        {toggle
+        {toggleIndex === index
           ? <MinusIcon className="lg:hidden" />
           : <PlusIcon className="lg:hidden" />
         }
       </button>
       <ul
         className={`
-          flex flex-col gap-2 text-body-invert overflow-hidden
+          flex flex-col gap-2 text-body-invert overflow-hidden overflow-hidden
           transition-all duration-300 ease-in-out lg:min-h-full lg:opacity-100
-          ${toggle ? 'opacity-100' : 'opacity-0'}
+          ${toggleIndex === index ? 'opacity-100' : 'opacity-0'}
         `}
         style={{
-          maxHeight: `${toggle ? getScrollHeight(uiRef.current) : 0}px`, 
-          overflow: overflowToggle ? `visible` : 'hidden'
+          maxHeight: `${toggleIndex === index ? getScrollHeight(uiRef.current) : 0}px`, 
+          paddingTop: toggleIndex === index ? '0.5rem' : '0',
         }}
         ref={uiRef}
       >
@@ -102,10 +106,6 @@ export default function FooterList ({ title, content, ...props}: Props) {
           </li>
         )}
       </ul>
-      <hr className={`
-          border-2 border-body-invert lg:hidden
-        `} 
-      />
     </div>
   )
 }

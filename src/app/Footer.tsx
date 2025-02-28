@@ -120,16 +120,19 @@ export default function Footer ({ ...props }) {
               SUBSCRIBE
             </BtnA>
           </div>
-        </div><hr className="border-2 border-body-invert w-full max-w-[600px] lg:hidden mx-auto mb-2" />
+        </div>
         <FooterList 
+          index={0}
           title={'COSTUMER SERVICE'} 
           content={['Privacy Policy', 'Returns & Refunds', 'Delivery and Shipment']} 
         />
         <FooterList 
+          index={1}
           title={'ABOUT US'} 
           content={['About Us', 'FAQs']} 
         />
         <FooterList 
+          index={2}
           title={'CONTACT US'} 
           content={[
             <div key="1" className="flex gap-2"><Phone />+9639302942</div>, 

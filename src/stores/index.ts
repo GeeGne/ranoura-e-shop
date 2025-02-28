@@ -80,19 +80,19 @@ const useFavouriteConfettiToggle = create<FavouriteConfettiToggleProps>(
   })
 );
 
-type layoutRefProps = {
+type LayoutRefProps = {
   layoutRef?: any;
   setLayoutRef: (value: any) => void;
 };
 
-const useLayoutRefStore = create<layoutRefProps>(
+const useLayoutRefStore = create<LayoutRefProps>(
   (set) => ({
     layoutRef: null,
     setLayoutRef: (layoutRef: any) => set({ layoutRef })
   })
 );
 
-type alertMessageProps = {
+type AlertMessageProps = {
   toggle: number;
   setToggle: (value: number) => void;
   type: string;
@@ -100,7 +100,7 @@ type alertMessageProps = {
   message: string;
   setMessage: (value: string) => void;
 }
-const useAlertMessageStore = create<alertMessageProps>(
+const useAlertMessageStore = create<AlertMessageProps>(
   (set) => ({
     toggle: 0,
     setToggle: (toggle: number) => set({ toggle }),
@@ -111,9 +111,22 @@ const useAlertMessageStore = create<alertMessageProps>(
   })
 );
 
+type FooterListProps = {
+  toggleIndex?: number | null;
+  setToggleIndex: (value: any) => void;
+}
+
+const useFooterListStore = create<FooterListProps>(
+  (set) => ({
+    toggleIndex: null,
+    setToggleIndex: (toggleIndex: number | null) => set({ toggleIndex })
+  })
+);
+
 export { 
   useCartStore, useNavbarStore, 
   useTabNameStore, useFilterWindowStore,
   useFavouritesStore, useFavouriteConfettiToggle,
-  useLayoutRefStore, useAlertMessageStore
+  useLayoutRefStore, useAlertMessageStore,
+  useFooterListStore
 };
