@@ -1,9 +1,12 @@
+// HOOKS
+import Link from 'next/link';
+
 // COMPONENTS
 import DisplayImg from "@/components/DisplayImg";
 import BtnA from "@/components/BtnA";
 
 // STORES
-import { useAlertMessageStore } from '@/stores/index';
+import { useLayoutRefStore, useAlertMessageStore } from '@/stores/index';
 
 // ASSETS
 const ramdanBanner = "/assets/img/ramadan-nights.webp";
@@ -13,7 +16,8 @@ const outfit2 = "assets/img/outfit-2.jpg"
 const outfit3 = "assets/img/outfit-3.jpg"
 
 export default function MainLayout () {
-  
+
+  const layoutRef = useLayoutRefStore((state: any) => state.layoutRef);
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
@@ -23,9 +27,9 @@ export default function MainLayout () {
 
     switch (type) {
       case 'shopNow_button_is_clicked':
-        setAlertToggle(Date.now());
-        setAlertType("warning");
-        setAlertMessage("Sorry! We're currently working on this feature.");
+        setTimeout(() => 
+          layoutRef.scrollTo({top: 0, behavior: "instant"})
+        ,200);
         break;
       default:
         console.error('Unknown type: ', type);
@@ -65,13 +69,17 @@ export default function MainLayout () {
           >
             Illuminate Your Style with Ramadan Nights – Exclusive Deals Await!
           </h3>
-          <BtnA
-            className="bg-background text-heading text-sm font-bold px-4 py-2 shadow-md drop-shadow-lg rounded-md"
-            data-type="shopNow_button_is_clicked"
-            onClick={handleClick}
+          <Link
+            href="shop/category/ramadan-nights"
           >
-            SHOP NOW
-          </BtnA>
+            <BtnA
+              className="bg-background text-heading text-sm font-bold px-4 py-2 shadow-md drop-shadow-lg rounded-md"
+              data-type="shopNow_button_is_clicked"
+              onClick={handleClick}
+            >
+              SHOP NOW
+            </BtnA>
+          </Link>
         </div>
       </div>
       
@@ -101,13 +109,17 @@ export default function MainLayout () {
           >
             "Unbeatable Discounts, Limited Time Offers! Discover exclusive deals on your favorite products. Shop now before they're gone!"
           </h3>
-          <BtnA
-            className="bg-background text-heading text-sm font-bold px-4 py-2 shadow-md drop-shadow-lg rounded-md"
-            data-type="shopNow_button_is_clicked"
-            onClick={handleClick}
+          <Link
+            href="/shop/category/hot-deals"
           >
-            SHOP NOW
-          </BtnA>
+            <BtnA
+              className="bg-background text-heading text-sm font-bold px-4 py-2 shadow-md drop-shadow-lg rounded-md"
+              data-type="shopNow_button_is_clicked"
+              onClick={handleClick}
+            >
+              SHOP NOW
+            </BtnA>
+          </Link>
         </div>
       </div>
       
@@ -137,13 +149,17 @@ export default function MainLayout () {
           >
             "Fresh Styles, Hot Prices! Explore our new clothing collection with exclusive deals you won't want to miss. Upgrade your wardrobe today!"
           </h3>
-          <BtnA
-            className="bg-background text-heading text-sm font-bold px-4 py-2 shadow-md drop-shadow-lg rounded-md"
-            data-type="shopNow_button_is_clicked"
-            onClick={handleClick}
+          <Link
+            href="/shop/category/latest-arrivals"
           >
-            SHOP NOW
-          </BtnA>
+            <BtnA
+              className="bg-background text-heading text-sm font-bold px-4 py-2 shadow-md drop-shadow-lg rounded-md"
+              data-type="shopNow_button_is_clicked"
+              onClick={handleClick}
+            >
+              SHOP NOW
+            </BtnA>
+          </Link>
         </div>
       </div>
     </section>
