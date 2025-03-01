@@ -5,6 +5,9 @@ import { useState } from 'react';
 import BtnA from '@/components/BtnA';
 import EpArrowLeft from '@/components/svgs/EpArrowLeft';
 
+// STORE
+import { useAllProductImagesStore } from '@/stores/index';
+
 // ASSETS
 const ramdanBanner = "/assets/img/ramadan-nights.webp";
 const ramdanBanner2 = "/assets/img/ramadan-nights-2.jpg";
@@ -20,10 +23,25 @@ type Props = {
 
 export default function ProductDisplay ({ className, imagesArray = [], ...props }: Props) {
   
+  const setToggle = useAllProductImagesStore(state => state.setToggle);
+  const setImages = useAllProductImagesStore(state => state.setImages);
   const [ selectedIndex, setSelectedIndex ] = useState<number>(0);
   const leftArrowInactive = false;
   const totalLenght = imagesArray.length;
   const sliceArrayInto5 = (array: any[]) => array.slice(0, 5); 
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const { type } = e.currentTarget.dataset;
+
+    switch (type) {
+      case 'see_all_images_button_is_clicked':
+        setToggle(true);
+        setImages(imagesArray)
+        break;
+      default:
+        console.error('Unknown type: ', type);
+    }
+  }
 
   // DEBUG & UI
   // imagesArray = [outfit2];
@@ -365,15 +383,16 @@ export default function ProductDisplay ({ className, imagesArray = [], ...props 
             src={imagesArray[5]}
           />
         </div> 
-        : <div
+        : <button
             className={`
               relative order-7 aspect-[1/1] object-center object-cover
               border-solid border-[2px] overflow-hidden
               border-body-extra-light hover:border-primary
               cursor-pointer rounded-lg overflow-hidden
               transition-all duration-300 ease-in-out
-
-            `}    
+            `}
+            data-type="see_all_images_button_is_clicked"
+            onClick={handleClick}
           >
             <img 
               className={`
@@ -381,7 +400,6 @@ export default function ProductDisplay ({ className, imagesArray = [], ...props 
               `}
               alt="Photo"
               src={imagesArray[5]}
-              onClick={() => setSelectedIndex(5)}
             />
             <div
               className="
@@ -391,13 +409,13 @@ export default function ProductDisplay ({ className, imagesArray = [], ...props 
               "
             >
               <span>
-                +3 more
+                +{totalLenght - 6} more
               </span>
               <span className="font-bold underline">
                 SEE ALL
               </span>
             </div>  
-          </div>
+          </button>
       }
     </section>
   )

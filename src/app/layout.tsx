@@ -13,6 +13,7 @@ import Cart from '@/components/fixedLayouts/Cart';
 import Navbar from '@/components/fixedLayouts/navbar/Index';
 import FilterWindow from '@/components/fixedLayouts/FilterWindow';
 import AlertMessage from '@/components/fixedLayouts/AlertMessage';
+import AllProductImages from '@/components/fixedLayouts/AllProductImages';
 import BottomBorder from '@/components/svgs/BottomBorder';
 
 // STORES
@@ -61,6 +62,7 @@ export default function RootLayout({
           <Navbar />
           <FilterWindow />          
           <AlertMessage />
+          <AllProductImages />
         </FixedLayouts>
       </body>
     </html>

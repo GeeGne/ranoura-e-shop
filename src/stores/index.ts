@@ -49,6 +49,22 @@ const useFilterWindowStore = create<FilterWindowProps>(
   })
 );
 
+type AllProductImages = {
+  toggle: boolean;
+  setToggle: (value: boolean) => void;
+  images: string[];
+  setImages: (value: string[]) => void;
+};
+
+const useAllProductImagesStore = create<AllProductImages>(
+  (set) => ({
+    toggle: false,
+    setToggle: (toggle: boolean) => set({ toggle }),
+    images: [],
+    setImages: (images: string[]) => set({ images })
+  })
+);
+
 const useTabNameStore = create(
   (set) => ({
     tabName: 'home',
@@ -128,5 +144,5 @@ export {
   useTabNameStore, useFilterWindowStore,
   useFavouritesStore, useFavouriteConfettiToggle,
   useLayoutRefStore, useAlertMessageStore,
-  useFooterListStore
+  useFooterListStore, useAllProductImagesStore
 };
