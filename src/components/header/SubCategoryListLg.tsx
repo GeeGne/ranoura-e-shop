@@ -1,3 +1,6 @@
+// HOOKS
+import Link from 'next/link';
+
 // STORES
 import { useCartStore, useNavbarStore, useTabNameStore } from '@/stores/index';
 
@@ -16,7 +19,7 @@ export default function SubCategoryListLg () {
   const navbarToggle = useNavbarStore((status:any) => status.toggle);
   const setNavbarToggle = useNavbarStore((status:any) => status.setToggle);
   const selectedCategory = useNavbarStore((status:any) => status.selectedCategory);
-  const getCategoryTitle = () => categories.find(category => category.key === selectedCategory)?.title || 'Unknown';
+  const getCategoryTitle = () => categories.find(category => category.slug === selectedCategory)?.name || 'Unknown';
 
   // DEBUG
   // console.log('selectedCategory', selectedCategory);
@@ -53,28 +56,50 @@ export default function SubCategoryListLg () {
             className="flex flex-col gap-2"
           >
             {subCategories
-              .filter(subCategory => subCategory.categoryKey === selectedCategory)
-              .map((subCategory, i) => 
+              .filter(itm => itm.type === selectedCategory)
+              .map((itm, i) => 
                 <li
                   key={i}
                   className="cursor-pointer"
                 >
-                  <span
-                    className="group relative"
+                  <Link
+                    href={`/shop/category/${itm.type}/${itm.slug}`}
+                    onClick={() => setNavbarToggle(false)}
                   >
-                    {subCategory.name}
-                    <UnderlineStyle 
-                      style={{backgroundColor: 'var(--font-heading-color)'}}
-                    />
-                  </span>
+                    <span
+                      className="group relative text-heading"
+                    >
+                      {itm.name}
+                      <UnderlineStyle 
+                        style={{backgroundColor: 'var(--font-heading-color)'}}
+                      />
+                    </span>
+                  </Link>
                 </li>
               )
             }            
+            <li
+              className="cursor-pointer"
+            >
+              <Link
+                href={`/shop/category/${selectedCategory}`}
+                onClick={() => setNavbarToggle(false)}
+              >
+                <span
+                  className="group relative text-content"
+                >
+                  SEE ALL
+                  <UnderlineStyle 
+                    style={{backgroundColor: 'var(--content-color)'}}
+                  />
+                </span>
+              </Link>
+            </li>  
           </ul>
         </div>
         <img
           className="flex-[2] w-full aspect-[2/1] rounded-lg cursor-pointer object-contain object-right" 
-          src={categories?.find(itm => selectedCategory === itm.key)?.navbarLgImg || ramdanBanner}
+          src={categories?.find(itm => selectedCategory === itm.slug)?.navbarLgImg || ramdanBanner}
           alt="Image"
         />
       </div>

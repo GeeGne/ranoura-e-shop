@@ -1,3 +1,6 @@
+// HOOKS
+import Link from 'next/link';
+
 // COMPONENTS
 import UnderlineStyle from "@/components/UnderlineStyle";
 
@@ -5,16 +8,34 @@ import UnderlineStyle from "@/components/UnderlineStyle";
 import ArrowUp from "@/components/svgs/ArrowUp";
 
 // STORES
-import { useNavbarStore } from '@/stores/index';
+import { useLayoutRefStore, useNavbarStore } from '@/stores/index';
 
 // JSON
+import categories from '@/json/categories.json';
 import subCategories from '@/json/subCategories.json';
 
 export default function SubCategoryList () {
 
+  const layoutRef = useLayoutRefStore((state: any) => state.layoutRef);
+  const setToggle = useNavbarStore(state => state.setToggle);
   const categoryToggle = useNavbarStore(state => state.categoryToggle);
   const setCategoryToggle = useNavbarStore(state => state.setCategoryToggle);
   const selectedCategory = useNavbarStore(state => state.selectedCategory);
+
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    const { type } = e.currentTarget.dataset;
+
+    switch (type) {
+      case 'navigate_to_category':
+        setToggle(false);
+        setTimeout(() => 
+          layoutRef.scrollTo({top: 0, behavior: "instant"})
+        ,200);
+        break;
+      default:
+        console.error('Unknown type: ', type);
+    }
+  }
 
   // DEBUG
   // console.log('selectedCategory: ', selectedCategory);
@@ -38,29 +59,53 @@ export default function SubCategoryList () {
             text-body text-sm
           "
         >
-          CLOTHING
+          {selectedCategory.toUpperCase()}
         </span>
       </div>
       <ul
         className="flex flex-col gap-4"
       >
         {subCategories
-          .filter((category: any) => category.categoryKey === selectedCategory)
-          .map((itm: any, i: number) => 
+          .filter(itm => itm.type === selectedCategory)
+          .map((sub: any, i: number) => 
             <li
               className="text-heading font-bold text-6xl cursor-pointer"
               key={i}
+              data-type="navigate_to_category"
+              onClick={handleClick}
+            >
+              <Link
+                href={`/shop/category/${selectedCategory}/${sub.slug}`}
+              >
+                <span
+                  className="group relative"
+                >
+                  {sub.name.toUpperCase()}
+                  <UnderlineStyle 
+                    style={{backgroundColor: 'var(--font-heading-color)'}}
+                  />
+                </span>
+              </Link>
+            </li>      
+          )}
+          <li
+            className="text-content font-bold text-6xl cursor-pointer"
+            data-type="navigate_to_category"
+            onClick={handleClick}
+          >
+            <Link
+              href={`/shop/category/${selectedCategory}`}
             >
               <span
                 className="group relative"
               >
-                {itm.name.toUpperCase()}
+                {'SEE ALL'}
                 <UnderlineStyle 
-                  style={{backgroundColor: 'var(--font-heading-color)'}}
+                  style={{backgroundColor: 'var(--content-color)'}}
                 />
               </span>
-            </li>      
-          )}
+            </Link>
+          </li>      
       </ul>
 
     </div>

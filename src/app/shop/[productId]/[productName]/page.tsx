@@ -29,6 +29,7 @@ const outfit2 = "/assets/img/outfit-2.jpg";
 const outfit3 = "/assets/img/outfit-3.jpg";
 
 export default function page () {
+
   const { productId } = useParams();
   const product = products.find(product => product.id === Number(productId));
   // const productName = slugArray[0];
@@ -39,8 +40,8 @@ export default function page () {
       name: "All Clothes",
       href: "/shop"
     },{
-      name: "Jeans",
-      href: "/shop/1/jeans"
+      name: product?.name,
+      href: `/shop/${product?.id}/${product?.slug}`
     } 
   ];
 

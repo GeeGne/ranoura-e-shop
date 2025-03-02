@@ -10,6 +10,7 @@ import LayeredStepsHaikeiMd from "@/components/svgs/layered_shapes/LayeredStepsH
 
 // JSON
 import category from "@/json/category.json";
+import subCategories from "@/json/subCategories.json";
 
 // ASSETS
 const ramdanBanner = "/assets/img/ramadan-nights.webp";
@@ -69,7 +70,7 @@ export default function CategoryPickerV2 () {
           "
         />
 
-        {category.map((itm, i) => 
+        {subCategories.filter(itm => itm.type === 'clothing').map((itm, i) => 
           <li
             key={i}
           >
@@ -79,7 +80,7 @@ export default function CategoryPickerV2 () {
                 hover:scale-[110%]
                 transition-all duraiton-300 ease-out
               `}
-              href={`/shop/category/${itm.name}`}
+              href={`/shop/category/${itm.type}/${itm.slug}`}
               data-type="navigate_to_category"
               onClick={handleClick}
             >
@@ -93,7 +94,7 @@ export default function CategoryPickerV2 () {
               {itm.name.toUpperCase()}
             </h3>
             <img 
-              src={itm.imgURL}
+              src={itm.image}
               alt="image"
               className="
                 w-full h-full object-cover object-center brightness-[95%] group-hover:brightness-[100%] group-hover:contrast-[100%]

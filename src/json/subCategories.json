@@ -1,49 +1,53 @@
 [
   {
-    "name": "Jeans",
-    "key": "jeans",
-    "categoryKey": "clothing"
+    "name": "PANTS",
+    "slug": "pants",
+    "type": "clothing",
+    "image": "/assets/img/cat_pants.jpg"
   },{
-    "name": "Jackets",
-    "key": "jackets",
-    "categoryKey": "clothing"
-  
+    "name": "JACKETS",
+    "slug": "jackets",
+    "type": "clothing",
+    "image": "/assets/img/cat_jackets.jpg"
   },{
-    "name": "Bags",
-    "key": "bags",
-    "categoryKey": "clothing"
-  
+    "name": "DRESSES",
+    "slug": "dresses",
+    "type": "clothing",
+    "image": "/assets/img/cat_dresses.jpg"
   },{
-    "name": "Dresses",
-    "key": "dresses",
-    "categoryKey": "clothing"
-  
+    "name": "SUITS",
+    "slug": "suits",
+    "type": "clothing",
+    "image": "/assets/img/cat_suits.jpg"
   },{
-    "name": "Suits",
-    "key": "suits",
-    "categoryKey": "clothing"
-  
+    "name": "SKIRTS",
+    "slug": "skirts",
+    "type": "clothing",
+    "image": "/assets/img/cat_skirts.jpg"
   },{
-    "name": "Skirts",
-    "key": "skirts",
-    "categoryKey": "clothing"
-  
+    "name": "ROBES",
+    "slug": "robes",
+    "type": "clothing",
+    "image": "/assets/img/cat_robes.jpg"
   },{
-    "name": "Robes",
-    "key": "robes",
-    "categoryKey": "clothing"
-  
+    "name": "WHAT'S NEW",
+    "slug": "what's-new",
+    "type": "new",
+    "image": ""
   },{
-    "name": "What's New?",
-    "key": "what-is-new",
-    "categoryKey": "new"
+    "name": "LATEST ARRIVALS",
+    "slug": "latest-arrivals",
+    "type": "sale",
+    "image": ""
   },{
-    "name": "Latest Arrivals",
-    "key": "latest-arrivals",
-    "categoryKey": "sale"
+    "name": "HOT DEALS",
+    "slug": "hot-deals",
+    "type": "sale",
+    "image": ""
   },{
-    "name": "Ramadan Nights",
-    "key": "ramadan-nights",
-    "categoryKey": "event"
+    "name": "RAMADAN NIGHTS",
+    "slug": "ramadan-nights",
+    "type": "event",
+    "image": ""
   }
 ]

@@ -2,8 +2,10 @@
   {
     "id": 1,
     "name": "Long Sweater",
+    "slug": "long-sweater",
     "description": "A luxurious velvet top with a wrap front.",
-    "category": "Sweaters",
+    "type": "dresses",
+    "categories": ["Sweaters"],
     "sizes": ["S", "2XL"],
     "colors": ["green", "orchid", "black", "salmon", "maroon"],
     "images": [
@@ -78,8 +80,10 @@
   },{
     "id": 2,
     "name": "Winter Long Sweater",
+    "slug": "winter-long-sweater",
     "description": "A luxurious velvet top with a wrap front.",
-    "category": "Sweaters",
+    "type": "dresses",
+    "categories": ["Sweaters"],
     "sizes": ["S", "M", "L"],
     "colors": ["blue", "salmon", "pink", "maroon"],
     "images": [
@@ -150,8 +154,10 @@
   },{
     "id": 3,
     "name": "Winter Long Sweater",
+    "slug": "winter-long-sweater",
     "description": "A luxurious velvet top with a wrap front.",
-    "category": "Sweaters",
+    "type": "t-shirts",
+    "categories": ["Sweaters"],
     "sizes": ["M", "L"],
     "colors": ["white", "black"],
     "images": [
@@ -214,8 +220,10 @@
   },{
     "id": 4,
     "name": "Long Sweater",
+    "slug": "long-sweater",
     "description": "A luxurious velvet top with a wrap front.",
-    "category": "Sweaters",
+    "type": "dresses",
+    "categories": ["Sweaters"],
     "sizes": ["S", "XL"],
     "colors": ["green", "orchid", "black", "salmon", "maroon"],
     "images": [
@@ -290,8 +298,10 @@
   },{
     "id": 5,
     "name": "Winter Long Sweater",
+    "slug": "winter-long-sweater",
     "description": "A luxurious velvet top with a wrap front.",
-    "category": "Sweaters",
+    "type": "dresses",
+    "categories": ["Sweaters"],
     "sizes": ["M", "2XL"],
     "colors": ["blue", "salmon", "pink", "maroon"],
     "images": [
@@ -362,8 +372,10 @@
   },{
     "id": 6,
     "name": "Winter Long Sweater",
+    "slug": "winter-long-sweater",
     "description": "A luxurious velvet top with a wrap front.",
-    "category": "Sweaters",
+    "type": "t-shirts",
+    "categories": ["Sweaters"],
     "sizes": ["XS", "2XL"],
     "colors": ["white", "black"],
     "images": [

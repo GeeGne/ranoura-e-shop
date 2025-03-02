@@ -44,7 +44,7 @@ export default function CategoryList () {
           role="button"
           key={i}
           data-type="category_button_is_clicked"
-          data-key={itm.key}
+          data-key={itm.type}
           onClick={handleClick}
         >
           <img
@@ -75,7 +75,7 @@ export default function CategoryList () {
                 transition-all ease-in-out duration-400
               "
             >
-              {itm.title.toUpperCase()}
+              {itm.name.toUpperCase()}
               <div
                 className="
                   absolute top-[100%] left-0 translate-y-[-50%]

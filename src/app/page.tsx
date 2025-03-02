@@ -33,18 +33,25 @@ export default function Home() {
       <ImageSlider />
       <AdvertTile 
         title="HOT DEALS" 
-        name="hot-deals"
+        category="hot-deals"
+        type="sale"
+        slug="hot-deals"
       />
       <CategoryPickerV2 />
       <MainLayout />
       <AdvertTile 
-        title="WHATS NEW?" 
-        name="whats-new"
+        title="WHAT'S NEW?" 
+        category="what's-new"
+        type="new"
+        slug="what's-new"
       />
       <AdvertTile 
-        title="COLLECTION" 
-        name="collection"
+        title="LATEST ARRIVALS" 
+        category="latest-arriavls"
+        type="sale"
+        slug="latest-arrivals"
       />
     </div>
   );
 }
+

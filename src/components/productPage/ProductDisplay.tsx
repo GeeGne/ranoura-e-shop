@@ -409,7 +409,7 @@ export default function ProductDisplay ({ className, imagesArray = [], ...props 
               "
             >
               <span>
-                +{totalLenght - 6} more
+                +{totalLenght - 5} more
               </span>
               <span className="font-bold underline">
                 SEE ALL

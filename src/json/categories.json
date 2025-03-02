@@ -1,30 +1,78 @@
 [
   {
     "id": 0,
-    "title": "Clothing",
-    "key": "clothing",
+    "name": "Clothing",
     "type": "clothing",
+    "slug": "clothing",
+    "subCategories": [
+      {
+        "name": "PANTS",
+        "slug": "pants",
+        "type": "clothing"
+      },{
+        "name": "JACKETS",
+        "slug": "jackets",
+        "type": "clothing"
+      },{
+        "name": "DRESSES",
+        "slug": "dresses",
+        "type": "clothing"
+      },{
+        "name": "SUITS",
+        "slug": "suits",
+        "type": "clothing"
+      },{
+        "name": "SKIRTS",
+        "slug": "skirts",
+        "type": "clothing"
+      },{
+        "name": "ROBES",
+        "slug": "robes",
+        "type": "clothing"
+      }
+    ],
     "navbarImg": "/assets/img/background(3).jpg",
     "navbarLgImg":"/assets/img/background(9).webp"
   },{
     "id": 1,
-    "title": "New",
-    "key": "new",
+    "name": "New",
     "type": "new",
+    "slug": "new",
+    "subCategories": [
+      {
+        "name": "WHAT'S NEW",
+        "slug": "what's-new",
+        "type": "new"
+      }
+    ],
     "navbarImg": "/assets/img/background(4).webp",
     "navbarLgImg":"/assets/img/background(10).webp"
   },{
     "id": 2,
-    "title": "Sale",
-    "key": "sale",
+    "name": "Sale",
     "type": "sale",
+    "slug": "sale",
+    "subCategories": [
+      {
+        "name": "LATEST ARRIVALS",
+        "slug": "latest-arrivals",
+        "type": "sale"
+      }
+    ],
     "navbarImg": "/assets/img/background(5).webp",
     "navbarLgImg":"/assets/img/background(7).webp"
   },{
     "id": 3,
-    "title": "Flash Events",
-    "key": "event",
+    "name": "Flash Events",
     "type": "event",
+    "slug": "event",
+    "subCategories": [
+      {
+        "name": "RAMADAN NIGHTS",
+        "slug": "ramadan-nights",
+        "type": "event"
+      }
+    ],
     "navbarImg": "/assets/img/background(6).jpg",
     "navbarLgImg":"/assets/img/background(9).webp"
   }

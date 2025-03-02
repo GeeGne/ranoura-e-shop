@@ -1,5 +1,6 @@
 // HOOKS
 import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 
 // COMPONENTS
 
@@ -19,13 +20,15 @@ export default function CategoryListLg ({ isWindowScrolled, tabName }: Props) {
   const navbarToggle = useNavbarStore((status:any) => status.toggle);
   const setNavbarToggle = useNavbarStore((status:any) => status.setToggle);
   const setSelectedCategory = useNavbarStore((status:any) => status.setSelectedCategory);
+  const selectedCategory = useNavbarStore((status:any) => status.selectedCategory);
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
     const { type, categoryKey } = e.currentTarget.dataset;
 
     switch (type) {
       case 'category_button_is_clicked':
-        setNavbarToggle(true);
+        setNavbarToggle(false);
         setSelectedCategory(categoryKey);
         break;
       default:
@@ -52,7 +55,8 @@ export default function CategoryListLg ({ isWindowScrolled, tabName }: Props) {
       onClick={handleClick}
     >
       {categories.map((category, i) => 
-        <span
+        <Link
+          href={`/shop/category/${selectedCategory}`}
           className={`
             text-lg cursor-pointer z-[25] hover:underline hover:font-bold
             transition-all ease-in-out duration-200
@@ -66,14 +70,14 @@ export default function CategoryListLg ({ isWindowScrolled, tabName }: Props) {
             }
           `}
           data-type="category_button_is_clicked"
-          data-category-key={category.key}
+          data-category-key={category.slug}
           onClick={handleClick}
-          onMouseEnter={() => {setNavbarToggle(true); setSelectedCategory(category.key)}}
+          onMouseEnter={() => {setNavbarToggle(true); setSelectedCategory(category.slug)}}
           onMouseLeave={() => setNavbarToggle(false)}
           key={i}
         >
-          {category.title}
-        </span>  
+          {category.name}
+        </Link>  
       )}
     </ul>
 

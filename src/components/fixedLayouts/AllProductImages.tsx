@@ -118,9 +118,9 @@ export default function AllProductImages () {
               </li>
             )}
           </ul>
-            <hr className="border-inbetween" />
+          <hr className="border-inbetween" />
           <ul
-            className="flex flex-col gap-4"
+            className="flex flex-col gap-4 pb-4"
           >
             {imagesArray.map((url, i) =>
               <li
@@ -141,6 +141,7 @@ export default function AllProductImages () {
       <button
         className={`
           fixed bottom-8 right-8 bg-primary rounded-full z-[2005]
+          scale-[100%] hover:scale-[105%]
           transition-all duration-300 ease-in-out
           ${toggle ? 'visible opacity-100' : 'invisible opacity-0'}
         `}

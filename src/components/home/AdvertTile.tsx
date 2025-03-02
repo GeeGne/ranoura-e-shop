@@ -42,10 +42,12 @@ import Confetti from "react-canvas-confetti/dist/presets/explosion";
 
 type Props = {
   title?: string;
-  name?: string;
+  category?: string;
+  type?: string;
+  slug?: string;
 }
 
-export default function AdvertTile ({ title = 'COLLECTION', name = 'collection' }: Props) {
+export default function AdvertTile ({ title = 'COLLECTION', category = 'collection', type = "collection", slug = 'collection' }: Props) {
   
   const router = useRouter();
   const array = [1, 2, 3, 4];
@@ -74,9 +76,7 @@ export default function AdvertTile ({ title = 'COLLECTION', name = 'collection' 
   const mainImgRefs = useRef<(HTMLElement | null)[]>([]);
   const secondImgRefs = useRef<(HTMLElement | null)[]>([]);
 
-  const getImgUrls = (imgArray: any) => {
-    return imgArray.find((itm: any) => itm.color === selectedColor);
-  }
+  const getImgUrls = (imgArray: any) => imgArray.find((itm: any) => itm.color === selectedColor);
 
   const displayPrideConfetti = () => {
     setTimeout(() => {
@@ -199,7 +199,7 @@ export default function AdvertTile ({ title = 'COLLECTION', name = 'collection' 
       >
         <Link
           className="relative flex items-center text-3xl text-heading font-bold transform"
-          href={`/shop/category/${name}`}
+          href={`/shop/category/${type}/${slug}`}
           data-type="navigate_to_category"
           onClick={handleClick}
         >
@@ -212,7 +212,7 @@ export default function AdvertTile ({ title = 'COLLECTION', name = 'collection' 
         </Link>
         <div className="flex items-center gap-4">
           <Link
-            href={`/shop/category/${name}`}
+            href={`/shop/category/${type}/${slug}`}
             data-type="navigate_to_category"
             onClick={handleClick}
           >
