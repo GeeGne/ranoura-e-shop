@@ -133,6 +133,20 @@
   }
 }
 
+@keyframes brightness-filter {
+  0%, 40% {
+    filter: brightness(250%);
+  }
+
+  60% {
+    filter: brightness(150%);
+  }
+
+  80%, 100% {
+    filter: brightness(250%);
+  }
+}
+
 .--infinite-card-slide-ani {
   animation-name: infinite-card-slide-ani;
   animation-duration: 10s;
@@ -195,6 +209,14 @@
 .--alert-timer-tape-ani {
   animation-name: alert-timer-tape-ani;
   animation-duration: 10s;
+  animation-fill-mode: linear;
+  animation-fill-mode: both;
+}
+
+.--brightness-filter {
+  animation-name: brightness-filter;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
   animation-fill-mode: linear;
   animation-fill-mode: both;
 }

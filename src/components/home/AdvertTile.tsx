@@ -13,6 +13,9 @@ import BtnA from '@/components/BtnA';
 import EpArrowLeft from '@/components/svgs/EpArrowLeft';
 import LineMdHeart from '@/components/svgs/LineMdHeart';
 import LineMdHeartFilled from '@/components/svgs/LineMdHeartFilled';
+import SquareLines from '@/components/svgs/SquareLines';
+import CircleLines from '@/components/svgs/CircleLines';
+import FlowerLines from '@/components/svgs/FlowerLines';
 import FoundationBurstSale from '@/components/svgs/FoundationBurstSale';
 import PepiconsPencilOpenCircleFilled from '@/components/svgs/PepiconsPencilOpenCircleFilled';
 import LineMdArrowsDiagonalRotated from '@/components/svgs/LineMdArrowsDiagonalRotated';
@@ -309,16 +312,51 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
                   ref={ (el: any) => { if (secondImgRefs.current) {secondImgRefs.current[i] = el}} }
                 />
                 <div
-                  className="absolute top-0 left-0 flex flex-col z-[10]"
+                  className="absolute top-0 left-0 flex flex-col gap-4 p-2 z-[10] drop-shadow-md"
                 >
-                  <FoundationBurstSale 
-                    className="w-12 h-12"
-                  />
-                  <New 
+                  <div
                     className="
-                      relative w-[3.2rem] h-[3.6rem] p-[6px]
+                      relative drop-shadow-md 
                     "
-                  />
+                  >
+                    <SquareLines 
+                      className="
+                        --brightness-filter w-10 md:w-12 h-10 md:h-12 drop-shadow-md contrast-[150%]  
+                      "
+                    />
+                    <span 
+                      className="
+                        absolute top-1/2 left-[50%]
+                        translate-x-[-50%] translate-y-[-50%]
+                        text-xs md:text-sm font-bold text-heading-invert bg-primary bg-clip-text outlined-text drop-shadow-mg
+                      "
+                    >
+                      NEW
+                    </span>
+                  </div>
+                  {!!product.discount_percent &&
+                    <div
+                      className="
+                        relative drop-shadow-md 
+                      "
+                    >
+                      <FlowerLines 
+                        className="
+                          --rotate-ani duration--10s w-10 md:w-12 h-10 md:h-12 drop-shadow-md contrast-[150%] brightness-[120%]  
+                        "
+                      />
+                      <span 
+                        className="
+                          absolute top-1/2 left-[50%]
+                          translate-x-[-50%] translate-y-[-50%]
+                          text-xs md:text-sm font-bold text-heading-invert bg-primary bg-clip-text outlined-text 
+                          drop-shadow-mg
+                        "
+                      >
+                        SALE
+                      </span>
+                    </div>
+                  }
                 </div>
                 <div
                   className={`

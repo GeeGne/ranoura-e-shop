@@ -19,6 +19,9 @@ import MaterialSymbolsPinchZoomInRounded from '@/components/svgs/MaterialSymbols
 import LineMdArrowsDiagonalRotated from '@/components/svgs/LineMdArrowsDiagonalRotated';
 import FoundationBurstSale from '@/components/svgs/FoundationBurstSale';
 import New from '@/components/svgs/New';
+import SquareLines from '@/components/svgs/SquareLines';
+import CircleLines from '@/components/svgs/CircleLines';
+import FlowerLines from '@/components/svgs/FlowerLines';
 
 // ASSETS
 const ramdanBanner = "/assets/img/ramadan-nights.webp";
@@ -222,14 +225,51 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
                 ref={ (el: any) => { if (secondImgRefs.current) {secondImgRefs.current[i] = el}} }
               />
               <div
-                className="absolute top-0 left-0 flex flex-col z-[10]"
+                className="absolute top-0 left-0 flex flex-col gap-4 p-2 z-[10] drop-shadow-md"
               >
-                <FoundationBurstSale 
-                  className="w-14 h-14"
-                />
-                <New 
-                  className="w-[3.6rem] h-[3.6rem] p-[6px]"
-                />
+                <div
+                  className="
+                    relative drop-shadow-md 
+                  "
+                >
+                  <SquareLines 
+                    className="
+                      --brightness-filter w-10 md:w-12 h-10 md:h-12 drop-shadow-md contrast-[150%]  
+                    "
+                  />
+                  <span 
+                    className="
+                      absolute top-1/2 left-[50%]
+                      translate-x-[-50%] translate-y-[-50%]
+                      text-xs md:text-sm font-bold text-heading-invert bg-primary bg-clip-text outlined-text drop-shadow-mg
+                    "
+                  >
+                    NEW
+                  </span>
+                </div>
+                {!!product.discount_percent &&
+                  <div
+                    className="
+                      relative drop-shadow-md 
+                    "
+                  >
+                    <FlowerLines 
+                      className="
+                        --rotate-ani duration--10s w-10 md:w-12 h-10 md:h-12 drop-shadow-md contrast-[150%] brightness-[120%]  
+                      "
+                    />
+                    <span 
+                      className="
+                        absolute top-1/2 left-[50%]
+                        translate-x-[-50%] translate-y-[-50%]
+                        text-xs md:text-sm font-bold text-heading-invert bg-primary bg-clip-text outlined-text 
+                        drop-shadow-mg
+                      "
+                    >
+                      SALE
+                    </span>
+                  </div>
+                }
               </div>
               <div
                 className={`
