@@ -227,26 +227,28 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
               <div
                 className="absolute top-0 left-0 flex flex-col gap-4 p-2 z-[10] drop-shadow-md"
               >
-                <div
-                  className="
-                    relative drop-shadow-md 
-                  "
-                >
-                  <SquareLines 
+                {product.forced_new &&
+                  <div
                     className="
-                      --brightness-filter w-10 md:w-12 h-10 md:h-12 drop-shadow-md contrast-[150%]  
-                    "
-                  />
-                  <span 
-                    className="
-                      absolute top-1/2 left-[50%]
-                      translate-x-[-50%] translate-y-[-50%]
-                      text-xs md:text-sm font-bold text-heading-invert bg-primary bg-clip-text outlined-text drop-shadow-mg
+                      relative drop-shadow-md 
                     "
                   >
-                    NEW
-                  </span>
-                </div>
+                    <SquareLines 
+                      className="
+                        --brightness-filter w-10 md:w-12 h-10 md:h-12 drop-shadow-md contrast-[150%]  
+                      "
+                    />
+                    <span 
+                      className="
+                        absolute top-1/2 left-[50%]
+                        translate-x-[-50%] translate-y-[-50%]
+                        text-xs md:text-sm font-bold text-heading-invert bg-primary bg-clip-text outlined-text drop-shadow-mg
+                      "
+                    >
+                      NEW
+                    </span>
+                  </div>  
+                }           
                 {!!product.discount_percent &&
                   <div
                     className="

@@ -6,6 +6,7 @@
     "description": "A luxurious velvet top with a wrap front.",
     "type": "dresses",
     "categories": ["Sweaters"],
+    "forced_new": true,
     "sizes": ["S", "2XL"],
     "colors": ["green", "orchid", "black", "salmon", "maroon"],
     "images": [
@@ -84,6 +85,7 @@
     "description": "A luxurious velvet top with a wrap front.",
     "type": "dresses",
     "categories": ["Sweaters"],
+    "forced_new": false,
     "sizes": ["S", "M", "L"],
     "colors": ["blue", "salmon", "pink", "maroon"],
     "images": [
@@ -158,6 +160,7 @@
     "description": "A luxurious velvet top with a wrap front.",
     "type": "t-shirts",
     "categories": ["Sweaters"],
+    "forced_new": true,
     "sizes": ["M", "L"],
     "colors": ["white", "black"],
     "images": [
@@ -224,6 +227,7 @@
     "description": "A luxurious velvet top with a wrap front.",
     "type": "dresses",
     "categories": ["Sweaters"],
+    "forced_new": true,
     "sizes": ["S", "XL"],
     "colors": ["green", "orchid", "black", "salmon", "maroon"],
     "images": [
@@ -256,7 +260,7 @@
       "L": { "emerald": 4, "black": 2 }
     },
     "price": 2000,
-    "discount_percent": 30,
+    "discount_percent": 0,
     "lists": [
       {
         "title": "PRODUCT DETAILS",
@@ -302,6 +306,7 @@
     "description": "A luxurious velvet top with a wrap front.",
     "type": "dresses",
     "categories": ["Sweaters"],
+    "forced_new": true,
     "sizes": ["M", "2XL"],
     "colors": ["blue", "salmon", "pink", "maroon"],
     "images": [
@@ -376,6 +381,7 @@
     "description": "A luxurious velvet top with a wrap front.",
     "type": "t-shirts",
     "categories": ["Sweaters"],
+    "forced_new": false,
     "sizes": ["XS", "2XL"],
     "colors": ["white", "black"],
     "images": [
