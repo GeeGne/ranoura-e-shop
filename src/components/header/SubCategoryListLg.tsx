@@ -2,7 +2,7 @@
 import Link from 'next/link';
 
 // STORES
-import { useCartStore, useNavbarStore, useTabNameStore } from '@/stores/index';
+import { useCartStore, useNavbarStore, useTabNameStore, useLayoutRefStore } from '@/stores/index';
 
 // COMPONENTS
 import UnderlineStyle from '@/components/UnderlineStyle';
@@ -16,10 +16,25 @@ import subCategories from '@/json/subCategories.json';
 
 export default function SubCategoryListLg () {
 
+  const layoutRef = useLayoutRefStore((state: any) => state.layoutRef);
   const navbarToggle = useNavbarStore((status:any) => status.toggle);
   const setNavbarToggle = useNavbarStore((status:any) => status.setToggle);
   const selectedCategory = useNavbarStore((status:any) => status.selectedCategory);
   const getCategoryTitle = () => categories.find(category => category.slug === selectedCategory)?.name || 'Unknown';
+
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    const { type } = e.currentTarget.dataset;
+
+    switch (type) {
+      case "navigate_to_category":
+        setNavbarToggle(false);
+        setTimeout(() => 
+          layoutRef.scrollTo({top: 0, behavior: "instant"})
+        , 200);
+        break;
+      console.error("Unkown Type:", type);
+    }
+  };
 
   // DEBUG
   // console.log('selectedCategory', selectedCategory);
@@ -64,7 +79,8 @@ export default function SubCategoryListLg () {
                 >
                   <Link
                     href={`/shop/category/${itm.type}/${itm.slug}`}
-                    onClick={() => setNavbarToggle(false)}
+                    data-type="navigate_to_category"
+                    onClick={handleClick}
                   >
                     <span
                       className="group relative text-heading"
@@ -83,7 +99,8 @@ export default function SubCategoryListLg () {
             >
               <Link
                 href={`/shop/category/${selectedCategory}`}
-                onClick={() => setNavbarToggle(false)}
+                data-type="navigate_to_category"
+                onClick={handleClick}
               >
                 <span
                   className="group relative text-content"

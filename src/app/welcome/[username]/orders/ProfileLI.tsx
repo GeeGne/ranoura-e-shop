@@ -3,13 +3,13 @@ import LineMdTextBoxToTextBoxMultipleTransition from '@/components/svgs/LineMdTe
 import LineMdMapMarkerLoop from '@/components/svgs/LineMdMapMarkerLoop';
 
 type Props = {
-  title?: string;
+  category?: string;
   user?: any[];
 } & React.ComponentPropsWithRef<"li">;
 
-export default function ProfileLI ({ title, user, ...props }: Props) {
+export default function ProfileLI ({ category, user, ...props }: Props) {
 
-  const categoryUnitsArray = user?.filter((itm: any) => itm.category === title);
+  const categoryUnitsArray = user?.filter((itm: any) => itm.category === category);
   
   return (
     <li
@@ -17,12 +17,12 @@ export default function ProfileLI ({ title, user, ...props }: Props) {
       { ...props }
     >
       <div className="flex items-center gap-2">
-        {title === 'personal' &&
+        {category === 'personal' &&
           <LineMdTextBoxToTextBoxMultipleTransition 
             className="text-heading"
           />
         }
-        {title === 'location' &&
+        {category === 'location' &&
           <LineMdMapMarkerLoop 
             className="text-heading"
           />
@@ -30,7 +30,7 @@ export default function ProfileLI ({ title, user, ...props }: Props) {
         <h3
           className="text-lg text-heading font-bold"
         >
-          {title?.toUpperCase() || 'LOADING'}
+          {category?.toUpperCase() || 'LOADING'}
         </h3>
       </div>
       <ul
@@ -41,7 +41,7 @@ export default function ProfileLI ({ title, user, ...props }: Props) {
             className="flex flex-col"
             key={i}
           >
-            <span className="text-md text-body font-bold">{itm.title}</span>
+            <span className="text-md text-body font-bold">{itm.name}</span>
             <span className="text-md text-heading">{itm.info}</span>
           </li>
         )}

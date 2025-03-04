@@ -1,48 +1,48 @@
 [
   {
-    "title": "First Name",
+    "name": "First Name",
     "info": "Ahmed",
-    "key": "firstName",
+    "type": "firstName",
     "category": "personal"
   },{
-    "title": "Last Name",
+    "name": "Last Name",
     "info": "El Ghabra",
-    "key": "lastName",
+    "type": "lastName",
     "category": "personal"
   },{
-    "title": "Email",
+    "name": "Email",
     "info": "bluewhalexweb@outlook.com",
-    "key": "email",
+    "type": "email",
     "category": "personal"
   },{
-    "title": "Date of Birth",
+    "name": "Date of Birth",
     "info": "1997 / 2 / 27",
-    "key": "birth",
+    "type": "birth",
     "category": "personal"
   },{
-    "title": "Gender",
+    "name": "Gender",
     "info": "Male",
-    "key": "gender",
+    "type": "gender",
     "category": "personal"
   },{
-    "title": "Adress Details",
+    "name": "Adress Details",
     "info": "Walmart's 20th street Near Alfredo Resturant, 3rd building 25th Apartmant",
-    "key": "addressDetails",
+    "type": "addressDetails",
     "category": "location"
   },{
-    "title": "Second Address",
+    "name": "Second Address",
     "info": "20th Street, Infront of Dailbo Resturant, 20th building, 10th Apartmant",
-    "key": "secondAddress",
+    "type": "secondAddress",
     "category": "location"
   },{
-    "title": "Notes",
+    "name": "Notes",
     "info": "I'm available between 5:00PM and 7:00PM",
-    "key": "notes",
+    "type": "notes",
     "category": "location"
   },{
-    "title": "Phone Number",
+    "name": "Phone Number",
     "info": "+963039562",
-    "key": "phoneNumber",
+    "type": "phoneNumber",
     "category": "location"
   }
 ]

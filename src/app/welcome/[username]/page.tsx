@@ -33,10 +33,10 @@ export default function page () {
     <ul
       className="flex flex-col gap-4 w-full p-4 mt-[-1rem] max-w-[1400px] lg:mx-auto bg-[var(--background-light-color)]"
     > 
-      {categoryArray.map((itm, i) => 
+      {categoryArray.map((category, i) => 
         <ProfileLI 
           key={i}
-          title={itm}
+          category={category}
           user={user}
         />
       )}
