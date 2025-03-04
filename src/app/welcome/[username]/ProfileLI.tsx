@@ -36,13 +36,13 @@ export default function ProfileLI ({ category, user, ...props }: Props) {
       <ul
         className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full"
       >
-        {categoryUnitsArray?.map((itm: any, i) => 
+        {categoryUnitsArray?.map((category: any, i) => 
           <li
             className="flex flex-col"
             key={i}
           >
-            <span className="text-md text-body font-bold">{itm.name}</span>
-            <span className="text-md text-heading">{itm.info}</span>
+            <span className="text-md text-body font-bold">{category.name}</span>
+            <span className="text-md text-heading">{category.info}</span>
           </li>
         )}
       </ul>

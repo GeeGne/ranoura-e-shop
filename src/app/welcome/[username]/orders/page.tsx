@@ -4,19 +4,19 @@
 import { useEffect } from 'react';
 
 // COMPONENTS
-import ProfileLI from '@/app/welcome/[username]/orders/ProfileLI';
+import OrdersLi from '@/app/welcome/[username]/orders/OrdersLi';
 import LineMdTextBoxToTextBoxMultipleTransition from '@/components/svgs/LineMdTextBoxToTextBoxMultipleTransition';
 
 // STORES
 import { useTabNameStore } from '@/stores/index';
 
 // JSON
-import user from '@/json/user.json';
+import orders from '@/json/orders.json';
 
 export default function page () {
   
   const setTabName = useTabNameStore((state: any) => state.setTabName);
-  const categoryArray = [ ...new Set(user.map(itm => itm.category))];
+  // const categoryArray = [ ...new Set(user.map(itm => itm.category))];
   
   useEffect(() => {
     setTabName('userOrders');
@@ -33,11 +33,10 @@ export default function page () {
     <ul
       className="flex flex-col gap-4 w-full p-4 mt-[-1rem] max-w-[1400px] lg:mx-auto bg-[var(--background-light-color)]"
     > 
-      {categoryArray.map((itm, i) => 
-        <ProfileLI 
+      {orders.map((order, i) => 
+        <OrdersLi 
           key={i}
-          title={itm}
-          user={user}
+          order={order}
         />
       )}
     </ul>

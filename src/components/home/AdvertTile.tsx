@@ -102,7 +102,6 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
     if (getEL(secondImgRefs.current))
       getEL(secondImgRefs.current).src = getProduct()?.images.find(itm => itm.color === color)?.second;
   }
-
   const handleClick = (e: React.MouseEvent<HTMLElement | any>) => {
     e.stopPropagation();
   
@@ -119,7 +118,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
       case 'navigate_to_product':
         setTimeout(() => 
           layoutRef.scrollTo({top: 0, behavior: "instant"})
-        ,200);
+        , 200);
         break;
       case 'product_img_wrapper_is_clicked':
         setImgScaleToggle(val => val === Number(index) ? false : Number(index));
