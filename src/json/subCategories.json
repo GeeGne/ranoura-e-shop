@@ -30,6 +30,36 @@
     "type": "clothing",
     "image": "/assets/img/cat_robes.jpg"
   },{
+    "name": "T-SHIRTS",
+    "slug": "t-shirts",
+    "type": "clothing",
+    "image": "/assets/img/cloth-18-sapphire.jpg"
+  },{
+    "name": "HOODIES",
+    "slug": "hoodies",
+    "type": "clothing",
+    "image": "/assets/img/cloth-9-white.jpg"
+  },{
+    "name": "OUTFIT PAIRS",
+    "slug": "outfit-pairs",
+    "type": "clothing",
+    "image": "/assets/img/cloth-12-green.jpg"
+  },{
+    "name": "MATCHING SETS",
+    "slug": "matching-sets",
+    "type": "clothing",
+    "image": "/assets/img/cloth-14-brown.jpg"
+  },{
+    "name": "SHIRTS",
+    "slug": "shirts",
+    "type": "clothing",
+    "image": "/assets/img/cloth-7-sky.jpg"
+  },{
+    "name": "PANTS",
+    "slug": "pants",
+    "type": "clothing",
+    "image": "/assets/img/cloth-11-sky.jpg"
+  },{
     "name": "WHAT'S NEW",
     "slug": "what's-new",
     "type": "new",

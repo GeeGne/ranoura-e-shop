@@ -1,35 +1,35 @@
 [
   {
     "id": 1,
-    "name": "Long Sweater",
-    "slug": "long-sweater",
-    "description": "A luxurious velvet top with a wrap front.",
-    "type": "dresses",
-    "categories": ["Sweaters"],
+    "name": "Serenity Set",
+    "slug": "serenity-set",
+    "description": "Elegant Ruched Top and Wide-Leg Pants Ensemble",
+    "type": "outfit-pairs",
+    "categories": ["clothing", "outfit-pairs", "pants", "t-shirts"],
     "forced_new": true,
     "sizes": ["S", "2XL"],
-    "colors": ["green", "orchid", "black", "salmon", "maroon"],
+    "colors": ["Green", "Pink", "Black", "Plum", "Coral"],
     "images": [
       {
         "main": "/assets/img/cloth-a-green.jpg",
         "second": "/assets/img/cloth-a-green-view-b.jpg",
-        "color": "green"
+        "color": "Green"
       },{
         "main": "/assets/img/cloth-a-orange.jpg",
         "second": "/assets/img/cloth-a-orange-view-b.jpg",
-        "color": "salmon"
+        "color": "Coral"
       },{
         "main": "/assets/img/cloth-a-pink.jpg",
         "second": "/assets/img/cloth-a-pink-view-b.jpg",
-        "color": "orchid"
+        "color": "Pink"
       },{
         "main": "/assets/img/cloth-a-red.jpg",
         "second": "/assets/img/cloth-a-red-view-b.jpg",
-        "color": "maroon"
+        "color": "Plum"
       },{
         "main": "/assets/img/cloth-a-black.jpg",
         "second": "/assets/img/cloth-a-black-view-b.jpg",
-        "color": "black"
+        "color": "Black"
       }
     ],
     "stock": {
@@ -55,10 +55,10 @@
         "title": "SIZE INFO",
         "descriptionLists": [
           "True to size.",
-          "XXS: 0",
-          "XS: 0-2",
-          "MD: 2-4",
-          "LG: 4-6",
+          "XS: 0",
+          "S: 0-2",
+          "M: 2-4",
+          "L: 4-6",
           "XL: 6-9"
         ]
       },{
@@ -80,31 +80,31 @@
     ]
   },{
     "id": 2,
-    "name": "Winter Long Sweater",
-    "slug": "winter-long-sweater",
-    "description": "A luxurious velvet top with a wrap front.",
-    "type": "dresses",
-    "categories": ["Sweaters"],
+    "name": "Serenity Set",
+    "slug": "serenity-set",
+    "description": "Elegant Turtleneck Sweater and Wide-Leg Pants Ensemble",
+    "type": "outfit-pairs",
+    "categories": ["clothing", "outfit-pairs", "skirts", "t-shirts"],
     "forced_new": false,
     "sizes": ["S", "M", "L"],
-    "colors": ["blue", "salmon", "pink", "maroon"],
+    "colors": ["Sky", "Coral", "Pink", "Wine"],
     "images": [
       {
         "main": "/assets/img/cloth-b-blue.jpg",
         "second": "/assets/img/cloth-b-blue-view-b.jpg",
-        "color": "blue"
+        "color": "Sky"
       },{
         "main": "/assets/img/cloth-b-orange.jpg",
         "second": "/assets/img/cloth-b-orange-view-b.jpg",
-        "color": "salmon"
+        "color": "Coral"
       },{
         "main": "/assets/img/cloth-b-pink.jpg",
         "second": "/assets/img/cloth-b-pink-view-b.jpg",
-        "color": "pink"
+        "color": "Pink"
       },{
         "main": "/assets/img/cloth-b-red.jpg",
         "second": "/assets/img/cloth-b-red-view-b.jpg",
-        "color": "maroon"
+        "color": "Wine"
       }
     ],
     "stock": {
@@ -130,10 +130,10 @@
         "title": "SIZE INFO",
         "descriptionLists": [
           "True to size.",
-          "XXS: 0",
-          "XS: 0-2",
-          "MD: 2-4",
-          "LG: 4-6",
+          "XS: 0",
+          "S: 0-2",
+          "M: 2-4",
+          "L: 4-6",
           "XL: 6-9"
         ]
       },{
@@ -155,23 +155,23 @@
     ]
   },{
     "id": 3,
-    "name": "Winter Long Sweater",
-    "slug": "winter-long-sweater",
-    "description": "A luxurious velvet top with a wrap front.",
+    "name": "Blossom Sweater",
+    "slug": "bolssom-sweater",
+    "description": "Cozy Floral-Embroidered Relaxed Sweater",
     "type": "t-shirts",
-    "categories": ["Sweaters"],
+    "categories": ["clothing", "t-shirts"],
     "forced_new": true,
     "sizes": ["M", "L"],
-    "colors": ["white", "black"],
+    "colors": ["White", "Black"],
     "images": [
       {
         "main": "/assets/img/cloth-c-white.jpg",
         "second": "/assets/img/cloth-c-white-view-b.jpg",
-        "color": "white"
+        "color": "White"
       },{
         "main": "/assets/img/cloth-c-black.jpg",
         "second": "/assets/img/cloth-c-black-view-b.jpg",
-        "color": "black"
+        "color": "Black"
       }
     ],
     "stock": {
@@ -222,35 +222,31 @@
     ]
   },{
     "id": 4,
-    "name": "Long Sweater",
-    "slug": "long-sweater",
-    "description": "A luxurious velvet top with a wrap front.",
-    "type": "dresses",
-    "categories": ["Sweaters"],
+    "name": "Mint Elegance Coat",
+    "slug": "mint-elegance-coat",
+    "description": "Timeless Mint Tailored Wool Coat",
+    "type": "jackets",
+    "categories": ["clothing", "jackets"],
     "forced_new": true,
-    "sizes": ["S", "XL"],
-    "colors": ["green", "orchid", "black", "salmon", "maroon"],
+    "sizes": ["S", "M", "L"],
+    "colors": ["Turquoise", "Hunter", "Wine", "Beige"],
     "images": [
       {
-        "main": "/assets/img/cloth-a-green.jpg",
-        "second": "/assets/img/cloth-a-green-view-b.jpg",
-        "color": "green"
+        "main": "/assets/img/cloth-4-turquoise.jpg",
+        "second": "/assets/img/cloth-4-turquoise-view-b.jpg",
+        "color": "Turquoise"
       },{
-        "main": "/assets/img/cloth-a-orange.jpg",
-        "second": "/assets/img/cloth-a-orange-view-b.jpg",
-        "color": "salmon"
+        "main": "/assets/img/cloth-4-hunter.jpg",
+        "second": "/assets/img/cloth-4-hunter-view-b.jpg",
+        "color": "Hunter"
       },{
-        "main": "/assets/img/cloth-a-pink.jpg",
-        "second": "/assets/img/cloth-a-pink-view-b.jpg",
-        "color": "orchid"
+        "main": "/assets/img/cloth-4-wine.jpg",
+        "second": "/assets/img/cloth-4-wine-view-b.jpg",
+        "color": "Wine"
       },{
-        "main": "/assets/img/cloth-a-red.jpg",
-        "second": "/assets/img/cloth-a-red-view-b.jpg",
-        "color": "maroon"
-      },{
-        "main": "/assets/img/cloth-a-black.jpg",
-        "second": "/assets/img/cloth-a-black-view-b.jpg",
-        "color": "black"
+        "main": "/assets/img/cloth-4-beige.jpg",
+        "second": "",
+        "color": "Beige"
       }
     ],
     "stock": {
@@ -259,7 +255,7 @@
       "M": { "emerald": 7, "black": 6 },
       "L": { "emerald": 4, "black": 2 }
     },
-    "price": 2000,
+    "price": 2400,
     "discount_percent": 0,
     "lists": [
       {
@@ -276,10 +272,10 @@
         "title": "SIZE INFO",
         "descriptionLists": [
           "True to size.",
-          "XXS: 0",
-          "XS: 0-2",
-          "MD: 2-4",
-          "LG: 4-6",
+          "XS: 0",
+          "S: 0-2",
+          "M: 2-4",
+          "L: 4-6",
           "XL: 6-9"
         ]
       },{
@@ -301,31 +297,23 @@
     ]
   },{
     "id": 5,
-    "name": "Winter Long Sweater",
-    "slug": "winter-long-sweater",
-    "description": "A luxurious velvet top with a wrap front.",
-    "type": "dresses",
-    "categories": ["Sweaters"],
-    "forced_new": true,
-    "sizes": ["M", "2XL"],
-    "colors": ["blue", "salmon", "pink", "maroon"],
+    "name": "Eclectic Zebra Cardigan",
+    "slug": "Eclectic-zebra-cardigan",
+    "description": "Bold Black Patchwork Knit Cardigan",
+    "type": "jackets",
+    "categories": ["clothing", "jackets"],
+    "forced_new": false,
+    "sizes": ["L", "2XL"],
+    "colors": ["Gold", "Ivory"],
     "images": [
       {
-        "main": "/assets/img/cloth-b-blue.jpg",
-        "second": "/assets/img/cloth-b-blue-view-b.jpg",
-        "color": "blue"
+        "main": "/assets/img/cloth-5-gold.jpg",
+        "second": "/assets/img/cloth-5-gold-view-b.jpg",
+        "color": "Gold"
       },{
-        "main": "/assets/img/cloth-b-orange.jpg",
-        "second": "/assets/img/cloth-b-orange-view-b.jpg",
-        "color": "salmon"
-      },{
-        "main": "/assets/img/cloth-b-pink.jpg",
-        "second": "/assets/img/cloth-b-pink-view-b.jpg",
-        "color": "pink"
-      },{
-        "main": "/assets/img/cloth-b-red.jpg",
-        "second": "/assets/img/cloth-b-red-view-b.jpg",
-        "color": "maroon"
+        "main": "/assets/img/cloth-5-ivory.jpg",
+        "second": "/assets/img/cloth-5-ivory-view-b.jpg",
+        "color": "Ivory"
       }
     ],
     "stock": {
@@ -334,8 +322,8 @@
       "M": { "emerald": 7, "black": 6 },
       "L": { "emerald": 4, "black": 2 }
     },
-    "price": 15000,
-    "discount_percent": 0,
+    "price": 35000,
+    "discount_percent": 10,
     "lists": [
       {
         "title": "PRODUCT DETAILS",
@@ -376,23 +364,31 @@
     ]
   },{
     "id": 6,
-    "name": "Winter Long Sweater",
-    "slug": "winter-long-sweater",
-    "description": "A luxurious velvet top with a wrap front.",
-    "type": "t-shirts",
-    "categories": ["Sweaters"],
-    "forced_new": false,
-    "sizes": ["XS", "2XL"],
-    "colors": ["white", "black"],
+    "name": "Opulent Blossom Abaya",
+    "slug": "opulent-blossom-abaya",
+    "description": "Regal Brown Embroidered Belted Abaya",
+    "type": "jackets",
+    "categories": ["clothing", "jackets"],
+    "forced_new": true,
+    "sizes": ["M", "L", "2XL"],
+    "colors": ["Slate", "Plum", "Olive", "Chocolate"],
     "images": [
       {
-        "main": "/assets/img/cloth-c-white.jpg",
-        "second": "/assets/img/cloth-c-white-view-b.jpg",
-        "color": "white"
+        "main": "/assets/img/cloth-6-slate.jpg",
+        "second": "",
+        "color": "Slate"
       },{
-        "main": "/assets/img/cloth-c-black.jpg",
-        "second": "/assets/img/cloth-c-black-view-b.jpg",
-        "color": "black"
+        "main": "/assets/img/cloth-6-plum.jpg",
+        "second": "",
+        "color": "Plum"
+      },{
+        "main": "/assets/img/cloth-6-olive.jpg",
+        "second": "",
+        "color": "Olive"
+      },{
+        "main": "/assets/img/cloth-6-chocolate.jpg",
+        "second": "",
+        "color": "Chocolate"
       }
     ],
     "stock": {
@@ -401,8 +397,8 @@
       "M": { "emerald": 7, "black": 6 },
       "L": { "emerald": 4, "black": 2 }
     },
-    "price": 45000,
-    "discount_percent": 45,
+    "price": 55000,
+    "discount_percent": 0,
     "lists": [
       {
         "title": "PRODUCT DETAILS",
@@ -422,6 +418,1067 @@
           "XS: 0-2",
           "MD: 2-4",
           "LG: 4-6",
+          "XL: 6-9"
+        ]
+      },{
+        "title": "ABOUT RANOURA✧･ﾟ*",
+        "descriptionLists": [
+          "Welcome to Ranoura – where elegance meets excellence. At Ranoura, we pride ourselves on crafting garments from the finest high-end fabrics, designed for those who appreciate quality, style, and sophistication. Each piece is meticulously tailored to provide a perfect blend of comfort and luxury, ensuring you feel confident and radiant in every moment. Discover timeless designs and impeccable craftsmanship that redefine fashion, only at Ranoura."
+        ]
+      },{
+        "title": "DELIVERY",
+        "descriptionLists": [
+          "Get your favorite Ranoura pieces delivered straight to your doorstep! Enjoy fast and reliable shipping with options for standard delivery (three to five business days) or express delivery (one to two business days) for those last-minute style needs. We carefully package every item to ensure it arrives in perfect condition, ready to shine in your wardrobe."
+        ]
+      },{
+        "title": "RETURNS",
+        "descriptionLists": [
+          "At Ranoura, your satisfaction is our priority. If something isn't quite right, you can easily return it within fourteen days of receiving your order. Items must be unworn, unwashed, and with original tags attached. Simply follow our hassle-free returns process, and we'll ensure you get a refund or exchange as quickly as possible."
+        ]
+      }
+    ]
+  },{
+    "id": 7,
+    "name": "Grove Jacket",
+    "slug": "grove-jacket",
+    "description": "Chic Textured Utility Jacket",
+    "type": "jackets",
+    "categories": ["clothing", "jackets"],
+    "forced_new": false,
+    "sizes": ["XS", "M", "L"],
+    "colors": ["Sky", "Purple", "Emerlad", "Olive", "Green", "Teal"],
+    "images": [
+      {
+        "main": "/assets/img/cloth-7-sky.jpg",
+        "second": "",
+        "color": "Sky"
+      },{
+        "main": "/assets/img/cloth-7-purple.jpg",
+        "second": "",
+        "color": "Purple"
+      },{
+        "main": "/assets/img/cloth-7-emerald.jpg",
+        "second": "",
+        "color": "Emerlad"
+      },{
+        "main": "/assets/img/cloth-7-olive.jpg",
+        "second": "",
+        "color": "Olive"
+      },{
+        "main": "/assets/img/cloth-7-green.jpg",
+        "second": "",
+        "color": "Green"
+      },{
+        "main": "/assets/img/cloth-7-teal.jpg",
+        "second": "/assets/img/cloth-7-teal-view-b.jpg",
+        "color": "Teal"
+      }
+    ],
+    "stock": {
+      "XS": { "emerald": 5, "black": 3 },
+      "S": { "emerald": 10, "black": 8 },
+      "M": { "emerald": 7, "black": 6 },
+      "L": { "emerald": 4, "black": 2 }
+    },
+    "price": 20000,
+    "discount_percent": 15,
+    "lists": [
+      {
+        "title": "PRODUCT DETAILS",
+        "descriptionLists": [
+          "Brand: Ranoura",
+          "Material: Fabric",
+          "Fit: Tight to boy",
+          "NeckLine: None",
+          "Sleeves: Yes",
+          "Design: Italic"
+        ]
+      },{
+        "title": "SIZE INFO",
+        "descriptionLists": [
+          "True to size.",
+          "XXS: 0",
+          "XS: 0-2",
+          "MD: 2-4",
+          "LG: 4-6",
+          "XL: 6-9"
+        ]
+      },{
+        "title": "ABOUT RANOURA✧･ﾟ*",
+        "descriptionLists": [
+          "Welcome to Ranoura – where elegance meets excellence. At Ranoura, we pride ourselves on crafting garments from the finest high-end fabrics, designed for those who appreciate quality, style, and sophistication. Each piece is meticulously tailored to provide a perfect blend of comfort and luxury, ensuring you feel confident and radiant in every moment. Discover timeless designs and impeccable craftsmanship that redefine fashion, only at Ranoura."
+        ]
+      },{
+        "title": "DELIVERY",
+        "descriptionLists": [
+          "Get your favorite Ranoura pieces delivered straight to your doorstep! Enjoy fast and reliable shipping with options for standard delivery (three to five business days) or express delivery (one to two business days) for those last-minute style needs. We carefully package every item to ensure it arrives in perfect condition, ready to shine in your wardrobe."
+        ]
+      },{
+        "title": "RETURNS",
+        "descriptionLists": [
+          "At Ranoura, your satisfaction is our priority. If something isn't quite right, you can easily return it within fourteen days of receiving your order. Items must be unworn, unwashed, and with original tags attached. Simply follow our hassle-free returns process, and we'll ensure you get a refund or exchange as quickly as possible."
+        ]
+      }
+    ]
+  },{
+    "id": 8,
+    "name": "Lace Whisper Abaya",
+    "slug": "lace-whisper-abaya",
+    "description": "Graceful Lace-Trimmed Puff-Sleeve Abaya",
+    "type": "robes",
+    "categories": ["clothing", "robes"],
+    "forced_new": true,
+    "sizes": ["S", "L"],
+    "colors": ["Beige", "Black"],
+    "images": [
+      {
+        "main": "/assets/img/cloth-8-beige.jpg",
+        "second": "/assets/img/cloth-8-beige-view-b.jpg",
+        "color": "Beige"
+      },{
+        "main": "/assets/img/cloth-8-black.jpg",
+        "second": "/assets/img/cloth-8-black-view-b.jpg",
+        "color": "Black"
+      }
+    ],
+    "stock": {
+      "XS": { "emerald": 5, "black": 3 },
+      "S": { "emerald": 10, "black": 8 },
+      "M": { "emerald": 7, "black": 6 },
+      "L": { "emerald": 4, "black": 2 }
+    },
+    "price": 55000,
+    "discount_percent": 0,
+    "lists": [
+      {
+        "title": "PRODUCT DETAILS",
+        "descriptionLists": [
+          "Brand: Ranoura",
+          "Material: Fabric",
+          "Fit: Tight to boy",
+          "NeckLine: None",
+          "Sleeves: Yes",
+          "Design: Italic"
+        ]
+      },{
+        "title": "SIZE INFO",
+        "descriptionLists": [
+          "True to size.",
+          "XXS: 0",
+          "XS: 0-2",
+          "MD: 2-4",
+          "LG: 4-6",
+          "XL: 6-9"
+        ]
+      },{
+        "title": "ABOUT RANOURA✧･ﾟ*",
+        "descriptionLists": [
+          "Welcome to Ranoura – where elegance meets excellence. At Ranoura, we pride ourselves on crafting garments from the finest high-end fabrics, designed for those who appreciate quality, style, and sophistication. Each piece is meticulously tailored to provide a perfect blend of comfort and luxury, ensuring you feel confident and radiant in every moment. Discover timeless designs and impeccable craftsmanship that redefine fashion, only at Ranoura."
+        ]
+      },{
+        "title": "DELIVERY",
+        "descriptionLists": [
+          "Get your favorite Ranoura pieces delivered straight to your doorstep! Enjoy fast and reliable shipping with options for standard delivery (three to five business days) or express delivery (one to two business days) for those last-minute style needs. We carefully package every item to ensure it arrives in perfect condition, ready to shine in your wardrobe."
+        ]
+      },{
+        "title": "RETURNS",
+        "descriptionLists": [
+          "At Ranoura, your satisfaction is our priority. If something isn't quite right, you can easily return it within fourteen days of receiving your order. Items must be unworn, unwashed, and with original tags attached. Simply follow our hassle-free returns process, and we'll ensure you get a refund or exchange as quickly as possible."
+        ]
+      }
+    ]
+  },{
+    "id": 9,
+    "name": "Whimsical Logo Hoodie",
+    "slug": "Whimisical-logo-hoodie",
+    "description": "Stylish Graphic-Print Hoodie",
+    "type": "t-shirts",
+    "categories": ["clothing", "t-shirts"],
+    "forced_new": true,
+    "sizes": ["S", "M", "L", "2XL"],
+    "colors": ["White", "Ivory", "Black"],
+    "images": [
+      {
+        "main": "/assets/img/cloth-9-white.jpg",
+        "second": "",
+        "color": "White"
+      },{
+        "main": "/assets/img/cloth-9-ivory.jpg",
+        "second": "",
+        "color": "Ivory"
+      },{
+        "main": "/assets/img/cloth-9-black.jpg",
+        "second": "",
+        "color": "Black"
+      }
+    ],
+    "stock": {
+      "XS": { "emerald": 5, "black": 3 },
+      "S": { "emerald": 10, "black": 8 },
+      "M": { "emerald": 7, "black": 6 },
+      "L": { "emerald": 4, "black": 2 }
+    },
+    "price": 10000,
+    "discount_percent": 0,
+    "lists": [
+      {
+        "title": "PRODUCT DETAILS",
+        "descriptionLists": [
+          "Brand: Ranoura",
+          "Material: Fabric",
+          "Fit: Tight to boy",
+          "NeckLine: None",
+          "Sleeves: Yes",
+          "Design: Italic"
+        ]
+      },{
+        "title": "SIZE INFO",
+        "descriptionLists": [
+          "True to size.",
+          "XS: 0",
+          "S: 0-2",
+          "M: 2-4",
+          "L: 4-6",
+          "XL: 6-9"
+        ]
+      },{
+        "title": "ABOUT RANOURA✧･ﾟ*",
+        "descriptionLists": [
+          "Welcome to Ranoura – where elegance meets excellence. At Ranoura, we pride ourselves on crafting garments from the finest high-end fabrics, designed for those who appreciate quality, style, and sophistication. Each piece is meticulously tailored to provide a perfect blend of comfort and luxury, ensuring you feel confident and radiant in every moment. Discover timeless designs and impeccable craftsmanship that redefine fashion, only at Ranoura."
+        ]
+      },{
+        "title": "DELIVERY",
+        "descriptionLists": [
+          "Get your favorite Ranoura pieces delivered straight to your doorstep! Enjoy fast and reliable shipping with options for standard delivery (three to five business days) or express delivery (one to two business days) for those last-minute style needs. We carefully package every item to ensure it arrives in perfect condition, ready to shine in your wardrobe."
+        ]
+      },{
+        "title": "RETURNS",
+        "descriptionLists": [
+          "At Ranoura, your satisfaction is our priority. If something isn't quite right, you can easily return it within fourteen days of receiving your order. Items must be unworn, unwashed, and with original tags attached. Simply follow our hassle-free returns process, and we'll ensure you get a refund or exchange as quickly as possible."
+        ]
+      }
+    ]
+  },{
+    "id": 10,
+    "name": "Midnight Blaze Tracksuit",
+    "slug": "midnight-blaze-tracksuit",
+    "description": "Sleek Black and Orange Sporty Tracksuit Set",
+    "type": "jackets",
+    "categories": ["clothing", "jackets"],
+    "forced_new": true,
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Orange", "Coral"],
+    "images": [
+      {
+        "main": "/assets/img/cloth-10-orange.jpg",
+        "second": "",
+        "color": "Orange"
+      },{
+        "main": "/assets/img/cloth-10-coral.jpg",
+        "second": "",
+        "color": "Coral"
+      }
+    ],
+    "stock": {
+      "XS": { "emerald": 5, "black": 3 },
+      "S": { "emerald": 10, "black": 8 },
+      "M": { "emerald": 7, "black": 6 },
+      "L": { "emerald": 4, "black": 2 }
+    },
+    "price": 10000,
+    "discount_percent": 0,
+    "lists": [
+      {
+        "title": "PRODUCT DETAILS",
+        "descriptionLists": [
+          "Brand: Ranoura",
+          "Material: Fabric",
+          "Fit: Tight to boy",
+          "NeckLine: None",
+          "Sleeves: Yes",
+          "Design: Italic"
+        ]
+      },{
+        "title": "SIZE INFO",
+        "descriptionLists": [
+          "True to size.",
+          "XS: 0",
+          "S: 0-2",
+          "M: 2-4",
+          "L: 4-6",
+          "XL: 6-9"
+        ]
+      },{
+        "title": "ABOUT RANOURA✧･ﾟ*",
+        "descriptionLists": [
+          "Welcome to Ranoura – where elegance meets excellence. At Ranoura, we pride ourselves on crafting garments from the finest high-end fabrics, designed for those who appreciate quality, style, and sophistication. Each piece is meticulously tailored to provide a perfect blend of comfort and luxury, ensuring you feel confident and radiant in every moment. Discover timeless designs and impeccable craftsmanship that redefine fashion, only at Ranoura."
+        ]
+      },{
+        "title": "DELIVERY",
+        "descriptionLists": [
+          "Get your favorite Ranoura pieces delivered straight to your doorstep! Enjoy fast and reliable shipping with options for standard delivery (three to five business days) or express delivery (one to two business days) for those last-minute style needs. We carefully package every item to ensure it arrives in perfect condition, ready to shine in your wardrobe."
+        ]
+      },{
+        "title": "RETURNS",
+        "descriptionLists": [
+          "At Ranoura, your satisfaction is our priority. If something isn't quite right, you can easily return it within fourteen days of receiving your order. Items must be unworn, unwashed, and with original tags attached. Simply follow our hassle-free returns process, and we'll ensure you get a refund or exchange as quickly as possible."
+        ]
+      }
+    ]
+  },{
+    "id": 11,
+    "name": "Skyline Cargo Jeans",
+    "slug": "skyline-cargo-jeans",
+    "description": "Relaxed Light Blue Wide-Leg Cargo Denim Pants",
+    "type": "jeans",
+    "categories": ["clothing", "jeans"],
+    "forced_new": true,
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Sky"],
+    "images": [
+      {
+        "main": "/assets/img/cloth-11-sky.jpg",
+        "second": "/assets/img/cloth-11-sky-view-b.jpg",
+        "color": "Sky"
+      }
+    ],
+    "stock": {
+      "XS": { "emerald": 5, "black": 3 },
+      "S": { "emerald": 10, "black": 8 },
+      "M": { "emerald": 7, "black": 6 },
+      "L": { "emerald": 4, "black": 2 }
+    },
+    "price": 25000,
+    "discount_percent": 50,
+    "lists": [
+      {
+        "title": "PRODUCT DETAILS",
+        "descriptionLists": [
+          "Brand: Ranoura",
+          "Material: Fabric",
+          "Fit: Tight to boy",
+          "NeckLine: None",
+          "Sleeves: Yes",
+          "Design: Italic"
+        ]
+      },{
+        "title": "SIZE INFO",
+        "descriptionLists": [
+          "True to size.",
+          "XS: 0",
+          "S: 0-2",
+          "M: 2-4",
+          "L: 4-6",
+          "XL: 6-9"
+        ]
+      },{
+        "title": "ABOUT RANOURA✧･ﾟ*",
+        "descriptionLists": [
+          "Welcome to Ranoura – where elegance meets excellence. At Ranoura, we pride ourselves on crafting garments from the finest high-end fabrics, designed for those who appreciate quality, style, and sophistication. Each piece is meticulously tailored to provide a perfect blend of comfort and luxury, ensuring you feel confident and radiant in every moment. Discover timeless designs and impeccable craftsmanship that redefine fashion, only at Ranoura."
+        ]
+      },{
+        "title": "DELIVERY",
+        "descriptionLists": [
+          "Get your favorite Ranoura pieces delivered straight to your doorstep! Enjoy fast and reliable shipping with options for standard delivery (three to five business days) or express delivery (one to two business days) for those last-minute style needs. We carefully package every item to ensure it arrives in perfect condition, ready to shine in your wardrobe."
+        ]
+      },{
+        "title": "RETURNS",
+        "descriptionLists": [
+          "At Ranoura, your satisfaction is our priority. If something isn't quite right, you can easily return it within fourteen days of receiving your order. Items must be unworn, unwashed, and with original tags attached. Simply follow our hassle-free returns process, and we'll ensure you get a refund or exchange as quickly as possible."
+        ]
+      }
+    ]
+  },{
+    "id": 12,
+    "name": "Midnight Blaze Tracksuit",
+    "slug": "midnight-blaze-tracksuit",
+    "description": "Sleek Black and Orange Sporty Tracksuit Set",
+    "type": "t-shirts",
+    "categories": ["clothing", "t-shirts", "pants"],
+    "forced_new": true,
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Green", "Beige"],
+    "images": [
+      {
+        "main": "/assets/img/cloth-12-green.jpg",
+        "second": "/assets/img/cloth-12-green-view-b.jpg",
+        "color": "Green"
+      },{
+        "main": "/assets/img/cloth-12-beige.jpg",
+        "second": "/assets/img/cloth-12-beige-view-b.jpg",
+        "color": "Beige"
+      }
+    ],
+    "stock": {
+      "XS": { "emerald": 5, "black": 3 },
+      "S": { "emerald": 10, "black": 8 },
+      "M": { "emerald": 7, "black": 6 },
+      "L": { "emerald": 4, "black": 2 }
+    },
+    "price": 25000,
+    "discount_percent": 20,
+    "lists": [
+      {
+        "title": "PRODUCT DETAILS",
+        "descriptionLists": [
+          "Brand: Ranoura",
+          "Material: Fabric",
+          "Fit: Tight to boy",
+          "NeckLine: None",
+          "Sleeves: Yes",
+          "Design: Italic"
+        ]
+      },{
+        "title": "SIZE INFO",
+        "descriptionLists": [
+          "True to size.",
+          "XS: 0",
+          "S: 0-2",
+          "M: 2-4",
+          "L: 4-6",
+          "XL: 6-9"
+        ]
+      },{
+        "title": "ABOUT RANOURA✧･ﾟ*",
+        "descriptionLists": [
+          "Welcome to Ranoura – where elegance meets excellence. At Ranoura, we pride ourselves on crafting garments from the finest high-end fabrics, designed for those who appreciate quality, style, and sophistication. Each piece is meticulously tailored to provide a perfect blend of comfort and luxury, ensuring you feel confident and radiant in every moment. Discover timeless designs and impeccable craftsmanship that redefine fashion, only at Ranoura."
+        ]
+      },{
+        "title": "DELIVERY",
+        "descriptionLists": [
+          "Get your favorite Ranoura pieces delivered straight to your doorstep! Enjoy fast and reliable shipping with options for standard delivery (three to five business days) or express delivery (one to two business days) for those last-minute style needs. We carefully package every item to ensure it arrives in perfect condition, ready to shine in your wardrobe."
+        ]
+      },{
+        "title": "RETURNS",
+        "descriptionLists": [
+          "At Ranoura, your satisfaction is our priority. If something isn't quite right, you can easily return it within fourteen days of receiving your order. Items must be unworn, unwashed, and with original tags attached. Simply follow our hassle-free returns process, and we'll ensure you get a refund or exchange as quickly as possible."
+        ]
+      }
+    ]
+  },{
+    "id": 13,
+    "name": "Midnight Blaze Tracksuit",
+    "slug": "midnight-blaze-tracksuit",
+    "description": "Sleek Black and Orange Sporty Tracksuit Set",
+    "type": "jackets",
+    "categories": ["clothing", "jackets"],
+    "forced_new": false,
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Ivory", "Beige", "White"],
+    "images": [
+      {
+        "main": "/assets/img/cloth-13-ivory.jpg",
+        "second": "",
+        "color": "Ivory"
+      },{
+        "main": "/assets/img/cloth-13-beige.jpg",
+        "second": "",
+        "color": "Beige"
+      },{
+        "main": "/assets/img/cloth-13-white.jpg",
+        "second": "",
+        "color": "White"
+      }
+    ],
+    "stock": {
+      "XS": { "emerald": 5, "black": 3 },
+      "S": { "emerald": 10, "black": 8 },
+      "M": { "emerald": 7, "black": 6 },
+      "L": { "emerald": 4, "black": 2 }
+    },
+    "price": 40000,
+    "discount_percent": 0,
+    "lists": [
+      {
+        "title": "PRODUCT DETAILS",
+        "descriptionLists": [
+          "Brand: Ranoura",
+          "Material: Fabric",
+          "Fit: Tight to boy",
+          "NeckLine: None",
+          "Sleeves: Yes",
+          "Design: Italic"
+        ]
+      },{
+        "title": "SIZE INFO",
+        "descriptionLists": [
+          "True to size.",
+          "XS: 0",
+          "S: 0-2",
+          "M: 2-4",
+          "L: 4-6",
+          "XL: 6-9"
+        ]
+      },{
+        "title": "ABOUT RANOURA✧･ﾟ*",
+        "descriptionLists": [
+          "Welcome to Ranoura – where elegance meets excellence. At Ranoura, we pride ourselves on crafting garments from the finest high-end fabrics, designed for those who appreciate quality, style, and sophistication. Each piece is meticulously tailored to provide a perfect blend of comfort and luxury, ensuring you feel confident and radiant in every moment. Discover timeless designs and impeccable craftsmanship that redefine fashion, only at Ranoura."
+        ]
+      },{
+        "title": "DELIVERY",
+        "descriptionLists": [
+          "Get your favorite Ranoura pieces delivered straight to your doorstep! Enjoy fast and reliable shipping with options for standard delivery (three to five business days) or express delivery (one to two business days) for those last-minute style needs. We carefully package every item to ensure it arrives in perfect condition, ready to shine in your wardrobe."
+        ]
+      },{
+        "title": "RETURNS",
+        "descriptionLists": [
+          "At Ranoura, your satisfaction is our priority. If something isn't quite right, you can easily return it within fourteen days of receiving your order. Items must be unworn, unwashed, and with original tags attached. Simply follow our hassle-free returns process, and we'll ensure you get a refund or exchange as quickly as possible."
+        ]
+      }
+    ]
+  },{
+    "id": 14,
+    "name": "Urban Plaid & Cobalt Set",
+    "slug": "ubran-plaid-cobalt-set",
+    "description": "Chic Plaid Jacket and Vibrant Blue Sweatpants Ensemble",
+    "type": "matching-sets",
+    "categories": ["clothing", "matching-sets", "shirts", "pants"],
+    "forced_new": true,
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Black", "Blue", "Green", "Red", "Brown"],
+    "images": [
+      {
+        "main": "/assets/img/cloth-14-black.jpg",
+        "second": "",
+        "color": "Black"
+      },{
+        "main": "/assets/img/cloth-14-blue.jpg",
+        "second": "",
+        "color": "Blue"
+      },{
+        "main": "/assets/img/cloth-14-green.jpg",
+        "second": "",
+        "color": "Green"
+      },{
+        "main": "/assets/img/cloth-14-red.jpg",
+        "second": "",
+        "color": "Red"
+      },{
+        "main": "/assets/img/cloth-14-brown.jpg",
+        "second": "",
+        "color": "Brown"
+      }
+    ],
+    "stock": {
+      "XS": { "emerald": 5, "black": 3 },
+      "S": { "emerald": 10, "black": 8 },
+      "M": { "emerald": 7, "black": 6 },
+      "L": { "emerald": 4, "black": 2 }
+    },
+    "price": 35000,
+    "discount_percent": 5,
+    "lists": [
+      {
+        "title": "PRODUCT DETAILS",
+        "descriptionLists": [
+          "Brand: Ranoura",
+          "Material: Fabric",
+          "Fit: Tight to boy",
+          "NeckLine: None",
+          "Sleeves: Yes",
+          "Design: Italic"
+        ]
+      },{
+        "title": "SIZE INFO",
+        "descriptionLists": [
+          "True to size.",
+          "XS: 0",
+          "S: 0-2",
+          "M: 2-4",
+          "L: 4-6",
+          "XL: 6-9"
+        ]
+      },{
+        "title": "ABOUT RANOURA✧･ﾟ*",
+        "descriptionLists": [
+          "Welcome to Ranoura – where elegance meets excellence. At Ranoura, we pride ourselves on crafting garments from the finest high-end fabrics, designed for those who appreciate quality, style, and sophistication. Each piece is meticulously tailored to provide a perfect blend of comfort and luxury, ensuring you feel confident and radiant in every moment. Discover timeless designs and impeccable craftsmanship that redefine fashion, only at Ranoura."
+        ]
+      },{
+        "title": "DELIVERY",
+        "descriptionLists": [
+          "Get your favorite Ranoura pieces delivered straight to your doorstep! Enjoy fast and reliable shipping with options for standard delivery (three to five business days) or express delivery (one to two business days) for those last-minute style needs. We carefully package every item to ensure it arrives in perfect condition, ready to shine in your wardrobe."
+        ]
+      },{
+        "title": "RETURNS",
+        "descriptionLists": [
+          "At Ranoura, your satisfaction is our priority. If something isn't quite right, you can easily return it within fourteen days of receiving your order. Items must be unworn, unwashed, and with original tags attached. Simply follow our hassle-free returns process, and we'll ensure you get a refund or exchange as quickly as possible."
+        ]
+      }
+    ]
+  },{
+    "id": 15,
+    "name": "Frost Parka",
+    "slug": "frost-parka",
+    "description": "Chic Fur-Hooded Utility Parka",
+    "type": "jackets",
+    "categories": ["clothing", "jackets"],
+    "forced_new": true,
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Olive", "Ivory"],
+    "images": [
+      {
+        "main": "/assets/img/cloth-15-olive.jpg",
+        "second": "",
+        "color": "Olive"
+      },{
+        "main": "/assets/img/cloth-15-ivory.jpg",
+        "second": "/assets/img/cloth-15-ivory-view-b.jpg",
+        "color": "Ivory"
+      }
+    ],
+    "stock": {
+      "XS": { "emerald": 5, "black": 3 },
+      "S": { "emerald": 10, "black": 8 },
+      "M": { "emerald": 7, "black": 6 },
+      "L": { "emerald": 4, "black": 2 }
+    },
+    "price": 40000,
+    "discount_percent": 0,
+    "lists": [
+      {
+        "title": "PRODUCT DETAILS",
+        "descriptionLists": [
+          "Brand: Ranoura",
+          "Material: Fabric",
+          "Fit: Tight to boy",
+          "NeckLine: None",
+          "Sleeves: Yes",
+          "Design: Italic"
+        ]
+      },{
+        "title": "SIZE INFO",
+        "descriptionLists": [
+          "True to size.",
+          "XS: 0",
+          "S: 0-2",
+          "M: 2-4",
+          "L: 4-6",
+          "XL: 6-9"
+        ]
+      },{
+        "title": "ABOUT RANOURA✧･ﾟ*",
+        "descriptionLists": [
+          "Welcome to Ranoura – where elegance meets excellence. At Ranoura, we pride ourselves on crafting garments from the finest high-end fabrics, designed for those who appreciate quality, style, and sophistication. Each piece is meticulously tailored to provide a perfect blend of comfort and luxury, ensuring you feel confident and radiant in every moment. Discover timeless designs and impeccable craftsmanship that redefine fashion, only at Ranoura."
+        ]
+      },{
+        "title": "DELIVERY",
+        "descriptionLists": [
+          "Get your favorite Ranoura pieces delivered straight to your doorstep! Enjoy fast and reliable shipping with options for standard delivery (three to five business days) or express delivery (one to two business days) for those last-minute style needs. We carefully package every item to ensure it arrives in perfect condition, ready to shine in your wardrobe."
+        ]
+      },{
+        "title": "RETURNS",
+        "descriptionLists": [
+          "At Ranoura, your satisfaction is our priority. If something isn't quite right, you can easily return it within fourteen days of receiving your order. Items must be unworn, unwashed, and with original tags attached. Simply follow our hassle-free returns process, and we'll ensure you get a refund or exchange as quickly as possible."
+        ]
+      }
+    ]
+  },{
+    "id": 16,
+    "name": "Frost Jacket",
+    "slug": "frost-jacket",
+    "description": "Chic Fur-Hooded Utility Jacket",
+    "type": "jackets",
+    "categories": ["clothing", "jackets"],
+    "forced_new": false,
+    "sizes": ["S", "L", "XL"],
+    "colors": ["Black", "Ivory", "Blue"],
+    "images": [
+      {
+        "main": "/assets/img/cloth-16-black.jpg",
+        "second": "",
+        "color": "Black"
+      },{
+        "main": "/assets/img/cloth-16-ivory.jpg",
+        "second": "",
+        "color": "Ivory"
+      },{
+        "main": "/assets/img/cloth-16-blue.jpg",
+        "second": "",
+        "color": "Blue"
+      }
+    ],
+    "stock": {
+      "XS": { "emerald": 5, "black": 3 },
+      "S": { "emerald": 10, "black": 8 },
+      "M": { "emerald": 7, "black": 6 },
+      "L": { "emerald": 4, "black": 2 }
+    },
+    "price": 30000,
+    "discount_percent": 25,
+    "lists": [
+      {
+        "title": "PRODUCT DETAILS",
+        "descriptionLists": [
+          "Brand: Ranoura",
+          "Material: Fabric",
+          "Fit: Tight to boy",
+          "NeckLine: None",
+          "Sleeves: Yes",
+          "Design: Italic"
+        ]
+      },{
+        "title": "SIZE INFO",
+        "descriptionLists": [
+          "True to size.",
+          "XS: 0",
+          "S: 0-2",
+          "M: 2-4",
+          "L: 4-6",
+          "XL: 6-9"
+        ]
+      },{
+        "title": "ABOUT RANOURA✧･ﾟ*",
+        "descriptionLists": [
+          "Welcome to Ranoura – where elegance meets excellence. At Ranoura, we pride ourselves on crafting garments from the finest high-end fabrics, designed for those who appreciate quality, style, and sophistication. Each piece is meticulously tailored to provide a perfect blend of comfort and luxury, ensuring you feel confident and radiant in every moment. Discover timeless designs and impeccable craftsmanship that redefine fashion, only at Ranoura."
+        ]
+      },{
+        "title": "DELIVERY",
+        "descriptionLists": [
+          "Get your favorite Ranoura pieces delivered straight to your doorstep! Enjoy fast and reliable shipping with options for standard delivery (three to five business days) or express delivery (one to two business days) for those last-minute style needs. We carefully package every item to ensure it arrives in perfect condition, ready to shine in your wardrobe."
+        ]
+      },{
+        "title": "RETURNS",
+        "descriptionLists": [
+          "At Ranoura, your satisfaction is our priority. If something isn't quite right, you can easily return it within fourteen days of receiving your order. Items must be unworn, unwashed, and with original tags attached. Simply follow our hassle-free returns process, and we'll ensure you get a refund or exchange as quickly as possible."
+        ]
+      }
+    ]
+  },{
+    "id": 17,
+    "name": "Frost Jacket",
+    "slug": "frost-jacket",
+    "description": "Chic Puffer Jacket with Detachable Hood",
+    "type": "jackets",
+    "categories": ["clothing", "jackets"],
+    "forced_new": true,
+    "sizes": ["M", "L", "XL"],
+    "colors": ["Black", "Beige"],
+    "images": [
+      {
+        "main": "/assets/img/cloth-17-black.jpg",
+        "second": "",
+        "color": "Black"
+      },{
+        "main": "/assets/img/cloth-17-beige.jpg",
+        "second": "",
+        "color": "Beige"
+      }
+    ],
+    "stock": {
+      "XS": { "emerald": 5, "black": 3 },
+      "S": { "emerald": 10, "black": 8 },
+      "M": { "emerald": 7, "black": 6 },
+      "L": { "emerald": 4, "black": 2 }
+    },
+    "price": 25000,
+    "discount_percent": 0,
+    "lists": [
+      {
+        "title": "PRODUCT DETAILS",
+        "descriptionLists": [
+          "Brand: Ranoura",
+          "Material: Fabric",
+          "Fit: Tight to boy",
+          "NeckLine: None",
+          "Sleeves: Yes",
+          "Design: Italic"
+        ]
+      },{
+        "title": "SIZE INFO",
+        "descriptionLists": [
+          "True to size.",
+          "XS: 0",
+          "S: 0-2",
+          "M: 2-4",
+          "L: 4-6",
+          "XL: 6-9"
+        ]
+      },{
+        "title": "ABOUT RANOURA✧･ﾟ*",
+        "descriptionLists": [
+          "Welcome to Ranoura – where elegance meets excellence. At Ranoura, we pride ourselves on crafting garments from the finest high-end fabrics, designed for those who appreciate quality, style, and sophistication. Each piece is meticulously tailored to provide a perfect blend of comfort and luxury, ensuring you feel confident and radiant in every moment. Discover timeless designs and impeccable craftsmanship that redefine fashion, only at Ranoura."
+        ]
+      },{
+        "title": "DELIVERY",
+        "descriptionLists": [
+          "Get your favorite Ranoura pieces delivered straight to your doorstep! Enjoy fast and reliable shipping with options for standard delivery (three to five business days) or express delivery (one to two business days) for those last-minute style needs. We carefully package every item to ensure it arrives in perfect condition, ready to shine in your wardrobe."
+        ]
+      },{
+        "title": "RETURNS",
+        "descriptionLists": [
+          "At Ranoura, your satisfaction is our priority. If something isn't quite right, you can easily return it within fourteen days of receiving your order. Items must be unworn, unwashed, and with original tags attached. Simply follow our hassle-free returns process, and we'll ensure you get a refund or exchange as quickly as possible."
+        ]
+      }
+    ]
+  },{
+    "id": 18,
+    "name": "League Hoodie",
+    "slug": "league-hoodie",
+    "description": "Stylish Graphic-Print College Hoodie",
+    "type": "hoodie",
+    "categories": ["clothing", "hoodie"],
+    "forced_new": false,
+    "sizes": ["M", "L", "XL"],
+    "colors": ["White", "Beige", "Sapphire"],
+    "images": [
+      {
+        "main": "/assets/img/cloth-18-white.jpg",
+        "second": "",
+        "color": "White"
+      },{
+        "main": "/assets/img/cloth-18-beige.jpg",
+        "second": "",
+        "color": "Beige"
+      },{
+        "main": "/assets/img/cloth-18-sapphire.jpg",
+        "second": "",
+        "color": "Sapphire"
+      }
+    ],
+    "stock": {
+      "XS": { "emerald": 5, "black": 3 },
+      "S": { "emerald": 10, "black": 8 },
+      "M": { "emerald": 7, "black": 6 },
+      "L": { "emerald": 4, "black": 2 }
+    },
+    "price": 15000,
+    "discount_percent": 10,
+    "lists": [
+      {
+        "title": "PRODUCT DETAILS",
+        "descriptionLists": [
+          "Brand: Ranoura",
+          "Material: Fabric",
+          "Fit: Tight to boy",
+          "NeckLine: None",
+          "Sleeves: Yes",
+          "Design: Italic"
+        ]
+      },{
+        "title": "SIZE INFO",
+        "descriptionLists": [
+          "True to size.",
+          "XS: 0",
+          "S: 0-2",
+          "M: 2-4",
+          "L: 4-6",
+          "XL: 6-9"
+        ]
+      },{
+        "title": "ABOUT RANOURA✧･ﾟ*",
+        "descriptionLists": [
+          "Welcome to Ranoura – where elegance meets excellence. At Ranoura, we pride ourselves on crafting garments from the finest high-end fabrics, designed for those who appreciate quality, style, and sophistication. Each piece is meticulously tailored to provide a perfect blend of comfort and luxury, ensuring you feel confident and radiant in every moment. Discover timeless designs and impeccable craftsmanship that redefine fashion, only at Ranoura."
+        ]
+      },{
+        "title": "DELIVERY",
+        "descriptionLists": [
+          "Get your favorite Ranoura pieces delivered straight to your doorstep! Enjoy fast and reliable shipping with options for standard delivery (three to five business days) or express delivery (one to two business days) for those last-minute style needs. We carefully package every item to ensure it arrives in perfect condition, ready to shine in your wardrobe."
+        ]
+      },{
+        "title": "RETURNS",
+        "descriptionLists": [
+          "At Ranoura, your satisfaction is our priority. If something isn't quite right, you can easily return it within fourteen days of receiving your order. Items must be unworn, unwashed, and with original tags attached. Simply follow our hassle-free returns process, and we'll ensure you get a refund or exchange as quickly as possible."
+        ]
+      }
+    ]
+  },{
+    "id": 19,
+    "name": "Frost Vest",
+    "slug": "frost-vest",
+    "description": "Chic Puffer Vest with Hood",
+    "type": "hoodie",
+    "categories": ["clothing", "hoodie"],
+    "forced_new": true,
+    "sizes": ["S", "M", "XL"],
+    "colors": ["Charcoal", "Blue", "Sapphire", "Red"],
+    "images": [
+      {
+        "main": "/assets/img/cloth-19-charcoal.jpg",
+        "second": "",
+        "color": "Charcoal"
+      },{
+        "main": "/assets/img/cloth-19-blue.jpg",
+        "second": "",
+        "color": "Blue"
+      },{
+        "main": "/assets/img/cloth-19-sapphire.jpg",
+        "second": "",
+        "color": "Sapphire"
+      },{
+        "main": "/assets/img/cloth-19-red.jpg",
+        "second": "",
+        "color": "Red"
+      }
+    ],
+    "stock": {
+      "XS": { "emerald": 5, "black": 3 },
+      "S": { "emerald": 10, "black": 8 },
+      "M": { "emerald": 7, "black": 6 },
+      "L": { "emerald": 4, "black": 2 }
+    },
+    "price": 25000,
+    "discount_percent": 0,
+    "lists": [
+      {
+        "title": "PRODUCT DETAILS",
+        "descriptionLists": [
+          "Brand: Ranoura",
+          "Material: Fabric",
+          "Fit: Tight to boy",
+          "NeckLine: None",
+          "Sleeves: Yes",
+          "Design: Italic"
+        ]
+      },{
+        "title": "SIZE INFO",
+        "descriptionLists": [
+          "True to size.",
+          "XS: 0",
+          "S: 0-2",
+          "M: 2-4",
+          "L: 4-6",
+          "XL: 6-9"
+        ]
+      },{
+        "title": "ABOUT RANOURA✧･ﾟ*",
+        "descriptionLists": [
+          "Welcome to Ranoura – where elegance meets excellence. At Ranoura, we pride ourselves on crafting garments from the finest high-end fabrics, designed for those who appreciate quality, style, and sophistication. Each piece is meticulously tailored to provide a perfect blend of comfort and luxury, ensuring you feel confident and radiant in every moment. Discover timeless designs and impeccable craftsmanship that redefine fashion, only at Ranoura."
+        ]
+      },{
+        "title": "DELIVERY",
+        "descriptionLists": [
+          "Get your favorite Ranoura pieces delivered straight to your doorstep! Enjoy fast and reliable shipping with options for standard delivery (three to five business days) or express delivery (one to two business days) for those last-minute style needs. We carefully package every item to ensure it arrives in perfect condition, ready to shine in your wardrobe."
+        ]
+      },{
+        "title": "RETURNS",
+        "descriptionLists": [
+          "At Ranoura, your satisfaction is our priority. If something isn't quite right, you can easily return it within fourteen days of receiving your order. Items must be unworn, unwashed, and with original tags attached. Simply follow our hassle-free returns process, and we'll ensure you get a refund or exchange as quickly as possible."
+        ]
+      }
+    ]
+  },{
+    "id": 20,
+    "name": "Classic Coat",
+    "slug": "classic-coat",
+    "description": "Timeless Textured Button-Down Coat",
+    "type": "hoodie",
+    "categories": ["clothing", "hoodie"],
+    "forced_new": true,
+    "sizes": ["S", "M", "L"],
+    "colors": ["Hunter", "Emerald", "Coral", "Purple", "Ivory"],
+    "images": [
+      {
+        "main": "/assets/img/cloth-20-hunter.jpg",
+        "second": "",
+        "color": "Hunter"
+      },{
+        "main": "/assets/img/cloth-20-emerald.jpg",
+        "second": "",
+        "color": "Emerald"
+      },{
+        "main": "/assets/img/cloth-20-coral.jpg",
+        "second": "",
+        "color": "Coral"
+      },{
+        "main": "/assets/img/cloth-20-purple.jpg",
+        "second": "",
+        "color": "Purple"
+      },{
+        "main": "/assets/img/cloth-20-ivory.jpg",
+        "second": "",
+        "color": "Ivory"
+      }
+    ],
+    "stock": {
+      "XS": { "emerald": 5, "black": 3 },
+      "S": { "emerald": 10, "black": 8 },
+      "M": { "emerald": 7, "black": 6 },
+      "L": { "emerald": 4, "black": 2 }
+    },
+    "price": 25000,
+    "discount_percent": 10,
+    "lists": [
+      {
+        "title": "PRODUCT DETAILS",
+        "descriptionLists": [
+          "Brand: Ranoura",
+          "Material: Fabric",
+          "Fit: Tight to boy",
+          "NeckLine: None",
+          "Sleeves: Yes",
+          "Design: Italic"
+        ]
+      },{
+        "title": "SIZE INFO",
+        "descriptionLists": [
+          "True to size.",
+          "XS: 0",
+          "S: 0-2",
+          "M: 2-4",
+          "L: 4-6",
+          "XL: 6-9"
+        ]
+      },{
+        "title": "ABOUT RANOURA✧･ﾟ*",
+        "descriptionLists": [
+          "Welcome to Ranoura – where elegance meets excellence. At Ranoura, we pride ourselves on crafting garments from the finest high-end fabrics, designed for those who appreciate quality, style, and sophistication. Each piece is meticulously tailored to provide a perfect blend of comfort and luxury, ensuring you feel confident and radiant in every moment. Discover timeless designs and impeccable craftsmanship that redefine fashion, only at Ranoura."
+        ]
+      },{
+        "title": "DELIVERY",
+        "descriptionLists": [
+          "Get your favorite Ranoura pieces delivered straight to your doorstep! Enjoy fast and reliable shipping with options for standard delivery (three to five business days) or express delivery (one to two business days) for those last-minute style needs. We carefully package every item to ensure it arrives in perfect condition, ready to shine in your wardrobe."
+        ]
+      },{
+        "title": "RETURNS",
+        "descriptionLists": [
+          "At Ranoura, your satisfaction is our priority. If something isn't quite right, you can easily return it within fourteen days of receiving your order. Items must be unworn, unwashed, and with original tags attached. Simply follow our hassle-free returns process, and we'll ensure you get a refund or exchange as quickly as possible."
+        ]
+      }
+    ]
+  },{
+    "id": 21,
+    "name": "Varsity Cardigan",
+    "slug": "varsity-cardigan",
+    "description": "Trendy Graphic Patch Button-Down Cardigan",
+    "type": "jackets",
+    "categories": ["clothing", "jackets"],
+    "forced_new": false,
+    "sizes": ["S", "M", "L"],
+    "colors": ["Black"],
+    "images": [
+      {
+        "main": "/assets/img/cloth-21-black.jpg",
+        "second": "/assets/img/cloth-21-black-view-b.jpg",
+        "color": "Black"
+      }
+    ],
+    "stock": {
+      "XS": { "emerald": 5, "black": 3 },
+      "S": { "emerald": 10, "black": 8 },
+      "M": { "emerald": 7, "black": 6 },
+      "L": { "emerald": 4, "black": 2 }
+    },
+    "price": 15000,
+    "discount_percent": 0,
+    "lists": [
+      {
+        "title": "PRODUCT DETAILS",
+        "descriptionLists": [
+          "Brand: Ranoura",
+          "Material: Fabric",
+          "Fit: Tight to boy",
+          "NeckLine: None",
+          "Sleeves: Yes",
+          "Design: Italic"
+        ]
+      },{
+        "title": "SIZE INFO",
+        "descriptionLists": [
+          "True to size.",
+          "XS: 0",
+          "S: 0-2",
+          "M: 2-4",
+          "L: 4-6",
           "XL: 6-9"
         ]
       },{
