@@ -8,13 +8,12 @@ type Props = {
   className?: string;
   width?: string;
   height?: string;
-  product?: any;
   colorsArray?: string[];
   currentColor?: any;
   productId?: number;
 }
 
-export default function ColorPallete ({ className = '', currentColor, width = 'w-4', height = 'h-4', product, productId, colorsArray = [] }: Props) {
+export default function ColorPallete ({ className = '', currentColor, width = 'w-4', height = 'h-4', productId, colorsArray = [] }: Props) {
 
   const [ selectedColor, setSelectedColor ] = useState<string>("");
   const [ clickedColor, setClickedColor ] = useState<string>("");
@@ -36,13 +35,19 @@ export default function ColorPallete ({ className = '', currentColor, width = 'w
         <li
           className={`
             relative ${width} ${height} p-1 border-solid
-            rounded-full cursor-pointer
+            rounded-full cursor-pointer drop-shadow-md
+            
             before:content-[''] before:absolute before:top-1/2 before:left-1/2
             before:translate-x-[-50%] before:translate-y-[-50%]
             before:w-[calc(100%+8px)] before:h-[calc(100%+8px)]
             before:border-solid
             before:border-[1px] before:rounded-full 
-            hover:before:opacity-100
+
+            after:content-[''] after:absolute after:top-1/2 after:left-1/2
+            after:translate-x-[-50%] after:translate-y-[-50%]
+            after:w-[calc(100%+8px)] after:h-[calc(100%+8px)]
+            after:bg-transparent after:rounded-full after:z-[-1]
+            
             ${className}
             ${clickedColor === color 
               ? `before:border-heading`

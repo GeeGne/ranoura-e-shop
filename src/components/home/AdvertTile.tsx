@@ -128,7 +128,6 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
           if (-1 * (val + liRefWidth + gap) <= 0) { 
             setLeftArrowInactive(true);
             setRightArrowInactive(false);
-
             return 0;
           };
 
@@ -297,19 +296,19 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
                   data-product-id={product.id}
                   ref={ (el: any) => {if (mainImgRefs.current) {mainImgRefs.current[i] = el}} }
                 />
-                  <img 
-                    className={`
-                      absolute top-0 left-0 w-full h-full 
-                      object-cover object-center rounded-lg z-[5] overflow-hidden
-                      opacity-0 peer-hover:opacity-100 group-hover:opacity-100
-                      blur-[20px] peer-hover:blur-[0px] group-hover:blur-[0px]
-                      transition-all ease-in duration-200
-                    `}
-                    src={getImgUrls(product.images)?.second}
-                    alt="Image"
-                    data-product-id={product.id}
-                    ref={ (el: any) => { if (secondImgRefs.current) {secondImgRefs.current[i] = el}} }
-                  />            
+                <img 
+                  className={`
+                    absolute top-0 left-0 w-full h-full 
+                    object-cover object-center rounded-lg z-[5] overflow-hidden
+                    opacity-0 peer-hover:opacity-100 group-hover:opacity-100
+                    blur-[20px] peer-hover:blur-[0px] group-hover:blur-[0px]
+                    transition-all ease-in duration-200
+                  `}
+                  src={getImgUrls(product.images)?.second}
+                  alt="Image"
+                  data-product-id={product.id}
+                  ref={ (el: any) => { if (secondImgRefs.current) {secondImgRefs.current[i] = el}} }
+                />            
                 <div
                   className="absolute top-0 left-0 flex flex-col gap-4 p-2 z-[10] drop-shadow-md"
                 >

@@ -56,7 +56,7 @@ export default function page () {
   }, []);
 
   const getImagesUrls = (array: any[] ) => 
-    array?.reduce((acc: any[] , itm) => [...acc, itm.main, itm.second], []);
+    array?.reduce((acc: any[] , itm) => itm.second ? [...acc, itm.main, itm.second] : [...acc, itm.main], []);
 
   const onColorChange = () => {
 
