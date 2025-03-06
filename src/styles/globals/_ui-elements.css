@@ -201,3 +201,12 @@
     before:w-8 before:h-[3px] before:bg-transparent before:hover:bg-inbetween before:rounded-full
     before:transition-all before:duration-300 before:ease-in-out 
 }
+
+.advert-picked-image {
+  color: var(--font-heading-color) !important;
+  background-color: var(--font-heading-invert-color) !important;
+  
+  &:hover {
+    background-color: var(--font-heading-invert-color) !important;
+  }    
+}

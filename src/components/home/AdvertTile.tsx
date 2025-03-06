@@ -19,6 +19,7 @@ import FlowerLines from '@/components/svgs/FlowerLines';
 import FoundationBurstSale from '@/components/svgs/FoundationBurstSale';
 import PepiconsPencilOpenCircleFilled from '@/components/svgs/PepiconsPencilOpenCircleFilled';
 import LineMdArrowsDiagonalRotated from '@/components/svgs/LineMdArrowsDiagonalRotated';
+import LineMdImageTwotone from '@/components/svgs/LineMdImageTwotone';
 import New from '@/components/svgs/New';
 
 // ASSETS
@@ -78,6 +79,9 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
   const liRefs = useRef<(HTMLElement | null)[]>([]);
   const mainImgRefs = useRef<(HTMLElement | null)[]>([]);
   const secondImgRefs = useRef<(HTMLElement | null)[]>([]);
+  const imgAorBRefs = useRef<(HTMLElement | null)[]>([]);
+  const aBtnRefs = useRef<(HTMLElement | null)[]>([]);
+  const bBtnRefs = useRef<(HTMLElement | null)[]>([]);
 
   const getImgUrl = (imgArray: any) => imgArray.find((itm: any) => itm.color === selectedColor);
 
@@ -102,9 +106,22 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
 
     if (getEL(secondImgRefs.current)) {
       const isSecondImgExist = !!getProduct()?.images.find(itm => itm.color === color)?.second;
-      if (!isSecondImgExist) return getEL(secondImgRefs.current).style.display = 'none';
+      if (!isSecondImgExist) { 
+        getEL(secondImgRefs.current).style.display = 'none'
+        getEL(imgAorBRefs.current).style.display = 'none'
+        return;
+      };
+
+      // Reset the A & B Button back to A along with main image
+      getEL(aBtnRefs.current).classList.add('advert-picked-image');
+      getEL(bBtnRefs.current).classList.remove('advert-picked-image');
+      if (getEL(secondImgRefs.current)) getEL(secondImgRefs.current).style.opacity = '0'
+      if (getEL(secondImgRefs.current)) getEL(secondImgRefs.current).style.filter = 'blur(20px)'
+
+      // Add the Second Image if exists
       getEL(secondImgRefs.current).style.display = 'inline';
       getEL(secondImgRefs.current).src = getProduct()?.images.find(itm => itm.color === color)?.second
+      getEL(imgAorBRefs.current).style.display = 'flex'
     };
   }
   const handleClick = (e: React.MouseEvent<HTMLElement | any>) => {
@@ -118,6 +135,9 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
     const totalTiles = array.length - 1
     const scrollTotalWidth = ulRefWidth / (totalTiles) + gap;
 
+    const getProduct = () => products.find(product => product.id === productId);
+    const getEL = (refs: ReactNode[] | any[]) => refs.find((el) => Number(el.dataset.productId) === Number(productId));
+
     switch (type) {
       case 'navigate_to_category':
       case 'navigate_to_product':
@@ -126,7 +146,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
         , 200);
         break;
       case 'product_img_wrapper_is_clicked':
-        setImgScaleToggle(val => val === Number(index) ? false : Number(index));
+        // setImgScaleToggle(val => val === Number(index) ? false : Number(index));
         break;
       case 'scroll_left_button_is_clicked':
         setScrollWidth((val: number) => {
@@ -180,8 +200,22 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
             ? favourites.filter(productID => productID !== Number(productId))
             : [...favourites, Number(productId)] 
         )
-
         break;
+        case'a_button_is_clicked':
+          if (getEL(aBtnRefs.current)) getEL(aBtnRefs.current).classList.add('advert-picked-image');
+          if (getEL(bBtnRefs.current)) getEL(bBtnRefs.current).classList.remove('advert-picked-image');
+
+          if (getEL(secondImgRefs.current)) getEL(secondImgRefs.current).style.opacity = '0'
+          if (getEL(secondImgRefs.current)) getEL(secondImgRefs.current).style.filter = 'blur(20px)'
+          break;
+        case'b_button_is_clicked':
+          // if (getEL(secondImgRefs.current)) getEL(secondImgRefs.current).style.display = 'initial'
+          if (getEL(aBtnRefs.current)) getEL(aBtnRefs.current).classList.remove('advert-picked-image');
+          if (getEL(bBtnRefs.current)) getEL(bBtnRefs.current).classList.add('advert-picked-image');
+
+          if (getEL(secondImgRefs.current)) getEL(secondImgRefs.current).style.opacity = '1'
+          if (getEL(secondImgRefs.current)) getEL(secondImgRefs.current).style.filter = 'blur(0px)'
+          break;
       default:
         console.error('Unknown type: ', type);
     }
@@ -287,7 +321,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
             >
               <div
                 className={`
-                  relative group cursor-pointer rounded-lg
+                  relative cursor-pointer rounded-lg
                   transition-all duraiton-200 ease-in-out overflow-hidden
                 `}
                 data-type="product_img_wrapper_is_clicked"
@@ -297,7 +331,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
                 <img 
                   className={`
                     w-full peer aspect-[2/3] object-cover object-center rounded-lg
-                    transition-all ease-in-out duration-300
+                    transition-all ease-in-out duration-200
                     ${imgScaleToggle === i? 'scale-[130%]' : 'scale-[100%]'}  
                   `}
                   src={getImgUrl(product.images)?.main}
@@ -311,7 +345,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
                     object-cover object-center z-[5] overflow-hidden
                     opacity-0 peer-hover:opacity-100 group-hover:opacity-100
                     blur-[20px] peer-hover:blur-[0px] group-hover:blur-[0px]
-                    transition-all ease-in-out duration-300
+                    transition-all ease-in-out duration-200
                     ${imgScaleToggle === i? 'scale-[130%]' : 'scale-[100%]'}  
                   `}
                   src={getImgUrl(product.images)?.second}
@@ -414,26 +448,64 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
                 </div>
                 <nav
                   className={`
-                    absolute bottom-2 right-2 z-[10]
-                    flex flex-col
+                    absolute bottom-0 right-0 p-2 z-[10]
+                    flex flex-row w-full justify-between items-end
                   `}
                 >
                   <LineMdArrowsDiagonalRotated 
                     className={`
-                      w-8 h-8 transform-style-3d transform group-hover:transform-style-3d 
-                      cursor-pointer rounded-full p-1
+                      order-2 w-8 h-8 transform-style-3d transform group-hover:transform-style-3d 
+                      cursor-pointer rounded-full p-1 ml-auto
                       ${imgScaleToggle === i ? 'text-heading-invert bg-heading' : 'text-body hover:text-heading'}
                     `}
+                    role="button"
                     data-type="scale_button_is_clicked"
                     data-index={i}
                     onClick={handleClick}
                   />
+                  <div
+                    className="
+                      order-1 flex flex-row items-center gap-2 
+                      rounded-lg border-solid border-heading-invert border-[2px] p-1 backdrop-brightness-[70%]
+                    "
+                    data-product-id={product.id}
+                    ref={ (el: any) => {if (imgAorBRefs.current) {imgAorBRefs.current[i] = el} }}
+                  >
+                    <LineMdImageTwotone className="w-5 h-5 text-heading-invert" />
+                    <button
+                      className="
+                        advert-picked-image text-xs font-bold px-[4px] rounded-full 
+                        text-heading-invert hover:bg-heading 
+                        border-solid border-heading-invert border-[2px]
+                      "
+                      data-type="a_button_is_clicked"
+                      data-product-id={product.id}
+                      onClick={handleClick}
+                      ref={ (el: any) => {if (aBtnRefs.current) {aBtnRefs.current[i] = el} }}
+                    >
+                      A                     
+                    </button>
+                    <button
+                      className="
+                        text-xs font-bold px-[4px] rounded-full 
+                        text-heading-invert hover:bg-heading 
+                        border-solid border-heading-invert border-[2px]
+                      "
+                      data-type="b_button_is_clicked"
+                      data-product-id={product.id}
+                      onClick={handleClick}
+                      ref={ (el: any) => {if (bBtnRefs.current) {bBtnRefs.current[i] = el} }}
+                    >
+                      B                     
+                    </button>
+                  </div>
                 </nav>
               </div>
               <Link
                 className="text-heading text-base mb-auto"
                 href={`/shop/${product.id}/${strSpaceToHyphen(product.name)}`}
                 data-type="navigate_to_product"
+                data-product-id={product.id}
                 onClick={handleClick}
               >
                 {product.name}
