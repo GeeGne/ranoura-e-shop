@@ -76,8 +76,8 @@ export default function CategoryPickerV2 () {
           >
             <Link
               className={`
-                group relative flex items-center justify-center w-full h-full aspect-[1/1] cursor-pointer bg-500 drop-shadow-md hover:z-[5]
-                hover:scale-[110%]
+                group relative flex items-center justify-center overflow-hidden
+                w-full h-full aspect-[1/1] cursor-pointer bg-500 drop-shadow-md hover:z-[5]
                 transition-all duraiton-300 ease-out
               `}
               href={`/shop/category/${itm.type}/${itm.slug}`}
@@ -97,7 +97,9 @@ export default function CategoryPickerV2 () {
               src={itm.image}
               alt="image"
               className="
-                w-full h-full object-cover object-center brightness-[95%] group-hover:brightness-[100%] group-hover:contrast-[100%]
+                w-full h-full object-cover object-center 
+                brightness-[95%] group-hover:brightness-[100%] group-hover:contrast-[100%]
+                group-hover:scale-[110%]
                 transition-all duraiton-300 ease-out
               "
             />

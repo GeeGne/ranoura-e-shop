@@ -79,7 +79,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
   const mainImgRefs = useRef<(HTMLElement | null)[]>([]);
   const secondImgRefs = useRef<(HTMLElement | null)[]>([]);
 
-  const getImgUrls = (imgArray: any) => imgArray.find((itm: any) => itm.color === selectedColor);
+  const getImgUrl = (imgArray: any) => imgArray.find((itm: any) => itm.color === selectedColor);
 
   const displayPrideConfetti = () => {
     setTimeout(() => {
@@ -99,8 +99,13 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
     
     if (getEL(mainImgRefs.current))
       getEL(mainImgRefs.current).src = getProduct()?.images.find(itm => itm.color === color)?.main;
-    if (getEL(secondImgRefs.current))
-      getEL(secondImgRefs.current).src = getProduct()?.images.find(itm => itm.color === color)?.second;
+
+    if (getEL(secondImgRefs.current)) {
+      const isSecondImgExist = !!getProduct()?.images.find(itm => itm.color === color)?.second;
+      if (!isSecondImgExist) return getEL(secondImgRefs.current).style.display = 'none';
+      getEL(secondImgRefs.current).style.display = 'inline';
+      getEL(secondImgRefs.current).src = getProduct()?.images.find(itm => itm.color === color)?.second
+    };
   }
   const handleClick = (e: React.MouseEvent<HTMLElement | any>) => {
     e.stopPropagation();
@@ -190,6 +195,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
   // console.log('ulRefScrollWidth', ulRefScrollWidth)
   // console.log('favourites: ', favourites);
   // console.log('layoutRef: ', layoutRef);
+  // console.log('getImgUrls(product.images)?.second: ', getImgUrls(products[1].images)?.second);
   
   return (
     <section
@@ -281,30 +287,34 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
             >
               <div
                 className={`
-                  relative group cursor-pointer
-                  transition-all duraiton-200 ease-in-out
-                  ${imgScaleToggle === i? 'scale-[130%] z-[10]' : 'scale-[100%]'}  
+                  relative group cursor-pointer rounded-lg
+                  transition-all duraiton-200 ease-in-out overflow-hidden
                 `}
                 data-type="product_img_wrapper_is_clicked"
                 data-index={i}
                 onClick={handleClick}
               >
-                <DisplayImg 
-                  className="w-full peer aspect-[2/3] object-cover object-center rounded-lg"
-                  src={getImgUrls(product.images)?.main}
+                <img 
+                  className={`
+                    w-full peer aspect-[2/3] object-cover object-center rounded-lg
+                    transition-all ease-in-out duration-300
+                    ${imgScaleToggle === i? 'scale-[130%]' : 'scale-[100%]'}  
+                  `}
+                  src={getImgUrl(product.images)?.main}
                   alt={product.name}
                   data-product-id={product.id}
                   ref={ (el: any) => {if (mainImgRefs.current) {mainImgRefs.current[i] = el}} }
                 />
                 <img 
                   className={`
-                    absolute top-0 left-0 w-full h-full 
-                    object-cover object-center rounded-lg z-[5] overflow-hidden
+                    absolute top-0 left-0 w-full h-full
+                    object-cover object-center z-[5] overflow-hidden
                     opacity-0 peer-hover:opacity-100 group-hover:opacity-100
                     blur-[20px] peer-hover:blur-[0px] group-hover:blur-[0px]
-                    transition-all ease-in duration-200
+                    transition-all ease-in-out duration-300
+                    ${imgScaleToggle === i? 'scale-[130%]' : 'scale-[100%]'}  
                   `}
-                  src={getImgUrls(product.images)?.second}
+                  src={getImgUrl(product.images)?.second}
                   alt="Image"
                   data-product-id={product.id}
                   ref={ (el: any) => { if (secondImgRefs.current) {secondImgRefs.current[i] = el}} }

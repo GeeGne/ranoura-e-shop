@@ -92,8 +92,13 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
     
     if (getEL(mainImgRefs.current))
       getEL(mainImgRefs.current).src = getProduct()?.images.find(itm => itm.color === color)?.main;
-    if (getEL(secondImgRefs.current))
-      getEL(secondImgRefs.current).src = getProduct()?.images.find(itm => itm.color === color)?.second;
+
+    if (getEL(secondImgRefs.current)) {
+      const isSecondImgExist = !!getProduct()?.images.find(itm => itm.color === color)?.second;
+      if (!isSecondImgExist) return getEL(secondImgRefs.current).style.display = 'none';
+      getEL(secondImgRefs.current).style.display = 'inline';
+      getEL(secondImgRefs.current).src = getProduct()?.images.find(itm => itm.color === color)?.second
+    };
   }
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -196,29 +201,33 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
           >
             <div
               className={`
-                relative group cursor-pointer
+                relative group cursor-pointer overflow-hidden
                 transition-all duraiton-200 ease-in-out
-                ${imgScaleToggle === i? 'scale-[130%] z-[10]' : 'scale-[100%]'}  
               `}
               data-type="navigate_to_product"
               data-index={i}
               onClick={handleClick}
             >
-              <DisplayImg 
-                className="w-full peer aspect-[2/3] object-cover object-center rounded-lg"
+              <img 
+                className={`
+                  w-full peer aspect-[2/3] object-cover object-center rounded-lg
+                  transition-all ease-in-out duration-300
+                  ${imgScaleToggle === i? 'scale-[130%]' : 'scale-[100%]'}  
+                `}
                 src={getImgUrls(product.images)?.main}
                 alt={product.name}
                 data-product-id={product.id}
                 ref={ (el: any) => {if (mainImgRefs.current) {mainImgRefs.current[i] = el}} }
               />
               <img 
-                className="
-                  absolute top-0 left-0 w-full h-full 
-                  object-cover object-center rounded-lg z-[5] overflow-hidden
+                className={`
+                  absolute top-0 left-0 w-full h-full
+                  object-cover object-center z-[5] overflow-hidden
                   opacity-0 peer-hover:opacity-100 group-hover:opacity-100
                   blur-[20px] peer-hover:blur-[0px] group-hover:blur-[0px]
-                  transition-all ease-in duration-200
-                "
+                  transition-all ease-in-out duration-300
+                  ${imgScaleToggle === i? 'scale-[130%]' : 'scale-[100%]'}  
+                `}
                 src={getImgUrls(product.images)?.second}
                 alt="Image"
                 data-product-id={product.id}

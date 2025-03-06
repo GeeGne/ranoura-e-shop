@@ -233,11 +233,11 @@
     "images": [
       {
         "main": "/assets/img/cloth-4-turquoise.jpg",
-        "second": "/assets/img/cloth-4-turquoise-view-b.jpg",
+        "second": "",
         "color": "Turquoise"
       },{
         "main": "/assets/img/cloth-4-hunter.jpg",
-        "second": "/assets/img/cloth-4-hunter-view-b.jpg",
+        "second": "",
         "color": "Hunter"
       },{
         "main": "/assets/img/cloth-4-wine.jpg",
