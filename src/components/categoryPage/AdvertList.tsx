@@ -22,6 +22,7 @@ import New from '@/components/svgs/New';
 import SquareLines from '@/components/svgs/SquareLines';
 import CircleLines from '@/components/svgs/CircleLines';
 import FlowerLines from '@/components/svgs/FlowerLines';
+import LineMdImageTwotone from '@/components/svgs/LineMdImageTwotone';
 
 // ASSETS
 const ramdanBanner = "/assets/img/ramadan-nights.webp";
@@ -71,8 +72,12 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
   const liRefs = useRef<(HTMLElement | null)[]>([]);
   const mainImgRefs = useRef<(HTMLElement | null)[]>([]);
   const secondImgRefs = useRef<(HTMLElement | null)[]>([]);
+  const imgAorBRefs = useRef<(HTMLElement | null)[]>([]);
+  const aBtnRefs = useRef<(HTMLElement | null)[]>([]);
+  const bBtnRefs = useRef<(HTMLElement | null)[]>([]);
 
-  const getImgUrls = (imgArray: any) => imgArray.find((itm: any) => itm.color === selectedColor);
+
+  const getImgUrl = (imgArray: any) => imgArray.find((itm: any) => itm.color === selectedColor);
 
   const displayPrideConfetti = () => {
     setTimeout(() => {
@@ -95,9 +100,22 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
 
     if (getEL(secondImgRefs.current)) {
       const isSecondImgExist = !!getProduct()?.images.find(itm => itm.color === color)?.second;
-      if (!isSecondImgExist) return getEL(secondImgRefs.current).style.display = 'none';
+      if (!isSecondImgExist) { 
+        getEL(secondImgRefs.current).style.display = 'none'
+        getEL(imgAorBRefs.current).style.display = 'none'
+        return;
+      };
+
+      // Reset the A & B Button back to A along with main image
+      getEL(aBtnRefs.current).classList.add('advert-picked-image');
+      getEL(bBtnRefs.current).classList.remove('advert-picked-image');
+      if (getEL(secondImgRefs.current)) getEL(secondImgRefs.current).style.opacity = '0'
+      if (getEL(secondImgRefs.current)) getEL(secondImgRefs.current).style.filter = 'blur(20px)'
+
+      // Add the Second Image if exists
       getEL(secondImgRefs.current).style.display = 'inline';
       getEL(secondImgRefs.current).src = getProduct()?.images.find(itm => itm.color === color)?.second
+      getEL(imgAorBRefs.current).style.display = 'flex'
     };
   }
 
@@ -111,6 +129,7 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
     const gap = parseFloat(getComputedStyle(ulRef.current).gap);
     const totalTiles = array.length - 1
     const scrollTotalWidth = ulRefWidth / (totalTiles) + gap;
+    const getEL = (refs: ReactNode[] | any[]) => refs.find((el) => Number(el.dataset.productId) === Number(productId));
 
     switch (type) {
       case 'navigate_to_product':
@@ -171,6 +190,21 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
             : [...favourites, Number(productId)] 
         )
         break;
+      case'a_button_is_clicked':
+        if (getEL(aBtnRefs.current)) getEL(aBtnRefs.current).classList.add('advert-picked-image');
+        if (getEL(bBtnRefs.current)) getEL(bBtnRefs.current).classList.remove('advert-picked-image');
+
+        if (getEL(secondImgRefs.current)) getEL(secondImgRefs.current).style.opacity = '0'
+        if (getEL(secondImgRefs.current)) getEL(secondImgRefs.current).style.filter = 'blur(20px)'
+        break;
+      case'b_button_is_clicked':
+        // if (getEL(secondImgRefs.current)) getEL(secondImgRefs.current).style.display = 'initial'
+        if (getEL(aBtnRefs.current)) getEL(aBtnRefs.current).classList.remove('advert-picked-image');
+        if (getEL(bBtnRefs.current)) getEL(bBtnRefs.current).classList.add('advert-picked-image');
+
+        if (getEL(secondImgRefs.current)) getEL(secondImgRefs.current).style.opacity = '1'
+        if (getEL(secondImgRefs.current)) getEL(secondImgRefs.current).style.filter = 'blur(0px)'
+        break;
       default:
         console.error('Unknown type: ', type);
     }
@@ -211,28 +245,29 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
               <img 
                 className={`
                   w-full peer aspect-[2/3] object-cover object-center rounded-lg
-                  transition-all ease-in-out duration-300
+                  transition-all ease-in-out duration-200
                   ${imgScaleToggle === i? 'scale-[130%]' : 'scale-[100%]'}  
                 `}
-                src={getImgUrls(product.images)?.main}
+                src={getImgUrl(product.images)?.main}
                 alt={product.name}
                 data-product-id={product.id}
                 ref={ (el: any) => {if (mainImgRefs.current) {mainImgRefs.current[i] = el}} }
               />
+
               <img 
                 className={`
                   absolute top-0 left-0 w-full h-full
                   object-cover object-center z-[5] overflow-hidden
                   opacity-0 peer-hover:opacity-100 group-hover:opacity-100
                   blur-[20px] peer-hover:blur-[0px] group-hover:blur-[0px]
-                  transition-all ease-in-out duration-300
+                  transition-all ease-in-out duration-200
                   ${imgScaleToggle === i? 'scale-[130%]' : 'scale-[100%]'}  
                 `}
-                src={getImgUrls(product.images)?.second}
+                src={getImgUrl(product.images)?.second}
                 alt="Image"
                 data-product-id={product.id}
                 ref={ (el: any) => { if (secondImgRefs.current) {secondImgRefs.current[i] = el}} }
-              />
+              />            
               <div
                 className="absolute top-0 left-0 flex flex-col gap-4 p-2 z-[10] drop-shadow-md"
               >
@@ -328,20 +363,63 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
               </div>
               <nav
               className={`
-                absolute bottom-2 right-2 z-[10]
-                flex flex-col
+                absolute bottom-0 right-0 p-2 z-[10]
+                flex flex-row w-full justify-between items-end
               `}
               >
                 <LineMdArrowsDiagonalRotated 
                   className={`
-                    w-8 h-8 transform-style-3d transform group-hover:transform-style-3d 
-                    cursor-pointer rounded-full p-1
+                    order-2 w-8 h-8 transform-style-3d transform group-hover:transform-style-3d 
+                    cursor-pointer rounded-full p-1 ml-auto
+                    transition-all ease-in-out duration-200
                     ${imgScaleToggle === i ? 'text-heading-invert bg-heading' : 'text-body hover:text-heading'}
                   `}
                   data-type="scale_button_is_clicked"
                   data-index={i}
                   onClick={(e: any) => { e.stopPropagation(); handleClick(e) }}
                 />
+                  <div
+                    className="
+                      order-1 flex flex-row items-center gap-2 
+                      rounded-lg border-solid border-heading-invert border-[2px] p-1 backdrop-brightness-[70%]
+                    "
+                    data-product-id={product.id}
+                    ref={ (el: any) => {if (imgAorBRefs.current) {imgAorBRefs.current[i] = el} }}
+                  >
+                    <LineMdImageTwotone 
+                      className="
+                        w-5 h-5 text-heading-invert 
+                      "
+                    />
+                    <button
+                      className="
+                        advert-picked-image text-xs font-bold px-[4px] rounded-full 
+                        text-heading-invert hover:bg-heading 
+                        border-solid border-heading-invert border-[2px]
+                        transition-all ease-in-out duration-200
+                      "
+                      data-type="a_button_is_clicked"
+                      data-product-id={product.id}
+                      onClick={handleClick}
+                      ref={ (el: any) => {if (aBtnRefs.current) {aBtnRefs.current[i] = el} }}
+                    >
+                      A                     
+                    </button>
+                    <button
+                      className="
+                        text-xs font-bold px-[4px] rounded-full 
+                        text-heading-invert hover:bg-heading 
+                        border-solid border-heading-invert border-[2px]
+                        transition-all ease-in-out duration-200
+                      "
+                      data-type="b_button_is_clicked"
+                      data-product-id={product.id}
+                      onClick={handleClick}
+                      ref={ (el: any) => {if (bBtnRefs.current) {bBtnRefs.current[i] = el} }}
+                    >
+                      B                     
+                    </button>
+                  </div>
               </nav>
             </div>
             <Link

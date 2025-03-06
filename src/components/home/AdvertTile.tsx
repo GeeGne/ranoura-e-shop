@@ -134,8 +134,6 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
     const gap = parseFloat(getComputedStyle(ulRef.current).gap);
     const totalTiles = array.length - 1
     const scrollTotalWidth = ulRefWidth / (totalTiles) + gap;
-
-    const getProduct = () => products.find(product => product.id === productId);
     const getEL = (refs: ReactNode[] | any[]) => refs.find((el) => Number(el.dataset.productId) === Number(productId));
 
     switch (type) {
@@ -456,6 +454,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
                     className={`
                       order-2 w-8 h-8 transform-style-3d transform group-hover:transform-style-3d 
                       cursor-pointer rounded-full p-1 ml-auto
+                      transition-all ease-in-out duration-200
                       ${imgScaleToggle === i ? 'text-heading-invert bg-heading' : 'text-body hover:text-heading'}
                     `}
                     role="button"
@@ -477,6 +476,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
                         advert-picked-image text-xs font-bold px-[4px] rounded-full 
                         text-heading-invert hover:bg-heading 
                         border-solid border-heading-invert border-[2px]
+                        transition-all ease-in-out duration-200
                       "
                       data-type="a_button_is_clicked"
                       data-product-id={product.id}
@@ -490,6 +490,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
                         text-xs font-bold px-[4px] rounded-full 
                         text-heading-invert hover:bg-heading 
                         border-solid border-heading-invert border-[2px]
+                        transition-all ease-in-out duration-200
                       "
                       data-type="b_button_is_clicked"
                       data-product-id={product.id}
