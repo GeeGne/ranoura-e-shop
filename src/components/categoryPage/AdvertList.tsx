@@ -133,7 +133,7 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
 
     switch (type) {
       case 'navigate_to_product':
-        setImgScaleToggle(val => val === Number(index) ? false : Number(index))
+        // setImgScaleToggle(val => val === Number(index) ? false : Number(index))
         break;
       case 'scroll_left_button_is_clicked':
         setScrollWidth((val: number) => {
@@ -161,9 +161,6 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
           setRightArrowInactive(false);
           return val - liRefWidth - gap
         });
-        break;
-      case 'scale_button_is_clicked':
-        setImgScaleToggle(val => val === Number(index) ? false : Number(index))
         break;
       case 'scale_button_is_clicked':
         setImgScaleToggle(val => val === Number(index) ? false : Number(index))
@@ -235,39 +232,41 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
           >
             <div
               className={`
-                relative group cursor-pointer overflow-hidden
+                relative group cursor-pointer 
                 transition-all duraiton-200 ease-in-out
               `}
               data-type="navigate_to_product"
               data-index={i}
               onClick={handleClick}
             >
-              <img 
-                className={`
-                  w-full peer aspect-[2/3] object-cover object-center rounded-lg
-                  transition-all ease-in-out duration-200
-                  ${imgScaleToggle === i? 'scale-[130%]' : 'scale-[100%]'}  
-                `}
-                src={getImgUrl(product.images)?.main}
-                alt={product.name}
-                data-product-id={product.id}
-                ref={ (el: any) => {if (mainImgRefs.current) {mainImgRefs.current[i] = el}} }
-              />
+              <div className="w-full h-full overflow-hidden">
+                <img 
+                  className={`
+                    w-full peer aspect-[2/3] object-cover object-center rounded-lg
+                    transition-all ease-in-out duration-200
+                    ${imgScaleToggle === i? 'scale-[130%]' : 'scale-[100%]'}  
+                  `}
+                  src={getImgUrl(product.images)?.main}
+                  alt={product.name}
+                  data-product-id={product.id}
+                  ref={ (el: any) => {if (mainImgRefs.current) {mainImgRefs.current[i] = el}} }
+                />
 
-              <img 
-                className={`
-                  absolute top-0 left-0 w-full h-full
-                  object-cover object-center z-[5] overflow-hidden
-                  opacity-0 peer-hover:opacity-100 group-hover:opacity-100
-                  blur-[20px] peer-hover:blur-[0px] group-hover:blur-[0px]
-                  transition-all ease-in-out duration-200
-                  ${imgScaleToggle === i? 'scale-[130%]' : 'scale-[100%]'}  
-                `}
-                src={getImgUrl(product.images)?.second}
-                alt="Image"
-                data-product-id={product.id}
-                ref={ (el: any) => { if (secondImgRefs.current) {secondImgRefs.current[i] = el}} }
-              />            
+                <img 
+                  className={`
+                    absolute top-0 left-0 w-full h-full
+                    object-cover object-center z-[5] overflow-hidden
+                    opacity-0 peer-hover:opacity-100 group-hover:opacity-100
+                    blur-[20px] peer-hover:blur-[0px] group-hover:blur-[0px]
+                    transition-all ease-in-out duration-200
+                    ${imgScaleToggle === i? 'scale-[130%]' : 'scale-[100%]'}  
+                  `}
+                  src={getImgUrl(product.images)?.second}
+                  alt="Image"
+                  data-product-id={product.id}
+                  ref={ (el: any) => { if (secondImgRefs.current) {secondImgRefs.current[i] = el}} }
+                />            
+              </div>
               <div
                 className="absolute top-0 left-0 flex flex-col gap-4 p-2 z-[10] drop-shadow-md"
               >
@@ -362,10 +361,10 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
                 }
               </div>
               <nav
-              className={`
-                absolute bottom-0 right-0 p-2 z-[10]
-                flex flex-row w-full justify-between items-end
-              `}
+                className={`
+                  absolute bottom-0 right-0 p-2 z-[10]
+                  flex flex-row w-full justify-between items-end
+                `}
               >
                 <LineMdArrowsDiagonalRotated 
                   className={`
@@ -374,9 +373,9 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
                     transition-all ease-in-out duration-200
                     ${imgScaleToggle === i ? 'text-heading-invert bg-heading' : 'text-body hover:text-heading'}
                   `}
+                  role="button"
                   data-type="scale_button_is_clicked"
                   data-index={i}
-                  onClick={(e: any) => { e.stopPropagation(); handleClick(e) }}
                 />
                   <div
                     className="
