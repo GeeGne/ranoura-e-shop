@@ -5,6 +5,9 @@ import ArrowUp from "@/components/svgs/ArrowUp";
 // STORES
 import { useFilterWindowStore } from '@/stores/index';
 
+// JSON
+import colors from '@/json/colors.json';
+
 export default function FilterWindow () {
   const toggle = useFilterWindowStore(state => state.toggle);
   const setToggle = useFilterWindowStore(state => state.setToggle);
@@ -136,13 +139,7 @@ export default function FilterWindow () {
         <FilterExpandWrapper 
           sectionName="COLORS"
           sectionKey="colors"
-          categoriesArray={[
-            {title: 'Black', key: 'black', hex: '#000000'}, 
-            {title: 'White', key: 'white', hex: '#ffffff'}, 
-            {title: 'Grey', key: 'grey', hex: '#7b7b7b'},
-            {title: 'Blue', key: 'blue', hex: '#1d11ff'},
-            {title: 'Pink', key: 'pink', hex: '#f410ff'}
-          ]}
+          categoriesArray={ colors.map(({name, hex}) => ( { title: name, key:name, hex } )) }
         />
         <FilterExpandWrapper 
           sectionName="PRICE"

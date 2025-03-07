@@ -119,7 +119,7 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
     };
   }
 
-  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+  const handleClick = (e: React.MouseEvent<HTMLElement> | any) => {
     e.stopPropagation();
 
     const { type, index, productUri, productId, productName } = e.currentTarget.dataset;
@@ -376,6 +376,7 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
                   role="button"
                   data-type="scale_button_is_clicked"
                   data-index={i}
+                  onClick={handleClick}
                 />
                   <div
                     className="

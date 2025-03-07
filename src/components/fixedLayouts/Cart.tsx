@@ -369,7 +369,7 @@ export default function Cart () {
           <li className="flex">
             <DisplayImg
               className="w-[100px] md:w-[200px] aspect-[2/3] object-cover rounded-lg"
-              src={outfit1}
+              src={outfit2}
             />
             <div className="flex flex-col flex-1 px-4">
               <div className="flex text-heading text-lg font-bold justify-between">

@@ -335,6 +335,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
                     `}
                     src={getImgUrl(product.images)?.main}
                     alt={product.name}
+                    loading="lazy"
                     data-product-id={product.id}
                     ref={ (el: any) => {if (mainImgRefs.current) {mainImgRefs.current[i] = el}} }
                   />
@@ -349,6 +350,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
                     `}
                     src={getImgUrl(product.images)?.second}
                     alt="Image"
+                    loading="lazy"
                     data-product-id={product.id}
                     ref={ (el: any) => { if (secondImgRefs.current) {secondImgRefs.current[i] = el}} }
                   />            
