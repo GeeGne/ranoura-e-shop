@@ -23,6 +23,11 @@ export default function page () {
   const { categoryAndSubSlug } = useParams();
   const isCategory = categoryAndSubSlug?.length === 1;
 
+  const mainSlug = () => {
+    if (isCategory) return categoryAndSubSlug[0];
+    if (categoryAndSubSlug?.length === 2) return categoryAndSubSlug[1];
+  };
+
   const setTabName = useTabNameStore((state: any) => state.setTabName);
 
   const getName = (array: any[], slug?: string) => array?.find((itm: any) => itm.slug === slug)?.name;
@@ -53,10 +58,11 @@ export default function page () {
     ]
   };
 
-  const getTitle = () =>{ 
-    if (isCategory) return getName(categories, categoryAndSubSlug[0]);
-    if (categoryAndSubSlug?.length === 2) return getName(subCategories, categoryAndSubSlug[1])
-  }
+  const filterProductsBasedOnSlug = () => 
+    products.filter(product => 
+      product.categories.some(prodCat => prodCat === mainSlug())
+    );
+
   useEffect(() => {
     setTabName('product');
   }, []);
@@ -76,12 +82,17 @@ export default function page () {
       />
       <CategoryTitle 
         className="px-4 py-8 w-auto max-w-[auto] mx-auto"
-        title={getTitle()}
+        name={isCategory 
+          ? getName(categories, mainSlug()) 
+          : getName(subCategories, mainSlug())
+        }
       />
       <FilterTile 
         className="px-4 w-auto max-w-[auto] mx-auto"
       />
-      <AdvertList />
+      <AdvertList 
+        products={filterProductsBasedOnSlug()}
+      />
     </div>
   )
 }

@@ -42,12 +42,14 @@ export default function page () {
       />
       <CategoryTitle 
         className="px-4 py-8 w-auto max-w-[auto] mx-auto"
-        title={"All Clothes"}
+        name={"All Clothes"}
       />
       <FilterTile 
         className="px-4 w-auto max-w-[auto] mx-auto"
       />
-      <AdvertList />
+      <AdvertList 
+        products={products}
+      />
     </div>
   )
 }

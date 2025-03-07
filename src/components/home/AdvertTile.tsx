@@ -56,7 +56,9 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
   const router = useRouter();
   const array = [1, 2, 3, 4];
   const selectedColor = "green";
-
+  const filterProductsBasedOnSlug = () => products.filter(product => 
+    product.categories.some(prodCat => prodCat === slug)
+  );
   const favourites = useFavouritesStore(state => state.favourites);
   const setFavourites = useFavouritesStore(state => state.setFavourites);
   
@@ -310,7 +312,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
           style={{transform: `translateX(${scrollWidth}px)`}}
           ref={ulRef}
         >
-          {products.map((product, i) => 
+          {filterProductsBasedOnSlug().map((product, i) => 
             <li
               className="flex flex-col shrink-0 gap-2 w-[250px] md:w-[350px] lg:w-[400px]"
               key={i}
@@ -326,10 +328,10 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
                 data-index={i}
                 onClick={handleClick}
               >
-                <div className="w-full h-full overflow-hidden">
+                <div className="relative w-full h-full rounded-lg overflow-hidden">
                   <img 
                     className={`
-                      w-full peer aspect-[2/3] object-cover object-center rounded-lg
+                      w-full peer aspect-[2/3] object-cover object-center
                       transition-all ease-in-out duration-200
                       ${imgScaleToggle === i? 'scale-[130%]' : 'scale-[100%]'}  
                     `}
@@ -338,7 +340,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
                     loading="lazy"
                     data-product-id={product.id}
                     ref={ (el: any) => {if (mainImgRefs.current) {mainImgRefs.current[i] = el}} }
-                  />
+   rounded-lg                />
                   <img 
                     className={`
                       absolute top-0 left-0 w-full h-full

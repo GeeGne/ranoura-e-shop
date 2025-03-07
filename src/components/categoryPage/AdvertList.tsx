@@ -32,7 +32,7 @@ const outfit2 = "assets/img/outfit-2.jpg"
 const outfit3 = "assets/img/outfit-3.jpg"
 
 // JSON
-import products from "@/json/products.json";
+// import products from "@/json/products.json";
 
 // UTILS
 import strSpaceToHyphen from '@/utils/strSpaceToHyphen';
@@ -44,10 +44,10 @@ import { useFavouritesStore, useFavouriteConfettiToggle, useAlertMessageStore } 
 import Confetti from "react-canvas-confetti/dist/presets/explosion";
 
 type Props = {
-  title?: string;
+  products?: any[];
 }
 
-export default function AdvertList ({ title = 'COLLECTION' }: Props) {
+export default function AdvertList ({ products = [] }: Props) {
   
   const router = useRouter();
   const array = [1, 2, 3, 4];
@@ -96,10 +96,10 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
     const getEL = (refs: ReactNode[] | any[]) => refs.find((el) => Number(el.dataset.productId) === productId);
     
     if (getEL(mainImgRefs.current))
-      getEL(mainImgRefs.current).src = getProduct()?.images.find(itm => itm.color === color)?.main;
+      getEL(mainImgRefs.current).src = getProduct()?.images.find((itm: any) => itm.color === color)?.main;
 
     if (getEL(secondImgRefs.current)) {
-      const isSecondImgExist = !!getProduct()?.images.find(itm => itm.color === color)?.second;
+      const isSecondImgExist = !!getProduct()?.images.find((itm: any) => itm.color === color)?.second;
       if (!isSecondImgExist) { 
         getEL(secondImgRefs.current).style.display = 'none'
         getEL(imgAorBRefs.current).style.display = 'none'
@@ -114,7 +114,7 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
 
       // Add the Second Image if exists
       getEL(secondImgRefs.current).style.display = 'inline';
-      getEL(secondImgRefs.current).src = getProduct()?.images.find(itm => itm.color === color)?.second
+      getEL(secondImgRefs.current).src = getProduct()?.images.find((itm: any) => itm.color === color)?.second
       getEL(imgAorBRefs.current).style.display = 'flex'
     };
   }
@@ -239,15 +239,16 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
               data-index={i}
               onClick={handleClick}
             >
-              <div className="w-full h-full overflow-hidden">
+              <div className="relative w-full h-full rounded-lg overflow-hidden">
                 <img 
                   className={`
-                    w-full peer aspect-[2/3] object-cover object-center rounded-lg
+                    w-full peer aspect-[2/3] object-cover object-center
                     transition-all ease-in-out duration-200
                     ${imgScaleToggle === i? 'scale-[130%]' : 'scale-[100%]'}  
                   `}
                   src={getImgUrl(product.images)?.main}
                   alt={product.name}
+                  loading="lazy"
                   data-product-id={product.id}
                   ref={ (el: any) => {if (mainImgRefs.current) {mainImgRefs.current[i] = el}} }
                 />
@@ -263,6 +264,7 @@ export default function AdvertList ({ title = 'COLLECTION' }: Props) {
                   `}
                   src={getImgUrl(product.images)?.second}
                   alt="Image"
+                  loading="lazy"
                   data-product-id={product.id}
                   ref={ (el: any) => { if (secondImgRefs.current) {secondImgRefs.current[i] = el}} }
                 />            
