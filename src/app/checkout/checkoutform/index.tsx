@@ -36,6 +36,7 @@ export default function CheckoutForm ({ className, ...props }: Props) {
   });
   
   const orderSummaryRef = useRef<HTMLElement>(null);
+  const deliverToRef = useRef<HTMLElement | any>(null);
   const getRefTotalHeight = (ref: any) => ref.current?.scrollHeight;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -48,12 +49,15 @@ export default function CheckoutForm ({ className, ...props }: Props) {
     switch (type) {
       case 'toggle_orderSummary_button_is_clicked':
         setToggleOrderSummary(val => !val);
+
         break;
       case 'deliverTo_list_is_clicked':
         setSelectedDeliverToCity({
           city,
           shippingFee      
         });
+        setTimeout(() => deliverToRef.current?.blur(), 100);
+        // deliverToRef.current?.blur();
         break;
       default:
         console.error('Unknown Type: ', type);
@@ -152,6 +156,7 @@ export default function CheckoutForm ({ className, ...props }: Props) {
               transition-all duration-200 ease-in-out
             "
             onFocus={handleFocus}
+            ref={deliverToRef}
           />
           <LineMdChevronSmallDown
             className="

@@ -2,7 +2,7 @@
 
 // HOOKS
 import { useRouter, useParams, useSearchParams } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 // COMPONENT
 import ProductDisplay from '@/components/productPage/ProductDisplay';
@@ -37,6 +37,7 @@ export default function page () {
   const router = useRouter();
   const searchParams = useSearchParams();
   const setSearchParams = useSetSearchParams();
+  const quantitiyInptRef = useRef<any>(null);
   const cart = useCartStore(state => state.cart);
   const setCart = useCartStore(state => state.setCart);
   const { productId } = useParams();
@@ -86,9 +87,10 @@ export default function page () {
 
     switch (type) {
       case 'add_to_bag_button_is_clicked':
-        const { size, quantity } = searchParams;
+        const size = searchParams.get("size");
+        const quantity = searchParams.get("quantity") || 1;
         const newProduct = { id: Number(productId), size: "M", quantity: Number(quantity), color: "purple" };
-        setCart([...cart, newProduct]);
+        setCart([ ...cart, newProduct ]);
         setAlertToggle(Date.now());
         setAlertType("product added");
         setAlertMessage(`"${productName}" is Added.` || "Unknown product name");
@@ -99,6 +101,7 @@ export default function page () {
       case 'quantity_list_is_clicked':
         setProductListsActiveIndex(val => val === Number(index) ? null : Number(index));
         setSearchParams('quantity', totalQuantity);
+        setTimeout(() => quantitiyInptRef.current.blur(), 100);
         console.log('clicked');
         break;
       default:
@@ -200,7 +203,7 @@ export default function page () {
             <input 
               className="
                 peer w-16 bg-transparent rounded-l-lg text-left
-                text-heading text-md font-bold px-4
+                text-heading text-md font-bold px-4 focus:outline-none
                 border-solid border-primary border-[2px]
               "
               name="quantity"
@@ -208,6 +211,7 @@ export default function page () {
               type="text"
               value={searchParams.get("quantity") || 1}
               readOnly
+              ref={quantitiyInptRef}
             />
             <LineMdChevronSmallDown 
               className="
@@ -218,6 +222,7 @@ export default function page () {
               className="
                 absolute top-full left-0 
                 w-full text-body text-md rounded-md bg-background drop-shadow-lg
+                origin-top scale-y-[0%] peer-focus:scale-y-[100%]
                 invisible peer-focus:visible opacity-0 peer-focus:opacity-100
                 transition-all delay-000 duration-200 ease-in-out
               "

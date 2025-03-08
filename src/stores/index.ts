@@ -5,8 +5,8 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 type CartStorePops = {
   toggle?: boolean;
   setToggle?: (value: boolean) => void;
-  cart?: any[];
-  setCart?: (value: any[]) => void;
+  cart: any[];
+  setCart: (value: any[]) => void;
 };
 
 const useCartStore = create<CartStorePops>(
