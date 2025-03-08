@@ -135,8 +135,9 @@ export default function CheckoutForm ({ className, ...props }: Props) {
           text="Deliver To" 
           info="Enter the address where you’d like your order to be delivered. Double-check the details to ensure everything is accurate and up-to-date for a smooth delivery experience!" 
         />
-        <div
+        <label
           className="relative"
+          htmlFor="deliverTo"
         >
           <input 
             type="text"
@@ -187,7 +188,7 @@ export default function CheckoutForm ({ className, ...props }: Props) {
               </li>
             )}
           </ul>
-        </div>
+        </label>
         <div className="flex justify-between">
           <h4 className="text-body">Shipping Fee:</h4>
           <span className="text-heading font-bold">{selectedDeliverToCity.shippingFee}</span>

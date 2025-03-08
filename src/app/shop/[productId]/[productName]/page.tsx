@@ -1,7 +1,7 @@
 "use client"
 
 // HOOKS
-import { useParams, useSearchParams } from 'next/navigation';
+import { useRouter, useParams, useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 // COMPONENT
@@ -13,6 +13,7 @@ import ColorPallete from '@/components/ColorPallete';
 import PriceTag from '@/components/PriceTag';
 import BtnA from '@/components/BtnA';
 import FamiconsBagAddOutlineBold from '@/components/svgs/FamiconsBagAddOutlineBold';
+import LineMdChevronSmallDown from '@/components/svgs/LineMdChevronSmallDown';
 import IonNavigate from '@/components/svgs/PepiconsPencilOpenCircleFilled';
 
 // STORES
@@ -20,6 +21,9 @@ import { useTabNameStore, useAlertMessageStore, useCartStore } from '@/stores/in
 
 // JSON
 import products from '@/json/products.json';
+
+// UTILS
+import useSetSearchParams from '@/utils/useSetSearchParams';
 
 // ASSETS
 const ramdanBanner = "/assets/img/ramadan-nights.webp";
@@ -30,7 +34,9 @@ const outfit3 = "/assets/img/outfit-3.jpg";
 
 export default function page () {
 
+  const router = useRouter();
   const searchParams = useSearchParams();
+  const setSearchParams = useSetSearchParams();
   const cart = useCartStore(state => state.cart);
   const setCart = useCartStore(state => state.setCart);
   const { productId } = useParams();
@@ -69,13 +75,19 @@ export default function page () {
 
   }
 
+  // const setSearchParams = (key: string, value: string) => {
+    // const params = new URLSearchParams(searchParams.toString())
+    // params.set(key, value)
+    // router.push(`${window.location.pathname}?${params.toString()}`)
+  // }
+
   const handleClick = (e: any) => {
-    const { type, productName, index, size, quantity, color } = e.currentTarget.dataset;
+    const { type, productName, index, size, quantity: totalQuantity , color } = e.currentTarget.dataset;
 
     switch (type) {
       case 'add_to_bag_button_is_clicked':
-        const { size } = searchParams;
-        const newProduct = { id: Number(productId), size: "M", quantity: 2, color: "purple" };
+        const { size, quantity } = searchParams;
+        const newProduct = { id: Number(productId), size: "M", quantity: Number(quantity), color: "purple" };
         setCart([...cart, newProduct]);
         setAlertToggle(Date.now());
         setAlertType("product added");
@@ -83,6 +95,11 @@ export default function page () {
         break;
       case 'productList_is_clicked':
         setProductListsActiveIndex(val => val === Number(index) ? null : Number(index));
+        break;
+      case 'quantity_list_is_clicked':
+        setProductListsActiveIndex(val => val === Number(index) ? null : Number(index));
+        setSearchParams('quantity', totalQuantity);
+        console.log('clicked');
         break;
       default:
         console.error('Unknown Type: ', type);
@@ -99,7 +116,7 @@ export default function page () {
   // console.log('images: ', 
   // [].reduce((acc: string[], itm) => [...acc, itm.main, itm.second], [])
   // );
-  console.log('cart: ', cart);
+  // console.log('cart: ', cart);
 
   return (
     <div
@@ -154,21 +171,74 @@ export default function page () {
             />
           )}
         </section>
-        <BtnA
+        <div
           className="
-            flex justify-center items-center gap-2 font-bold text-base text-heading-invert 
-            cool-bg-grad-m py-2 rounded-lg mt-auto
+            relative flex w-full mt-auto
           "
-          data-type="add_to_bag_button_is_clicked"
-          data-product-name="Long Jeans With a Skirt"
-          onClick={handleClick}
         >
-          <FamiconsBagAddOutlineBold 
-            width={16} 
-            height={16}
-          />
-          ADD TO BAG
-        </BtnA>
+          <BtnA
+            className="
+              order-2 flex-1 flex justify-center items-center gap-2 font-bold text-base text-heading-invert 
+              cool-bg-grad-m py-2 rounded-r-lg 
+            "
+            data-type="add_to_bag_button_is_clicked"
+            data-product-name="Long Jeans With a Skirt"
+            onClick={handleClick}
+          >
+            <FamiconsBagAddOutlineBold 
+              width={16} 
+              height={16}
+            />
+            ADD TO BAG
+          </BtnA>
+          <label
+            className="
+              relative order-1 relative flex z-[10]
+            "
+            htmlFor="quantity"
+          >
+            <input 
+              className="
+                peer w-16 bg-transparent rounded-l-lg text-left
+                text-heading text-md font-bold px-4
+                border-solid border-primary border-[2px]
+              "
+              name="quantity"
+              id="quantity"
+              type="text"
+              value={searchParams.get("quantity") || 1}
+              readOnly
+            />
+            <LineMdChevronSmallDown 
+              className="
+                absolute top-1/2 right-4 translate-y-[-50%] w-4 h-4 text-heading
+              "
+            />
+            <ul
+              className="
+                absolute top-full left-0 
+                w-full text-body text-md rounded-md bg-background drop-shadow-lg
+                invisible peer-focus:visible opacity-0 peer-focus:opacity-100
+                transition-all delay-000 duration-200 ease-in-out
+              "
+            >
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(num =>
+                <li
+                  className="
+                    text-center hover:bg-content-invert hover:font-bold hover:text-content m-1 rounded-md cursor-pointer
+                    transition-all duration-200 ease-in-out
+                  "
+                  key={num}
+                  data-quantity={num}
+                  data-type="quantity_list_is_clicked"
+                  onClick={handleClick}
+                >
+                  {num}
+                </li>
+              )}
+            </ul>
+          </label>
+        </div>
       </section>
       <section
         className="lg:hidden md:col-span-2 lg:col-span-1"
