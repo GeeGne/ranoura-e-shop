@@ -99,7 +99,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
     }, 1000)
   };
 
-  const onColorChange = (color: string, productId: number) => {
+  const onColorChange = (color: string, clickedColor: string, productId: number) => {
     const getProduct = () => products.find(product => product.id === productId);
     const getEL = (refs: ReactNode[] | any[]) => refs.find((el) => Number(el.dataset.productId) === productId);
     

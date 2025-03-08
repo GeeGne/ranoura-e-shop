@@ -24,6 +24,7 @@ import products from '@/json/products.json';
 
 // UTILS
 import useSetSearchParams from '@/utils/useSetSearchParams';
+import useDeleteAllSearchParams from '@/utils/useDeleteAllSearchParams';
 
 // ASSETS
 const ramdanBanner = "/assets/img/ramadan-nights.webp";
@@ -37,6 +38,8 @@ export default function page () {
   const router = useRouter();
   const searchParams = useSearchParams();
   const setSearchParams = useSetSearchParams();
+  const deleteAllSearchParams = useDeleteAllSearchParams();
+
   const quantitiyInptRef = useRef<any>(null);
   const cart = useCartStore(state => state.cart);
   const setCart = useCartStore(state => state.setCart);
@@ -72,8 +75,8 @@ export default function page () {
   const getImagesUrls = (array: any[] ) => 
     array?.reduce((acc: any[] , itm) => itm.second ? [...acc, itm.main, itm.second] : [...acc, itm.main], []);
 
-  const onColorChange = () => {
-
+  const onColorChange = (selectedColor: string, clickedColor: string) => {
+    setSearchParams("color", clickedColor);
   }
 
   // const setSearchParams = (key: string, value: string) => {
@@ -83,17 +86,29 @@ export default function page () {
   // }
 
   const handleClick = (e: any) => {
-    const { type, productName, index, size, quantity: totalQuantity , color } = e.currentTarget.dataset;
+    e.stopPropagation();
+
+    const { type, productName, index, quantity: totalQuantity } = e.currentTarget.dataset;
 
     switch (type) {
       case 'add_to_bag_button_is_clicked':
         const size = searchParams.get("size");
-        const quantity = searchParams.get("quantity") || 1;
-        const newProduct = { id: Number(productId), size: "M", quantity: Number(quantity), color: "purple" };
-        setCart([ ...cart, newProduct ]);
+        const quantity = Number(searchParams.get("quantity")) || 1;
+        const color = searchParams.get("color");
         setAlertToggle(Date.now());
-        setAlertType("product added");
-        setAlertMessage(`"${productName}" is Added.` || "Unknown product name");
+
+        if (color && size) {
+          const newProduct = { id: Number(productId), size: "M", quantity, color };
+          setCart([ ...cart, newProduct ]);
+          setAlertType("product added");
+          setAlertMessage(`"${productName}" is Added.` || "Unknown product name");  
+          deleteAllSearchParams();
+          return;
+        }
+
+        setAlertType("error");
+        setAlertMessage(`Select your preferred color and size to continue`);  
+      
         break;
       case 'productList_is_clicked':
         setProductListsActiveIndex(val => val === Number(index) ? null : Number(index));
@@ -102,7 +117,6 @@ export default function page () {
         setProductListsActiveIndex(val => val === Number(index) ? null : Number(index));
         setSearchParams('quantity', totalQuantity);
         setTimeout(() => quantitiyInptRef.current.blur(), 100);
-        console.log('clicked');
         break;
       default:
         console.error('Unknown Type: ', type);
@@ -198,7 +212,6 @@ export default function page () {
             className="
               relative order-1 relative flex z-[10]
             "
-            htmlFor="quantity"
           >
             <input 
               className="
@@ -224,7 +237,7 @@ export default function page () {
                 w-full text-body text-md rounded-md bg-background drop-shadow-lg
                 origin-top scale-y-[0%] peer-focus:scale-y-[100%]
                 invisible peer-focus:visible opacity-0 peer-focus:opacity-100
-                transition-all delay-000 duration-200 ease-in-out
+                transition-all delay-100 duration-200 ease-in-out
               "
             >
               {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(num =>

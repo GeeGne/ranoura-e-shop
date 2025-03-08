@@ -21,8 +21,8 @@ export default function ColorPallete ({ className = '', currentColor, width = 'w
   const isMounted = useRef<boolean>(false);
 
   useEffect(() => {
-    currentColor(selectedColor, productId);
-  }, [selectedColor]);
+    currentColor(selectedColor, clickedColor, productId);
+  }, [selectedColor, clickedColor]);
 
   useEffect(() => {
     setSelectedColor(colorsArray[0])

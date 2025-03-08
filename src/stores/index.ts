@@ -13,7 +13,8 @@ const useCartStore = create<CartStorePops>(
   (set) => ({
     toggle: false,
     setToggle: (toggle: boolean) => set({ toggle }),
-    cart: [{ id: 1, size: "M", quantity: 2, color: "purple" }],
+    // cart: [{ id: 1, size: "M", quantity: 2, color: "purple" }],
+    cart: [],
     setCart: (cart: any[]) => set({ cart })
   })
 );

@@ -1,6 +1,9 @@
 // HOOKS
 import { useEffect } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
+
+// UTILS
+import useSetSearchParams from '@/utils/useSetSearchParams';
 
 type Props = {
   sizes?: string[];
@@ -9,28 +12,19 @@ type Props = {
 export default function ProductSize ({ sizes }: Props) {
 
   const searchParams = useSearchParams();
-  const router = useRouter();
+  const setSearchParams = useSetSearchParams();
 
   // const active = true;
   const available = false;
   const sizesArray = ['XS', 'S', 'M', 'L', 'XL', '2XL'];
-  
-
-  const setSearchParam = (size: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("size", size);
-    router.push(`${window.location.pathname}?${params.toString()}`);
-  }
 
   const handleActive = (e: React.MouseEvent<HTMLElement>) => {
     
     const index = Number(e.currentTarget.dataset.index);
     const { size } = e.currentTarget.dataset;
-    const isSizeAvailable = !sizes?.some(avaliableSize => avaliableSize === size);
+    const isSizeAvailable = sizes?.some(avaliableSize => avaliableSize === size);
 
-    if (isSizeAvailable) return;
-    
-    if (size) setSearchParam(size);
+    if (size && isSizeAvailable) setSearchParams('size', size);
   }
 
   // DEBUG
