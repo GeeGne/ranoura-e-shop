@@ -45,7 +45,7 @@ export default function AllProductImages () {
   // console.log('test: ', selectedCategories);
   // console.log('test: ', toggle);
   // console.log('imagesArray: ', imagesArray);
-  console.log('imagesRefs: ', imagesRefs);
+  // console.log('imagesRefs: ', imagesRefs);
 
   return (
     <>    

@@ -1,7 +1,7 @@
 "use client"
 
 // HOOKS
-import { useParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 // COMPONENT
@@ -16,7 +16,7 @@ import FamiconsBagAddOutlineBold from '@/components/svgs/FamiconsBagAddOutlineBo
 import IonNavigate from '@/components/svgs/PepiconsPencilOpenCircleFilled';
 
 // STORES
-import { useTabNameStore, useAlertMessageStore } from '@/stores/index';
+import { useTabNameStore, useAlertMessageStore, useCartStore } from '@/stores/index';
 
 // JSON
 import products from '@/json/products.json';
@@ -30,6 +30,9 @@ const outfit3 = "/assets/img/outfit-3.jpg";
 
 export default function page () {
 
+  const searchParams = useSearchParams();
+  const cart = useCartStore(state => state.cart);
+  const setCart = useCartStore(state => state.setCart);
   const { productId } = useParams();
   const product = products.find(product => product.id === Number(productId));
   // const productName = slugArray[0];
@@ -55,6 +58,10 @@ export default function page () {
     setTabName('product');
   }, []);
 
+  useEffect(() => {
+
+  }, [searchParams]);
+
   const getImagesUrls = (array: any[] ) => 
     array?.reduce((acc: any[] , itm) => itm.second ? [...acc, itm.main, itm.second] : [...acc, itm.main], []);
 
@@ -63,10 +70,13 @@ export default function page () {
   }
 
   const handleClick = (e: any) => {
-    const { type, productName, index } = e.currentTarget.dataset;
+    const { type, productName, index, size, quantity, color } = e.currentTarget.dataset;
 
     switch (type) {
       case 'add_to_bag_button_is_clicked':
+        const { size } = searchParams;
+        const newProduct = { id: Number(productId), size: "M", quantity: 2, color: "purple" };
+        setCart([...cart, newProduct]);
         setAlertToggle(Date.now());
         setAlertType("product added");
         setAlertMessage(`"${productName}" is Added.` || "Unknown product name");
@@ -89,6 +99,7 @@ export default function page () {
   // console.log('images: ', 
   // [].reduce((acc: string[], itm) => [...acc, itm.main, itm.second], [])
   // );
+  console.log('cart: ', cart);
 
   return (
     <div
@@ -121,7 +132,7 @@ export default function page () {
         <PriceTag price={product?.price} discount={product?.discount_percent}/>
         <ProductSize sizes={product?.sizes} />
         <ColorPallete 
-          className="mb-8"
+          className="mb-4"
           width="w-6"
           height="h-6"
           colorsArray={product?.colors}

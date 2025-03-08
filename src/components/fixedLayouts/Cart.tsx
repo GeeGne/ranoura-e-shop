@@ -16,6 +16,12 @@ import EpArrowLeft from "@/components/svgs/EpArrowLeft";
 import IcOutlineClear from '@/components/svgs/IcOutlineClear';
 import IcOutlineCreate from "@/components/svgs/IcOutlineCreate";
 
+// JSON
+import products from '@/json/products.json';
+
+// UTILS
+import getProduct from '@/utils/getProduct';
+
 // ASSETS
 const ramdanBanner = "/assets/img/ramadan-nights.webp";
 const ramdanBanner2 = "/assets/img/ramadan-nights-2.jpg";
@@ -23,13 +29,15 @@ const outfit1 = "assets/img/outfit.jpg"
 const outfit2 = "assets/img/outfit-2.jpg"
 const outfit3 = "assets/img/outfit-3.jpg"
 
-
 export default function Cart () {
 
   const router = useRouter();
   const layoutRef = useLayoutRefStore((state: any) => state.layoutRef);
+
   const toggle = useCartStore((status:any) => status.toggle);
   const setToggle = useCartStore((status:any) => status.setToggle);
+  const cart = useCartStore((status:any) => status.cart);
+
   const [ inputToggle, setInputToggle ] = useState<boolean>(false);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -138,120 +146,122 @@ export default function Cart () {
         </div>
         <hr className="border-inbetween"/>
         <ul className="flex flex-col flex-1 py-4 px-2 gap-8 overflow-y-scroll">
-          <li className="flex">
-            <DisplayImg
-              className="w-[100px] md:w-[200px] aspect-[2/3] object-cover rounded-lg"
-              src={outfit2}
-            />
-            <div className="flex flex-col flex-1 px-4">
-              <div className="flex text-heading text-lg font-bold justify-between">
-                <h3>
-                  Dark Sweater
-                </h3>             
-                <h3>
-                  4000 SYP
-                </h3>
-              </div>
-              <div className="flex items-center gap-2 font-bold py-4">
-                <span>
-                  M
-                </span>
-                <span>|</span>
-                <span className="h-4 w-4 rounded-full bg-black"></span>
-                <span>
-                  BLACK
-                </span>
-              </div>
-                <div className="flex justify-between w-[150px]">
-                  <span className="text-body">
-                    Price: 
+          {cart.map((product: any, i: number) => 
+            <li className="flex" key={i}>
+              <DisplayImg
+                className="w-[100px] md:w-[200px] aspect-[2/3] object-cover rounded-lg"
+                src={outfit2}
+              />
+              <div className="flex flex-col flex-1 px-4">
+                <div className="flex text-heading text-lg font-bold justify-between">
+                  <h3>
+                    {getProduct(product.id, products)?.name}
+                  </h3>             
+                  <h3>
+                    4000 SYP
+                  </h3>
+                </div>
+                <div className="flex items-center gap-2 font-bold py-4">
+                  <span>
+                    {product.size}
                   </span>
-                  <span className="text-heading font-bold">
-                    200 SYP
+                  <span>|</span>
+                  <span className="h-4 w-4 rounded-full bg-black"></span>
+                  <span>
+                    BLACK
                   </span>
-                </div>       
-                <label 
-                  className="flex justify-between w-[150px]"
-                  htmlFor="quantity"
-                >
-                  <span className="text-body">
-                    Quanitity:
-                  </span>
-                  <div
-                    className="relative"
+                </div>
+                  <div className="flex justify-between w-[150px]">
+                    <span className="text-body">
+                      Price: 
+                    </span>
+                    <span className="text-heading font-bold">
+                      200 SYP
+                    </span>
+                  </div>       
+                  <label 
+                    className="flex justify-between w-[150px]"
+                    htmlFor="quantity"
                   >
-                    <input 
-                      className="w-12 bg-transparent text-center outline-none border-none"
-                      id="quantity"
-                      name="quantity"
-                      value="1"
-                      onFocus={handleFocus}
-                      onBlur={handleBlur}
-                      readOnly
-                    />
-                    <div 
-                      className="
-                        absolute top-0 left-0 w-full h-full
-                        flex items-center justify-end
-                        border-solid border-b-[2px] border-body
-
-                    ">
-                      <EpArrowLeft className="w-4 h-4 rotate-[265deg]" />
-                    </div>
-                    <ul
-                      className={`
-                        absolute top-full left-0 w-full h-auto py-2
-                        flex-col bg-[var(--background-light-color)] rounded-lg cursor-pointer
-                        ${inputToggle ? 'flex' : 'hidden'}
-                      `}
+                    <span className="text-body">
+                      Quanitity:
+                    </span>
+                    <div
+                      className="relative"
                     >
-                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">1</li>
-                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">2</li>
-                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">3</li>
-                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">4</li>
-                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">5</li>
-                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">6</li>
-                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">7</li>
-                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">8</li>
-                      <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">9</li>
-                    </ul>
-                  </div>
-                </label>
-                <div 
-                  className="
-                    flex flex-col gap-2 text-sm md:text-base mt-auto pt-8
-                    translate-all duration-300 ease-in-out
-                  "
-                >
-                <button
-                  className="
-                    flex items-center justify-center gap-1 
-                    border-solid border-body border-[2px] rounded-md
-                    translate-all duration-300 ease-in-out
-                    hover:bg-body hover:text-heading-invert
-                  "
-                >
-                  <IcOutlineCreate
-                    className="w-4 h-4"
-                  />
-                  <span>EDIT</span>
-                </button>
-                <button
-                  className="
-                    flex items-center justify-center gap-1 
-                    border-solid border-body border-[2px] rounded-md
-                    translate-all duration-300 ease-in-out
-                    hover:bg-body hover:text-heading-invert
-                  "
-                >
-                  <IcOutlineClear
-                    className="w-4 h-4"
-                  />
-                  <span>DELETE</span>
-                </button>
+                      <input
+                        className="w-12 bg-transparent text-center outline-none border-none"
+                        id="quantity"
+                        name="quantity"
+                        value={product.quantity}
+                        onFocus={handleFocus}
+                        onBlur={handleBlur}
+                        readOnly
+                      />
+                      <div 
+                        className="
+                          absolute top-0 left-0 w-full h-full
+                          flex items-center justify-end
+                          border-solid border-b-[2px] border-body
+
+                      ">
+                        <EpArrowLeft className="w-4 h-4 rotate-[265deg]" />
+                      </div>
+                      <ul
+                        className={`
+                          absolute top-full left-0 w-full h-auto py-2
+                          flex-col bg-[var(--background-light-color)] rounded-lg cursor-pointer
+                          ${inputToggle ? 'flex' : 'hidden'}
+                        `}
+                      >
+                        <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">1</li>
+                        <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">2</li>
+                        <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">3</li>
+                        <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">4</li>
+                        <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">5</li>
+                        <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">6</li>
+                        <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">7</li>
+                        <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">8</li>
+                        <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">9</li>
+                      </ul>
+                    </div>
+                  </label>
+                  <div 
+                    className="
+                      flex flex-col gap-2 text-sm md:text-base mt-auto pt-8
+                      translate-all duration-300 ease-in-out
+                    "
+                  >
+                  <button
+                    className="
+                      flex items-center justify-center gap-1 
+                      border-solid border-body border-[2px] rounded-md
+                      translate-all duration-300 ease-in-out
+                      hover:bg-body hover:text-heading-invert
+                    "
+                  >
+                    <IcOutlineCreate
+                      className="w-4 h-4"
+                    />
+                    <span>EDIT</span>
+                  </button>
+                  <button
+                    className="
+                      flex items-center justify-center gap-1 
+                      border-solid border-body border-[2px] rounded-md
+                      translate-all duration-300 ease-in-out
+                      hover:bg-body hover:text-heading-invert
+                    "
+                  >
+                    <IcOutlineClear
+                      className="w-4 h-4"
+                    />
+                    <span>DELETE</span>
+                  </button>
+                </div>
               </div>
-            </div>
-          </li>
+            </li>
+          )}
           <li className="flex">
             <DisplayImg
               className="w-[100px] md:w-[200px] aspect-[2/3] object-cover rounded-lg"

@@ -11,6 +11,7 @@ import SubCategoryListLg from "@/components/header/SubCategoryListLg";
 import FillOnScroll from "@/components/header/FillOnScroll";
 import LineMdCloseToMenuAltTransition from "@/components/svgs/LineMdCloseToMenuAltTransition";
 import SolarCart4Outline from "@/components/svgs/SolarCart4Outline";
+import SolarCart4Bold from "@/components/svgs/SolarCart4Bold";
 import IconamoonSearchThin from "@/components/svgs/IconamoonSearchThin";
 import BottomBorder from "@/components/svgs/BottomBorder";
 import EpUser from "@/components/svgs/EpUser";
@@ -32,7 +33,11 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
 
   const [ isWindowScrolled, setIsWindowScrolled ] = useState(false);
   const headerRef = useRef<HTMLInputElement>(null);
+
   const setCartToggle = useCartStore((stats:any) => stats.setToggle);
+  const cart = useCartStore((stats:any) => stats.cart);
+  const isCartEmpty = cart.length === 0;
+
   const navbarToggle = useNavbarStore((status:any) => status.toggle);
   const setNavbarToggle = useNavbarStore((status:any) => status.setToggle);
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
@@ -227,7 +232,7 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
       </button>
       <button
         className={`
-          z-[25]
+          relative z-[25]
           ${navbarToggle 
             || tabName !== "home" 
             || "nav-hover-effect"
@@ -236,21 +241,49 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
         onClick={handleClick}
         data-type="cart_button_is_clicked"
       >
-        <SolarCart4Outline
-          className={`
-            cursor-pointer
-            ${navbarToggle 
-              ? 'lg:text-heading text-heading-invert' 
-              : isWindowScrolled
-                ? "text-heading-invert"
-                : (tabName === 'home')
+        {isCartEmpty 
+          ?<SolarCart4Outline
+            className={`
+              cursor-pointer
+              ${navbarToggle 
+                ? 'lg:text-heading text-heading-invert' 
+                : isWindowScrolled
+                  ? "text-heading-invert text-green-500"
+                  : (tabName === 'home')
+                    ? "text-heading-invert"
+                    : "text-heading"
+              }
+            `}
+            width={24}
+            height={24}
+          />
+          :<><SolarCart4Bold
+            className={`
+              cursor-pointer
+              ${navbarToggle 
+                ? 'lg:text-heading text-heading-invert' 
+                : isWindowScrolled
                   ? "text-heading-invert"
-                  : "text-heading"
-            }
-          `}
-          width={24}
-          height={24}
-        />
+                  : (tabName === 'home')
+                    ? "text-heading-invert"
+                    : "text-heading"
+              }
+              after:content-[''] after:absolute 
+              after:top-1/2 after:left-1/2 
+              after:translate-x-[-50%] after:translate-y-[-50%] 
+              after:w-4 after:h-4
+              after:bg-red-500 after:rounded-full 
+            `}
+            width={24}
+            height={24}
+          />
+          <div
+            className="
+              absolute top-0 right-0 w-2 h-2
+              bg-red-500 rounded-full
+            "
+          /></>    
+        }
       </button>
       <BottomBorder 
         className={`

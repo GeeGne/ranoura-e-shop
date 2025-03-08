@@ -2,10 +2,19 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
 // FIXED LAYOUTS
-const useCartStore = create(
+type CartStorePops = {
+  toggle?: boolean;
+  setToggle?: (value: boolean) => void;
+  cart?: any[];
+  setCart?: (value: any[]) => void;
+};
+
+const useCartStore = create<CartStorePops>(
   (set) => ({
     toggle: false,
-    setToggle: (toggle: boolean) => set({ toggle })
+    setToggle: (toggle: boolean) => set({ toggle }),
+    cart: [{ id: 1, size: "M", quantity: 2, color: "purple" }],
+    setCart: (cart: any[]) => set({ cart })
   })
 );
 
@@ -116,6 +125,7 @@ type AlertMessageProps = {
   message: string;
   setMessage: (value: string) => void;
 }
+
 const useAlertMessageStore = create<AlertMessageProps>(
   (set) => ({
     toggle: 0,

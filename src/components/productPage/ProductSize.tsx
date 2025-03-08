@@ -1,16 +1,26 @@
-import { useState } from 'react';
+// HOOKS
+import { useEffect } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 
 type Props = {
   sizes?: string[];
 };
 
 export default function ProductSize ({ sizes }: Props) {
-  
-  const [ active, setActive ] = useState<number>(0);
+
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
   // const active = true;
   const available = false;
   const sizesArray = ['XS', 'S', 'M', 'L', 'XL', '2XL'];
+  
+
+  const setSearchParam = (size: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("size", size);
+    router.push(`${window.location.pathname}?${params.toString()}`);
+  }
 
   const handleActive = (e: React.MouseEvent<HTMLElement>) => {
     
@@ -20,12 +30,14 @@ export default function ProductSize ({ sizes }: Props) {
 
     if (isSizeAvailable) return;
     
-    setActive(index);
+    if (size) setSearchParam(size);
   }
 
   // DEBUG
   // console.log('active: ', active);
   // console.log('sizes: ', sizes);
+  // console.log('searchParams.get("size"): ', searchParams.get('size'));
+
 
   return (
     <section>
@@ -42,7 +54,7 @@ export default function ProductSize ({ sizes }: Props) {
               border-solid border-[2px]
               transition-all duration-300 ease-out z-[5]
               ${sizes?.some(clothSize => clothSize === size) 
-                ? active === i 
+                ? searchParams.get("size") === size 
                   ? 'text-heading-invert bg-heading hover:bg-[var(--background-deep-light-invert-color)] border-heading hover:border-heading cursor-pointer' 
                   : 'text-body-light border-body-light hover:text-heading hover:border-heading cursor-pointer'
                 : ` relative text-body-extra-light

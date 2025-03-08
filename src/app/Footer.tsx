@@ -94,7 +94,6 @@ export default function Footer ({ ...props }) {
                 maskPosition: 'center',
                 maskRepeat: 'no-repeat',
                 maskSize: 'cover',
-
               }}
             />
           </div>
