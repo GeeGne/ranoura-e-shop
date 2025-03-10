@@ -3,8 +3,8 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 
 // FIXED LAYOUTS
 type CartStorePops = {
-  toggle?: boolean;
-  setToggle?: (value: boolean) => void;
+  toggle: boolean;
+  setToggle: (value: boolean) => void;
   cart: any[];
   setCart: (value: any[]) => void;
 };

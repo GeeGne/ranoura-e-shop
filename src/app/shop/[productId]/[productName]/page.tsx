@@ -243,7 +243,8 @@ export default function page () {
               {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(num =>
                 <li
                   className="
-                    text-center hover:bg-content-invert hover:font-bold hover:text-content m-1 rounded-md cursor-pointer
+                    text-center hover:bg-content-invert hover:font-bold hover:text-content 
+                    m-1 rounded-md cursor-pointer
                     transition-all duration-200 ease-in-out
                   "
                   key={num}

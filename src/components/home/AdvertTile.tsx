@@ -180,7 +180,6 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
         break;
       case 'heart_button_is_clicked':
         const isProductInFavourites = favourites.some(productID => productID === Number(productId));
-          
         
         if (!isProductInFavourites) {
           displayPrideConfetti();
@@ -340,7 +339,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
                     loading="lazy"
                     data-product-id={product.id}
                     ref={ (el: any) => {if (mainImgRefs.current) {mainImgRefs.current[i] = el}} }
-   rounded-lg                />
+                  />
                   <img 
                     className={`
                       absolute top-0 left-0 w-full h-full
