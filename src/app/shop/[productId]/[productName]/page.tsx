@@ -98,7 +98,7 @@ export default function page () {
         setAlertToggle(Date.now());
 
         if (color && size) {
-          const newProduct = { id: Number(productId), size: "M", quantity, color };
+          const newProduct = { id: Number(productId), size, quantity, color };
           setCart([ ...cart, newProduct ]);
           setAlertType("product added");
           setAlertMessage(`"${productName}" is Added.` || "Unknown product name");  

@@ -3,11 +3,13 @@ import calculatePriceAfterDiscount from "@/utils/calculatePriceAfterDiscount";
 type Props = {
   price?: number;  
   discount?: number;
-}
+} & React.ComponentPropsWithRef<"div">;
 
-export default function PriceTag ({ price = 0, discount = 0 }: Props) {
+export default function PriceTag ({ price = 0, discount = 0, ...props }: Props) {
   return (
-    <div>
+    <div
+      { ...props }
+    >
       {discount > 0
         ? <div
             className="flex flex-col"
@@ -23,7 +25,7 @@ export default function PriceTag ({ price = 0, discount = 0 }: Props) {
               <s
                 className="text-body-light text-base font-bold"
               >
-                {price} SYP
+                {price}
               </s>
             </div> 
             <span

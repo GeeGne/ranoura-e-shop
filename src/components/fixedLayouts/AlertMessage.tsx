@@ -83,7 +83,7 @@ export default function AlertMessage () {
         p-2 bg-[var(--background-light-color)] hover:bg-[var(--background-deep-light-color)] active:bg-[var(--background-deep-color)]
         drop-shadow-xl rounded-lg overflow-hidden
         transition-all duration-200 ease-in-out
-        cursor-pointer z-[1000]
+        cursor-pointer z-[3000]
       "
       ref={wrapperRef}
       data-type="wrapper_is_clicked"
@@ -144,7 +144,7 @@ export default function AlertMessage () {
         p-2 bg-[var(--background-light-color)] hover:bg-[var(--background-deep-light-color)] active:bg-[var(--background-deep-color)]
         drop-shadow-xl rounded-lg overflow-hidden
         transition-all duration-200 ease-in-out
-        cursor-pointer z-[1000]
+        cursor-pointer z-[3000]
       "
       ref={wrapperRef}
       data-type="wrapper_is_clicked"
@@ -205,7 +205,7 @@ export default function AlertMessage () {
         p-2 bg-[var(--background-light-color)] hover:bg-[var(--background-deep-light-color)] active:bg-[var(--background-deep-color)]
         drop-shadow-xl rounded-lg overflow-hidden
         transition-all duration-200 ease-in-out
-        cursor-pointer z-[1000]
+        cursor-pointer z-[3000]
       "
       ref={wrapperRef}
       data-type="wrapper_is_clicked"
@@ -266,7 +266,7 @@ export default function AlertMessage () {
         p-2 bg-[var(--background-light-color)] hover:bg-[var(--background-deep-light-color)] active:bg-[var(--background-deep-color)]
         drop-shadow-xl rounded-lg overflow-hidden
         transition-all duration-200 ease-in-out
-        cursor-pointer z-[1000]
+        cursor-pointer z-[3000]
       "
       ref={wrapperRef}
       data-type="wrapper_is_clicked"
@@ -307,7 +307,10 @@ export default function AlertMessage () {
           {message}
         </span>
         <div
-          className="flex justify-between text-sm font-bold text-background-light gap-2"
+          className="
+            --alert-messge-content-ani flex justify-between 
+            text-sm font-bold text-background-light gap-2 py-2
+          "
         >
           <button
             className="
@@ -354,7 +357,7 @@ export default function AlertMessage () {
         p-2 bg-[var(--background-light-color)] hover:bg-[var(--background-deep-light-color)] active:bg-[var(--background-deep-color)]
         drop-shadow-xl rounded-lg overflow-hidden
         transition-all duration-200 ease-in-out
-        cursor-pointer z-[1000]
+        cursor-pointer z-[3000]
       "
       ref={wrapperRef}
       data-type="wrapper_is_clicked"
@@ -374,7 +377,7 @@ export default function AlertMessage () {
       </button>
         <ShoppingApp 
           className={`
-           --alert-messge-content-ani w-[50px] h-[50px] lg:w-[100px] lg:h-[100px]
+           --alert-messge-content-ani w-[50px] h-[50px] lg:w-[100px] lg:h-[100px] text-content-inbetween
           `}
         />
       <div
@@ -416,7 +419,7 @@ export default function AlertMessage () {
         p-2 bg-[var(--background-light-color)] hover:bg-[var(--background-deep-light-color)] active:bg-[var(--background-deep-color)]
         drop-shadow-xl rounded-lg overflow-hidden
         transition-all duration-200 ease-in-out
-        cursor-pointer z-[1000]
+        cursor-pointer z-[3000]
       "
       ref={wrapperRef}
       data-type="wrapper_is_clicked"

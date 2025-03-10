@@ -1,15 +1,17 @@
 // HOOKS
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from "react";
 
 // COMPONENTS
+import PriceTag from '@/components/PriceTag'
 import SolarCart4Outline from "@/components/svgs/SolarCart4Outline";
 import ArrowUp from "@/components/svgs/ArrowUp";
 import DisplayImg from "@/components/DisplayImg";
 import BtnA from "@/components/BtnA";
 
 // STORES
-import { useCartStore, useLayoutRefStore } from '@/stores/index';
+import { useCartStore, useLayoutRefStore, useAlertMessageStore } from '@/stores/index';
 
 // SVG
 import EpArrowLeft from "@/components/svgs/EpArrowLeft";
@@ -18,9 +20,13 @@ import IcOutlineCreate from "@/components/svgs/IcOutlineCreate";
 
 // JSON
 import products from '@/json/products.json';
+import colors from '@/json/colors.json';
 
 // UTILS
+import calculatePriceAfterDiscount from "@/utils/calculatePriceAfterDiscount";
 import getProduct from '@/utils/getProduct';
+import getImgUrl from '@/utils/getImgUrl';
+import getColor from '@/utils/getColor';
 
 // ASSETS
 const ramdanBanner = "/assets/img/ramadan-nights.webp";
@@ -37,11 +43,16 @@ export default function Cart () {
   const toggle = useCartStore((status:any) => status.toggle);
   const setToggle = useCartStore((status:any) => status.setToggle);
   const cart = useCartStore((status:any) => status.cart);
+  const setCart = useCartStore((status:any) => status.setCart);
+
+  const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
+  const setAlertType = useAlertMessageStore((state) => state.setType);
+  const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
 
   const [ inputToggle, setInputToggle ] = useState<boolean>(false);
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const { type } = e.currentTarget.dataset;
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    const { type, index, productName, size, color } = e.currentTarget.dataset;
 
     switch (type) {
       case 'close_button_is_clicked':
@@ -50,6 +61,22 @@ export default function Cart () {
       case 'navigate_to_checkout':
         setToggle(false);
         router.push('/checkout');
+        setTimeout(() => 
+          layoutRef.scrollTo({top: 0, behavior: "instant"})
+        ,200);
+        break;
+      case 'delete_button_is_clicked':
+        setAlertToggle(Date.now());
+        setAlertType('product removed');
+        setAlertMessage(`"${productName}" has been removed from your cart`);
+        setCart(cart.filter((itm: any) => !(itm.id === Number(index) && itm.color === color && itm.size === size) ));
+        break;
+      case 'edit_button_is_clicked':
+        setToggle(false);
+        setAlertToggle(Date.now());
+        setAlertType('warning');
+        setAlertMessage(`"${productName}" is removed! Re-select your options and add it back to the cart`);
+        setCart(cart.filter((itm: any) => !(itm.id === Number(index) && itm.color === color && itm.size === size) ));
         setTimeout(() => 
           layoutRef.scrollTo({top: 0, behavior: "instant"})
         ,200);
@@ -64,7 +91,7 @@ export default function Cart () {
 
     switch (name) {
       case 'quantity':
-        setInputToggle(true);
+        // setInputToggle(true);
         break;
       default:
         console.error('Unknown name: ', name);
@@ -76,12 +103,16 @@ export default function Cart () {
 
     switch (name) {
       case 'quantity':
-        setInputToggle(false);
+        // setInputToggle(false);
         break;
       default:
         console.error('Unknown name: ', name);
     }
   }
+
+  // DEBUG & UI
+  // console.log('cart: ', cart);
+  // console.log('img main url ', );
 
   return (
     <div
@@ -141,7 +172,7 @@ export default function Cart () {
           <span
             className="text-2xl text-heading border-heading border-solid border-[1px] rounded-full px-2"
           >
-            3
+            {cart.length}
           </span>
         </div>
         <hr className="border-inbetween"/>
@@ -150,34 +181,49 @@ export default function Cart () {
             <li className="flex" key={i}>
               <DisplayImg
                 className="w-[100px] md:w-[200px] aspect-[2/3] object-cover rounded-lg"
-                src={outfit2}
+                alt={getProduct(products, product.id).name}
+                src={getImgUrl(getProduct(products, product.id).images, product.color)?.main}
               />
               <div className="flex flex-col flex-1 px-4">
                 <div className="flex text-heading text-lg font-bold justify-between">
                   <h3>
-                    {getProduct(product.id, products)?.name}
-                  </h3>             
-                  <h3>
-                    4000 SYP
+                    {getProduct(products, product.id)?.name} 
                   </h3>
+                  <span
+                    className="font-bold text-lg text-content"
+                  >
+                    {calculatePriceAfterDiscount({ 
+                      price: getProduct(products, product.id).price, 
+                      discount: getProduct(products, product.id).discount_percent
+                    }) * product.quantity} SYP
+                  </span>
                 </div>
                 <div className="flex items-center gap-2 font-bold py-4">
                   <span>
                     {product.size}
                   </span>
                   <span>|</span>
-                  <span className="h-4 w-4 rounded-full bg-black"></span>
+                  <span 
+                    className={`h-4 w-4 rounded-full`}
+                    style={{backgroundColor: getColor(colors, product.color).hex}}
+                  />
                   <span>
-                    BLACK
+                    {product.color}
                   </span>
                 </div>
-                  <div className="flex justify-between w-[150px]">
+                  <div className="flex gap-4 items-center w-full">
                     <span className="text-body">
                       Price: 
                     </span>
-                    <span className="text-heading font-bold">
-                      200 SYP
-                    </span>
+                      {/* {calculatePriceAfterDiscount({ 
+                          price: getProduct(products, product.id).price, 
+                          discount: getProduct(products, product.id).discount 
+                        }) * product.quantity} SYP */}
+                      <PriceTag 
+                        className="" 
+                        price={getProduct(products, product.id).price} 
+                        discount={getProduct(products, product.id).discount_percent}
+                      />
                   </div>       
                   <label 
                     className="flex justify-between w-[150px]"
@@ -214,15 +260,14 @@ export default function Cart () {
                           ${inputToggle ? 'flex' : 'hidden'}
                         `}
                       >
-                        <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">1</li>
-                        <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">2</li>
-                        <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">3</li>
-                        <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">4</li>
-                        <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">5</li>
-                        <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">6</li>
-                        <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">7</li>
-                        <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">8</li>
-                        <li className="hover:bg-[var(--background-deep-light-color)] w-full text-center">9</li>
+                        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(num => 
+                          <li 
+                            className="hover:bg-[var(--background-deep-light-color)] w-full text-center"
+                            key={num}
+                          >
+                            {num}
+                          </li>
+                        )}
                       </ul>
                     </div>
                   </label>
@@ -232,19 +277,26 @@ export default function Cart () {
                       translate-all duration-300 ease-in-out
                     "
                   >
-                  <button
+                  <Link
                     className="
                       flex items-center justify-center gap-1 
                       border-solid border-body border-[2px] rounded-md
                       translate-all duration-300 ease-in-out
                       hover:bg-body hover:text-heading-invert
                     "
+                    href={`/shop/${getProduct(products, product.id).id}/${getProduct(products, product.id).slug}`}
+                    data-type="edit_button_is_clicked"
+                    data-product-name={getProduct(products, product.id).name}
+                    data-size={product.size}
+                    data-color={product.color}
+                    data-index={product.id}
+                    onClick={handleClick}
                   >
                     <IcOutlineCreate
                       className="w-4 h-4"
                     />
                     <span>EDIT</span>
-                  </button>
+                  </Link>
                   <button
                     className="
                       flex items-center justify-center gap-1 
@@ -252,6 +304,12 @@ export default function Cart () {
                       translate-all duration-300 ease-in-out
                       hover:bg-body hover:text-heading-invert
                     "
+                    data-type="delete_button_is_clicked"
+                    data-product-name={getProduct(products, product.id).name}
+                    data-size={product.size}
+                    data-color={product.color}
+                    data-index={product.id}
+                    onClick={handleClick}
                   >
                     <IcOutlineClear
                       className="w-4 h-4"
