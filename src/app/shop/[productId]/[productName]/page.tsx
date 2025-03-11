@@ -78,6 +78,7 @@ export default function page () {
     array?.reduce((acc: any[] , itm) => itm.second ? [...acc, itm.main, itm.second] : [...acc, itm.main], []);
 
   const onColorChange = (selectedColor: string, clickedColor: string) => {
+    if (selectedColor === "" || clickedColor === "") return;
     setSearchParams("color", clickedColor);
   }
 
@@ -99,14 +100,15 @@ export default function page () {
         const color = searchParams.get("color");
         setAlertToggle(Date.now());
 
+        setSetColorTrigger(Date.now());
+        setPickedColor("");
+        deleteAllSearchParams();
+
         if (color && size) {
           const newProduct = { id: Number(productId), size, quantity, color };
           setCart([ ...cart, newProduct ]);
           setAlertType("product added");
           setAlertMessage(`"${productName}" is Added.` || "Unknown product name");  
-          setPickedColor("");
-          setSetColorTrigger(Date.now());
-          deleteAllSearchParams();
           return;
         }
 
