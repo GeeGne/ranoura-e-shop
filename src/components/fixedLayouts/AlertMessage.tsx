@@ -288,7 +288,7 @@ export default function AlertMessage () {
           className={`
             --alert-messge-content-ani 
             w-[50px] h-[50px] lg:w-[100px] lg:h-[100px] 
-            text-content-inbetween
+            text-content
           `}
         />
       <div
@@ -296,7 +296,7 @@ export default function AlertMessage () {
       >
         <span
           className={`
-            --alert-messge-content-ani text-base lg:text-xl font-bold text-content-inbetween
+            --alert-messge-content-ani text-base lg:text-xl font-bold text-heading
           `}
         >
           Added to Your Cart 🛒

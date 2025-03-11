@@ -14,6 +14,7 @@ import BtnA from "@/components/BtnA";
 import { useCartStore, useLayoutRefStore, useAlertMessageStore } from '@/stores/index';
 
 // SVG
+import CartEmpty from "@/components/svgs/CartEmpty";
 import EpArrowLeft from "@/components/svgs/EpArrowLeft";
 import IcOutlineClear from '@/components/svgs/IcOutlineClear';
 import IcOutlineCreate from "@/components/svgs/IcOutlineCreate";
@@ -44,6 +45,7 @@ export default function Cart () {
   const setToggle = useCartStore((status:any) => status.setToggle);
   const cart = useCartStore((status:any) => status.cart);
   const setCart = useCartStore((status:any) => status.setCart);
+  const isCartEmpty = cart.length === 0;
 
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
@@ -113,6 +115,73 @@ export default function Cart () {
   // DEBUG & UI
   // console.log('cart: ', cart);
   // console.log('img main url ', );
+
+  if (isCartEmpty) return (
+    <div
+      className={`
+        fixed top-0 left-0 
+        flex flex-col w-full h-screen bg-[var(--shade-v2-color)] z-[2000]
+        transition-all duration-300 ease-in-out
+        backdrop-blur-[2px]
+        ${toggle ? 'translate-y-[0%]' : 'translate-y-[-100%]'}
+      `}
+    >
+      <button
+        className="
+        relative flex items-center justify-end 
+        w-full max-w-[1400px] mx-auto px-4 py-8 opacity-100 cursor-pointer"
+        onClick={handleClick}
+        data-type="close_button_is_clicked"
+      >
+        <div
+          className="nav-active-effect z-10"
+        >
+          <SolarCart4Outline
+            className="
+              text-heading-invert cursor-pointer
+            "
+            width={24}
+            height={24}
+          />
+        </div>
+        <div
+          className="
+            absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]
+            w-screen h-full text-body text-4xl font-thin
+            flex items-center justify-center gap-2 bg-[hsla(0,0%,80%,0.6)]  
+          "
+        >
+          <ArrowUp 
+            className="w-8 h-8 text-between rounded-full border-solid border-body-light border-[1px] p-1"
+          />
+          <h2>
+            CLOSE
+          </h2>
+        </div>
+      </button>
+      <hr className="border-inbetween"/>
+      <div
+        className="flex flex-col gap-8 w-full items-center max-w-[800px] p-8 m-auto translate-y-[-3rem]"
+      >
+        <CartEmpty 
+          className="flex w-full h-auto text-content-inbetween"
+        />
+        <h2
+          className="text-heading text-xl font-base"
+        >
+          <span className="text-content text-3xl font-bold">I</span>
+          t looks like your Cart is Empty
+        </h2>
+        <BtnA 
+          className="bg-primary text-heading-invert font-bold py-2 px-4 rounded-md"
+          data-type="close_button_is_clicked"
+          onClick={handleClick}
+        >
+          Close Cart
+        </BtnA>
+      </div>
+    </div>
+  )
 
   return (
     <div

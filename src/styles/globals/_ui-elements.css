@@ -176,7 +176,7 @@
 }
 
 .cool-bg-grad-k {
-  background-image: linear-gradient(to right, #edc4b3, #7d4f50, #edc4b3);
+  background-image: linear-gradient(to right, #edc4b3, var(--content-color), #edc4b3);
 }
 
 .cool-bg-grad-l {
@@ -184,7 +184,7 @@
 }
 
 .cool-bg-grad-m {
-  background-image: linear-gradient(to right, #0a0908, #7d4f50, #0a0908);
+  background-image: linear-gradient(to right, #0a0908, var(--content-color), #0a0908);
 }
 
 .user-nav-selected {
