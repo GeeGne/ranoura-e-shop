@@ -18,7 +18,7 @@ export default function ProductSize ({ sizes }: Props) {
   const available = false;
   const sizesArray = ['XS', 'S', 'M', 'L', 'XL', '2XL'];
 
-  const handleActive = (e: React.MouseEvent<HTMLElement>) => {
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     
     const index = Number(e.currentTarget.dataset.index);
     const { size } = e.currentTarget.dataset;
@@ -31,7 +31,6 @@ export default function ProductSize ({ sizes }: Props) {
   // console.log('active: ', active);
   // console.log('sizes: ', sizes);
   // console.log('searchParams.get("size"): ', searchParams.get('size'));
-
 
   return (
     <section>
@@ -64,7 +63,7 @@ export default function ProductSize ({ sizes }: Props) {
             data-active={i}
             data-size={size}
             data-available={available}
-            onClick={handleActive}
+            onClick={handleClick}
           >
             <span>
               {size}

@@ -9,25 +9,46 @@ type Props = {
   width?: string;
   height?: string;
   colorsArray?: string[];
+  pickFirstIndexByDefault?: boolean;
   currentColor?: any;
+  setColor?: any;
+  setColorTrigger?: any;
   productId?: number;
 }
 
-export default function ColorPallete ({ className = '', currentColor, width = 'w-4', height = 'h-4', productId, colorsArray = [] }: Props) {
+export default function ColorPallete ({ className = '', currentColor, pickFirstIndexByDefault = true, setColor = null, setColorTrigger, width = 'w-4', height = 'h-4', productId, colorsArray = [] }: Props) {
 
   const [ selectedColor, setSelectedColor ] = useState<string>("");
   const [ clickedColor, setClickedColor ] = useState<string>("");
   const getHex = (color: string) => colors.find((itm: any) => itm.name === color)?.hex || '#339933';
   const isMounted = useRef<boolean>(false);
+  const onMount = useRef<boolean>(false);
 
   useEffect(() => {
     currentColor(selectedColor, clickedColor, productId);
   }, [selectedColor, clickedColor]);
 
   useEffect(() => {
-    setSelectedColor(colorsArray[0])
-    setClickedColor(colorsArray[0])
-  }, [colorsArray]);
+    if (pickFirstIndexByDefault) {
+      setSelectedColor(colorsArray[0]);
+      setClickedColor(colorsArray[0]);
+      return;
+    }
+    setSelectedColor("")
+    setClickedColor("")
+  }, [colorsArray, pickFirstIndexByDefault]);
+
+  useEffect(() => {
+    if (!onMount.current)  {
+      onMount.current = true;
+      return;
+    };
+
+    if (setColor === null) return;
+    
+    setSelectedColor(setColor);
+    setClickedColor(setColor);
+  }, [setColor, setColorTrigger]);
 
   return (
     <ul className="flex gap-2">

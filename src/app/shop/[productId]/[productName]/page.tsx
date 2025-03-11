@@ -40,6 +40,8 @@ export default function page () {
   const setSearchParams = useSetSearchParams();
   const deleteAllSearchParams = useDeleteAllSearchParams();
 
+  const [ pickedColor, setPickedColor ] = useState<any>(null)
+  const [ setColorTrigger, setSetColorTrigger ] = useState<any>(null)
   const quantitiyInptRef = useRef<any>(null);
   const cart = useCartStore(state => state.cart);
   const setCart = useCartStore(state => state.setCart);
@@ -102,13 +104,14 @@ export default function page () {
           setCart([ ...cart, newProduct ]);
           setAlertType("product added");
           setAlertMessage(`"${productName}" is Added.` || "Unknown product name");  
+          setPickedColor("");
+          setSetColorTrigger(Date.now());
           deleteAllSearchParams();
           return;
         }
 
         setAlertType("error");
-        setAlertMessage(`Select your preferred color and size to continue`);  
-      
+        setAlertMessage(`Select your preferred color and size to continue`);
         break;
       case 'productList_is_clicked':
         setProductListsActiveIndex(val => val === Number(index) ? null : Number(index));
@@ -171,6 +174,9 @@ export default function page () {
           height="h-6"
           colorsArray={product?.colors}
           productId={product?.id}
+          pickFirstIndexByDefault={false}
+          setColor={pickedColor}
+          setColorTrigger={setColorTrigger}
           currentColor={onColorChange}
         />
         <section

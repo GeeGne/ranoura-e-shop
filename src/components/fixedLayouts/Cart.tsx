@@ -227,7 +227,7 @@ export default function Cart () {
                   </div>       
                   <label 
                     className="flex justify-between w-[150px]"
-                    htmlFor="quantity"
+                    htmlFor="cartQuantity"
                   >
                     <span className="text-body">
                       Quanitity:
@@ -237,8 +237,8 @@ export default function Cart () {
                     >
                       <input
                         className="w-12 bg-transparent text-center outline-none border-none"
-                        id="quantity"
-                        name="quantity"
+                        id="cartQuantity"
+                        name="cartQuantity"
                         value={product.quantity}
                         onFocus={handleFocus}
                         onBlur={handleBlur}
