@@ -9,14 +9,20 @@ type CartStorePops = {
   setCart: (value: any[]) => void;
 };
 
-const useCartStore = create<CartStorePops>(
-  (set) => ({
-    toggle: false,
-    setToggle: (toggle: boolean) => set({ toggle }),
-    // cart: [{ id: 1, size: "M", quantity: 2, color: "purple" }],
-    cart: [],
-    setCart: (cart: any[]) => set({ cart })
-  })
+const useCartStore = create<CartStorePops>()(
+  persist(
+    (set) => ({
+      toggle: false,
+      setToggle: (toggle: boolean) => set({ toggle }),
+      // cart: [{ id: 1, size: "M", quantity: 2, color: "purple" }],
+      cart: [],
+      setCart: (cart: any[]) => set({ cart })
+    }),
+    {
+      name:'cart-storage',
+      storage: createJSONStorage(() => localStorage)
+    }
+  )
 );
 
 type NavbarStoreProps = {
@@ -127,7 +133,7 @@ type AlertMessageProps = {
   setMessage: (value: string) => void;
 }
 
-const useAlertMessageStore = create<AlertMessageProps>(
+const useAlertMessageStore = create<AlertMessageProps>()(
   (set) => ({
     toggle: 0,
     setToggle: (toggle: number) => set({ toggle }),
@@ -135,7 +141,7 @@ const useAlertMessageStore = create<AlertMessageProps>(
     setType: (type: string) => set({ type }),
     message: "",
     setMessage: (message: string) => set({ message })
-  })
+  }),
 );
 
 type FooterListProps = {
