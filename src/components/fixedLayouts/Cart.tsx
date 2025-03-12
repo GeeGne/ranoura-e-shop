@@ -254,7 +254,7 @@ export default function Cart () {
                 src={getImgUrl(getProduct(products, product.id).images, product.color)?.main}
               />
               <div className="flex flex-col flex-1 px-4">
-                <div className="flex text-heading text-lg font-bold justify-between">
+                <div className="flex text-heading text-lg justify-between">
                   <h3>
                     {getProduct(products, product.id)?.name} 
                   </h3>
@@ -280,7 +280,7 @@ export default function Cart () {
                     {product.color}
                   </span>
                 </div>
-                  <div className="flex gap-4 items-center w-full">
+                  <div className="flex gap-2 items-center w-full">
                     <span className="text-body">
                       Price: 
                     </span>
@@ -290,6 +290,8 @@ export default function Cart () {
                         }) * product.quantity} SYP */}
                       <PriceTag 
                         className="" 
+                        hidePercent={true}
+                        textSize="base"
                         price={getProduct(products, product.id).price} 
                         discount={getProduct(products, product.id).discount_percent}
                       />

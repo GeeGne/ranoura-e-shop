@@ -3,9 +3,11 @@ import calculatePriceAfterDiscount from "@/utils/calculatePriceAfterDiscount";
 type Props = {
   price?: number;  
   discount?: number;
+  hidePercent?: boolean;
+  textSize?: string;
 } & React.ComponentPropsWithRef<"div">;
 
-export default function PriceTag ({ price = 0, discount = 0, ...props }: Props) {
+export default function PriceTag ({ price = 0, discount = 0, hidePercent = false, textSize = "lg", ...props }: Props) {
   return (
     <div
       { ...props }
@@ -18,24 +20,54 @@ export default function PriceTag ({ price = 0, discount = 0, ...props }: Props) 
               className="flex items-center gap-2"
             >
               <span
-                className="text-red-600 text-lg font-bold"
+                className={`
+                  text-red-600 font-bold
+                  ${textSize === 'lg' 
+                    ? 'text-lg' 
+                    : textSize === 'base' 
+                    ? 'text-base' : 'text-sm'
+                  }
+                `}
               >
                 {calculatePriceAfterDiscount({ price, discount })} SYP
               </span>
               <s
-                className="text-body-light text-base font-bold"
+                className={`
+                  text-body-light font-bold
+                  ${textSize === 'lg' 
+                    ? 'text-base' 
+                    : textSize === 'base' 
+                    ? 'text-sm' : 'text-xs'
+                  }
+                `}
               >
                 {price}
               </s>
             </div> 
-            <span
-              className="text-body text-sm font-bold"
-            >
-              {discount}% Off
-            </span>
+              {hidePercent ||
+                  <span
+                  className={`
+                    text-body font-bold
+                    ${textSize === 'lg' 
+                      ? 'text-sm' 
+                      : textSize === 'base' 
+                      ? 'text-xs': 'text-xs'
+                    }
+                  `}
+                >
+                  {discount}% Off
+                </span>
+              }
           </div>
         : <div
-            className="text-heading text-lg font-bold"
+            className={`
+              text-heading font-bold
+              ${textSize === 'lg' 
+                ? 'text-lg' 
+                : textSize === 'base' 
+                ? 'text-base' : 'text-sm'
+              }
+            `}
           >
             {price} SYP
           </div>

@@ -1,5 +1,19 @@
 // COMPONENTS
 import Image from 'next/image';
+import PriceTag from '@/components/PriceTag'
+
+// STORES
+import { useCartStore } from "@/stores/index"
+
+// JSON
+import products from '@/json/products.json';
+import colors from '@/json/colors.json';
+
+// UTILS
+import calculatePriceAfterDiscount from "@/utils/calculatePriceAfterDiscount";
+import getProduct from '@/utils/getProduct';
+import getImgUrl from '@/utils/getImgUrl';
+import getColor from '@/utils/getColor';
 
 // ASSETS
 const ramdanBanner = "/assets/img/ramadan-nights.webp";
@@ -7,7 +21,6 @@ const ramdanBanner2 = "/assets/img/ramadan-nights-2.jpg";
 const outfit1 = "assets/img/outfit.webp"
 const outfit2 = "assets/img/outfit-2.jpg"
 const outfit3 = "assets/img/outfit-3.jpg"
-
 
 type Props = {
   className?: string;
@@ -17,7 +30,9 @@ type Props = {
 
 export default function OrderSummary ({ hideProductsSection = false, hideTotalSection = false, className, ...props }: Props) {
   
-  const cart = [1, 2, 3, 4, 5, 6];
+  // const cart = [1, 2, 3, 4, 5, 6];
+
+  const cart = useCartStore(state => state.cart)
 
   return (
     <section
@@ -54,22 +69,23 @@ export default function OrderSummary ({ hideProductsSection = false, hideTotalSe
             flex flex-col gap-4
           `}
         >
-          {cart.map(itm =>
+          {cart.map((product, i) =>
             <li
-              key={itm}
+              key={i}
               className="flex gap-4"
             >
               <section
-                className="relative rounded-lg overflow-hidden"
+                className="relative"
               >
                 <img
-                  alt="product Image"
-                  src={outfit1}
-                  className="w-[100px] md:w-[200px] ratio-[2/3] object-cover object-center drop-shadow-md"
+                  alt={getProduct(products, product.id).name}
+                  src={getImgUrl(getProduct(products, product.id).images, product.color)?.main}
+  
+                  className="rounded-lg shrink-0 w-[100px] min-w-[100px] h-auto md:w-[200px] ratio-[2/3] object-cover object-center drop-shadow-md"
                 />
                 <span
                   className="
-                    absolute top-0 right-0 
+                    hidden absolute top-0 right-0 
                     text-heading-invert font-bold
                     px-2 py-1 z-[5]
                   "
@@ -78,7 +94,7 @@ export default function OrderSummary ({ hideProductsSection = false, hideTotalSe
                 </span>
                 <div
                   className="
-                    absolute top-0 left-full 
+                    hidden absolute top-0 left-full 
                     translate-x-[-50%] translate-y-[-50%]
                     w-16 h-16 bg-primary rounded-full bg-
                   "
@@ -87,40 +103,59 @@ export default function OrderSummary ({ hideProductsSection = false, hideTotalSe
               <section
                 className="flex flex-col flex-1 gap-2"
               >
-                <h3 className="text-sm md:text-base text-heading">
-                  Warm Jacket for casual days
-                </h3>
+                <div
+                  className="flex justify-between"
+                >
+                  <h3 className="text-base md:text-lg text-heading">
+                    {getProduct(products, product.id)?.name}
+                  </h3>
+                  <h3
+                    className="text-base md:text-lg text-content font-bold"
+                  >
+                    {calculatePriceAfterDiscount({ 
+                        price: getProduct(products, product.id).price, 
+                        discount: getProduct(products, product.id).discount_percent
+                      }) * product.quantity} SYP
+                  </h3>
+                </div>
                 <div className="flex gap-2 items-center text-sm md:text-base text-heading font-bold">
                   <span>
-                    BLACK
+                    {product.size}
                   </span> {' | '}
-                  <div className="w-3 md:w-4 h-3 md:h-4 bg-primary rounded-full" />
+                  <div 
+                    className="w-3 md:w-4 h-3 md:h-4 bg-primary rounded-full drop-shadow-md"
+                    style={{backgroundColor: getColor(colors, product.color).hex}}
+                  />
                 </div>
                 <div className="flex gap-2 items-center text-heading">
                   <span className="text-sm md:text-base text-body">
-                    size:
+                    Price:
                   </span>
+                    <PriceTag 
+                        className="md:hidden whitespace-nowrap" 
+                        hidePercent={true}
+                        textSize='sm'
+                        price={getProduct(products, product.id).price} 
+                        discount={getProduct(products, product.id).discount_percent}
+                    />
+                    <PriceTag 
+                        className="hidden md:inline whitespace-nowrap" 
+                        hidePercent={true}
+                        textSize='base'
+                        price={getProduct(products, product.id).price} 
+                        discount={getProduct(products, product.id).discount_percent}
+                    />
                   <span className="text-sm md:text-base font-bold">
-                    M
                   </span>
                 </div>
                 <div className="flex gap-2 items-center text-heading">
                   <span className="text-sm md:text-base text-body">
-                    quantity:
+                    Quantity:
                   </span>
                   <span className="text-sm md:text-base font-bold">
-                    2
+                    {product.quantity}
                   </span>
                 </div>
-              </section>
-              <section
-                className="flex"
-              >
-                <span
-                  className="text-sm md:text-base"
-                >
-                  300 SYP
-                </span>
               </section>
             </li>
           )}
