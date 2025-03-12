@@ -157,7 +157,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
           };
 
           setLeftArrowInactive(false);
-          setRightArrowInactive(true);
+          setRightArrowInactive(false);
           return val + liRefWidth + gap
         });
         break;
@@ -170,7 +170,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
             return -1 * (ulRefScrollWidth - ulRefWidth)
           };
 
-          setLeftArrowInactive(true);
+          setLeftArrowInactive(false);
           setRightArrowInactive(false);
           return val - liRefWidth - gap
         });

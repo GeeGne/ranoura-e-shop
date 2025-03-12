@@ -21,27 +21,27 @@ export default function CartEmpty(props: SVGProps<SVGSVGElement>) {
         transform="translate(-152 -76.01429)"
         fill="currentColor"
       />
-      <rect x="413.2485" y="35.90779" width="140" height="2" fill="#f2f2f2" />
-      <rect x="513.2485" y="37.40779" width="2" height="18.5" fill="#f2f2f2" />
-      <rect x="452.2485" y="37.40779" width="2" height="18.5" fill="#f2f2f2" />
-      <rect x="484.2485" y="131.90779" width="140" height="2" fill="#f2f2f2" />
-      <rect x="522.2485" y="113.90779" width="2" height="18.5" fill="#f2f2f2" />
-      <rect x="583.2485" y="113.90779" width="2" height="18.5" fill="#f2f2f2" />
-      <rect x="670.2485" y="176.90779" width="140" height="2" fill="#f2f2f2" />
-      <rect x="708.2485" y="158.90779" width="2" height="18.5" fill="#f2f2f2" />
-      <rect x="769.2485" y="158.90779" width="2" height="18.5" fill="#f2f2f2" />
-      <rect x="656.2485" y="640.90779" width="140" height="2" fill="#f2f2f2" />
-      <rect x="694.2485" y="622.90779" width="2" height="18.5" fill="#f2f2f2" />
-      <rect x="755.2485" y="622.90779" width="2" height="18.5" fill="#f2f2f2" />
-      <rect x="417.2485" y="319.90779" width="140" height="2" fill="#f2f2f2" />
-      <rect x="455.2485" y="301.90779" width="2" height="18.5" fill="#f2f2f2" />
-      <rect x="516.2485" y="301.90779" width="2" height="18.5" fill="#f2f2f2" />
-      <rect x="461.2485" y="560.90779" width="140" height="2" fill="#f2f2f2" />
-      <rect x="499.2485" y="542.90779" width="2" height="18.5" fill="#f2f2f2" />
-      <rect x="560.2485" y="542.90779" width="2" height="18.5" fill="#f2f2f2" />
-      <rect x="685.2485" y="487.90779" width="140" height="2" fill="#f2f2f2" />
-      <rect x="723.2485" y="469.90779" width="2" height="18.5" fill="#f2f2f2" />
-      <rect x="784.2485" y="469.90779" width="2" height="18.5" fill="#f2f2f2" />
+      <rect x="413.2485" y="35.90779" width="140" height="2" fill="var(--inbetween-color)" />
+      <rect x="513.2485" y="37.40779" width="2" height="18.5" fill="var(--inbetween-color)" />
+      <rect x="452.2485" y="37.40779" width="2" height="18.5" fill="var(--inbetween-color)" />
+      <rect x="484.2485" y="131.90779" width="140" height="2" fill="var(--inbetween-color)" />
+      <rect x="522.2485" y="113.90779" width="2" height="18.5" fill="var(--inbetween-color)" />
+      <rect x="583.2485" y="113.90779" width="2" height="18.5" fill="var(--inbetween-color)" />
+      <rect x="670.2485" y="176.90779" width="140" height="2" fill="var(--inbetween-color)" />
+      <rect x="708.2485" y="158.90779" width="2" height="18.5" fill="var(--inbetween-color)" />
+      <rect x="769.2485" y="158.90779" width="2" height="18.5" fill="var(--inbetween-color)" />
+      <rect x="656.2485" y="640.90779" width="140" height="2" fill="var(--inbetween-color)" />
+      <rect x="694.2485" y="622.90779" width="2" height="18.5" fill="var(--inbetween-color)" />
+      <rect x="755.2485" y="622.90779" width="2" height="18.5" fill="var(--inbetween-color)" />
+      <rect x="417.2485" y="319.90779" width="140" height="2" fill="var(--inbetween-color)" />
+      <rect x="455.2485" y="301.90779" width="2" height="18.5" fill="var(--inbetween-color)" />
+      <rect x="516.2485" y="301.90779" width="2" height="18.5" fill="var(--inbetween-color)" />
+      <rect x="461.2485" y="560.90779" width="140" height="2" fill="var(--inbetween-color)" />
+      <rect x="499.2485" y="542.90779" width="2" height="18.5" fill="var(--inbetween-color)" />
+      <rect x="560.2485" y="542.90779" width="2" height="18.5" fill="var(--inbetween-color)" />
+      <rect x="685.2485" y="487.90779" width="140" height="2" fill="var(--inbetween-color)" />
+      <rect x="723.2485" y="469.90779" width="2" height="18.5" fill="var(--inbetween-color)" />
+      <rect x="784.2485" y="469.90779" width="2" height="18.5" fill="var(--inbetween-color)" />
       <polygon
         points="362.06 702.184 125.274 702.184 125.274 700.481 360.356 700.481 360.356 617.861 145.18 617.861 134.727 596.084 136.263 595.347 146.252 616.157 362.06 616.157 362.06 702.184"
         fill="#2f2e41"
@@ -171,21 +171,21 @@ export default function CartEmpty(props: SVGProps<SVGSVGElement>) {
         transform="translate(-152 -76.01429)"
         fill="#3f3d56"
       />
-      <rect x="60.2485" y="352.90779" width="140" height="2" fill="#f2f2f2" />
-      <rect x="98.2485" y="334.90779" width="2" height="18.5" fill="#f2f2f2" />
-      <rect x="159.2485" y="334.90779" width="2" height="18.5" fill="#f2f2f2" />
-      <rect x="109.2485" y="56.90779" width="140" height="2" fill="#f2f2f2" />
-      <rect x="209.2485" y="58.40779" width="2" height="18.5" fill="#f2f2f2" />
-      <rect x="148.2485" y="58.40779" width="2" height="18.5" fill="#f2f2f2" />
-      <rect x="250.2485" y="253.90779" width="140" height="2" fill="#f2f2f2" />
-      <rect x="350.2485" y="255.40779" width="2" height="18.5" fill="#f2f2f2" />
-      <rect x="289.2485" y="255.40779" width="2" height="18.5" fill="#f2f2f2" />
-      <rect x="12.2485" y="252.90779" width="140" height="2" fill="#f2f2f2" />
-      <rect x="112.2485" y="254.40779" width="2" height="18.5" fill="#f2f2f2" />
-      <rect x="51.2485" y="254.40779" width="2" height="18.5" fill="#f2f2f2" />
-      <rect x="180.2485" y="152.90779" width="140" height="2" fill="#f2f2f2" />
-      <rect x="218.2485" y="134.90779" width="2" height="18.5" fill="#f2f2f2" />
-      <rect x="279.2485" y="134.90779" width="2" height="18.5" fill="#f2f2f2" />
+      <rect x="60.2485" y="352.90779" width="140" height="2" fill="var(--inbetween-color)" />
+      <rect x="98.2485" y="334.90779" width="2" height="18.5" fill="var(--inbetween-color)" />
+      <rect x="159.2485" y="334.90779" width="2" height="18.5" fill="var(--inbetween-color)" />
+      <rect x="109.2485" y="56.90779" width="140" height="2" fill="var(--inbetween-color)" />
+      <rect x="209.2485" y="58.40779" width="2" height="18.5" fill="var(--inbetween-color)" />
+      <rect x="148.2485" y="58.40779" width="2" height="18.5" fill="var(--inbetween-color)" />
+      <rect x="250.2485" y="253.90779" width="140" height="2" fill="var(--inbetween-color)" />
+      <rect x="350.2485" y="255.40779" width="2" height="18.5" fill="var(--inbetween-color)" />
+      <rect x="289.2485" y="255.40779" width="2" height="18.5" fill="var(--inbetween-color)" />
+      <rect x="12.2485" y="252.90779" width="140" height="2" fill="var(--inbetween-color)" />
+      <rect x="112.2485" y="254.40779" width="2" height="18.5" fill="var(--inbetween-color)" />
+      <rect x="51.2485" y="254.40779" width="2" height="18.5" fill="var(--inbetween-color)" />
+      <rect x="180.2485" y="152.90779" width="140" height="2" fill="var(--inbetween-color)" />
+      <rect x="218.2485" y="134.90779" width="2" height="18.5" fill="var(--inbetween-color)" />
+      <rect x="279.2485" y="134.90779" width="2" height="18.5" fill="var(--inbetween-color)" />
     </svg>
   );
 }
