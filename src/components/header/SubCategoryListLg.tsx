@@ -114,11 +114,16 @@ export default function SubCategoryListLg () {
             </li>  
           </ul>
         </div>
-        <img
-          className="flex-[2] w-full aspect-[2/1] rounded-lg cursor-pointer object-contain object-right" 
-          src={categories?.find(itm => selectedCategory === itm.slug)?.navbarLgImg || ramdanBanner}
-          alt="Image"
-        />
+        <a
+          className="flex flex-[2] items-center justify-center w-full h-full rounded-lg cursor-pointer overflow-hidden" 
+          href={categories.find(itm => itm.slug === selectedCategory)?.imgUrl}
+        >
+          <img
+            className="w-full aspect-[2/1] object-cover object-center" 
+            src={categories?.find(itm => selectedCategory === itm.slug)?.navbarLgImg || ramdanBanner}
+            alt="Image"
+          />
+        </a>
       </div>
     </>
 

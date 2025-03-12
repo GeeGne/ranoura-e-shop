@@ -99,12 +99,30 @@ export default function SubCategoryList () {
               <span
                 className="group relative"
               >
-                {'SEE ALL'}
+                SEE ALL
                 <UnderlineStyle 
                   style={{backgroundColor: 'var(--content-color)'}}
                 />
               </span>
             </Link>
+          </li>      
+          <li
+            className="
+              w-full h-full overflow-hidden rounded-lg drop-shadow-lg
+            "
+          >
+            <a
+              href={categories.find(itm => itm.slug === selectedCategory)?.imgUrl}
+            >
+              <img
+                className="
+                  w-full aspect-square  hover:scale-[105%]
+                  transition-all duration-300 ease-in-out
+                "
+                src={categories.find(itm => itm.slug === selectedCategory)?.navbarImg || null}
+                alt="An Image"
+              />
+            </a>
           </li>      
       </ul>
 

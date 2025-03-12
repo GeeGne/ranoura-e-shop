@@ -5,27 +5,31 @@
     "type": "clothing",
     "slug": "clothing",
     "navbarImg": "/assets/img/background(3).jpg",
-    "navbarLgImg":"/assets/img/background(9).webp"
+    "navbarLgImg":"/assets/img/background(9).webp",
+    "imgUrl": "https://ranoura-e-shop-vwyz.vercel.app/shop/18/League-Hoodie"
   },{
     "id": 1,
     "name": "New",
     "type": "new",
     "slug": "new",
     "navbarImg": "/assets/img/background(4).webp",
-    "navbarLgImg":"/assets/img/background(10).webp"
+    "navbarLgImg":"/assets/img/background(10).webp",
+    "imgUrl": "https://ranoura-e-shop-vwyz.vercel.app/shop/18/League-Hoodie"
   },{
     "id": 2,
     "name": "Sale",
     "type": "sale",
     "slug": "sale",
     "navbarImg": "/assets/img/background(5).webp",
-    "navbarLgImg":"/assets/img/background(7).webp"
+    "navbarLgImg":"/assets/img/background(7).webp",
+    "imgUrl": "https://ranoura-e-shop-vwyz.vercel.app/shop/18/League-Hoodie"
   },{
     "id": 3,
     "name": "Flash Events",
     "type": "event",
     "slug": "event",
     "navbarImg": "/assets/img/background(6).jpg",
-    "navbarLgImg":"/assets/img/background(9).webp"
+    "navbarLgImg":"/assets/img/background(9).webp",
+    "imgUrl": "https://ranoura-e-shop-vwyz.vercel.app/shop/18/League-Hoodie"
   }
 ]
