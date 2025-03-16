@@ -297,8 +297,8 @@ export default function Cart () {
                       />
                   </div>       
                   <label 
-                    className="flex justify-between w-[150px]"
-                    htmlFor="cartQuantity"
+                    className="flex gap-2 w-[150px]"
+                    htmlFor={`cartQuantity_${i}`}
                   >
                     <span className="text-body">
                       Quanitity:
@@ -307,12 +307,12 @@ export default function Cart () {
                       className="relative"
                     >
                       <input
-                        className="w-12 bg-transparent text-center outline-none border-none"
-                        id="cartQuantity"
-                        name="cartQuantity"
+                        className="peer w-12 bg-transparent text-center text-sm outline-none border-none"
+                        id={`cartQuantity_${i}`}
+                        name={`cartQuantity_${i}`}
                         value={product.quantity}
-                        onFocus={handleFocus}
-                        onBlur={handleBlur}
+                        // onFocus={handleFocus}
+                        // onBlur={handleBlur}
                         readOnly
                       />
                       <div 
@@ -320,20 +320,25 @@ export default function Cart () {
                           absolute top-0 left-0 w-full h-full
                           flex items-center justify-end
                           border-solid border-b-[2px] border-body
-
-                      ">
-                        <EpArrowLeft className="w-4 h-4 rotate-[265deg]" />
+                        "
+                      >
+                        <EpArrowLeft className="w-3 h-3 rotate-[265deg]" />
                       </div>
                       <ul
                         className={`
-                          absolute top-full left-0 w-full h-auto py-2
-                          flex-col bg-[var(--background-light-color)] rounded-lg cursor-pointer
-                          ${inputToggle ? 'flex' : 'hidden'}
+                          invisible peer-focus:visible opacity-0 peer-focus:opacity-100 
+                          scale-y-[0%] peer-focus:scale-y-[100%] origin-top
+                          absolute top-full left-0 w-full h-auto p-1 drop-shadow-lg
+                          flex-col bg-[var(--background-light-color)] rounded-md cursor-pointer
+                          transition-all duration-300 ease-in-out
                         `}
                       >
                         {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(num => 
                           <li 
-                            className="hover:bg-[var(--background-deep-light-color)] w-full text-center"
+                            className="
+                              hover:bg-content-invert w-full text-sm text-center text-body hover:text-content hover:font-bold rounded-md
+                              transition-all duration-300 ease-in-out
+                            "
                             key={num}
                           >
                             {num}
