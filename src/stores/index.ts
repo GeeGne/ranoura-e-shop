@@ -6,7 +6,7 @@ type CartStorePops = {
   toggle: boolean;
   setToggle: (value: boolean) => void;
   cart: any[];
-  setCart: (value: any[]) => void;
+  setCart: (value: any) => void;
 };
 
 const useCartStore = create<CartStorePops>()(
@@ -16,7 +16,7 @@ const useCartStore = create<CartStorePops>()(
       setToggle: (toggle: boolean) => set({ toggle }),
       // cart: [{ id: 1, size: "M", quantity: 2, color: "purple" }],
       cart: [],
-      setCart: (cart: any[]) => set({ cart })
+      setCart: (cart: any) => set({ cart })
     }),
     {
       name:'cart-storage',

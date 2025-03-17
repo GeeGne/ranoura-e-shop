@@ -1,7 +1,7 @@
 // HOOKS
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 // COMPONENTS
 import PriceTag from '@/components/PriceTag'
@@ -53,8 +53,10 @@ export default function Cart () {
 
   const [ inputToggle, setInputToggle ] = useState<boolean>(false);
 
+  const amountInptRefs = useRef<HTMLElement | any>([]);
+
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    const { type, index, productName, size, color } = e.currentTarget.dataset;
+    const { type, index, productName, size, color, productId, quantity } = e.currentTarget.dataset;
 
     switch (type) {
       case 'close_button_is_clicked':
@@ -82,6 +84,16 @@ export default function Cart () {
         setTimeout(() => 
           layoutRef.scrollTo({top: 0, behavior: "instant"})
         ,200);
+        break;
+      case 'product_amount_is_clicked':
+        // const updatedProduct = cart.find((itm: any) => itm.id === Number(productId))
+        // setCart( cart.filter((itm: any) => itm.id === Number(productId)) );
+        console.log('quantitiy:', quantity);
+        console.log('amountInptRefs:', amountInptRefs);
+        console.log('index:', index);
+        const newCart = cart[Number(index)].quantity = Number(quantity) 
+        // setCart(newCart);
+        setTimeout(() =>  amountInptRefs.current.find((itm: any, i: number) => i === Number(index)).blur() ,100);
         break;
       default:
         console.error('Unknown type: :', type);
@@ -113,7 +125,7 @@ export default function Cart () {
   }
 
   // DEBUG & UI
-  // console.log('cart: ', cart);
+  console.log('cart: ', cart);
   // console.log('img main url ', );
 
   if (isCartEmpty) return (
@@ -161,7 +173,7 @@ export default function Cart () {
       </button>
       <hr className="border-inbetween"/>
       <div
-        className="flex flex-col gap-8 w-full items-center max-w-[800px] p-8 m-auto translate-y-[-3rem]"
+        className="flex flex-col gap-8 w-full items-center max-w-[800px] p-8 m-auto translate-y-[0rem] overflow-y-scroll"
       >
         <CartEmpty 
           className="flex w-full h-auto text-content-inbetween"
@@ -173,7 +185,7 @@ export default function Cart () {
           t looks like your Cart is Empty
         </h2>
         <BtnA 
-          className="bg-primary text-heading-invert font-bold py-2 px-4 rounded-md"
+          className="shrink-0 bg-primary text-heading-invert font-bold py-2 px-4 rounded-md"
           data-type="close_button_is_clicked"
           onClick={handleClick}
         >
@@ -274,7 +286,7 @@ export default function Cart () {
                   <span>|</span>
                   <span 
                     className={`h-4 w-4 rounded-full`}
-                    style={{backgroundColor: getColor(colors, product.color).hex}}
+                    style={{backgroundColor: getColor(colors, product.color)?.hex}}
                   />
                   <span>
                     {product.color}
@@ -297,7 +309,7 @@ export default function Cart () {
                       />
                   </div>       
                   <label 
-                    className="flex gap-2 w-[150px]"
+                    className="flex gap-2 items-center w-[150px]"
                     htmlFor={`cartQuantity_${i}`}
                   >
                     <span className="text-body">
@@ -308,12 +320,14 @@ export default function Cart () {
                     >
                       <input
                         className="peer w-12 bg-transparent text-center text-sm outline-none border-none"
+                        readOnly
                         id={`cartQuantity_${i}`}
                         name={`cartQuantity_${i}`}
                         value={product.quantity}
+                        data-index={i}
+                        ref={(el: any) => amountInptRefs.current[i] = el}
                         // onFocus={handleFocus}
                         // onBlur={handleBlur}
-                        readOnly
                       />
                       <div 
                         className="
@@ -330,16 +344,22 @@ export default function Cart () {
                           scale-y-[0%] peer-focus:scale-y-[100%] origin-top
                           absolute top-full left-0 w-full h-auto p-1 drop-shadow-lg
                           flex-col bg-[var(--background-light-color)] rounded-md cursor-pointer
-                          transition-all duration-300 ease-in-out
+                          transition-all delay-100 duration-300 ease-in-out
                         `}
                       >
                         {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(num => 
                           <li 
                             className="
-                              hover:bg-content-invert w-full text-sm text-center text-body hover:text-content hover:font-bold rounded-md
+                              hover:bg-content-invert w-full text-sm 
+                                text-center text-body hover:text-content hover:font-bold rounded-md
                               transition-all duration-300 ease-in-out
                             "
                             key={num}
+                            data-index={i}
+                            data-type="product_amount_is_clicked"
+                            data-product-id={product.id}
+                            data-quantity={num}
+                            onClick={handleClick}
                           >
                             {num}
                           </li>
