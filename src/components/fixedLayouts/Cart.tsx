@@ -86,14 +86,12 @@ export default function Cart () {
         ,200);
         break;
       case 'product_amount_is_clicked':
-        // const updatedProduct = cart.find((itm: any) => itm.id === Number(productId))
-        // setCart( cart.filter((itm: any) => itm.id === Number(productId)) );
-        console.log('quantitiy:', quantity);
-        console.log('amountInptRefs:', amountInptRefs);
-        console.log('index:', index);
-        const newCart = cart[Number(index)].quantity = Number(quantity) 
-        // setCart(newCart);
-        setTimeout(() =>  amountInptRefs.current.find((itm: any, i: number) => i === Number(index)).blur() ,100);
+        const cartArray = [ ...cart ]; 
+        cartArray[Number(index)].quantity = Number(quantity);
+        setCart(cartArray);
+        setTimeout(() =>  
+          amountInptRefs.current.find((itm: any, i: number) => i === Number(index)).blur()
+        , 100);
         break;
       default:
         console.error('Unknown type: :', type);
@@ -125,7 +123,7 @@ export default function Cart () {
   }
 
   // DEBUG & UI
-  console.log('cart: ', cart);
+  // console.log('cart: ', cart);
   // console.log('img main url ', );
 
   if (isCartEmpty) return (
