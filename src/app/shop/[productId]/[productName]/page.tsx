@@ -105,8 +105,25 @@ export default function page () {
         deleteAllSearchParams();
 
         if (color && size) {
-          const newProduct = { id: Number(productId), size, quantity, color };
-          setCart([ ...cart, newProduct ]);
+          const cartArray = [ ...cart ];
+          const newProduct = { id: Number(productId), size, quantity: Number(quantity), color };
+          const isProductMatched = cart.some(product => 
+            product.id === Number(productId) && product.size === size && product.color === color
+          );
+
+          if (isProductMatched) setCart(
+            cart.map(product => {
+              if (product.id === Number(productId)) 
+                return {
+                  ...product, 
+                  quantity: product.quantity + Number(quantity) < 9 ? product.quantity + Number(quantity) : 9
+                }
+              return true;
+            })
+          );
+
+          if (!isProductMatched) setCart([ ...cart, newProduct ]);
+
           setAlertType("product added");
           setAlertMessage(`"${productName}" is Added.` || "Unknown product name");  
           return;
