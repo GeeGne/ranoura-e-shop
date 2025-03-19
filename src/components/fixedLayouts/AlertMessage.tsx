@@ -15,6 +15,13 @@ import {
   useLayoutRefStore, useAlertMessageStore, useCartStore
 } from '@/stores/index';
 
+// JSON
+import products from '@/json/products.json';
+import colors from '@/json/colors.json';
+
+// UTILS
+import getColor from '@/utils/getColor';
+
 export default function AlertMessage () {
 
   const layoutRef = useLayoutRefStore((state: any) => state.layoutRef);
@@ -22,6 +29,7 @@ export default function AlertMessage () {
   const alertToggle = useAlertMessageStore(state => state.toggle);
   const type = useAlertMessageStore(state => state.type);
   const message = useAlertMessageStore(state => state.message);
+  const productDetails = useAlertMessageStore(state => state.productDetails);
   const wrapperRef = useRef<any>(null)
   const timeoutId = useRef<any>(null);
   const timeoutId2 = useRef<any>(null);
@@ -71,6 +79,7 @@ export default function AlertMessage () {
   // const type: any = 'product added';
   // const type: any = 'product removed';
   // const message = 'this is a message for something useful  this is a message for something useful';
+  // console.log('productDetails: ', productDetails);
 
   if (type ===  "success") return (
     <div
@@ -284,10 +293,9 @@ export default function AlertMessage () {
       >
         X
       </button>
-      <div className="flex flex-row gap-4">
+      <div className="--alert-messge-content-ani flex flex-row gap-4">
         <ShoppingApp 
           className={`
-            --alert-messge-content-ani 
             w-[50px] h-[50px] lg:w-[100px] lg:h-[100px] 
             text-content-inbetween
           `}
@@ -298,13 +306,13 @@ export default function AlertMessage () {
         >
           <span
             className={`
-              --alert-messge-content-ani text-base lg:text-xl font-bold text-heading
+              text-base lg:text-xl font-bold text-heading
             `}
           >
             Added to Your Cart 🛒
           </span>
           <span
-            className="--alert-messge-content-ani text-body text-sm lg:text-base"
+            className="text-body text-sm lg:text-base"
           >
             {message}
           </span>
@@ -312,6 +320,56 @@ export default function AlertMessage () {
       </div>
       
       <hr className="w-full border-inbetween" />
+
+      <img
+        alt="img"
+        src={productDetails.imgURL}
+        className="--alert-messge-content-ani w-[200px] aspect-[2/3] object-cover object-center rounded-lg drop-shadow-lg"
+      />
+
+      <div
+        className="--alert-messge-content-ani w-[200px] flex flex-row items-center justify-between"
+      >
+        <span
+          className="text-sm text-body font-bold"
+        >
+          Size:
+        </span>
+        <span
+          className="text-sm text-heading font-bold"
+        >
+          {productDetails.size}
+        </span>
+      </div>
+
+      <div
+        className="--alert-messge-content-ani w-[200px] flex flex-row items-center justify-between"
+      >
+        <span
+          className="text-sm text-body font-bold"
+        >
+          Color:
+        </span>
+        <span
+          className="w-4 h-4 rounded-full drop-shadow-md"
+          style={{backgroundColor: getColor(colors, productDetails.color)?.hex}}
+        />
+      </div>
+
+      <div
+        className="w-[200px] flex flex-row items-center justify-between"
+      >
+        <span
+          className="text-sm text-body font-bold"
+        >
+          Quanitity:
+        </span>
+        <span
+          className="text-sm text-heading font-bold"
+        >
+          {productDetails.quantity}
+        </span>
+      </div>
 
       <div
         className="

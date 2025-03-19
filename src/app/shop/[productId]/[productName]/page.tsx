@@ -25,6 +25,7 @@ import products from '@/json/products.json';
 // UTILS
 import useSetSearchParams from '@/utils/useSetSearchParams';
 import useDeleteAllSearchParams from '@/utils/useDeleteAllSearchParams';
+import getProduct from '@/utils/getProduct';
 
 // ASSETS
 const ramdanBanner = "/assets/img/ramadan-nights.webp";
@@ -64,6 +65,7 @@ export default function page () {
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
+  const setProductDetails = useAlertMessageStore(state => state.setProductDetails);
   const [ productListsActiveIndex, setProductListsActiveIndex ] = useState<number | null>(null);
 
   useEffect(() => {
@@ -126,6 +128,12 @@ export default function page () {
 
           setAlertType("product added");
           setAlertMessage(`"${productName}" is Added.` || "Unknown product name");  
+          setProductDetails({ 
+            imgURL: getProduct(products, Number(productId)).images.find((img: any) => img.color === color).main,
+            size,
+            color,
+            quantity
+          });  
           return;
         }
 
