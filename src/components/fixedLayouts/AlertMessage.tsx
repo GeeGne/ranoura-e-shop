@@ -37,7 +37,7 @@ export default function AlertMessage () {
     }, 100);
     clearTimeout(timeoutId2.current);
     timeoutId.current = setTimeout(() =>{ 
-      if (wrapperRef.current) wrapperRef.current.style.display = 'none'
+      if (wrapperRef.current) wrapperRef.current.style.display = 'flex'
     }, 10100);
   }, [alertToggle])
 
@@ -262,7 +262,7 @@ export default function AlertMessage () {
         hidden fixed top-[10%] left-1/2
         translate-x-[-50%]
         w-[calc(100vw-2rem)] md:w-auto
-        flex flex-row md:flex-row items-center justify-center gap-4
+        flex flex-col md:flex-col items-center justify-center gap-4
         p-2 bg-[var(--background-light-color)] hover:bg-[var(--background-deep-light-color)] active:bg-[var(--background-deep-color)]
         drop-shadow-xl rounded-lg overflow-hidden
         transition-all duration-200 ease-in-out
@@ -284,57 +284,64 @@ export default function AlertMessage () {
       >
         X
       </button>
+      <div className="flex flex-row gap-4">
         <ShoppingApp 
           className={`
             --alert-messge-content-ani 
             w-[50px] h-[50px] lg:w-[100px] lg:h-[100px] 
-            text-content
+            text-content-inbetween
           `}
         />
-      <div
-        className="flex flex-col items-center gap-2"
-      >
-        <span
-          className={`
-            --alert-messge-content-ani text-base lg:text-xl font-bold text-heading
-          `}
-        >
-          Added to Your Cart 🛒
-        </span>
-        <span
-          className="--alert-messge-content-ani text-body text-sm lg:text-base"
-        >
-          {message}
-        </span>
+
         <div
-          className="
-            --alert-messge-content-ani flex justify-between 
-            text-sm font-bold text-background-light gap-2 py-2
-          "
+          className="flex flex-col items-center gap-2"
         >
-          <button
-            className="
-              bg-content-inbetween hover:bg-content py-1 px-2 rounded-md
-              transition-all duration-200 ease-in-out
-            "
-            data-type="open_cart"
-            onClick={handleClick}
+          <span
+            className={`
+              --alert-messge-content-ani text-base lg:text-xl font-bold text-heading
+            `}
           >
-            View Cart
-          </button>
-          <Link
-            className="
-              bg-content-inbetween hover:bg-content py-1 px-2 rounded-md
-              transition-all duration-200 ease-in-out
-            "
-            href="/checkout"
-            data-type="navigate_to_checkout"
-            onClick={handleClick}
+            Added to Your Cart 🛒
+          </span>
+          <span
+            className="--alert-messge-content-ani text-body text-sm lg:text-base"
           >
-            Head to Checkout
-          </Link>
+            {message}
+          </span>
         </div>
-      </div> 
+      </div>
+      
+      <hr className="w-full border-inbetween" />
+
+      <div
+        className="
+          --alert-messge-content-ani flex justify-between 
+          text-sm font-bold text-background-light gap-2 py-2
+        "
+      >
+        <button
+          className="
+            bg-content-inbetween hover:bg-content py-1 px-2 rounded-md
+            transition-all duration-200 ease-in-out
+          "
+          data-type="open_cart"
+          onClick={handleClick}
+        >
+          View Cart
+        </button>
+        <Link
+          className="
+            bg-content-inbetween hover:bg-content py-1 px-2 rounded-md
+            transition-all duration-200 ease-in-out
+          "
+          href="/checkout"
+          data-type="navigate_to_checkout"
+          onClick={handleClick}
+        >
+          Head to Checkout
+        </Link>
+      </div>
+
       <div
         className={`
           --alert-timer-tape-ani

@@ -1,5 +1,5 @@
 // HOOKS
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 // COMPONENTS
 import DisplayImg from "@/components/DisplayImg";
@@ -40,6 +40,12 @@ export default function Navbar () {
   const setCategoryToggle = useNavbarStore((status:any) => status.setCategoryToggle);
 
   const [ inputToggle, setInputToggle ] = useState<boolean>(false);
+
+  const mainWrapperRef = useRef<any>(null);
+
+  useEffect(() => {
+    mainWrapperRef.current?.scrollTo({ top: 0, behavior: 'auto' });
+  }, [categoryToggle]);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const { type } = e.currentTarget.dataset;
@@ -88,6 +94,7 @@ export default function Navbar () {
         backdrop-blur-[2px] overflow-x-hidden
         ${toggle ? 'translate-y-[0%]' : 'translate-y-[-100%]'}
       `}
+      ref={mainWrapperRef}
     >
       <button
         className="

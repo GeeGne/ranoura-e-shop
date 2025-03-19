@@ -119,7 +119,7 @@ export default function SubCategoryList () {
                   w-full aspect-square  hover:scale-[105%]
                   transition-all duration-300 ease-in-out
                 "
-                src={categories.find(itm => itm.slug === selectedCategory)?.navbarImg || ''}
+                src={categories.find(itm => itm.slug === selectedCategory)?.navbarImg}
                 alt="An Image"
               />
             </a>
