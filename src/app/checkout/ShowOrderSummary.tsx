@@ -8,6 +8,17 @@ import LineMdDownloadTwotoneLoop from '@/components/svgs/activity/LineMdDownload
 import LineMdUploadOutlineLoop from '@/components/svgs/activity/LineMdUploadOutlineLoop';
 import LineMdUploadTwotoneLoop from '@/components/svgs/activity/LineMdUploadTwotoneLoop';
 
+// STORES
+import { useCartStore } from "@/stores/index";
+
+// UTILS
+import calculateTotalPrice from '@/utils/calculateTotalPrice';
+import calculatePriceAfterDiscount from '@/utils/calculatePriceAfterDiscount';
+import getProduct from '@/utils/getProduct';
+
+// JSON
+import products from '@/json/products.json';
+
 type Props = {
   className?: string;
 } & React.ComponentPropsWithRef<"div">;
@@ -16,12 +27,24 @@ export default function ShowOrderSummary ({ className, ...props }: Props) {
   
   const [ toggle, setToggle ] = useState<boolean>(false);
   const orderSummaryRef = useRef<HTMLUListElement>(null);
+  const cart = useCartStore(state => state.cart)
 
   const getRefTotalHeight = (ref: any) => ref.current?.scrollHeight;
 
-  // DEBUG
+  const pricesArray = () => 
+    cart.map(product => 
+      calculatePriceAfterDiscount({
+        price: getProduct(products, product.id).price, 
+        discount: getProduct(products, product.id).discount_percent
+      }) * product.quantity
+    )
+  ;
+
+  // DEBUG & UI
   // console.log('orderSummaryRef: ', orderSummaryRef.current);
   // console.log('orderSummary total height: ', orderSummaryRef.current?.scrollHeight);
+  // console.log('calucalteTotalPrice', calculateTotalPrice(pricesArray()));
+  // console.log('pricesArray', pricesArray());
 
   return (
     <div
@@ -75,7 +98,7 @@ export default function ShowOrderSummary ({ className, ...props }: Props) {
             </div>
         }
         <span className="text-lg text-heading font-bold ml-auto">
-          500 SYP
+          {calculateTotalPrice(pricesArray())} SYP
         </span>
       </button>
       <section
@@ -87,7 +110,7 @@ export default function ShowOrderSummary ({ className, ...props }: Props) {
           ORDER SUMMARY
         </h2>
         <span className="text-lg text-heading font-bold ml-auto">
-          500 SYP
+          {calculateTotalPrice(pricesArray())} SYP
         </span>
       </section>
       <OrderSummary 
@@ -106,8 +129,7 @@ export default function ShowOrderSummary ({ className, ...props }: Props) {
         className={`
           flex flex-col gap-4 overflow-hidden
         `}
-      >
-        
+      >       
         <OrderSummary
           className={`
             hidden lg:flex max-h-[486px] overflow-y-scroll

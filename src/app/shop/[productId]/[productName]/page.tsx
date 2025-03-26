@@ -5,6 +5,7 @@ import { useRouter, useParams, useSearchParams } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
 
 // COMPONENT
+import NotFound from '@/components/NotFound';
 import ProductDisplay from '@/components/productPage/ProductDisplay';
 import ProductSize from '@/components/productPage/ProductSize';
 import ProductLists from '@/components/productPage/ProductLists';
@@ -48,6 +49,7 @@ export default function page () {
   const setCart = useCartStore(state => state.setCart);
   const { productId } = useParams();
   const product = products.find(product => product.id === Number(productId));
+  const isProductExist = products.some(product => product.id === Number(productId));
   // const productName = slugArray[0];
   // const productId = slugArray[1];
 
@@ -164,6 +166,10 @@ export default function page () {
   // [].reduce((acc: string[], itm) => [...acc, itm.main, itm.second], [])
   // );
   // console.log('cart: ', cart);
+
+  if (!isProductExist) return (
+    <NotFound type='product' />
+  )
 
   return (
     <div

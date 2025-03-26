@@ -357,7 +357,7 @@ export default function AlertMessage () {
       </div>
 
       <div
-        className="w-[200px] flex flex-row items-center justify-between"
+        className="--alert-messge-content-ani w-[200px] flex flex-row items-center justify-between"
       >
         <span
           className="text-sm text-body font-bold"

@@ -11,6 +11,7 @@ import colors from '@/json/colors.json';
 
 // UTILS
 import calculatePriceAfterDiscount from "@/utils/calculatePriceAfterDiscount";
+import calculateTotalPrice from '@/utils/calculateTotalPrice';
 import getProduct from '@/utils/getProduct';
 import getImgUrl from '@/utils/getImgUrl';
 import getColor from '@/utils/getColor';
@@ -33,6 +34,15 @@ export default function OrderSummary ({ hideProductsSection = false, hideTotalSe
   // const cart = [1, 2, 3, 4, 5, 6];
 
   const cart = useCartStore(state => state.cart)
+
+  const pricesArray = () => 
+    cart.map(product => 
+      calculatePriceAfterDiscount({
+        price: getProduct(products, product.id).price, 
+        discount: getProduct(products, product.id).discount_percent
+      }) * product.quantity
+    )
+  ;
 
   return (
     <section
@@ -172,7 +182,7 @@ export default function OrderSummary ({ hideProductsSection = false, hideTotalSe
             Sub Total
           </span>
           <span className="text-heading">
-            300 SYP
+            {calculateTotalPrice(pricesArray())} SYP
           </span>
         </div>
 
