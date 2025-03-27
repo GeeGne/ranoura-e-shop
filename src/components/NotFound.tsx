@@ -9,6 +9,7 @@ import { useLayoutRefStore } from '@/stores/index';
 
 // COMPONENTS
 import Error404 from '@/components/svgs/Error404';
+import Void from '@/components/svgs/Void';
 import UndrawEmpty from '@/components/svgs/UndrawEmpty';
 import BtnA from '@/components/BtnA';
 
@@ -36,6 +37,50 @@ export default function NotFound ({ type = "default" }: Props) {
     }
   }
 
+
+  if (type === 'category') return (
+    <section
+      className="grid grid-cols-2 lg:items-center gap-8 py-4 md:py-8 px-4 max-w-[1400px] mx-auto"
+    >
+      <Void
+        className="
+          lg:order-2 col-span-2 lg:col-span-1 
+          w-[300px] md:w-[500px] md:w-[500px] h-full text-content mx-auto
+        "
+      />
+      <section
+        className="
+          flex flex-col gap-8 lg:order-first col-span-2 lg:col-span-1 
+          text-6xl md:text-8xl mx-auto"
+      >
+        <h2
+          className="text-6xl md:text-8xl text-heading font-light mx-auto"
+        >
+          <span
+            className="text-7xl md:text-9xl text-content font-medium"
+          >
+            E
+          </span>
+          mpty rack alert!
+        </h2>
+        <h2
+          className="text-2xl text-body font-medium mx-auto"
+        >
+          Swing by our other categories to find your next look! 
+        </h2>
+        <BtnA
+          className="
+            flex grow-0 mx-auto bg-primary 
+            text-lg text-heading-invert font-bold px-4 py-2 rounded-md
+          "
+          data-type="navigate_to_home"
+          onClick={handleClick}
+        >
+          Back to Home
+        </BtnA>
+      </section>
+    </section>
+  )
 
   if (type === 'product') return (
     <section

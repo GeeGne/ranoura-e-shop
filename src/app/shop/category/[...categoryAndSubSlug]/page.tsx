@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react';
 import { useParams } from 'next/navigation';
 
 // COMPONENTS
+import NotFound from '@/components/NotFound';
 import AdvertList from '@/components/categoryPage/AdvertList';
 import CategoryTitle from '@/components/categoryPage/CategoryTitle';
 import FilterTile from '@/components/categoryPage/FilterTile';
@@ -61,7 +62,14 @@ export default function page () {
   const filterProductsBasedOnSlug = () => 
     products.filter(product => 
       product.categories.some(prodCat => prodCat === mainSlug())
-    );
+    )
+  ;
+
+  const isProductsExist = () => 
+    products.filter(product => 
+      product.categories.some(prodCat => prodCat === mainSlug())
+    ).length !== 0
+  ;
 
   useEffect(() => {
     setTabName('product');
@@ -69,6 +77,27 @@ export default function page () {
 
   // console.log('params: ', categoryAndSubSlug)
   // console.log('isCategory: ', isCategory)
+
+  if (!isProductsExist()) return (
+    <div
+      className="
+        flex flex-col gap-4 py-4
+      "
+    >
+      <BreadCrumb
+        className="px-4 w-full max-w-[1400px] mx-auto"
+        slugNameAndLinkArray={slugNameAndLinkArray()} 
+      />
+      <CategoryTitle 
+        className="px-4 py-8 w-auto max-w-[auto] mx-auto"
+        name={isCategory 
+          ? getName(categories, mainSlug()) 
+          : getName(subCategories, mainSlug())
+        }
+      />
+      <NotFound type='category' />
+    </div>
+  )
 
   return (
     <div
