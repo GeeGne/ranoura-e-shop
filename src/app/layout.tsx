@@ -12,6 +12,7 @@ import FixedLayouts from '@/components/fixedLayouts/Index';
 import Cart from '@/components/fixedLayouts/Cart';
 import Navbar from '@/components/fixedLayouts/navbar/Index';
 import FilterWindow from '@/components/fixedLayouts/FilterWindow';
+import SelectLang from '@/components/fixedLayouts/SelectLang';
 import AlertMessage from '@/components/fixedLayouts/AlertMessage';
 import AllProductImages from '@/components/fixedLayouts/AllProductImages';
 import BottomBorder from '@/components/svgs/BottomBorder';
@@ -61,7 +62,8 @@ export default function RootLayout({
         <FixedLayouts>
           <Cart />
           <Navbar />
-          <FilterWindow />          
+          <SelectLang />
+          <FilterWindow />    
           <AlertMessage />
           <AllProductImages />
         </FixedLayouts>
