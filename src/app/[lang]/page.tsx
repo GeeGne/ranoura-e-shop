@@ -40,7 +40,7 @@ export default function Home() {
       <CategoryPickerV2 />
       <MainLayout />
       <AdvertTile 
-        title="WHAT'S NEW?"
+        title="WHAT'S NEW?" 
         category="what's-new"
         type="new"
         slug="what's-new"

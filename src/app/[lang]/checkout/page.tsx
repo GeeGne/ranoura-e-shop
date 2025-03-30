@@ -4,12 +4,12 @@
 import { useEffect }from 'react';
 
 // COMPONENTS
-import ShowOrderSummary from '@/app/checkout/ShowOrderSummary';
+import ShowOrderSummary from '@/app/[lang]/checkout/ShowOrderSummary';
 import OrderSummary from '@/components/OrderSummary';
-import CheckoutForm from '@/app/checkout/checkoutform/index';
+import CheckoutForm from '@/app/[lang]/checkout/checkoutform/index';
 import AccountBenefitsSection from '@/components/AccountBenefitsSection/index';
 import BreadCrumb from '@/components/BreadCrumb';
-import SignupForm from '@/app/signup/SignupForm';
+import SignupForm from '@/app/[lang]/signup/SignupForm';
 
 // STORES
 import { useTabNameStore } from '@/stores/index';

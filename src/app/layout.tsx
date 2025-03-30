@@ -6,8 +6,8 @@ import "./globals.css";
 
 // COMPONENTS
 import Header from '@/components/header/index';
-import Main from '@/app/Main';
-import Footer from '@/app/Footer';
+import Main from '@/app/[lang]/Main';
+import Footer from '@/app/[lang]/Footer';
 import FixedLayouts from '@/components/fixedLayouts/Index';
 import Cart from '@/components/fixedLayouts/Cart';
 import Navbar from '@/components/fixedLayouts/navbar/Index';

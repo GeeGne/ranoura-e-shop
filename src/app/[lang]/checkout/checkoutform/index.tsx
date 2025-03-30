@@ -2,7 +2,7 @@
 import { useState, useRef } from 'react';
 
 // COMPONENTS
-import Title from '@/app/checkout/checkoutform/Title';
+import Title from '@/app/[lang]/checkout/checkoutform/Title';
 import OrderSummary from '@/components/OrderSummary';
 import BtnA from '@/components/BtnA';
 import LineMdChevronSmallDown from '@/components/svgs/LineMdChevronSmallDown';
