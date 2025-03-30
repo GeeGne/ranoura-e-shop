@@ -2,6 +2,7 @@
 
 // HOOKS
 import { useEffect } from 'react';
+import { useParams } from 'next/navigation';
 
 // COMPONENTS
 import Image from "next/image";
@@ -14,15 +15,21 @@ import MainLayout from '@/components/home/MainLayout';
 import AdvertTile from '@/components/home/AdvertTile';
 
 // STORES
-import { useTabNameStore } from '@/stores/index';
+import { useTabNameStore, useLanguageStore } from '@/stores/index';
 
 export default function Home() {
 
   const setTabName = useTabNameStore((state: any) => state.setTabName);
+  const setLang = useLanguageStore((state: any) => state.setLang);
+  const { lang } = useParams();
   
   useEffect(() => {
     setTabName('home');
   }, []);
+
+  useEffect(() => {
+    setLang(lang);
+  }, [ lang ]);
 
   return (
     <div

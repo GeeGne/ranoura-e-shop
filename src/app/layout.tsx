@@ -17,7 +17,7 @@ import AllProductImages from '@/components/fixedLayouts/AllProductImages';
 import BottomBorder from '@/components/svgs/BottomBorder';
 
 // STORES
-import { useLayoutRefStore } from '@/stores/index';
+import { useLayoutRefStore, useLanguageStore } from '@/stores/index';
 
 export default function RootLayout({
   children,
@@ -27,6 +27,7 @@ export default function RootLayout({
 
   const layoutRef = useLayoutRefStore(state => state.layoutRef);
   const setLayoutRef = useLayoutRefStore(state => state.setLayoutRef);
+  const lang = useLanguageStore(state => state.lang);
   const [ onScroll, setOnScroll ] = useState<any>(null);
 
   // DEBUG & UI
@@ -34,7 +35,7 @@ export default function RootLayout({
   // console.log(layoutRef);
   
   return (
-    <html lang="en">
+    <html lang={lang} dir={lang === 'en' ? 'ltr' : 'rtl'}>
       <body
         className={`antialiased`}
       >

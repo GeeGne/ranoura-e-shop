@@ -160,10 +160,31 @@ const useFooterListStore = create<FooterListProps>(
   })
 );
 
+type LanguageProps = {
+  firstTime: boolean;
+  lang: string;
+  setLang: (value: string) => void;
+};
+
+const useLanguageStore = create<LanguageProps>()(
+  persist(
+    (set) => ({
+      firstTime: false,
+      lang: 'en',
+      setLang: (lang: string) => set({ lang })
+    }),
+    {
+      name:'language-storage',
+      storage: createJSONStorage(() => localStorage)
+    }
+  )  
+);
+
 export { 
   useCartStore, useNavbarStore, 
   useTabNameStore, useFilterWindowStore,
   useFavouritesStore, useFavouriteConfettiToggle,
   useLayoutRefStore, useAlertMessageStore,
-  useFooterListStore, useAllProductImagesStore
+  useFooterListStore, useAllProductImagesStore,
+  useLanguageStore
 };
