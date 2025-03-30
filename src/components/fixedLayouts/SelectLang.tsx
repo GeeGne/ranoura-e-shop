@@ -1,13 +1,38 @@
+// STORES
+import { useLanguageStore } from "@/stores/index";
+
+// ASSETS
 const logo = '/assets/img/ranoura-logo.png';
 
 export default function SelectLang () {
+  
+  const firstTime = useLanguageStore(state => state.firstTime);
+  const setFirstTime = useLanguageStore(state => state.setFirstTime);
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const { type } = e.currentTarget.dataset;
+
+    switch (type) {
+      case 'continue_button_is_clicked':
+        setFirstTime(false);
+        break;
+      default:
+        console.error('Unknown type: ', type);
+    }
+  }
+  
+  // DEBUG & UI
+  // console.log('firstTime: ', firstTime);
+
   return (
     <div
-      className="
+      className={`
+        ${firstTime ? 'visible opacity-100' : 'invisible opacity-0'}
         fixed top-0 left-0 w-screen h-screen z-[1000]
         flex flex-col gap-4 items-center justify-center
         bg-[hsla(0,0%,0%,0.6)] backdrop-blur-[1px] 
-      "
+        tranistion-all duration-300 ease-in-out
+      `}
     >
       <img 
         alt="Ranoura Brand Logo"
@@ -71,7 +96,7 @@ export default function SelectLang () {
               transition-all duration-200 ease-in-out
             "
           >
-            Arabic
+            العربيه
           </span>
         </label>
       </div>
@@ -83,6 +108,8 @@ export default function SelectLang () {
           hover:scale-[1.1] hover:font-bold overflow-hidden
           transition-all duration-300 ease-in-out
         "
+        data-type="continue_button_is_clicked"
+        onClick={handleClick}
       >
         <div 
           className="

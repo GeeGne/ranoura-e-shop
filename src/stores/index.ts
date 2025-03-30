@@ -162,6 +162,7 @@ const useFooterListStore = create<FooterListProps>(
 
 type LanguageProps = {
   firstTime: boolean;
+  setFirstTime: (value: boolean) => void;
   lang: string;
   setLang: (value: string) => void;
 };
@@ -169,7 +170,8 @@ type LanguageProps = {
 const useLanguageStore = create<LanguageProps>()(
   persist(
     (set) => ({
-      firstTime: false,
+      firstTime: true,
+      setFirstTime: (firstTime: boolean) => set({ firstTime }),
       lang: 'en',
       setLang: (lang: string) => set({ lang })
     }),
