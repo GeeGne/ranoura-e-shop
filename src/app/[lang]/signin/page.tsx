@@ -6,7 +6,7 @@ import { useEffect, useRef } from 'react';
 // COMPONENTS
 import AccountBenefitsSection from '@/components/AccountBenefitsSection/index';
 import BreadCrumb from '@/components/BreadCrumb';
-import SigninForm from '@/app/signin/SigninForm';
+import SigninForm from '@/app/[lang]/signin/SigninForm';
 
 // STORES
 import { useTabNameStore } from '@/stores/index';

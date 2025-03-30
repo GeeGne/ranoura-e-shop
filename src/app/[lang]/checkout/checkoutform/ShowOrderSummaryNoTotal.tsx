@@ -2,7 +2,7 @@
 import { useRef, useState } from 'react';
 
 // COMPONENTS
-import Title from '@/app/checkout/checkoutform/Title';
+import Title from '@/app/[lang]/checkout/checkoutform/Title';
 import OrderSummary from '@/components/OrderSummary';
 import LineMdDownloadOutlineLoop from '@/components/svgs/activity/LineMdDownloadOutlineLoop';
 import LineMdDownloadTwotoneLoop from '@/components/svgs/activity/LineMdDownloadTwotoneLoop';

@@ -5,11 +5,11 @@ import { useEffect } from 'react';
 
 // COMPONENTS
 import BreadCrumb from '@/components/BreadCrumb';
-import Banner from '@/app/welcome/[username]/Banner';
-import UserPfp from '@/app/welcome/[username]/UserPfp';
-import Username from '@/app/welcome/[username]/Username';
-import NavTile from '@/app/welcome/[username]/NavTile';
-import SignOutBtn from '@/app/welcome/[username]/SignOutBtn';
+import Banner from '@/app/[lang]/welcome/[username]/Banner';
+import UserPfp from '@/app/[lang]/welcome/[username]/UserPfp';
+import Username from '@/app/[lang]/welcome/[username]/Username';
+import NavTile from '@/app/[lang]/welcome/[username]/NavTile';
+import SignOutBtn from '@/app/[lang]/welcome/[username]/SignOutBtn';
 
 // STORES
 import { useTabNameStore } from '@/stores/index';

@@ -4,7 +4,7 @@
 import { useEffect } from 'react';
 
 // COMPONENTS
-import OrdersLi from '@/app/welcome/[username]/orders/OrdersLi';
+import OrdersLi from '@/app/[lang]/welcome/[username]/orders/OrdersLi';
 import LineMdTextBoxToTextBoxMultipleTransition from '@/components/svgs/LineMdTextBoxToTextBoxMultipleTransition';
 
 // STORES

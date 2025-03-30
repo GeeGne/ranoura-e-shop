@@ -4,7 +4,7 @@
 import { useEffect } from 'react';
 
 // COMPONENTS
-import ProfileLI from '@/app/welcome/[username]/ProfileLI';
+import ProfileLI from '@/app/[lang]/welcome/[username]/ProfileLI';
 import LineMdTextBoxToTextBoxMultipleTransition from '@/components/svgs/LineMdTextBoxToTextBoxMultipleTransition';
 
 // STORES

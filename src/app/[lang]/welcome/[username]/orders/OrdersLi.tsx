@@ -1,5 +1,5 @@
 // COMPONENTS
-import ProductsLists from '@/app/welcome/[username]/orders/ProductsLists';
+import ProductsLists from '@/app/[lang]/welcome/[username]/orders/ProductsLists';
 import LineMdTextBoxToTextBoxMultipleTransition from '@/components/svgs/LineMdTextBoxToTextBoxMultipleTransition';
 import LineMdMapMarkerLoop from '@/components/svgs/LineMdMapMarkerLoop';
 
