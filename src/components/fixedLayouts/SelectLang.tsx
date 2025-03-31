@@ -1,49 +1,96 @@
+// HOOKS
+import { useState, useRef, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+
 // STORES
-import { useLanguageStore } from "@/stores/index";
+import { useLanguageStore, useAlertMessageStore } from "@/stores/index";
 
 // ASSETS
 const logo = '/assets/img/ranoura-logo.png';
 
 export default function SelectLang () {
-  
+  const router = useRouter();
+
   const firstTime = useLanguageStore(state => state.firstTime);
   const setFirstTime = useLanguageStore(state => state.setFirstTime);
+  const lang = useLanguageStore(state => state.lang);
+  const [ selectedLang, setSelectedLang ] = useState<string | null>(null);
+  const isEn = selectedLang === 'en' || selectedLang === null;
+
+  const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
+  const setAlertType = useAlertMessageStore((state) => state.setType);
+  const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
+
+  const engInptRef = useRef(null);
+  const arInptRef = useRef(null);
+
+  useEffect(() => {
+    if (typeof(firstTime) === 'string') setFirstTime(true);
+  }, [firstTime]);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const { type } = e.currentTarget.dataset;
 
     switch (type) {
       case 'continue_button_is_clicked':
+        if (typeof(selectedLang) !== 'string') {
+          setAlertToggle(Date.now());
+          setAlertType("warning");
+          setAlertMessage("Please select your preferred language");  
+          return;
+        }
+
         setFirstTime(false);
+        router.push(`/${selectedLang}`)
         break;
       default:
         console.error('Unknown type: ', type);
     }
   }
   
-  // DEBUG & UI
-  // console.log('firstTime: ', firstTime);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.currentTarget;
 
-  return (
+    switch (name) {
+      case 'language':
+        setSelectedLang(value);
+        break;
+      default:
+        console.error('Unknown name: ', name);
+    }
+  }
+
+  // DEBUG & UI
+  console.log('firstTime: ', firstTime);
+
+  if (typeof(firstTime) !== 'string') return (
     <div
       className={`
-        ${firstTime ? 'visible opacity-100' : 'invisible opacity-0'}
+        invisible opacity-0
         fixed top-0 left-0 w-screen h-screen z-[1000]
-        flex flex-col gap-4 items-center justify-center
-        bg-[hsla(0,0%,0%,0.6)] backdrop-blur-[1px] 
-        tranistion-all duration-300 ease-in-out
+        flex flex-col gap-8 items-center justify-center
+        bg-[hsla(0,0%,0%,0.6)] backdrop-blur-[0px]
+        transition-all duration-300 ease-in-out
       `}
+      style={{ 
+        direction: 'ltr', 
+        visibility: firstTime ? 'visible' : 'hidden',
+        opacity: firstTime ? '1' : '0',
+      }}
     >
       <img 
         alt="Ranoura Brand Logo"
         src={logo}
-        className="w-[300px] h-auto object-contain object center"
+        className="w-[300px] md:w-[400px] lg:w-[500px] h-auto object-contain object center"
       />
       
       <h2
-        className="text-heading-invert font-semibold italic text-xl"
+        className={`
+          text-heading-invert font-semibold italic text-xl
+          ${isEn ? 'ltr' : 'rtl'}
+        `}
       >
-        Step into Ranoura – where style finds you.
+        {isEn? 'Step into Ranoura – where style finds you.' : '.رنورا - حيث الأناقة تبحث عنك'}
       </h2>
 
       <div
@@ -62,6 +109,8 @@ export default function SelectLang () {
             value="en"
             name="language"
             className="peer absolute opacity-0"
+            onChange={handleChange}
+            ref={engInptRef}
           />
           <span
             className="
@@ -87,6 +136,8 @@ export default function SelectLang () {
             value="ar"
             name="language"
             className="peer absolute opacity-0"
+            onChange={handleChange}
+            ref={arInptRef}
           />
           <span
             className="
@@ -133,7 +184,7 @@ export default function SelectLang () {
             transition-all duration-300 ease-in-out
           "
         />
-        Let's go
+        {isEn ? `Let's go` : 'استمرار'}
       </button>
     </div>
   )
