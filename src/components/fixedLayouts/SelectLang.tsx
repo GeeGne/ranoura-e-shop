@@ -11,6 +11,7 @@ const logo = '/assets/img/ranoura-logo.png';
 export default function SelectLang () {
   const router = useRouter();
 
+  const isHydrated = useLanguageStore(state => state.isHydrated);
   const firstTime = useLanguageStore(state => state.firstTime);
   const setFirstTime = useLanguageStore(state => state.setFirstTime);
   const lang = useLanguageStore(state => state.lang);
@@ -23,10 +24,6 @@ export default function SelectLang () {
 
   const engInptRef = useRef(null);
   const arInptRef = useRef(null);
-
-  useEffect(() => {
-    if (typeof(firstTime) === 'string') setFirstTime(true);
-  }, [firstTime]);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const { type } = e.currentTarget.dataset;
@@ -61,12 +58,13 @@ export default function SelectLang () {
   }
 
   // DEBUG & UI
-  console.log('firstTime: ', firstTime);
+  // console.log('firstTime: ', firstTime);
+  // console.log('isHydrated: ', isHydrated);
 
-  if (typeof(firstTime) !== 'string') return (
+  if (isHydrated) return (
     <div
       className={`
-        invisible opacity-0
+        ${firstTime ? 'visible opacity-100' : 'invisible opacity-0'}
         fixed top-0 left-0 w-screen h-screen z-[1000]
         flex flex-col gap-8 items-center justify-center
         bg-[hsla(0,0%,0%,0.6)] backdrop-blur-[0px]
@@ -74,8 +72,6 @@ export default function SelectLang () {
       `}
       style={{ 
         direction: 'ltr', 
-        visibility: firstTime ? 'visible' : 'hidden',
-        opacity: firstTime ? '1' : '0',
       }}
     >
       <img 

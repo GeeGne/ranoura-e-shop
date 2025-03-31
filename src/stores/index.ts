@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
+import { persist, createJSONStorage, StateStorage } from 'zustand/middleware';
 
 // FIXED LAYOUTS
 type CartStorePops = {
@@ -161,23 +161,30 @@ const useFooterListStore = create<FooterListProps>(
 );
 
 type LanguageProps = {
-  firstTime: boolean | string;
-  setFirstTime: (value: boolean | string) => void;
+  firstTime: boolean;
+  setFirstTime: (value: boolean) => void;
   lang: string;
   setLang: (value: string) => void;
+  isHydrated: boolean; // New flag
+  setIsHydrated: (isHydrated: boolean) => void; // Setter for the flag
 };
 
 const useLanguageStore = create<LanguageProps>()(
   persist(
     (set) => ({
-      firstTime: 'loading',
-      setFirstTime: (firstTime: boolean | string) => set({ firstTime }),
+      firstTime: true,
+      setFirstTime: (firstTime: boolean) => set({ firstTime }),
       lang: 'en',
-      setLang: (lang: string) => set({ lang })
+      setLang: (lang: string) => set({ lang }),
+      isHydrated: false, // Default to false
+      setIsHydrated: (isHydrated: boolean) => set({ isHydrated }),
     }),
     {
       name:'language-storage',
-      storage: createJSONStorage(() => localStorage)
+      storage: createJSONStorage(() => localStorage),
+      onRehydrateStorage: () => (state) => {
+        state?.setIsHydrated(true);
+      }
     }
   )  
 );
