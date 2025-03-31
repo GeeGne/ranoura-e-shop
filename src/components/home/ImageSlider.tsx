@@ -121,6 +121,7 @@ export default function ImageSlider({
         relative flex w-full overflow-hidden ${className}
       `}
       {...props}
+      style={{direction: 'ltr'}}
     >
       <ul
         className={`

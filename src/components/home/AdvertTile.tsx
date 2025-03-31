@@ -38,7 +38,7 @@ import strSpaceToHyphen from '@/utils/strSpaceToHyphen';
 // STORES
 import { 
   useLayoutRefStore, useFavouritesStore, 
-  useFavouriteConfettiToggle, useAlertMessageStore
+  useFavouriteConfettiToggle, useAlertMessageStore, useLanguageStore
 } from '@/stores/index';
 
 // CONFETTI 
@@ -59,6 +59,10 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
   const filterProductsBasedOnSlug = () => products.filter(product => 
     product.categories.some(prodCat => prodCat === slug)
   );
+
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
+
   const favourites = useFavouritesStore(state => state.favourites);
   const setFavourites = useFavouritesStore(state => state.setFavourites);
   
@@ -149,31 +153,48 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
         // setImgScaleToggle(val => val === Number(index) ? false : Number(index));
         break;
       case 'scroll_left_button_is_clicked':
-        setScrollWidth((val: number) => {
-          if (-1 * (val + liRefWidth + gap) <= 0) { 
-            setLeftArrowInactive(true);
-            setRightArrowInactive(false);
-            return 0;
-          };
+          setScrollWidth((val: number) => {
+            if (isEn) {
+              if (-1 * (val + liRefWidth + gap) <= 0) { 
+                setLeftArrowInactive(true);
+                setRightArrowInactive(false);
+                return 0;
+              };  
 
-          setLeftArrowInactive(false);
-          setRightArrowInactive(false);
-          return val + liRefWidth + gap
-        });
+            } else {
+              if (1 * (val + liRefWidth + gap) >= ulRefScrollWidth - ulRefWidth) { 
+                setLeftArrowInactive(true);
+                setRightArrowInactive(false);
+    
+                return 1 * (ulRefScrollWidth - ulRefWidth)
+              };  
+            }
+          
+            setLeftArrowInactive(false);
+            setRightArrowInactive(false);
+            return val + liRefWidth + gap
+          });            
         break;
       case 'scroll_right_button_is_clicked':
-        setScrollWidth((val: number) => {
-          if (-1 * (val - liRefWidth - gap) >= ulRefScrollWidth - ulRefWidth) { 
+          setScrollWidth((val: number) => {
+            if (isEn) {
+              if (-1 * (val - liRefWidth - gap) >= ulRefScrollWidth - ulRefWidth) { 
+                setLeftArrowInactive(false);
+                setRightArrowInactive(true);
+              
+                return -1 * (ulRefScrollWidth - ulRefWidth)
+              };
+            } else {
+              if (1 * (val - liRefWidth - gap) <= 0) { 
+                setLeftArrowInactive(false);
+                setRightArrowInactive(true);
+                return 0;
+              };    
+            }
             setLeftArrowInactive(false);
-            setRightArrowInactive(true);
-
-            return -1 * (ulRefScrollWidth - ulRefWidth)
-          };
-
-          setLeftArrowInactive(false);
-          setRightArrowInactive(false);
-          return val - liRefWidth - gap
-        });
+            setRightArrowInactive(false);
+            return val - liRefWidth - gap
+          });
         break;
       case 'scale_button_is_clicked':
         setImgScaleToggle(val => val === Number(index) ? false : Number(index))
@@ -247,7 +268,11 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
             {title}
           </span>
           <div
-            className="absolute bottom-0 left-0 w-[calc(100%+1rem)] h-[40%] backdrop-invert origin-left translate-x-4"
+            className={`
+              ${isEn ? 'translate-x-4' : 'translate-x-[-1rem]'}
+              absolute bottom-0 left-0 w-[calc(100%+1rem)] h-[40%] 
+              backdrop-invert origin-left
+            `}
           />
         </Link>
         <div className="flex items-center gap-4">
@@ -267,15 +292,16 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
             className={`
               w-8 h-8 rounded-full
               ${leftArrowInactive ? 'bg-inbetween cursor-not-allowed' : 'bg-primary cursor-pointer'}
+              ${isEn ? 'order-1' : 'order-2'}
             `}
             effect={!leftArrowInactive}
             onClick={handleClick}
             data-type="scroll_left_button_is_clicked"
           >
             <EpArrowLeft
-              className="
+              className={`
                 text-heading-invert p-1
-              "
+              `}
               width={32}
               height={32}
               role="button"
@@ -286,15 +312,16 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
             className={`
               w-8 h-8 rounded-full
               ${rightArrowInactive ? 'bg-inbetween cursor-not-allowed' : 'bg-primary cursor-pointer'}
+              ${isEn ? 'order-2' : 'order-1'}
             `}
             onClick={handleClick}
             effect={!rightArrowInactive}
             data-type="scroll_right_button_is_clicked"
           >
             <EpArrowLeft
-              className="
+              className={`
                 text-heading-invert p-1 rotate-180
-              "
+              `}
               width={32}
               height={32}
               role="button"
