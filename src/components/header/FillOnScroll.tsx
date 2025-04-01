@@ -1,6 +1,9 @@
 // HOOKS
 import React, { ReactNode, useState, useEffect } from "react";
 
+// STORES
+import { useLanguageStore } from '@/stores/index';
+
 type Props = {
   onScroll: ReactNode,
   layoutRef: HTMLElement
@@ -8,6 +11,8 @@ type Props = {
 
 export default function FillOnScroll ({ onScroll, layoutRef }: Props) {
 
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
   const [ percantage, setPercantage ] = useState<number>(0);
 
   useEffect(() => {
@@ -29,9 +34,11 @@ export default function FillOnScroll ({ onScroll, layoutRef }: Props) {
   return (
     <div
       className={`
-        absolute top-0 left-1/2 w-[100vw] h-1 bg-content-inbetween
+        absolute top-0 left-0 w-full h-1 
+        bg-content-inbetween z-[2000]
+        ${isEn ? 'origin-left' : 'origin-right'}
       `}
-      style={{ transform: `translateX(${percantage - 150}%`}}
+      style={{ transform: `scaleX(${percantage / 100}`}}
     />
   )
 }

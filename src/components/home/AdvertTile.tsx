@@ -253,7 +253,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
   
   return (
     <section
-      className="flex flex-col gap-4 px-4 py-8"
+      className="flex flex-col gap-4 px-4 py-8 overflow-x-hidden"
     >
       <div
         className="flex items-center justify-between"

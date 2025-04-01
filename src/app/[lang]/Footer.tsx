@@ -1,3 +1,6 @@
+// HOOKS
+import Link from 'next/link';
+
 // COMPONENTS
 import FooterList from '@/components/FooterList';
 import Facebook from '@/components/svgs/Facebook';
@@ -8,13 +11,16 @@ import Email from '@/components/svgs/Email';
 import BtnA from '@/components/BtnA';
 
 // STORES
-import { useAlertMessageStore } from '@/stores/index';
+import { useAlertMessageStore, useLanguageStore } from '@/stores/index';
 
 // ASSETS
 const logo = '/assets/img/ranoura-logo(2).png';
 const background = '/public/assets/img/background(2).jpg';
 
 export default function Footer ({ ...props }) {
+
+  const lang = useLanguageStore((state) => state.lang);
+  const isEn = lang === 'en';
 
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
@@ -100,7 +106,10 @@ export default function Footer ({ ...props }) {
           <span
             className="text-base text-body-invert"
           >
-            I am not arrogant. I know my limitations, but I also believe in my abilities. When we are united and work sincerely, we can overcome difficulties. Cooperation and mutual understanding bring light to our path. Life is a continuous journey of learning and improvement. Together, we can achieve great things and leave a meaningful impact.
+            {isEn 
+              ? 'I am not arrogant. I know my limitations, but I also believe in my abilities. When we are united and work sincerely, we can overcome difficulties. Cooperation and mutual understanding bring light to our path. Life is a continuous journey of learning and improvement. Together, we can achieve great things and leave a meaningful impact.' 
+              : 'انا متواضع، بس بعرف قديش عندي وواثق من أسلوبي. إحنا لما نكون سوا ونشتغل من القلب، منقدر نواجه أي تحدّي. الاتحاد والتفاهم بيناتنا هو سرّ نجاحنا. الحياة ذوق وتجربة، وإحنا سوا منضلّ نبدع ونترك ورانا بصمتنا.'
+            }
           </span>
           <div className="flex shirnk-0">
             <input 
@@ -109,30 +118,30 @@ export default function Footer ({ ...props }) {
                 placeholder:font-bold placeholder:text-heading-invert 
 
               "
-              placeholder="Enter your email"
+              placeholder={isEn ? "Enter your email" : "اكتب إيميلك"}
             />
             <BtnA
               className="p-2 bg-heading-invert font-bold text-heading border-solid border-[2px] border-heading-invert"
               data-type="subscribe_button_is_clicked"
               onClick={handleClick}
             >
-              SUBSCRIBE
+              {isEn ? 'SUBSCRIBE' : 'اشتراك'}
             </BtnA>
           </div>
         </div>
         <FooterList 
           index={0}
-          title={'COSTUMER SERVICE'} 
+          title={isEn ? 'COSTUMER SERVICE' : 'خدمة العملاء'} 
           content={['Privacy Policy', 'Returns & Refunds', 'Delivery and Shipment']} 
         />
         <FooterList 
           index={1}
-          title={'ABOUT US'} 
+          title={isEn ? 'ABOUT US' : 'من نحن'} 
           content={['About Us', 'FAQs']} 
         />
         <FooterList 
           index={2}
-          title={'CONTACT US'} 
+          title={isEn ? 'CONTACT US' : 'تواصل معنا'} 
           content={[
             <div key="1" className="flex gap-2"><Phone />+9639302942</div>, 
             <div key="2" className="flex gap-2"><Email />support@ranoura.com</div> 
@@ -148,7 +157,7 @@ export default function Footer ({ ...props }) {
           <span
             className="text-heading-invert text-xl text-bold"
           >
-            SOCIAL LINKS
+            {isEn ? 'SOCIAL LINKS' : 'حساباتنا على السوشال'}
           </span>
           <ul
             className="flex flex-row gap-2 text-body-invert"
@@ -179,11 +188,38 @@ export default function Footer ({ ...props }) {
             </li>
           </ul>
         </div>
+        <div
+          className="flex flex-row gap-2 items-center text-heading-invert font-bold"
+          style={{direction: 'ltr'}}
+        >
+          <Link
+            href="/en"
+            scroll={false}
+            className={`
+              hover:font-medium hover:text-heading-invert
+              ${isEn ? 'font-medium text-heading-invert' : 'text-body-invert font-light'}
+              transition-all duration-300 ease-in-out
+            `}
+          >
+            English
+          </Link> {'|'}
+          <Link
+            href="/ar"
+            scroll={false}
+            className={`
+              hover:font-medium hover:text-heading-invert
+              ${isEn ? 'text-body-invert font-light' : 'font-medium text-heading-invert'}
+              transition-all duration-300 ease-in-out 
+            `}
+          >
+            العربيه
+          </Link>
+        </div>
         <div>
           <span
             className="text-body-light-invert text-sm"
           >
-            Syria © 2025 RANOURA all rights reserved
+            {isEn ? 'Syria © 2025 RANOURA all rights reserved' : 'سوريا © 2025 رانورا جميع الحقوق محفوظة'}
           </span>
         </div>
       </section>

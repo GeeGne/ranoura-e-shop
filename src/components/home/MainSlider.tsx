@@ -11,6 +11,7 @@ export default function MainSlider ({ ...props }) {
         bg-primary
       "
       { ...props }
+      style={{direction: 'ltr', fontFamily: 'Sofia Sans Condensed, sans-serif'}}
     >
       <span
         className="

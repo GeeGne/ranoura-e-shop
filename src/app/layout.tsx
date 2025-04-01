@@ -38,7 +38,7 @@ export default function RootLayout({
   return (
     <html lang={lang} dir={lang === 'en' ? 'ltr' : 'rtl'}>
       <body
-        className={`antialiased`}
+        className={`${lang} antialiased`}
       >
         <div 
           className="app-layout"

@@ -19,6 +19,8 @@
   --font-extra-light-color: hsl(0, 0%, 60%);
   --font-extra-light-invert-color: hsl(0, 0%, 40%);
 
+  --font-roboto: 
+
   --grey-color: hsl(0, 0%, 30%);
 
   --background-color: #edf2f4;
@@ -143,4 +145,53 @@
   --background-3-url: url(/assets/background-3.jpg);
   --background-4-url: url(/assets/background-4.jpg);
   --circular-progress: 20;
+}
+
+.en {
+  --font-family: 'Sofia Sans Condensed', sans-serif;
+}
+
+.ar {
+  --font-family: 'Lateef', sans-serif;
+  font-size: 21px;
+}
+
+.ar .text-xs {
+  font-size: 17px;
+}
+.ar .text-sm {
+  font-size: 19px;
+}
+.ar .text-base {
+  font-size: 21px;
+}
+.ar .text-lg {
+  font-size: 23px;
+}
+.ar .text-xl {
+  font-size: 25px;
+}
+.ar .text-2xl {
+  font-size: 29px;
+}
+.ar .text-3xl {
+  font-size: 35px;
+}
+.ar .text-4xl {
+  font-size: 41px;
+}
+.ar .text-5xl {
+  font-size: 53px;
+}
+.ar .text-6xl {
+  font-size: 65px;
+}
+.ar .text-7xl {
+  font-size: 77px;
+}
+.ar .text-8xl {
+  font-size: 101px;
+}
+.ar .text-9xl {
+  font-size: 133px; 
 }

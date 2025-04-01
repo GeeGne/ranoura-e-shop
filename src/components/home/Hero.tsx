@@ -175,7 +175,6 @@ export default function Hero({ className = "", ...props }: Props) {
                 text-heading-invert w-[2rem] h-[2rem] z-[10]
               "
             />
-
           : <LineMdPlayFilledToPauseTransition
               className=" 
                 absolute top-1/2 left-1/2 
@@ -197,7 +196,7 @@ export default function Hero({ className = "", ...props }: Props) {
       <button
         className={`
           inline md:hidden absolute top-[70%] left-4 translate-y-[-50%] origin-center
-           w-16 h-16 
+          w-16 h-16 
           transition-opacity duration-300 ease-in 
         `}
       >

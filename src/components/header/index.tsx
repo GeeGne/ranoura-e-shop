@@ -99,7 +99,8 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
   return (
     <header
       className={`
-        sticky top-0 flex flex-row items-center mx-auto gap-4 px-4 py-8 z-[1000] bg-transparent
+        sticky top-0 flex flex-row items-center 
+        mx-auto gap-4 px-4 py-8 z-[1000] bg-transparent
         before:content-[''] before:absolute before:top-0 before:left-1/2 before:translate-x-[-50%]
         before:w-[100vw] before:h-full before:z-[-1]
         transition-all ease-in-out duration-300
