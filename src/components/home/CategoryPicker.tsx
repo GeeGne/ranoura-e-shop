@@ -1,5 +1,5 @@
 // STORES
-import { useAlertMessageStore } from '@/stores/index';
+import { useAlertMessageStore, useLanguageStore } from '@/stores/index';
 
 // JSON
 import category from "@/json/category.json";
@@ -19,6 +19,8 @@ export default function CategoryPicker () {
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
 
   const handleClick = (e: React.MouseEvent<HTMLLIElement>) => {
     const { type } = e.currentTarget.dataset;
@@ -44,7 +46,7 @@ export default function CategoryPicker () {
         <span
             className="relative flex text-3xl text-heading font-bold transform"
           >
-            SHOP BY CATEGORY
+            {isEn ? 'SHOP BY CATEGORY' : 'تصفح الأقسام'}
             <div
               className="absolute bottom-0 left-0 w-[calc(100%+1rem)] h-[40%] backdrop-invert origin-left translate-x-4"
             />
@@ -102,7 +104,7 @@ export default function CategoryPicker () {
               <h3
                 className="text-lg text-heading-invert font-bold drop-shadow-md outlined-text"
               >
-                {itm.categoryName}
+                {itm.name}
               </h3>            
             </div>
           </li>

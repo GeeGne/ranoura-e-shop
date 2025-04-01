@@ -1,81 +1,81 @@
 [
   {
-    "name": "JEANS",
+    "name": {"en":"JEANS", "ar": "جينز"},
     "slug": "jeans",
     "type": "clothing",
     "image": "/assets/img/cloth-11-sky.jpg"
   },{
-    "name": "JACKETS",
+    "name": {"en": "JACKETS", "ar": "جواكيت"},
     "slug": "jackets",
     "type": "clothing",
     "image": "/assets/img/cat_jackets.jpg"
   },{
-    "name": "DRESSES",
+    "name": {"en": "DRESSES", "ar": "فساتين"},
     "slug": "dresses",
     "type": "clothing",
     "image": "/assets/img/cat_dresses.jpg"
   },{
-    "name": "SUITS",
+    "name": {"en": "SUITS", "ar": "بدلات"},
     "slug": "suits",
     "type": "clothing",
     "image": "/assets/img/cat_suits.jpg"
   },{
-    "name": "SKIRTS",
+    "name": {"en": "SKIRTS", "ar": "تنانير"},
     "slug": "skirts",
     "type": "clothing",
     "image": "/assets/img/cat_skirts.jpg"
   },{
-    "name": "ROBES",
+    "name": {"en": "ROBES", "ar": "روب"},
     "slug": "robes",
     "type": "clothing",
     "image": "/assets/img/cat_robes.jpg"
   },{
-    "name": "T-SHIRTS",
+    "name": {"en": "T-SHIRTS", "ar": "تيشيرتات"},
     "slug": "t-shirts",
     "type": "clothing",
     "image": "/assets/img/cloth-18-sapphire.jpg"
   },{
-    "name": "HOODIES",
+    "name": {"en": "HOODIES", "ar": "هوديز"},
     "slug": "hoodies",
     "type": "clothing",
     "image": "/assets/img/cloth-9-white.jpg"
   },{
-    "name": "SHIRTS",
+    "name": {"en": "SHIRTS", "ar": "قمصان"},
     "slug": "shirts",
     "type": "clothing",
     "image": "/assets/img/cloth-7-sky.jpg"
   },{
-    "name": "PANTS",
+    "name": {"en": "PANTS", "ar": "بناطيل"},
     "slug": "pants",
     "type": "clothing",
     "image": "/assets/img/cat_pants.jpg"
   },{
-    "name": "OUTFIT PAIRS",
+    "name": {"en": "OUTFIT PAIRS", "ar": "اوتفيت كامل"},
     "slug": "outfit-pairs",
     "type": "clothing",
     "image": "/assets/img/cloth-12-green.jpg"
   },{
-    "name": "MATCHING SETS",
+    "name": {"en": "MATCHING SETS", "ar": "تنسيقات من اختيارنا"},
     "slug": "matching-sets",
     "type": "clothing",
     "image": "/assets/img/cloth-14-brown.jpg"
   },{
-    "name": "WHAT'S NEW",
+    "name": {"en": "WHAT'S NEW", "ar": "احدث الكوليكشات"},
     "slug": "what's-new",
     "type": "new",
     "image": ""
   },{
-    "name": "LATEST ARRIVALS",
+    "name": {"en": "LATEST ARRIVALS", "ar": "اخر الدروب"},
     "slug": "latest-arrivals",
     "type": "sale",
     "image": ""
   },{
-    "name": "HOT DEALS",
+    "name": {"en": "HOT DEALS", "ar": "عروض حارقه"},
     "slug": "hot-deals",
     "type": "sale",
     "image": ""
   },{
-    "name": "RAMADAN NIGHTS",
+    "name": {"en": "RAMADAN NIGHTS", "ar": "ليالي رمضان"},
     "slug": "ramadan-nights",
     "type": "event",
     "image": ""

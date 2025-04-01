@@ -132,12 +132,16 @@ export default function Footer ({ ...props }) {
         <FooterList 
           index={0}
           title={isEn ? 'COSTUMER SERVICE' : 'خدمة العملاء'} 
-          content={['Privacy Policy', 'Returns & Refunds', 'Delivery and Shipment']} 
+          content={
+            isEn 
+            ? ['Privacy Policy', 'Returns & Refunds', 'Delivery and Shipment'] 
+            : ['سياسة الخصوصية', 'إرجاع واسترداد الأموال', 'التوصيل والشحن']
+          } 
         />
         <FooterList 
           index={1}
           title={isEn ? 'ABOUT US' : 'من نحن'} 
-          content={['About Us', 'FAQs']} 
+          content={isEn ? ['About Us', 'FAQs'] : ['حولنا', 'الأسئلة الشائعة']} 
         />
         <FooterList 
           index={2}
@@ -189,15 +193,20 @@ export default function Footer ({ ...props }) {
           </ul>
         </div>
         <div
-          className="flex flex-row gap-2 items-center text-heading-invert font-bold"
-          style={{direction: 'ltr'}}
+          className="
+            flex flex-row gap-2 items-center text-heading-invert font-bold text-[16px]
+          "
+          style={{direction: 'ltr', fontFamily: `'Sofia Sans Condensed', sans-serif`}}
         >
           <Link
             href="/en"
             scroll={false}
             className={`
+              ${isEn 
+                ? 'font-medium text-heading-invert' 
+                : 'text-body-invert font-light'
+              }
               hover:font-medium hover:text-heading-invert
-              ${isEn ? 'font-medium text-heading-invert' : 'text-body-invert font-light'}
               transition-all duration-300 ease-in-out
             `}
           >
@@ -219,7 +228,10 @@ export default function Footer ({ ...props }) {
           <span
             className="text-body-light-invert text-sm"
           >
-            {isEn ? 'Syria © 2025 RANOURA all rights reserved' : 'سوريا © 2025 رانورا جميع الحقوق محفوظة'}
+            {isEn 
+              ? 'Syria © 2025 RANOURA all rights reserved' 
+              : 'سوريا © 2025 رانورا جميع الحقوق محفوظة'
+            }
           </span>
         </div>
         {/* <div className="flex gap-2">

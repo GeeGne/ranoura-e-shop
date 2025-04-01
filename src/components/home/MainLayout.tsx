@@ -6,7 +6,7 @@ import DisplayImg from "@/components/DisplayImg";
 import BtnA from "@/components/BtnA";
 
 // STORES
-import { useLayoutRefStore, useAlertMessageStore } from '@/stores/index';
+import { useLayoutRefStore, useAlertMessageStore, useLanguageStore } from '@/stores/index';
 
 // ASSETS
 const ramdanBanner = "/assets/img/ramadan-nights.webp";
@@ -21,6 +21,8 @@ export default function MainLayout () {
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
 
   const handleClick = (e: any) => {
     const { type } = e.currentTarget.dataset;
@@ -62,12 +64,15 @@ export default function MainLayout () {
           <h2
             className="text-xl text-heading-invert font-bold drop-shadow-md"
           >
-            RAMADAN NIGHTS
+            {isEn ? 'RAMADAN NIGHTS' : 'ليالي رمضان'}
           </h2>
           <h3
             className="text-base text-heading-invert"
           >
-            Illuminate Your Style with Ramadan Nights – Exclusive Deals Await!
+            {isEn 
+              ? 'Illuminate Your Style with Ramadan Nights – Exclusive Deals Await!'
+              : 'أنِقْ إطلالتك الرمضانية بعروضٍ لا تُضاهى'
+            }
           </h3>
           <Link
             href="shop/category/event/ramadan-nights"
@@ -77,7 +82,7 @@ export default function MainLayout () {
               data-type="shopNow_button_is_clicked"
               onClick={handleClick}
             >
-              SHOP NOW
+              {isEn ? 'SHOP NOW' : 'تسوق الان'}
             </BtnA>
           </Link>
         </div>
@@ -102,12 +107,15 @@ export default function MainLayout () {
           <h2
             className="text-xl text-heading-invert font-bold drop-shadow-md"
           >
-            HOT DEALS
+            {isEn ? 'HOT DEALS' : 'عروض ساخنة'}
           </h2>
           <h3
             className="text-base text-heading-invert"
           >
-            "Unbeatable Discounts, Limited Time Offers! Discover exclusive deals on your favorite products. Shop now before they're gone!"
+            {isEn 
+              ? `"Unbeatable Discounts, Limited Time Offers! Discover exclusive deals on your favorite products. Shop now before they're gone!"`
+              : '"عروض مهولة! استفيد قبل ما تخلص! تشكيلات حصرية بسعر خرافي. لا تفوتك!"'
+            }
           </h3>
           <Link
             href="/shop/category/sale/hot-deals"
@@ -117,7 +125,7 @@ export default function MainLayout () {
               data-type="shopNow_button_is_clicked"
               onClick={handleClick}
             >
-              SHOP NOW
+              {isEn ? 'SHOP NOW' : 'تسوق الان'}
             </BtnA>
           </Link>
         </div>
@@ -142,12 +150,15 @@ export default function MainLayout () {
           <h2
             className="text-xl text-heading-invert font-bold drop-shadow-md"
           >
-            LATEST ARRIVALS
+            {isEn ? 'LATEST ARRIVALS' : 'وصل حديثاً'}
           </h2>
           <h3
             className="text-base text-heading-invert"
           >
-            "Fresh Styles, Hot Prices! Explore our new clothing collection with exclusive deals you won't want to miss. Upgrade your wardrobe today!"
+            {isEn 
+              ? `"Fresh Styles, Hot Prices! Explore our new clothing collection with exclusive deals you won't want to miss. Upgrade your wardrobe today!"`
+              : `"تصاميم جديدة وأسعار تنافسية! جرب تشكيلة الملابس الجديدة مع خصومات حصرية لا تفوتها. انعش إطلالتك الآن!"`  
+            }
           </h3>
           <Link
             href="/shop/category/sale/latest-arrivals"
@@ -157,7 +168,7 @@ export default function MainLayout () {
               data-type="shopNow_button_is_clicked"
               onClick={handleClick}
             >
-              SHOP NOW
+              {isEn ? 'SHOP NOW' : 'تسوق الان'}
             </BtnA>
           </Link>
         </div>

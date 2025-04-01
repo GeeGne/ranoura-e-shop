@@ -2,7 +2,7 @@
 import Link from 'next/link';
 
 // STORES
-import { useLayoutRefStore,  useAlertMessageStore } from '@/stores/index';
+import { useLayoutRefStore, useAlertMessageStore, useLanguageStore } from '@/stores/index';
 
 // COMPONENTS
 import Blob from "@/components/svgs/layered_shapes/Blob"
@@ -28,6 +28,8 @@ export default function CategoryPickerV2 () {
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     const { type } = e.currentTarget.dataset;
@@ -53,7 +55,7 @@ export default function CategoryPickerV2 () {
         <span
             className="relative flex text-3xl text-heading font-bold transform"
           >
-            SHOP BY CATEGORY
+            {isEn ? 'SHOP BY CATEGORY' : 'تصفح الأقسام'}
             <div
               className="absolute bottom-0 left-0 w-[calc(100%+1rem)] h-[40%] backdrop-invert origin-left translate-x-4"
             />
@@ -69,7 +71,6 @@ export default function CategoryPickerV2 () {
             w-full h-full 
           "
         />
-
         {subCategories.filter(itm => itm.type === 'clothing').map((itm, i) => 
           <li
             key={i}
@@ -91,7 +92,7 @@ export default function CategoryPickerV2 () {
                 text-center flex-1 text-lg text-heading-invert font-bold drop-shadow-md outlined-text z-[10]
               "
             >
-              {itm.name.toUpperCase()}
+              {itm.name[lang] || 'fg'}
             </h3>
             <img 
               src={itm.image}

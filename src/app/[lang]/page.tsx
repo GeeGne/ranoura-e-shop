@@ -22,6 +22,7 @@ export default function Home() {
   const setTabName = useTabNameStore((state: any) => state.setTabName);
   const setLang = useLanguageStore((state: any) => state.setLang);
   const { lang } = useParams();
+  const isEn = lang === 'en';
   
   useEffect(() => {
     setTabName('home');
@@ -39,7 +40,7 @@ export default function Home() {
       <MainSlider /> 
       <ImageSlider />
       <AdvertTile 
-        title="HOT DEALS" 
+        title={isEn ? "HOT DEALS" : "عروض الحارقه"}
         category="hot-deals"
         type="sale"
         slug="hot-deals"
@@ -47,13 +48,13 @@ export default function Home() {
       <CategoryPickerV2 />
       <MainLayout />
       <AdvertTile 
-        title="WHAT'S NEW?" 
+        title={isEn ? "WHAT'S NEW?" : "احدث الكوليكشات"}
         category="what's-new"
         type="new"
         slug="what's-new"
       />
       <AdvertTile 
-        title="LATEST ARRIVALS" 
+        title={isEn ? "LATEST ARRIVALS" : "اخر الدروب"}
         category="latest-arriavls"
         type="sale"
         slug="latest-arrivals"

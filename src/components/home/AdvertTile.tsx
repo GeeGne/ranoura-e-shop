@@ -1,7 +1,7 @@
 "use client"
 
 // HOOKS
-import { ReactNode, useState, useRef } from 'react';
+import { ReactNode, useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from "next/navigation";
 
@@ -76,10 +76,15 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
 
   const [ scrollWidth, setScrollWidth ] = useState<number>(0);
-  const [ leftArrowInactive, setLeftArrowInactive ] = useState<boolean>(true);
-  const [ rightArrowInactive, setRightArrowInactive ] = useState<boolean>(false);
   const [ imgScaleToggle, setImgScaleToggle ] = useState<boolean | number>(false);
   const [ heartActiveId, setHeartActiveId ] = useState<number | null>(null);
+
+  const [ leftArrowInactive, setLeftArrowInactive ] = useState<boolean>(false);
+  const [ rightArrowInactive, setRightArrowInactive ] = useState<boolean>(true);
+  useEffect(() => {
+    setLeftArrowInactive(isEn ? true : false);
+    setRightArrowInactive(isEn ? false : true);
+  }, [lang]);
 
   const ulRef = useRef<any>(null);
   const liRefs = useRef<(HTMLElement | null)[]>([]);
@@ -88,7 +93,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
   const imgAorBRefs = useRef<(HTMLElement | null)[]>([]);
   const aBtnRefs = useRef<(HTMLElement | null)[]>([]);
   const bBtnRefs = useRef<(HTMLElement | null)[]>([]);
-
+  
   const getImgUrl = (imgArray: any) => imgArray.find((itm: any) => itm.color === selectedColor);
 
   const displayPrideConfetti = () => {
@@ -269,9 +274,9 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
           </span>
           <div
             className={`
-              ${isEn ? 'translate-x-4' : 'translate-x-[-1rem]'}
-              absolute bottom-0 left-0 w-[calc(100%+1rem)] h-[40%] 
-              backdrop-invert origin-left
+              ${isEn ? 'translate-x-4' : 'translate-x-[-2rem]'}
+              absolute bottom-0 left-0 w-[calc(100%+1rem)] h-[40%]
+              backdrop-invert origin-left 
             `}
           />
         </Link>
