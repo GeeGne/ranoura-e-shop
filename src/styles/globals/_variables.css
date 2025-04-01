@@ -152,46 +152,48 @@
 }
 
 .ar {
-  --font-family: 'Lateef', sans-serif;
-  font-size: 21px;
+  --font-family: 'Zain', sans-serif;
+  --font-size-increment: 2px;
+  /* --font-family: 'Tajawal', sans-serif; */
+  /* --font-family: 'Lateef', sans-serif; */
 }
 
 .ar .text-xs {
-  font-size: 17px;
+  font-size: calc(12px + var(--font-size-increment));
 }
 .ar .text-sm {
-  font-size: 19px;
+  font-size: calc(14px + var(--font-size-increment));
 }
 .ar .text-base {
-  font-size: 21px;
+  font-size: calc(16px + var(--font-size-increment));
 }
 .ar .text-lg {
-  font-size: 23px;
+  font-size: calc(18px + var(--font-size-increment));
 }
 .ar .text-xl {
-  font-size: 25px;
+  font-size: calc(20px + var(--font-size-increment));
 }
 .ar .text-2xl {
-  font-size: 29px;
+  font-size: calc(24px + var(--font-size-increment));
 }
 .ar .text-3xl {
-  font-size: 35px;
+  font-size: calc(30px + var(--font-size-increment));
 }
 .ar .text-4xl {
-  font-size: 41px;
+  font-size: calc(36px + var(--font-size-increment));
 }
 .ar .text-5xl {
-  font-size: 53px;
+  font-size: calc(48px + var(--font-size-increment));
 }
 .ar .text-6xl {
-  font-size: 65px;
+  font-size: calc(60px + var(--font-size-increment));
 }
 .ar .text-7xl {
-  font-size: 77px;
+  font-size: calc(72px + var(--font-size-increment));
 }
 .ar .text-8xl {
-  font-size: 101px;
+  font-size: calc(96px + var(--font-size-increment));
 }
 .ar .text-9xl {
-  font-size: 133px; 
-}
+  font-size: calc(128px + var(--font-size-increment)); 
+} 

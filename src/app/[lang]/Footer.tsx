@@ -222,6 +222,21 @@ export default function Footer ({ ...props }) {
             {isEn ? 'Syria © 2025 RANOURA all rights reserved' : 'سوريا © 2025 رانورا جميع الحقوق محفوظة'}
           </span>
         </div>
+        {/* <div className="flex gap-2">
+          <span className="text-heading-invert font-light">خفيف</span>
+          <span className="text-heading-invert font-base">عادي</span>
+          <span className="text-heading-invert font-medium">وسط</span>
+          <span className="text-heading-invert font-semibold">شوي سميك</span>
+          <span className="text-heading-invert font-bold">سميك</span>
+        </div>
+        <div className="flex flex-col gap-2">
+          <span className="text-heading-invert text-xs">اكس سمال</span>
+          <span className="text-heading-invert text-sm">سمال</span>
+          <span className="text-heading-invert text-base">عادي</span>
+          <span className="text-heading-invert text-lg">ال جي</span>
+          <span className="text-heading-invert text-xl">اكس ال</span>
+          <span className="text-heading-invert text-2xl">اكس اكس ال</span>
+        </div> */}
       </section>
     </footer>
   )

@@ -11,26 +11,20 @@
 /* Lateef */
 @font-face {
   font-family: 'Lateef';
-  src: url('/assets/fonts/Lateef/Lateef-Bold.ttf') format('truetype');
-  font-weight: bold;
-}
-
-@font-face {
-  font-family: 'Lateef';
   src: url('/assets/fonts/Lateef/Lateef-ExtraLight.ttf') format('truetype');
-  font-weight: 100;
+  font-weight: 200;
 }
 
 @font-face {
   font-family: 'Lateef';
   src: url('/assets/fonts/Lateef/Lateef-Light.ttf') format('truetype');
-  font-weight: lighter;
+  font-weight: 300;
 }
 
 @font-face {
   font-family: 'Lateef';
   src: url('/assets/fonts/Lateef/Lateef-Regular.ttf') format('truetype');
-  font-weight: normal;
+  font-weight: 400;
 }
 
 @font-face {
@@ -41,18 +35,116 @@
 
 @font-face {
   font-family: 'Lateef';
-  src: url('/assets/fonts/Lateef/Lateef-SemiBold.ttf') format('truetype');
+  src: url('/assets/fonts/Lateef/Lateef-Medium.ttf') format('truetype');
   font-weight: 600;
 }
 
 @font-face {
   font-family: 'Lateef';
   src: url('/assets/fonts/Lateef/Lateef-Bold.ttf') format('truetype');
-  font-weight: bold;
+  font-weight: 700;
 }
 
 @font-face {
   font-family: 'Lateef';
   src: url('/assets/fonts/Lateef/Lateef-ExtraBold.ttf') format('truetype');
-  font-weight: bolder;
+  font-weight: 800;
+}
+
+/* Tajawal */
+@font-face {
+  font-family: 'Tajawal';
+  src: url('/assets/fonts/Tajawal/Tajawal-ExtraLight.ttf') format('truetype');
+  font-weight: 200;
+}
+
+@font-face {
+  font-family: 'Tajawal';
+  src: url('/assets/fonts/Tajawal/Tajawal-Light.ttf') format('truetype');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Tajawal';
+  src: url('/assets/fonts/Tajawal/Tajawal-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Tajawal';
+  src: url('/assets/fonts/Tajawal/Tajawal-Medium.ttf') format('truetype');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Tajawal';
+  src: url('/assets/fonts/Tajawal/Tajawal-Medium.ttf') format('truetype');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'Tajawal';
+  src: url('/assets/fonts/Tajawal/Tajawal-Bold.ttf') format('truetype');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Tajawal';
+  src: url('/assets/fonts/Tajawal/Tajawal-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+}
+
+@font-face {
+  font-family: 'Tajawal';
+  src: url('/assets/fonts/Tajawal/Tajawal-Black.ttf') format('truetype');
+  font-weight: 900;
+}
+
+/* Zain */
+@font-face {
+  font-family: 'Zain';
+  src: url('/assets/fonts/Zain/Zain-ExtraLight.ttf') format('truetype');
+  font-weight: 200;
+}
+
+@font-face {
+  font-family: 'Zain';
+  src: url('/assets/fonts/Zain/Zain-Light.ttf') format('truetype');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Zain';
+  src: url('/assets/fonts/Zain/Zain-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Zain';
+  src: url('/assets/fonts/Zain/Zain-Regular.ttf') format('truetype');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Zain';
+  src: url('/assets/fonts/Zain/Zain-Regular.ttf') format('truetype');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'Zain';
+  src: url('/assets/fonts/Zain/Zain-Bold.ttf') format('truetype');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Zain';
+  src: url('/assets/fonts/Zain/Zain-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+}
+
+@font-face {
+  font-family: 'Zain';
+  src: url('/assets/fonts/Zain/Zain-Black.ttf') format('truetype');
+  font-weight: 900;
 }

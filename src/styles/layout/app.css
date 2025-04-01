@@ -20,6 +20,7 @@
   & main {
     grid-area: main;
     position: relative;
+    overflow-x: clip;
   }
 
   & footer {
