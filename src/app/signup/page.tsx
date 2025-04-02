@@ -28,7 +28,7 @@ export default function page () {
   useEffect(() => {
     setTabName('signup');
   }, []);
-
+  
   return (
     <div
       className="

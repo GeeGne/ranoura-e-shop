@@ -40,7 +40,6 @@ export default function SubCategoryList () {
   // DEBUG
   // console.log('selectedCategory: ', selectedCategory);
   // console.log('subCategoreskeys: ', subCategories.forEach(itm => console.log(itm.key)));
-
   return (
     <div
       className="flex flex-col shrink-0 w-full p-4 gap-8"

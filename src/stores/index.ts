@@ -163,10 +163,10 @@ const useFooterListStore = create<FooterListProps>(
 type LanguageProps = {
   firstTime: boolean;
   setFirstTime: (value: boolean) => void;
-  lang: string;
+  lang: any;
   setLang: (value: string) => void;
-  isHydrated: boolean; // New flag
-  setIsHydrated: (isHydrated: boolean) => void; // Setter for the flag
+  isHydrated: boolean;
+  setIsHydrated: (isHydrated: boolean) => void;
 };
 
 const useLanguageStore = create<LanguageProps>()(

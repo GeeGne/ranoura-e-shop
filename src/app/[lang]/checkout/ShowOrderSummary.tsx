@@ -45,7 +45,6 @@ export default function ShowOrderSummary ({ className, ...props }: Props) {
   // console.log('orderSummary total height: ', orderSummaryRef.current?.scrollHeight);
   // console.log('calucalteTotalPrice', calculateTotalPrice(pricesArray()));
   // console.log('pricesArray', pricesArray());
-
   return (
     <div
       className={`

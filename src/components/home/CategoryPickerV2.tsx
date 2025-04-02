@@ -92,7 +92,7 @@ export default function CategoryPickerV2 () {
                 text-center flex-1 text-lg text-heading-invert font-bold drop-shadow-md outlined-text z-[10]
               "
             >
-              {itm.name[lang] || 'fg'}
+              {itm.name[isEn ? 'en' : 'ar']}
             </h3>
             <img 
               src={itm.image}

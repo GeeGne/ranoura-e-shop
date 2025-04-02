@@ -2,6 +2,9 @@
 import LineMdTextBoxToTextBoxMultipleTransition from '@/components/svgs/LineMdTextBoxToTextBoxMultipleTransition';
 import LineMdMapMarkerLoop from '@/components/svgs/LineMdMapMarkerLoop';
 
+//  STORES
+import { useLanguageStore } from '@/stores/index';
+
 type Props = {
   category?: string;
   user?: any[];
@@ -9,6 +12,8 @@ type Props = {
 
 export default function ProfileLI ({ category, user, ...props }: Props) {
 
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
   const categoryUnitsArray = user?.filter((itm: any) => itm.category === category);
   
   return (
@@ -41,7 +46,7 @@ export default function ProfileLI ({ category, user, ...props }: Props) {
             className="flex flex-col"
             key={i}
           >
-            <span className="text-md text-body font-bold">{category.name}</span>
+            <span className="text-md text-body font-bold">{category.name[lang]}</span>
             <span className="text-md text-heading">{category.info}</span>
           </li>
         )}

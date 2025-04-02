@@ -17,7 +17,10 @@ import BottomBorder from "@/components/svgs/BottomBorder";
 import EpUser from "@/components/svgs/EpUser";
 
 // STORES
-import { useCartStore, useNavbarStore, useTabNameStore, useAlertMessageStore } from '@/stores/index';
+import { 
+  useCartStore, useNavbarStore, 
+  useTabNameStore, useAlertMessageStore 
+} from '@/stores/index';
 
 // ASSETS
 const logo = "/assets/img/ranoura-logo.png";
@@ -95,7 +98,6 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
   }
 
   // DEBUG
-
   return (
     <header
       className={`

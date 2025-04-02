@@ -44,7 +44,7 @@ export default function page () {
   const setSearchParams = useSetSearchParams();
   const deleteAllSearchParams = useDeleteAllSearchParams();
 
-  const lang = useLanguageStore(state => state.lang);
+  const lang = useLanguageStore(state => state.lang) || 'en';
   const isEn = lang === 'en';
   const [ pickedColor, setPickedColor ] = useState<any>(null)
   const [ setColorTrigger, setSetColorTrigger ] = useState<any>(null)
@@ -62,7 +62,7 @@ export default function page () {
       name: "All Clothes",
       href: "/shop"
     },{
-      name: product.name[lang],
+      name: isEn ? product?.name.ar : product?.name.ar,
       href: `/shop/${product?.id}/${product?.slug}`
     } 
   ];
@@ -198,12 +198,12 @@ export default function page () {
         <h2
           className="text-lg font-bold text-heading"
         >
-          {product?.name[lang] || 'asd'}
+          {product?.name[(isEn ? 'ar' : 'en')]}
         </h2>
         <h3
           className="text-md text-body"
         >
-          {product?.description[lang] || 'asd'}
+          {product?.description[(isEn ? 'ar' : 'en')]}
         </h3>
         <PriceTag price={product?.price} discount={product?.discount_percent}/>
         <ProductSize sizes={product?.sizes} />
@@ -244,7 +244,7 @@ export default function page () {
               cool-bg-grad-m py-2 rounded-r-lg 
             "
             data-type="add_to_bag_button_is_clicked"
-            data-product-name={product.name[lang]}
+            data-product-name={product?.name[(isEn ? 'ar' : 'en')]}
             onClick={handleClick}
           >
             <FamiconsBagAddOutlineBold 

@@ -2,7 +2,11 @@
 import Link from 'next/link';
 
 // STORES
-import { useCartStore, useNavbarStore, useTabNameStore, useLayoutRefStore } from '@/stores/index';
+import { 
+  useCartStore, useNavbarStore,
+  useTabNameStore, useLayoutRefStore,
+  useLanguageStore
+} from '@/stores/index';
 
 // COMPONENTS
 import UnderlineStyle from '@/components/UnderlineStyle';
@@ -16,11 +20,13 @@ import subCategories from '@/json/subCategories.json';
 
 export default function SubCategoryListLg () {
 
+  const lang = useLanguageStore(state => state.lang) || 'en';
+  const isEn = lang === 'en';
   const layoutRef = useLayoutRefStore((state: any) => state.layoutRef);
   const navbarToggle = useNavbarStore((status:any) => status.toggle);
   const setNavbarToggle = useNavbarStore((status:any) => status.setToggle);
   const selectedCategory = useNavbarStore((status:any) => status.selectedCategory);
-  const getCategoryTitle = () => categories.find(category => category.slug === selectedCategory)?.name || 'Unknown';
+  const getCategory = () => categories.find(category => category.slug === selectedCategory);
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     const { type } = e.currentTarget.dataset;
@@ -34,10 +40,11 @@ export default function SubCategoryListLg () {
         break;
       console.error("Unkown Type:", type);
     }
-  };
+  }
 
   // DEBUG
   // console.log('selectedCategory', selectedCategory);
+  console.log('getCategory', getCategory());
   
   return (
     <>
@@ -65,14 +72,14 @@ export default function SubCategoryListLg () {
           <span
             className="text-body-extra-light text-xs"
           >
-            { getCategoryTitle() }
+            { getCategory()?.name[(isEn ? 'ar' : 'en')] }
           </span>
           <ul
             className="flex flex-col gap-2"
           >
             {subCategories
               .filter(itm => itm.type === selectedCategory)
-              .map((itm, i) => 
+              .map((itm: any, i) => 
                 <li
                   key={i}
                   className="cursor-pointer"
@@ -85,7 +92,7 @@ export default function SubCategoryListLg () {
                     <span
                       className="group relative text-heading"
                     >
-                      {itm.name}
+                      {itm.name[lang]}
                       <UnderlineStyle 
                         style={{backgroundColor: 'var(--font-heading-color)'}}
                       />

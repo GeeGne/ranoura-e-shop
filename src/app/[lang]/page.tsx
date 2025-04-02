@@ -31,7 +31,6 @@ export default function Home() {
   useEffect(() => {
     setLang(lang);
   }, [ lang ]);
-
   return (
     <div
       className="flex flex-col"

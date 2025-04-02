@@ -84,6 +84,7 @@ export default function Navbar () {
         console.error('Unknown name: ', name);
     }
   }
+  return(<div>his</div>)
 
   return (
     <div

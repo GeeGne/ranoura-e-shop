@@ -367,7 +367,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
                       ${imgScaleToggle === i? 'scale-[130%]' : 'scale-[100%]'}  
                     `}
                     src={getImgUrl(product.images)?.main}
-                    alt={product.name[lang]}
+                    alt={product.name[isEn ? 'en' : 'ar']}
                     loading="lazy"
                     data-product-id={product.id}
                     ref={ (el: any) => {if (mainImgRefs.current) {mainImgRefs.current[i] = el}} }
@@ -452,7 +452,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
                   data-index={i}
                   data-type="heart_button_is_clicked"
                   data-product-id={product.id}
-                  data-product-name={product.name[lang]}
+                  data-product-name={product.name[isEn ? 'en' : 'ar']}
                   onClick={handleClick}
                 >
                   <LineMdHeart
@@ -550,7 +550,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
                 data-product-id={product.id}
                 onClick={handleClick}
               >
-                {product.name[lang]}
+                {product.name[isEn ? 'en' : 'ar']}
               </Link>
               <PriceTag 
                 price={product.price} 

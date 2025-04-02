@@ -5,7 +5,7 @@ import Link from "next/link";
 // COMPONENTS
 
 // STORES
-import { useCartStore, useNavbarStore } from '@/stores/index';
+import { useCartStore, useNavbarStore, useLanguageStore } from '@/stores/index';
 
 // JSON
 import categories from '@/json/categories.json';
@@ -21,6 +21,8 @@ export default function CategoryListLg ({ isWindowScrolled, tabName }: Props) {
   const setNavbarToggle = useNavbarStore((status:any) => status.setToggle);
   const setSelectedCategory = useNavbarStore((status:any) => status.setSelectedCategory);
   const selectedCategory = useNavbarStore((status:any) => status.selectedCategory);
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
@@ -54,7 +56,7 @@ export default function CategoryListLg ({ isWindowScrolled, tabName }: Props) {
       data-type="ar_button_is_clicked"
       onClick={handleClick}
     >
-      {categories.map((category, i) => 
+      {categories.map((category: any, i) => 
         <Link
           href={`/shop/category/${selectedCategory}`}
           className={`
@@ -76,7 +78,7 @@ export default function CategoryListLg ({ isWindowScrolled, tabName }: Props) {
           onMouseLeave={() => setNavbarToggle(false)}
           key={i}
         >
-          {category.name}
+          {category?.name[lang]}
         </Link>  
       )}
     </ul>

@@ -33,7 +33,7 @@ export default function page () {
 
   const setTabName = useTabNameStore((state: any) => state.setTabName);
 
-  const getName = (array: any[], slug?: string) => array?.find((itm: any) => itm.slug === slug)?.name[lang];
+  const getName = (array: any[], slug?: string) => array?.find((itm: any) => itm.slug === slug)?.name.en;
 
   const slugNameAndLinkArray = () => {
     

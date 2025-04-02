@@ -6,11 +6,7 @@ import Title from '@/app/[lang]/checkout/checkoutform/Title';
 import OrderSummary from '@/components/OrderSummary';
 import BtnA from '@/components/BtnA';
 import LineMdChevronSmallDown from '@/components/svgs/LineMdChevronSmallDown';
-import LineMdConfirmCircleTwotone from '@/components/svgs/LineMdConfirmCircleTwotone';
-import LineMdConfirmCircleTwotoneToCircleTwotoneTransition from '@/components/svgs/LineMdConfirmCircleTwotoneToCircleTwotoneTransition';
-import LineMdSquareTwotoneToConfirmSquareTransition from '@/components/svgs/LineMdSquareTwotoneToConfirmSquareTransition';
 import LineMdConfirmSquareToSquareTransition from '@/components/svgs/LineMdConfirmSquareToSquareTransition';
-import LineMdSquareToConfirmSquareTwotoneTransition from '@/components/svgs/LineMdSquareToConfirmSquareTwotoneTransition';
 import LineMdSquareToConfirmSquareTransition from '@/components/svgs/LineMdSquareToConfirmSquareTransition';
 import LineMdArrowsVerticalAlt from '@/components/svgs/LineMdArrowsVerticalAlt';
 

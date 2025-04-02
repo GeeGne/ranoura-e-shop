@@ -1,12 +1,20 @@
 // ASSETS
 const outfit1 = "/assets/img/outfit-2.jpg";
 
+// STORES
+import { useLanguageStore } from '@/stores/index';
+
 type Props = {
   productsArray?: any[];
   className?: string;
 } & React.ComponentPropsWithRef<"ul">;
 
 export default function ProductsLists ({productsArray, className, ...props}: Props) {
+
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
+
+  return(<div>his</div>)
   return (
     <ul
       className={`flex flex-col gap-8`}

@@ -6,10 +6,12 @@ import FluentArrowRight12Filled from "@/components/svgs/FluentArrowRight12Filled
 import categories from '@/json/categories.json';
 
 // STORES
-import { useNavbarStore } from '@/stores/index';
+import { useNavbarStore, useLanguageStore } from '@/stores/index';
 
 export default function CategoryList () {
   
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
   const categoryToggle = useNavbarStore((status:any) => status.categoryToggle);
   const setCategoryToggle = useNavbarStore((status:any) => status.setCategoryToggle);
   const setSelectedCategory = useNavbarStore((status:any) => status.setSelectedCategory);
@@ -34,7 +36,7 @@ export default function CategoryList () {
     <ul
       className="flex flex-col w-full shrink-0 p-8 gap-8"
     >
-      {categories.map((itm, i) => 
+      {categories.map((itm: any, i) => 
         <li
           className={`
             group relative w-full aspect-square bg-foreground 
@@ -75,7 +77,7 @@ export default function CategoryList () {
                 transition-all ease-in-out duration-400
               "
             >
-              {itm.name.toUpperCase()}
+              {itm.name[lang].toUpperCase()}
               <div
                 className="
                   absolute top-[100%] left-0 translate-y-[-50%]
