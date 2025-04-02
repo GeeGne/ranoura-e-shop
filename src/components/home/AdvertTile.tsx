@@ -258,7 +258,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
   
   return (
     <section
-      className="flex flex-col gap-4 px-4 py-8 overflow-x-hidden"
+      className="flex flex-col gap-4 px-4 py-8"
     >
       <div
         className="flex items-center justify-between"
@@ -367,7 +367,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
                       ${imgScaleToggle === i? 'scale-[130%]' : 'scale-[100%]'}  
                     `}
                     src={getImgUrl(product.images)?.main}
-                    alt={product.name}
+                    alt={product.name[lang]}
                     loading="lazy"
                     data-product-id={product.id}
                     ref={ (el: any) => {if (mainImgRefs.current) {mainImgRefs.current[i] = el}} }
@@ -389,7 +389,10 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
                   />            
                 </div>
                 <div
-                  className="absolute top-0 left-0 flex flex-col gap-4 p-2 z-[10] drop-shadow-md"
+                  className={`
+                    absolute top-0 flex flex-col gap-4 p-2 z-[10] drop-shadow-md
+                    ${isEn ? 'left-0' : 'right-0'}
+                  `}
                 >
                   {product.forced_new &&
                     <div
@@ -409,7 +412,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
                           text-xs md:text-sm font-bold text-heading-invert bg-primary bg-clip-text outlined-text drop-shadow-mg
                         "
                       >
-                        NEW
+                        {isEn ? "NEW" : "جديد"}
                       </span>
                     </div>
                   }
@@ -432,14 +435,15 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
                           drop-shadow-mg
                         "
                       >
-                        SALE
+                        {isEn ? "SALE" : "تخفيض"}
                       </span>
                     </div>
                   }
                 </div>
                 <div
                   className={`
-                    absolute top-2 right-2 w-6 h-6 text-pink-500 cursor-pointer z-[10]
+                    absolute top-2 w-6 h-6 text-pink-500 cursor-pointer z-[10]
+                    ${isEn ? 'right-2' : 'left-2'}
                     ${favourites.some(productId => productId === product.id)
                       && heartActiveId === i 
                       && '--heart-ani'
@@ -448,7 +452,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
                   data-index={i}
                   data-type="heart_button_is_clicked"
                   data-product-id={product.id}
-                  data-product-name={product.name}
+                  data-product-name={product.name[lang]}
                   onClick={handleClick}
                 >
                   <LineMdHeart
@@ -490,7 +494,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
                   <LineMdArrowsDiagonalRotated 
                     className={`
                       order-2 w-8 h-8 transform-style-3d transform group-hover:transform-style-3d 
-                      cursor-pointer rounded-full p-1 ml-auto
+                      cursor-pointer rounded-full p-1 
                       transition-all ease-in-out duration-200
                       ${imgScaleToggle === i ? 'text-heading-invert bg-heading' : 'text-body hover:text-heading'}
                     `}
@@ -541,12 +545,12 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
               </div>
               <Link
                 className="text-heading text-base mb-auto"
-                href={`/shop/${product.id}/${strSpaceToHyphen(product.name)}`}
+                href={`/shop/${product.id}/${product.slug}`}
                 data-type="navigate_to_product"
                 data-product-id={product.id}
                 onClick={handleClick}
               >
-                {product.name}
+                {product.name[lang]}
               </Link>
               <PriceTag 
                 price={product.price} 

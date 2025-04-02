@@ -42,7 +42,7 @@ export default function page () {
       />
       <CategoryTitle 
         className="px-4 py-8 w-auto max-w-[auto] mx-auto"
-        name={"All Clothes"}
+        name="All Clothes"
       />
       <FilterTile 
         className="px-4 w-auto max-w-[auto] mx-auto"

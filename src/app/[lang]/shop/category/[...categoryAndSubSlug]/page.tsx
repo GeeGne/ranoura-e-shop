@@ -12,7 +12,7 @@ import FilterTile from '@/components/categoryPage/FilterTile';
 import BreadCrumb from '@/components/BreadCrumb';
 
 // STORES
-import { useTabNameStore } from '@/stores/index';
+import { useTabNameStore, useLanguageStore } from '@/stores/index';
 
 // JSON
 import categories from "@/json/categories.json";
@@ -23,6 +23,8 @@ export default function page () {
 
   const { categoryAndSubSlug } = useParams();
   const isCategory = categoryAndSubSlug?.length === 1;
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
 
   const mainSlug = () => {
     if (isCategory) return categoryAndSubSlug[0];
@@ -31,13 +33,13 @@ export default function page () {
 
   const setTabName = useTabNameStore((state: any) => state.setTabName);
 
-  const getName = (array: any[], slug?: string) => array?.find((itm: any) => itm.slug === slug)?.name;
+  const getName = (array: any[], slug?: string) => array?.find((itm: any) => itm.slug === slug)?.name[lang];
 
   const slugNameAndLinkArray = () => {
     
     if (isCategory) return [
       {
-        name: "All Clothes",
+        name: isEn ? "All Clothes" : "جميع الملابس",
         href: "/shop"
       },{
         name: `${getName(categories, categoryAndSubSlug[0])}`,
@@ -47,7 +49,7 @@ export default function page () {
 
     if (categoryAndSubSlug?.length === 2) return [
       {
-        name: "All Clothes",
+        name: isEn ? "All Clothes" : "جميع الملابس",
         href: "/shop"
       },{
         name: `${getName(categories, categoryAndSubSlug[0])}`,

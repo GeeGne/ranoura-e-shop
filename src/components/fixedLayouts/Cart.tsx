@@ -11,7 +11,10 @@ import DisplayImg from "@/components/DisplayImg";
 import BtnA from "@/components/BtnA";
 
 // STORES
-import { useCartStore, useLayoutRefStore, useAlertMessageStore } from '@/stores/index';
+import { 
+  useCartStore, useLayoutRefStore, 
+  useAlertMessageStore, useLanguageStore
+} from '@/stores/index';
 
 // SVG
 import CartEmpty from "@/components/svgs/CartEmpty";
@@ -40,6 +43,9 @@ export default function Cart () {
 
   const router = useRouter();
   const layoutRef = useLayoutRefStore((state: any) => state.layoutRef);
+
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
 
   const toggle = useCartStore((status:any) => status.toggle);
   const setToggle = useCartStore((status:any) => status.setToggle);
@@ -165,7 +171,7 @@ export default function Cart () {
             className="w-8 h-8 text-between rounded-full border-solid border-body-light border-[1px] p-1"
           />
           <h2>
-            CLOSE
+            {isEn ? 'CLOSE' : 'الغاء'}
           </h2>
         </div>
       </button>
@@ -232,7 +238,7 @@ export default function Cart () {
             className="w-8 h-8 text-between rounded-full border-solid border-body-light border-[1px] p-1"
           />
           <h2>
-            CLOSE
+            {isEn ? 'CLOSE' : 'الغاء'}
           </h2>
         </div>
       </button>
@@ -246,7 +252,7 @@ export default function Cart () {
           <span
             className="text-2xl text-heading"
           >
-            Cart
+            {isEn ? 'Cart' : 'السله'}
           </span>
           <span
             className="text-2xl text-heading border-heading border-solid border-[1px] rounded-full px-2"
@@ -260,13 +266,13 @@ export default function Cart () {
             <li className="flex" key={i}>
               <DisplayImg
                 className="w-[100px] md:w-[200px] aspect-[2/3] object-cover rounded-lg"
-                alt={getProduct(products, product.id).name}
+                alt={getProduct(products, product.id).name[lang]}
                 src={getImgUrl(getProduct(products, product.id).images, product.color)?.main}
               />
               <div className="flex flex-col flex-1 px-4">
                 <div className="flex text-heading text-lg justify-between">
                   <h3>
-                    {getProduct(products, product.id)?.name} 
+                    {getProduct(products, product.id)?.name[lang]} 
                   </h3>
                   <span
                     className="font-bold text-lg text-content"
@@ -380,7 +386,7 @@ export default function Cart () {
                     "
                     href={`/shop/${getProduct(products, product.id).id}/${getProduct(products, product.id).slug}`}
                     data-type="edit_button_is_clicked"
-                    data-product-name={getProduct(products, product.id).name}
+                    data-product-name={getProduct(products, product.id).name[lang]}
                     data-size={product.size}
                     data-color={product.color}
                     data-index={product.id}
@@ -389,7 +395,7 @@ export default function Cart () {
                     <IcOutlineCreate
                       className="w-4 h-4"
                     />
-                    <span>EDIT</span>
+                    <span>{isEn ? 'EDIT' : 'تعديل'}</span>
                   </Link>
                   <button
                     className="
@@ -399,7 +405,7 @@ export default function Cart () {
                       hover:bg-body hover:text-heading-invert
                     "
                     data-type="delete_button_is_clicked"
-                    data-product-name={getProduct(products, product.id).name}
+                    data-product-name={getProduct(products, product.id).name[lang]}
                     data-size={product.size}
                     data-color={product.color}
                     data-index={product.id}
@@ -408,7 +414,7 @@ export default function Cart () {
                     <IcOutlineClear
                       className="w-4 h-4"
                     />
-                    <span>DELETE</span>
+                    <span>{isEn ? 'DELETE' : 'مسح'}</span>
                   </button>
                 </div>
               </div>

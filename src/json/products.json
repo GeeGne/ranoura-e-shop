@@ -1,9 +1,9 @@
 [
   {
     "id": 1,
-    "name": "Serenity Set",
+    "name": {"en": "Serenity Set", "ar": "ست سيرينيتي"},
     "slug": "serenity-set",
-    "description": "Elegant Ruched Top and Wide-Leg Pants Ensemble",
+    "description": {"en": "Elegant Ruched Top and Wide-Leg Pants Ensemble", "ar": "بلوزة كشخة مع بنطلون واسع"},
     "type": "outfit-pairs",
     "categories": ["clothing", "outfit-pairs", "pants", "t-shirts", "new", "what's-new", "sale", "hot-deals", "latest-arrivals", "event", "ramadan-nights"],
     "forced_new": true,
@@ -80,9 +80,9 @@
     ]
   },{
     "id": 2,
-    "name": "Serenity Set",
+    "name": {"en": "Serenity Set", "ar": "ست سيرينيتي"},
     "slug": "serenity-set",
-    "description": "Elegant Turtleneck Sweater and Wide-Leg Pants Ensemble",
+    "description": {"en": "Elegant Turtleneck Sweater and Wide-Leg Pants Ensemble", "ar": "سترة تيرتلنيك أنيقة مع بنطلون واسع"},
     "type": "outfit-pairs",
     "categories": ["clothing", "outfit-pairs", "skirts", "t-shirts", "sale", "hot-deals", "latest-arrivals"],
     "forced_new": false,
@@ -155,9 +155,9 @@
     ]
   },{
     "id": 3,
-    "name": "Blossom Sweater",
+    "name": {"en": "Blossom Sweater", "ar": "سترة بلوسوم"},
     "slug": "bolssom-sweater",
-    "description": "Cozy Floral-Embroidered Relaxed Sweater",
+    "description": {"en": "Cozy Floral-Embroidered Relaxed Sweater", "ar": "كنزة مريحة مطرزة بزهور"},
     "type": "t-shirts",
     "categories": ["clothing", "t-shirts", "new", "what's-new", "sale", "hot-deals", "latest-arrivals"],
     "forced_new": true,
@@ -222,9 +222,9 @@
     ]
   },{
     "id": 4,
-    "name": "Mint Elegance Coat",
+    "name": {"en": "Mint Elegance Coat", "ar": "معطف النعناع الأنيق"},
     "slug": "mint-elegance-coat",
-    "description": "Timeless Mint Tailored Wool Coat",
+    "description": {"en": "Timeless Mint Tailored Wool Coat", "ar": "معطف صوفي مينت كلاسيكي"},
     "type": "jackets",
     "categories": ["clothing", "jackets", "new", "what's-new", "latest-arrivals"],
     "forced_new": true,
@@ -297,9 +297,9 @@
     ]
   },{
     "id": 5,
-    "name": "Eclectic Zebra Cardigan",
+    "name": {"en": "Eclectic Zebra Cardigan", "ar": "كنزة حمرة بخطوط زيبرا"},
     "slug": "Eclectic-zebra-cardigan",
-    "description": "Bold Black Patchwork Knit Cardigan",
+    "description": {"en": "Bold Black Patchwork Knit Cardigan", "ar": "كنزة حبك بتصميم الباتشورك الجريئة بالأسود"},
     "type": "jackets",
     "categories": ["clothing", "jackets", "sale", "hot-deals", "latest-arrivals", "event", "ramadan-nights"],
     "forced_new": false,
@@ -364,9 +364,9 @@
     ]
   },{
     "id": 6,
-    "name": "Opulent Blossom Abaya",
+    "name": {"en": "Opulent Blossom Abaya", "ar": "عباءة زهرية فاخرة"},
     "slug": "opulent-blossom-abaya",
-    "description": "Regal Brown Embroidered Belted Abaya",
+    "description": {"en": "Regal Brown Embroidered Belted Abaya", "ar": "عباءة بنية مطرزة مزودة بحزام بتصميم ملكي"},
     "type": "jackets",
     "categories": ["clothing", "jackets", "new", "what's-new", "latest-arrivals"],
     "forced_new": true,
@@ -439,9 +439,9 @@
     ]
   },{
     "id": 7,
-    "name": "Grove Jacket",
+    "name": {"en": "Grove Jacket", "ar": "جاكت جروف"},
     "slug": "grove-jacket",
-    "description": "Chic Textured Utility Jacket",
+    "description": {"en": "Chic Textured Utility Jacket", "ar": "جاكت أنيق متعدد الوظائف بتصميم ملمسي"},
     "type": "jackets",
     "categories": ["clothing", "jackets", "sale", "hot-deals", "latest-arrivals"],
     "forced_new": false,
@@ -522,9 +522,9 @@
     ]
   },{
     "id": 8,
-    "name": "Lace Whisper Abaya",
+    "name": {"en": "Lace Whisper Abaya", "ar": "عباءة دانتيل ويسبر"},
     "slug": "lace-whisper-abaya",
-    "description": "Graceful Lace-Trimmed Puff-Sleeve Abaya",
+    "description": {"en": "Graceful Lace-Trimmed Puff-Sleeve Abaya", "ar": "عباءة أنيقة بأكمام منتفخة ومزينة بتفاصيل دانتيل"},
     "type": "robes",
     "categories": ["clothing", "robes", "new", "what's-new", "latest-arrivals"],
     "forced_new": true,
@@ -589,9 +589,9 @@
     ]
   },{
     "id": 9,
-    "name": "Whimsical Logo Hoodie",
+    "name": {"en": "Whimsical Logo Hoodie", "ar": "هودي شعار خيالي"},
     "slug": "Whimisical-logo-hoodie",
-    "description": "Stylish Graphic-Print Hoodie",
+    "description": {"en": "Stylish Graphic-Print Hoodie", "ar": "هودي أنيق بطبعة جرافيك"},
     "type": "t-shirts",
     "categories": ["clothing", "t-shirts", "new", "what's-new", "latest-arrivals"],
     "forced_new": true,
@@ -660,9 +660,9 @@
     ]
   },{
     "id": 10,
-    "name": "Midnight Blaze Tracksuit",
+    "name": {"en": "Midnight Blaze Tracksuit", "ar": "بدلة رياضية بلون لهيب منتصف الليل"},
     "slug": "midnight-blaze-tracksuit",
-    "description": "Sleek Black and Orange Sporty Tracksuit Set",
+    "description": {"en": "Sleek Black and Orange Sporty Tracksuit Set", "ar": "مجموعة بدلة رياضية أنيقة باللون الأسود والبرتقالي"},
     "type": "outfit-pairs",
     "categories": ["clothing", "outfit-pairs", "new", "what's-new", "latest-arrivals"],
     "forced_new": true,
@@ -727,9 +727,9 @@
     ]
   },{
     "id": 11,
-    "name": "Skyline Cargo Jeans",
+    "name": {"en": "Skyline Cargo Jeans", "ar": "جينز كارغو سكايلاين"},
     "slug": "skyline-cargo-jeans",
-    "description": "Relaxed Light Blue Wide-Leg Cargo Denim Pants",
+    "description": {"en": "Relaxed Light Blue Wide-Leg Cargo Denim Pants", "ar": "بنطلون دينم كارغو واسع الساق باللون الأزرق الفاتح المريح"},
     "type": "jeans",
     "categories": ["clothing", "jeans", "new", "what's-new", "sale", "hot-deals", "latest-arrivals"],
     "forced_new": true,
@@ -790,9 +790,9 @@
     ]
   },{
     "id": 12,
-    "name": "Midnight Blaze Tracksuit",
+    "name": {"en": "Midnight Blaze Tracksuit", "ar": "بدلة رياضية بلون لهيب منتصف الليل"},
     "slug": "midnight-blaze-tracksuit",
-    "description": "Sleek Black and Orange Sporty Tracksuit Set",
+    "description": {"en": "Sleek Black and Orange Sporty Tracksuit Set", "ar": "مجموعة بدلة رياضية أنيقة باللون الأسود والبرتقالي"},
     "type": "outfit-pairs",
     "categories": ["clothing", "outfit-pairs", "new", "what's-new", "sale", "hot-deals", "latest-arrivals"],
     "forced_new": true,
@@ -857,9 +857,9 @@
     ]
   },{
     "id": 13,
-    "name": "Midnight Blaze Tracksuit",
+    "name": {"en": "Midnight Blaze Tracksuit", "ar": "بدلة رياضية بلون لهيب منتصف الليل"},
     "slug": "midnight-blaze-tracksuit",
-    "description": "Sleek Black and Orange Sporty Tracksuit Set",
+    "description": {"en": "Sleek Black and Orange Sporty Tracksuit Set", "ar": "مجموعة بدلة رياضية أنيقة باللون الأسود والبرتقالي"},
     "type": "jackets",
     "categories": ["clothing", "jackets", "latest-arrivals"],
     "forced_new": false,
@@ -928,9 +928,9 @@
     ]
   },{
     "id": 14,
-    "name": "Urban Plaid & Cobalt Set",
+    "name": {"en": "Urban Plaid & Cobalt Set", "ar": "مجموعة أربان بليد وكوبالت"},
     "slug": "ubran-plaid-cobalt-set",
-    "description": "Chic Plaid Jacket and Vibrant Blue Sweatpants Ensemble",
+    "description": {"en": "Chic Plaid Jacket and Vibrant Blue Sweatpants Ensemble", "ar": "جاكيت شيك بنقشة البليد وبنطلون رياضي أزرق نابض بالحياة"},
     "type": "matching-sets",
     "categories": ["clothing", "matching-sets", "shirts", "pants", "new", "what's-new", "sale", "hot-deals", "latest-arrivals"],
     "forced_new": true,
@@ -1007,9 +1007,9 @@
     ]
   },{
     "id": 15,
-    "name": "Frost Parka",
+    "name": {"en": "Frost Parka", "ar": "باركا فروست"},
     "slug": "frost-parka",
-    "description": "Chic Fur-Hooded Utility Parka",
+    "description": {"en": "Chic Fur-Hooded Utility Parka", "ar": "باركا أنيقة بغطاء رأس من الفرو وعملية"},
     "type": "jackets",
     "categories": ["clothing", "jackets", "new", "what's-new", "latest-arrivals", "event", "ramadan-nights"],
     "forced_new": true,
@@ -1074,9 +1074,9 @@
     ]
   },{
     "id": 16,
-    "name": "Frost Jacket",
+    "name": {"en": "Frost Jacket", "ar": "جاكيت فروست"},
     "slug": "frost-jacket",
-    "description": "Chic Fur-Hooded Utility Jacket",
+    "description": {"en": "Chic Fur-Hooded Utility Jacket", "ar": "جاكيت عملي أنيق بغطاء فرو"},
     "type": "jackets",
     "categories": ["clothing", "jackets", "sale", "hot-deals", "latest-arrivals"],
     "forced_new": false,
@@ -1145,9 +1145,9 @@
     ]
   },{
     "id": 17,
-    "name": "Frost Jacket",
+    "name": {"en": "Frost Jacket", "ar": "جاكيت فروست"},
     "slug": "frost-jacket",
-    "description": "Chic Puffer Jacket with Detachable Hood",
+    "description": {"en": "Chic Puffer Jacket with Detachable Hood", "ar": "جاكيت منفوخ أنيق بغطاء قابل للإزالة"},
     "type": "jackets",
     "categories": ["clothing", "jackets", "new", "what's-new", "latest-arrivals"],
     "forced_new": true,
@@ -1212,9 +1212,9 @@
     ]
   },{
     "id": 18,
-    "name": "League Hoodie",
+    "name": {"en": "League Hoodie", "ar": "هودي ليج"},
     "slug": "league-hoodie",
-    "description": "Stylish Graphic-Print College Hoodie",
+    "description": {"en": "Stylish Graphic-Print College Hoodie", "ar": "هودي جامعي أنيق بطبعة جرافيك"},
     "type": "hoodies",
     "categories": ["clothing", "hoodies", "sale", "hot-deals", "latest-arrivals"],
     "forced_new": false,
@@ -1283,9 +1283,9 @@
     ]
   },{
     "id": 19,
-    "name": "Frost Vest",
+    "name": {"en": "Frost Vest", "ar": "سترة فروست"},
     "slug": "frost-vest",
-    "description": "Chic Puffer Vest with Hood",
+    "description": {"en": "Chic Puffer Vest with Hood", "ar": "سترة منفوخة أنيقة بغطاء رأس"},
     "type": "jackets",
     "categories": ["clothing", "jackets", "new", "what's-new", "latest-arrivals", "event", "ramadan-nights"],
     "forced_new": true,
@@ -1358,9 +1358,9 @@
     ]
   },{
     "id": 20,
-    "name": "Classic Coat",
+    "name": {"en": "Classic Coat", "ar": "معطف كلاسيكي"},
     "slug": "classic-coat",
-    "description": "Timeless Textured Button-Down Coat",
+    "description": {"en": "Timeless Textured Button-Down Coat", "ar": "معطف كلاسيكي مزخرف بأزرار أمامية"},
     "type": "jackets",
     "categories": ["clothing", "jackets", "new", "what's-new", "sale", "hot-deals", "latest-arrivals"],
     "forced_new": true,
@@ -1437,9 +1437,9 @@
     ]
   },{
     "id": 21,
-    "name": "Varsity Cardigan",
+    "name": {"en": "Varsity Cardigan", "ar": "كاردجان فارسي"},
     "slug": "varsity-cardigan",
-    "description": "Trendy Graphic Patch Button-Down Cardigan",
+    "description": {"en": "Trendy Graphic Patch Button-Down Cardigan", "ar": "كاردجان أنيق مزخرف بطبعة جرافيك وأزرار"},
     "type": "jackets",
     "categories": ["clothing", "jackets", "latest-arrivals", "event", "ramadan-nights"],
     "forced_new": false,

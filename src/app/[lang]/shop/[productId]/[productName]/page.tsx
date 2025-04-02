@@ -1,7 +1,7 @@
 "use client"
 
 // HOOKS
-import { useRouter, useParams, useSearchParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
 
 // COMPONENT
@@ -18,7 +18,10 @@ import LineMdChevronSmallDown from '@/components/svgs/LineMdChevronSmallDown';
 import IonNavigate from '@/components/svgs/PepiconsPencilOpenCircleFilled';
 
 // STORES
-import { useTabNameStore, useAlertMessageStore, useCartStore } from '@/stores/index';
+import { 
+  useTabNameStore, useAlertMessageStore, 
+  useCartStore, useLanguageStore
+} from '@/stores/index';
 
 // JSON
 import products from '@/json/products.json';
@@ -37,11 +40,12 @@ const outfit3 = "/assets/img/outfit-3.jpg";
 
 export default function page () {
 
-  const router = useRouter();
   const searchParams = useSearchParams();
   const setSearchParams = useSetSearchParams();
   const deleteAllSearchParams = useDeleteAllSearchParams();
 
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
   const [ pickedColor, setPickedColor ] = useState<any>(null)
   const [ setColorTrigger, setSetColorTrigger ] = useState<any>(null)
   const quantitiyInptRef = useRef<any>(null);
@@ -58,7 +62,7 @@ export default function page () {
       name: "All Clothes",
       href: "/shop"
     },{
-      name: product?.name,
+      name: product.name[lang],
       href: `/shop/${product?.id}/${product?.slug}`
     } 
   ];
@@ -79,7 +83,9 @@ export default function page () {
   }, [searchParams]);
 
   const getImagesUrls = (array: any[] ) => 
-    array?.reduce((acc: any[] , itm) => itm.second ? [...acc, itm.main, itm.second] : [...acc, itm.main], []);
+    array?.reduce((acc: any[] , itm) => 
+      itm.second ? [...acc, itm.main, itm.second] : [...acc, itm.main], []
+    );
 
   const onColorChange = (selectedColor: string, clickedColor: string) => {
     if (selectedColor === "" || clickedColor === "") return;
@@ -192,12 +198,12 @@ export default function page () {
         <h2
           className="text-lg font-bold text-heading"
         >
-          {product?.name}
+          {product?.name[lang] || 'asd'}
         </h2>
         <h3
           className="text-md text-body"
         >
-          {product?.description}
+          {product?.description[lang] || 'asd'}
         </h3>
         <PriceTag price={product?.price} discount={product?.discount_percent}/>
         <ProductSize sizes={product?.sizes} />
@@ -238,14 +244,14 @@ export default function page () {
               cool-bg-grad-m py-2 rounded-r-lg 
             "
             data-type="add_to_bag_button_is_clicked"
-            data-product-name="Long Jeans With a Skirt"
+            data-product-name={product.name[lang]}
             onClick={handleClick}
           >
             <FamiconsBagAddOutlineBold 
               width={16} 
               height={16}
             />
-            ADD TO BAG
+            {isEn ? 'ADD TO BAG' : 'اضف الى السله'}
           </BtnA>
           <label
             className="

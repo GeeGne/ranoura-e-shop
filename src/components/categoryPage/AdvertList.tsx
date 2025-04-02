@@ -6,30 +6,14 @@ import Link from 'next/link';
 import { useRouter } from "next/navigation";
 
 // COMPONENTS
-import DisplayImg from '@/components/DisplayImg';
 import PriceTag from '@/components/PriceTag';
 import ColorPallete from '@/components/ColorPallete';
-import BtnA from '@/components/BtnA';
-import EpArrowLeft from '@/components/svgs/EpArrowLeft';
 import LineMdHeart from '@/components/svgs/LineMdHeart';
 import LineMdHeartFilled from '@/components/svgs/LineMdHeartFilled';
-import HugeiconsRotateLeft01 from '@/components/svgs/HugeiconsRotateLeft01';
-import HugeiconsRotateRight01 from '@/components/svgs/HugeiconsRotateRight01';
-import MaterialSymbolsPinchZoomInRounded from '@/components/svgs/MaterialSymbolsPinchZoomInRounded';
 import LineMdArrowsDiagonalRotated from '@/components/svgs/LineMdArrowsDiagonalRotated';
-import FoundationBurstSale from '@/components/svgs/FoundationBurstSale';
-import New from '@/components/svgs/New';
 import SquareLines from '@/components/svgs/SquareLines';
-import CircleLines from '@/components/svgs/CircleLines';
 import FlowerLines from '@/components/svgs/FlowerLines';
 import LineMdImageTwotone from '@/components/svgs/LineMdImageTwotone';
-
-// ASSETS
-const ramdanBanner = "/assets/img/ramadan-nights.webp";
-const ramdanBanner2 = "/assets/img/ramadan-nights-2.jpg";
-const outfit1 = "assets/img/outfit.jpg"
-const outfit2 = "assets/img/outfit-2.jpg"
-const outfit3 = "assets/img/outfit-3.jpg"
 
 // JSON
 // import products from "@/json/products.json";
@@ -38,7 +22,10 @@ const outfit3 = "assets/img/outfit-3.jpg"
 import strSpaceToHyphen from '@/utils/strSpaceToHyphen';
 
 // STORES
-import { useFavouritesStore, useFavouriteConfettiToggle, useAlertMessageStore } from '@/stores/index';
+import { 
+  useFavouritesStore, useFavouriteConfettiToggle,
+  useAlertMessageStore, useLanguageStore
+} from '@/stores/index';
 
 // CONFETTI 
 import Confetti from "react-canvas-confetti/dist/presets/explosion";
@@ -49,9 +36,10 @@ type Props = {
 
 export default function AdvertList ({ products = [] }: Props) {
   
-  const router = useRouter();
   const array = [1, 2, 3, 4];
   const selectedColor = "green";
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
   const [ scrollWidth, setScrollWidth ] = useState<number>(0);
   const [ leftArrowInactive, setLeftArrowInactive ] = useState<boolean>(true);
   const [ rightArrowInactive, setRightArrowInactive ] = useState<boolean>(false);
@@ -247,7 +235,7 @@ export default function AdvertList ({ products = [] }: Props) {
                     ${imgScaleToggle === i? 'scale-[130%]' : 'scale-[100%]'}  
                   `}
                   src={getImgUrl(product.images)?.main}
-                  alt={product.name}
+                  alt={product.name[lang]}
                   loading="lazy"
                   data-product-id={product.id}
                   ref={ (el: any) => {if (mainImgRefs.current) {mainImgRefs.current[i] = el}} }
@@ -290,7 +278,7 @@ export default function AdvertList ({ products = [] }: Props) {
                         text-xs md:text-sm font-bold text-heading-invert bg-primary bg-clip-text outlined-text drop-shadow-mg
                       "
                     >
-                      NEW
+                      {isEn ? 'NEW' : 'جديد'}
                     </span>
                   </div>  
                 }           
@@ -313,7 +301,7 @@ export default function AdvertList ({ products = [] }: Props) {
                         drop-shadow-mg
                       "
                     >
-                      SALE
+                      {isEn ? 'SALE' : 'تخفيض'}
                     </span>
                   </div>
                 }
@@ -329,7 +317,7 @@ export default function AdvertList ({ products = [] }: Props) {
                 data-index={i}
                 data-type="heart_button_is_clicked"
                 data-product-id={product.id}
-                data-product-name={product.name}
+                data-product-name={product.name[lang]}
                 onClick={handleClick}
               >
                 <LineMdHeart
@@ -426,9 +414,9 @@ export default function AdvertList ({ products = [] }: Props) {
             </div>
             <Link
               className="text-heading text-base mb-auto"
-              href={`/shop/${product.id}/${strSpaceToHyphen(product.name)}`}
+              href={`/shop/${product.id}/${(product.slug)}`}
             >
-              {product.name}
+              {product.name[lang]}
             </Link>
             <PriceTag 
               price={product.price} 
