@@ -8,7 +8,7 @@ import UnderlineStyle from "@/components/UnderlineStyle";
 import ArrowUp from "@/components/svgs/ArrowUp";
 
 // STORES
-import { useLayoutRefStore, useNavbarStore } from '@/stores/index';
+import { useLayoutRefStore, useNavbarStore, useLanguageStore } from '@/stores/index';
 
 // JSON
 import categories from '@/json/categories.json';
@@ -16,6 +16,8 @@ import subCategories from '@/json/subCategories.json';
 
 export default function SubCategoryList () {
 
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
   const layoutRef = useLayoutRefStore((state: any) => state.layoutRef);
   const setToggle = useNavbarStore(state => state.setToggle);
   const categoryToggle = useNavbarStore(state => state.categoryToggle);
@@ -40,6 +42,7 @@ export default function SubCategoryList () {
   // DEBUG
   // console.log('selectedCategory: ', selectedCategory);
   // console.log('subCategoreskeys: ', subCategories.forEach(itm => console.log(itm.key)));
+
   return (
     <div
       className="flex flex-col shrink-0 w-full p-4 gap-8"
@@ -98,7 +101,7 @@ export default function SubCategoryList () {
               <span
                 className="group relative"
               >
-                SEE ALL
+                {isEn ? 'SEE ALL' : 'عرض الكل'}
                 <UnderlineStyle 
                   style={{backgroundColor: 'var(--content-color)'}}
                 />

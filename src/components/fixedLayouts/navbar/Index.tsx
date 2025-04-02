@@ -2,22 +2,15 @@
 import { useState, useEffect, useRef } from "react";
 
 // COMPONENTS
-import DisplayImg from "@/components/DisplayImg";
 import CategoryList from "@/components/fixedLayouts/navbar/CategoryList";
 import SubCategoryList from "@/components/fixedLayouts/navbar/SubCategoryList";
-import SolarCart4Outline from "@/components/svgs/SolarCart4Outline";
 
 // STORES
-import { useNavbarStore } from '@/stores/index';
+import { useNavbarStore, useLanguageStore } from '@/stores/index';
 
 // SVG
 import ArrowUp from "@/components/svgs/ArrowUp";
-import EpArrowLeft from "@/components/svgs/EpArrowLeft";
-import IcOutlineClear from '@/components/svgs/IcOutlineClear';
-import IcOutlineCreate from "@/components/svgs/IcOutlineCreate";
-import MeteoconsStarFill from "@/components/svgs/MeteoconsStarFill";
 import LineMdMenuToCloseAltTransition from "@/components/svgs/LineMdMenuToCloseAltTransition";
-import FluentArrowRight12Filled from "@/components/svgs/FluentArrowRight12Filled";
 
 // JSON
 import categories from '@/json/categories.json';
@@ -34,6 +27,8 @@ import categories from '@/json/categories.json';
 
 export default function Navbar () {
 
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
   const toggle = useNavbarStore((status:any) => status.toggle);
   const setToggle = useNavbarStore((status:any) => status.setToggle);
   const categoryToggle = useNavbarStore((status:any) => status.categoryToggle);
@@ -84,7 +79,6 @@ export default function Navbar () {
         console.error('Unknown name: ', name);
     }
   }
-  return(<div>his</div>)
 
   return (
     <div
@@ -126,10 +120,16 @@ export default function Navbar () {
           "
         >
           <ArrowUp 
-            className="w-8 h-8 text-between rounded-full border-solid border-body-light border-[1px] p-1"
+          className={`
+            ${isEn ? 'order-1' : 'order-2'}
+            w-8 h-8 text-between rounded-full
+            border-solid border-body-light border-[1px] p-1
+          `}
           />
-          <h2>
-            CLOSE
+          <h2
+            className={`${isEn ? 'order-2' : 'order-1'}`}
+          >
+            {isEn ? 'CLOSE' : 'الغاء'}
           </h2>
         </div>
         <hr className="border-inbetween"/>

@@ -168,9 +168,17 @@ export default function Cart () {
           "
         >
           <ArrowUp 
-            className="w-8 h-8 text-between rounded-full border-solid border-body-light border-[1px] p-1"
+            className={`
+              ${isEn ? 'order-1' : 'order-2'}
+              w-8 h-8 text-between rounded-full 
+              border-solid border-body-light border-[1px] p-1
+            `}
           />
-          <h2>
+          <h2
+            className={`
+              ${isEn ? 'order-2' : 'order-1'}  
+            `}
+          >
             {isEn ? 'CLOSE' : 'الغاء'}
           </h2>
         </div>
@@ -185,15 +193,15 @@ export default function Cart () {
         <h2
           className="text-heading text-xl font-base"
         >
-          <span className="text-content text-3xl font-bold">I</span>
-          t looks like your Cart is Empty
+          <span className="text-content text-3xl font-bold">{isEn ? 'I' : 'ي'}</span>
+          {isEn ? 't looks like your Cart is Empty' : 'بدو أن عربة التسوق الخاصة بك فارغة'}
         </h2>
         <BtnA 
           className="shrink-0 bg-primary text-heading-invert font-bold py-2 px-4 rounded-md"
           data-type="close_button_is_clicked"
           onClick={handleClick}
         >
-          Close Cart
+          {isEn ? 'Close Cart' : 'رجوع'}
         </BtnA>
       </div>
     </div>
@@ -235,9 +243,17 @@ export default function Cart () {
           "
         >
           <ArrowUp 
-            className="w-8 h-8 text-between rounded-full border-solid border-body-light border-[1px] p-1"
+            className={`
+              ${isEn ? 'order-1' : 'order-2'}
+              w-8 h-8 between rounded-full 
+              border-solid border-body-light border-[1px] p-1
+            `}
           />
-          <h2>
+          <h2 
+            className={`
+              ${isEn ? 'order-2' : 'order-1'}
+            `}
+          >
             {isEn ? 'CLOSE' : 'الغاء'}
           </h2>
         </div>
@@ -298,7 +314,7 @@ export default function Cart () {
                 </div>
                   <div className="flex gap-2 items-center w-full">
                     <span className="text-body">
-                      Price: 
+                      {isEn ? 'Price:' : 'السعر'} 
                     </span>
                       {/* {calculatePriceAfterDiscount({ 
                           price: getProduct(products, product.id).price, 
@@ -317,7 +333,7 @@ export default function Cart () {
                     htmlFor={`cartQuantity_${i}`}
                   >
                     <span className="text-body">
-                      Quanitity:
+                      {isEn ? 'Quanitity' : 'الكميه'}:
                     </span>
                     <div
                       className="relative"
@@ -426,7 +442,7 @@ export default function Cart () {
           className="flex flex-col items-center gap-4 p-4"
         >
           <div className="flex flex-row justify-between w-full font-bold text-lg">
-            <h3 className="">Total Price: </h3>
+            <h3 className="">{isEn ? 'Total Price: ': 'مجمل السعر: '}</h3>
             <h3 className="">16000 SYP</h3>
           </div>
           <BtnA
@@ -434,7 +450,7 @@ export default function Cart () {
             data-type="navigate_to_checkout"
             onClick={handleClick}
           >
-            Head to Checkout
+            {isEn ? 'Head to Checkout' : 'توجه الى الدفع'}
           </BtnA>
         </section>
       </section>
