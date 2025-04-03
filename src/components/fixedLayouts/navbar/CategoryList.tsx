@@ -46,7 +46,7 @@ export default function CategoryList () {
           role="button"
           key={i}
           data-type="category_button_is_clicked"
-          data-key={itm.type}
+          data-key={itm.slug}
           onClick={handleClick}
         >
           <img
@@ -85,9 +85,11 @@ export default function CategoryList () {
                 "
               />
               <FluentArrowRight12Filled
-                className="
-                  absolute top-[100%] left-[calc(100%-6px)] translate-y-[-50%] text-heading-invert w-8 h-8
-                "
+                className={`
+                  absolute top-[100%] translate-y-[-50%] 
+                  text-heading-invert w-8 h-8
+                  ${isEn ? 'left-[calc(100%-6px)]' : 'right-[calc(100%-6px)] rotate-180'}
+                `}
               />
               <div
                 className="

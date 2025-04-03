@@ -3,7 +3,7 @@ import Image from 'next/image';
 import PriceTag from '@/components/PriceTag'
 
 // STORES
-import { useCartStore } from "@/stores/index"
+import { useCartStore, useLanguageStore } from "@/stores/index"
 
 // JSON
 import products from '@/json/products.json';
@@ -33,6 +33,8 @@ export default function OrderSummary ({ hideProductsSection = false, hideTotalSe
   
   // const cart = [1, 2, 3, 4, 5, 6];
 
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
   const cart = useCartStore(state => state.cart)
 
   const pricesArray = () => 
@@ -63,12 +65,12 @@ export default function OrderSummary ({ hideProductsSection = false, hideTotalSe
           <span
             className="lg:z-[10]"
           >
-            PRODUCT
+            {isEn ? 'PRODUCT' : 'الغرض'}
           </span>
           <span
             className="lg:z-[10]"
           >
-            PRICE
+            {isEn ? 'PRICE' : 'السعر'}
           </span>
         </div>
         
@@ -117,7 +119,7 @@ export default function OrderSummary ({ hideProductsSection = false, hideTotalSe
                   className="flex justify-between"
                 >
                   <h3 className="text-base md:text-lg text-heading">
-                    {getProduct(products, product.id)?.name}
+                    {getProduct(products, product.id)?.name[lang]}
                   </h3>
                   <h3
                     className="text-base md:text-lg text-content font-bold"
@@ -139,7 +141,7 @@ export default function OrderSummary ({ hideProductsSection = false, hideTotalSe
                 </div>
                 <div className="flex gap-2 items-center text-heading">
                   <span className="text-sm md:text-base text-body">
-                    Price:
+                    {isEn ? 'Price:' : 'السعر:'}
                   </span>
                     <PriceTag 
                         className="md:hidden whitespace-nowrap" 
@@ -160,7 +162,7 @@ export default function OrderSummary ({ hideProductsSection = false, hideTotalSe
                 </div>
                 <div className="flex gap-2 items-center text-heading">
                   <span className="text-sm md:text-base text-body">
-                    Quantity:
+                    {isEn ? 'Quantity:' : 'الكميه'}
                   </span>
                   <span className="text-sm md:text-base font-bold">
                     {product.quantity}
@@ -179,7 +181,7 @@ export default function OrderSummary ({ hideProductsSection = false, hideTotalSe
           className="flex justify-between text-base"
         >
           <span className="text-body">
-            Sub Total
+            {isEn ? 'Sub Total' : 'المجموع الفرعي'}
           </span>
           <span className="text-heading">
             {calculateTotalPrice(pricesArray())} SYP
@@ -190,7 +192,7 @@ export default function OrderSummary ({ hideProductsSection = false, hideTotalSe
           className="flex justify-between text-base"
         >
           <span className="text-body">
-            Shipping fee
+            {isEn ? 'Shipping fee' : 'رسوم الشحن'}
           </span>
           <span className="text-heading">
             200 SYP
@@ -201,7 +203,7 @@ export default function OrderSummary ({ hideProductsSection = false, hideTotalSe
           className="flex justify-between text-lg font-bold "
         >
           <span className="text-body">
-            TOTAL
+            {isEn ? 'TOTAL' : 'المجموع'}
           </span>
           <span className="text-heading">
             500 SYP

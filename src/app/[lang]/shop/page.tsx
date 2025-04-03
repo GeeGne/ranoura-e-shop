@@ -10,18 +10,20 @@ import FilterTile from '@/components/categoryPage/FilterTile';
 import BreadCrumb from '@/components/BreadCrumb';
 
 // STORES
-import { useTabNameStore } from '@/stores/index';
+import { useTabNameStore, useLanguageStore } from '@/stores/index';
 
 // JSON
 import products from "@/json/products.json";
 
 export default function page () {
 
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
   const setTabName = useTabNameStore((state: any) => state.setTabName);
 
   const slugNameAndLinkArray = [
     {
-      name: "All Clothes",
+      name: isEn ? "All Clothes" : "كل الملابس",
       href: "/shop"
     }
   ];

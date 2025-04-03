@@ -12,15 +12,17 @@ import BreadCrumb from '@/components/BreadCrumb';
 import SignupForm from '@/app/[lang]/signup/SignupForm';
 
 // STORES
-import { useTabNameStore } from '@/stores/index';
+import { useTabNameStore, useLanguageStore } from '@/stores/index';
 
 export default function page () {
   
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
   const setTabName = useTabNameStore((state: any) => state.setTabName);
 
   const slugNameAndLinkArray = [
     {
-      name: "Checkout",
+      name: isEn ? "Checkout" : "الدفع",
       href: "/checkout"
     } 
   ];
@@ -28,7 +30,6 @@ export default function page () {
   useEffect(() => {
     setTabName('checkout');
   }, []);
-
   return (
     <div
       className="

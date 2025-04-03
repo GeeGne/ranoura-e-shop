@@ -59,10 +59,10 @@ export default function page () {
 
   const slugNameAndLinkArray = [
     {
-      name: "All Clothes",
+      name: isEn ? "All Clothes" : "كل الملابس",
       href: "/shop"
     },{
-      name: isEn ? product?.name.ar : product?.name.ar,
+      name: product?.name[isEn ? 'en': 'ar'],
       href: `/shop/${product?.id}/${product?.slug}`
     } 
   ];
@@ -198,12 +198,12 @@ export default function page () {
         <h2
           className="text-lg font-bold text-heading"
         >
-          {product?.name[(isEn ? 'ar' : 'en')]}
+          {product?.name[isEn ? 'en' : 'ar']}
         </h2>
         <h3
           className="text-md text-body"
         >
-          {product?.description[(isEn ? 'ar' : 'en')]}
+          {product?.description[(isEn ? 'en' : 'ar')]}
         </h3>
         <PriceTag price={product?.price} discount={product?.discount_percent}/>
         <ProductSize sizes={product?.sizes} />
@@ -239,10 +239,11 @@ export default function page () {
           "
         >
           <BtnA
-            className="
+            className={`
               order-2 flex-1 flex justify-center items-center gap-2 font-bold text-base text-heading-invert 
-              cool-bg-grad-m py-2 rounded-r-lg 
-            "
+              cool-bg-grad-m py-2
+              ${isEn ? 'rounded-r-lg' : 'rounded-l-lg'}
+            `}
             data-type="add_to_bag_button_is_clicked"
             data-product-name={product?.name[(isEn ? 'ar' : 'en')]}
             onClick={handleClick}
@@ -259,11 +260,12 @@ export default function page () {
             "
           >
             <input 
-              className="
-                peer w-16 bg-transparent rounded-l-lg text-left
+              className={`
+                peer w-16 bg-transparent text-left
                 text-heading text-md font-bold px-4 focus:outline-none
                 border-solid border-primary border-[2px]
-              "
+                ${isEn ? 'rounded-l-lg' : 'rounded-r-lg'}
+              `}
               name="quantity"
               id="quantity"
               type="text"
@@ -277,13 +279,13 @@ export default function page () {
               "
             />
             <ul
-              className="
+              className={`
                 absolute top-full left-0 
                 w-full text-body text-md rounded-md bg-background drop-shadow-lg
                 origin-top scale-y-[0%] peer-focus:scale-y-[100%]
                 invisible peer-focus:visible opacity-0 peer-focus:opacity-100
                 transition-all delay-100 duration-200 ease-in-out
-              "
+              `}
             >
               {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(num =>
                 <li

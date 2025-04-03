@@ -6,6 +6,9 @@ import LineMdHomeTwotone from '@/components/svgs/LineMdHomeTwotone';
 import IconoirHomeAltSlim from '@/components/svgs/IconoirHomeAltSlim';
 import LineMdChevronSmallRight from '@/components/svgs/LineMdChevronSmallRight';
 
+// STORES
+import { useLanguageStore } from '@/stores/index';
+
 type Props = {
   slugNameAndLinkArray?: any[];
   className?: string;
@@ -13,6 +16,9 @@ type Props = {
 
 export default function BreadCrumb ({ slugNameAndLinkArray, className, ...props }: Props) {
   
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
+
   const scrollToTop = () => 
     document.querySelector('.app-layout')
     ?.scrollTo({ top:0, left:0, behavior: 'smooth'});
@@ -36,7 +42,7 @@ export default function BreadCrumb ({ slugNameAndLinkArray, className, ...props 
           />
         </Link>
         <LineMdChevronSmallRight 
-          className="mx-1"
+          className={`${isEn ? 'rotate-0' : 'rotate-180'} mx-1`}
         />
       </li>
       {slugNameAndLinkArray?.map((itm, i) => 
@@ -58,7 +64,7 @@ export default function BreadCrumb ({ slugNameAndLinkArray, className, ...props 
           </Link>
           {slugNameAndLinkArray.length - 1 === i
             ||  <LineMdChevronSmallRight 
-                  className="mx-1"
+                  className={`${isEn ? 'rotate-0' : 'rotate-180'} mx-1`}
                 />
           }
         </li>

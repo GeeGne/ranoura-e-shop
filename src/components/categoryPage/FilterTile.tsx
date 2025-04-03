@@ -4,7 +4,7 @@ import EntypoPriceTag from '@/components/svgs/EntypoPriceTag';
 import LineiconsZeroSize from '@/components/svgs/LineiconsZeroSize';
 
 // STORES
-import { useFilterWindowStore } from '@/stores/index';
+import { useFilterWindowStore, useLanguageStore } from '@/stores/index';
 
 type Props = {
   className?: string;
@@ -12,6 +12,8 @@ type Props = {
 
 export default function FilterTile ({ className = '' }: Props) {
   
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
   const setToggle = useFilterWindowStore(state => state.setToggle);
   const selectedCategories = useFilterWindowStore(state => state.selectedCategories);
   const setSelectedCategories = useFilterWindowStore(state => state.setSelectedCategories);
@@ -38,7 +40,6 @@ export default function FilterTile ({ className = '' }: Props) {
 
   const removeCategory = (array: any[], key: any) =>  array.filter(itm => itm.key !== key);
 
-
   return (
     <section
       className={`
@@ -58,7 +59,7 @@ export default function FilterTile ({ className = '' }: Props) {
           <span
             className="underline"
           >
-            Sort
+            {isEn ? 'Sort' : 'ترتيب'}
           </span>
           <LineMdFilter 
             className="text-body w-4 h-4 hover:text-heading"
@@ -73,14 +74,14 @@ export default function FilterTile ({ className = '' }: Props) {
           <span
             className="hover:text-heading underline"
           >
-            Colors
+            {isEn ? 'Colors' : 'الوان'}
           </span>
           <div
             className="flex flex-row"
           >
             <div className="w-4 h-4 bg-inbetween rounded-full z-[1] opacity-50"/>
-            <div className="w-4 h-4 bg-secondary ml-[-8px] rounded-full z-[2] opacity-50"/>
-            <div className="w-4 h-4 bg-primary ml-[-8px] rounded-full z-[3] opacity-100"/>
+            <div className={`w-4 h-4 bg-secondary ${isEn ? 'ml-[-8px]' : 'mr-[-8px]'} rounded-full z-[2] opacity-50`}/>
+            <div className={`w-4 h-4 bg-primary ${isEn ? 'ml-[-8px]' : 'mr-[-8px]'} rounded-full z-[3] opacity-100`}/>
           </div>
         </li>
         <li
@@ -92,7 +93,7 @@ export default function FilterTile ({ className = '' }: Props) {
           <span
             className="hover:text-heading underline"
           >
-            Price
+            {isEn ? 'Price' : 'السعر'}
           </span>
           <EntypoPriceTag 
             className="text-body w-4 h-4 hover:text-heading"
@@ -107,7 +108,7 @@ export default function FilterTile ({ className = '' }: Props) {
           <span
             className="hover:text-heading underline"
           >
-            Size
+            {isEn ? 'Size' : 'المقاس'}
           </span>
           <LineiconsZeroSize 
             className="text-body w-4 h-4 hover:text-heading"

@@ -6,7 +6,7 @@ import BtnA from '@/components/BtnA';
 import EpArrowLeft from '@/components/svgs/EpArrowLeft';
 
 // STORE
-import { useAllProductImagesStore } from '@/stores/index';
+import { useAllProductImagesStore, useLanguageStore } from '@/stores/index';
 
 // ASSETS
 const ramdanBanner = "/assets/img/ramadan-nights.webp";
@@ -23,6 +23,8 @@ type Props = {
 
 export default function ProductDisplay ({ className, imagesArray = [], ...props }: Props) {
   
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
   const setToggle = useAllProductImagesStore(state => state.setToggle);
   const setImages = useAllProductImagesStore(state => state.setImages);
   const [ selectedIndex, setSelectedIndex ] = useState<number>(0);
@@ -409,10 +411,10 @@ export default function ProductDisplay ({ className, imagesArray = [], ...props 
               "
             >
               <span>
-                +{totalLenght - 5} more
+              {!isEn || '+'}{totalLenght - 5}{isEn || '+'} {isEn ? 'more': 'اخر'}
               </span>
               <span className="font-bold underline">
-                SEE ALL
+                {isEn ? 'SEE ALL' : 'عرض الكل'}
               </span>
             </div>  
           </button>

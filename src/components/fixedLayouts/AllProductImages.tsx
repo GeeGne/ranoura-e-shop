@@ -7,10 +7,12 @@ import ArrowUp from "@/components/svgs/ArrowUp";
 import LineMdArrowSmallUp from "@/components/svgs/LineMdArrowSmallUp";
 
 // STORES
-import { useAllProductImagesStore } from '@/stores/index';
+import { useAllProductImagesStore, useLanguageStore } from '@/stores/index';
 
 export default function AllProductImages () {
 
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
   const toggle = useAllProductImagesStore(state => state.toggle);
   const setToggle = useAllProductImagesStore(state => state.setToggle);
   const imagesArray = useAllProductImagesStore(state => state.images);
@@ -75,10 +77,18 @@ export default function AllProductImages () {
             data-type="close_button_is_clicked"
           >
             <ArrowUp 
-              className="w-6 h-6 text-between rotate-[180deg] rounded-full border-solid border-body-light border-[1px] p-1"
+              className={`
+                w-8 h-8 text-between rotate-[180deg] rounded-full 
+                border-solid border-body-light border-[1px] p-1
+                ${isEn ? 'order-1' : 'order-2'}
+              `}
             />
-            <h2>
-              CLOSE
+            <h2
+              className={`
+                ${isEn ? 'order-2' : 'order-1'}
+              `}
+            >
+              {isEn ? 'CLOSE' : 'الغاء'}
             </h2>
           </button>
           <hr className="border-inbetween"/>
@@ -95,7 +105,7 @@ export default function AllProductImages () {
             <li
               className="col-span-4 text-center text-5xl font-light text-body"
             >
-              Pick an Image
+              {isEn ? 'Pick an Image' : 'اختر صوره'}
             </li>
             {imagesArray.map((url, i) =>
               <li

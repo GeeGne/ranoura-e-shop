@@ -33,13 +33,13 @@ export default function page () {
 
   const setTabName = useTabNameStore((state: any) => state.setTabName);
 
-  const getName = (array: any[], slug?: string) => array?.find((itm: any) => itm.slug === slug)?.name.en;
+  const getName = (array: any[], slug?: string) => array?.find((itm: any) => itm.slug === slug)?.name[lang];
 
   const slugNameAndLinkArray = () => {
     
     if (isCategory) return [
       {
-        name: isEn ? "All Clothes" : "جميع الملابس",
+        name: isEn ? "All Clothes" : "كل الملابس",
         href: "/shop"
       },{
         name: `${getName(categories, categoryAndSubSlug[0])}`,

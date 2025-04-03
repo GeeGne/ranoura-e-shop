@@ -13,55 +13,17 @@ import LineMdArrowsVerticalAlt from '@/components/svgs/LineMdArrowsVerticalAlt';
 // JSON
 import deliverTo from '@/json/deliverTo.json';
 
+// STORES
+import { useLanguageStore } from "@/stores/index";
+
 type Props = {
   className?: string;
 } & React.ComponentPropsWithRef<"form">;
 
 export default function CheckoutForm ({ className, ...props }: Props) {
 
-  const orderDetails = {
-    id: 1,
-    user_id: 2,
-    date: "2025-02-22T10:45:00Z",
-    status: "pending",
-    products_total: 133,
-    shipping_fee: 10,
-    total: 144,
-    shippingAdress: {
-      city: "Damascus",
-      address_details: "Fourth aparatmanet Near MC Resturant",
-      second_address: "Fourth aparatmanet Near MC Resturant",
-      notes: "Second address between 5 am and 10 am"
-    },
-    products: [
-      {
-        id: 2,
-        image: "/assets/img/cloth-c-white.jpg",
-        quantity: 2,
-        size: "M",
-        color: "black",
-        price: 30,
-        total: 465
-      },{
-        id: 1,
-        image: "/assets/img/cloth-b-blue.jpg",
-        quantity: 2,
-        size: "S",
-        color: "black",
-        price: 50,
-        total: 657
-      },{
-        id: 3,
-        image: "/assets/img/cloth-c-black.jpg",
-        quantity: 2,
-        size: "M",
-        color: "black",
-        price: 70,
-        total: 65
-      }
-    ],
-    created_at: "2025-02-26T16:45:00Z"
-  }
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
 
   const [ isAddressDetailsFocus, setIsAddressDetailsFocus ] = useState<boolean>(false);
   const [ isSecondAddressFocus, setIsSecondAddressFocus ] = useState<boolean>(false);
@@ -175,8 +137,11 @@ export default function CheckoutForm ({ className, ...props }: Props) {
       >
         <Title 
           className="pb-4" 
-          text="Deliver To" 
-          info="Enter the address where you’d like your order to be delivered. Double-check the details to ensure everything is accurate and up-to-date for a smooth delivery experience!" 
+          text={isEn ? "Deliver To" : "توصيل الى"} 
+          info={isEn 
+            ? "Enter the address where you’d like your order to be delivered. Double-check the details to ensure everything is accurate and up-to-date for a smooth delivery experience!" 
+            : "أدخل العنوان الذي تريد تسليم طلبك إليه. تحقق مرة أخرى من التفاصيل للتأكد من أن كل شيء دقيق ومحدث لتجربة تسليم سلسة!" 
+          }
         />
         <label
           className="relative"
@@ -234,7 +199,7 @@ export default function CheckoutForm ({ className, ...props }: Props) {
           </ul>
         </label>
         <div className="flex justify-between">
-          <h4 className="text-body">Shipping Fee:</h4>
+          <h4 className="text-body">{isEn ? 'Shipping Fee:' : 'رسوم الشحن'}</h4>
           <span className="text-heading font-bold">{selectedDeliverToCity.shippingFee}</span>
         </div>
       </section>
@@ -243,8 +208,12 @@ export default function CheckoutForm ({ className, ...props }: Props) {
       >
         <Title 
           className="pb-4" 
-          text="Contact Phone Number" 
-          info="Please share a phone number where we can contact you about your order. This ensures we can reach you quickly for delivery updates or questions!" 
+          text={isEn ? "Contact Phone Number" : "رقم هاتف الاتصال"}
+          info={
+            isEn 
+            ? "Please share a phone number where we can contact you about your order. This ensures we can reach you quickly for delivery updates or questions!" 
+            : `يرجى مشاركة رقم هاتف يمكننا من خلاله التواصل معك بشأن طلبك. هذا يضمن أن نتمكن من الوصول إليك بسرعة لتحديثات التسليم أو الأسئلة!`
+          }
         />
         <label
           className="group relative flex items-center gap-4 group cursor-pointer"
@@ -280,7 +249,7 @@ export default function CheckoutForm ({ className, ...props }: Props) {
               transition-all duration-200 ease-in-out
             `}
           >
-            Add Your personal account Number
+            {isEn ? 'Add Your personal account Number' : 'أضف رقم حسابك الشخصي'}
           </span>
         </label>
         <label
@@ -316,7 +285,7 @@ export default function CheckoutForm ({ className, ...props }: Props) {
               transition-all duration-200 ease-in-out
             `}
           >
-            Add another Phone Number
+            {isEn ? 'Add another Phone Number' : 'أضف رقم هاتف آخر'}
           </span>
         </label>
       </section>
@@ -325,8 +294,11 @@ export default function CheckoutForm ({ className, ...props }: Props) {
       >
         <Title 
           className="pb-4" 
-          text="Shipping Address" 
-          info="Where should we send your order? Please provide the full address, including any necessary details like apartment numbers or landmarks, to ensure your package arrives safely and on time."
+          text={isEn ? "Shipping Address" : "عنوان الشحن"} 
+          info={isEn 
+            ? "Where should we send your order? Please provide the full address, including any necessary details like apartment numbers or landmarks, to ensure your package arrives safely and on time."
+            : "إلى أين يجب أن نرسل طلبك؟ يرجى تقديم العنوان الكامل، بما في ذلك أي تفاصيل ضرورية مثل أرقام الشقق أو المعالم، لضمان وصول طردك بأمان وفي الوقت المحدد."
+          }
         />
         <label
         className="relative flex w-full"
@@ -340,7 +312,7 @@ export default function CheckoutForm ({ className, ...props }: Props) {
             ${isAddressDetailsFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
           `}
         >
-          Address Details
+          {isEn ? 'Address Details' : 'تفاصيل العنوان'}
         </span>
         <input
           className={`
@@ -369,7 +341,7 @@ export default function CheckoutForm ({ className, ...props }: Props) {
             ${isSecondAddressFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
           `}
         >
-          Second Address (optional)
+          {isEn ? 'Second Address (optional)' : 'العنوان الثاني (اختياري)'}
         </span>
         <input
           className={`
@@ -398,7 +370,7 @@ export default function CheckoutForm ({ className, ...props }: Props) {
               ${isNotesFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
             `}
           >
-            Notes (optional)
+            {isEn ? 'Notes (optional)' : 'ملاحظات (اختياري)'}
           </span>
           <input
             className={`
@@ -472,7 +444,7 @@ export default function CheckoutForm ({ className, ...props }: Props) {
         <BtnA
           className="cool-bg-grad-m text-heading-invert font-bold rounded-lg p-2"
         >
-          PLACE ORDER
+          {isEn ? 'PLACE ORDER' : 'تقديم الطلب'}
         </BtnA>
       </section>
     </form>

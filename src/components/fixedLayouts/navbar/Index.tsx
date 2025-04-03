@@ -138,7 +138,11 @@ export default function Navbar () {
         className={`
           flex w-full
           transition-all ease-in-out duration-400
-          ${categoryToggle ? 'translate-x-[-100%]' : 'translate-x-[0%]'}
+          ${categoryToggle 
+            ? isEn
+            ? 'translate-x-[-100%]' : 'translate-x-[100%]' 
+            : 'translate-x-[0%]'
+          }
         `}
       >
         <CategoryList />

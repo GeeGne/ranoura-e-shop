@@ -359,9 +359,10 @@ export default function AdvertList ({ products = [] }: Props) {
                 <LineMdArrowsDiagonalRotated 
                   className={`
                     order-2 w-8 h-8 transform-style-3d transform group-hover:transform-style-3d 
-                    cursor-pointer rounded-full p-1 ml-auto
+                    cursor-pointer rounded-full p-1
                     transition-all ease-in-out duration-200
                     ${imgScaleToggle === i ? 'text-heading-invert bg-heading' : 'text-body hover:text-heading'}
+                    ${isEn ? 'ml-auto' : 'mr-auto'}
                   `}
                   role="button"
                   data-type="scale_button_is_clicked"

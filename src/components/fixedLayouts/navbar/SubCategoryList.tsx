@@ -14,6 +14,9 @@ import { useLayoutRefStore, useNavbarStore, useLanguageStore } from '@/stores/in
 import categories from '@/json/categories.json';
 import subCategories from '@/json/subCategories.json';
 
+// UTILS
+import getCategory from '@/utils/getCategory';
+
 export default function SubCategoryList () {
 
   const lang = useLanguageStore(state => state.lang);
@@ -51,7 +54,10 @@ export default function SubCategoryList () {
         className="relative flex flex-row items-center w-full"
       >
         <ArrowUp 
-          className="w-4 h-4 rotate-[-90deg] text-body cursor-pointer"
+          className={`
+            w-4 h-4 text-body cursor-pointer
+            ${isEn ? 'rotate-[270deg]' : 'rotate-[90deg]'}
+          `}
           role="button"
           onClick={() => setCategoryToggle(false)}
         />
@@ -61,7 +67,7 @@ export default function SubCategoryList () {
             text-body text-sm
           "
         >
-          {selectedCategory.toUpperCase()}
+          {getCategory(categories, selectedCategory)?.name[lang].toUpperCase()}
         </span>
       </div>
       <ul
@@ -82,7 +88,7 @@ export default function SubCategoryList () {
                 <span
                   className="group relative"
                 >
-                  {sub.name.toUpperCase()}
+                  {sub.name[lang].toUpperCase()}
                   <UnderlineStyle 
                     style={{backgroundColor: 'var(--font-heading-color)'}}
                   />
