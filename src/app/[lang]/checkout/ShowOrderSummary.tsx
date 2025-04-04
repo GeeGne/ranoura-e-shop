@@ -100,11 +100,11 @@ export default function ShowOrderSummary({ className, ...props }: Props) {
           {calculateTotalPrice(pricesArray())} SYP
         </span>
       </button>
-      <section className="hidden lg:flex lg:items-center">
+      <section className="hidden lg:flex lg:items-center lg:justify-between">
         <h2 className="text-5xl text-content font-light">
           {isEn ? 'ORDER SUMMARY' : 'ملخص الطلب'}
         </h2>
-        <span className="text-lg text-heading font-bold ml-auto">
+        <span className="text-lg text-heading font-bold">
           {calculateTotalPrice(pricesArray())} SYP
         </span>
       </section>

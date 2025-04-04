@@ -44,7 +44,7 @@ export default function SubCategoryListLg () {
 
   // DEBUG
   // console.log('selectedCategory', selectedCategory);
-  console.log('getCategory', getCategory());
+  // console.log('getCategory', getCategory());
   
   return (
     <>
@@ -72,7 +72,7 @@ export default function SubCategoryListLg () {
           <span
             className="text-body-extra-light text-xs"
           >
-            { getCategory()?.name[(isEn ? 'ar' : 'en')] }
+            { getCategory()?.name[(isEn ? 'en' : 'ar')] }
           </span>
           <ul
             className="flex flex-col gap-2"
@@ -112,7 +112,7 @@ export default function SubCategoryListLg () {
                 <span
                   className="group relative text-content"
                 >
-                  SEE ALL
+                  {isEn ? 'SEE ALL' : 'عرض الكل'}
                   <UnderlineStyle 
                     style={{backgroundColor: 'var(--content-color)'}}
                   />

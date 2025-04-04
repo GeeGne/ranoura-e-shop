@@ -12,7 +12,8 @@ import OrderConfirmed from "@/components/svgs/OrderConfirmed";
 
 // STORES
 import { 
-  useLayoutRefStore, useAlertMessageStore, useCartStore
+  useLayoutRefStore, useAlertMessageStore, 
+  useCartStore, useLanguageStore
 } from '@/stores/index';
 
 // JSON
@@ -24,6 +25,8 @@ import getColor from '@/utils/getColor';
 
 export default function AlertMessage () {
 
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
   const layoutRef = useLayoutRefStore((state: any) => state.layoutRef);
   const setCartToggle = useCartStore(state => state.setToggle);
   const alertToggle = useAlertMessageStore(state => state.toggle);
@@ -123,7 +126,7 @@ export default function AlertMessage () {
             --alert-messge-content-ani text-base lg:text-xl font-bold text-green-500
           `}
         >
-          All Set!
+          {isEn ? 'All Set!' : 'كل شيء جاهز!'}
         </span>
         <span
           className="--alert-messge-content-ani text-body text-sm lg:text-base"
@@ -184,7 +187,7 @@ export default function AlertMessage () {
             --alert-messge-content-ani text-base lg:text-xl font-bold text-warning-500
           `}
         >
-          Attention Needed ✋
+          {isEn ? 'Attention Needed ✋' : 'تحتاج إلى انتباه ✋'}
         </span>
         <span
           className="--alert-messge-content-ani text-body text-sm lg:text-base"
@@ -245,7 +248,7 @@ export default function AlertMessage () {
             --alert-messge-content-ani text-base lg:text-xl font-bold text-red-500
           `}
         >
-          Something Went Wrong 🚫
+          {isEn ? 'Something Went Wrong 🚫' : 'حدث خطأ ما 🚫'}
         </span>
         <span
           className="--alert-messge-content-ani text-body text-sm lg:text-base"
@@ -309,7 +312,7 @@ export default function AlertMessage () {
               text-base lg:text-xl font-bold text-heading
             `}
           >
-            Added to Your Cart 🛒
+            {isEn ? 'Added to Your Cart 🛒' : 'تم الاضافه إلى السلة الخاصة بك 🛒'}
           </span>
           <span
             className="text-body text-sm lg:text-base"
@@ -333,7 +336,7 @@ export default function AlertMessage () {
         <span
           className="text-sm text-body font-bold"
         >
-          Size:
+          {isEn ? 'Size:' : 'المقاس:'}
         </span>
         <span
           className="text-sm text-heading font-bold"
@@ -348,7 +351,7 @@ export default function AlertMessage () {
         <span
           className="text-sm text-body font-bold"
         >
-          Color:
+          {isEn ? 'Color:' : 'اللون:'}
         </span>
         <span
           className="w-4 h-4 rounded-full drop-shadow-md"
@@ -362,7 +365,7 @@ export default function AlertMessage () {
         <span
           className="text-sm text-body font-bold"
         >
-          Quanitity:
+          {isEn ? 'Quanitity:' : 'الكميه'}
         </span>
         <span
           className="text-sm text-heading font-bold"
@@ -385,7 +388,7 @@ export default function AlertMessage () {
           data-type="open_cart"
           onClick={handleClick}
         >
-          View Cart
+          {isEn ? 'View Cart' : 'عرض السله'}
         </button>
         <Link
           className="
@@ -396,7 +399,7 @@ export default function AlertMessage () {
           data-type="navigate_to_checkout"
           onClick={handleClick}
         >
-          Head to Checkout
+          {isEn ? 'Head to Checkout' : 'الذهاب الى الدفع'}
         </Link>
       </div>
 
@@ -453,7 +456,7 @@ export default function AlertMessage () {
             --alert-messge-content-ani text-base lg:text-xl font-bold text-content-inbetween
           `}
         >
-          Item Removed from Cart 🛒
+          {isEn ? 'Item Removed from Cart 🛒' : 'تم إزالة العنصر من السلة'}
         </span>
         <span
           className="--alert-messge-content-ani text-body text-sm lg:text-base"
@@ -472,7 +475,6 @@ export default function AlertMessage () {
     </div>
   )
   
-
 /*   return (
     <div
       className="

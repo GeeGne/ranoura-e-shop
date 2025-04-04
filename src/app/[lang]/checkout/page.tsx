@@ -30,6 +30,7 @@ export default function page () {
   useEffect(() => {
     setTabName('checkout');
   }, []);
+  
   return (
     <div
       className="
@@ -43,13 +44,14 @@ export default function page () {
         slugNameAndLinkArray={slugNameAndLinkArray}     
       />
       <ShowOrderSummary 
-        className="
+        className={`
           lg:relative lg:order-3 lg:border-none
           lg:before:content-[''] lg:before:absolute 
-          lg:before:right-[calc(100%+1rem)] lg:before:top-0 
+          lg:before:top-0 
           lg:before:translate-x-[-50%] lg:before:w-[1px] lg:before:h-full
           lg:before:bg-inbetween lg:before:z-[5]
-        "
+          ${isEn ? 'lg:before:right-[calc(100%+1rem)]' : 'lg:before:left-[calc(100%+1rem)]'}
+        `}
       />
       <CheckoutForm 
         className="

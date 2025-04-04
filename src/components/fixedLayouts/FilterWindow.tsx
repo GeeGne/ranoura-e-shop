@@ -3,12 +3,15 @@ import FilterExpandWrapper from "@/components/categoryPage/FilterExpandWrapper";
 import ArrowUp from "@/components/svgs/ArrowUp";
 
 // STORES
-import { useFilterWindowStore } from '@/stores/index';
+import { useFilterWindowStore, useLanguageStore } from '@/stores/index';
 
 // JSON
 import colors from '@/json/colors.json';
 
 export default function FilterWindow () {
+
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
   const toggle = useFilterWindowStore(state => state.toggle);
   const setToggle = useFilterWindowStore(state => state.setToggle);
   const selectedCategories = useFilterWindowStore(state => state.selectedCategories);
@@ -65,10 +68,18 @@ export default function FilterWindow () {
           data-type="close_button_is_clicked"
         >
           <ArrowUp 
-            className="w-6 h-6 text-between rotate-[180deg] rounded-full border-solid border-body-light border-[1px] p-1"
+            className={`
+              w-8 h-8 text-between rotate-[180deg] rounded-full 
+              border-solid border-body-light border-[1px] p-1
+              ${isEn ? 'order-1' : 'order-2'}
+            `}
           />
-          <h2>
-            CLOSE
+          <h2
+            className={`
+              ${isEn ? 'order-2' : 'order-1'}
+            `}
+          >
+            {isEn ? 'CLOSE' : 'الغاء'}
           </h2>
         </button>
         <hr className="border-inbetween"/>
@@ -118,8 +129,8 @@ export default function FilterWindow () {
             onClick={handleClick}
           >
             {selectedCategories.length > 0 
-             ? 'Clear all filters'
-             : 'No Filters are selected'
+             ? (isEn ? 'Clear all filters' : 'امسح جميع الفلاتر')
+             : (isEn ? 'No Filters are selected' : 'لم يتم تحديد أي فلاتر')
             }
           </button>
         </section>
@@ -129,20 +140,32 @@ export default function FilterWindow () {
         className="divide-y divide-inbetween px-4 w-full max-w-[700px] mx-auto"
       >
         <FilterExpandWrapper 
-          sectionName="SORT"
+          sectionName={isEn ? "SORT" : "ترتيب"}
           sectionKey="sort"
           categoriesArray={[
-            {title: 'Price:Low To High', key: 'lth'}, 
-            {title: 'Price:High To Low', key: 'htl'}, 
+            {
+              title: isEn ? 'Price:Low To High' : 'السعر: من الأدنى إلى الأعلى'
+              , key: 'lth'
+            },{
+              title: isEn ? 'Price:High To Low' : 'السعر: من الأعلى إلى الأدنى'
+              , key: 'htl'
+            }, 
           ]}
         />
         <FilterExpandWrapper 
-          sectionName="COLORS"
+          sectionName={isEn ? "COLORS" : "الوان"}
           sectionKey="colors"
-          categoriesArray={ colors.map(({name, hex}) => ( { title: name, key:name, hex } )) }
+          categoriesArray={ 
+            colors.map(({title, name, hex}) => ({ 
+               title: title[isEn ? 'en' : 'ar'], 
+               key:name, 
+               hex 
+              } 
+            )) 
+          }
         />
         <FilterExpandWrapper 
-          sectionName="PRICE"
+          sectionName={isEn ? "PRICE" : "السعر"}
           sectionKey="price"
           categoriesArray={[
             {title: '0 - 20,000', key: '0t20'}, 
@@ -151,7 +174,7 @@ export default function FilterWindow () {
           ]}
         />
         <FilterExpandWrapper 
-          sectionName="SIZE"
+          sectionName={isEn ? "SIZE" : "المقاس"}
           sectionKey="size"
           categoriesArray={[
             {title: 'XS', key: 'xs'}, 

@@ -8,6 +8,12 @@
   src: url('/assets/fonts/Sofia_Sans/SofiaSans-VariableFont_wght.ttf') format('truetype');
 }
 
+/* Noto_Sans_Arabic */
+@font-face {
+  font-family: 'Noto_Sans_Arabic';
+  src: url('/assets/fonts/Noto_Sans_Arabic/NotoSansArabic-VariableFont_wdth,wght.ttf') format('truetype');
+}
+
 /* Lateef */
 @font-face {
   font-family: 'Lateef';

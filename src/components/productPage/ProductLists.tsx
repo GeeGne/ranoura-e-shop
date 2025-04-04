@@ -5,6 +5,9 @@ import { useState, useRef } from 'react';
 import LineMdChevronDownCircle from '@/components/svgs/LineMdChevronDownCircle';
 import LineMdStarPulsatingFilledLoop from '@/components/svgs/LineMdStarPulsatingFilledLoop';
 
+// STORES
+import { useLanguageStore } from '@/stores/index';
+
 type Props = {
   descArray?: string[];
   title?: string;
@@ -14,6 +17,8 @@ type Props = {
 export default function ProductLists ({ title = 'NO TITLE', descArray = ['Text is Empty'], toggle = false, ...props }: Props) {
   
   // const [ toggle, setToggle ] = useState<boolean>(false);
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
   const [ overflowToggle, setOverflowToggle ] = useState<boolean>(false);
   const descRef = useRef<any>(null);
   const getScrollHeight = (el: HTMLElement) => el?.scrollHeight + 16 || 0;
@@ -80,11 +85,12 @@ export default function ProductLists ({ title = 'NO TITLE', descArray = ['Text i
               {itm}            
             </span>
             <LineMdStarPulsatingFilledLoop 
-              className="
-                content-[''] absolute left-0 top-[3px] 
+              className={`
+                content-[''] absolute top-[3px] 
                 w-4 h-4 
                 transition-all duration-300 ease-in-out
-              "
+                ${isEn ? 'left-0' : 'right-0'}
+              `}
             />
           </li>
         )}

@@ -128,14 +128,13 @@ export default function page () {
                   ...product, 
                   quantity: product.quantity + Number(quantity) < 9 ? product.quantity + Number(quantity) : 9
                 }
-              return true;
             })
           );
 
           if (!isProductMatched) setCart([ ...cart, newProduct ]);
 
           setAlertType("product added");
-          setAlertMessage(`"${productName}" is Added.` || "Unknown product name");  
+          setAlertMessage(isEn ? `"${productName}" is Added.` : `اسم القطعه: "${productName}"`);  
           setProductDetails({ 
             imgURL: getProduct(products, Number(productId)).images.find((img: any) => img.color === color).main,
             size,
@@ -146,7 +145,7 @@ export default function page () {
         }
 
         setAlertType("error");
-        setAlertMessage(`Select your preferred color and size to continue`);
+        setAlertMessage(isEn ? `Select your preferred color and size to continue` : 'اختر اللون والحجم المفضلين لديك للمتابعة');
         break;
       case 'productList_is_clicked':
         setProductListsActiveIndex(val => val === Number(index) ? null : Number(index));
@@ -224,8 +223,8 @@ export default function page () {
           {product?.lists.map(({ title, descriptionLists }, i) => 
             <ProductLists
               key={i}
-              title={title}
-              descArray={descriptionLists}
+              title={title[isEn ? 'en' : 'ar']}
+              descArray={descriptionLists[isEn ? 'en' : 'ar']}
               data-type="productList_is_clicked"
               data-index={i}
               toggle={productListsActiveIndex === i ? true : false}
@@ -245,7 +244,7 @@ export default function page () {
               ${isEn ? 'rounded-r-lg' : 'rounded-l-lg'}
             `}
             data-type="add_to_bag_button_is_clicked"
-            data-product-name={product?.name[(isEn ? 'ar' : 'en')]}
+            data-product-name={product?.name[(isEn ? 'en' : 'ar')]}
             onClick={handleClick}
           >
             <FamiconsBagAddOutlineBold 
@@ -312,8 +311,8 @@ export default function page () {
         {product?.lists.map(({ title, descriptionLists }, i) => 
           <ProductLists
             key={i}
-            title={title}
-            descArray={descriptionLists}
+            title={title[isEn ? 'en' : 'ar']}
+            descArray={descriptionLists[isEn ? 'en' : 'ar']}
             data-type="productList_is_clicked"
             data-index={i}
             toggle={productListsActiveIndex === i ? true : false}

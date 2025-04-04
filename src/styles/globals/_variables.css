@@ -152,10 +152,11 @@
 }
 
 .ar {
-  --font-family: 'Zain', sans-serif;
-  --font-size-increment: 2px;
+  --font-family: 'Tajawal', sans-serif;
+  --font-size-increment: 0px;
   font-size: calc(16px + var(--font-size-increment));
-  /* --font-family: 'Tajawal', sans-serif; */
+  /* --font-family: 'Noto_Sans_Arabic', sans-serif; */
+  /* --font-family: 'Zain', sans-serif; */
   /* --font-family: 'Lateef', sans-serif; */
 }
 

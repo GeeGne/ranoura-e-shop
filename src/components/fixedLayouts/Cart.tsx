@@ -129,7 +129,7 @@ export default function Cart () {
   }
 
   // DEBUG & UI
-  // console.log('cart: ', cart);
+  console.log('cart: ', cart);
   // console.log('img main url ', );
 
   if (isCartEmpty) return (
@@ -206,7 +206,7 @@ export default function Cart () {
       </div>
     </div>
   )
-
+  
   return (
     <div
       className={`
@@ -309,7 +309,7 @@ export default function Cart () {
                     style={{backgroundColor: getColor(colors, product.color)?.hex}}
                   />
                   <span>
-                    {product.color}
+                    {getColor(colors, product.color).title[lang]}
                   </span>
                 </div>
                   <div className="flex gap-2 items-center w-full">
@@ -446,7 +446,7 @@ export default function Cart () {
             <h3 className="">16000 SYP</h3>
           </div>
           <BtnA
-            className="w-full text-base text-heading-invert py-2 px-2 bg-primary rounded-md"
+            className="w-full text-base text-heading-invert font-bold py-2 px-2 bg-primary rounded-md"
             data-type="navigate_to_checkout"
             onClick={handleClick}
           >

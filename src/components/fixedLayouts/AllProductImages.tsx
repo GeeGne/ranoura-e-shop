@@ -103,7 +103,7 @@ export default function AllProductImages () {
             className="grid grid-cols-4 gap-2"
           >
             <li
-              className="col-span-4 text-center text-5xl font-light text-body"
+              className="col-span-4 text-center text-5xl font-light text-body pb-2"
             >
               {isEn ? 'Pick an Image' : 'اختر صوره'}
             </li>

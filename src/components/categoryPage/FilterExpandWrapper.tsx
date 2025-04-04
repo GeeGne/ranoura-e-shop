@@ -10,7 +10,7 @@ import LineMdConfirmSquareToSquareTransition from '@/components/svgs/LineMdConfi
 import LineMdSquareToConfirmSquareTransition from '@/components/svgs/LineMdSquareToConfirmSquareTransition';
 
 // STORES
-import { useFilterWindowStore } from '@/stores/index';
+import { useFilterWindowStore, useLanguageStore } from '@/stores/index';
 
 type Props = {
   sectionName?: string;
@@ -31,6 +31,8 @@ export default function FilterExpandWrapper ({
   
   const [ toggle, setToggle ] = useState<boolean>(false);
 
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
   const selectedCategories = useFilterWindowStore(state => state.selectedCategories);
   const setSelectedCategories = useFilterWindowStore(state => state.setSelectedCategories);
   const clickedCategory = useFilterWindowStore(state => state.clickedCategory);
@@ -146,14 +148,16 @@ export default function FilterExpandWrapper ({
               {selectedCategories.some(val => val.key === itm.key)
                 ? <LineMdSquareToConfirmSquareTransition
                     className={`
-                      absolute top-1/2 left-[0]
+                      absolute top-1/2 
                       translate-y-[-50%] w-5 h-5 text-heading
+                      ${isEn ? 'left-0' : 'right-0'}
                     `}
                   />
                 : <LineMdConfirmSquareToSquareTransition
                     className={`
-                      absolute top-1/2 left-[0]
+                      absolute top-1/2 
                       translate-y-[-50%] w-5 h-5 text-body
+                      ${isEn ? 'left-0' : 'right-0'}
                     `}
                   />
               } 

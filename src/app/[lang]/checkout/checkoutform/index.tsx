@@ -1,5 +1,5 @@
 // HOOKS
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 // COMPONENTS
 import Title from '@/app/[lang]/checkout/checkoutform/Title';
@@ -44,6 +44,10 @@ export default function CheckoutForm ({ className, ...props }: Props) {
   const orderSummaryRef = useRef<HTMLElement>(null);
   const deliverToRef = useRef<HTMLElement | any>(null);
   const getRefTotalHeight = (ref: any) => ref.current?.scrollHeight;
+
+  useEffect(() => {
+    setSelectedDeliverToCity({city: isEn ? 'Pick Your City' : 'اختر محافظتك', shippingFee: '--'});
+  }, [lang]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -311,9 +315,9 @@ export default function CheckoutForm ({ className, ...props }: Props) {
           }
         />
         <label
-        className="relative flex w-full"
-        htmlFor="addressDetails"
-      >
+          className="relative flex w-full"
+          htmlFor="addressDetails"
+        >
         <span
           className={`
             absolute left-3 translate-y-[-50%]
@@ -340,9 +344,9 @@ export default function CheckoutForm ({ className, ...props }: Props) {
         />
       </label>
         <label
-        className="relative flex w-full"
-        htmlFor="secondAddress"
-      >
+          className="relative flex w-full"
+          htmlFor="secondAddress"
+        >
         <span
           className={`
             absolute left-3 translate-y-[-50%]
@@ -368,7 +372,7 @@ export default function CheckoutForm ({ className, ...props }: Props) {
           onBlur={handleBlur}
         />
         </label>
-          <label
+        <label
           className="relative flex w-full"
           htmlFor="notes"
         >

@@ -1,125 +1,206 @@
 [
   {
+    "title": {"en": "Red", "ar": "أحمر"},
     "name": "Red", 
     "hex": "#FF0000"
-  },{
+  },
+  {
+    "title": {"en": "Cherry", "ar": "كرزي"},
     "name": "Cherry", 
     "hex": "#D2042D"
-  },{
+  },
+  {
+    "title": {"en": "Wine", "ar": "نبيذ"},
     "name": "Wine", 
     "hex": "#722F37"
-  },{
+  },
+  {
+    "title": {"en": "Blue", "ar": "أزرق"},
     "name": "Blue", 
     "hex": "#0000FF"
-  },{
+  },
+  {
+    "title": {"en": "Navy", "ar": "كحلي"},
     "name": "Navy", 
     "hex": "#000080"
-  },{
+  },
+  {
+    "title": {"en": "Sky", "ar": "سماء"},
     "name": "Sky", 
     "hex": "#87CEEB"
-  },{
+  },
+  {
+    "title": {"en": "Sapphire", "ar": "ياقوت أزرق"},
     "name": "Sapphire", 
     "hex": "#0F52BA"
-  },{
+  },
+  {
+    "title": {"en": "Hunter", "ar": "صياد"},
     "name": "Hunter", 
     "hex": "#0e4238"
-  },{
+  },
+  {
+    "title": {"en": "Green", "ar": "أخضر"},
     "name": "Green", 
     "hex": "#008000"
-  },{
+  },
+  {
+    "title": {"en": "Emerald", "ar": "زمرد"},
     "name": "Emerald", 
     "hex": "#50C878"
-  },{
+  },
+  {
+    "title": {"en": "Mint", "ar": "نعناع"},
     "name": "Mint", 
     "hex": "#98FF98"
-  },{
+  },
+  {
+    "title": {"en": "Olive", "ar": "زيتوني"},
     "name": "Olive", 
     "hex": "#808000"
-  },{
+  },
+  {
+    "title": {"en": "Yellow", "ar": "أصفر"},
     "name": "Yellow", 
     "hex": "#FFFF00"
-  },{
+  },
+  {
+    "title": {"en": "Lemon", "ar": "ليمون"},
     "name": "Lemon", 
     "hex": "#FFFACD"
-  },{
+  },
+  {
+    "title": {"en": "Mustard", "ar": "خردل"},
     "name": "Mustard", 
     "hex": "#FFDB58"
-  },{
+  },
+  {
+    "title": {"en": "Black", "ar": "أسود"},
     "name": "Black", 
     "hex": "#000000"
-  },{
+  },
+  {
+    "title": {"en": "Charcoal", "ar": "فحم"},
     "name": "Charcoal", 
     "hex": "#36454F"
-  },{
+  },
+  {
+    "title": {"en": "White", "ar": "أبيض"},
     "name": "White", 
     "hex": "#FFFFFF"
-  },{
+  },
+  {
+    "title": {"en": "Ivory", "ar": "عاجي"},
     "name": "Ivory", 
     "hex": "#FFFFF0"
-  },{
+  },
+  {
+    "title": {"en": "Gray", "ar": "رمادي"},
     "name": "Gray", 
     "hex": "#808080"
-  },{
+  },
+  {
+    "title": {"en": "Slate", "ar": "أردوازي"},
     "name": "Slate", 
     "hex": "#708090"
-  },{
+  },
+  {
+    "title": {"en": "Pink", "ar": "وردي"},
     "name": "Pink", 
     "hex": "#FFC1CC"
-  },{
+  },
+  {
+    "title": {"en": "Blush", "ar": "تورد"},
     "name": "Blush", 
     "hex": "#FF9999"
-  },{
+  },
+  {
+    "title": {"en": "Fuchsia", "ar": "فوشيا"},
     "name": "Fuchsia", 
     "hex": "#FF00FF"
-  },{
+  },
+  {
+    "title": {"en": "Purple", "ar": "بنفسجي"},
     "name": "Purple", 
     "hex": "#800080"
-  },{
+  },
+  {
+    "title": {"en": "Lilac", "ar": "ليلك"},
     "name": "Lilac", 
     "hex": "#C8A2C8"
-  },{
+  },
+  {
+    "title": {"en": "Plum", "ar": "خوخ"},
     "name": "Plum", 
     "hex": "#8E4585"
-  },{
+  },
+  {
+    "title": {"en": "Orange", "ar": "برتقالي"},
     "name": "Orange", 
     "hex": "#FFA500"
-  },{
+  },
+  {
+    "title": {"en": "Coral", "ar": "مرجاني"},
     "name": "Coral", 
     "hex": "#FF7F50"
-  },{
+  },
+  {
+    "title": {"en": "Tangerine", "ar": "يوسفي"},
     "name": "Tangerine", 
     "hex": "#F28C38"
-  },{
+  },
+  {
+    "title": {"en": "Brown", "ar": "بني"},
     "name": "Brown", 
     "hex": "#8B4513"
-  },{
+  },
+  {
+    "title": {"en": "Camel", "ar": "جملي"},
     "name": "Camel", 
     "hex": "#C19A6B"
-  },{
+  },
+  {
+    "title": {"en": "Chocolate", "ar": "شوكولاتة"},
     "name": "Chocolate", 
     "hex": "#4A2C2A"
-  },{
+  },
+  {
+    "title": {"en": "Beige", "ar": "بيج"},
     "name": "Beige", 
     "hex": "#F5F5DC"
-  },{
+  },
+  {
+    "title": {"en": "Taupe", "ar": "رمادي بني"},
     "name": "Taupe", 
     "hex": "#483C32"
-  },{
+  },
+  {
+    "title": {"en": "Teal", "ar": "أزرق مخضر"},
     "name": "Teal", 
     "hex": "#008080"
-  },{
+  },
+  {
+    "title": {"en": "Turquoise", "ar": "تركواز"},
     "name": "Turquoise", 
     "hex": "#40E0D0"
-  },{
+  },
+  {
+    "title": {"en": "Lavender", "ar": "خزامى"},
     "name": "Lavender", 
     "hex": "#E6E6FA"
-  },{
+  },
+  {
+    "title": {"en": "Gold", "ar": "ذهبي"},
     "name": "Gold", 
     "hex": "#FFD700"
-  },{
+  },
+  {
+    "title": {"en": "Rose Gold", "ar": "ذهبي وردي"},
     "name": "Rose Gold", 
     "hex": "#B76E79"
-  },{
+  },
+  {
+    "title": {"en": "Silver", "ar": "فضي"},
     "name": "Silver", 
     "hex": "#C0C0C0"
   }
