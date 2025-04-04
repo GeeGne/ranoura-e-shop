@@ -10,7 +10,7 @@ import LineMdWatchOffLoop from '@/components/svgs/LineMdWatchOffLoop';
 import LineMdWatchOffTwotoneLoop from '@/components/svgs/LineMdWatchOffTwotoneLoop';
 
 // STORES
-import { useAlertMessageStore, useLayoutRefStore } from '@/stores/index';
+import { useAlertMessageStore, useLayoutRefStore, useLanguageStore } from '@/stores/index';
 
 type Props = {
   className?: string;
@@ -20,9 +20,9 @@ export default function SigninForm ({ className, ...props }: Props) {
 
   const [ isEmailFocus, setIsEmailFocus ] = useState<boolean>(false);
   const [ isPasswordFocus, setIsPasswordFocus ] = useState<boolean>(false);
-
   const [ isPassEyeActive, setIsPassEyeActive ] = useState<boolean>(false);
-
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
@@ -86,7 +86,6 @@ export default function SigninForm ({ className, ...props }: Props) {
     }
   };
 
-  return(<div>his</div>)
   return (
     <form
       className={`
@@ -98,7 +97,7 @@ export default function SigninForm ({ className, ...props }: Props) {
       <h2
         className="text-center text-5xl text-heading mx-auto"
       >
-        SIGNIN
+        {isEn ? 'SIGNIN' : 'تسجيل الدخول'}
       </h2>
       <label
         className="relative flex w-full"
@@ -106,13 +105,14 @@ export default function SigninForm ({ className, ...props }: Props) {
       >
         <span
           className={`
-            absolute left-3 translate-y-[-50%]
+            absolute translate-y-[-50%]
             px-1 bg-background peer-autofill:top-0
             transition-all duration-300 ease-in-out
+            ${isEn ? 'left-3' : 'right-3'}
             ${isEmailFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
           `}
         >
-          EMAIL
+          {isEn ? 'EMAIL' : 'ايميل'}
         </span>
         <input
           className={`
@@ -135,14 +135,15 @@ export default function SigninForm ({ className, ...props }: Props) {
       >
         <span
           className={`
-            absolute left-3 translate-y-[-50%]
+            absolute translate-y-[-50%]
             px-1 bg-background
             transition-all duration-300 ease-in-out
+            ${isEn ? 'left-3' : 'right-3'}
             ${isPasswordFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
 
           `}
         >
-          PASSWORD
+          {isEn ? 'PASSWORD' : 'كلمه السر'}
         </span>
         <input
           className={`
@@ -161,10 +162,11 @@ export default function SigninForm ({ className, ...props }: Props) {
         />
         { isPassEyeActive 
           ? <button
-              className="
-                group absolute top-1/2 right-4
+              className={`
+                group absolute top-1/2
                 translate-y-[-50%] text-heading cursor-pointer
-              "
+                ${isEn ? 'right-4' : 'left-8'}
+              `}
               data-type="pass_eye_icon_is_clicked"
               onClick={handleClick}
             > 
@@ -179,7 +181,7 @@ export default function SigninForm ({ className, ...props }: Props) {
               />
               <LineMdWatchOffTwotoneLoop 
                 className={`
-                  absolute top-1/2 right-0
+                  absolute top-1/2 right-0 
                   translate-y-[-50%] cursor-pointer
                   opacity-0 group-hover:opacity-100 z-[5]
                   transition-all duration-200 ease-out
@@ -188,10 +190,11 @@ export default function SigninForm ({ className, ...props }: Props) {
               />
             </button>
           : <button
-              className="
-                group absolute top-1/2 right-4
+              className={`
+                group absolute top-1/2
                 translate-y-[-50%] text-heading cursor-pointer
-              "
+                ${isEn ? 'right-4' : 'left-8'}
+              `}
               data-type="pass_eye_icon_is_clicked"
               onClick={handleClick}
             > 
@@ -221,7 +224,7 @@ export default function SigninForm ({ className, ...props }: Props) {
         data-type="signin_button_is_clicked"
         onClick={handleClick}
       >
-        CONTINUE
+        {isEn ? 'CONTINUE' : 'استمرار'}
       </BtnA>
       <Link
         href="/signup"
@@ -232,12 +235,12 @@ export default function SigninForm ({ className, ...props }: Props) {
         <span
           className="underline"
         >
-          New here?
+          {isEn ? 'New here?' : 'جديد هنا؟'}
         </span>{' '}
         <span
           className="font-bold"
         >
-          Create an account
+          {isEn ? 'Create an account' : 'انشاء حساب جديد'}
         </span>
       </Link>
       <Link
@@ -247,12 +250,12 @@ export default function SigninForm ({ className, ...props }: Props) {
         <span
           className="underline"
         >
-          Forgot password?
+          {isEn ? 'Forgot password?' : 'نسيت كلمه السر؟'}
         </span>{' '}
         <span
           className="font-bold"
         >
-          Reset it here
+          {isEn ? 'Reset it here' : 'استعيدها هنا'}
         </span>
       </Link>
     </form>

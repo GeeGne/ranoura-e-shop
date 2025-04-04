@@ -23,14 +23,19 @@ export default function Home() {
   const setLang = useLanguageStore((state: any) => state.setLang);
   const { lang } = useParams();
   const isEn = lang === 'en';
+  const setDefaultLanguage = () => {
+    setLang(lang);
+    document.cookie = `preferredLang=${lang}; path=/; max-age=31536000`
+  }
   
   useEffect(() => {
     setTabName('home');
   }, []);
 
   useEffect(() => {
-    setLang(lang);
+    setDefaultLanguage();
   }, [ lang ]);
+  
   return (
     <div
       className="flex flex-col"

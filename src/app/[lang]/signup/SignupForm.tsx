@@ -10,13 +10,16 @@ import LineMdWatchOffLoop from '@/components/svgs/LineMdWatchOffLoop';
 import LineMdWatchOffTwotoneLoop from '@/components/svgs/LineMdWatchOffTwotoneLoop';
 
 // STORES
-import { useAlertMessageStore, useLayoutRefStore } from '@/stores/index';
+import { useAlertMessageStore, useLayoutRefStore, useLanguageStore } from '@/stores/index';
 
 type Props = {
   className?: string;
 }
 
 export default function SignupForm ({ className, ...props }: Props) {
+
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
 
   const [ isFNameFocus, setIsFNameFocus ] = useState<boolean>(false);
   const [ isLNameFocus, setIsLNameFocus ] = useState<boolean>(false);
@@ -109,10 +112,8 @@ export default function SignupForm ({ className, ...props }: Props) {
       default:
         console.error('Unknown name: ', name);
     }
-
   };
 
-  return(<div>his</div>)
   return (
     <form
       className={`
@@ -125,7 +126,7 @@ export default function SignupForm ({ className, ...props }: Props) {
       <h2
         className="md:col-span-2 text-center text-5xl text-heading mx-auto"
       >
-        SIGNUP
+        {isEn ? 'SIGNUP' : 'تسجيل'}
       </h2>
       <label
         className="relative flex w-full"
@@ -133,13 +134,14 @@ export default function SignupForm ({ className, ...props }: Props) {
       >
         <span
           className={`
-            absolute left-3 translate-y-[-50%]
+            absolute translate-y-[-50%]
             bg-background px-1
             transition-all duration-300 ease-in-out
+            ${isEn ? 'left-3' : 'right-3'}
             ${isFNameFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
           `}
         >
-          FIRST NAME
+          {isEn ? 'FIRST NAME' : 'الاسم الاول'}
         </span>
         <input
           className={`
@@ -162,13 +164,14 @@ export default function SignupForm ({ className, ...props }: Props) {
       >
         <span
           className={`
-            absolute left-3 translate-y-[-50%]
+            absolute translate-y-[-50%]
             bg-background px-1
             transition-all duration-300 ease-in-out
+            ${isEn ? 'left-3' : 'right-3'}
             ${isLNameFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
           `}
         >
-          LAST NAME
+          {isEn ? 'LAST NAME' : 'الاسم الاخير'}
         </span>
         <input
           className={`
@@ -191,13 +194,14 @@ export default function SignupForm ({ className, ...props }: Props) {
       >
         <span
           className={`
-            absolute left-3 translate-y-[-50%]
+            absolute translate-y-[-50%]
             bg-background px-1
             transition-all duration-300 ease-in-out
+            ${isEn ? 'left-3' : 'right-3'}
             ${isEmailFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
           `}
         >
-          EMAIL
+          {isEn ? 'EMAIL' : 'الايميل'}
         </span>
         <input
           className={`
@@ -220,13 +224,14 @@ export default function SignupForm ({ className, ...props }: Props) {
       >
         <span
           className={`
-            absolute left-3 translate-y-[-50%]
+            absolute translate-y-[-50%]
             bg-background px-1
             transition-all duration-300 ease-in-out
+            ${isEn ? 'left-3' : 'right-3'}
             ${isPasswordFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
           `}
         >
-          PASSWORD
+          {isEn ? 'PASSWORD' : 'كلمه السر'}
         </span>
         <input
           className={`
@@ -245,10 +250,11 @@ export default function SignupForm ({ className, ...props }: Props) {
         />
         { isPassEyeActive 
           ? <button
-              className="
-                group absolute top-1/2 right-4
+              className={`
+                group absolute top-1/2
                 translate-y-[-50%] text-heading cursor-pointer
-              "
+                ${isEn ? 'right-4' : 'left-8'}
+              `}
               data-type="pass_eye_icon_is_clicked"
               onClick={handleClick}
             > 
@@ -272,10 +278,11 @@ export default function SignupForm ({ className, ...props }: Props) {
               />
             </button>
           : <button
-              className="
-                group absolute top-1/2 right-4
+              className={`
+                group absolute top-1/2
                 translate-y-[-50%] text-heading cursor-pointer
-              "
+                ${isEn ? 'right-4' : 'left-8'}
+              `}
               data-type="pass_eye_icon_is_clicked"
               onClick={handleClick}
             > 
@@ -306,13 +313,14 @@ export default function SignupForm ({ className, ...props }: Props) {
       >
         <span
           className={`
-            absolute left-3 translate-y-[-50%]
+            absolute translate-y-[-50%]
             bg-background px-1
             transition-all duration-300 ease-in-out
             ${isCPasswordFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
+            ${isEn ? 'left-3' : 'right-3'}
           `}
         >
-          CONFIRM PASSWORD
+          {isEn ? 'CONFIRM PASSWORD' : 'تاكيد كلمه السر'}
         </span>
         <input
           className={`
@@ -331,10 +339,11 @@ export default function SignupForm ({ className, ...props }: Props) {
         />
         { isCPassEyeActive 
           ? <button
-              className="
-                group absolute top-1/2 right-4
+              className={`
+                group absolute top-1/2
                 translate-y-[-50%] text-heading cursor-pointer
-              "
+                ${isEn ? 'right-4' : 'left-8'}
+              `}
               data-type="cPass_eye_icon_is_clicked"
               onClick={handleClick}
             > 
@@ -358,10 +367,11 @@ export default function SignupForm ({ className, ...props }: Props) {
               />
             </button>
           : <button
-              className="
-                group absolute top-1/2 right-4
+              className={`
+                group absolute top-1/2
                 translate-y-[-50%] text-heading cursor-pointer
-              "
+                ${isEn ? 'right-4' : 'left-8'}
+              `}
               data-type="cPass_eye_icon_is_clicked"
               onClick={handleClick}
             > 
@@ -391,7 +401,7 @@ export default function SignupForm ({ className, ...props }: Props) {
         data-type="signin_button_is_clicked"
         onClick={handleClick}
       >
-        CONTINUE
+        {isEn ? 'CONTINUE' : 'استمرار'}
       </BtnA>
       <Link
         href="/signin"
@@ -402,12 +412,12 @@ export default function SignupForm ({ className, ...props }: Props) {
         <span
           className="underline"
         >
-          Have an account?
+          {isEn ? 'Have an account?' : 'لديك حساب'}
         </span>{' '}
         <span
           className="font-bold"
         >
-          Signin
+          {isEn ? 'Signin' : 'تسجيل الدخول'}
         </span>
       </Link>
     </form>

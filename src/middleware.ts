@@ -14,13 +14,17 @@ function hasLocalePrefix(pathname: string): boolean {
 
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
-  
+  const preferredLocale = req.cookies.get('preferredLang')?.value;
+  const localToUse = preferredLocale && locales.includes(preferredLocale) 
+    ? preferredLocale
+    : defaultLocale
+    console.log('preferredLocale: ', preferredLocale);
   if (hasLocalePrefix(pathname)) {
     return NextResponse.next();
   }
   
   const newUrl = new URL(
-    pathname === '/' ? `/${defaultLocale}` : `/${defaultLocale}${pathname}`,
+    pathname === '/' ? `/${localToUse}` : `/${localToUse}${pathname}`,
     req.url
   );
 
