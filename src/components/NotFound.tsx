@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 // STORES
-import { useLayoutRefStore } from '@/stores/index';
+import { useLayoutRefStore, useLanguageStore } from '@/stores/index';
 
 // COMPONENTS
 import Error404 from '@/components/svgs/Error404';
@@ -19,6 +19,8 @@ type Props = {
 
 export default function NotFound ({ type = "default" }: Props) {
 
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
   const router = useRouter();
   const layoutRef = useLayoutRefStore((state: any) => state.layoutRef);
 
@@ -59,14 +61,14 @@ export default function NotFound ({ type = "default" }: Props) {
           <span
             className="text-7xl md:text-9xl text-content font-medium"
           >
-            E
+            {isEn ? 'E' : 'ت'}
           </span>
-          mpty rack alert!
+          {isEn ? 'mpty rack alert!' : 'نبيه رف فارغ!'}
         </h2>
         <h2
           className="text-2xl text-body font-medium mx-auto"
         >
-          Swing by our other categories to find your next look! 
+          {isEn ? 'Swing by our other categories to find your next look!' : 'تصفح فئاتنا الأخرى لتجد إطلالتك القادمة!'}
         </h2>
         <BtnA
           className="
@@ -76,7 +78,7 @@ export default function NotFound ({ type = "default" }: Props) {
           data-type="navigate_to_home"
           onClick={handleClick}
         >
-          Back to Home
+          {isEn ? 'Back to Home' : 'العوده الى الرئيسيه'}
         </BtnA>
       </section>
     </section>
@@ -103,14 +105,14 @@ export default function NotFound ({ type = "default" }: Props) {
           <span
             className="text-7xl md:text-9xl text-content font-medium"
           >
-            O
+            {isEn ? 'O' : 'ن'}
           </span>
-          ut of stock? 
+          {isEn ? 'ut of stock?' : 'فد المخزون؟'} 
         </h2>
         <h2
           className="text-2xl text-body font-medium mx-auto"
         >
-          No worries—our closet’s still full of gems waiting for you!
+          {isEn ? 'No worries—our closet’s still full of gems waiting for you!' : 'لا تقلق—خزانتنا لا تزال مليئة بالجواهر التي تنتظرك!'}
         </h2>
         <BtnA
           className="
@@ -120,7 +122,7 @@ export default function NotFound ({ type = "default" }: Props) {
           data-type="navigate_to_home"
           onClick={handleClick}
         >
-          Back to Home
+          {isEn ? 'Back to Home' : 'العوده الى الرئيسيه'}
         </BtnA>
       </section>
     </section>
@@ -147,14 +149,14 @@ export default function NotFound ({ type = "default" }: Props) {
           <span
             className="text-7xl md:text-9xl text-content font-medium"
           >
-            O
+            {isEn ? 'O' : 'ا'}
           </span>
-          OOPS...
+          {isEn ? 'OOPS...' : 'ووبس...'}
         </h2>
         <h2
           className="text-2xl text-body font-medium mx-auto"
         >
-          This page is missing, but your next favorite outfit isn't
+          {isEn ? "This page is missing, but your next favorite outfit isn't" : 'هذه الصفحة مفقودة، لكن زيك المفضل القادم ليس كذلك'}
         </h2>
         <BtnA
           className="
@@ -164,7 +166,7 @@ export default function NotFound ({ type = "default" }: Props) {
           data-type="navigate_to_home"
           onClick={handleClick}
         >
-          Back to Home
+          {isEn ? 'Back to Home' : 'العوده الى الرئيسيه'}
         </BtnA>
       </section>
     </section>

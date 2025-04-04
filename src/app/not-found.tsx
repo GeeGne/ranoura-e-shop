@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 // STORES
-import { useTabNameStore, useLayoutRefStore } from '@/stores/index';
+import { useTabNameStore, useLayoutRefStore, useLanguageStore } from '@/stores/index';
 
 // COMPONENTS
 import Error404 from '@/components/svgs/Error404';
@@ -14,6 +14,8 @@ import BtnA from '@/components/BtnA';
 export default function notFound () {
 
   const router = useRouter();
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
   const setTabName = useTabNameStore((state: any) => state.setTabName);
   const layoutRef = useLayoutRefStore((state: any) => state.layoutRef);
   
@@ -57,14 +59,14 @@ export default function notFound () {
           <span
             className="text-7xl md:text-9xl text-content font-medium"
           >
-            O
+            {isEn ? 'O' : 'ا'}
           </span>
-          OOPS...
+          {isEn ? 'OOPS...' : 'ووبس...'}
         </h2>
         <h2
           className="text-2xl text-body font-medium mx-auto"
         >
-          This page is missing, but your next favorite outfit isn't
+          {isEn ? "This page is missing, but your next favorite outfit isn't" : "هذه الصفحة غير موجودة، لكن إطلالتك المفضلة القادمة لا تزال بانتظارك"}
         </h2>
         <BtnA
           className="
@@ -74,7 +76,7 @@ export default function notFound () {
           data-type="navigate_to_home"
           onClick={handleClick}
         >
-          Back to Home
+          {isEn ? 'Back to Home' : 'العوده الى الرئيسيه'}
         </BtnA>
       </section>
     </section>
