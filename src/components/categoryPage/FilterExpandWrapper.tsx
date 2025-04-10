@@ -42,7 +42,8 @@ export default function FilterExpandWrapper ({
   
   useEffect(() => {
     setToggle(false);
-    if (clickedCategory === sectionName.toLowerCase()) setToggle(true) 
+    console.log('clickedCategory: ', clickedCategory);
+    if (clickedCategory === sectionKey) setToggle(true) 
   }, [clickedCategory]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
