@@ -1,5 +1,5 @@
 // HOOKS
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // SVGS
 import SvgSpinnersTadpole from '@/components/svgs/activity/SvgSpinnersTadpole';
@@ -8,14 +8,20 @@ const logo = "/assets/img/ranoura-logo.png"
 const logo2 = "/assets/img/ranoura-logo(2).png"
 
 export default function LoadingScreen () {
-  const [ toggle, setToggle ] = useState<boolean>(false);
+
+  const [ toggle, setToggle ] = useState<boolean>(true);
+
+  useEffect(() => {
+    setTimeout(() => setToggle(false), 10000);
+  }, []);
+
   return (
     <div
       className={`
         fixed top-0 left-0 w-full h-full bg-primary z-[2000]
         flex flex-col items-center justify-center p-4 gap-4
         transition-all duration-500 ease-in-out
-        ${toggle ? 'visible opacity-100' : 'invisible opaicty-0'}
+        ${toggle ? 'visible opacity-100' : 'invisible opacity-0'}
       `}
     >
       <img 

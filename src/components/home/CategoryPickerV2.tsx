@@ -97,6 +97,7 @@ export default function CategoryPickerV2 () {
             <img 
               src={itm.image}
               alt="image"
+              fetchPriority="low"
               className="
                 w-full h-full object-cover object-center 
                 brightness-[95%] group-hover:brightness-[100%] group-hover:contrast-[100%]

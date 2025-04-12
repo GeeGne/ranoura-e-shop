@@ -172,7 +172,8 @@ export default function ImageSlider({
                 className="w-full h-full object-cover object-center"
                 src={itm.sm}
                 alt="test"
-                loading="lazy"
+                loading="eager"
+                fetchPriority={i === 0 ? "high" : "low"}
               />
             </picture>
           </li>

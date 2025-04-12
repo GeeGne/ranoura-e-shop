@@ -368,7 +368,8 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
                     `}
                     src={getImgUrl(product.images)?.main}
                     alt={product.name[isEn ? 'en' : 'ar']}
-                    loading="lazy"
+                    loading={i <= 1 ? "eager" :"lazy"}
+                    fetchPriority={i <= 1 ? "high" :"low"}
                     data-product-id={product.id}
                     ref={ (el: any) => {if (mainImgRefs.current) {mainImgRefs.current[i] = el}} }
                   />
@@ -383,7 +384,8 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
                     `}
                     src={getImgUrl(product.images)?.second}
                     alt="Image"
-                    loading="lazy"
+                    loading={i <= 1 ? "eager" :"lazy"}
+                    fetchPriority={i <= 1 ? "high" :"low"}
                     data-product-id={product.id}
                     ref={ (el: any) => { if (secondImgRefs.current) {secondImgRefs.current[i] = el}} }
                   />            

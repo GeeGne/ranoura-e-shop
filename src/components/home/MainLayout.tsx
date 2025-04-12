@@ -50,10 +50,11 @@ export default function MainLayout () {
           relative w-full h-full col-span-10 lg:col-span-4 lg:row-span-2 rounded-2xl overflow-hidden
         "
       >
-        <DisplayImg 
+        <img 
           className="absolute top-0 left-0 w-full h-full object-cover object-right bg-background-light z-[5]"
           src={outfit1}
           alt="Image"
+          fetchPriority="low"
         />
         <div
           className="
