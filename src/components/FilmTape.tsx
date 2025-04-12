@@ -16,8 +16,7 @@ export default function FilmTape ({ className = '', ...props }: Props) {
     <div
       className={`  
         w-[50px] h-[750px] md:w-[125px] md:h-[1050px] lg:h-[2050px] 
-        bg-[hsl(0,7%,6%,0.3)] backdrop-blur-sm text-black overflow-hidden
-         
+        bg-[hsl(0,7%,6%,0.3)] backdrop-blur-sm text-black overflow-hidden         
         ${className}
       `}
     >
@@ -30,193 +29,241 @@ export default function FilmTape ({ className = '', ...props }: Props) {
         <li
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
-          <Image 
+          <Image
             src={img1}
             alt="test"
+            loading="lazy"
+            fetchPriority="low"
           />
         </li>
         <li
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
-          <Image 
+          <Image
             src={img2}
             alt="test"
+            loading="lazy"
+            fetchPriority="low"
           />
         </li>
         <li
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
-          <Image 
+          <Image
             src={img3}
             alt="test"
+            loading="lazy"
+            fetchPriority="low"
           />
         </li>
         <li
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
-          <Image 
+          <Image
             src={img1}
             alt="test"
+            loading="lazy"
+            fetchPriority="low"
           />
         </li>
         <li
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
-          <Image 
+          <Image
             src={img2}
             alt="test"
+            loading="lazy"
+            fetchPriority="low"
           />
         </li>
         <li
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
-          <Image 
+          <Image
             src={img3}
             alt="test"
+            loading="lazy"
+            fetchPriority="low"
           />
         </li>
         <li
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
-          <Image 
+          <Image
             src={img1}
             alt="test"
+            loading="lazy"
+            fetchPriority="low"
           />
         </li>
         <li
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
-          <Image 
+          <Image
             src={img2}
             alt="test"
+            loading="lazy"
+            fetchPriority="low"
           />
         </li>
         <li
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
-          <Image 
+          <Image
             src={img2}
             alt="test"
+            loading="lazy"
+            fetchPriority="low"
           />
         </li>
         <li
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
-          <Image 
+          <Image
             src={img1}
             alt="test"
+            loading="lazy"
+            fetchPriority="low"
           />
         </li>
         <li
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
-          <Image 
+          <Image
             src={img3}
             alt="test"
+            loading="lazy"
+            fetchPriority="low"
           />
         </li>
         <li
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
-          <Image 
+          <Image
             src={img3}
             alt="test"
+            loading="lazy"
+            fetchPriority="low"
           />
         </li>
         <li
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
-          <Image 
+          <Image
             src={img1}
             alt="test"
+            loading="lazy"
+            fetchPriority="low"
           />
         </li>
         <li
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
-          <Image 
+          <Image
             src={img2}
             alt="test"
+            loading="lazy"
+            fetchPriority="low"
           />
         </li>
         <li
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
-          <Image 
+          <Image
             src={img3}
             alt="test"
+            loading="lazy"
+            fetchPriority="low"
           />
         </li>
         <li
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
-          <Image 
+          <Image
             src={img1}
             alt="test"
+            loading="lazy"
+            fetchPriority="low"
           />
         </li>
         <li
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
-          <Image 
+          <Image
             src={img2}
             alt="test"
+            loading="lazy"
+            fetchPriority="low"
           />
         </li>
         <li
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
-          <Image 
+          <Image
             src={img3}
             alt="test"
+            loading="lazy"
+            fetchPriority="low"
           />
         </li>
         <li
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
-          <Image 
+          <Image
             src={img1}
             alt="test"
+            loading="lazy"
+            fetchPriority="low"
           />
         </li>
         <li
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
-          <Image 
+          <Image
             src={img2}
             alt="test"
+            loading="lazy"
+            fetchPriority="low"
           />
         </li>
         <li
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
-          <Image 
+          <Image
             src={img2}
             alt="test"
+            loading="lazy"
+            fetchPriority="low"
           />
         </li>
         <li
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
-          <Image 
+          <Image
             src={img1}
             alt="test"
+            loading="lazy"
+            fetchPriority="low"
           />
         </li>
         <li
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
-          <Image 
+          <Image
             src={img3}
             alt="test"
+            loading="lazy"
+            fetchPriority="low"
           />
         </li>
         <li
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
-          <Image 
+          <Image
             src={img3}
             alt="test"
+            loading="lazy"
+            fetchPriority="low"
           />
         </li>
       </ul>

@@ -129,6 +129,8 @@ export default function SubCategoryList () {
                 "
                 src={categories.find(itm => itm.slug === selectedCategory)?.navbarImg}
                 alt="An Image"
+                loading="lazy"
+                fetchPriority="low"
               />
             </a>
           </li>      

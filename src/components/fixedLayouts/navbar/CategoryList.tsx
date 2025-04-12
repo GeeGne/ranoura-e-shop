@@ -55,6 +55,8 @@ export default function CategoryList () {
             "
             src={itm.navbarImg}
             alt="An Image"
+            loading="lazy"
+            fetchPriority="low"
           />
           <div
             className="

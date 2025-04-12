@@ -149,6 +149,7 @@ export default function ImageSlider({
               className="w-full h-full object-cover object-center"
               src={array[totalIndex()].sm}
               alt="test"
+              fetchPriority="low"
             />
           </picture>
         </li>
@@ -196,6 +197,7 @@ export default function ImageSlider({
               className="w-full h-full object-cover object-center"
               src={array[0].sm}
               alt="test"
+              fetchPriority="low"
             />
           </picture>
         </li>

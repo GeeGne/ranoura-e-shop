@@ -129,7 +129,7 @@ export default function Cart () {
   }
 
   // DEBUG & UI
-  console.log('cart: ', cart);
+  // console.log('cart: ', cart);
   // console.log('img main url ', );
 
   if (isCartEmpty) return (
@@ -284,6 +284,8 @@ export default function Cart () {
                 className="w-[100px] md:w-[200px] aspect-[2/3] object-cover rounded-lg"
                 alt={getProduct(products, product.id).name[lang]}
                 src={getImgUrl(getProduct(products, product.id).images, product.color)?.main}
+                loading="lazy"
+                fetchPriority="low"
               />
               <div className="flex flex-col flex-1 px-4">
                 <div className="flex text-heading text-lg justify-between">

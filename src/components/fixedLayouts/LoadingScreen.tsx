@@ -4,13 +4,18 @@ import { useState, useEffect } from 'react';
 // SVGS
 import SvgSpinnersTadpole from '@/components/svgs/activity/SvgSpinnersTadpole';
 
+// STORES
+import { useLanguageStore } from '@/stores/index';
+
 const logo = "/assets/img/ranoura-logo.png"
 const logo2 = "/assets/img/ranoura-logo(2).png"
 
 export default function LoadingScreen () {
 
   const [ toggle, setToggle ] = useState<boolean>(true);
-
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
+  
   useEffect(() => {
     setTimeout(() => setToggle(false), 10000);
   }, []);
@@ -32,7 +37,7 @@ export default function LoadingScreen () {
       <span
         className="text-body-invert text-2xl font-normal"
       >
-        Loading..
+        {isEn ? 'Loading...' : 'جاري التحميل...'}
       </span>
       <SvgSpinnersTadpole 
         className="text-heading-invert w-10 h-10"

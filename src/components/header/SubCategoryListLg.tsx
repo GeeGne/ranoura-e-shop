@@ -129,6 +129,8 @@ export default function SubCategoryListLg () {
             className="w-full aspect-[2/1] object-cover object-center" 
             src={categories?.find(itm => selectedCategory === itm.slug)?.navbarLgImg || ramdanBanner}
             alt="Image"
+            loading="lazy"
+            fetchPriority="low"
           />
         </a>
       </div>
