@@ -34,11 +34,12 @@ export default function FillOnScroll ({ onScroll, layoutRef }: Props) {
   return (
     <div
       className={`
-        absolute top-0 left-0 w-full h-1 
+        absolute top-0 left-1/2
+        w-screen h-1
         bg-content-inbetween z-[2000]
         ${isEn ? 'origin-left' : 'origin-right'}
       `}
-      style={{ transform: `scaleX(${percantage / 100}`}}
+      style={{transform: ` translateX(-50%) scaleX(${percantage / 100}`}}
     />
   )
 }
