@@ -15,7 +15,7 @@ const badgePng = "/assets/img/badge.png";
 const badge2Png = "/assets/img/badge2.png";
 const cloudPng = "/assets/img/cloud.png";
 const introVideo = "/assets/video/intro-video.mp4";
-const introVideo2 = "/assets/video/intro-video(2).mp4";
+const introVideo2 = "/assets/video/Intro-Video(2)(24 frame)(720p).mp4";
 
 type Props = {
   className?: string;
@@ -103,14 +103,18 @@ export default function Hero({ className = "", ...props }: Props) {
       onMouseLeave={handleMouseLeave}
     > 
       <video 
-          autoPlay muted loop
-          className="
-            absolute bottom-0 left-0 bg-primary
-            w-full h-[calc(100%+100px)] object-cover 
-          "
-          ref={vidRef}
-        >
-          <source src={introVideo2} />
+        autoPlay muted loop playsInline
+        className="
+          absolute bottom-0 left-0 bg-primary
+          w-full h-[calc(100%+100px)] object-cover 
+        "
+        ref={vidRef}
+        preload="metadata"
+        onWaiting={() => console.log('waiting')}
+        onCanPlay={() => console.log('canPlay')}
+        onCanPlayThrough={() => console.log('canPlayThrought')}
+      >
+        <source src={introVideo2} />
       </video>
       <div
         className="

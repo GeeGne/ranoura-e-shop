@@ -9,6 +9,7 @@ import Header from '@/components/header/index';
 import Main from '@/app/[lang]/Main';
 import Footer from '@/app/[lang]/Footer';
 import FixedLayouts from '@/components/fixedLayouts/Index';
+import LoadingScreen from '@/components/fixedLayouts/LoadingScreen';
 import Cart from '@/components/fixedLayouts/Cart';
 import Navbar from '@/components/fixedLayouts/navbar/Index';
 import FilterWindow from '@/components/fixedLayouts/FilterWindow';
@@ -60,6 +61,7 @@ export default function RootLayout({
           <Footer />
         </div>
         <FixedLayouts>
+          <LoadingScreen />
           <Cart />
           <Navbar />
           <SelectLang />

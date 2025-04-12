@@ -172,6 +172,7 @@ export default function ImageSlider({
                 className="w-full h-full object-cover object-center"
                 src={itm.sm}
                 alt="test"
+                loading="lazy"
               />
             </picture>
           </li>
