@@ -79,7 +79,7 @@ export default function CategoryList () {
                 transition-all ease-in-out duration-400
               "
             >
-              {itm.name[lang].toUpperCase()}
+              {itm.name[lang]?.toUpperCase()}
               <div
                 className="
                   absolute top-[100%] left-0 translate-y-[-50%]

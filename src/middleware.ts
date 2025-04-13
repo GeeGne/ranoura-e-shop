@@ -18,11 +18,18 @@ export function middleware(req: NextRequest) {
   const localToUse = preferredLocale && locales.includes(preferredLocale) 
     ? preferredLocale
     : defaultLocale
-    console.log('preferredLocale: ', preferredLocale);
+
   if (hasLocalePrefix(pathname)) {
     return NextResponse.next();
   }
+
+  const hasAdmin = req.url.endsWith('admin');
+  if (hasAdmin) {
+    // return NextResponse.redirect()
+  }
   
+  console.log('has no Admin');
+
   const newUrl = new URL(
     pathname === '/' ? `/${localToUse}` : `/${localToUse}${pathname}`,
     req.url

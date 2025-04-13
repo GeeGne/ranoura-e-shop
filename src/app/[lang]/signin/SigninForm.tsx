@@ -140,7 +140,6 @@ export default function SigninForm ({ className, ...props }: Props) {
             transition-all duration-300 ease-in-out
             ${isEn ? 'left-3' : 'right-3'}
             ${isPasswordFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
-
           `}
         >
           {isEn ? 'PASSWORD' : 'كلمه السر'}
@@ -219,13 +218,17 @@ export default function SigninForm ({ className, ...props }: Props) {
             </button>
         }
       </label>
-      <BtnA
-        className="bg-primary w-full text-heading-invert font-bold py-2 rounded-md"
-        data-type="signin_button_is_clicked"
-        onClick={handleClick}
+      <Link
+        href="/admin"
       >
-        {isEn ? 'CONTINUE' : 'استمرار'}
-      </BtnA>
+        <BtnA
+          className="bg-primary w-full text-heading-invert font-bold py-2 rounded-md"
+          data-type="signin_button_is_clicked"
+          // onClick={handleClick}
+        >
+          {isEn ? 'CONTINUE' : 'استمرار'}
+        </BtnA>
+      </Link>
       <Link
         href="/signup"
         className="text-heading text-base"
