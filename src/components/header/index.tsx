@@ -13,6 +13,7 @@ import LineMdCloseToMenuAltTransition from "@/components/svgs/LineMdCloseToMenuA
 import SolarCart4Outline from "@/components/svgs/SolarCart4Outline";
 import SolarCart4Bold from "@/components/svgs/SolarCart4Bold";
 import IconamoonSearchThin from "@/components/svgs/IconamoonSearchThin";
+import IconoirSearch from "@/components/svgs/IconoirSearch";
 import BottomBorder from "@/components/svgs/BottomBorder";
 import EpUser from "@/components/svgs/EpUser";
 
@@ -184,7 +185,7 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
           }
         `}
       >
-        <IconamoonSearchThin
+        <IconoirSearch
           className={`
             cursor-pointer
             ${navbarToggle 
