@@ -9,16 +9,16 @@ import EpArrowLeft from "@/components/svgs/EpArrowLeft";
 
 // ASSETS
 const small1 = "/assets/img/background(4).webp";
-const small2 = "/assets/img/background(3).jpg";
-const small3 = "/assets/img/background(6).jpg";
+const small2 = "/assets/img/background(3).avif";
+const small3 = "/assets/img/background(6).avif";
 const medium1 = "/assets/img/background(4).webp";
 const medium2 = "/assets/img/background(8).webp";
-const medium3 = "/assets/img/background(6).jpg";
+const medium3 = "/assets/img/background(6).avif";
 const large1 = "/assets/img/background(7).webp";
 const large2 = "/assets/img/background(9).webp";
 const large3 = "/assets/img/background(10).webp";
 const img1 = "/assets/img/background(7).webp";
-const cover1 = "/assets/img/cover-1.jpg";
+const cover1 = "/assets/img/cover-1.avif";
 const cover2 = "/assets/img/cover-2.webp";
 
 export default function ImageSlider({

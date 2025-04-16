@@ -15,7 +15,7 @@ import { useAlertMessageStore, useLanguageStore } from '@/stores/index';
 
 // ASSETS
 const logo = '/assets/img/ranoura-logo(2).png';
-const background = '/public/assets/img/background(2).jpg';
+const background = '/public/assets/img/background(2).avif';
 
 export default function Footer ({ ...props }) {
 
@@ -65,7 +65,7 @@ export default function Footer ({ ...props }) {
           <div
             className="opacity-0 absolute w-full h-full inset-0 bg-cover overflow-hidden"
             style={{
-              backgroundImage: `url('/assets/img/background(9).jpg')`,
+              backgroundImage: `url('/assets/img/background(9).avif')`,
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
               backgroundSize: 'cover',
@@ -91,7 +91,7 @@ export default function Footer ({ ...props }) {
             <div
               className="opacity-0 absolute w-full h-full inset-0 bg-cover overflow-hidden"
               style={{
-                backgroundImage: `url('/assets/img/background(9).jpg')`,
+                backgroundImage: `url('/assets/img/background(9).avif')`,
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: 'cover',

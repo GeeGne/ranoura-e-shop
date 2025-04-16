@@ -16,7 +16,7 @@
     "products": [
       {
         "id": 2,
-        "image": "/assets/img/cloth-c-white.jpg",
+        "image": "/assets/img/cloth-c-white.avif",
         "quantity": 2,
         "size": "M",
         "color": "black",
@@ -24,7 +24,7 @@
         "total": 465
       },{
         "id": 1,
-        "image": "/assets/img/cloth-b-blue.jpg",
+        "image": "/assets/img/cloth-b-blue.avif",
         "quantity": 2,
         "size": "S",
         "color": "black",
@@ -32,7 +32,7 @@
         "total": 657
       },{
         "id": 3,
-        "image": "/assets/img/cloth-c-black.jpg",
+        "image": "/assets/img/cloth-c-black.avif",
         "quantity": 2,
         "size": "M",
         "color": "black",

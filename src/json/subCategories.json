@@ -3,62 +3,62 @@
     "name": {"en":"JEANS", "ar": "جينز"},
     "slug": "jeans",
     "type": "clothing",
-    "image": "/assets/img/cloth-11-sky.jpg"
+    "image": "/assets/img/cloth-11-sky.avif"
   },{
     "name": {"en": "JACKETS", "ar": "جواكيت"},
     "slug": "jackets",
     "type": "clothing",
-    "image": "/assets/img/cat_jackets.jpg"
+    "image": "/assets/img/cat_jackets.avif"
   },{
     "name": {"en": "DRESSES", "ar": "فساتين"},
     "slug": "dresses",
     "type": "clothing",
-    "image": "/assets/img/cat_dresses.jpg"
+    "image": "/assets/img/cat_dresses.avif"
   },{
     "name": {"en": "SUITS", "ar": "بدلات"},
     "slug": "suits",
     "type": "clothing",
-    "image": "/assets/img/cat_suits.jpg"
+    "image": "/assets/img/cat_suits.avif"
   },{
     "name": {"en": "SKIRTS", "ar": "تنانير"},
     "slug": "skirts",
     "type": "clothing",
-    "image": "/assets/img/cat_skirts.jpg"
+    "image": "/assets/img/cat_skirts.avif"
   },{
     "name": {"en": "ROBES", "ar": "روب"},
     "slug": "robes",
     "type": "clothing",
-    "image": "/assets/img/cat_robes.jpg"
+    "image": "/assets/img/cat_robes.avif"
   },{
     "name": {"en": "T-SHIRTS", "ar": "تيشيرتات"},
     "slug": "t-shirts",
     "type": "clothing",
-    "image": "/assets/img/cloth-18-sapphire.jpg"
+    "image": "/assets/img/cloth-18-sapphire.avif"
   },{
     "name": {"en": "HOODIES", "ar": "هوديز"},
     "slug": "hoodies",
     "type": "clothing",
-    "image": "/assets/img/cloth-9-white.jpg"
+    "image": "/assets/img/cloth-9-white.avif"
   },{
     "name": {"en": "SHIRTS", "ar": "قمصان"},
     "slug": "shirts",
     "type": "clothing",
-    "image": "/assets/img/cloth-7-sky.jpg"
+    "image": "/assets/img/cloth-7-sky.avif"
   },{
     "name": {"en": "PANTS", "ar": "بناطيل"},
     "slug": "pants",
     "type": "clothing",
-    "image": "/assets/img/cat_pants.jpg"
+    "image": "/assets/img/cat_pants.avif"
   },{
     "name": {"en": "OUTFIT PAIRS", "ar": "اوتفيت كامل"},
     "slug": "outfit-pairs",
     "type": "clothing",
-    "image": "/assets/img/cloth-12-green.jpg"
+    "image": "/assets/img/cloth-12-green.avif"
   },{
     "name": {"en": "MATCHING SETS", "ar": "تنسيقات من اختيارنا"},
     "slug": "matching-sets",
     "type": "clothing",
-    "image": "/assets/img/cloth-14-brown.jpg"
+    "image": "/assets/img/cloth-14-brown.avif"
   },{
     "name": {"en": "WHAT'S NEW", "ar": "احدث الكوليكشات"},
     "slug": "what's-new",

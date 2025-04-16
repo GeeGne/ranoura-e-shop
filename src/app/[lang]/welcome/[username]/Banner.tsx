@@ -1,5 +1,5 @@
-const img1 = '/assets/img/background(2).jpg';
-const img2 = '/assets/img/background(16).jpg';
+const img1 = '/assets/img/background(2).avif';
+const img2 = '/assets/img/background(16).avif';
 
 export default function Banner () {
   return (

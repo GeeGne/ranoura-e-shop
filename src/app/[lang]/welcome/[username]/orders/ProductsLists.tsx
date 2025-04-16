@@ -1,5 +1,5 @@
 // ASSETS
-const outfit1 = "/assets/img/outfit-2.jpg";
+const outfit1 = "/assets/img/outfit-2.avif";
 
 // STORES
 import { useLanguageStore } from '@/stores/index';

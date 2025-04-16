@@ -4,7 +4,7 @@ import LineMdTextBoxToTextBoxMultipleTransition from '@/components/svgs/LineMdTe
 import LineMdMapMarkerLoop from '@/components/svgs/LineMdMapMarkerLoop';
 
 // ASSETS
-const outfit1 = "/assets/img/outfit-2.jpg";
+const outfit1 = "/assets/img/outfit-2.avif";
 
 type Props = {
   order?: any;

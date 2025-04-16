@@ -45,10 +45,10 @@
   --critical-priority-color: hsl(0, 100%, 60%);
 
   --foreground: #0a0908;
-  --background-1-url: url(/assets/background-1.jpg);
-  --background-2-url: url(/assets/background-2.jpg);
-  --background-3-url: url(/assets/background-3.jpg);
-  --background-4-url: url(/assets/background-4.jpg);
+  --background-1-url: url(/assets/background-1.avif);
+  --background-2-url: url(/assets/background-2.avif);
+  --background-3-url: url(/assets/background-3.avif);
+  --background-4-url: url(/assets/background-4.avif);
   --circular-progress: 20;
 }
 
@@ -93,10 +93,10 @@
   --critical-priority-color: hsl(0, 100%, 60%);
 
   --foreground: hsl(0, 0%, 100%);
-  --background-1-url: url(/assets/background-1.jpg);
-  --background-2-url: url(/assets/background-2.jpg);
-  --background-3-url: url(/assets/background-3.jpg);
-  --background-4-url: url(/assets/background-4.jpg);
+  --background-1-url: url(/assets/background-1.avif);
+  --background-2-url: url(/assets/background-2.avif);
+  --background-3-url: url(/assets/background-3.avif);
+  --background-4-url: url(/assets/background-4.avif);
 }
 
 .black-lightCaramel-theme {
@@ -140,10 +140,10 @@
   --critical-priority-color: hsl(0, 100%, 60%);
 
   --foreground: #1c1c1c;
-  --background-1-url: url(/assets/background-1.jpg);
-  --background-2-url: url(/assets/background-2.jpg);
-  --background-3-url: url(/assets/background-3.jpg);
-  --background-4-url: url(/assets/background-4.jpg);
+  --background-1-url: url(/assets/background-1.avif);
+  --background-2-url: url(/assets/background-2.avif);
+  --background-3-url: url(/assets/background-3.avif);
+  --background-4-url: url(/assets/background-4.avif);
   --circular-progress: 20;
 }
 

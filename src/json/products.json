@@ -11,24 +11,24 @@
     "colors": ["Green", "Pink", "Black", "Plum", "Coral"],
     "images": [
       {
-        "main": "/assets/img/cloth-a-green.jpg",
-        "second": "/assets/img/cloth-a-green-view-b.jpg",
+        "main": "/assets/img/cloth-a-green.avif",
+        "second": "/assets/img/cloth-a-green-view-b.avif",
         "color": "Green"
       },{
-        "main": "/assets/img/cloth-a-orange.jpg",
-        "second": "/assets/img/cloth-a-orange-view-b.jpg",
+        "main": "/assets/img/cloth-a-orange.avif",
+        "second": "/assets/img/cloth-a-orange-view-b.avif",
         "color": "Coral"
       },{
-        "main": "/assets/img/cloth-a-pink.jpg",
-        "second": "/assets/img/cloth-a-pink-view-b.jpg",
+        "main": "/assets/img/cloth-a-pink.avif",
+        "second": "/assets/img/cloth-a-pink-view-b.avif",
         "color": "Pink"
       },{
-        "main": "/assets/img/cloth-a-red.jpg",
-        "second": "/assets/img/cloth-a-red-view-b.jpg",
+        "main": "/assets/img/cloth-a-red.avif",
+        "second": "/assets/img/cloth-a-red-view-b.avif",
         "color": "Plum"
       },{
-        "main": "/assets/img/cloth-a-black.jpg",
-        "second": "/assets/img/cloth-a-black-view-b.jpg",
+        "main": "/assets/img/cloth-a-black.avif",
+        "second": "/assets/img/cloth-a-black-view-b.avif",
         "color": "Black"
       }
     ],
@@ -125,20 +125,20 @@
     "colors": ["Sky", "Coral", "Pink", "Wine"],
     "images": [
       {
-        "main": "/assets/img/cloth-b-blue.jpg",
-        "second": "/assets/img/cloth-b-blue-view-b.jpg",
+        "main": "/assets/img/cloth-b-blue.avif",
+        "second": "/assets/img/cloth-b-blue-view-b.avif",
         "color": "Sky"
       },{
-        "main": "/assets/img/cloth-b-orange.jpg",
-        "second": "/assets/img/cloth-b-orange-view-b.jpg",
+        "main": "/assets/img/cloth-b-orange.avif",
+        "second": "/assets/img/cloth-b-orange-view-b.avif",
         "color": "Coral"
       },{
-        "main": "/assets/img/cloth-b-pink.jpg",
-        "second": "/assets/img/cloth-b-pink-view-b.jpg",
+        "main": "/assets/img/cloth-b-pink.avif",
+        "second": "/assets/img/cloth-b-pink-view-b.avif",
         "color": "Pink"
       },{
-        "main": "/assets/img/cloth-b-red.jpg",
-        "second": "/assets/img/cloth-b-red-view-b.jpg",
+        "main": "/assets/img/cloth-b-red.avif",
+        "second": "/assets/img/cloth-b-red-view-b.avif",
         "color": "Wine"
       }
     ],
@@ -235,12 +235,12 @@
     "colors": ["White", "Black"],
     "images": [
       {
-        "main": "/assets/img/cloth-c-white.jpg",
-        "second": "/assets/img/cloth-c-white-view-b.jpg",
+        "main": "/assets/img/cloth-c-white.avif",
+        "second": "/assets/img/cloth-c-white-view-b.avif",
         "color": "White"
       },{
-        "main": "/assets/img/cloth-c-black.jpg",
-        "second": "/assets/img/cloth-c-black-view-b.jpg",
+        "main": "/assets/img/cloth-c-black.avif",
+        "second": "/assets/img/cloth-c-black-view-b.avif",
         "color": "Black"
       }
     ],
@@ -337,19 +337,19 @@
     "colors": ["Turquoise", "Hunter", "Wine", "Beige"],
     "images": [
       {
-        "main": "/assets/img/cloth-4-turquoise.jpg",
+        "main": "/assets/img/cloth-4-turquoise.avif",
         "second": "",
         "color": "Turquoise"
       },{
-        "main": "/assets/img/cloth-4-hunter.jpg",
+        "main": "/assets/img/cloth-4-hunter.avif",
         "second": "",
         "color": "Hunter"
       },{
-        "main": "/assets/img/cloth-4-wine.jpg",
-        "second": "/assets/img/cloth-4-wine-view-b.jpg",
+        "main": "/assets/img/cloth-4-wine.avif",
+        "second": "/assets/img/cloth-4-wine-view-b.avif",
         "color": "Wine"
       },{
-        "main": "/assets/img/cloth-4-beige.jpg",
+        "main": "/assets/img/cloth-4-beige.avif",
         "second": "",
         "color": "Beige"
       }
@@ -447,12 +447,12 @@
     "colors": ["Gold", "Ivory"],
     "images": [
       {
-        "main": "/assets/img/cloth-5-gold.jpg",
-        "second": "/assets/img/cloth-5-gold-view-b.jpg",
+        "main": "/assets/img/cloth-5-gold.avif",
+        "second": "/assets/img/cloth-5-gold-view-b.avif",
         "color": "Gold"
       },{
-        "main": "/assets/img/cloth-5-ivory.jpg",
-        "second": "/assets/img/cloth-5-ivory-view-b.jpg",
+        "main": "/assets/img/cloth-5-ivory.avif",
+        "second": "/assets/img/cloth-5-ivory-view-b.avif",
         "color": "Ivory"
       }
     ],
@@ -549,19 +549,19 @@
     "colors": ["Slate", "Plum", "Olive", "Chocolate"],
     "images": [
       {
-        "main": "/assets/img/cloth-6-slate.jpg",
+        "main": "/assets/img/cloth-6-slate.avif",
         "second": "",
         "color": "Slate"
       },{
-        "main": "/assets/img/cloth-6-plum.jpg",
+        "main": "/assets/img/cloth-6-plum.avif",
         "second": "",
         "color": "Plum"
       },{
-        "main": "/assets/img/cloth-6-green.jpg",
+        "main": "/assets/img/cloth-6-green.avif",
         "second": "",
         "color": "Olive"
       },{
-        "main": "/assets/img/cloth-6-chocolate.jpg",
+        "main": "/assets/img/cloth-6-chocolate.avif",
         "second": "",
         "color": "Chocolate"
       }
@@ -659,28 +659,28 @@
     "colors": ["Sky", "Purple", "Emerlad", "Olive", "Green", "Teal"],
     "images": [
       {
-        "main": "/assets/img/cloth-7-sky.jpg",
+        "main": "/assets/img/cloth-7-sky.avif",
         "second": "",
         "color": "Sky"
       },{
-        "main": "/assets/img/cloth-7-purple.jpg",
+        "main": "/assets/img/cloth-7-purple.avif",
         "second": "",
         "color": "Purple"
       },{
-        "main": "/assets/img/cloth-7-emerald.jpg",
+        "main": "/assets/img/cloth-7-emerald.avif",
         "second": "",
         "color": "Emerlad"
       },{
-        "main": "/assets/img/cloth-7-olive.jpg",
+        "main": "/assets/img/cloth-7-olive.avif",
         "second": "",
         "color": "Olive"
       },{
-        "main": "/assets/img/cloth-7-green.jpg",
+        "main": "/assets/img/cloth-7-green.avif",
         "second": "",
         "color": "Green"
       },{
-        "main": "/assets/img/cloth-7-teal.jpg",
-        "second": "/assets/img/cloth-7-teal-view-b.jpg",
+        "main": "/assets/img/cloth-7-teal.avif",
+        "second": "/assets/img/cloth-7-teal-view-b.avif",
         "color": "Teal"
       }
     ],
@@ -777,12 +777,12 @@
     "colors": ["Beige", "Black"],
     "images": [
       {
-        "main": "/assets/img/cloth-8-beige.jpg",
-        "second": "/assets/img/cloth-8-beige-view-b.jpg",
+        "main": "/assets/img/cloth-8-beige.avif",
+        "second": "/assets/img/cloth-8-beige-view-b.avif",
         "color": "Beige"
       },{
-        "main": "/assets/img/cloth-8-black.jpg",
-        "second": "/assets/img/cloth-8-black-view-b.jpg",
+        "main": "/assets/img/cloth-8-black.avif",
+        "second": "/assets/img/cloth-8-black-view-b.avif",
         "color": "Black"
       }
     ],
@@ -879,15 +879,15 @@
     "colors": ["White", "Ivory", "Black"],
     "images": [
       {
-        "main": "/assets/img/cloth-9-white.jpg",
+        "main": "/assets/img/cloth-9-white.avif",
         "second": "",
         "color": "White"
       },{
-        "main": "/assets/img/cloth-9-ivory.jpg",
+        "main": "/assets/img/cloth-9-ivory.avif",
         "second": "",
         "color": "Ivory"
       },{
-        "main": "/assets/img/cloth-9-black.jpg",
+        "main": "/assets/img/cloth-9-black.avif",
         "second": "",
         "color": "Black"
       }
@@ -985,11 +985,11 @@
     "colors": ["Orange", "Coral"],
     "images": [
       {
-        "main": "/assets/img/cloth-10-orange.jpg",
+        "main": "/assets/img/cloth-10-orange.avif",
         "second": "",
         "color": "Orange"
       },{
-        "main": "/assets/img/cloth-10-coral.jpg",
+        "main": "/assets/img/cloth-10-coral.avif",
         "second": "",
         "color": "Coral"
       }
@@ -1087,8 +1087,8 @@
     "colors": ["Sky"],
     "images": [
       {
-        "main": "/assets/img/cloth-11-sky.jpg",
-        "second": "/assets/img/cloth-11-sky-view-b.jpg",
+        "main": "/assets/img/cloth-11-sky.avif",
+        "second": "/assets/img/cloth-11-sky-view-b.avif",
         "color": "Sky"
       }
     ],
@@ -1185,12 +1185,12 @@
     "colors": ["Green", "Beige"],
     "images": [
       {
-        "main": "/assets/img/cloth-12-green.jpg",
-        "second": "/assets/img/cloth-12-green-view-b.jpg",
+        "main": "/assets/img/cloth-12-green.avif",
+        "second": "/assets/img/cloth-12-green-view-b.avif",
         "color": "Green"
       },{
-        "main": "/assets/img/cloth-12-beige.jpg",
-        "second": "/assets/img/cloth-12-beige-view-b.jpg",
+        "main": "/assets/img/cloth-12-beige.avif",
+        "second": "/assets/img/cloth-12-beige-view-b.avif",
         "color": "Beige"
       }
     ],
@@ -1287,15 +1287,15 @@
     "colors": ["Ivory", "Beige", "White"],
     "images": [
       {
-        "main": "/assets/img/cloth-13-ivory.jpg",
+        "main": "/assets/img/cloth-13-ivory.avif",
         "second": "",
         "color": "Ivory"
       },{
-        "main": "/assets/img/cloth-13-beige.jpg",
+        "main": "/assets/img/cloth-13-beige.avif",
         "second": "",
         "color": "Beige"
       },{
-        "main": "/assets/img/cloth-13-white.jpg",
+        "main": "/assets/img/cloth-13-white.avif",
         "second": "",
         "color": "White"
       }
@@ -1393,23 +1393,23 @@
     "colors": ["Black", "Blue", "Green", "Red", "Brown"],
     "images": [
       {
-        "main": "/assets/img/cloth-14-black.jpg",
+        "main": "/assets/img/cloth-14-black.avif",
         "second": "",
         "color": "Black"
       },{
-        "main": "/assets/img/cloth-14-blue.jpg",
+        "main": "/assets/img/cloth-14-blue.avif",
         "second": "",
         "color": "Blue"
       },{
-        "main": "/assets/img/cloth-14-green.jpg",
+        "main": "/assets/img/cloth-14-green.avif",
         "second": "",
         "color": "Green"
       },{
-        "main": "/assets/img/cloth-14-red.jpg",
+        "main": "/assets/img/cloth-14-red.avif",
         "second": "",
         "color": "Red"
       },{
-        "main": "/assets/img/cloth-14-brown.jpg",
+        "main": "/assets/img/cloth-14-brown.avif",
         "second": "",
         "color": "Brown"
       }
@@ -1507,12 +1507,12 @@
     "colors": ["Olive", "Ivory"],
     "images": [
       {
-        "main": "/assets/img/cloth-15-olive.jpg",
+        "main": "/assets/img/cloth-15-olive.avif",
         "second": "",
         "color": "Olive"
       },{
-        "main": "/assets/img/cloth-15-ivory.jpg",
-        "second": "/assets/img/cloth-15-ivory-view-b.jpg",
+        "main": "/assets/img/cloth-15-ivory.avif",
+        "second": "/assets/img/cloth-15-ivory-view-b.avif",
         "color": "Ivory"
       }
     ],
@@ -1609,15 +1609,15 @@
     "colors": ["Black", "Ivory", "Blue"],
     "images": [
       {
-        "main": "/assets/img/cloth-16-black.jpg",
+        "main": "/assets/img/cloth-16-black.avif",
         "second": "",
         "color": "Black"
       },{
-        "main": "/assets/img/cloth-16-ivory.jpg",
+        "main": "/assets/img/cloth-16-ivory.avif",
         "second": "",
         "color": "Ivory"
       },{
-        "main": "/assets/img/cloth-16-blue.jpg",
+        "main": "/assets/img/cloth-16-blue.avif",
         "second": "",
         "color": "Blue"
       }
@@ -1715,11 +1715,11 @@
     "colors": ["Black", "Beige"],
     "images": [
       {
-        "main": "/assets/img/cloth-17-black.jpg",
+        "main": "/assets/img/cloth-17-black.avif",
         "second": "",
         "color": "Black"
       },{
-        "main": "/assets/img/cloth-17-beige.jpg",
+        "main": "/assets/img/cloth-17-beige.avif",
         "second": "",
         "color": "Beige"
       }
@@ -1817,15 +1817,15 @@
     "colors": ["White", "Beige", "Sapphire"],
     "images": [
       {
-        "main": "/assets/img/cloth-18-white.jpg",
+        "main": "/assets/img/cloth-18-white.avif",
         "second": "",
         "color": "White"
       },{
-        "main": "/assets/img/cloth-18-beige.jpg",
+        "main": "/assets/img/cloth-18-beige.avif",
         "second": "",
         "color": "Beige"
       },{
-        "main": "/assets/img/cloth-18-sapphire.jpg",
+        "main": "/assets/img/cloth-18-sapphire.avif",
         "second": "",
         "color": "Sapphire"
       }
@@ -1923,19 +1923,19 @@
     "colors": ["Charcoal", "Blue", "Sapphire", "Red"],
     "images": [
       {
-        "main": "/assets/img/cloth-19-charcoal.jpg",
+        "main": "/assets/img/cloth-19-charcoal.avif",
         "second": "",
         "color": "Charcoal"
       },{
-        "main": "/assets/img/cloth-19-blue.jpg",
+        "main": "/assets/img/cloth-19-blue.avif",
         "second": "",
         "color": "Blue"
       },{
-        "main": "/assets/img/cloth-19-sapphire.jpg",
+        "main": "/assets/img/cloth-19-sapphire.avif",
         "second": "",
         "color": "Sapphire"
       },{
-        "main": "/assets/img/cloth-19-red.jpg",
+        "main": "/assets/img/cloth-19-red.avif",
         "second": "",
         "color": "Red"
       }
@@ -2033,23 +2033,23 @@
     "colors": ["Hunter", "Emerald", "Coral", "Purple", "Ivory"],
     "images": [
       {
-        "main": "/assets/img/cloth-20-hunter.jpg",
+        "main": "/assets/img/cloth-20-hunter.avif",
         "second": "",
         "color": "Hunter"
       },{
-        "main": "/assets/img/cloth-20-emerald.jpg",
+        "main": "/assets/img/cloth-20-emerald.avif",
         "second": "",
         "color": "Emerald"
       },{
-        "main": "/assets/img/cloth-20-coral.jpg",
+        "main": "/assets/img/cloth-20-coral.avif",
         "second": "",
         "color": "Coral"
       },{
-        "main": "/assets/img/cloth-20-purple.jpg",
+        "main": "/assets/img/cloth-20-purple.avif",
         "second": "",
         "color": "Purple"
       },{
-        "main": "/assets/img/cloth-20-ivory.jpg",
+        "main": "/assets/img/cloth-20-ivory.avif",
         "second": "",
         "color": "Ivory"
       }
@@ -2147,8 +2147,8 @@
     "colors": ["Black"],
     "images": [
       {
-        "main": "/assets/img/cloth-21-black.jpg",
-        "second": "/assets/img/cloth-21-black-view-b.jpg",
+        "main": "/assets/img/cloth-21-black.avif",
+        "second": "/assets/img/cloth-21-black-view-b.avif",
         "color": "Black"
       }
     ],
