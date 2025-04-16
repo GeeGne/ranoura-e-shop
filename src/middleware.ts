@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 // supported locales
 const locales = ['en', 'ar'];
 const defaultLocale = 'en';
+const defaultAdminUrl = '/view-tabs'
 
 function hasLocalePrefix(pathname: string): boolean {
   if (locales.some(locale => pathname === `/${locale}`)) {
@@ -25,7 +26,9 @@ export function middleware(req: NextRequest) {
 
   const hasAdmin = req.url.endsWith('admin');
   if (hasAdmin) {
-    // return NextResponse.redirect()
+    console.log('url: ', `${pathname}${defaultAdminUrl}`);
+    const newUrl = new URL(`${pathname}${defaultAdminUrl}`, req.url);
+    return NextResponse.redirect(newUrl);
   }
   
   console.log('has no Admin');
