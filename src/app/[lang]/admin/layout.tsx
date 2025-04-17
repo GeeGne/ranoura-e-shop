@@ -7,7 +7,7 @@ export default function Layout ({children}: any) {
       className="flex flex-row bg-red-300"
     >
       <Categories
-        className="h-full bg-blue-400"
+        className="h-full bg-[var(--background-light-color)]"
       />
       <section
         className="flex-1 h-full bg-yellow-400"

@@ -1,11 +1,23 @@
 [
   {
-    "name": "this"
+    "name": "View Tabs"
   },{
-    "name": "is"
+    "name": "Edit Products"
   },{
-    "name": "a"
+    "name": "General Settings"
   },{
-    "name": "category"
+    "name": "View Users"
+  },{
+    "name": "Edit FilmTape"
+  },{
+    "name": "Edit Social Links"
+  },{
+    "name": "Edit Categories"
+  },{
+    "name": "Edit SubCategories"
+  },{
+    "name": "Edit Video"
+  },{
+    "name": "Edit Themes"
   }
 ]
