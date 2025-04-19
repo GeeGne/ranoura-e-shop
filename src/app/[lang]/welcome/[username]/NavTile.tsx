@@ -49,7 +49,7 @@ export default function NavTile ({ className, tabName, ...props }: Props) {
             transition-all duration-300 ease-in-out
           `}                
         >
-          Orders    
+          Orders 
         </span>
       </Link>
     </nav>
