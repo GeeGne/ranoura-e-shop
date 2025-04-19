@@ -19,12 +19,15 @@ export default function Categories ({className, props}: Props) {
 
   const [ toggle, setToggle ] = useState<boolean>(false);
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement | HTMLDivElement>) => {
     const { type } = e.currentTarget.dataset;
 
     switch (type) {
       case 'close_button_is_clicked':
         setToggle(false);
+        break;
+      case 'open_button_is_clicked':
+        setToggle(true);
         break;
       default:
         console.error('Unknown Type: ', type);
@@ -36,16 +39,28 @@ export default function Categories ({className, props}: Props) {
       className={`
         ${className} p-4
         relative flex flex-col gap-2 overflow-hidden
-        ${toggle ? '' : 'w-12'}
+        transition-all duration-300 ease-in-out
+        ${toggle ? 'w-[200px]' : 'w-12 hover:w-16'}
       `}
       { ...props }
     >
       <div
+        className="
+          absolute top-0 right-0 w-[2px] h-full 
+          bg-primary blur-[2px]
+        "
+      />
+      <div
         className={`
-          flex flex-col gap-2
-          h-full
-          ${toggle ? '' : 'w-12'}
+          absolute top-4 left-1/2 translate-x-[-50%]
+          flex flex-col gap-1
+          h-full text-heading font-bold text-lg items-center
+          transition-all duration-300 ease-in-out
+          ${toggle ? 'invisible opacity-0' : 'visible opacity-100'}
         `}
+        role="button"
+        data-type="open_button_is_clicked"
+        onClick={handleClick}
       >
         <span>
           C
@@ -74,6 +89,9 @@ export default function Categories ({className, props}: Props) {
         <span>
           S
         </span>
+        <LsiconOpenNewOutline 
+          className="w-6 h-6"
+        />
       </div>
       <div
         className={`
@@ -88,7 +106,10 @@ export default function Categories ({className, props}: Props) {
           Categoreis
         </h2>
         <button
-          className="border-solid border-inbetween border-[1px] px-2 rounded-[8px]"
+          className="
+            border-solid border-inbetween hover:border-body border-[1px] px-2 rounded-[8px]
+            transition-all duration-300 ease-in-out
+          "
           data-type="close_button_is_clicked"
           onClick={handleClick}
         >

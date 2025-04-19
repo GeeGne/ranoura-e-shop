@@ -210,3 +210,7 @@
     background-color: var(--font-heading-invert-color) !important;
   }    
 }
+
+.shadow-inset {
+  box-shadow: inset -4px 0px 6px 2px var(--inbetween-color);
+}
