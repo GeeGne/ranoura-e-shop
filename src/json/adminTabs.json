@@ -1,23 +1,43 @@
 [
   {
-    "name": "View Tabs"
+    "name": "View Tabs",
+    "slug": "view-tabs",
+    "type": "view"
   },{
-    "name": "Edit Products"
+    "name": "Edit Products",
+    "slug": "edit-products",
+    "type": "edit"
   },{
-    "name": "General Settings"
+    "name": "General Settings",
+    "slug": "general-setings",
+    "type": "edit"
   },{
-    "name": "View Users"
+    "name": "View Users",
+    "slug": "view-users",
+    "type": "view"
   },{
-    "name": "Edit FilmTape"
+    "name": "Edit FilmTape",
+    "slug": "edit-filmTape",
+    "type": "edit"
   },{
-    "name": "Edit Social Links"
+    "name": "Edit Social Links",
+    "slug": "edit-soical-links",
+    "type": "edit"
   },{
-    "name": "Edit Categories"
+    "name": "Edit Categories",
+    "slug": "edit-categories",
+    "type": "edit"
   },{
-    "name": "Edit SubCategories"
+    "name": "Edit SubCategories",
+    "slug": "edit-subCategories",
+    "type": "edit"
   },{
-    "name": "Edit Video"
+    "name": "Edit Video",
+    "slug": "edit-video",
+    "type": "edit"
   },{
-    "name": "Edit Themes"
+    "name": "Edit Themes",
+    "slug": "edit-themes",
+    "type": "edit"
   }
 ]
