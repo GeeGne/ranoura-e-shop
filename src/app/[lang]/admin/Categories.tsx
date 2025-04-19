@@ -14,10 +14,11 @@ type Props = {
   className?: string;
 };
 
-
 export default function Categories ({className, props}: Props) {
 
   const [ toggle, setToggle ] = useState<boolean>(false);
+  const viewArray = adminTabs?.filter(tab => tab.type === 'view');
+  const editArray = adminTabs?.filter(tab => tab.type === 'edit');
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement | HTMLDivElement>) => {
     const { type } = e.currentTarget.dataset;
@@ -38,7 +39,7 @@ export default function Categories ({className, props}: Props) {
     <section
       className={`
         ${className} p-4
-        relative flex flex-col gap-2 overflow-hidden
+        relative flex flex-col gap-2 overflow-hidden whitespace-nowrap
         transition-all duration-300 ease-in-out
         ${toggle ? 'w-[200px]' : 'w-12 hover:w-16'}
       `}
@@ -101,7 +102,7 @@ export default function Categories ({className, props}: Props) {
         `}
       >
         <h2
-          className="text-content text-xl font-medium underline"
+          className="text-content text-xl font-medium"
         >
           Categoreis
         </h2>
@@ -131,7 +132,23 @@ export default function Categories ({className, props}: Props) {
           ${toggle ? 'visible opacity-100' : 'invisible opacity-0'}
         `}
       >
-        {adminTabs.map((itm, i) =>
+        {viewArray.map((itm, i) =>
+          <li
+            key={i}
+            className="text-body text-base"
+          >
+            {itm.name}
+          </li>
+        )}
+      </ul>
+      <ul
+        className={`
+          flex flex-col gap-2
+          transition-all duration-300 ease-in-out
+          ${toggle ? 'visible opacity-100' : 'invisible opacity-0'}
+        `}
+      >
+        {editArray.map((itm, i) =>
           <li
             key={i}
             className="text-body text-base"
