@@ -3,11 +3,17 @@
 // HOOKS
 import { useState } from 'react';
 
+// COMPONENTS
+import CatType from '@/app/[lang]/admin/categories/CatType';
+
 // SVGS
 import LsiconOpenNewOutline from '@/components/svgs/LsiconOpenNewOutline';
 
 // JSON
 import adminTabs from '@/json/adminTabs.json';
+
+// STORES
+import { useTabNameStore } from '@/stores/index';
 
 type Props = {
   props?: React.HTMLAttributes<HTMLElement>;
@@ -17,8 +23,9 @@ type Props = {
 export default function Categories ({className, props}: Props) {
 
   const [ toggle, setToggle ] = useState<boolean>(false);
-  const viewArray = adminTabs?.filter(tab => tab.type === 'view');
-  const editArray = adminTabs?.filter(tab => tab.type === 'edit');
+  const viewArray = adminTabs.filter(tab => tab.type === 'view');
+  const editArray = adminTabs.filter(tab => tab.type === 'edit');
+  const tabName = useTabNameStore((state: any) => state.tabName);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement | HTMLDivElement>) => {
     const { type } = e.currentTarget.dataset;
@@ -102,7 +109,7 @@ export default function Categories ({className, props}: Props) {
         `}
       >
         <h2
-          className="text-content text-xl font-medium"
+          className="text-heading text-xl"
         >
           Categoreis
         </h2>
@@ -125,6 +132,13 @@ export default function Categories ({className, props}: Props) {
           className=""
         />
       </div>
+      <CatType 
+        type="VIEW"
+        className={`
+          transition-all duration-300 ease-in-out
+          ${toggle ? 'visible opacity-100' : 'invisible opacity-0'}
+        `}
+      />
       <ul
         className={`
           flex flex-col gap-2
@@ -135,12 +149,21 @@ export default function Categories ({className, props}: Props) {
         {viewArray.map((itm, i) =>
           <li
             key={i}
-            className="text-body text-base"
+            className={`
+              ${itm.slug === tabName ? 'text-content font-bold text-base' : 'text-body text-base'}
+            `}
           >
             {itm.name}
           </li>
         )}
       </ul>
+      <CatType 
+        type="EDIT"
+        className={`
+          transition-all duration-300 ease-in-out
+          ${toggle ? 'visible opacity-100' : 'invisible opacity-0'}
+        `}
+      />
       <ul
         className={`
           flex flex-col gap-2

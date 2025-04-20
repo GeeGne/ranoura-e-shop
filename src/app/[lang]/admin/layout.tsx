@@ -1,5 +1,5 @@
 // COMPONENTS
-import Categories from '@/app/[lang]/admin/Categories';
+import Categories from '@/app/[lang]/admin/categories/index';
 import CurrentCategoryAndBackToHome from '@/app/[lang]/admin/CurrentCategoryAndBackToHome';
 
 export default function Layout ({children}: any) {
