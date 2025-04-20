@@ -2,10 +2,12 @@
 
 // HOOKS
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 // COMPONENTS
 import IconoirHomeAltSlim from '@/components/svgs/IconoirHomeAltSlim';
 import EpUser from "@/components/svgs/EpUser";
+import BtnB from "@/components/BtnB";
 
 // STORES
 import { useTabNameStore } from '@/stores/index';
@@ -36,20 +38,32 @@ export default function CurrentCategoryAndBackToHome () {
       <div 
         className="flex gap-4"
       >
-        <button
-          className="border-solid border-heading border-[1px] p-1 rotate-45 rounded-md"
+        <BtnB
+          className="
+            group bg-transparent hover:bg-heading
+            transition-all duration-300 ease-in-out
+          "
         >
           <IconoirHomeAltSlim 
-            className="rotate-[-45deg]"
+            className="
+              rotate-[-45deg] text-heading group-hover:text-heading-invert
+              transition-all duration-300 ease-in-out
+            "
           />
-        </button>
-        <button
-          className="border-solid border-heading border-[1px] p-1 rotate-45 rounded-md"
+        </BtnB>
+        <BtnB
+          className="
+            group bg-transparent hover:bg-heading
+            transition-all duration-300 ease-in-out
+          "
         >
           <EpUser 
-            className="rotate-[-45deg] w-6 h-6"
+            className="
+              rotate-[-45deg] w-6 h-6 text-heading group-hover:text-heading-invert
+              transition-all duration-300 ease-in-out
+            "
           />
-        </button>
+        </BtnB>
       </div>
     </div>
   )
