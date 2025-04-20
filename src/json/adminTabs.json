@@ -9,7 +9,7 @@
     "type": "edit"
   },{
     "name": "General Settings",
-    "slug": "general-setings",
+    "slug": "edit-general-setings",
     "type": "edit"
   },{
     "name": "Users",

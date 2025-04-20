@@ -2,9 +2,11 @@
 
 // HOOKS
 import { useState } from 'react';
+import Link from 'next/link';
 
 // COMPONENTS
 import CatType from '@/app/[lang]/admin/categories/CatType';
+import UnderlineStyle from '@/components/UnderlineStyle';
 
 // SVGS
 import LsiconOpenNewOutline from '@/components/svgs/LsiconOpenNewOutline';
@@ -111,7 +113,7 @@ export default function Categories ({className, props}: Props) {
         <h2
           className="text-heading text-xl"
         >
-          Categoreis
+          CATEGORIES
         </h2>
         <button
           className="
@@ -150,11 +152,19 @@ export default function Categories ({className, props}: Props) {
           <li
             key={i}
             className={`
+              transition-all duration-300 ease-in-out
+              hover:font-bold hover:text-heading
               ${itm.slug === tabName ? 'text-content font-bold text-base' : 'text-body text-base'}
             `}
           >
-            {itm.name}
-          </li>
+            <Link
+              href={`/admin/${itm.slug}`}
+              className="group relative inline-block"
+            >
+              {itm.name}
+              <UnderlineStyle style={{backgroundColor: 'var(--font-heading-color)'}} />
+            </Link>
+          </li>          
         )}
       </ul>
       <CatType 
@@ -174,9 +184,19 @@ export default function Categories ({className, props}: Props) {
         {editArray.map((itm, i) =>
           <li
             key={i}
-            className="text-body text-base"
+            className={`
+              transition-all duration-300 ease-in-out
+              hover:font-bold hover:text-heading
+              ${itm.slug === tabName ? 'text-content font-bold text-base' : 'text-body text-base'}
+            `}
           >
-            {itm.name}
+            <Link
+              href={`/admin/${itm.slug}`}
+              className="group relative inline-block"
+            >
+              {itm.name}
+              <UnderlineStyle style={{backgroundColor: 'var(--font-heading-color)'}} />
+            </Link>
           </li>
         )}
       </ul>
