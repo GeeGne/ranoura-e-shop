@@ -1,9 +1,16 @@
+// STORES
+import { useLanguageStore } from '@/stores/index';
+
 type Props = {
   type?: string;
   className?: string;
 }
 
 export default function CatType ({ type, className, ...props }: Props) {
+
+  const lang = useLanguageStore((state) => state.lang);
+  const isEn = lang === 'en';
+
   return (
     <div
       className={`
@@ -12,10 +19,11 @@ export default function CatType ({ type, className, ...props }: Props) {
       { ...props }
     >
       <h3
-        className="
-          absolute top-1/2 left-4 translate-y-[-50%]
+        className={`
+          absolute top-1/2 translate-y-[-50%]
           text-body-extra-light font-bold text-sm bg-background px-1 z-[5]
-        "
+          ${isEn ? 'left-4' : 'right-4'}
+        `}
       >
         {type || 'default'}
       </h3>

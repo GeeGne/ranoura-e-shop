@@ -15,7 +15,7 @@ import LsiconOpenNewOutline from '@/components/svgs/LsiconOpenNewOutline';
 import adminTabs from '@/json/adminTabs.json';
 
 // STORES
-import { useTabNameStore } from '@/stores/index';
+import { useTabNameStore, useLanguageStore } from '@/stores/index';
 
 type Props = {
   props?: React.HTMLAttributes<HTMLElement>;
@@ -24,6 +24,8 @@ type Props = {
 
 export default function Categories ({className, props}: Props) {
 
+  const lang = useLanguageStore((state) => state.lang);
+  const isEn = lang === 'en';
   const [ toggle, setToggle ] = useState<boolean>(false);
   const viewArray = adminTabs.filter(tab => tab.type === 'view');
   const editArray = adminTabs.filter(tab => tab.type === 'edit');
@@ -72,8 +74,12 @@ export default function Categories ({className, props}: Props) {
         data-type="open_button_is_clicked"
         onClick={handleClick}
       >
-        <span>C</span><span>A</span><span>T</span><span>E</span><span>G</span>
-        <span>R</span><span>I</span><span>E</span><span>S</span>
+        {isEn 
+          ? <><span>C</span><span>A</span><span>T</span><span>E</span><span>G</span>
+            <span>R</span><span>I</span><span>E</span><span>S</span></> 
+          : <><span>ا</span><span>ل</span><span>ف</span>
+            <span>ء</span><span>ا</span><span>ت</span></>
+        }
         <LsiconOpenNewOutline 
           className="w-6 h-6"
         />
@@ -88,7 +94,7 @@ export default function Categories ({className, props}: Props) {
         <h2
           className="text-heading text-xl"
         >
-          CATEGORIES
+          {isEn ? 'CATEGORIES' : 'الفئات'}
         </h2>
         <button
           className="
@@ -110,7 +116,7 @@ export default function Categories ({className, props}: Props) {
         />
       </div>
       <CatType 
-        type="VIEW"
+        type={isEn ? "VIEW" : "عرض"}
         className={`
           transition-all duration-300 ease-in-out
           ${toggle ? 'visible opacity-100' : 'invisible opacity-0'}
@@ -123,7 +129,7 @@ export default function Categories ({className, props}: Props) {
           ${toggle ? 'visible opacity-100' : 'invisible opacity-0'}
         `}
       >
-        {viewArray.map((itm, i) =>
+        {viewArray.map((itm: any, i) =>
           <li
             key={i}
             className={`
@@ -136,14 +142,14 @@ export default function Categories ({className, props}: Props) {
               href={`/admin/${itm.slug}`}
               className="group relative inline-block"
             >
-              {itm.name}
+              {itm.name[lang]}
               <UnderlineStyle style={{backgroundColor: 'var(--font-heading-color)'}} />
             </Link>
           </li>          
         )}
       </ul>
       <CatType 
-        type="EDIT"
+        type={isEn ? "EDIT" : "تعديل"}
         className={`
           transition-all duration-300 ease-in-out
           ${toggle ? 'visible opacity-100' : 'invisible opacity-0'}
@@ -156,7 +162,7 @@ export default function Categories ({className, props}: Props) {
           ${toggle ? 'visible opacity-100' : 'invisible opacity-0'}
         `}
       >
-        {editArray.map((itm, i) =>
+        {editArray.map((itm: any, i) =>
           <li
             key={i}
             className={`
@@ -169,7 +175,7 @@ export default function Categories ({className, props}: Props) {
               href={`/admin/${itm.slug}`}
               className="group relative inline-block"
             >
-              {itm.name}
+              {itm.name[lang]}
               <UnderlineStyle style={{backgroundColor: 'var(--font-heading-color)'}} />
             </Link>
           </li>

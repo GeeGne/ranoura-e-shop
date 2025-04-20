@@ -1,42 +1,42 @@
 [
   {
-    "name": "Tabs",
+    "name": {"en": "Tabs", "ar": "التبويبات"},
     "slug": "view-tabs",
     "type": "view"
   },{
-    "name": "Products",
+    "name": {"en": "Products", "ar": "المنتجات"},
     "slug": "edit-products",
     "type": "edit"
   },{
-    "name": "General Settings",
+    "name": {"en": "General Settings", "ar": "الإعدادات العامة"},
     "slug": "edit-general-settings",
     "type": "edit"
   },{
-    "name": "Users",
+    "name": {"en": "Users", "ar": "المستخدمون"},
     "slug": "view-users",
     "type": "view"
   },{
-    "name": "FilmTape",
+    "name": {"en": "FilmTape", "ar": "شريط الفيلم"},
     "slug": "edit-filmTape",
     "type": "edit"
   },{
-    "name": "Social Links",
+    "name": {"en": "Social Links", "ar": "روابط التواصل الاجتماعي"},
     "slug": "edit-social-links",
     "type": "edit"
   },{
-    "name": "Categories",
+    "name": {"en": "Categories", "ar": "الفئات"},
     "slug": "edit-categories",
     "type": "edit"
   },{
-    "name": "SubCategories",
+    "name": {"en": "SubCategories", "ar": "الفئات الفرعية"},
     "slug": "edit-subCategories",
     "type": "edit"
   },{
-    "name": "Video",
+    "name": {"en": "Video", "ar": "الفيديو"},
     "slug": "edit-video",
     "type": "edit"
   },{
-    "name": "Themes",
+    "name": {"en": "Themes", "ar": "الثيمات"},
     "slug": "edit-themes",
     "type": "edit"
   }
