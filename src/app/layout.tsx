@@ -61,7 +61,7 @@ export default function RootLayout({
           <Footer />
         </div>
         <FixedLayouts>
-          <LoadingScreen />
+          {/* <LoadingScreen /> */}
           <Cart />
           <Navbar />
           <SelectLang />

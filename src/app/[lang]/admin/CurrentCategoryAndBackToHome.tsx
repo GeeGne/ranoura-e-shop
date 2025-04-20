@@ -3,6 +3,10 @@
 // HOOKS
 import { useState, useEffect } from 'react';
 
+// COMPONENTS
+import IconoirHomeAltSlim from '@/components/svgs/IconoirHomeAltSlim';
+import EpUser from "@/components/svgs/EpUser";
+
 // STORES
 import { useTabNameStore } from '@/stores/index';
 
@@ -22,13 +26,31 @@ export default function CurrentCategoryAndBackToHome () {
 
   return (
     <div
-      className=""
+      className="flex items-center justify-between"
     >
       <h2
         className="text-2xl font-bold text-heading"
       >
         {title}
       </h2>
+      <div 
+        className="flex gap-4"
+      >
+        <button
+          className="border-solid border-heading border-[1px] p-1 rotate-45 rounded-md"
+        >
+          <IconoirHomeAltSlim 
+            className="rotate-[-45deg]"
+          />
+        </button>
+        <button
+          className="border-solid border-heading border-[1px] p-1 rotate-45 rounded-md"
+        >
+          <EpUser 
+            className="rotate-[-45deg] w-6 h-6"
+          />
+        </button>
+      </div>
     </div>
   )
 }

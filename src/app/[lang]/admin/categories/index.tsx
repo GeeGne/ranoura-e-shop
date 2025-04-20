@@ -72,33 +72,8 @@ export default function Categories ({className, props}: Props) {
         data-type="open_button_is_clicked"
         onClick={handleClick}
       >
-        <span>
-          C
-        </span>
-        <span>
-          A
-        </span>
-        <span>
-          T
-        </span>
-        <span>
-          E
-        </span>
-        <span>
-          G
-        </span>
-        <span>
-          R
-        </span>
-        <span>
-          I
-        </span>
-        <span>
-          E
-        </span>
-        <span>
-          S
-        </span>
+        <span>C</span><span>A</span><span>T</span><span>E</span><span>G</span>
+        <span>R</span><span>I</span><span>E</span><span>S</span>
         <LsiconOpenNewOutline 
           className="w-6 h-6"
         />

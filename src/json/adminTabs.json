@@ -9,7 +9,7 @@
     "type": "edit"
   },{
     "name": "General Settings",
-    "slug": "edit-general-setings",
+    "slug": "edit-general-settings",
     "type": "edit"
   },{
     "name": "Users",
@@ -21,7 +21,7 @@
     "type": "edit"
   },{
     "name": "Social Links",
-    "slug": "edit-soical-links",
+    "slug": "edit-social-links",
     "type": "edit"
   },{
     "name": "Categories",
