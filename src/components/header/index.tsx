@@ -29,9 +29,10 @@ const logo = "/assets/img/ranoura-logo.png";
 type Props = {
   onScroll?: any;
   layoutRef?: any;
+  className?: string;
 }
 
-export default function Header({ onScroll, layoutRef, ...props }: Props) {
+export default function Header({ className, onScroll, layoutRef, ...props }: Props) {
   
   const router = useRouter();
 
@@ -108,6 +109,7 @@ export default function Header({ onScroll, layoutRef, ...props }: Props) {
         before:w-[100vw] before:h-full before:z-[-1]
         transition-all ease-in-out duration-300
         before:transition-all before:ease-in-out before:duration-300
+        ${className}
         ${
           isWindowScrolled 
             ? "bg-primary before:bg-primary"

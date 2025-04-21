@@ -57,16 +57,17 @@ export default function Categories ({className, props}: Props) {
       { ...props }
     >
       <div
-        className="
-          absolute top-0 right-0 w-[2px] h-full 
+        className={`
+          absolute top-0 w-[2px] h-full 
           bg-primary blur-[2px]
-        "
+          ${isEn ? 'right-0' : 'left-0'}
+        `}
       />
       <div
         className={`
           absolute top-4 left-1/2 translate-x-[-50%]
           flex flex-col gap-1
-          h-full text-heading font-bold text-lg items-center
+          h-full text-body font-bold text-lg items-center
           transition-all duration-300 ease-in-out
           ${toggle ? 'invisible opacity-0' : 'visible opacity-100'}
         `}
@@ -81,7 +82,10 @@ export default function Categories ({className, props}: Props) {
             <span>ء</span><span>ا</span><span>ت</span></>
         }
         <LsiconOpenNewOutline 
-          className="w-6 h-6"
+          className={`
+            w-6 h-6 text-body
+            ${isEn ? 'rotate-0' : 'rotate-180'}
+          `}
         />
       </div>
       <div
@@ -106,14 +110,6 @@ export default function Categories ({className, props}: Props) {
         >
           X
         </button>
-      </div>
-      <div
-        className="hidden absolute top-4 right-4"
-      >
-        <LsiconOpenNewOutline 
-          role="button"
-          className=""
-        />
       </div>
       <CatType 
         type={isEn ? "VIEW" : "عرض"}

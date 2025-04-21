@@ -17,7 +17,11 @@ import { useAlertMessageStore, useLanguageStore } from '@/stores/index';
 const logo = '/assets/img/ranoura-logo(2).png';
 const background = '/public/assets/img/background(2).avif';
 
-export default function Footer ({ ...props }) {
+type Props = {
+  className?: string;
+}
+
+export default function Footer ({ className, ...props }: Props) {
 
   const lang = useLanguageStore((state) => state.lang);
   const isEn = lang === 'en';
@@ -42,11 +46,12 @@ export default function Footer ({ ...props }) {
 
   return (
     <footer 
-      className="
+      className={`
         relative flex flex-col gap-4 p-4 bg-primary
         before:content-[''] before:absolute before:top-0 before:left-1/2
-        before:translate-x-[-50%] before:w-screen before:h-full before:bg-primary before:z-[-1]
-      "
+        before:translate-x-[-50%] before:w-screen before:h-full before:bg-primary before:z-[-1]\
+        ${className}
+      `}
       {...props}
     >
       <section

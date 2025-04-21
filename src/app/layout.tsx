@@ -2,6 +2,7 @@
 
 // HOOKS
 import { useState } from 'react';
+import { usePathname, useSearchParams } from 'next/navigation';
 import "./globals.css";
 
 // COMPONENTS
@@ -27,10 +28,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const layoutRef = useLayoutRefStore(state => state.layoutRef);
   const setLayoutRef = useLayoutRefStore(state => state.setLayoutRef);
   const lang = useLanguageStore(state => state.lang);
   const [ onScroll, setOnScroll ] = useState<any>(null);
+
+  const pathNameIncludesAdmin = () => pathname.includes('/admin');
+  console.log(pathNameIncludesAdmin());
 
   // DEBUG & UI
   // const handleScroll = (e: any) => console.log('wrokign');
@@ -46,19 +52,26 @@ export default function RootLayout({
           onScroll={(e: any) => setOnScroll(e)}
           ref={(el: any) => setLayoutRef(el)}
         >
-          <Header onScroll={onScroll} layoutRef={layoutRef}/>
+          <Header 
+            onScroll={onScroll} 
+            layoutRef={layoutRef}
+            className={`${pathNameIncludesAdmin() ? 'hidden' : 'visible'}`}
+          />
           <Main
             className="relative bg-background pb-[2rem] md:pb-[3rem] lg:pb-[3rem]"
           >
             {children}
             <BottomBorder
-              className="
+              className={`
                 absolute top-[100%] origin-top scale-x-[105%]
                 scale-y-[50%] md:scale-y-[35%] lg:scale-y-[25%] text-primary rotate-180
-              "
+                ${pathNameIncludesAdmin() ? 'hidden' : 'visible'}
+              `}
             />
           </Main>
-          <Footer />
+          <Footer 
+            className={`${pathNameIncludesAdmin() ? 'hidden' : 'visible'}`}
+          />
         </div>
         <FixedLayouts>
           {/* <LoadingScreen /> */}
