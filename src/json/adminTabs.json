@@ -8,8 +8,8 @@
     "slug": "edit-products",
     "type": "edit"
   },{
-    "name": {"en": "General Settings", "ar": "الإعدادات العامة"},
-    "slug": "edit-general-settings",
+    "name": {"en": "Settings", "ar": "الإعدادات العامة"},
+    "slug": "edit-settings",
     "type": "edit"
   },{
     "name": {"en": "Users", "ar": "المستخدمون"},

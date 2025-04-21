@@ -21,7 +21,7 @@ export default function CatType ({ type, className, ...props }: Props) {
       <h3
         className={`
           absolute top-1/2 translate-y-[-50%]
-          text-body-extra-light font-bold text-sm bg-background px-1 z-[5]
+          text-body-extra-light font-bold text-sm bg-primary px-1 z-[5]
           ${isEn ? 'left-4' : 'right-4'}
         `}
       >

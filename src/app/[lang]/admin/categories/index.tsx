@@ -50,7 +50,8 @@ export default function Categories ({className, props}: Props) {
     <section
       className={`
         ${className} p-4
-        relative flex flex-col gap-2 overflow-hidden whitespace-nowrap
+        relative flex flex-col gap-2
+        bg-primary overflow-hidden whitespace-nowrap
         transition-all duration-300 ease-in-out
         ${toggle ? 'w-[200px]' : 'w-12 hover:w-16'}
       `}
@@ -58,8 +59,8 @@ export default function Categories ({className, props}: Props) {
     >
       <div
         className={`
-          absolute top-0 w-[2px] h-full 
-          bg-primary blur-[2px]
+          absolute top-0 w-[2px] h-full
+          bg-background blur-[2px]
           ${isEn ? 'right-0' : 'left-0'}
         `}
       />
@@ -67,7 +68,7 @@ export default function Categories ({className, props}: Props) {
         className={`
           absolute top-4 left-1/2 translate-x-[-50%]
           flex flex-col gap-1
-          h-full text-body font-bold text-lg items-center
+          h-full text-heading-invert font-bold text-lg items-center
           transition-all duration-300 ease-in-out
           ${toggle ? 'invisible opacity-0' : 'visible opacity-100'}
         `}
@@ -83,26 +84,26 @@ export default function Categories ({className, props}: Props) {
         }
         <LsiconOpenNewOutline 
           className={`
-            w-6 h-6 text-body
+            w-6 h-6 text-heading-invert
             ${isEn ? 'rotate-0' : 'rotate-180'}
           `}
         />
       </div>
       <div
         className={`
-          flex items-center justify-between text-xl font-medium text-heading
+          flex items-center justify-between text-xl font-medium text-heading-invert
           transition-all duration-300 ease-in-out
           ${toggle ? 'visible opacity-100' : 'invisible opacity-0'}
         `}
       >
         <h2
-          className="text-heading text-xl"
+          className="text-heading-invert text-xl"
         >
           {isEn ? 'CATEGORIES' : 'الفئات'}
         </h2>
         <button
           className="
-            border-solid border-inbetween hover:border-body border-[1px] px-2 rounded-[8px]
+            border-solid border-inbetween hover:border-body-invert border-[1px] px-2 rounded-[8px]
             transition-all duration-300 ease-in-out
           "
           data-type="close_button_is_clicked"
@@ -130,8 +131,8 @@ export default function Categories ({className, props}: Props) {
             key={i}
             className={`
               transition-all duration-300 ease-in-out
-              hover:font-bold hover:text-heading
-              ${itm.slug === tabName ? 'text-content font-bold text-base' : 'text-body text-base'}
+              hover:font-bold hover:text-heading-invert
+              ${itm.slug === tabName ? 'text-heading-invert font-bold text-base' : 'text-body-invert text-base'}
             `}
           >
             <Link
@@ -139,7 +140,7 @@ export default function Categories ({className, props}: Props) {
               className="group relative inline-block"
             >
               {itm.name[lang]}
-              <UnderlineStyle style={{backgroundColor: 'var(--font-heading-color)'}} />
+              <UnderlineStyle />
             </Link>
           </li>          
         )}
@@ -163,8 +164,8 @@ export default function Categories ({className, props}: Props) {
             key={i}
             className={`
               transition-all duration-300 ease-in-out
-              hover:font-bold hover:text-heading
-              ${itm.slug === tabName ? 'text-content font-bold text-base' : 'text-body text-base'}
+              hover:font-bold hover:text-heading-invert
+              ${itm.slug === tabName ? 'text-heading-invert font-bold text-base' : 'text-body-invert text-base'}
             `}
           >
             <Link
@@ -172,7 +173,7 @@ export default function Categories ({className, props}: Props) {
               className="group relative inline-block"
             >
               {itm.name[lang]}
-              <UnderlineStyle style={{backgroundColor: 'var(--font-heading-color)'}} />
+              <UnderlineStyle />
             </Link>
           </li>
         )}

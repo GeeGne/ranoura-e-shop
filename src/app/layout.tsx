@@ -58,7 +58,10 @@ export default function RootLayout({
             className={`${pathNameIncludesAdmin() ? 'hidden' : 'visible'}`}
           />
           <Main
-            className="relative bg-background pb-[2rem] md:pb-[3rem] lg:pb-[3rem]"
+            className={`
+              relative bg-background
+              ${pathNameIncludesAdmin() ? 'pb-[0rem]' : 'pb-[2rem] md:pb-[3rem] lg:pb-[3rem]'}
+            `}
           >
             {children}
             <BottomBorder
