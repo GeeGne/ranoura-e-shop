@@ -7,6 +7,7 @@ import Link from 'next/link';
 // COMPONENTS
 import CatType from '@/app/[lang]/admin/categories/CatType';
 import UnderlineStyle from '@/components/UnderlineStyle';
+import Icon from '@/components/Icon';
 
 // SVGS
 import LsiconOpenNewOutline from '@/components/svgs/LsiconOpenNewOutline';
@@ -130,7 +131,8 @@ export default function Categories ({className, props}: Props) {
           <li
             key={i}
             className={`
-              group transition-all duration-300 ease-in-out px-2 py-1 rounded-md 
+              group p-2 rounded-md 
+              transition-all duration-300 ease-in-out 
               hover:bg-[var(--background-deep-light-invert-color)] cursor-pointer
               hover:font-bold hover:text-heading-invert
               ${itm.slug === tabName 
@@ -141,12 +143,27 @@ export default function Categories ({className, props}: Props) {
           >
             <Link
               href={`/admin/${itm.slug}`}
-              className="inline-block w-full"
+              className="inline-block flex w-full"
             >
-              <span className="relative">
-                {itm.name[lang]}
+              <div
+                className="relative flex flex-row gap-2"
+              >
+                <Icon 
+                  svgString={itm.icon}
+                  className={`
+                    ${itm.slug === tabName 
+                      ? 'text-heading-invert' 
+                      : 'text-body-invert'
+                    }
+                    group-hover:text-heading-invert 
+                    transition-all duration-300 ease-in-out 
+                  `}
+                />
+                <span>
+                  {itm.name[lang]}
+                </span>
                 <UnderlineStyle />
-              </span>
+              </div>
             </Link>
           </li>          
         )}
@@ -169,7 +186,8 @@ export default function Categories ({className, props}: Props) {
           <li
             key={i}
             className={`
-              group transition-all duration-300 ease-in-out px-2 py-1 rounded-md 
+              group p-2 rounded-md 
+              transition-all duration-300 ease-in-out 
               hover:bg-[var(--background-deep-light-invert-color)] cursor-pointer
               hover:font-bold hover:text-heading-invert
               ${itm.slug === tabName 
@@ -180,12 +198,27 @@ export default function Categories ({className, props}: Props) {
           >
             <Link
               href={`/admin/${itm.slug}`}
-              className="inline-block w-full"
+              className="inline-block flex w-full"
             >
-              <span className="relative">
-                {itm.name[lang]}
+              <div
+                className="relative flex flex-row items-center gap-2"
+              >
+                <Icon 
+                  svgString={itm.icon}
+                  className={`
+                    ${itm.slug === tabName 
+                      ? 'text-heading-invert' 
+                      : 'text-body-invert'
+                    }
+                    group-hover:text-heading-invert 
+                    transition-all duration-300 ease-in-out 
+                  `}
+                />
+                <span>
+                  {itm.name[lang]}
+                </span>
                 <UnderlineStyle />
-              </span>
+              </div>
             </Link>
           </li>
         )}
