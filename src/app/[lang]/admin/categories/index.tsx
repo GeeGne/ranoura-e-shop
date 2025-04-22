@@ -67,11 +67,11 @@ export default function Categories ({className, props}: Props) {
       />
       <div
         className={`
-          absolute top-4 left-1/2 translate-x-[-50%]
+          absolute top-4 left-1/2
           flex flex-col gap-1
           h-full text-heading-invert font-bold text-lg items-center
           transition-all duration-300 ease-in-out
-          ${toggle ? 'invisible opacity-0' : 'visible opacity-100'}
+          ${toggle ? 'translate-x-[calc(-50%+4rem)] invisible opacity-0' : 'translate-x-[-50%] visible opacity-100'}
         `}
         role="button"
         data-type="open_button_is_clicked"
@@ -94,7 +94,7 @@ export default function Categories ({className, props}: Props) {
         className={`
           flex items-center justify-between text-xl font-medium text-heading-invert
           transition-all duration-300 ease-in-out
-          ${toggle ? 'visible opacity-100' : 'invisible opacity-0'}
+          ${toggle ? 'translate-x-0 visible opacity-100' : 'translate-x-12 invisible opacity-0'}
         `}
       >
         <h2
@@ -117,14 +117,14 @@ export default function Categories ({className, props}: Props) {
         type={isEn ? "VIEW" : "عرض"}
         className={`
           transition-all duration-300 ease-in-out
-          ${toggle ? 'visible opacity-100' : 'invisible opacity-0'}
+          ${toggle ? 'translate-x-0 visible opacity-100' : 'translate-x-12 invisible opacity-0'}
         `}
       />
       <ul
         className={`
           flex flex-col gap-2
           transition-all duration-300 ease-in-out
-          ${toggle ? 'visible opacity-100' : 'invisible opacity-0'}
+          ${toggle ? 'translate-x-0 visible opacity-100' : 'translate-x-12 invisible opacity-0'}
         `}
       >
         {viewArray.map((itm: any, i) =>
@@ -172,14 +172,14 @@ export default function Categories ({className, props}: Props) {
         type={isEn ? "EDIT" : "تعديل"}
         className={`
           transition-all duration-300 ease-in-out
-          ${toggle ? 'visible opacity-100' : 'invisible opacity-0'}
+          ${toggle ? 'translate-x-0 visible opacity-100' : 'translate-x-12 invisible opacity-0'}
         `}
       />
       <ul
         className={`
           flex flex-col gap-2
           transition-all duration-300 ease-in-out
-          ${toggle ? 'visible opacity-100' : 'invisible opacity-0'}
+          ${toggle ? 'translate-x-0 visible opacity-100' : 'translate-x-12 invisible opacity-0'}
         `}
       >
         {editArray.map((itm: any, i) =>
