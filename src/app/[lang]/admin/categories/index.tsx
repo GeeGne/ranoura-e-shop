@@ -130,17 +130,23 @@ export default function Categories ({className, props}: Props) {
           <li
             key={i}
             className={`
-              transition-all duration-300 ease-in-out
+              group transition-all duration-300 ease-in-out px-2 py-1 rounded-md 
+              hover:bg-[var(--background-deep-light-invert-color)] cursor-pointer
               hover:font-bold hover:text-heading-invert
-              ${itm.slug === tabName ? 'text-heading-invert font-bold text-base' : 'text-body-invert text-base'}
+              ${itm.slug === tabName 
+                ? 'text-heading-invert font-bold text-base bg-[var(--background-deep-light-invert-color)]' 
+                : 'text-body-invert text-base bg-transparent'
+              }
             `}
           >
             <Link
               href={`/admin/${itm.slug}`}
-              className="group relative inline-block"
+              className="inline-block w-full"
             >
-              {itm.name[lang]}
-              <UnderlineStyle />
+              <span className="relative">
+                {itm.name[lang]}
+                <UnderlineStyle />
+              </span>
             </Link>
           </li>          
         )}
@@ -163,17 +169,23 @@ export default function Categories ({className, props}: Props) {
           <li
             key={i}
             className={`
-              transition-all duration-300 ease-in-out
+              group transition-all duration-300 ease-in-out px-2 py-1 rounded-md 
+              hover:bg-[var(--background-deep-light-invert-color)] cursor-pointer
               hover:font-bold hover:text-heading-invert
-              ${itm.slug === tabName ? 'text-heading-invert font-bold text-base' : 'text-body-invert text-base'}
+              ${itm.slug === tabName 
+                ? 'text-heading-invert font-bold text-base bg-[var(--background-deep-light-invert-color)]' 
+                : 'text-body-invert text-base bg-transparent'
+              }
             `}
           >
             <Link
               href={`/admin/${itm.slug}`}
-              className="group relative inline-block"
+              className="inline-block w-full"
             >
-              {itm.name[lang]}
-              <UnderlineStyle />
+              <span className="relative">
+                {itm.name[lang]}
+                <UnderlineStyle />
+              </span>
             </Link>
           </li>
         )}

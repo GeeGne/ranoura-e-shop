@@ -11,7 +11,7 @@ export default function page () {
   const setTabName = useTabNameStore((state: any) => state.setTabName);
 
   useEffect(() => {
-    setTabName('edit-general-settings');
+    setTabName('edit-settings');
   }, []);
 
   return (
