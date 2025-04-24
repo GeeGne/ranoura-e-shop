@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 // supported locales
 const locales = ['en', 'ar'];
 const defaultLocale = 'en';
-const defaultAdminUrl = '/view-tabs'
+const defaultAdminUrl = '/view-tabs';
 
 function hasLocalePrefix(pathname: string): boolean {
   if (locales.some(locale => pathname === `/${locale}`)) {
@@ -20,9 +20,7 @@ export function middleware(req: NextRequest) {
     ? preferredLocale
     : defaultLocale
 
-  if (hasLocalePrefix(pathname)) {
-    return NextResponse.next();
-  }
+  if (hasLocalePrefix(pathname)) return NextResponse.next();
 
   const hasAdmin = req.url.endsWith('admin');
   if (hasAdmin) {

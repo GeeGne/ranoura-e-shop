@@ -28,6 +28,7 @@ export default {
         "background-light": "var(--background-light-color)",
         "background-light-invert": "var(--background-light-invert-color)",
         foreground: "var(--background-invert-color)",
+        underline: "grey-50"
       },
     },
   },
