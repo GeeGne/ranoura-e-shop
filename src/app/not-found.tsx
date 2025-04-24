@@ -3,6 +3,7 @@
 // HOOKS
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+export const dynamic = 'force-static';
 
 // STORES
 import { useTabNameStore, useLayoutRefStore, useLanguageStore } from '@/stores/index';

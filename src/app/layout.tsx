@@ -2,7 +2,7 @@
 
 // HOOKS
 import { useState } from 'react';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import "./globals.css";
 
 // COMPONENTS
@@ -29,19 +29,18 @@ export default function RootLayout({
 }>) {
 
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const layoutRef = useLayoutRefStore(state => state.layoutRef);
   const setLayoutRef = useLayoutRefStore(state => state.setLayoutRef);
   const lang = useLanguageStore(state => state.lang);
   const [ onScroll, setOnScroll ] = useState<any>(null);
 
   const pathNameIncludesAdmin = () => pathname.includes('/admin');
-  console.log(pathNameIncludesAdmin());
 
   // DEBUG & UI
   // const handleScroll = (e: any) => console.log('wrokign');
   // console.log(layoutRef);
-  
+  // console.log(pathNameIncludesAdmin());
+
   return (
     <html lang={lang} dir={lang === 'en' ? 'ltr' : 'rtl'}>
       <body
