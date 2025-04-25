@@ -1,0 +1,59 @@
+[
+  {
+    "name": "Signin",
+    "url": "/[lang]/signin",
+    "type": "user"
+  },{
+    "name": "Signup",
+    "url": "/[lang]/signup",
+    "type": "user"
+  },{
+    "name": "User Profile",
+    "url": "/[lang]/welcome/[username]/profile",
+    "type": "user"
+  },{
+    "name": "User Orders",
+    "url": "/[lang]/welcome/[username]/profile",
+    "type": "user"
+  },{
+    "name": "All Cloths",
+    "url": "/[lang]/shop",
+    "type": "cloths"
+  },{
+    "name": "Category",
+    "url": "/[lang]/shop/category/[category-name]",
+    "type": "cloths"
+  },{
+    "name": "Subcategory",
+    "url": "/[lang]/shop/category/[subcategory-name]",
+    "type": "cloths"
+  },{
+    "name": "Specific Cloth",
+    "url": "/[lang]/",
+    "type": "cloths"
+  },{
+    "name": "Checkout",
+    "url": "/[lang]/checkout",
+    "type": "payment"
+  },{
+    "name": "Privacy Policy",
+    "url": "/[lang]/privacy-policy",
+    "type": "customer-service"
+  },{
+    "name": "Returns & Refunds",
+    "url": "/[lang]/returns-&-refunds",
+    "type": "customer-service"
+  },{
+    "name": "Delivery and Shipment",
+    "url": "/[lang]/delivery-and-shipment",
+    "type": "customer-service"
+  },{
+    "name": "About Us",
+    "url": "/[lang]/about-us",
+    "type": "about-us"
+  },{
+    "name": "FAQs",
+    "url": "/[lang]/faqs",
+    "type": "about-us"
+  }
+]

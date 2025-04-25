@@ -113,7 +113,7 @@ export default function Footer ({ className, ...props }: Props) {
           >
             {isEn 
               ? 'I am not arrogant. I know my limitations, but I also believe in my abilities. When we are united and work sincerely, we can overcome difficulties. Cooperation and mutual understanding bring light to our path. Life is a continuous journey of learning and improvement. Together, we can achieve great things and leave a meaningful impact.' 
-              : 'انا متواضع، بس بعرف قديش عندي وواثق من أسلوبي. إحنا لما نكون سوا ونشتغل من القلب، منقدر نواجه أي تحدّي. الاتحاد والتفاهم بيناتنا هو سرّ نجاحنا. الحياة ذوق وتجربة، وإحنا سوا منضلّ نبدع ونترك ورانا بصمتنا.'
+              :'نحن في رانورا، نؤمن بأن الأزياء هي لغة عالمية تعبر عن هويتنا. بدأنا رحلتنا من الصفر، حاملين شغفاً بتقديم أزياء عالمية المستوى تصنع فارقاً. نستخدم أجود الخامات ونوظف أحدث التقنيات لضمان جودة لا تضاهى في كل قطعة نصنعها. هدفنا هو أن نكون العلامة التجارية العالمية المفضلة، حيث يجد العملاء كل ما يحتاجونه من الأزياء المميزة والأنيقة'
             }
           </span>
           <div className="flex shirnk-0">

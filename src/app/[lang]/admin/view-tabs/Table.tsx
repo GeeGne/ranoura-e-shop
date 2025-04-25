@@ -80,7 +80,7 @@ export default function Table() {
     }
   ]
 
-  const show = false;
+  const show = true;
   
   if (show) return (
     <table
@@ -103,12 +103,12 @@ export default function Table() {
         </tr>
       </thead>
       <tbody className="divide-y divide-underline">
-        <tr className="">
+        <tr className="hover:bg-background-light transition-all duration-300 ease-in-out">
           <td className="px-6 py-4">test</td>
           <td className="px-6 py-4">this</td>
           <td className="px-6 py-4">is</td>
         </tr>
-        <tr className="">
+        <tr className="hover:bg-background-light transition-all duration-300 ease-in-out">
           <td className="px-6 py-4">test</td>
           <td className="px-6 py-4">this</td>
           <td className="px-6 py-4">is</td>
