@@ -1,11 +1,15 @@
 // HOOKS
 import { useState } from 'react';
+import Link from 'next/link';
 
 // COMPONENTS
 import LineMdLink from '@/components/svgs/LineMdLink';
 
 // JSON
 import urlsTable from '@/json/cmsTables/urlsTable.json';
+
+// STORES
+import { useTabNameStore, useLanguageStore } from '@/stores/index';
 
 import {
   useReactTable,
@@ -47,6 +51,10 @@ export default function Table() {
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
+
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
+  const setTabName = useTabNameStore((state: any) => state.setTabName);
 
   const people = [
     {
@@ -94,7 +102,7 @@ export default function Table() {
       <h3
         className="sticky left-0 text-lg text-heading"
       >
-        User
+        {isEn ? 'User' : 'المستخدم'}
       </h3>
       <table
         className="
@@ -104,28 +112,191 @@ export default function Table() {
       >
         <thead className="text-body">
           <tr>
-            <th scope="col" className="px-6 py-3 font-medium text-left text-xs font-medium tracking-wider">
-              NAME
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'NAME' : 'الاسم'}
             </th>
-            <th scope="col" className="px-6 py-3 font-medium text-left text-xs font-medium tracking-wider">
-              URL
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'URL' : 'الرابط'}
             </th>
-            <th scope="col" className="px-6 py-3 font-medium text-left text-xs font-medium tracking-wider">
-              OPTIONS
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'OPTIONS' : 'الخيارات'}
             </th>
           </tr>
         </thead>
         <tbody className="divide-y divide-underline">
-          {urlsTable.map(itm => 
-            <tr className="hover:bg-background-light transition-all duration-300 ease-in-out">
-              <td className="px-6 py-4 text-heading">{itm.name}</td>
-              <td className="px-6 py-4 text-sm text-body">
-                <span className="bg-green-100 px-2 py-0 rounded-md">
+          {urlsTable.filter(itm => itm.type === "user").map((itm, i) => 
+            <tr 
+              key={i}
+              className="hover:bg-background-light transition-all duration-300 ease-in-out"
+            >
+              <td className="px-6 py-4 text-heading">{itm.name[isEn ? 'en' : 'ar']}</td>
+              <td className={`direction-ltr ${isEn ? 'text-left' : 'text-right'} px-6 py-4 text-sm text-body`}>
+                <span className="direction-ltr bg-green-100 px-2 py-0 rounded-md">
                   {itm.url}              
                 </span>
               </td>
               <td className="px-6 py-4">
-                <LineMdLink className="border-solid border-[1px] border-body w-8 h-8 p-1 rounded-md" />
+                <LineMdLink className="border-solid border-[1px] border-transparent rounded-md cursor-pointer" />
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+      <h3
+        className="sticky left-0 text-lg text-heading"
+      >
+        {isEn ? 'Cloths' : 'الملابس'}
+      </h3>
+      <table
+        className="
+          min-w-full overflow-hidden 
+          divide-y divide-underline bg-white rounded-lg whitespace-nowrap
+        "
+      >
+        <thead className="text-body">
+          <tr>
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'NAME' : 'الاسم'}
+            </th>
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'URL' : 'الرابط'}
+            </th>
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'OPTIONS' : 'الخيارات'}
+            </th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-underline">
+          {urlsTable.filter(itm => itm.type === "cloths").map(itm => 
+            <tr className="hover:bg-background-light transition-all duration-300 ease-in-out">
+              <td className="px-6 py-4 text-heading">{itm.name[isEn ? 'en' : 'ar']}</td>
+              <td className={`direction-ltr ${isEn ? 'text-left' : 'text-right'} px-6 py-4 text-sm text-body`}>
+                <span className="direction-ltr bg-green-100 px-2 py-0 rounded-md">
+                  {itm.url}              
+                </span>
+              </td>
+              <td className="px-6 py-4">
+                <LineMdLink className="border-solid border-[1px] border-transparent rounded-md cursor-pointer" />
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+      <h3
+        className="sticky left-0 text-lg text-heading"
+      >
+        {isEn ? 'Payment' : 'الدفع'}
+      </h3>
+      <table
+        className="
+          min-w-full overflow-hidden 
+          divide-y divide-underline bg-white rounded-lg whitespace-nowrap
+        "
+      >
+        <thead className="text-body">
+          <tr>
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'NAME' : 'الاسم'}
+            </th>
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'URL' : 'الرابط'}
+            </th>
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'OPTIONS' : 'الخيارات'}
+            </th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-underline">
+          {urlsTable.filter(itm => itm.type === "payment").map(itm => 
+            <tr className="hover:bg-background-light transition-all duration-300 ease-in-out">
+              <td className="px-6 py-4 text-heading">{itm.name[isEn ? 'en' : 'ar']}</td>
+              <td className={`direction-ltr ${isEn ? 'text-left' : 'text-right'} px-6 py-4 text-sm text-body`}>
+                <span className="direction-ltr bg-green-100 px-2 py-0 rounded-md">
+                  {itm.url}              
+                </span>
+              </td>
+              <td className="px-6 py-4">
+                <LineMdLink className="border-solid border-[1px] border-transparent rounded-md cursor-pointer" />
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+      <h3
+        className="sticky left-0 text-lg text-heading"
+      >
+        {isEn ? 'Customer Service' : 'خدمه العملاء'}
+      </h3>
+      <table
+        className="
+          min-w-full overflow-hidden 
+          divide-y divide-underline bg-white rounded-lg whitespace-nowrap
+        "
+      >
+        <thead className="text-body">
+          <tr>
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'NAME' : 'الاسم'}
+            </th>
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'URL' : 'الرابط'}
+            </th>
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'OPTIONS' : 'الخيارات'}
+            </th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-underline">
+          {urlsTable.filter(itm => itm.type === "customer-service").map(itm => 
+            <tr className="hover:bg-background-light transition-all duration-300 ease-in-out">
+              <td className="px-6 py-4 text-heading">{itm.name[isEn ? 'en' : 'ar']}</td>
+              <td className={`direction-ltr ${isEn ? 'text-left' : 'text-right'} px-6 py-4 text-sm text-body`}>
+                <span className="direction-ltr bg-green-100 px-2 py-0 rounded-md">
+                  {itm.url}              
+                </span>
+              </td>
+              <td className="px-6 py-4">
+                <LineMdLink className="border-solid border-[1px] border-transparent rounded-md cursor-pointer" />
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+      <h3
+        className="sticky left-0 text-lg text-heading"
+      >
+        {isEn ? 'About us' : 'من نحن'}
+      </h3>
+      <table
+        className="
+          min-w-full overflow-hidden 
+          divide-y divide-underline bg-white rounded-lg whitespace-nowrap
+        "
+      >
+        <thead className="text-body">
+          <tr>
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'NAME' : 'الاسم'}
+            </th>
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'URL' : 'الرابط'}
+            </th>
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'OPTIONS' : 'الخيارات'}
+            </th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-underline">
+          {urlsTable.filter(itm => itm.type === "about-us").map(itm => 
+            <tr className="hover:bg-background-light transition-all duration-300 ease-in-out">
+              <td className="px-6 py-4 text-heading">{itm.name[isEn ? 'en' : 'ar']}</td>
+              <td className={`direction-ltr ${isEn ? 'text-left' : 'text-right'} px-6 py-4 text-sm text-body`}>
+                <span className="direction-ltr bg-green-100 px-2 py-0 rounded-md">
+                  {itm.url}              
+                </span>
+              </td>
+              <td className="px-6 py-4">
+                <LineMdLink className="border-solid border-[1px] border-transparent rounded-md cursor-pointer" />
               </td>
             </tr>
           )}

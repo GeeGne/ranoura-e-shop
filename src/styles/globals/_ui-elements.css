@@ -7,7 +7,7 @@
 }
 
 .direction-ltr {
-  direction: ltr;
+  direction: ltr !important;
 }
 
 .test {

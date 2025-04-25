@@ -1,59 +1,59 @@
 [
   {
-    "name": "Signin",
-    "url": "/[lang]/signin",
+    "name": {"en": "Signin", "ar": "تسجيل الدخول"},
+    "url": "/(lang)/signin",
     "type": "user"
   },{
-    "name": "Signup",
-    "url": "/[lang]/signup",
+    "name": {"en": "Signup", "ar": "إنشاء حساب"},
+    "url": "/(lang)/signup",
     "type": "user"
   },{
-    "name": "User Profile",
-    "url": "/[lang]/welcome/[username]/profile",
+    "name": {"en": "User Profile", "ar": "الملف الشخصي"},
+    "url": "/(lang)/welcome/(username)/profile",
     "type": "user"
   },{
-    "name": "User Orders",
-    "url": "/[lang]/welcome/[username]/profile",
+    "name": {"en": "User Orders", "ar": "طلبات المستخدم"},
+    "url": "/(lang)/welcome/(username)/orders",
     "type": "user"
   },{
-    "name": "All Cloths",
-    "url": "/[lang]/shop",
+    "name": {"en": "All Cloths", "ar": "جميع الأقمشة"},
+    "url": "/(lang)/shop",
     "type": "cloths"
   },{
-    "name": "Category",
-    "url": "/[lang]/shop/category/[category-name]",
+    "name": {"en": "Category", "ar": "الفئة"},
+    "url": "/(lang)/shop/category/(category-name)",
     "type": "cloths"
   },{
-    "name": "Subcategory",
-    "url": "/[lang]/shop/category/[subcategory-name]",
+    "name": {"en": "Subcategory", "ar": "الفئة الفرعية"},
+    "url": "/(lang)/shop/category/(subcategory-name)",
     "type": "cloths"
   },{
-    "name": "Specific Cloth",
-    "url": "/[lang]/",
+    "name": {"en": "Specific Cloth", "ar": "قماش محدد"},
+    "url": "/(lang)/(product-id)",
     "type": "cloths"
   },{
-    "name": "Checkout",
-    "url": "/[lang]/checkout",
+    "name": {"en": "Checkout", "ar": "الدفع"},
+    "url": "/(lang)/checkout",
     "type": "payment"
   },{
-    "name": "Privacy Policy",
-    "url": "/[lang]/privacy-policy",
+    "name": {"en": "Privacy Policy", "ar": "سياسة الخصوصية"},
+    "url": "/(lang)/privacy-policy",
     "type": "customer-service"
   },{
-    "name": "Returns & Refunds",
-    "url": "/[lang]/returns-&-refunds",
+    "name": {"en": "Returns & Refunds", "ar": "الإرجاع والاسترداد"},
+    "url": "/(lang)/returns-&-refunds",
     "type": "customer-service"
   },{
-    "name": "Delivery and Shipment",
-    "url": "/[lang]/delivery-and-shipment",
+    "name": {"en": "Delivery and Shipment", "ar": "التوصيل والشحن"},
+    "url": "/(lang)/delivery-and-shipment",
     "type": "customer-service"
   },{
-    "name": "About Us",
-    "url": "/[lang]/about-us",
+    "name": {"en": "About Us", "ar": "من نحن"},
+    "url": "/(lang)/about-us",
     "type": "about-us"
   },{
-    "name": "FAQs",
-    "url": "/[lang]/faqs",
+    "name": {"en": "FAQs", "ar": "الأسئلة الشائعة"},
+    "url": "/(lang)/faqs",
     "type": "about-us"
   }
 ]

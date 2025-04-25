@@ -47,7 +47,7 @@ export default function RootLayout({
         className={`${lang} antialiased`}
       >
         <div 
-          className="app-layout"
+          className={`app-layout`}
           onScroll={(e: any) => setOnScroll(e)}
           ref={(el: any) => setLayoutRef(el)}
         >
