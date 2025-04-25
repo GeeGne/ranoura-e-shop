@@ -1,4 +1,11 @@
+// HOOKS
 import { useState } from 'react';
+
+// COMPONENTS
+import LineMdLink from '@/components/svgs/LineMdLink';
+
+// JSON
+import urlsTable from '@/json/cmsTables/urlsTable.json';
 
 import {
   useReactTable,
@@ -83,38 +90,48 @@ export default function Table() {
   const show = true;
   
   if (show) return (
-    <table
-      className="
-        min-w-full overflow-hidden overflow-x-auto 
-        divide-y divide-underline bg-white rounded-lg
-      "
-    >
-      <thead className="text-body">
-        <tr>
-          <th scope="col" className="px-6 py-3 font-medium text-left text-xs font-medium tracking-wider">
-            NAME
-          </th>
-          <th scope="col" className="px-6 py-3 font-medium text-left text-xs font-medium tracking-wider">
-            URL
-          </th>
-          <th scope="col" className="px-6 py-3 font-medium text-left text-xs font-medium tracking-wider">
-            OPTIONS
-          </th>
-        </tr>
-      </thead>
-      <tbody className="divide-y divide-underline">
-        <tr className="hover:bg-background-light transition-all duration-300 ease-in-out">
-          <td className="px-6 py-4">test</td>
-          <td className="px-6 py-4">this</td>
-          <td className="px-6 py-4">is</td>
-        </tr>
-        <tr className="hover:bg-background-light transition-all duration-300 ease-in-out">
-          <td className="px-6 py-4">test</td>
-          <td className="px-6 py-4">this</td>
-          <td className="px-6 py-4">is</td>
-        </tr>
-      </tbody>
-    </table>
+    <div className="flex flex-col gap-4 overflow-x-auto">
+      <h3
+        className="sticky left-0 text-lg text-heading"
+      >
+        User
+      </h3>
+      <table
+        className="
+          min-w-full overflow-hidden 
+          divide-y divide-underline bg-white rounded-lg whitespace-nowrap
+        "
+      >
+        <thead className="text-body">
+          <tr>
+            <th scope="col" className="px-6 py-3 font-medium text-left text-xs font-medium tracking-wider">
+              NAME
+            </th>
+            <th scope="col" className="px-6 py-3 font-medium text-left text-xs font-medium tracking-wider">
+              URL
+            </th>
+            <th scope="col" className="px-6 py-3 font-medium text-left text-xs font-medium tracking-wider">
+              OPTIONS
+            </th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-underline">
+          {urlsTable.map(itm => 
+            <tr className="hover:bg-background-light transition-all duration-300 ease-in-out">
+              <td className="px-6 py-4 text-heading">{itm.name}</td>
+              <td className="px-6 py-4 text-sm text-body">
+                <span className="bg-green-100 px-2 py-0 rounded-md">
+                  {itm.url}              
+                </span>
+              </td>
+              <td className="px-6 py-4">
+                <LineMdLink className="border-solid border-[1px] border-body w-8 h-8 p-1 rounded-md" />
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
   )
 
   return (

@@ -5,7 +5,7 @@ import CurrentCategoryAndBackToHome from '@/app/[lang]/admin/CurrentCategoryAndB
 export default function Layout ({children}: any) {
   return (
     <div
-      className="h-screen flex flex-row"
+      className="min-h-screen h-full flex flex-row"
     >
       <Categories
         className="h-full"
