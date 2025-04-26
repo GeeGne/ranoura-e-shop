@@ -5,10 +5,10 @@ import CurrentCategoryAndBackToHome from '@/app/[lang]/admin/CurrentCategoryAndB
 export default function Layout ({children}: any) {
   return (
     <div
-      className="min-h-screen h-full flex flex-row"
+      className="flex flex-row"
     >
       <Categories
-        className="h-full"
+        className="sticky top-0 h-screen"
       />
       <section
         className="flex-1 flex flex-col gap-4 p-4 h-full"

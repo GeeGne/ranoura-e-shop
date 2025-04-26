@@ -92,7 +92,7 @@ export default function Categories ({className, props}: Props) {
       </div>
       <div
         className={`
-          flex items-center justify-between text-xl font-medium text-heading-invert
+          sticky top-0 flex items-center justify-between text-xl font-medium text-heading-invert
           transition-all duration-300 ease-in-out
           ${toggle ? 'translate-x-0 visible opacity-100' : 'translate-x-12 invisible opacity-0'}
         `}
