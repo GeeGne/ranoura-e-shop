@@ -4,6 +4,8 @@ import Link from 'next/link';
 
 // COMPONENTS
 import LineMdLink from '@/components/svgs/LineMdLink';
+import TablerCopy from '@/components/svgs/TablerCopy';
+import MaterialSymbolsCheckRounded from '@/components/svgs/MaterialSymbolsCheckRounded';
 
 // JSON
 import urlsTable from '@/json/cmsTables/urlsTable.json';
@@ -135,8 +137,26 @@ export default function Table() {
                   {itm.url}              
                 </span>
               </td>
-              <td className="px-6 py-4">
-                <LineMdLink className="border-solid border-[1px] border-transparent rounded-md cursor-pointer" />
+              <td className="px-6">
+                <div className="flex gap-2">
+                  <LineMdLink className="bg-background-light w-7 h-7 p-1 rounded-md cursor-pointer" />
+                  <button className="bg-background-light">
+                    <TablerCopy 
+                      className={`
+                        w-7 h-7 p-1 rounded-md cursor-pointer 
+                        transition-all duration-200 ease-in-out
+                        {isUrlCopied ? 'visible opacity-100' : 'invisible opacity-0'}
+                      `}
+                    />    
+                    <MaterialSymbolsCheckRounded 
+                      className="
+                        w-7 h-7 p-1 rounded-md cursor-pointer 
+                        transition-all duration-200 ease-in-out
+                        {isUrlCopied ? 'visible opacity-100' : 'invisible opacity-0'}
+                      "
+                    />    
+                  </button>
+                </div>
               </td>
             </tr>
           )}
@@ -175,8 +195,26 @@ export default function Table() {
                   {itm.url}              
                 </span>
               </td>
-              <td className="px-6 py-4">
-                <LineMdLink className="border-solid border-[1px] border-transparent rounded-md cursor-pointer" />
+              <td className="px-6">
+                <div className="flex gap-2">
+                  <LineMdLink className="bg-background-light w-7 h-7 p-1 rounded-md cursor-pointer" />
+                  <button className="bg-background-light">
+                    <TablerCopy 
+                      className={`
+                        w-7 h-7 p-1 rounded-md cursor-pointer 
+                        transition-all duration-200 ease-in-out
+                        {isUrlCopied ? 'visible opacity-100' : 'invisible opacity-0'}
+                      `}
+                    />
+                    <MaterialSymbolsCheckRounded 
+                      className="
+                        w-7 h-7 p-1 rounded-md cursor-pointer 
+                        transition-all duration-200 ease-in-outnter
+                        {isUrlCopied ? 'visible opacity-100' : 'invisible opacity-0'}
+                      "
+                    />
+                  </button>
+                </div>
               </td>
             </tr>
           )}
@@ -215,8 +253,26 @@ export default function Table() {
                   {itm.url}              
                 </span>
               </td>
-              <td className="px-6 py-4">
-                <LineMdLink className="border-solid border-[1px] border-transparent rounded-md cursor-pointer" />
+              <td className="px-6">
+                <div className="flex gap-2">
+                  <LineMdLink className="bg-background-light w-7 h-7 p-1 rounded-md cursor-pointer" />
+                  <button className="bg-background-light">
+                    <TablerCopy 
+                      className={`
+                        w-7 h-7 p-1 rounded-md cursor-pointer 
+                        transition-all duration-200 ease-in-out
+                        {isUrlCopied ? 'visible opacity-100' : 'invisible opacity-0'}
+                      `}
+                    />
+                    <MaterialSymbolsCheckRounded 
+                      className="
+                        w-7 h-7 p-1 rounded-md cursor-pointer 
+                        transition-all duration-200 ease-in-outnter
+                        {isUrlCopied ? 'visible opacity-100' : 'invisible opacity-0'}
+                      "
+                    />
+                  </button>
+                </div>
               </td>
             </tr>
           )}
@@ -255,8 +311,26 @@ export default function Table() {
                   {itm.url}              
                 </span>
               </td>
-              <td className="px-6 py-4">
-                <LineMdLink className="border-solid border-[1px] border-transparent rounded-md cursor-pointer" />
+              <td className="px-6">
+                <div className="flex gap-2">                  
+                  <LineMdLink className="bg-background-light w-7 h-7 p-1 rounded-md cursor-pointer" />
+                  <button className="bg-background-light">
+                    <TablerCopy 
+                      className={`
+                        w-7 h-7 p-1 rounded-md cursor-pointer 
+                        transition-all duration-200 ease-in-out
+                        {isUrlCopied ? 'visible opacity-100' : 'invisible opacity-0'}
+                      `}
+                    />
+                    <MaterialSymbolsCheckRounded 
+                      className="
+                        w-7 h-7 p-1 rounded-md cursor-pointer 
+                        transition-all duration-200 ease-in-outnter
+                        {isUrlCopied ? 'visible opacity-100' : 'invisible opacity-0'}
+                      "
+                    />
+                  </button>
+                </div>
               </td>
             </tr>
           )}
@@ -295,8 +369,26 @@ export default function Table() {
                   {itm.url}              
                 </span>
               </td>
-              <td className="px-6 py-4">
-                <LineMdLink className="border-solid border-[1px] border-transparent rounded-md cursor-pointer" />
+              <td className="px-6">
+                <div className="flex gap-2">
+                  <LineMdLink className="bg-background-light w-7 h-7 p-1 rounded-md cursor-pointer" />
+                  <button className="bg-background-light">
+                    <TablerCopy 
+                      className={`
+                        w-7 h-7 p-1 rounded-md cursor-pointer 
+                        transition-all duration-200 ease-in-out
+                        {isUrlCopied ? 'visible opacity-100' : 'invisible opacity-0'}
+                      `}
+                    />
+                    <MaterialSymbolsCheckRounded 
+                      className="
+                        w-7 h-7 p-1 rounded-md cursor-pointer 
+                        transition-all duration-200 ease-in-outnter
+                        {isUrlCopied ? 'visible opacity-100' : 'invisible opacity-0'}
+                      "
+                    />
+                  </button>
+                </div>
               </td>
             </tr>
           )}
