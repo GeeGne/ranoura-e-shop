@@ -6,12 +6,13 @@ import Link from 'next/link';
 import LineMdLink from '@/components/svgs/LineMdLink';
 import TablerCopy from '@/components/svgs/TablerCopy';
 import MaterialSymbolsCheckRounded from '@/components/svgs/MaterialSymbolsCheckRounded';
+import LineMdCloseCircleFilled from '@/components/svgs/LineMdCloseCircleFilled';
 
 // JSON
 import urlsTable from '@/json/cmsTables/urlsTable.json';
 
 // STORES
-import { useTabNameStore, useLanguageStore } from '@/stores/index';
+import { useTabNameStore, useLanguageStore, useAlertMessageStore } from '@/stores/index';
 
 import {
   useReactTable,
@@ -54,8 +55,13 @@ type UrlCopiedState = {
 
 export default function Table() {
 
+  const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
+  const setAlertType = useAlertMessageStore((state) => state.setType);
+  const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
+
   const [ isUrlCopied, setIsUrlCopied ] = useState<UrlCopiedState>({ toggle: false, index: 0 });
   const isUrlCopiedTimerId = useRef<any>(0);
+
   const checkToggle = (toggle: boolean, hookIndex: number | string, refIndex: number | string) => {
     if (toggle === true && hookIndex === refIndex) return true;
     return false
@@ -67,11 +73,15 @@ export default function Table() {
     switch (type) {
       case 'copy_button_is_clicked':
         try {
-          await navigator.clipboard.writeText("Text is copied");
+          await navigator?.clipboard?.writeText("Text is copied");
           setIsUrlCopied({ toggle: true, index: String(index) });
           clearTimeout(isUrlCopiedTimerId.current);
           isUrlCopiedTimerId.current = setTimeout(() => setIsUrlCopied({ toggle: false, index: 0 })
           , 2000);  
+
+          setAlertToggle(Date.now());
+          setAlertType('success');
+          setAlertMessage(isEn ? 'URL is added to clipboard successfully!' : '!تم نسخ الرابط بنجاح');
         } catch (err) {
           console.error('Error while copying text: ', err)
         }
@@ -241,7 +251,7 @@ export default function Table() {
         </thead>
         <tbody className="divide-y divide-underline">
           {urlsTable.filter(itm => itm.type === "cloths").map((itm, i) => 
-            <tr className="hover:bg-yellow-50 transition-all duration-300 ease-in-out">
+            <tr key={i} className="hover:bg-yellow-50 transition-all duration-300 ease-in-out">
               <td className="px-6 py-4 text-heading">{itm.name[isEn ? 'en' : 'ar']}</td>
               <td className={`direction-ltr ${isEn ? 'text-left' : 'text-right'} px-6 py-4 text-sm text-body`}>
                 <span className="direction-ltr bg-green-100 px-2 py-0 rounded-md">
@@ -319,7 +329,7 @@ export default function Table() {
         </thead>
         <tbody className="divide-y divide-underline">
           {urlsTable.filter(itm => itm.type === "payment").map((itm, i) => 
-            <tr className="hover:bg-yellow-50 transition-all duration-300 ease-in-out">
+            <tr key={i} className="hover:bg-yellow-50 transition-all duration-300 ease-in-out">
               <td className="px-6 py-4 text-heading">{itm.name[isEn ? 'en' : 'ar']}</td>
               <td className={`direction-ltr ${isEn ? 'text-left' : 'text-right'} px-6 py-4 text-sm text-body`}>
                 <span className="direction-ltr bg-green-100 px-2 py-0 rounded-md">
@@ -397,7 +407,7 @@ export default function Table() {
         </thead>
         <tbody className="divide-y divide-underline">
           {urlsTable.filter(itm => itm.type === "customer-service").map((itm, i) => 
-            <tr className="hover:bg-yellow-50 transition-all duration-300 ease-in-out">
+            <tr key={i} className="hover:bg-yellow-50 transition-all duration-300 ease-in-out">
               <td className="px-6 py-4 text-heading">{itm.name[isEn ? 'en' : 'ar']}</td>
               <td className={`direction-ltr ${isEn ? 'text-left' : 'text-right'} px-6 py-4 text-sm text-body`}>
                 <span className="direction-ltr bg-green-100 px-2 py-0 rounded-md">
@@ -475,7 +485,7 @@ export default function Table() {
         </thead>
         <tbody className="divide-y divide-underline">
           {urlsTable.filter(itm => itm.type === "about-us").map((itm, i) => 
-            <tr className="hover:bg-yellow-50 transition-all duration-300 ease-in-out">
+            <tr key={i} className="hover:bg-yellow-50 transition-all duration-300 ease-in-out">
               <td className="px-6 py-4 text-heading">{itm.name[isEn ? 'en' : 'ar']}</td>
               <td className={`direction-ltr ${isEn ? 'text-left' : 'text-right'} px-6 py-4 text-sm text-body`}>
                 <span className="direction-ltr bg-green-100 px-2 py-0 rounded-md">
@@ -550,8 +560,8 @@ export default function Table() {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {people.map((person) => (
-            <tr key={person.email}>
+          {people.map((person, i) => (
+            <tr key={i}>
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="flex items-center">
                   <div className="flex-shrink-0 h-10 w-10">

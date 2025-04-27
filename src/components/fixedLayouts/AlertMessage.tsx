@@ -9,6 +9,7 @@ import Warning from "@/components/svgs/Warning";
 import Wishlist from "@/components/svgs/Wishlist";
 import ShoppingApp from "@/components/svgs/ShoppingApp";
 import OrderConfirmed from "@/components/svgs/OrderConfirmed";
+import LineMdCloseCircleFilled from "@/components/svgs/LineMdCloseCircleFilled";
 
 // STORES
 import { 
@@ -92,7 +93,7 @@ export default function AlertMessage () {
         translate-x-[-50%]
         w-[calc(100vw-2rem)] md:w-auto
         flex flex-row md:flex-row items-center justify-center gap-4
-        p-2 bg-[var(--background-light-color)] hover:bg-[var(--background-deep-light-color)] active:bg-[var(--background-deep-color)]
+        p-6 bg-[var(--background-light-color)] hover:bg-[var(--background-deep-light-color)] active:bg-[var(--background-deep-color)]
         drop-shadow-xl rounded-lg overflow-hidden
         transition-all duration-200 ease-in-out
         cursor-pointer z-[3000]
@@ -102,16 +103,16 @@ export default function AlertMessage () {
       onClick={handleClick}
     >
       <button
-        className="
+        className={`
           --alert-messge-content-ani
-          absolute top-2 right-2
-          w-5 h-5 flex items-center justify-center bg-inbetween rounded-full
-          text-[var(--background-light-color)] text-xs font-bold cursor-pointer
-        "
+          absolute top-1 w-4 h-4 
+          flex items-center justify-center rounded-full cursor-pointer
+          ${isEn ? 'right-1' : 'left-1'}
+        `}
         data-type="close_button_is_clicked"
         onClick={handleClick}
       >
-        X
+        <LineMdCloseCircleFilled className="text-inbetween" />
       </button>
         <CheckBoxes 
           className={`
@@ -119,14 +120,14 @@ export default function AlertMessage () {
           `}
         />
       <div
-        className="flex flex-col items-center gap-2"
+        className="flex flex-col items-center gap-4"
       >
         <span
           className={`
             --alert-messge-content-ani text-base lg:text-xl font-bold text-green-500
           `}
         >
-          {isEn ? 'All Set!' : 'كل شيء جاهز!'}
+          {isEn ? 'All Set!' : 'تمت العمليه بنجاح!'}
         </span>
         <span
           className="--alert-messge-content-ani text-body text-sm lg:text-base"
@@ -140,6 +141,7 @@ export default function AlertMessage () {
           absolute bottom-0 left-0
           h-[5px]
           bg-green-500
+          ${isEn ? 'left-0' : 'right-0'}
         `}
       />
     </div>
@@ -153,7 +155,7 @@ export default function AlertMessage () {
         translate-x-[-50%]
         w-[calc(100vw-2rem)] md:w-auto
         flex flex-row md:flex-row items-center justify-center gap-4
-        p-2 bg-[var(--background-light-color)] hover:bg-[var(--background-deep-light-color)] active:bg-[var(--background-deep-color)]
+        p-6 bg-[var(--background-light-color)] hover:bg-[var(--background-deep-light-color)] active:bg-[var(--background-deep-color)]
         drop-shadow-xl rounded-lg overflow-hidden
         transition-all duration-200 ease-in-out
         cursor-pointer z-[3000]
@@ -163,16 +165,16 @@ export default function AlertMessage () {
       onClick={handleClick}
     >
       <button
-        className="
+        className={`
           --alert-messge-content-ani
-          absolute top-2 right-2
-          w-5 h-5 flex items-center justify-center bg-inbetween rounded-full
-          text-[var(--background-light-color)] text-xs font-bold cursor-pointer
-        "
+          absolute top-1 w-4 h-4 
+          flex items-center justify-center rounded-full cursor-pointer
+          ${isEn ? 'right-1' : 'left-1'}
+        `}
         data-type="close_button_is_clicked"
         onClick={handleClick}
       >
-        X
+        <LineMdCloseCircleFilled className="text-inbetween" />
       </button>
         <Notify 
           className={`
@@ -180,7 +182,7 @@ export default function AlertMessage () {
           `}
         />
       <div
-        className="flex flex-col items-center gap-2"
+        className="flex flex-col items-center gap-4"
       >
         <span
           className={`
@@ -201,6 +203,7 @@ export default function AlertMessage () {
           absolute bottom-0 left-0
           h-[5px]
           bg-yellow-500
+          ${isEn ? 'left-0' : 'right-0'}
         `}
       />
     </div>
@@ -214,7 +217,7 @@ export default function AlertMessage () {
         translate-x-[-50%]
         w-[calc(100vw-2rem)] md:w-auto
         flex flex-row md:flex-row items-center justify-center gap-4
-        p-2 bg-[var(--background-light-color)] hover:bg-[var(--background-deep-light-color)] active:bg-[var(--background-deep-color)]
+        p-6 bg-[var(--background-light-color)] hover:bg-[var(--background-deep-light-color)] active:bg-[var(--background-deep-color)]
         drop-shadow-xl rounded-lg overflow-hidden
         transition-all duration-200 ease-in-out
         cursor-pointer z-[3000]
@@ -224,16 +227,16 @@ export default function AlertMessage () {
       onClick={handleClick}
     >
       <button
-        className="
+        className={`
           --alert-messge-content-ani
-          absolute top-2 right-2
-          w-5 h-5 flex items-center justify-center bg-inbetween rounded-full
-          text-[var(--background-light-color)] text-xs font-bold cursor-pointer
-        "
+          absolute top-1 w-4 h-4 
+          flex items-center justify-center rounded-full cursor-pointer
+          ${isEn ? 'right-1' : 'left-1'}
+        `}
         data-type="close_button_is_clicked"
         onClick={handleClick}
       >
-        X
+        <LineMdCloseCircleFilled className="text-inbetween" />
       </button>
         <Warning 
           className={`
@@ -241,7 +244,7 @@ export default function AlertMessage () {
           `}
         />
       <div
-        className="flex flex-col items-center gap-2"
+        className="flex flex-col items-center gap-4"
       >
         <span
           className={`
@@ -262,6 +265,7 @@ export default function AlertMessage () {
           absolute bottom-0 left-0
           h-[5px]
           bg-red-500
+          ${isEn ? 'left-0' : 'right-0'}
         `}
       />
     </div>
@@ -275,7 +279,7 @@ export default function AlertMessage () {
         translate-x-[-50%]
         w-[calc(100vw-2rem)] md:w-auto
         flex flex-col md:flex-col items-center justify-center gap-4
-        p-2 bg-[var(--background-light-color)] hover:bg-[var(--background-deep-light-color)] active:bg-[var(--background-deep-color)]
+        p-6 bg-[var(--background-light-color)] hover:bg-[var(--background-deep-light-color)] active:bg-[var(--background-deep-color)]
         drop-shadow-xl rounded-lg overflow-hidden
         transition-all duration-200 ease-in-out
         cursor-pointer z-[3000]
@@ -285,16 +289,16 @@ export default function AlertMessage () {
       onClick={handleClick}
     >
       <button
-        className="
+        className={`
           --alert-messge-content-ani
-          absolute top-2 right-2
-          w-5 h-5 flex items-center justify-center bg-inbetween rounded-full
-          text-[var(--background-light-color)] text-xs font-bold cursor-pointer
-        "
+          absolute top-1 w-4 h-4 
+          flex items-center justify-center rounded-full cursor-pointer
+          ${isEn ? 'right-1' : 'left-1'}
+        `}
         data-type="close_button_is_clicked"
         onClick={handleClick}
       >
-        X
+        <LineMdCloseCircleFilled className="text-inbetween" />
       </button>
       <div className="--alert-messge-content-ani flex flex-row gap-4">
         <ShoppingApp 
@@ -409,6 +413,7 @@ export default function AlertMessage () {
           absolute bottom-0 left-0
           h-[5px]
           bg-content-inbetween
+          ${isEn ? 'left-0' : 'right-0'}
         `}
       />
     </div>
@@ -422,7 +427,7 @@ export default function AlertMessage () {
         translate-x-[-50%]
         w-[calc(100vw-2rem)] md:w-auto
         flex flex-row md:flex-row items-center justify-center gap-4
-        p-2 bg-[var(--background-light-color)] hover:bg-[var(--background-deep-light-color)] active:bg-[var(--background-deep-color)]
+        p-6 bg-[var(--background-light-color)] hover:bg-[var(--background-deep-light-color)] active:bg-[var(--background-deep-color)]
         drop-shadow-xl rounded-lg overflow-hidden
         transition-all duration-200 ease-in-out
         cursor-pointer z-[3000]
@@ -432,16 +437,16 @@ export default function AlertMessage () {
       onClick={handleClick}
     >
       <button
-        className="
+        className={`
           --alert-messge-content-ani
-          absolute top-2 right-2
-          w-5 h-5 flex items-center justify-center bg-inbetween rounded-full
-          text-[var(--background-light-color)] text-xs font-bold cursor-pointer
-        "
+          absolute top-1 w-4 h-4 
+          flex items-center justify-center rounded-full cursor-pointer
+          ${isEn ? 'right-1' : 'left-1'}
+        `}
         data-type="close_button_is_clicked"
         onClick={handleClick}
       >
-        X
+        <LineMdCloseCircleFilled className="text-inbetween" />
       </button>
         <ShoppingApp 
           className={`
@@ -449,7 +454,7 @@ export default function AlertMessage () {
           `}
         />
       <div
-        className="flex flex-col items-center gap-2"
+        className="flex flex-col items-center gap-4"
       >
         <span
           className={`
@@ -470,6 +475,7 @@ export default function AlertMessage () {
           absolute bottom-0 left-0
           h-[5px]
           bg-content-inbetween
+          ${isEn ? 'left-0' : 'right-0'}
         `}
       />
     </div>
@@ -483,7 +489,7 @@ export default function AlertMessage () {
         translate-x-[-50%]
         w-[calc(100vw-2rem)] md:w-auto
         flex flex-row md:flex-row items-center justify-center gap-4
-        p-2 bg-[var(--background-light-color)] hover:bg-[var(--background-deep-light-color)] active:bg-[var(--background-deep-color)]
+        p-6 bg-[var(--background-light-color)] hover:bg-[var(--background-deep-light-color)] active:bg-[var(--background-deep-color)]
         drop-shadow-xl rounded-lg overflow-hidden
         transition-all duration-200 ease-in-out
         cursor-pointer z-[3000]
@@ -493,16 +499,16 @@ export default function AlertMessage () {
       onClick={handleClick}
     >
       <button
-        className="
+        className={`
           --alert-messge-content-ani
-          absolute top-2 right-2
-          w-5 h-5 flex items-center justify-center bg-inbetween rounded-full
-          text-[var(--background-light-color)] text-xs font-bold cursor-pointer
-        "
+          absolute top-1 w-4 h-4 
+          flex items-center justify-center rounded-full cursor-pointer
+          ${isEn ? 'right-1' : 'left-1'}
+        `}
         data-type="close_button_is_clicked"
         onClick={handleClick}
       >
-        X
+        <LineMdCloseCircleFilled className="text-inbetween" />
       </button>
       {type === 'wishlist' &&
         <Wishlist 
@@ -542,7 +548,7 @@ export default function AlertMessage () {
         />
       } 
       <div
-        className="flex flex-col items-center gap-2"
+        className="flex flex-col items-center gap-4"
       >
         <span
           className={`
@@ -584,6 +590,7 @@ export default function AlertMessage () {
           absolute bottom-0 left-0
           h-[5px]
           ${type === 'success' 
+          ${isEn ? 'left-0' : 'right-0'}
             ? 'bg-green-500'
             : type === 'warning'
               ? 'bg-yellow-500'
