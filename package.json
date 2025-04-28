@@ -10,9 +10,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@prisma/adapter-pg": "^6.6.0",
+    "@prisma/client": "^6.6.0",
     "@tanstack/react-table": "^8.21.3",
     "chalk": "^5.4.1",
+    "dotenv": "^16.5.0",
     "next": "^15.4.0-canary.8",
+    "prisma": "^6.6.0",
     "react": "^19.0.0",
     "react-canvas-confetti": "^2.0.7",
     "react-dom": "^19.0.0",
