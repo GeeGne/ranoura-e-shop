@@ -10,6 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.0.0",
     "@prisma/adapter-pg": "^6.6.0",
     "@prisma/client": "^6.6.0",
     "@tanstack/react-table": "^8.21.3",
