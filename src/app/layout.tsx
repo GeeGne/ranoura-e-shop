@@ -35,12 +35,11 @@ export default function RootLayout({
   const [ onScroll, setOnScroll ] = useState<any>(null);
 
   const pathNameIncludesAdmin = () => pathname.includes('/admin');
-  
+
   // DEBUG & UI
   // const handleScroll = (e: any) => console.log('wrokign');
   // console.log(layoutRef);
   // console.log(pathNameIncludesAdmin());
-  console.log('Enviroment variable test on the client side: ', process.env.THIS_IS_TEST);
 
   return (
     <html lang={lang} dir={lang === 'en' ? 'ltr' : 'rtl'}>
