@@ -1,0 +1,10 @@
+{
+  "primary_color": "#0a0908",
+  "primary_invert_color": "#F1EFEF",
+  "secondary_color": "#22333b",
+  "secondary_invert_color": "#D0D0D0",
+  "inbetween_color": "#9999a1",
+  "content_color": "oklch(0.473 0.137 46.201)",
+  "content_inbetween_color": "oklch(0.769 0.188 70.08)",
+  "content_invert_color": "oklch(0.924 0.12 95.746)"
+}

@@ -71,7 +71,7 @@ export default function SubCategoryList () {
         </span>
       </div>
       <ul
-        className="flex flex-col gap-4"
+        className="flex flex-col gap-6"
       >
         {subCategories
           .filter(itm => itm.type === selectedCategory)

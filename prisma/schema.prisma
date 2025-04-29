@@ -27,3 +27,14 @@ model User {
   email String
 }
 
+model Themes {
+  id Int @id @default(autoincrement())
+  primary_color String @default("#0a0908")
+  primary_invert_color String @default("#F1EFEF")
+  secondary_color String @default("#22333b")
+  secondary_invert_color String @default("#D0D0D0")
+  inbetween_color String @default("#9999a1")
+  content_color String @default("oklch(0.473 0.137 46.201)")
+  content_invert_color String @default("oklch(0.473 0.137 46.201)")
+  content_inbetween_color String @default("oklch(0.924 0.12 95.746)")
+}
