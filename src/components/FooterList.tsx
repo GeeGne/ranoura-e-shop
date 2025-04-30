@@ -1,5 +1,7 @@
 // HOOKS
 import React, { useState, useRef, useEffect } from 'react';
+
+// COMPONENTS
 import PlusIcon from '@/components/svgs/Plus';
 import MinusIcon from '@/components/svgs/Minus';
 import UnderlineStyle from '@/components/UnderlineStyle';
