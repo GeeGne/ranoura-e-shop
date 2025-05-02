@@ -13,6 +13,8 @@
     "@neondatabase/serverless": "^1.0.0",
     "@prisma/adapter-pg": "^6.6.0",
     "@prisma/client": "^6.6.0",
+    "@tanstack/react-query": "^5.75.1",
+    "@tanstack/react-query-devtools": "^5.75.1",
     "@tanstack/react-table": "^8.21.3",
     "chalk": "^5.4.1",
     "dotenv": "^16.5.0",

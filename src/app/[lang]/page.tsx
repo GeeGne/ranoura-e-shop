@@ -3,6 +3,7 @@
 // HOOKS
 import { useEffect } from 'react';
 import { useParams } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
 
 // COMPONENTS
 import Image from "next/image";
@@ -17,6 +18,9 @@ import AdvertTile from '@/components/home/AdvertTile';
 // STORES
 import { useTabNameStore, useLanguageStore } from '@/stores/index';
 
+// API
+import getThemes from '@/lib/api/themes/get';
+
 export default function Home() {
 
   const setTabName = useTabNameStore((state: any) => state.setTabName);
@@ -28,6 +32,12 @@ export default function Home() {
     document.cookie = `preferredLang=${lang}; path=/; max-age=31536000`
   }
   
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['themes'],
+    queryFn: getThemes,
+  })
+
+  console.log('themes data: ', data);
   useEffect(() => {
     setTabName('home');
   }, []);

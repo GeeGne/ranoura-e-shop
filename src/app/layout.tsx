@@ -3,9 +3,11 @@
 // HOOKS
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
 import "./globals.css";
 
 // COMPONENTS
+import Providers from '@/app/Providers';
 import Header from '@/components/header/index';
 import Main from '@/app/[lang]/Main';
 import Footer from '@/app/[lang]/Footer';
@@ -60,44 +62,46 @@ export default function RootLayout({
       <body
         className={`${lang} antialiased`}
       >
-        <div 
-          className={`app-layout`}
-          onScroll={(e: any) => setOnScroll(e)}
-          ref={(el: any) => setLayoutRef(el)}
-        >
-          <Header 
-            onScroll={onScroll} 
-            layoutRef={layoutRef}
-            className={`${pathNameIncludesAdmin() ? 'hidden' : 'visible'}`}
-          />
-          <Main
-            className={`
-              relative bg-background
-              ${pathNameIncludesAdmin() ? 'pb-[0rem]' : 'pb-[2rem] md:pb-[3rem] lg:pb-[3rem]'}
-            `}
+        <Providers>
+          <div 
+            className={`app-layout`}
+            onScroll={(e: any) => setOnScroll(e)}
+            ref={(el: any) => setLayoutRef(el)}
           >
-            {children}
-            <BottomBorder
-              className={`
-                absolute top-[100%] origin-top scale-x-[105%]
-                scale-y-[50%] md:scale-y-[35%] lg:scale-y-[25%] text-primary rotate-180
-                ${pathNameIncludesAdmin() ? 'hidden' : 'visible'}
-              `}
+            <Header 
+              onScroll={onScroll} 
+              layoutRef={layoutRef}
+              className={`${pathNameIncludesAdmin() ? 'hidden' : 'visible'}`}
             />
-          </Main>
-          <Footer 
-            className={`${pathNameIncludesAdmin() ? 'hidden' : 'visible'}`}
-          />
-        </div>
-        <FixedLayouts>
-          {/* <LoadingScreen /> */}
-          <Cart />
-          <Navbar />
-          <SelectLang />
-          <FilterWindow />    
-          <AlertMessage />
-          <AllProductImages />
-        </FixedLayouts>
+            <Main
+              className={`
+                relative bg-background
+                ${pathNameIncludesAdmin() ? 'pb-[0rem]' : 'pb-[2rem] md:pb-[3rem] lg:pb-[3rem]'}
+              `}
+            >
+              {children}
+              <BottomBorder
+                className={`
+                  absolute top-[100%] origin-top scale-x-[105%]
+                  scale-y-[50%] md:scale-y-[35%] lg:scale-y-[25%] text-primary rotate-180
+                  ${pathNameIncludesAdmin() ? 'hidden' : 'visible'}
+                `}
+              />
+            </Main>
+            <Footer 
+              className={`${pathNameIncludesAdmin() ? 'hidden' : 'visible'}`}
+            />
+          </div>
+          <FixedLayouts>
+            {/* <LoadingScreen /> */}
+            <Cart />
+            <Navbar />
+            <SelectLang />
+            <FilterWindow />    
+            <AlertMessage />
+            <AllProductImages />
+          </FixedLayouts>
+        </Providers>
       </body>
     </html>
   );
