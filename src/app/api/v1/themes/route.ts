@@ -1,13 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 
+async function nextError (message: string, status = 404) {
+  NextResponse.json({ error: message }, { status })
+}
+
   // @desc get themes variables data
   // @route /api/v1/themes
   // @access public
 export async function GET(req: NextRequest) {
   try {
-    const themes = await prisma.themes.findMany();
-    return NextResponse.json({themes}, {status: 200});  
+    const [themes] = await prisma.themes.findMany();
+    return NextResponse.json(themes, {status: 200});  
   } catch (err) {
     return NextResponse.json(
       { error: 'Unable to get Themes Data: ' + err },
@@ -21,10 +25,30 @@ export async function GET(req: NextRequest) {
   // @access private
 export async function POST(req: NextRequest) {
   try {
-    const themesData = req.body;
-    await prisma.task.task.create(themesData);
-    return NextResponse.next();
+    const themesData = await req.json();
+
+    // await prisma.themes.update({ 
+      // where: { id: 1 }, 
+      // data: {
+        // primary_color: "green", 
+    // }
+    // });
+    await prisma.themes.update({ 
+      where: { id: 1 }, 
+      data: themesData 
+    });
+
+    return NextResponse.json({ message: "Themes are updated successfuly!" }, { status: 202 })
   } catch (error) {
-    return NextResponse.json({error : 'Unable to update Themes: ' + error}, { status: 404 })
+    const err = error as Error;
+    return NextResponse.json({error : 'Unable to update Themes: ' + err.message}, { status: 404 })
   }
+}
+
+export async function PUT(req: NextResponse) {
+  return nextError(`Put isn't supported`, 404);
+}
+
+export async function DELETE(req: NextResponse) {
+  return nextError(`delet e isn't supported`, 404);
 }

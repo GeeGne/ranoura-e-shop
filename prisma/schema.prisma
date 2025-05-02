@@ -28,7 +28,9 @@ model User {
 }
 
 model Themes {
-  id Int @id @default(autoincrement())
+  id Int @id @default(1)
+  name Json @default("{\"en\": \"Dusk Cacoa\", \"ar\": \"كاكاو مشبع\"}")
+  scheme_id Int @default(1)
   primary_color String @default("#0a0908")
   primary_invert_color String @default("#F1EFEF")
   secondary_color String @default("#22333b")

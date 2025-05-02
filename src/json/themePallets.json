@@ -1,0 +1,47 @@
+[
+  {
+    "name": {"en": "Dusk Cacoa", "ar": "كاكاو مشبع"},
+    "scheme_id": 1,
+    "primary_color": "#0a0908",
+    "primary_invert_color": "#F1EFEF",
+    "secondary_color": "#22333b",
+    "secondary_invert_color": "#D0D0D0",
+    "inbetween_color": "#9999a1",
+    "content_color": "oklch(0.473 0.137 46.201)",
+    "content_inbetween_color": "oklch(0.769 0.188 70.08)",
+    "content_invert_color": "oklch(0.924 0.12 95.746)"
+  },{
+    "name": {"en": "Crimson Nocturne", "ar": "ليل القرمزي"},
+    "scheme_id": 2,
+    "primary_color": "#2b2d42",
+    "primary_invert_color": "#e9e9ec",
+    "secondary_color": "#8d99ae",
+    "secondary_invert_color": "#f3f4f6",
+    "inbetween_color": "#9999a1",
+    "content_color": "#d80032",
+    "content_inbetween_color": "#ef233c",
+    "content_invert_color": "#f36576"
+  },{
+    "name": {"en": "Mosswood", "ar": "خَشَبُ الطُّحْلُب"},
+    "scheme_id": 3,
+    "primary_color": "#2e0014",
+    "primary_invert_color": "#eae5e7",
+    "secondary_color": "#ece8e8",
+    "secondary_invert_color": "#D0D0D0",
+    "inbetween_color": "#9999a1",
+    "content_color": "#809848",
+    "content_inbetween_color": "#b5dead",
+    "content_invert_color": "#b0ca87"
+  },{
+    "name": {"en": "Royal Grain", "ar": "حَبُّ الملوك"},
+    "scheme_id": 1,
+    "primary_color": "#9381ff",
+    "primary_invert_color": "#f4f2ff",
+    "secondary_color": "#b8b8ff",
+    "secondary_invert_color": "#f7f7ff",
+    "inbetween_color": "#9999a1",
+    "content_color": "#ffd8be",
+    "content_inbetween_color": "#ffeedd",
+    "content_invert_color": "#f8f7ff"
+  }
+]
