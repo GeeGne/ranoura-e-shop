@@ -136,7 +136,7 @@ export default function Categories ({className, props}: Props) {
               hover:bg-[var(--background-deep-light-invert-color)] cursor-pointer
               hover:font-bold hover:text-heading-invert
               ${itm.slug === tabName 
-                ? 'text-heading-invert font-bold text-base bg-[var(--background-deep-light-invert-color)]' 
+                ? 'text-content-invert font-bold text-base bg-[var(--background-deep-light-invert-color)]' 
                 : 'text-body-invert text-base bg-transparent'
               }
             `}
@@ -152,7 +152,7 @@ export default function Categories ({className, props}: Props) {
                   svgString={itm.icon}
                   className={`
                     ${itm.slug === tabName 
-                      ? 'text-heading-invert' 
+                      ? 'text-content-invert' 
                       : 'text-body-invert'
                     }
                     group-hover:text-heading-invert 
@@ -162,7 +162,7 @@ export default function Categories ({className, props}: Props) {
                 <span>
                   {itm.name[lang]}
                 </span>
-                <UnderlineStyle />
+                <UnderlineStyle className="hidden" />
               </div>
             </Link>
           </li>          
@@ -191,7 +191,7 @@ export default function Categories ({className, props}: Props) {
               hover:bg-[var(--background-deep-light-invert-color)] cursor-pointer
               hover:font-bold hover:text-heading-invert
               ${itm.slug === tabName 
-                ? 'text-heading-invert font-bold text-base bg-[var(--background-deep-light-invert-color)]' 
+                ? 'text-content-invert font-bold text-base bg-[var(--background-deep-light-invert-color)]' 
                 : 'text-body-invert text-base bg-transparent'
               }
             `}
@@ -207,7 +207,7 @@ export default function Categories ({className, props}: Props) {
                   svgString={itm.icon}
                   className={`
                     ${itm.slug === tabName 
-                      ? 'text-heading-invert' 
+                      ? 'text-content-invert' 
                       : 'text-body-invert'
                     }
                     group-hover:text-heading-invert 
@@ -217,7 +217,7 @@ export default function Categories ({className, props}: Props) {
                 <span>
                   {itm.name[lang]}
                 </span>
-                <UnderlineStyle />
+                <UnderlineStyle className="hidden" />
               </div>
             </Link>
           </li>

@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
   // @desc update themes variables
   // @route /api/v1/themes
   // @access private
-export async function POST(req: NextRequest) {
+export async function PUT(req: NextRequest) {
   try {
     const themesData = await req.json();
 
@@ -45,8 +45,8 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function PUT(req: NextResponse) {
-  return nextError(`Put isn't supported`, 404);
+export async function POST(req: NextResponse) {
+  return nextError(`post isn't supported`, 404);
 }
 
 export async function DELETE(req: NextResponse) {

@@ -1,10 +1,11 @@
 // HOOKS
 import { useState, useRef } from 'react';
 import Link from 'next/link';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 // COMPONENTS
 import LoadingTable from '@/components/LoadingTable'
+import ErrorLayout from '@/components/ErrorLayout';
 import LineMdLink from '@/components/svgs/LineMdLink';
 import TablerCopy from '@/components/svgs/TablerCopy';
 import MaterialSymbolsCheckRounded from '@/components/svgs/MaterialSymbolsCheckRounded';
@@ -20,7 +21,8 @@ import themePallets from '@/json/themePallets.json';
 import { useTabNameStore, useLanguageStore, useAlertMessageStore } from '@/stores/index';
 
 // API
-import getThemes from '@/lib/api/themes/get';
+import getThemeVars from '@/lib/api/themes/get';
+import updateThemeVars from '@/lib/api/themes/put';
 
 import {
   useReactTable,
@@ -32,26 +34,37 @@ import {
 
 export default function Table() {
 
+  const queryClient = useQueryClient();
+  const loadingArray = [1, 2, 3, 4];
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
-  const loadingArray = [1, 2, 3, 4];
 
+  const isSameTheme = (id: number) => id === currentTheme?.scheme_id;
+  const getTheme = (schemeId: number) => themePallets.find(theme => theme.scheme_id === schemeId)
+  
   const { data: currentTheme, error, isLoading } = useQuery({
     queryKey: ['themes'],
-    queryFn: getThemes,
+    queryFn: getThemeVars,
   });
-  const isSameTheme = (id: number) => id === currentTheme?.scheme_id;
-
-  const checkToggle = (toggle: boolean, hookIndex: number | string, refIndex: number | string) => {
-    if (toggle === true && hookIndex === refIndex) return true;
-    return false
-  };
+  
+  const updateThemeVarsMutation = useMutation({
+    mutationFn: updateThemeVars,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['themes']})
+    }
+  }) 
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    const { type, index } = e.currentTarget.dataset;
+    const { type, index, schemeId } = e.currentTarget.dataset;
 
     switch (type) {
+      case 'set_theme_button_is_clicked':
+        if (isSameTheme(Number(schemeId))) return;
+        const themeData = getTheme(Number(schemeId));
+        console.log('themeData: ', themeData);
+        updateThemeVarsMutation.mutate(themeData);
+        break;
       case 'copy_button_is_clicked':
         try {
           await navigator?.clipboard?.writeText("Text is copied");
@@ -75,10 +88,18 @@ export default function Table() {
   // DEBUG & UI
   // console.log('themes data: ', data);
 
+  return (
+    <ErrorLayout />
+  )
+
+
   if (isLoading) return (
     <LoadingTable />
   )
 
+  return (
+    <ErrorLayout />
+  )
   return (
     <div className="flex flex-col gap-4 overflow-x-auto">
       <h3
@@ -98,7 +119,7 @@ export default function Table() {
               {isEn ? 'NAME' : 'الاسم'}
             </th>
             <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
-              {isEn ? 'Pallete' : 'لوح الألوان'}
+              {isEn ? 'PALLETE' : 'لوح الألوان'}
             </th>
             <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
               {isEn ? 'OPTIONS' : 'الخيارات'}
@@ -116,38 +137,70 @@ export default function Table() {
             >
               {/* <td className="px-6 py-4 text-heading">{itm.name[isEn ? 'en' : 'ar']}</td> */}
               <td className="px-6 py-4 text-heading">{itm.name[isEn ? 'en' : 'ar']}</td>
-              <td className={`flex px-6 py-4 text-sm text-body`}>
-                <ul className="flex flex-row w rounded-md overflow-hidden border-solid border-inbetween border-2">
+              <td 
+                className={`
+                  flex px-6 hover:px-3 py-4 text-sm text-body
+                  transition-all duration-300 ease-in-out
+                `}
+              >
+                <ul className="
+                  flex flex-row w rounded-md overflow-hidden 
+                  border-solid border-primary border-[1px]
+                ">
                   <li
-                    className={`p-3`}
+                    className={`
+                      p-3 hover:px-6
+                      transition-all duration-300 ease-in-out
+                    `}
                     style={{backgroundColor: itm.primary_color}}
                   />
                   <li
-                    className={`p-3`}
+                    className={`
+                      p-3 hover:px-6
+                      transition-all duration-300 ease-in-out
+                    `}
                     style={{backgroundColor: itm.secondary_color}}
                   />
                   <li
-                    className={`p-3`}
+                    className={`
+                      p-3 hover:px-6
+                      transition-all duration-300 ease-in-out
+                    `}
                     style={{backgroundColor: itm.content_color}}
                   />
                   <li
-                    className={`p-3`}
+                    className={`
+                      p-3 hover:px-6
+                      transition-all duration-300 ease-in-out
+                    `}
                     style={{backgroundColor: itm.content_inbetween_color}}
                   />
                   <li
-                    className={`p-3`}
+                    className={`
+                      p-3 hover:px-6
+                      transition-all duration-300 ease-in-out
+                    `}
                     style={{backgroundColor: itm.inbetween_color}}
                   />
                   <li
-                    className={`p-3`}
+                    className={`
+                      p-3 hover:px-6
+                      transition-all duration-300 ease-in-out
+                    `}
                     style={{backgroundColor: itm.content_invert_color}}
                   />
                   <li
-                    className={`p-3`}
+                    className={`
+                      p-3 hover:px-6
+                      transition-all duration-300 ease-in-out
+                    `}
                     style={{backgroundColor: itm.primary_invert_color}}
                   />
                   <li
-                    className={`p-3`}
+                    className={`
+                      p-3 hover:px-6
+                      transition-all duration-300 ease-in-out
+                    `}
                     style={{backgroundColor: itm.secondary_invert_color}}
                   />
                 </ul>
@@ -159,15 +212,18 @@ export default function Table() {
                       relative bg-background-light rounded-md
                       transition-all duration-500 ease-in-out
                       ${isSameTheme(itm.scheme_id)
-                        ? 'bg-green-400' 
+                        ? 'bg-green-600' 
                         : 'bg-background-light'
                       }
                     `}
+                    data-type="set_theme_button_is_clicked"
+                    data-scheme-id={itm.scheme_id}
+                    onClick={handleClick}
                   >
                     <SolarGalleryBold 
                       className={`
                         w-7 h-7 p-1 rounded-md cursor-pointer 
-                        transition-all duration-200 ease-in-out
+                        transition-all duration-200 ease-in-out text-heading
                         ${isSameTheme(itm.scheme_id)
                           ? 'invisible opacity-0'
                           : 'visible opacity-100' 
@@ -178,7 +234,7 @@ export default function Table() {
                       className={`
                         absolute top-1/2 left-1/2
                         translate-x-[-50%] translate-y-[-50%]
-                        w-7 h-7 p-1 rounded-md cursor-pointer 
+                        w-7 h-7 p-1 rounded-md cursor-pointer text-heading-invert
                         transition-all duration-200 ease-in-out
                         ${isSameTheme(itm.scheme_id)
                           ? 'visible opacity-100' 

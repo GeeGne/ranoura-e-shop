@@ -511,7 +511,7 @@ export default function Table() {
                     <TablerCopy 
                       className={`
                         w-7 h-7 p-1 rounded-md cursor-pointer 
-                        transition-all duration-200 ease-in-out
+                        transition-all duration-200 ease-in-out text-heading
                         ${checkToggle(isUrlCopied.toggle, isUrlCopied.index, i + itm.type)
                           ? 'invisible opacity-0'
                           : 'visible opacity-100' 
@@ -522,7 +522,7 @@ export default function Table() {
                       className={`
                         absolute top-1/2 left-1/2
                         translate-x-[-50%] translate-y-[-50%]
-                        w-7 h-7 p-1 rounded-md cursor-pointer 
+                        w-7 h-7 p-1 rounded-md cursor-pointer text-heading
                         transition-all duration-200 ease-in-outnter
                         ${checkToggle(isUrlCopied.toggle, isUrlCopied.index, i + itm.type) 
                           ? 'visible opacity-100' 
@@ -588,19 +588,6 @@ export default function Table() {
             </tr>
           ))}
         </tbody>
-      </table>
-    </div>
-  )
-
-
-  return (
-    <div>
-      <table className="">
-        <thead>
-          <tr>tr</tr>
-          <tr>tr</tr>
-          <tr>tr</tr>
-        </thead>
       </table>
     </div>
   )
