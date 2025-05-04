@@ -41,17 +41,6 @@ export default function RootLayout({
 
   const pathNameIncludesAdmin = () => pathname.includes('/admin');
 
-  useEffect(() => {
-    document.documentElement.style.setProperty('--primary-color', themes.primary_color);
-    document.documentElement.style.setProperty('--primary-invert-color', themes.primary_invert_color);
-    document.documentElement.style.setProperty('--secondary-color', themes.secondary_color);
-    document.documentElement.style.setProperty('--secondary-invert-color', themes.secondary_invert_color);
-    document.documentElement.style.setProperty('--inbetween-color', themes.inbetween_color);
-    document.documentElement.style.setProperty('--content-color', themes.content_color);
-    document.documentElement.style.setProperty('--content-inbetween-color', themes.content_inbetween_color);
-    document.documentElement.style.setProperty('--content-invert-color', themes.content_invert_color);
-  }, []);
-
   // DEBUG & UI
   // const handleScroll = (e: any) => console.log('wrokign');
   // console.log(layoutRef);

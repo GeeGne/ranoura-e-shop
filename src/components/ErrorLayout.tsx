@@ -17,7 +17,11 @@ type Props = {
   refreshBtn?: boolean;
 }
 
-export default function ErrorLayout ({ title, description, refreshBtn = true }: Props) {
+export default function ErrorLayout ({ 
+  title = 'OOPS...', 
+  description = 'This page is missing, but your next favorite outfit isn\'t', 
+  refreshBtn = true 
+}: Props) {
   const router = useRouter();
     const lang = useLanguageStore(state => state.lang);
     const isEn = lang === 'en';
@@ -32,6 +36,9 @@ export default function ErrorLayout ({ title, description, refreshBtn = true }: 
       const { type } = e.currentTarget.dataset;
       
       switch (type) {
+        case 'refresh_button_is_clicked':
+          window.location.reload();
+          break;
         case 'navigate_to_home':
           router.push('/');
           setTimeout(() => 
@@ -61,20 +68,20 @@ export default function ErrorLayout ({ title, description, refreshBtn = true }: 
         <h2
           className="text-6xl md:text-8xl text-heading font-light mx-auto"
         >
-          {isEn ? 'OOPS...' : 'ووبس...'}
+          {title}
         </h2>
         <h2
           className="text-2xl text-body font-medium mx-auto"
         >
-          {isEn ? "This page is missing, but your next favorite outfit isn't" : "هذه الصفحة غير موجودة، لكن إطلالتك المفضلة القادمة لا تزال بانتظارك"}
+          {description}
         </h2>
         <BtnA
           className={`
             flex grow-0 mx-auto bg-primary 
             text-lg text-heading-invert font-bold px-4 py-2 rounded-md
-            ${refreshBtn ? 'hidden' : 'visible'}
+            ${refreshBtn ? 'visible' : 'hidden'}
           `}
-          data-type="navigate_to_home"
+          data-type="refresh_button_is_clicked"
           onClick={handleClick}
         >
           {isEn ? 'Refresh Page' : 'تحديث الصفحه'}

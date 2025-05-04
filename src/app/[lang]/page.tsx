@@ -19,7 +19,7 @@ import AdvertTile from '@/components/home/AdvertTile';
 import { useTabNameStore, useLanguageStore } from '@/stores/index';
 
 // API
-import getThemes from '@/lib/api/themes/get';
+import getThemeVars from '@/lib/api/themes/get';
 
 export default function Home() {
 
@@ -32,12 +32,11 @@ export default function Home() {
     document.cookie = `preferredLang=${lang}; path=/; max-age=31536000`
   }
   
-  const { data, error, isLoading } = useQuery({
+  const { data: themesData, error, isLoading } = useQuery({
     queryKey: ['themes'],
-    queryFn: getThemes,
+    queryFn: getThemeVars,
   })
 
-  console.log('themes data: ', data);
   useEffect(() => {
     setTabName('home');
   }, []);
@@ -45,7 +44,23 @@ export default function Home() {
   useEffect(() => {
     setDefaultLanguage();
   }, [ lang ]);
-  
+
+  useEffect(() => {
+    if (error || isLoading) return;
+    function updateThemeVariables () {
+      document.documentElement.style.setProperty('--primary-color', themesData.primary_color);
+      document.documentElement.style.setProperty('--primary-invert-color', themesData.primary_invert_color);
+      document.documentElement.style.setProperty('--secondary-color', themesData.secondary_color);
+      document.documentElement.style.setProperty('--secondary-invert-color', themesData.secondary_invert_color);
+      document.documentElement.style.setProperty('--inbetween-color', themesData.inbetween_color);
+      document.documentElement.style.setProperty('--content-color', themesData.content_color);
+      document.documentElement.style.setProperty('--content-inbetween-color', themesData.content_inbetween_color);
+      document.documentElement.style.setProperty('--content-invert-color', themesData.content_invert_color);
+      window.location.reload();
+    }
+    updateThemeVariables();
+  }, [themesData, error, isLoading]);
+
   return (
     <div
       className="flex flex-col"

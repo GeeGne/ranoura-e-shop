@@ -10,6 +10,7 @@ import LineMdLink from '@/components/svgs/LineMdLink';
 import TablerCopy from '@/components/svgs/TablerCopy';
 import MaterialSymbolsCheckRounded from '@/components/svgs/MaterialSymbolsCheckRounded';
 import SolarGalleryBold from '@/components/svgs/SolarGalleryBold';
+import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingResize';
 import SolarGalleryCheckBold from '@/components/svgs/SolarGalleryCheckBold';
 import LineMdCloseCircleFilled from '@/components/svgs/LineMdCloseCircleFilled';
 
@@ -35,11 +36,14 @@ import {
 export default function Table() {
 
   const queryClient = useQueryClient();
-  const loadingArray = [1, 2, 3, 4];
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
-
+  const [ isThemeMutating, setIsThemeMutating ] = useState<{toggle: boolean, index: number}>({
+    toggle: false, index: 0
+  });
   const isSameTheme = (id: number) => id === currentTheme?.scheme_id;
   const getTheme = (schemeId: number) => themePallets.find(theme => theme.scheme_id === schemeId)
   
@@ -50,8 +54,12 @@ export default function Table() {
   
   const updateThemeVarsMutation = useMutation({
     mutationFn: updateThemeVars,
+    onMutate: () => {
+      setIsThemeMutating(val => ({ toggle: true, index: val.index }));
+    },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['themes']})
+      queryClient.invalidateQueries({ queryKey: ['themes']});
+      setIsThemeMutating(val => ({ toggle: false, index: val.index }));
     }
   }) 
 
@@ -62,8 +70,8 @@ export default function Table() {
       case 'set_theme_button_is_clicked':
         if (isSameTheme(Number(schemeId))) return;
         const themeData = getTheme(Number(schemeId));
-        console.log('themeData: ', themeData);
         updateThemeVarsMutation.mutate(themeData);
+        setIsThemeMutating( {toggle: false, index: Number(index) });
         break;
       case 'copy_button_is_clicked':
         try {
@@ -80,26 +88,21 @@ export default function Table() {
     }
   }
 
-  const lang = useLanguageStore(state => state.lang);
-  const isEn = lang === 'en';
-  const setTabName = useTabNameStore((state: any) => state.setTabName);
-  const array = [1]
 
   // DEBUG & UI
   // console.log('themes data: ', data);
-
-  return (
-    <ErrorLayout />
-  )
-
 
   if (isLoading) return (
     <LoadingTable />
   )
 
-  return (
-    <ErrorLayout />
+  if (error) return (
+    <ErrorLayout 
+      title={isEn ? 'Unable To Load' : 'لم يتم التحميل'}
+      description={isEn ? 'Please Refresh the page or try again later' : 'الرجاء اعاده تحميل الصفحه او حاول مره اخرى لاحقا'}
+    />
   )
+  
   return (
     <div className="flex flex-col gap-4 overflow-x-auto">
       <h3
@@ -216,15 +219,28 @@ export default function Table() {
                         : 'bg-background-light'
                       }
                     `}
+                    data-index={i}
                     data-type="set_theme_button_is_clicked"
                     data-scheme-id={itm.scheme_id}
                     onClick={handleClick}
                   >
+                    <SvgSpinnersRingResize 
+                      className={`
+                        absolute top-1/2 left-1/2
+                        translate-x-[-50%] translate-y-[-50%]
+                        w-7 h-7 p-1 rounded-md cursor-pointer 
+                        transition-all duration-200 ease-in-out text-heading
+                        ${isThemeMutating.toggle && isThemeMutating.index === i
+                          ? 'visible opacity-100'
+                          : 'invisible opacity-0' 
+                        }
+                      `}
+                    />    
                     <SolarGalleryBold 
                       className={`
                         w-7 h-7 p-1 rounded-md cursor-pointer 
                         transition-all duration-200 ease-in-out text-heading
-                        ${isSameTheme(itm.scheme_id)
+                        ${isSameTheme(itm.scheme_id) || isThemeMutating.toggle && isThemeMutating.index === i
                           ? 'invisible opacity-0'
                           : 'visible opacity-100' 
                         }
