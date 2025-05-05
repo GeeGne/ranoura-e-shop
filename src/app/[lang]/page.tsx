@@ -18,12 +18,6 @@ import AdvertTile from '@/components/home/AdvertTile';
 // STORES
 import { useTabNameStore, useLanguageStore } from '@/stores/index';
 
-// API
-import getThemeVars from '@/lib/api/themes/get';
-
-// UTILS
-import updateThemeVariables from '@/utils/updateThemeVariables';
-
 export default function Home() {
 
   const setTabName = useTabNameStore((state: any) => state.setTabName);
@@ -34,11 +28,6 @@ export default function Home() {
     setLang(lang);
     document.cookie = `preferredLang=${lang}; path=/; max-age=31536000`
   }
-  
-  const { data: themesData, isError, isLoading } = useQuery({
-    queryKey: ['themes'],
-    queryFn: getThemeVars,
-  })
 
   useEffect(() => {
     setTabName('home');
@@ -47,10 +36,6 @@ export default function Home() {
   useEffect(() => {
     setDefaultLanguage();
   }, [ lang ]);
-
-  useEffect(() => {
-    if (isError || isLoading) return;
-  }, [themesData]);
 
   return (
     <div

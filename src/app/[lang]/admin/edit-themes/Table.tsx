@@ -67,10 +67,6 @@ export default function Table() {
     }
   }) 
 
-  useEffect(() => {
-    if (isError || isLoading) return;
-  }, [currentTheme]);
-
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     const { type, index, schemeId } = e.currentTarget.dataset;
 

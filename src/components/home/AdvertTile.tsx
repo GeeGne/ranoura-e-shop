@@ -287,7 +287,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
             onClick={handleClick}
           >
             <PepiconsPencilOpenCircleFilled
-              className="cursor-pointer my-auto text-heading"
+              className="cursor-pointer my-auto text-primary"
               role="button"
               width={32}
               height={32}

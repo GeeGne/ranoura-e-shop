@@ -52,12 +52,12 @@ export default function ErrorLayout ({
   
   return (
     <section
-      className="grid grid-cols-2 lg:items-center gap-8 py-4 md:py-8 px-4 max-w-[1400px] mx-auto"
+      className="grid grid-cols-2 lg:items-center gap-8 max-w-[1400px] mx-auto"
     >
       <Error404
         className="
           lg:order-2 col-span-2 lg:col-span-1 
-          w-[300px] md:w-[500px] md:w-[500px] h-full text-content mx-auto
+          w-full md:w-[500px] md:w-[500px] h-full text-content mx-auto
         "
       />
       <section
