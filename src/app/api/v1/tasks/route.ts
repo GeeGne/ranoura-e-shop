@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 
 export async function GET() {
@@ -6,7 +6,7 @@ export async function GET() {
   return NextResponse.json(tasks);
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const { title, description } = await request.json();
 
@@ -17,11 +17,10 @@ export async function POST(request: Request) {
         description: description || null, // Optional field
       },
     });
-
     return NextResponse.json(newTask, { status: 201 });
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to create task" },
+      { error: "Failed to create task: " + error },
       { status: 500 }
     );
   }

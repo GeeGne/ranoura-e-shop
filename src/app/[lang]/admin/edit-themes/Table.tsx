@@ -1,5 +1,5 @@
 // HOOKS
-import { useState, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -25,6 +25,9 @@ import { useTabNameStore, useLanguageStore, useAlertMessageStore } from '@/store
 import getThemeVars from '@/lib/api/themes/get';
 import updateThemeVars from '@/lib/api/themes/put';
 
+// UTILS
+import updateThemeVariables from '@/utils/updateThemeVariables';
+
 import {
   useReactTable,
   getCoreRowModel,
@@ -47,7 +50,7 @@ export default function Table() {
   const isSameTheme = (id: number) => id === currentTheme?.scheme_id;
   const getTheme = (schemeId: number) => themePallets.find(theme => theme.scheme_id === schemeId)
   
-  const { data: currentTheme, error, isLoading } = useQuery({
+  const { data: currentTheme, isError, isLoading } = useQuery({
     queryKey: ['themes'],
     queryFn: getThemeVars,
   });
@@ -59,17 +62,24 @@ export default function Table() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['themes']});
+      queryClient.refetchQueries({ queryKey: ['themes']});
       setIsThemeMutating(val => ({ toggle: false, index: val.index }));
     }
   }) 
+
+  useEffect(() => {
+    if (isError || isLoading) return;
+    updateThemeVariables(currentTheme);
+  }, [currentTheme]);
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     const { type, index, schemeId } = e.currentTarget.dataset;
 
     switch (type) {
       case 'set_theme_button_is_clicked':
-        if (isSameTheme(Number(schemeId))) return;
         const themeData = getTheme(Number(schemeId));
+        if (isSameTheme(Number(schemeId)) || !themeData) return;
+        
         updateThemeVarsMutation.mutate(themeData);
         setIsThemeMutating( {toggle: false, index: Number(index) });
         break;
@@ -96,7 +106,7 @@ export default function Table() {
     <LoadingTable />
   )
 
-  if (error) return (
+  if (isError) return (
     <ErrorLayout 
       title={isEn ? 'Unable To Load' : 'لم يتم التحميل'}
       description={isEn ? 'Please Refresh the page or try again later' : 'الرجاء اعاده تحميل الصفحه او حاول مره اخرى لاحقا'}
