@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 
 async function nextError (message: string, status = 404) {
-  NextResponse.json({ error: message }, { status })
+  return NextResponse.json({ error: message }, { status })
 }
 
   // @desc get theme variables data

@@ -69,7 +69,6 @@ export default function Table() {
 
   useEffect(() => {
     if (isError || isLoading) return;
-    updateThemeVariables(currentTheme);
   }, [currentTheme]);
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -145,74 +144,75 @@ export default function Table() {
               key={i}
               className={`
                 hover:bg-yellow-50 transition-all duration-300 ease-in-out
-                ${isSameTheme(itm.scheme_id) ? 'bg-green-100' : 'bg-transparent'}
+                ${isSameTheme(itm.scheme_id) ? 'bg-content-invert' : 'bg-transparent'}
               `}
             >
               {/* <td className="px-6 py-4 text-heading">{itm.name[isEn ? 'en' : 'ar']}</td> */}
               <td className="px-6 py-4 text-heading">{itm.name[isEn ? 'en' : 'ar']}</td>
               <td 
                 className={`
-                  flex px-6 hover:px-3 py-4 text-sm text-body
+                  flex px-6 py-4 text-sm text-body
                   transition-all duration-300 ease-in-out
                 `}
               >
-                <ul className="
-                  flex flex-row w rounded-md overflow-hidden 
-                  border-solid border-primary border-[1px]
-                ">
+                <ul className={`
+                  flex flex-row w-[300px] h-[30px] rounded-md overflow-hidden 
+                  border-solid border-[1px]
+                  ${isSameTheme(itm.scheme_id) ? 'border-content' : 'border-primary'}
+                `}>
                   <li
                     className={`
-                      p-3 hover:px-6
-                      transition-all duration-300 ease-in-out
+                      flex-1 w-full h-full hover:px-2
+                      transition-all duration-200 ease-out
                     `}
                     style={{backgroundColor: itm.primary_color}}
                   />
                   <li
                     className={`
-                      p-3 hover:px-6
-                      transition-all duration-300 ease-in-out
+                      flex-1 w-full h-full hover:px-2
+                      transition-all duration-200 ease-out
                     `}
                     style={{backgroundColor: itm.secondary_color}}
                   />
                   <li
                     className={`
-                      p-3 hover:px-6
-                      transition-all duration-300 ease-in-out
+                      flex-1 w-full h-full hover:px-2
+                      transition-all duration-200 ease-out
                     `}
                     style={{backgroundColor: itm.content_color}}
                   />
                   <li
                     className={`
-                      p-3 hover:px-6
-                      transition-all duration-300 ease-in-out
+                      flex-1 w-full h-full hover:px-2
+                      transition-all duration-200 ease-out
                     `}
                     style={{backgroundColor: itm.content_inbetween_color}}
                   />
                   <li
                     className={`
-                      p-3 hover:px-6
-                      transition-all duration-300 ease-in-out
+                      flex-1 w-full h-full hover:px-2
+                      transition-all duration-200 ease-out
                     `}
                     style={{backgroundColor: itm.inbetween_color}}
                   />
                   <li
                     className={`
-                      p-3 hover:px-6
-                      transition-all duration-300 ease-in-out
+                      flex-1 w-full h-full hover:px-2
+                      transition-all duration-200 ease-out
                     `}
                     style={{backgroundColor: itm.content_invert_color}}
                   />
                   <li
                     className={`
-                      p-3 hover:px-6
-                      transition-all duration-300 ease-in-out
+                      flex-1 w-full h-full hover:px-2
+                      transition-all duration-200 ease-out
                     `}
                     style={{backgroundColor: itm.primary_invert_color}}
                   />
                   <li
                     className={`
-                      p-3 hover:px-6
-                      transition-all duration-300 ease-in-out
+                      flex-1 w-full h-full hover:px-2
+                      transition-all duration-200 ease-out
                     `}
                     style={{backgroundColor: itm.secondary_invert_color}}
                   />
@@ -225,7 +225,7 @@ export default function Table() {
                       relative bg-background-light rounded-md
                       transition-all duration-500 ease-in-out
                       ${isSameTheme(itm.scheme_id)
-                        ? 'bg-green-600' 
+                        ? 'bg-content' 
                         : 'bg-background-light'
                       }
                     `}

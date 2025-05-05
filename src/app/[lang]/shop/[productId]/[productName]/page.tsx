@@ -239,7 +239,8 @@ export default function page () {
         >
           <BtnA
             className={`
-              order-2 flex-1 flex justify-center items-center gap-2 font-bold text-base text-heading-invert 
+              order-2 flex-1 flex justify-center items-center 
+              gap-2 font-bold text-base text-heading-invert 
               cool-bg-grad-m py-2
               ${isEn ? 'rounded-r-lg' : 'rounded-l-lg'}
             `}
@@ -262,7 +263,7 @@ export default function page () {
               className={`
                 peer w-16 bg-transparent text-left
                 text-heading text-md font-bold px-4 focus:outline-none
-                border-solid border-primary border-[2px]
+                border-solid border-[#0a0908] border-[2px]
                 ${isEn ? 'rounded-l-lg' : 'rounded-r-lg'}
               `}
               name="quantity"

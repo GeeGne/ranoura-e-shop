@@ -43,5 +43,49 @@
     "content_color": "#ffd8be",
     "content_inbetween_color": "#ffeedd",
     "content_invert_color": "#f8f7ff"
+  },{
+    "name": {"en": "Planet Mars", "ar": "كوكب المريخ"},
+    "scheme_id": 5,
+    "primary_color": "#355070",
+    "primary_invert_color": "#eaac8b",
+    "secondary_color": "#f08080",
+    "secondary_invert_color": "#ffdab9",
+    "inbetween_color": "#f8ad9d",
+    "content_color": "#f25c54",
+    "content_inbetween_color": "#f4845f",
+    "content_invert_color": "#f7b267"
+  },{
+    "name": {"en": "Romantic Bomb", "ar": "قنبله رومانسيه"},
+    "scheme_id": 6,
+    "primary_color": "#fb6f92",
+    "primary_invert_color": "#ffe5ec",
+    "secondary_color": "#e0b1cb",
+    "secondary_invert_color": "#ffdab9",
+    "inbetween_color": "#9999a1",
+    "content_color": "#abc4ff",
+    "content_inbetween_color": "#c1d3fe",
+    "content_invert_color": "#d7e3fc"
+  },{
+    "name": {"en": "Earthy mix", "ar": "مزيج ارضي"},
+    "scheme_id": 7,
+    "primary_color": "#293241",
+    "primary_invert_color": "#e0fbfc",
+    "secondary_color": "#3d5a80",
+    "secondary_invert_color": "#98c1d9",
+    "inbetween_color": "#979dac",
+    "content_color": "#f08080",
+    "content_inbetween_color": "#f8ad9d",
+    "content_invert_color": "#ffdab9"
+  },{
+    "name": {"en": "Sky Shade", "ar": "تداريج السماء"},
+    "scheme_id": 8,
+    "primary_color": "#0d1321",
+    "primary_invert_color": "#f0ebd8",
+    "secondary_color": "#0582ca",
+    "secondary_invert_color": "#b5e2fa",
+    "inbetween_color": "#979dac",
+    "content_color": "#1d2d44",
+    "content_inbetween_color": "#3e5c76",
+    "content_invert_color": "#748cab"
   }
 ]

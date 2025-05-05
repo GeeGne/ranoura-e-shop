@@ -39,7 +39,7 @@ export default function Home() {
     queryKey: ['themes'],
     queryFn: getThemeVars,
   })
-  console.log('themesData: ', themesData);
+
   useEffect(() => {
     setTabName('home');
   }, []);
@@ -50,7 +50,6 @@ export default function Home() {
 
   useEffect(() => {
     if (isError || isLoading) return;
-    updateThemeVariables(themesData);
   }, [themesData]);
 
   return (
