@@ -14,17 +14,63 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id Int @id @default(autoincrement())
+  email String @unique
+  first_name String
+  last_name String
+  password_hash String
+  phone_number String
+  date_of_birth DateTime?
+  last_login_at DateTime?
+  status String @default("active")
+  email_verified Boolean @default(false)
+  profile_img_url String?
+  timezone String @default("UTC+3")
+  locale String @default("ar")
+  created_at DateTime @default(now())
+  updated_at DateTime? @updatedAt
+
+  addresses UserAddress[]
+  roles UserRole[]
+}
+
+model UserAddress {
+  id Int @id @default(autoincrement())
+  user_id Int @unique
+  address_details String
+  second_address String?
+  notes String?
+  created_at DateTime @default(now())
+  updated_at DateTime? @updatedAt
+
+  user User @relation(fields: [user_id], references: [id])
+}
+
+// User Roles/Permissions (many-to-many)
+model Role {
+  id Int @id @default(autoincrement())
+  name String @unique
+  description String?
+
+  userRole UserRole[]
+}
+
+model UserRole {
+  user_id Int
+  role_id Int
+
+  user User @relation(fields: [user_id], references:[id])
+  role Role @relation(fields: [role_id], references:[id])
+  @@id([user_id, role_id])
+}
+
 model Task {
   id          Int      @id @default(autoincrement())
   title       String
   description String?
   completed   Boolean  @default(false)
   createdAt   DateTime @default(now())
-}
-
-model User {
-  id Int @id @default(autoincrement())
-  email String
 }
 
 model Themes {
@@ -39,4 +85,6 @@ model Themes {
   content_color String @default("oklch(0.473 0.137 46.201)")
   content_invert_color String @default("oklch(0.473 0.137 46.201)")
   content_inbetween_color String @default("oklch(0.924 0.12 95.746)")
+  created_at DateTime @default(now())
+  updated_at DateTime? @updatedAt
 }
