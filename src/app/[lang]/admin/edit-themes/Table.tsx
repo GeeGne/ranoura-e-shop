@@ -53,6 +53,11 @@ export default function Table() {
   const { data: currentTheme, isError, isLoading } = useQuery({
     queryKey: ['themes'],
     queryFn: getThemeVars,
+    onError: () => {
+      setAlertToggle(Date.now());
+      setAlertType("error");
+      setAlertMessage(`${isEn ? '' : ''}`);      
+    }
   });
   
   const updateThemeVarsMutation = useMutation({
@@ -60,10 +65,21 @@ export default function Table() {
     onMutate: () => {
       setIsThemeMutating(val => ({ toggle: true, index: val.index }));
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['themes']});
       queryClient.refetchQueries({ queryKey: ['themes']});
       setIsThemeMutating(val => ({ toggle: false, index: val.index }));
+
+      setAlertToggle(Date.now());
+      setAlertType("success");
+      setAlertMessage(data.message[isEn ? 'en' : 'ar']);
+    },
+    onError: (error) => {
+      setIsThemeMutating(val => ({ toggle: false, index: val.index }));
+
+      setAlertToggle(Date.now());
+      setAlertType("success");
+      setAlertMessage(error.message);
     }
   }) 
 

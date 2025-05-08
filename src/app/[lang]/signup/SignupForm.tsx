@@ -20,10 +20,18 @@ export default function SignupForm ({ className, ...props }: Props) {
 
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
+  const [ signInForm, setSignInForm ] = useState<FormProps>({
+    first_name: '',
+    last_name: '',
+    email: '',
+    phone_number: '',
+    password: '',
+  });
 
   const [ isFNameFocus, setIsFNameFocus ] = useState<boolean>(false);
   const [ isLNameFocus, setIsLNameFocus ] = useState<boolean>(false);
   const [ isEmailFocus, setIsEmailFocus ] = useState<boolean>(false);
+  const [ isPhoneNumberFocus, setIsPhoneNumberFocus ] = useState<boolean>(false);
   const [ isPasswordFocus, setIsPasswordFocus ] = useState<boolean>(false);
   const [ isCPasswordFocus, setIsCPasswordFocus ] = useState<boolean>(false);
 
@@ -78,6 +86,9 @@ export default function SignupForm ({ className, ...props }: Props) {
       case 'email':
         setIsEmailFocus(true);
         break;
+      case 'phone_number':
+        setIsPhoneNumberFocus(true);
+        break;
       case 'password':
         setIsPasswordFocus(true);
         break;
@@ -102,6 +113,9 @@ export default function SignupForm ({ className, ...props }: Props) {
         break;
       case 'email':
         setIsEmailFocus(false);
+        break;
+      case 'phone_number':
+        setIsPhoneNumberFocus(false);
         break;
       case 'password':
         setIsPasswordFocus(false);
@@ -214,6 +228,36 @@ export default function SignupForm ({ className, ...props }: Props) {
           id="email"
           name="email"
           type="email"
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+        />
+      </label>
+      <label
+        className="relative flex md:col-span-2 w-full"
+        htmlFor="phone_number"
+      >
+        <span
+          className={`
+            absolute translate-y-[-50%]
+            bg-background px-1
+            transition-all duration-300 ease-in-out
+            ${isEn ? 'left-3' : 'right-3'}
+            ${isPhoneNumberFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
+          `}
+        >
+          {isEn ? 'Phone Number' : 'رقم الهاتف'}
+        </span>
+        <input
+          className={`
+            bg-transparent border-solid
+            outline-none text-heading
+            transition-all duration-300 ease-in-out
+            w-full py-2 px-4 rounded-md
+            ${isPhoneNumberFocus ? 'border-body border-[2px]' : 'border-[1px] border-inbetween'}
+          `}
+          id="phone_number"
+          name="phone_number"
+          type="phone_number"
           onFocus={handleFocus}
           onBlur={handleBlur}
         />
