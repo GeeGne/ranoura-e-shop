@@ -15,7 +15,14 @@ async function nextError (message: ErrorProps, status = 404) {
 export async function GET(req: NextRequest) {
   try {
     const [themes] = await prisma.themes.findMany();
-    return NextResponse.json(themes, { status: 200 });  
+    const data = { 
+      data: themes , 
+      message: { 
+        en: 'Theme data has fetched successfully!',
+        ar: 'تم استقبال بياتات السيمه بنجاح!'
+      } 
+    }
+    return NextResponse.json(data, { status: 200 });  
   } catch (error) {
     const err = error as Error;
     console.error('Unable to update the Website UI Theme: ', err.message);

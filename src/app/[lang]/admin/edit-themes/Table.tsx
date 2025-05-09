@@ -47,16 +47,17 @@ export default function Table() {
   const [ isThemeMutating, setIsThemeMutating ] = useState<{toggle: boolean, index: number}>({
     toggle: false, index: 0
   });
-  const isSameTheme = (id: number) => id === currentTheme?.scheme_id;
+
+  const isSameTheme = (id: number) => {if (themeData.data.scheme_id) return id === themeData?.data?.scheme_id};
   const getTheme = (schemeId: number) => themePallets.find(theme => theme.scheme_id === schemeId)
   
-  const { data: currentTheme, isError, isLoading } = useQuery({
+  const { data: themeData, isError, isLoading } = useQuery({
     queryKey: ['themes'],
     queryFn: getThemeVars,
     onError: () => {
       setAlertToggle(Date.now());
       setAlertType("error");
-      setAlertMessage(`${isEn ? '' : ''}`);      
+      setAlertMessage(``);      
     }
   });
   
@@ -78,8 +79,8 @@ export default function Table() {
       setIsThemeMutating(val => ({ toggle: false, index: val.index }));
 
       setAlertToggle(Date.now());
-      setAlertType("success");
-      setAlertMessage(error.message);
+      setAlertType("error");
+      setAlertMessage(error.message[isEn ? 'en' : 'ar']);
     }
   }) 
 
@@ -160,7 +161,13 @@ export default function Table() {
               `}
             >
               {/* <td className="px-6 py-4 text-heading">{itm.name[isEn ? 'en' : 'ar']}</td> */}
-              <td className="px-6 py-4 text-heading">{itm.name[isEn ? 'en' : 'ar']}</td>
+              <td 
+                className={`
+                  px-6 py-4 ${isSameTheme(itm.scheme_id) ? 'text-content font-bold' : 'text-heading font-normal'}
+                `}
+              >
+                {itm.name[isEn ? 'en' : 'ar']}
+              </td>
               <td 
                 className={`
                   flex px-6 py-4 text-sm text-body
@@ -169,8 +176,8 @@ export default function Table() {
               >
                 <ul className={`
                   flex flex-row w-[300px] h-[30px] rounded-md overflow-hidden 
-                  border-solid border-[1px]
-                  ${isSameTheme(itm.scheme_id) ? 'border-content' : 'border-primary'}
+                  border-solid
+                  ${isSameTheme(itm.scheme_id) ? 'border-content border-[2px]' : 'border-primary border-[1px]'}
                 `}>
                   <li
                     className={`

@@ -22,7 +22,7 @@ export default function Layout (
 
   useEffect(() => {
     if (isError || isLoading) return;
-    updateThemeVariables(themesData);
+    updateThemeVariables(themesData.data);
   }, [themesData]);
 
   return (
