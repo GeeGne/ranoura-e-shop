@@ -47,18 +47,12 @@ export default function Table() {
   const [ isThemeMutating, setIsThemeMutating ] = useState<{toggle: boolean, index: number}>({
     toggle: false, index: 0
   });
-
-  const isSameTheme = (id: number) => {if (themeData.data.scheme_id) return id === themeData?.data?.scheme_id};
+  const isSameTheme = (id: number) => id === themeData?.data?.scheme_id;
   const getTheme = (schemeId: number) => themePallets.find(theme => theme.scheme_id === schemeId)
   
-  const { data: themeData, isError, isLoading } = useQuery({
+  const { data: themeData, error, isError, isLoading } = useQuery({
     queryKey: ['themes'],
     queryFn: getThemeVars,
-    onError: () => {
-      setAlertToggle(Date.now());
-      setAlertType("error");
-      setAlertMessage(``);      
-    }
   });
   
   const updateThemeVarsMutation = useMutation({
@@ -75,14 +69,23 @@ export default function Table() {
       setAlertType("success");
       setAlertMessage(data.message[isEn ? 'en' : 'ar']);
     },
-    onError: (error) => {
+    onError: (error: any) => {
       setIsThemeMutating(val => ({ toggle: false, index: val.index }));
 
       setAlertToggle(Date.now());
       setAlertType("error");
-      setAlertMessage(error.message[isEn ? 'en' : 'ar']);
+      setAlertMessage(error?.message[isEn ? 'en' : 'ar']);
     }
-  }) 
+  });
+
+  useEffect(() => {
+    if (!error && !isError) return;
+    setAlertToggle(Date.now());
+    setAlertType("error");
+    const message = error instanceof Error ? error.message[isEn ? 'en' : 'ar'] : "An unknown error occurred";
+    // setAlertMessage(error?.message['en']);
+    setAlertMessage(message);
+  }, [error, isError])
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     const { type, index, schemeId } = e.currentTarget.dataset;

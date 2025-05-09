@@ -5,13 +5,13 @@ type ErrorProps = {
   message: {en: string, ar: string};
 }
 
-async function nextError (message: ErrorProps, status = 404) {
-  return NextResponse.json({ error: message }, { status })
+async function nextError (message: {en: string, ar: string}, status = 404) {
+  return NextResponse.json({ message }, { status })
 }
 
-  // @desc get theme variables data
-  // @route /api/v1/themes
-  // @access public
+// @desc get theme variables data
+// @route /api/v1/themes
+// @access public
 export async function GET(req: NextRequest) {
   try {
     const [themes] = await prisma.themes.findMany();
@@ -27,11 +27,9 @@ export async function GET(req: NextRequest) {
     const err = error as Error;
     console.error('Unable to update the Website UI Theme: ', err.message);
     return nextError(
-      { message: 
-        {
-          en: 'Unable to update the Website UI Theme',
-          ar: 'غير قابل على تحديث السيمه '
-        }
+      {
+        en: 'Unable to update the Website UI Theme',
+        ar: 'غير قابل على تحديث السيمه '
       }
       ,
       404
@@ -68,11 +66,9 @@ export async function PUT(req: NextRequest) {
     const err = error as Error;
     console.error('Unable to update the Website UI Theme: ', err.message);
     return nextError(
-      { message: 
-        {
-          en: 'Unable to update the Website UI Theme: ' + err.message,
-          ar: 'غير قابل على تحديث السيمه ' + err.message
-        }
+      {
+        en: 'Unable to update the Website UI Theme.',
+        ar: 'غير قابل على تحديث السيمه '
       }
       , 404
     )
@@ -80,9 +76,23 @@ export async function PUT(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  return nextError(`post isn't supported`, 404);
+  return nextError(
+    {
+      en: `post isn't supported`,
+      ar: 'غير قابل على تحديث السيمه '
+    }
+    , 404
+  )
+
 }
 
 export async function DELETE(req: NextRequest) {
-  return nextError(`delet e isn't supported`, 404);
+  return nextError(
+    {
+      en: `delet e isn't supported`,
+      ar: 'غير قابل على تحديث السيمه '
+    }
+    , 404
+  )
+
 }
