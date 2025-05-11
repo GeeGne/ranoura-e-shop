@@ -1,0 +1,14 @@
+{
+  "en": {
+    "METHOD_NOT_ALLOWED": "The chosen Method is not allowed on this route",
+    "REQUIRED_EMAIL": "Email is required.",
+    "THEME_FETCH_FAIL": "Unable to get Theme Data",
+    "THEME_UPDATE_FAIL": "Unable to udpate the Website UI Theme"
+  },
+  "ar": {
+    "METHOD_NOT_ALLOWED": "طريقه المسار غير مسموح بها",
+    "REQUIRED_EMAIL": "البريد الالكتروني مطلوب.",
+    "THEME_FETCH_FAIL": "تعذر الحصول على بيانات المظهر",
+    "THEME_UPDATE_FAIL": "تعذر تحديث مظهر واجهه الموقع"
+  }
+}

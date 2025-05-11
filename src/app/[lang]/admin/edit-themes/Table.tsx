@@ -79,14 +79,13 @@ export default function Table() {
   });
 
   useEffect(() => {
-    if (!error && !isError) return;
+    if (!isLoading && !error && !isError) return;
     setAlertToggle(Date.now());
     setAlertType("error");
     const message = error instanceof Error ? error.message[isEn ? 'en' : 'ar'] : "An unknown error occurred";
-    // setAlertMessage(error?.message['en']);
     setAlertMessage(message);
   }, [error, isError])
-
+  console.log('error: ', error);
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     const { type, index, schemeId } = e.currentTarget.dataset;
 

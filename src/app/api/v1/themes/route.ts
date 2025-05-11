@@ -5,9 +5,17 @@ type ErrorProps = {
   message: {en: string, ar: string};
 }
 
-async function nextError (message: {en: string, ar: string}, status = 404) {
-  return NextResponse.json({ message }, { status })
-}
+async function nextError (code: string, message: string, status = 404) {
+  return NextResponse.json(
+    {
+      status,
+      code,
+      message,
+      timesStamp: new Date().toISOString(),
+    }, 
+    { status }
+  )
+};
 
 // @desc get theme variables data
 // @route /api/v1/themes
@@ -27,19 +35,16 @@ export async function GET(req: NextRequest) {
     const err = error as Error;
     console.error('Unable to update the Website UI Theme: ', err.message);
     return nextError(
-      {
-        en: 'Unable to update the Website UI Theme',
-        ar: 'غير قابل على تحديث السيمه '
-      }
-      ,
+      'THEME_FETCH_FAIL',
+      'Unable to get Theme Data',
       404
     )
   }
 }
 
-  // @desc update theme variables
-  // @route /api/v1/themes
-  // @access private
+// @desc update theme variables
+// @route /api/v1/themes
+// @access private
 export async function PUT(req: NextRequest) {
   try {
     const themesData = await req.json();
@@ -66,33 +71,27 @@ export async function PUT(req: NextRequest) {
     const err = error as Error;
     console.error('Unable to update the Website UI Theme: ', err.message);
     return nextError(
-      {
-        en: 'Unable to update the Website UI Theme.',
-        ar: 'غير قابل على تحديث السيمه '
-      }
-      , 404
+      'THEME_UPDATE_FAIL',
+      'Unable to update the Website UI Theme.',
+      404
     )
   }
 }
 
 export async function POST(req: NextRequest) {
   return nextError(
-    {
-      en: `post isn't supported`,
-      ar: 'غير قابل على تحديث السيمه '
-    }
-    , 404
+    'METHOD_NOT_ALLOWED',
+    'The requested HTTP Method is not allowed on this endpoint',
+    404
   )
 
 }
 
 export async function DELETE(req: NextRequest) {
   return nextError(
-    {
-      en: `delet e isn't supported`,
-      ar: 'غير قابل على تحديث السيمه '
-    }
-    , 404
+    'METHOD_NOT_ALLOWED',
+    'The requested HTTP Method is now allowed on this endpoint',
+    404
   )
 
 }
