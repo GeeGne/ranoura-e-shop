@@ -17,6 +17,7 @@ import LineMdCloseCircleFilled from '@/components/svgs/LineMdCloseCircleFilled';
 // JSON
 import urlsTable from '@/json/cmsTables/urlsTable.json';
 import themePallets from '@/json/themePallets.json';
+import messages from '@/json/messages.json';
 
 // STORES
 import { useTabNameStore, useLanguageStore, useAlertMessageStore } from '@/stores/index';
@@ -27,6 +28,9 @@ import updateThemeVars from '@/lib/api/themes/put';
 
 // UTILS
 import updateThemeVariables from '@/utils/updateThemeVariables';
+
+// LIB
+import getMessage from '@/lib/messages/index';
 
 import {
   useReactTable,
@@ -74,18 +78,24 @@ export default function Table() {
 
       setAlertToggle(Date.now());
       setAlertType("error");
-      setAlertMessage(error?.message[isEn ? 'en' : 'ar']);
+      setAlertMessage(getMessage(error.code, 'en'))
     }
   });
 
+  function isErrorWithCode(error: unknown): error is { code: string } {
+    return typeof error === 'object' && error !== null && 'code' in error;
+  }
+  
   useEffect(() => {
-    if (!isLoading && !error && !isError) return;
-    setAlertToggle(Date.now());
-    setAlertType("error");
-    const message = error instanceof Error ? error.message[isEn ? 'en' : 'ar'] : "An unknown error occurred";
-    setAlertMessage(message);
-  }, [error, isError])
-  console.log('error: ', error);
+    if (isLoading && !error && !isError) return;
+  
+    if (error instanceof Error && isErrorWithCode(error)) {
+      setAlertToggle(Date.now());
+      setAlertType("error");
+      setAlertMessage(getMessage(error.code, 'en'))
+    }
+  }, [error, isError, isLoading]);
+
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     const { type, index, schemeId } = e.currentTarget.dataset;
 
@@ -158,8 +168,8 @@ export default function Table() {
             <tr 
               key={i}
               className={`
-                hover:bg-yellow-50 transition-all duration-300 ease-in-out
-                ${isSameTheme(itm.scheme_id) ? 'bg-content-invert' : 'bg-transparent'}
+                transition-all duration-300 ease-in-out
+                ${isSameTheme(itm.scheme_id) ? 'bg-content-invert hover:bg-content-invert' : 'bg-transparent hover:bg-yellow-50'}
               `}
             >
               {/* <td className="px-6 py-4 text-heading">{itm.name[isEn ? 'en' : 'ar']}</td> */}
