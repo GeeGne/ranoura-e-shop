@@ -206,7 +206,7 @@ export default function SignupForm ({ className, ...props }: Props) {
             w-full py-2 px-4 rounded-md
             ${incorrectField === "first_name" 
               ? 'border-red-500'
-              :isFNameFocus 
+              : isFNameFocus 
               ? 'border-body' 
               : 'border-inbetween'
             }
