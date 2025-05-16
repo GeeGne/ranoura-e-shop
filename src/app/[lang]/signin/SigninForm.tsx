@@ -36,7 +36,7 @@ export default function SigninForm ({ className, ...props }: Props) {
         e.preventDefault();
         setAlertToggle(Date.now());
         setAlertType("warning");
-        setAlertMessage("Sorry! We're currently working on this feature.");
+        setAlertMessage(isEn ? "Sorry! We're currently working on this feature." : "المعذره! جاري العمل عليها.");
         break;
       case 'navigate_to_signup':
         setTimeout(() => 

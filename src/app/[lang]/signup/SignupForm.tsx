@@ -16,6 +16,14 @@ type Props = {
   className?: string;
 }
 
+type FormProps = {
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone_number: string;
+  password: string;
+}
+
 export default function SignupForm ({ className, ...props }: Props) {
 
   const lang = useLanguageStore(state => state.lang);
@@ -27,6 +35,7 @@ export default function SignupForm ({ className, ...props }: Props) {
     phone_number: '',
     password: '',
   });
+  const [ incorrectField, setIncorrectField ] = useState<boolean | string>('first_name');
 
   const [ isFNameFocus, setIsFNameFocus ] = useState<boolean>(false);
   const [ isLNameFocus, setIsLNameFocus ] = useState<boolean>(false);
@@ -51,7 +60,7 @@ export default function SignupForm ({ className, ...props }: Props) {
         e.preventDefault();
         setAlertToggle(Date.now());
         setAlertType("warning");
-        setAlertMessage("Sorry! We're currently working on this feature.");
+        setAlertMessage(isEn ? "Sorry! We're currently working on this feature." : "المعذره! جاري العمل عليها.");
         break;
       case 'navigate_to_signin':
         setTimeout(() => 
@@ -65,7 +74,10 @@ export default function SignupForm ({ className, ...props }: Props) {
       case 'cPass_eye_icon_is_clicked':
         e.preventDefault();
         setIsCPassEyeActive(val => !val);
-        break;  
+        break;
+      case 'label_element_is_clicked':
+        setIncorrectField(false);
+        break;
       default:
         console.error('Unknown type: ', type);
     }
@@ -77,10 +89,10 @@ export default function SignupForm ({ className, ...props }: Props) {
     e.currentTarget.scrollIntoView({ block: 'center', behavior: 'smooth' });
 
     switch (name) {
-      case 'firstName':
+      case 'first_name':
         setIsFNameFocus(true);
         break;
-      case 'lastName':
+      case 'last_name':
         setIsLNameFocus(true);
         break;
       case 'email':
@@ -105,10 +117,10 @@ export default function SignupForm ({ className, ...props }: Props) {
 
     if (value !== "") return;
     switch (name) {
-      case 'firstName':
+      case 'first_name':
         setIsFNameFocus(false);
         break;
-      case 'lastName':
+      case 'last_name':
         setIsLNameFocus(false);
         break;
       case 'email':
@@ -128,6 +140,32 @@ export default function SignupForm ({ className, ...props }: Props) {
     }
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.currentTarget;
+
+    switch (name) {
+      case 'first_name':
+      case 'last_name':
+      case 'email':
+      case 'phone_number':
+      case 'password':
+      case 'cpassword':
+        setSignInForm(val => ({...val, [name]: value}));
+        break;
+      default:
+        console.error('Unknown name: ', name);
+    }
+  }
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log('submit button is clicked!');
+
+  };
+
+  // DEBUG
+  // console.log('signInForm: ', signInForm);
+
   return (
     <form
       className={`
@@ -135,6 +173,7 @@ export default function SignupForm ({ className, ...props }: Props) {
         md:grid grid-cols-2
         ${className}
       `}
+      onSubmit={handleSubmit}
       { ...props }
     > 
       <h2
@@ -144,7 +183,9 @@ export default function SignupForm ({ className, ...props }: Props) {
       </h2>
       <label
         className="relative flex w-full"
-        htmlFor="firstName"
+        htmlFor="first_name"
+        data-type="label_element_is_clicked"
+        onClick={handleClick}
       >
         <span
           className={`
@@ -160,21 +201,38 @@ export default function SignupForm ({ className, ...props }: Props) {
         <input
           className={`
             bg-transparent border-solid
-            outline-none text-heading
+            outline-none text-heading border-[1px]
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
-            ${isFNameFocus ? 'border-body border-[2px]' : 'border-[1px] border-inbetween'}
+            ${incorrectField === "first_name" 
+              ? 'border-red-500'
+              :isFNameFocus 
+              ? 'border-body' 
+              : 'border-inbetween'
+            }
           `}
-          id="firstName"
-          name="firstName"
+          id="first_name"
+          name="first_name"
           type="text"
           onFocus={handleFocus}
           onBlur={handleBlur}
+          onChange={handleChange}
         />
+        <span
+          className={`
+            absolute top-1/2 left-2
+            translate-y-[-50%] bg-background py-2 px-2
+            text-xs text-red-500
+            transition-all duration-300 ease-in-out
+            ${incorrectField === "first_name" ? 'visible opacity-100' : 'invisible opacity-0'}
+          `}
+        >
+          This is an error!
+        </span>
       </label>
       <label
         className="relative flex w-full"
-        htmlFor="lastName"
+        htmlFor="last_name"
       >
         <span
           className={`
@@ -190,16 +248,17 @@ export default function SignupForm ({ className, ...props }: Props) {
         <input
           className={`
             bg-transparent border-solid
-            outline-none text-heading
+            outline-none text-heading border-[1px]
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
-            ${isLNameFocus ? 'border-body border-[2px]' : 'border-[1px] border-inbetween'}
+            ${isLNameFocus ? 'border-body' : 'border-inbetween'}
           `}
-          id="lastName"
-          name="lastName"
+          id="last_name"
+          name="last_name"
           type="text"
           onFocus={handleFocus}
           onBlur={handleBlur}
+          onChange={handleChange}
         />
       </label>
       <label
@@ -220,16 +279,17 @@ export default function SignupForm ({ className, ...props }: Props) {
         <input
           className={`
             bg-transparent border-solid
-            outline-none text-heading
+            outline-none text-heading border-[1px]
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
-            ${isEmailFocus ? 'border-body border-[2px]' : 'border-[1px] border-inbetween'}
+            ${isEmailFocus ? 'border-body' : 'border-inbetween'}
           `}
           id="email"
           name="email"
           type="email"
           onFocus={handleFocus}
           onBlur={handleBlur}
+          onChange={handleChange}
         />
       </label>
       <label
@@ -250,16 +310,17 @@ export default function SignupForm ({ className, ...props }: Props) {
         <input
           className={`
             bg-transparent border-solid
-            outline-none text-heading
+            outline-none text-heading border-[1px]
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
-            ${isPhoneNumberFocus ? 'border-body border-[2px]' : 'border-[1px] border-inbetween'}
+            ${isPhoneNumberFocus ? 'border-body' : 'border-inbetween'}
           `}
           id="phone_number"
           name="phone_number"
           type="phone_number"
           onFocus={handleFocus}
           onBlur={handleBlur}
+          onChange={handleChange}
         />
       </label>
       <label
@@ -280,17 +341,18 @@ export default function SignupForm ({ className, ...props }: Props) {
         <input
           className={`
             bg-transparent border-solid
-            outline-none text-heading
+            outline-none text-heading border-[1px]
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
             ${isPassEyeActive ? "font-regular" : "font-bold"}
-            ${isPasswordFocus ? 'border-body border-[2px]' : 'border-[1px] border-inbetween'}
+            ${isPasswordFocus ? 'border-body' : 'border-inbetween'}
           `}
           id="password"
           name="password"
           type={isPassEyeActive ? "text" : "password"}
           onFocus={handleFocus}
           onBlur={handleBlur}
+          onChange={handleChange}
         />
         { isPassEyeActive 
           ? <button
@@ -369,17 +431,18 @@ export default function SignupForm ({ className, ...props }: Props) {
         <input
           className={`
             bg-transparent border-solid
-            outline-none text-heading
+            outline-none text-heading border-[1px]
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
             ${isCPassEyeActive ? "font-regular" : "font-bold"}
-            ${isCPasswordFocus ? 'border-body border-[2px]' : 'border-[1px] border-inbetween'}
+            ${isCPasswordFocus ? 'border-body' : 'border-inbetween'}
           `}
           id="cpassword"
           name="cpassword"
           type={isCPassEyeActive ? "text" : "password"}
           onFocus={handleFocus}
           onBlur={handleBlur}
+          onChange={handleChange}
         />
         { isCPassEyeActive 
           ? <button
@@ -442,8 +505,7 @@ export default function SignupForm ({ className, ...props }: Props) {
       </label>
       <BtnA
         className="md:col-span-2 bg-primary w-full text-heading-invert font-bold py-2 rounded-md"
-        data-type="signin_button_is_clicked"
-        onClick={handleClick}
+        type="submit"
       >
         {isEn ? 'CONTINUE' : 'استمرار'}
       </BtnA>
