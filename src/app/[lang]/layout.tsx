@@ -26,6 +26,8 @@ export default function Layout (
   }, [themesData]);
 
   return (
-    <>{children}</>
+    <>
+      {children}
+    </>
   )
 }
