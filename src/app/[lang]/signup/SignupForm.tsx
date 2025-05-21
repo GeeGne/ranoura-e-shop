@@ -12,6 +12,9 @@ import LineMdWatchOffTwotoneLoop from '@/components/svgs/LineMdWatchOffTwotoneLo
 // STORES
 import { useAlertMessageStore, useLayoutRefStore, useLanguageStore } from '@/stores/index';
 
+// LIB
+import { validate } from '@/lib/validators/SignUpFormClient';
+
 type Props = {
   className?: string;
 }
@@ -22,6 +25,21 @@ type FormProps = {
   email: string;
   phone_number: string;
   password: string;
+  cPassword: string;
+}
+
+type ValidateProps = {
+  first_name: ValidateRecord;
+  last_name: ValidateRecord;
+  email: ValidateRecord;
+  phone_number: ValidateRecord;
+  password: ValidateRecord;
+  cPassword: ValidateRecord;
+}
+
+type ValidateRecord = {
+  message: string;
+  isValid: boolean;
 }
 
 export default function SignupForm ({ className, ...props }: Props) {
@@ -34,8 +52,16 @@ export default function SignupForm ({ className, ...props }: Props) {
     email: '',
     phone_number: '',
     password: '',
+    cPassword: '',
   });
-  const [ incorrectField, setIncorrectField ] = useState<boolean | string>('first_name');
+  const [ incorrectField, setIncorrectField ] = useState<ValidateProps>({
+    first_name: { message: '', isValid: true },
+    last_name: { message: '', isValid: true },
+    email: { message: '', isValid: true },
+    phone_number: { message: '', isValid: true },
+    password: { message: '', isValid: true },
+    cPassword: { message: '', isValid: true },
+  });
 
   const [ isFNameFocus, setIsFNameFocus ] = useState<boolean>(false);
   const [ isLNameFocus, setIsLNameFocus ] = useState<boolean>(false);
@@ -51,6 +77,21 @@ export default function SignupForm ({ className, ...props }: Props) {
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
   const layoutRef = useLayoutRefStore((state: any) => state.layoutRef);
+
+  const isAllInptsValid = (results: ValidateProps) => {
+    const { first_name, last_name, email, phone_number, password, cPassword } = results;
+    switch (false) {
+      case first_name.isValid:
+      case last_name.isValid:
+      case email.isValid:
+      case phone_number.isValid:
+      case password.isValid:
+      case cPassword.isValid:
+        return false;
+      default:
+        return true;    
+    }
+  }
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     const { type } = e.currentTarget.dataset;
@@ -76,7 +117,14 @@ export default function SignupForm ({ className, ...props }: Props) {
         setIsCPassEyeActive(val => !val);
         break;
       case 'label_element_is_clicked':
-        setIncorrectField(false);
+        setIncorrectField(val => ({
+          first_name: { ...val.first_name, isValid: true },
+          last_name: { ...val.last_name, isValid: true },
+          email: { ...val.email, isValid: true },
+          phone_number: { ...val.phone_number, isValid: true },
+          password: { ...val.password, isValid: true },
+          cPassword: { ...val.cPassword, isValid: true },
+        }));
         break;
       default:
         console.error('Unknown type: ', type);
@@ -150,7 +198,7 @@ export default function SignupForm ({ className, ...props }: Props) {
       case 'phone_number':
       case 'password':
       case 'cpassword':
-        setSignInForm(val => ({...val, [name]: value}));
+        setSignInForm(val => ({ ...val, [name]: value }));
         break;
       default:
         console.error('Unknown name: ', name);
@@ -160,6 +208,48 @@ export default function SignupForm ({ className, ...props }: Props) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log('submit button is clicked!');
+
+    const { first_name, last_name, email, phone_number, password, cPassword } = signInForm;
+    const { firstName, lastName, email: userEmail, phoneNumber, password: userPassword, cPassword: userCPassword } = validate;
+    const inptsResults = {
+      first_name: { 
+        message: firstName(first_name, isEn).message, 
+        isValid: lastName(last_name, isEn).isValid
+      },
+      last_name: { 
+        message: lastName(last_name, isEn).message, 
+        isValid: lastName(last_name, isEn).isValid 
+      },
+      email: { 
+        message: userEmail(email, isEn).message, 
+        isValid: userEmail(email, isEn).isValid
+      },
+      phone_number: { 
+        message: phoneNumber(phone_number, isEn).message, 
+        isValid: phoneNumber(phone_number, isEn).isValid
+      },
+      password: { 
+        message: userPassword(password, isEn).message, 
+        isValid: userPassword(password, isEn).isValid
+      },
+      cPassword: { 
+        message: userCPassword(cPassword, password, isEn).message, 
+        isValid: userCPassword(cPassword, password, isEn).isValid
+      },  
+    }
+
+    try {
+      if (!isAllInptsValid(inptsResults)) throw new Error (isEn ? "Sorry! We're currently working on this feature." : "المعذره! جاري العمل عليها.")
+      setAlertType("success");
+      setAlertMessage(isEn ? "Sorry! We're currently working on this feature." : "المعذره! جاري العمل عليها.");
+    } catch (err) {
+      const error = err as Error;
+      setIncorrectField(inptsResults)
+      setAlertType("error");
+      setAlertMessage(error.message);
+    } finally {
+      setAlertToggle(Date.now());
+    }
 
   };
 
@@ -204,11 +294,11 @@ export default function SignupForm ({ className, ...props }: Props) {
             outline-none text-heading border-[1px]
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
-            ${incorrectField === "first_name" 
-              ? 'border-red-500'
-              : isFNameFocus 
-              ? 'border-body' 
+            ${incorrectField.first_name.isValid 
+              ? isFNameFocus 
+              ? 'border-body'
               : 'border-inbetween'
+              : 'border-red-500'
             }
           `}
           id="first_name"
@@ -224,15 +314,17 @@ export default function SignupForm ({ className, ...props }: Props) {
             translate-y-[-50%] bg-background py-2 px-2
             text-xs text-red-500
             transition-all duration-300 ease-in-out
-            ${incorrectField === "first_name" ? 'visible opacity-100' : 'invisible opacity-0'}
+            ${incorrectField.first_name.isValid ? 'invisible opacity-0' : 'visible opacity-100'}
           `}
         >
-          This is an error!
+          {incorrectField.first_name.message}
         </span>
       </label>
       <label
         className="relative flex w-full"
         htmlFor="last_name"
+        data-type="label_element_is_clicked"
+        onClick={handleClick}
       >
         <span
           className={`
@@ -251,7 +343,12 @@ export default function SignupForm ({ className, ...props }: Props) {
             outline-none text-heading border-[1px]
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
-            ${isLNameFocus ? 'border-body' : 'border-inbetween'}
+            ${incorrectField.last_name.isValid 
+              ? isLNameFocus 
+              ? 'border-body'
+              : 'border-inbetween'
+              : 'border-red-500'
+            }
           `}
           id="last_name"
           name="last_name"
@@ -260,10 +357,23 @@ export default function SignupForm ({ className, ...props }: Props) {
           onBlur={handleBlur}
           onChange={handleChange}
         />
+        <span
+          className={`
+            absolute top-1/2 left-2
+            translate-y-[-50%] bg-background py-2 px-2
+            text-xs text-red-500
+            transition-all duration-300 ease-in-out
+            ${incorrectField.last_name.isValid ? 'invisible opacity-0' : 'visible opacity-100'}
+          `}
+        >
+          {incorrectField.last_name.message}
+        </span>
       </label>
       <label
         className="relative flex md:col-span-2 w-full"
         htmlFor="email"
+        data-type="label_element_is_clicked"
+        onClick={handleClick}
       >
         <span
           className={`
@@ -282,7 +392,12 @@ export default function SignupForm ({ className, ...props }: Props) {
             outline-none text-heading border-[1px]
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
-            ${isEmailFocus ? 'border-body' : 'border-inbetween'}
+            ${incorrectField.email.isValid 
+              ? isEmailFocus 
+              ? 'border-body'
+              : 'border-inbetween'
+              : 'border-red-500'
+            }
           `}
           id="email"
           name="email"
@@ -291,10 +406,23 @@ export default function SignupForm ({ className, ...props }: Props) {
           onBlur={handleBlur}
           onChange={handleChange}
         />
+        <span
+          className={`
+            absolute top-1/2 left-2
+            translate-y-[-50%] bg-background py-2 px-2
+            text-xs text-red-500
+            transition-all duration-300 ease-in-out
+            ${incorrectField.email.isValid ? 'invisible opacity-0' : 'visible opacity-100'}
+          `}
+        >
+          {incorrectField.email.message}
+        </span>
       </label>
       <label
         className="relative flex md:col-span-2 w-full"
         htmlFor="phone_number"
+        data-type="label_element_is_clicked"
+        onClick={handleClick}
       >
         <span
           className={`
@@ -313,7 +441,12 @@ export default function SignupForm ({ className, ...props }: Props) {
             outline-none text-heading border-[1px]
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
-            ${isPhoneNumberFocus ? 'border-body' : 'border-inbetween'}
+            ${incorrectField.email.isValid 
+              ? isPhoneNumberFocus 
+              ? 'border-body'
+              : 'border-inbetween'
+              : 'border-red-500'
+            }
           `}
           id="phone_number"
           name="phone_number"
@@ -322,10 +455,23 @@ export default function SignupForm ({ className, ...props }: Props) {
           onBlur={handleBlur}
           onChange={handleChange}
         />
+        <span
+          className={`
+            absolute top-1/2 left-2
+            translate-y-[-50%] bg-background py-2 px-2
+            text-xs text-red-500
+            transition-all duration-300 ease-in-out
+            ${incorrectField.phone_number.isValid ? 'invisible opacity-0' : 'visible opacity-100'}
+          `}
+        >
+          {incorrectField.phone_number.message}
+        </span>
       </label>
       <label
         className="relative flex w-full"
         htmlFor="password"
+        data-type="label_element_is_clicked"
+        onClick={handleClick}
       >
         <span
           className={`
@@ -345,7 +491,12 @@ export default function SignupForm ({ className, ...props }: Props) {
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
             ${isPassEyeActive ? "font-regular" : "font-bold"}
-            ${isPasswordFocus ? 'border-body' : 'border-inbetween'}
+            ${incorrectField.email.isValid 
+              ? isPasswordFocus 
+              ? 'border-body'
+              : 'border-inbetween'
+              : 'border-red-500'
+            }
           `}
           id="password"
           name="password"
@@ -354,6 +505,17 @@ export default function SignupForm ({ className, ...props }: Props) {
           onBlur={handleBlur}
           onChange={handleChange}
         />
+        <span
+          className={`
+            absolute top-1/2 left-2
+            translate-y-[-50%] bg-background py-2 px-2
+            text-xs text-red-500
+            transition-all duration-300 ease-in-out
+            ${incorrectField.password.isValid ? 'invisible opacity-0' : 'visible opacity-100'}
+          `}
+        >
+          {incorrectField.password.message}
+        </span>
         { isPassEyeActive 
           ? <button
               className={`
@@ -416,6 +578,8 @@ export default function SignupForm ({ className, ...props }: Props) {
       <label
         className="relative flex w-full"
         htmlFor="cpassword"
+        data-type="label_element_is_clicked"
+        onClick={handleClick}
       >
         <span
           className={`
@@ -435,7 +599,12 @@ export default function SignupForm ({ className, ...props }: Props) {
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
             ${isCPassEyeActive ? "font-regular" : "font-bold"}
-            ${isCPasswordFocus ? 'border-body' : 'border-inbetween'}
+            ${incorrectField.email.isValid 
+              ? isCPasswordFocus 
+              ? 'border-body'
+              : 'border-inbetween'
+              : 'border-red-500'
+            }
           `}
           id="cpassword"
           name="cpassword"
@@ -444,6 +613,17 @@ export default function SignupForm ({ className, ...props }: Props) {
           onBlur={handleBlur}
           onChange={handleChange}
         />
+        <span
+          className={`
+            absolute top-1/2 left-2
+            translate-y-[-50%] bg-background py-2 px-2
+            text-xs text-red-500
+            transition-all duration-300 ease-in-out
+            ${incorrectField.cPassword.isValid ? 'invisible opacity-0' : 'visible opacity-100'}
+          `}
+        >
+          {incorrectField.cPassword.message}
+        </span>
         { isCPassEyeActive 
           ? <button
               className={`
