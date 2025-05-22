@@ -156,7 +156,7 @@ export const validate = {
           message: isEn ? 'can\'t be blank' : 'لا يمكن ان يكون فارغا', 
           isValid: false
         }
-      case inpt === reference:
+      case inpt !== reference:
         return {
           message: isEn ? 'must match the password' : 'يجب ان تطابق كلمه السر', 
           isValid: false

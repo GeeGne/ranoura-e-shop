@@ -77,6 +77,7 @@ export default function SignupForm ({ className, ...props }: Props) {
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
   const layoutRef = useLayoutRefStore((state: any) => state.layoutRef);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const isAllInptsValid = (results: ValidateProps) => {
     const { first_name, last_name, email, phone_number, password, cPassword } = results;
@@ -246,6 +247,9 @@ export default function SignupForm ({ className, ...props }: Props) {
       setAlertMessage(isEn ? "All fields are correct!" : "جميع الحقول صحيحه!");
     } catch (err) {
       const error = err as Error;
+
+      if (formRef.current) 
+        formRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
       setIncorrectField(inptsResults);
       setAlertType("error");
       setAlertMessage(error.message);
@@ -266,6 +270,7 @@ export default function SignupForm ({ className, ...props }: Props) {
         ${className}
       `}
       onSubmit={handleSubmit}
+      ref={formRef}
       { ...props }
     > 
       <h2
