@@ -152,7 +152,7 @@ export default function SignupForm ({ className, ...props }: Props) {
       case 'password':
         setIsPasswordFocus(true);
         break;
-      case 'cpassword':
+      case 'cPassword':
         setIsCPasswordFocus(true);
         break;
       default:
@@ -180,7 +180,7 @@ export default function SignupForm ({ className, ...props }: Props) {
       case 'password':
         setIsPasswordFocus(false);
         break;
-      case 'cpassword':
+      case 'cPassword':
         setIsCPasswordFocus(false);
         break;
       default:
@@ -197,7 +197,7 @@ export default function SignupForm ({ className, ...props }: Props) {
       case 'email':
       case 'phone_number':
       case 'password':
-      case 'cpassword':
+      case 'cPassword':
         setSignInForm(val => ({ ...val, [name]: value }));
         break;
       default:
@@ -239,12 +239,14 @@ export default function SignupForm ({ className, ...props }: Props) {
     }
 
     try {
-      if (!isAllInptsValid(inptsResults)) throw new Error (isEn ? "Sorry! We're currently working on this feature." : "المعذره! جاري العمل عليها.")
+      const errorMessage = isEn ? "Some fields are incorrect!" : "بعض الحقول غير صحيحه!";
+      if (!isAllInptsValid(inptsResults)) throw new Error (errorMessage);
+
       setAlertType("success");
-      setAlertMessage(isEn ? "Sorry! We're currently working on this feature." : "المعذره! جاري العمل عليها.");
+      setAlertMessage(isEn ? "All fields are correct!" : "جميع الحقول صحيحه!");
     } catch (err) {
       const error = err as Error;
-      setIncorrectField(inptsResults)
+      setIncorrectField(inptsResults);
       setAlertType("error");
       setAlertMessage(error.message);
     } finally {
@@ -308,17 +310,20 @@ export default function SignupForm ({ className, ...props }: Props) {
           onBlur={handleBlur}
           onChange={handleChange}
         />
-        <span
+        <div
           className={`
-            absolute top-1/2 left-2
-            translate-y-[-50%] bg-background py-2 px-2
-            text-xs text-red-500
+            absolute top-1/2 left-1/2
+            flex items-center
+            translate-y-[-50%] translate-x-[-50%] w-[calc(100%-0.5rem)] h-[calc(100%-0.5rem)]
+            text-xs text-red-500 backdrop-blur-[5px]
             transition-all duration-300 ease-in-out
             ${incorrectField.first_name.isValid ? 'invisible opacity-0' : 'visible opacity-100'}
           `}
         >
-          {incorrectField.first_name.message}
-        </span>
+          <span className="flex px-2">
+            {incorrectField.first_name.message}
+          </span>
+        </div>
       </label>
       <label
         className="relative flex w-full"
@@ -357,17 +362,20 @@ export default function SignupForm ({ className, ...props }: Props) {
           onBlur={handleBlur}
           onChange={handleChange}
         />
-        <span
+        <div
           className={`
-            absolute top-1/2 left-2
-            translate-y-[-50%] bg-background py-2 px-2
-            text-xs text-red-500
+            absolute top-1/2 left-1/2
+            flex items-center
+            translate-y-[-50%] translate-x-[-50%] w-[calc(100%-0.5rem)] h-[calc(100%-0.5rem)]
+            text-xs text-red-500 backdrop-blur-[5px]
             transition-all duration-300 ease-in-out
             ${incorrectField.last_name.isValid ? 'invisible opacity-0' : 'visible opacity-100'}
           `}
         >
-          {incorrectField.last_name.message}
-        </span>
+          <span className="flex px-2">
+            {incorrectField.last_name.message}
+          </span>
+        </div>
       </label>
       <label
         className="relative flex md:col-span-2 w-full"
@@ -406,17 +414,20 @@ export default function SignupForm ({ className, ...props }: Props) {
           onBlur={handleBlur}
           onChange={handleChange}
         />
-        <span
+        <div
           className={`
-            absolute top-1/2 left-2
-            translate-y-[-50%] bg-background py-2 px-2
-            text-xs text-red-500
+            absolute top-1/2 left-1/2
+            flex items-center
+            translate-y-[-50%] translate-x-[-50%] w-[calc(100%-0.5rem)] h-[calc(100%-0.5rem)]
+            text-xs text-red-500 backdrop-blur-[5px]
             transition-all duration-300 ease-in-out
             ${incorrectField.email.isValid ? 'invisible opacity-0' : 'visible opacity-100'}
           `}
         >
-          {incorrectField.email.message}
-        </span>
+          <span className="flex px-2">
+            {incorrectField.email.message}
+          </span>
+        </div>
       </label>
       <label
         className="relative flex md:col-span-2 w-full"
@@ -455,17 +466,20 @@ export default function SignupForm ({ className, ...props }: Props) {
           onBlur={handleBlur}
           onChange={handleChange}
         />
-        <span
+        <div
           className={`
-            absolute top-1/2 left-2
-            translate-y-[-50%] bg-background py-2 px-2
-            text-xs text-red-500
+            absolute top-1/2 left-1/2
+            flex items-center
+            translate-y-[-50%] translate-x-[-50%] w-[calc(100%-0.5rem)] h-[calc(100%-0.5rem)]
+            text-xs text-red-500 backdrop-blur-[5px]
             transition-all duration-300 ease-in-out
             ${incorrectField.phone_number.isValid ? 'invisible opacity-0' : 'visible opacity-100'}
           `}
         >
-          {incorrectField.phone_number.message}
-        </span>
+          <span className="flex px-2">
+            {incorrectField.phone_number.message}
+          </span>
+        </div>
       </label>
       <label
         className="relative flex w-full"
@@ -505,17 +519,20 @@ export default function SignupForm ({ className, ...props }: Props) {
           onBlur={handleBlur}
           onChange={handleChange}
         />
-        <span
+        <div
           className={`
-            absolute top-1/2 left-2
-            translate-y-[-50%] bg-background py-2 px-2
-            text-xs text-red-500
+            absolute top-1/2 left-1/2
+            flex items-center
+            translate-y-[-50%] translate-x-[-50%] w-[calc(100%-0.5rem)] h-[calc(100%-0.5rem)]
+            text-xs text-red-500 backdrop-blur-[5px]
             transition-all duration-300 ease-in-out
             ${incorrectField.password.isValid ? 'invisible opacity-0' : 'visible opacity-100'}
           `}
         >
-          {incorrectField.password.message}
-        </span>
+          <span className="flex px-2">
+            {incorrectField.password.message}
+          </span>
+        </div>
         { isPassEyeActive 
           ? <button
               className={`
@@ -577,7 +594,7 @@ export default function SignupForm ({ className, ...props }: Props) {
       </label>
       <label
         className="relative flex w-full"
-        htmlFor="cpassword"
+        htmlFor="cPassword"
         data-type="label_element_is_clicked"
         onClick={handleClick}
       >
@@ -606,24 +623,27 @@ export default function SignupForm ({ className, ...props }: Props) {
               : 'border-red-500'
             }
           `}
-          id="cpassword"
-          name="cpassword"
+          id="cPassword"
+          name="cPassword"
           type={isCPassEyeActive ? "text" : "password"}
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={handleChange}
         />
-        <span
+        <div
           className={`
-            absolute top-1/2 left-2
-            translate-y-[-50%] bg-background py-2 px-2
-            text-xs text-red-500
+            absolute top-1/2 left-1/2
+            flex items-center
+            translate-y-[-50%] translate-x-[-50%] w-[calc(100%-0.5rem)] h-[calc(100%-0.5rem)]
+            text-xs text-red-500 backdrop-blur-[5px]
             transition-all duration-300 ease-in-out
             ${incorrectField.cPassword.isValid ? 'invisible opacity-0' : 'visible opacity-100'}
           `}
         >
-          {incorrectField.cPassword.message}
-        </span>
+          <span className="flex px-2">
+            {incorrectField.cPassword.message}
+          </span>
+        </div>
         { isCPassEyeActive 
           ? <button
               className={`
