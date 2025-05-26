@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 
-type ErrorProps = {
-  message: {en: string, ar: string};
-}
-
 async function nextError (code: string, message: string, status = 404) {
   return NextResponse.json(
     {
@@ -49,12 +45,6 @@ export async function PUT(req: NextRequest) {
   try {
     const themesData = await req.json();
 
-    // await prisma.themes.update({ 
-      // where: { id: 1 }, 
-      // data: {
-        // primary_color: "green", 
-    // }
-    // });
     await prisma.themes.update({ 
       where: { id: 1 }, 
       data: themesData 
@@ -66,7 +56,8 @@ export async function PUT(req: NextRequest) {
           en: "Website UI Theme is updated.", 
           ar: "تم تحديث سيمه الصفحه."
         } 
-      }, { status: 202 })
+      }, { status: 202 }
+    )
   } catch (error) {
     const err = error as Error;
     console.error('Unable to update the Website UI Theme: ', err.message);
@@ -93,5 +84,4 @@ export async function DELETE(req: NextRequest) {
     'The requested HTTP Method is now allowed on this endpoint',
     404
   )
-
 }

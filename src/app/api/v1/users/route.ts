@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 
-
 async function nextError (code: string, message: string, status = 404) {
   return NextResponse.json(
     {
@@ -13,7 +12,6 @@ async function nextError (code: string, message: string, status = 404) {
     { status }
   )
 };
-
 
 export async function GET(req: NextRequest) {
   try {

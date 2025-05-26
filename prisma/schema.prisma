@@ -1,13 +1,7 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider        = "prisma-client-js"
+  output          = "./node_modules/.prisma/client"
   previewFeatures = ["driverAdapters"]
-  output   = "./node_modules/.prisma/client"
 }
 
 datasource db {
@@ -16,53 +10,49 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  email String @unique
-  first_name String
-  last_name String
-  password_hash String
-  phone_number String
-  date_of_birth DateTime?
-  last_login_at DateTime?
-  status String @default("active")
-  email_verified Boolean @default(false)
+  id              Int          @id @default(autoincrement())
+  email           String       @unique
+  created_at      DateTime     @default(now())
+  date_of_birth   DateTime?
+  email_verified  Boolean      @default(false)
+  first_name      String
+  last_login_at   DateTime?
+  last_name       String
+  locale          String       @default("ar")
+  password_hash   String
+  phone_number    String
   profile_img_url String?
-  timezone String @default("UTC+3")
-  locale String @default("ar")
-  created_at DateTime @default(now())
-  updated_at DateTime? @updatedAt
-
-  addresses UserAddress[]
-  roles UserRole[]
+  status          String       @default("active")
+  timezone        String       @default("UTC+3")
+  updated_at      DateTime?    @updatedAt
+  addresses       UserAddress?
+  roles           UserRole[]
 }
 
 model UserAddress {
-  id Int @id @default(autoincrement())
-  user_id Int @unique
+  id              Int       @id @default(autoincrement())
+  user_id         Int       @unique
   address_details String
-  second_address String?
-  notes String?
-  created_at DateTime @default(now())
-  updated_at DateTime? @updatedAt
-
-  user User @relation(fields: [user_id], references: [id])
+  second_address  String?
+  notes           String?
+  created_at      DateTime  @default(now())
+  updated_at      DateTime? @updatedAt
+  user            User      @relation(fields: [user_id], references: [id])
 }
 
-// User Roles/Permissions (many-to-many)
 model Role {
-  id Int @id @default(autoincrement())
-  name String @unique
+  id          Int        @id @default(autoincrement())
+  name        String     @unique
   description String?
-
-  userRole UserRole[]
+  userRole    UserRole[]
 }
 
 model UserRole {
   user_id Int
   role_id Int
+  role    Role @relation(fields: [role_id], references: [id])
+  user    User @relation(fields: [user_id], references: [id])
 
-  user User @relation(fields: [user_id], references:[id])
-  role Role @relation(fields: [role_id], references:[id])
   @@id([user_id, role_id])
 }
 
@@ -75,17 +65,17 @@ model Task {
 }
 
 model Themes {
-  id Int @id @default(1)
-  name Json @default("{\"en\": \"Dusk Cacoa\", \"ar\": \"كاكاو مشبع\"}")
-  scheme_id Int @default(1)
-  primary_color String @default("#0a0908")
-  primary_invert_color String @default("#F1EFEF")
-  secondary_color String @default("#22333b")
-  secondary_invert_color String @default("#D0D0D0")
-  inbetween_color String @default("#9999a1")
-  content_color String @default("oklch(0.473 0.137 46.201)")
-  content_invert_color String @default("oklch(0.473 0.137 46.201)")
-  content_inbetween_color String @default("oklch(0.924 0.12 95.746)")
-  created_at DateTime @default(now())
-  updated_at DateTime? @updatedAt
+  id                      Int       @id @default(1)
+  primary_color           String    @default("#0a0908")
+  primary_invert_color    String    @default("#F1EFEF")
+  secondary_color         String    @default("#22333b")
+  secondary_invert_color  String    @default("#D0D0D0")
+  inbetween_color         String    @default("#9999a1")
+  content_color           String    @default("oklch(0.473 0.137 46.201)")
+  content_invert_color    String    @default("oklch(0.473 0.137 46.201)")
+  content_inbetween_color String    @default("oklch(0.924 0.12 95.746)")
+  name                    Json      @default("{\"ar\": \"كاكاو مشبع\", \"en\": \"Dusk Cacoa\"}")
+  scheme_id               Int       @default(1)
+  created_at              DateTime  @default(now())
+  updated_at              DateTime? @updatedAt
 }
