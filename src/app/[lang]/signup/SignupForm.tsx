@@ -1,6 +1,7 @@
 // HOOKS
 import { useState, useRef } from "react";
 import Link from "next/link";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 // COMPONENTS
 import BtnA from '@/components/BtnA';
@@ -8,12 +9,16 @@ import LineMdWatchLoop from '@/components/svgs/LineMdWatchLoop';
 import LineMdWatchTwotoneLoop from '@/components/svgs/LineMdWatchTwotoneLoop';
 import LineMdWatchOffLoop from '@/components/svgs/LineMdWatchOffLoop';
 import LineMdWatchOffTwotoneLoop from '@/components/svgs/LineMdWatchOffTwotoneLoop';
+import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingResize';
 
 // STORES
 import { useAlertMessageStore, useLayoutRefStore, useLanguageStore } from '@/stores/index';
 
 // LIB
 import { validate } from '@/lib/validators/SignUpFormClient';
+
+// API
+import createNewUser from '@/lib/api/users/post';
 
 type Props = {
   className?: string;
@@ -44,6 +49,7 @@ type ValidateRecord = {
 
 export default function SignupForm ({ className, ...props }: Props) {
 
+  const queryClient = useQueryClient();
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
   const [ signInForm, setSignInForm ] = useState<FormProps>({
@@ -62,7 +68,7 @@ export default function SignupForm ({ className, ...props }: Props) {
     password: { message: '', isValid: true },
     cPassword: { message: '', isValid: true },
   });
-
+  const [ isProcessing, setIsProcessing ] = useState<boolean>(false);
   const [ isFNameFocus, setIsFNameFocus ] = useState<boolean>(false);
   const [ isLNameFocus, setIsLNameFocus ] = useState<boolean>(false);
   const [ isEmailFocus, setIsEmailFocus ] = useState<boolean>(false);
@@ -78,6 +84,27 @@ export default function SignupForm ({ className, ...props }: Props) {
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
   const layoutRef = useLayoutRefStore((state: any) => state.layoutRef);
   const formRef = useRef<HTMLFormElement>(null);
+
+  const createNewUserMutation = useMutation({
+    mutationFn: createNewUser,
+    onSettled: () => {
+      setIsProcessing(false);
+    },
+    onMutate: () => {
+      setIsProcessing(true);
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+      setAlertToggle(Date.now());
+      setAlertType("success");
+      setAlertMessage(data.message[isEn ? 'en' : 'ar']);
+    },
+    onError: (error) => {
+      setAlertToggle(Date.now());
+      setAlertType("error");
+      setAlertMessage(error.message);
+    }
+  })
 
   const isAllInptsValid = (results: ValidateProps) => {
     const { first_name, last_name, email, phone_number, password, cPassword } = results;
@@ -208,32 +235,31 @@ export default function SignupForm ({ className, ...props }: Props) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('submit button is clicked!');
 
     const { first_name, last_name, email, phone_number, password, cPassword } = signInForm;
     const { firstName, lastName, email: userEmail, phoneNumber, password: userPassword, cPassword: userCPassword } = validate;
     const inptsResults = {
-      first_name: { 
+      first_name: {
         message: firstName(first_name, isEn).message, 
         isValid: lastName(last_name, isEn).isValid
       },
-      last_name: { 
+      last_name: {
         message: lastName(last_name, isEn).message, 
         isValid: lastName(last_name, isEn).isValid 
       },
-      email: { 
+      email: {
         message: userEmail(email, isEn).message, 
         isValid: userEmail(email, isEn).isValid
       },
-      phone_number: { 
+      phone_number: {
         message: phoneNumber(phone_number, isEn).message, 
         isValid: phoneNumber(phone_number, isEn).isValid
       },
-      password: { 
+      password: {
         message: userPassword(password, isEn).message, 
         isValid: userPassword(password, isEn).isValid
       },
-      cPassword: { 
+      cPassword: {
         message: userCPassword(cPassword, password, isEn).message, 
         isValid: userCPassword(cPassword, password, isEn).isValid
       },  
@@ -243,20 +269,20 @@ export default function SignupForm ({ className, ...props }: Props) {
       const errorMessage = isEn ? "Some fields are incorrect!" : "بعض الحقول غير صحيحه!";
       if (!isAllInptsValid(inptsResults)) throw new Error (errorMessage);
 
-      setAlertType("success");
-      setAlertMessage(isEn ? "All fields are correct!" : "جميع الحقول صحيحه!");
+      createNewUserMutation
+        .mutate({ 
+          first_name, last_name, email, phone_number, password 
+        });
     } catch (err) {
       const error = err as Error;
 
       if (formRef.current) 
         formRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
       setIncorrectField(inptsResults);
+      setAlertToggle(Date.now());
       setAlertType("error");
       setAlertMessage(error.message);
-    } finally {
-      setAlertToggle(Date.now());
     }
-
   };
 
   // DEBUG
@@ -709,10 +735,25 @@ export default function SignupForm ({ className, ...props }: Props) {
         }
       </label>
       <BtnA
-        className="md:col-span-2 bg-primary w-full text-heading-invert font-bold py-2 rounded-md"
+        className="relative md:col-span-2 bg-primary w-full text-heading-invert font-bold py-2 rounded-md"
         type="submit"
       >
-        {isEn ? 'CONTINUE' : 'استمرار'}
+        <SvgSpinnersRingResize 
+          className={`
+            absolute top-1/2 left-1/2
+            translate-x-[-50%] translate-y-[-50%]
+            transition-all duration-300 ease-in-out
+            ${isProcessing ? 'visible opacity-100' : 'invisible opacity-0'}
+          `}
+        />
+        <span 
+          className={`
+            transition-all duration-300 ease-in-out
+            ${isProcessing ? 'invisible opacity-0' : 'visible opacity-100'}
+          `}
+        >
+          {isEn ? 'CONTINUE' : 'استمرار'}
+        </span>
       </BtnA>
       <Link
         href="/signin"

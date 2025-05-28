@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 
 // API
 import getThemeVars from '@/lib/api/themes/get';
+import getUserData from '@/lib/api/auth/me/get';
 
 // UTILS
 import updateThemeVariables from '@/utils/updateThemeVariables';
@@ -15,6 +16,11 @@ export default function Layout (
   : Readonly<{children: React.ReactNode;}>
 ) {
 
+  const { data: userData } = useQuery({
+    queryKey: ['user'],
+    queryFn: getUserData,
+  })
+  console.log('userData: ', userData);
   const { data: themesData, isError, isLoading } = useQuery({
     queryKey: ['themes'],
     queryFn: getThemeVars,

@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import bcrypt from 'bcrypt';
+import { cookies } from 'next/headers';
+import { generateTokens } from '@/utils/jwt';
+
 
 async function nextError (code: string, message: string, status = 404) {
   return NextResponse.json(
@@ -49,6 +52,31 @@ export async function POST(req: NextRequest) {
         password_hash
       }
     })
+
+    const { accessToken, refreshToken } = generateTokens(email);
+    const cookieStore = await cookies();
+    
+    cookieStore.set(
+      'accessToken', 
+      accessToken, 
+      {
+        httpOnly: process.env.NODE_ENV === 'production',
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        maxAge: 7 * 24 * 15 * 60 * 1000
+      }
+    );
+
+    cookieStore.set(
+      'refreshToken', 
+      refreshToken, 
+      {
+        httpOnly: process.env.NODE_ENV === 'production',
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        maxAge: 7 * 24 * 15 * 60 * 1000
+      }
+    );
 
     const message = {
       en: "New user is created successfully!",
