@@ -56,8 +56,17 @@ model UserRole {
   @@id([user_id, role_id])
 }
 
+model RefreshToken { 
+  id String @id @default(uuid())
+  token String @unique
+  user_id String
+  user User @relation(fields: [user_id], references: [id])
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
 model Task {
-  id          Int      @id @default(autoincrement())
+  id          Int @id @default(autoincrement())
   title       String
   description String?
   completed   Boolean  @default(false)

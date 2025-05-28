@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 import prisma from '@/lib/prisma';
 import bcrypt from 'bcrypt';
 import { generateTokens } from '@/utils/jwt';
@@ -20,11 +21,6 @@ async function nextError (code: string, message: string, status = 404) {
 // @access private
 export async function POST(req: NextRequest) {
   try {
-    let response = NextResponse;
-    // Set a cookie to hide the banner
-    response.cookies.set('show-banner', 'false')
-// Response will have a `Set-Cookie:show-banner=false;path=/home` header
-return response
     const { email, password } = await req.json();
     if (!email || !password) 
       return nextError(
@@ -36,7 +32,6 @@ return response
     const { password_hash, first_name, last_name } = await prisma.user.findUnique({
       where: { email },
       select: {
-        id: true,
         first_name: true,
         last_name: true,
         password_hash: true
@@ -57,19 +52,32 @@ return response
         401
       );
     
-    // const { accessToken, refreshToken } = generateTokens(email);
-    // return NextResponse.next().cookies.set('cookieName', 'cookieValue');
-    // return NextResponse.next().cookies.set(
-    //   'accessToken', 
-    //   accessToken, 
-    //   {
-    //     httpOnly: true,
-    //     // secure: process.env.NODE_ENV === 'production',
-    //     secure: true,
-    //     sameSite: 'strict',
-    //     maxAge: 15 * 60 * 1000
-    //   }
-    // );
+    const { accessToken, refreshToken } = generateTokens(email);
+    const cookieStore = await cookies();
+    
+    cookieStore.set(
+      'accessToken', 
+      accessToken, 
+      {
+        httpOnly: true,
+        // secure: process.env.NODE_ENV === 'production',
+        secure: true,
+        sameSite: 'strict',
+        maxAge: 7 * 24 * 15 * 60 * 1000
+      }
+    );
+
+    cookieStore.set(
+      'refreshToken', 
+      refreshToken, 
+      {
+        httpOnly: true,
+        // secure: process.env.NODE_ENV === 'production',
+        secure: true,
+        sameSite: 'strict',
+        maxAge: 7 * 24 * 15 * 60 * 1000
+      }
+    );
     return NextResponse.json({
         data: {
           first_name,

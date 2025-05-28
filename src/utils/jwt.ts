@@ -13,61 +13,34 @@ type GeneratedTokens = {
 };
 
 type props = {
-  ACCESS: number;
-  REFRESH: number;
+  ACCESS: string;
+  REFRESH: string;
 }
+type VerifiedToken = TokenPayload & jwt.JwtPayload;
 
-const JWT_SECRET: string = process.env.JWT_SECRET || 'test';
+const JWT_SECRET = process.env.JWT_SECRET || 'secret';
 
 const TOKEN_EXPIRY: props = {
   ACCESS: '15m',
   REFRESH: '7d'
 };
 
-// export const generateTokens = (email: string) => {
-//   const accessToken = jwt.sign(
-//     { email } satisfies TokenPayload,
-//     JWT_SECRET,
-//     { expiresIn: TOKEN_EXPIRY.ACCESS }
-//   );
-//   const refreshToken = jwt.sign(
-//     { email, tokenType: 'refresh' } satisfies TokenPayload,
-//     JWT_SECRET,
-//     { expiresIn: TOKEN_EXPIRY.REFRESH }
-//   )
-
-//   return { accessToken, refreshToken };
-// };
-
-// export const verifyToken = (token:string) => {
-//   try {
-//     return jwt.verify(token, JWT_SECRET);
-//   } catch (err) {
-//     const error = err as Error;
-//     console.error('Token verification failed:', error.message);
-//     return null;
-//   }
-// }
-
 export const generateTokens = (email: string): GeneratedTokens => {
   const accessToken = jwt.sign(
     { email } satisfies TokenPayload,
     JWT_SECRET,
-    { expiresIn: TOKEN_EXPIRY.ACCESS }
+    { expiresIn: '7d' }
   );
 
   const refreshToken = jwt.sign(
     { email, tokenType: 'refresh' } satisfies TokenPayload,
     JWT_SECRET,
-    { expiresIn: TOKEN_EXPIRY.REFRESH }
+    { expiresIn: '7d' }
   );
 
   return { accessToken, refreshToken };
 };
 
-/**
- * Verify JWT token
- */
 export const verifyToken = (token: string): VerifiedToken | null => {
   try {
     return jwt.verify(token, JWT_SECRET) as VerifiedToken;
