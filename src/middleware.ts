@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { verifyToken } from '@/utils/jwt';
+import getAuthRedirect from '@/utils/middleware/getAuthRedirect';
 
 // supported locales
 const locales = ['en', 'ar'];
@@ -13,9 +15,16 @@ function hasLocalePrefix(pathname: string): boolean {
   return locales.some(locale => pathname.startsWith(`/${locale}/`));
 }
 
-export function middleware(req: NextRequest) {
+export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
+
   const preferredLocale = req.cookies.get('preferredLang')?.value;
+  const authToken = req.cookies.get('accessToken')?.value;
+  const redirectUrl = await getAuthRedirect(pathname, authToken);
+  console.log('authToken: ', authToken);
+  if (redirectUrl) 
+    return NextResponse.redirect(new URL(redirectUrl || '', req.url));
+
   const localToUse = preferredLocale && locales.includes(preferredLocale) 
     ? preferredLocale
     : defaultLocale

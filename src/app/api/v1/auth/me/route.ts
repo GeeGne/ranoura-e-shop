@@ -37,7 +37,7 @@ export async function GET(req: NextResponse) {
         { status: 401 }
       )
 
-    const { email }: any = verifyToken(authToken);
+    const { email }: any = await verifyToken(authToken);
     if (!email) throw null;
     
     const { first_name, last_name } = await prisma.user.findUnique({
