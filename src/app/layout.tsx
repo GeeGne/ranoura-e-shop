@@ -39,7 +39,7 @@ export default function RootLayout({
   const lang = useLanguageStore(state => state.lang);
   const [ onScroll, setOnScroll ] = useState<any>(null);
 
-  const pathNameIncludesAdmin = () => pathname.includes('/admin');
+  const pathNameIncludesAdmin = () => pathname.includes('/dashboard');
 
   // DEBUG & UI
   // const handleScroll = (e: any) => console.log('wrokign');

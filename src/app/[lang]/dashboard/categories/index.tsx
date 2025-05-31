@@ -5,7 +5,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 
 // COMPONENTS
-import CatType from '@/app/[lang]/admin/categories/CatType';
+import CatType from '@/app/[lang]/dashboard/categories/CatType';
 import UnderlineStyle from '@/components/UnderlineStyle';
 import Icon from '@/components/Icon';
 

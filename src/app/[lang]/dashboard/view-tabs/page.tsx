@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import { useTabNameStore } from '@/stores/index';
 
 // COMPONENTS
-import Table from '@/app/[lang]/admin/view-tabs/Table';
+import Table from '@/app/[lang]/dashboard/view-tabs/Table';
 
 export default function page () {  
   

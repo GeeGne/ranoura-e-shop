@@ -1,6 +1,6 @@
 // COMPONENTS
-import Categories from '@/app/[lang]/admin/categories/index';
-import CurrentCategoryAndBackToHome from '@/app/[lang]/admin/CurrentCategoryAndBackToHome';
+import Categories from '@/app/[lang]/dashboard/categories/index';
+import CurrentCategoryAndBackToHome from '@/app/[lang]/dashboard/CurrentCategoryAndBackToHome';
 
 export default function Layout ({children}: any) {
   return (
