@@ -1,11 +1,10 @@
 import { verifyToken } from '@/utils/jwt';
 
 export default async function getAuthRedirect(pathname: string, authToken?: string) {
-  const authRoutes = ['/signin', '/signup'];
-  const protectedRoutes = ['/welcome', '/dashboard'];
+  const authRoutes = ['/en/signin', '/ar/signin', '/en/signup', '/ar/signup'];
+  const protectedRoutes = ['/en/welcome', '/ar/welcome', '/en/dashboard', '/ar/dashboard'];
   
   const isAuthTokenVerified = authToken ? await verifyToken(authToken) : null;
-
   if (isAuthTokenVerified && authRoutes.includes(pathname)) {
     return `/welcome/${isAuthTokenVerified.fullNameSlug}`;
   }
