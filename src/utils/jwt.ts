@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 
 // Types
 type TokenPayload = {
+  fullNameSlug: string;
   email: string;
   tokenType?: 'refresh';
 };
@@ -25,15 +26,15 @@ const TOKEN_EXPIRY: props = {
   REFRESH: '7d'
 };
 
-export const generateTokens = (email: string): GeneratedTokens => {
+export const generateTokens = (fullNameSlug: string, email: string): GeneratedTokens => {
   const accessToken = jwt.sign(
-    { email } satisfies TokenPayload,
+    { fullNameSlug , email } satisfies TokenPayload,
     JWT_SECRET,
     { expiresIn: '7d' }
   );
 
   const refreshToken = jwt.sign(
-    { email, tokenType: 'refresh' } satisfies TokenPayload,
+    { fullNameSlug, email, tokenType: 'refresh' } satisfies TokenPayload,
     JWT_SECRET,
     { expiresIn: '7d' }
   );

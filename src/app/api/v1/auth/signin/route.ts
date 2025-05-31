@@ -4,6 +4,14 @@ import prisma from '@/lib/prisma';
 import bcrypt from 'bcrypt';
 import { generateTokens } from '@/utils/jwt';
 
+const createSlug = (first_name: string, last_name: string) => 
+  `${first_name} ${last_name}`
+  .toLowerCase()
+  .trim()
+  .replace(/[^/w/s-]/g, '')
+  .replace(/[/s_-]+/g, '-')
+  .replace(/^-+|-+$/g, '');
+
 async function nextError (code: string, message: string, status = 404) {
   return NextResponse.json(
     {
@@ -29,9 +37,10 @@ export async function POST(req: NextRequest) {
         400
       )
 
-    const { password_hash, first_name, last_name } = await prisma.user.findUnique({
+    const { id, first_name, last_name, password_hash } = await prisma.user.findUnique({
       where: { email },
       select: {
+        id: true,
         first_name: true,
         last_name: true,
         password_hash: true
@@ -52,7 +61,8 @@ export async function POST(req: NextRequest) {
         401
       );
     
-    const { accessToken, refreshToken } = generateTokens(email);
+    const fullNameSlug = createSlug(first_name, last_name);
+    const { accessToken, refreshToken } = generateTokens(fullNameSlug, email);
     const cookieStore = await cookies();
     
     cookieStore.set(

@@ -19,17 +19,21 @@ export default function Layout (
   const { data: userData } = useQuery({
     queryKey: ['user'],
     queryFn: getUserData,
-  })
-  console.log('userData: ', userData);
+  });
+
   const { data: themesData, isError, isLoading } = useQuery({
     queryKey: ['themes'],
     queryFn: getThemeVars,
-  })
+  });
 
   useEffect(() => {
     if (isError || isLoading) return;
     updateThemeVariables(themesData.data);
   }, [themesData]);
+
+  // DEBUG & UI
+  // console.log('userData: ', userData);
+
 
   return (
     <>
