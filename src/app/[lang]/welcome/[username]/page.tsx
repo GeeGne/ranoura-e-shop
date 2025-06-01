@@ -2,9 +2,11 @@
 
 // HOOKS
 import { useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 // COMPONENTS
 import ProfileLI from '@/app/[lang]/welcome/[username]/ProfileLI';
+import ProfileLoading from '@/app/[lang]/welcome/[username]/ProfileLoading';
 import LineMdTextBoxToTextBoxMultipleTransition from '@/components/svgs/LineMdTextBoxToTextBoxMultipleTransition';
 
 // STORES
@@ -12,6 +14,9 @@ import { useTabNameStore } from '@/stores/index';
 
 // JSON
 import user from '@/json/user.json';
+
+// API
+import getUserData from '@/lib/api/auth/me/get';
 
 export default function page () {
   
@@ -22,24 +27,34 @@ export default function page () {
     setTabName('personalData');
   }, []);
 
+  const { data: userData, isError } = useQuery({
+    queryKey: ['user'],
+    queryFn: getUserData,
+  });
+
   // DEBUG & UI
   // console.log(user.filter((itm, i, self) => self.indexOf(itm) === i))
   // console.log(user.filter((itm, i, self) => self.indexOf(itm.category) === i))
   // console.log(user.map(itm => itm.category).filter((itm, i, self) => self.indexOf(itm) === i));
   // console.log([ ...new Set(user.map(itm => itm.category)) ])
   // console.log(categoryArray);
-  
+  // console.log('userData: ', userData);
+  const isLoading = true;
+  if (isLoading) return (
+    <ul
+      className="flex flex-col gap-4 w-full p-4 mt-[-1rem] max-w-[1400px] lg:mx-auto bg-[var(--background-light-color)]"
+    > 
+      <ProfileLoading />
+    </ul>
+  );
+  if (isError) return (<></>);
   return (
     <ul
       className="flex flex-col gap-4 w-full p-4 mt-[-1rem] max-w-[1400px] lg:mx-auto bg-[var(--background-light-color)]"
     > 
-      {categoryArray.map((category, i) => 
-        <ProfileLI 
-          key={i}
-          category={category}
-          user={user}
-        />
-      )}
+      <ProfileLI 
+        user={userData?.data}
+      />
     </ul>
   )
 }

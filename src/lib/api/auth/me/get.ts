@@ -8,8 +8,7 @@ export default async function get () {
     const response = await fetch(url, { credentials: 'include' });
     if (!response.ok) throw new Error('authentication process is unsuccessful')
     
-    const results = response.json();
-    console.log('results: ', results);
+    const results = await response.json();
     return results
   } catch (err) {
     const error = err as Error;

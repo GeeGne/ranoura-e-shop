@@ -5,23 +5,11 @@ import LineMdMapMarkerLoop from '@/components/svgs/LineMdMapMarkerLoop';
 //  STORES
 import { useLanguageStore } from '@/stores/index';
 
-type Props = {
-  category?: string;
-  user: UserProps;
-} & React.ComponentPropsWithRef<"li">;
 
-type UserProps = {
-  first_name: string;
-  last_name: string;
-  phone_number: string;
-  email: string;
-}
-
-export default function ProfileLI ({ user, ...props }: Props) {
+export default function ProfileLoading (props: any) {
 
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
-  const { first_name, last_name, email, phone_number }: UserProps = user;
   
   return (
     <>
@@ -29,12 +17,12 @@ export default function ProfileLI ({ user, ...props }: Props) {
         className="flex flex-col gap-4 w-full p-4 max-w-[1400px] mx-auto bg-background rounded-lg"
         { ...props }
       >
-        <div className="flex items-center gap-2">
+        <div className="--opacity-blink flex items-center gap-2 w-[10rem] bg-background-deep-light rounded-lg">
           <LineMdTextBoxToTextBoxMultipleTransition 
-            className="text-heading"
+            className="text-heading opacity-0"
           />
           <h3
-            className="text-lg text-heading font-bold"
+            className="text-lg text-heading font-bold opacity-0"
           >
             PERSONAL
           </h3>
@@ -45,20 +33,20 @@ export default function ProfileLI ({ user, ...props }: Props) {
           <li
             className="flex flex-col"
           >
-            <span className="text-md text-body font-bold">{isEn ? 'Name' : 'الاسم'}</span>
-            <span className="text-md text-heading">{first_name}</span>
+            <span className="text-md text-body font-bold opacity-0">{isEn ? 'Name' : 'الاسم'}</span>
+            <span className="text-md text-heading opacity-0">any</span>
           </li>
           <li
             className="flex flex-col"
           >
-            <span className="text-md text-body font-bold">{isEn ? 'Last Name' : 'اللقب'}</span>
-            <span className="text-md text-heading">{last_name}</span>
+            <span className="text-md text-body font-bold opacity-0">{isEn ? 'Last Name' : 'اللقب'}</span>
+            <span className="text-md text-heading opacity-0">any</span>
           </li>
           <li
             className="flex flex-col"
           >
-            <span className="text-md text-body font-bold">{isEn ? 'Email' : 'الايميل'}</span>
-            <span className="text-md text-heading">{email}</span>
+            <span className="text-md text-body font-bold opacity-0">{isEn ? 'Email' : 'الايميل'}</span>
+            <span className="text-md text-heading opacity-0">any</span>
           </li>
         </ul>
       </li>     
@@ -82,8 +70,8 @@ export default function ProfileLI ({ user, ...props }: Props) {
           <li
             className="flex flex-col"
           >
-            <span className="text-md text-body font-bold">{first_name}</span>
-            <span className="text-md text-heading">{first_name}</span>
+            <span className="text-md text-body font-bold">any</span>
+            <span className="text-md text-heading">any</span>
           </li>
         </ul>
       </li>
