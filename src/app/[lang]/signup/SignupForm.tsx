@@ -1,7 +1,7 @@
 // HOOKS
 import { useState, useRef } from "react";
 import Link from "next/link";
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 // COMPONENTS
 import BtnA from '@/components/BtnA';

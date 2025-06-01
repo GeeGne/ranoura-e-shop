@@ -8,8 +8,8 @@ const createSlug = (first_name: string, last_name: string) =>
   `${first_name} ${last_name}`
   .toLowerCase()
   .trim()
-  .replace(/[^/w/s-]/g, '')
-  .replace(/[/s_-]+/g, '-')
+  .replace(/[^\w\s-]/g, '')
+  .replace(/[\s_-]+/g, '-') 
   .replace(/^-+|-+$/g, '');
 
 async function nextError (code: string, message: string, status = 404) {
@@ -29,6 +29,7 @@ async function nextError (code: string, message: string, status = 404) {
 // @access private
 export async function POST(req: NextRequest) {
   try {
+    console.log('posting!');
     const { email, password } = await req.json();
     if (!email || !password) 
       return nextError(
@@ -62,7 +63,8 @@ export async function POST(req: NextRequest) {
       );
     
     const fullNameSlug = createSlug(first_name, last_name);
-    const { accessToken, refreshToken } = generateTokens(fullNameSlug, email);
+    console.log('fullNameSlug: ', fullNameSlug);
+    const { accessToken, refreshToken } = await generateTokens(fullNameSlug, email);
     const cookieStore = await cookies();
     
     cookieStore.set(

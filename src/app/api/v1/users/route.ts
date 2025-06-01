@@ -4,6 +4,13 @@ import bcrypt from 'bcrypt';
 import { cookies } from 'next/headers';
 import { generateTokens } from '@/utils/jwt';
 
+const createSlug = (first_name: string, last_name: string) => 
+  `${first_name} ${last_name}`
+  .toLowerCase()
+  .trim()
+  .replace(/[^\w\s-]/g, '')
+  .replace(/[\s_-]+/g, '-') 
+  .replace(/^-+|-+$/g, '');
 
 async function nextError (code: string, message: string, status = 404) {
   return NextResponse.json(
@@ -53,7 +60,9 @@ export async function POST(req: NextRequest) {
       }
     })
 
-    const { accessToken, refreshToken } = generateTokens(email);
+    const fullNameSlug = createSlug(first_name, last_name);
+
+    const { accessToken, refreshToken } = await generateTokens(fullNameSlug, email);
     const cookieStore = await cookies();
     
     cookieStore.set(

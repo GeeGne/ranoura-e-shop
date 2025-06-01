@@ -10,23 +10,24 @@ datasource db {
 }
 
 model User {
-  id              Int          @id @default(autoincrement())
-  email           String       @unique
-  created_at      DateTime     @default(now())
+  id              Int            @id @default(autoincrement())
+  email           String         @unique
+  created_at      DateTime       @default(now())
   date_of_birth   DateTime?
-  email_verified  Boolean      @default(false)
+  email_verified  Boolean        @default(false)
   first_name      String
   last_login_at   DateTime?
   last_name       String
-  locale          String       @default("ar")
+  locale          String         @default("ar")
   password_hash   String
   phone_number    String
   profile_img_url String?
-  status          String       @default("active")
-  timezone        String       @default("UTC+3")
-  updated_at      DateTime?    @updatedAt
+  status          String         @default("active")
+  timezone        String         @default("UTC+3")
+  updated_at      DateTime?      @updatedAt
   addresses       UserAddress?
   roles           UserRole[]
+  RefreshToken    RefreshToken[]
 }
 
 model UserAddress {
@@ -56,17 +57,17 @@ model UserRole {
   @@id([user_id, role_id])
 }
 
-model RefreshToken { 
-  id String @id @default(uuid())
-  token String @unique
-  user_id String
-  user User @relation(fields: [user_id], references: [id])
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  user_id   Int
+  user      User     @relation(fields: [user_id], references: [id])
   expiresAt DateTime
   createdAt DateTime @default(now())
 }
 
 model Task {
-  id          Int @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   title       String
   description String?
   completed   Boolean  @default(false)

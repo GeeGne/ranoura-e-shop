@@ -1,5 +1,6 @@
 // HOOKS
 import { useState, useRef } from "react";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import Link from "next/link";
 
 // COMPONENTS
@@ -8,25 +9,92 @@ import LineMdWatchLoop from '@/components/svgs/LineMdWatchLoop';
 import LineMdWatchTwotoneLoop from '@/components/svgs/LineMdWatchTwotoneLoop';
 import LineMdWatchOffLoop from '@/components/svgs/LineMdWatchOffLoop';
 import LineMdWatchOffTwotoneLoop from '@/components/svgs/LineMdWatchOffTwotoneLoop';
+import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingResize';
 
 // STORES
 import { useAlertMessageStore, useLayoutRefStore, useLanguageStore } from '@/stores/index';
+
+// LIB
+import { validate } from '@/lib/validators/SignInFormClient';
+
+// API
+import signinRequest from '@/lib/api/auth/signin/post';
 
 type Props = {
   className?: string;
 }
 
+type FormProps = {
+  email: string;
+  password: string;
+}
+
+type ValidateProps = {
+  email: ValidateRecord;
+  password: ValidateRecord;
+}
+
+type ValidateRecord = {
+  message: string;
+  isValid: boolean;
+}
+
 export default function SigninForm ({ className, ...props }: Props) {
 
+  const queryClient = useQueryClient();
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
+
+  const [ signInForm, setSignInForm ] = useState<FormProps>({
+    email: '',
+    password: '',
+  });
+  const [ incorrectField, setIncorrectField ] = useState<ValidateProps>({
+    email: { message: '', isValid: true },
+    password: { message: '', isValid: true },
+  });
+  
+  const [ isProcessing, setIsProcessing ] = useState<boolean>(false);
   const [ isEmailFocus, setIsEmailFocus ] = useState<boolean>(false);
   const [ isPasswordFocus, setIsPasswordFocus ] = useState<boolean>(false);
   const [ isPassEyeActive, setIsPassEyeActive ] = useState<boolean>(false);
-  const lang = useLanguageStore(state => state.lang);
-  const isEn = lang === 'en';
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
   const layoutRef = useLayoutRefStore((state: any) => state.layoutRef);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const signinMutation = useMutation({
+    mutationFn: signinRequest,
+    onSettled: () => {
+      setIsProcessing(false);
+    },
+    onMutate: () => {
+      setIsProcessing(true);
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+      setAlertToggle(Date.now());
+      setAlertType("success");
+      setAlertMessage(data.message[isEn ? 'en' : 'ar']);
+    },
+    onError: (error) => {
+      setAlertToggle(Date.now());
+      setAlertType("error");
+      setAlertMessage(error.message);
+    }
+  })
+
+  const isAllInptsValid = (results: ValidateProps) => {
+    const { email, password } = results;
+    switch (false) {
+      case email.isValid:
+      case password.isValid:
+        return false;
+      default:
+        return true;    
+    }
+  };
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     const { type } = e.currentTarget.dataset;
@@ -47,6 +115,12 @@ export default function SigninForm ({ className, ...props }: Props) {
         e.preventDefault();
         setIsPassEyeActive(val => !val);
         break;  
+      case 'label_element_is_clicked':
+        setIncorrectField(val => ({
+          email: { ...val.email, isValid: true },
+          password: { ...val.password, isValid: true },
+        }));
+        break;
       default:
         console.error('Unknown type: ', type);
     }
@@ -86,12 +160,64 @@ export default function SigninForm ({ className, ...props }: Props) {
     }
   };
 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.currentTarget;
+
+    switch (name) {
+      case 'email':
+      case 'password':
+        setSignInForm(val => ({ ...val, [name]: value }));
+        break;
+      default:
+        console.error('Unknown name: ', name);
+    }
+  }
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log('submit is clicked!')
+    const { email, password } = signInForm;
+    const { email: userEmail, password: userPassword } = validate;
+    const inptsResults = {
+      email: {
+        message: userEmail(email, isEn).message, 
+        isValid: userEmail(email, isEn).isValid
+      },
+      password: {
+        message: userPassword(password, isEn).message, 
+        isValid: userPassword(password, isEn).isValid
+      },
+    }
+
+    try {
+      const errorMessage = isEn ? "Some fields are incorrect!" : "بعض الحقول غير صحيحه!";
+      if (!isAllInptsValid(inptsResults)) throw new Error (errorMessage);
+
+      signinMutation.mutate({ email, password });
+    } catch (err) {
+      const error = err as Error;
+
+      if (formRef.current) 
+        formRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setIncorrectField(inptsResults);
+      setAlertToggle(Date.now());
+      setAlertType("error");
+      setAlertMessage(error.message);
+    }
+  };
+
+  // UI & DEBUG
+  // console.log('signInForm: ', signInForm);
+  // console.log('incorrectField: ', incorrectField);
+
   return (
     <form
       className={`
         flex flex-col w-[300px] md:w-[400px] mx-auto p-4 gap-4
         ${className}
       `}
+      onSubmit={handleSubmit}
+      ref={formRef}
       { ...props }
     > 
       <h2
@@ -102,6 +228,8 @@ export default function SigninForm ({ className, ...props }: Props) {
       <label
         className="relative flex w-full"
         htmlFor="email"
+        data-type="label_element_is_clicked"
+        onClick={handleClick}
       >
         <span
           className={`
@@ -117,21 +245,43 @@ export default function SigninForm ({ className, ...props }: Props) {
         <input
           className={`
             bg-transparent border-solid
-            outline-none text-heading autofill:bg-red-500
+            outline-none text-heading border-[1px]
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
-            ${isEmailFocus ? 'border-body border-[2px]' : 'border-[1px] border-inbetween'}
+            ${incorrectField.email.isValid 
+              ? isEmailFocus 
+              ? 'border-body'
+              : 'border-inbetween'
+              : 'border-red-500'
+            }
           `}
           id="email"
           name="email"
           type="email"
           onFocus={handleFocus}
           onBlur={handleBlur}
+          onChange={handleChange}
         />
+        <div
+          className={`
+            absolute top-1/2 left-1/2
+            flex items-center
+            translate-y-[-50%] translate-x-[-50%] w-[calc(100%-0.5rem)] h-[calc(100%-0.5rem)]
+            text-xs text-red-500 backdrop-blur-[5px]
+            transition-all duration-300 ease-in-out
+            ${incorrectField.email.isValid ? 'invisible opacity-0' : 'visible opacity-100'}
+          `}
+        >
+          <span className="flex px-2">
+            {incorrectField.email.message}
+          </span>
+        </div>
       </label>
       <label
         className="relative flex w-full"
         htmlFor="password"
+        data-type="label_element_is_clicked"
+        onClick={handleClick}
       >
         <span
           className={`
@@ -147,18 +297,38 @@ export default function SigninForm ({ className, ...props }: Props) {
         <input
           className={`
             bg-transparent border-solid
-            outline-none text-heading
+            outline-none text-heading border-[1px]
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
             ${isPassEyeActive ? "font-regular" : "font-bold"}
-            ${isPasswordFocus ? 'border-body border-[2px]' : 'border-[1px] border-inbetween'}
+            ${incorrectField.email.isValid 
+              ? isPasswordFocus 
+              ? 'border-body'
+              : 'border-inbetween'
+              : 'border-red-500'
+            }
           `}
           id="password"
           name="password"
           type={isPassEyeActive ? "text" : "password"}
           onFocus={handleFocus}
           onBlur={handleBlur}
+          onChange={handleChange}
         />
+        <div
+          className={`
+            absolute top-1/2 left-1/2
+            flex items-center
+            translate-y-[-50%] translate-x-[-50%] w-[calc(100%-0.5rem)] h-[calc(100%-0.5rem)]
+            text-xs text-red-500 backdrop-blur-[5px]
+            transition-all duration-300 ease-in-out
+            ${incorrectField.password.isValid ? 'invisible opacity-0' : 'visible opacity-100'}
+          `}
+        >
+          <span className="flex px-2">
+            {incorrectField.password.message}
+          </span>
+        </div>
         { isPassEyeActive 
           ? <button
               className={`
@@ -218,17 +388,27 @@ export default function SigninForm ({ className, ...props }: Props) {
             </button>
         }
       </label>
-      <Link
-        href="/admin"
+      <BtnA
+        className="relative md:col-span-2 bg-primary w-full text-heading-invert font-bold py-2 rounded-md"
+        type="submit"
       >
-        <BtnA
-          className="bg-primary w-full text-heading-invert font-bold py-2 rounded-md"
-          data-type="signin_button_is_clicked"
-          // onClick={handleClick}
+        <SvgSpinnersRingResize 
+          className={`
+            absolute top-1/2 left-1/2
+            translate-x-[-50%] translate-y-[-50%]
+            transition-all duration-300 ease-in-out
+            ${isProcessing ? 'visible opacity-100' : 'invisible opacity-0'}
+          `}
+        />
+        <span 
+          className={`
+            transition-all duration-300 ease-in-out
+            ${isProcessing ? 'invisible opacity-0' : 'visible opacity-100'}
+          `}
         >
           {isEn ? 'CONTINUE' : 'استمرار'}
-        </BtnA>
-      </Link>
+        </span>
+      </BtnA>
       <Link
         href="/signup"
         className="text-heading text-base"

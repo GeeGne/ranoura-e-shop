@@ -6,6 +6,7 @@ export default async function getAuthRedirect(pathname: string, authToken?: stri
   
   const isAuthTokenVerified = authToken ? await verifyToken(authToken) : null;
   if (isAuthTokenVerified && authRoutes.includes(pathname)) {
+    console.log('isAuthTokenVerified', isAuthTokenVerified);
     return `/welcome/${isAuthTokenVerified.fullNameSlug}`;
   }
 
