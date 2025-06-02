@@ -98,6 +98,7 @@ export default function SignupForm ({ className, ...props }: Props) {
       setAlertToggle(Date.now());
       setAlertType("success");
       setAlertMessage(data.message[isEn ? 'en' : 'ar']);
+      window.location.reload();
     },
     onError: (error) => {
       setAlertToggle(Date.now());

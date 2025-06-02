@@ -31,19 +31,25 @@ export default function ProfileLoading (props: any) {
           className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full"
         >
           <li
-            className="flex flex-col"
+            className="--opacity-blink bg-background-deep-light flex flex-col rounded-lg w-[300px]"
           >
             <span className="text-md text-body font-bold opacity-0">{isEn ? 'Name' : 'الاسم'}</span>
             <span className="text-md text-heading opacity-0">any</span>
           </li>
           <li
-            className="flex flex-col"
+            className="--opacity-blink bg-background-deep-light flex flex-col rounded-lg w-[300px]"
           >
             <span className="text-md text-body font-bold opacity-0">{isEn ? 'Last Name' : 'اللقب'}</span>
             <span className="text-md text-heading opacity-0">any</span>
           </li>
           <li
-            className="flex flex-col"
+            className="--opacity-blink bg-background-deep-light flex flex-col rounded-lg w-[300px]"
+          >
+            <span className="text-md text-body font-bold opacity-0">{isEn ? 'Email' : 'الايميل'}</span>
+            <span className="text-md text-heading opacity-0">any</span>
+          </li>
+          <li
+            className="--opacity-blink bg-background-deep-light flex flex-col rounded-lg w-[300px]"
           >
             <span className="text-md text-body font-bold opacity-0">{isEn ? 'Email' : 'الايميل'}</span>
             <span className="text-md text-heading opacity-0">any</span>
@@ -54,12 +60,12 @@ export default function ProfileLoading (props: any) {
         className="flex flex-col gap-4 w-full p-4 max-w-[1400px] mx-auto bg-background rounded-lg"
         { ...props }
       >
-        <div className="flex items-center gap-2">
+        <div className="--opacity-blink flex items-center gap-2 w-[10rem] bg-background-deep-light rounded-lg">
           <LineMdMapMarkerLoop 
-            className="text-heading"
+            className="text-heading opacity-0"
           />
           <h3
-            className="text-lg text-heading font-bold"
+            className="text-lg text-heading font-bold opacity-0"
           >
             LOCATION
           </h3>
@@ -68,10 +74,16 @@ export default function ProfileLoading (props: any) {
           className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full"
         >
           <li
-            className="flex flex-col"
+            className="--opacity-blink bg-background-deep-light flex flex-col rounded-lg w-[300px]"
           >
-            <span className="text-md text-body font-bold">any</span>
-            <span className="text-md text-heading">any</span>
+            <span className="text-md text-body font-bold opacity-0">any</span>
+            <span className="text-md text-heading opacity-0">any</span>
+          </li>
+          <li
+            className="--opacity-blink bg-background-deep-light flex flex-col rounded-lg w-[300px]"
+          >
+            <span className="text-md text-body font-bold opacity-0">any</span>
+            <span className="text-md text-heading opacity-0">any</span>
           </li>
         </ul>
       </li>

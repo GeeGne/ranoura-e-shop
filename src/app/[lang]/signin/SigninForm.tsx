@@ -1,6 +1,6 @@
 // HOOKS
 import { useState, useRef } from "react";
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Link from "next/link";
 
 // COMPONENTS
@@ -77,6 +77,7 @@ export default function SigninForm ({ className, ...props }: Props) {
       setAlertToggle(Date.now());
       setAlertType("success");
       setAlertMessage(data.message[isEn ? 'en' : 'ar']);
+      window.location.reload();
     },
     onError: (error) => {
       setAlertToggle(Date.now());
@@ -219,7 +220,7 @@ export default function SigninForm ({ className, ...props }: Props) {
       onSubmit={handleSubmit}
       ref={formRef}
       { ...props }
-    > 
+    >  
       <h2
         className="text-center text-5xl text-heading mx-auto"
       >
