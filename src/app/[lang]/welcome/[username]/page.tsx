@@ -27,7 +27,7 @@ export default function page () {
     setTabName('personalData');
   }, []);
 
-  const { data: userData, isError } = useQuery({
+  const { data: userData, isLoading, isError } = useQuery({
     queryKey: ['user'],
     queryFn: getUserData,
   });
@@ -39,14 +39,7 @@ export default function page () {
   // console.log([ ...new Set(user.map(itm => itm.category)) ])
   // console.log(categoryArray);
   // console.log('userData: ', userData);
-  const isLoading = true;
-  if (isLoading) return (
-    <ul
-      className="flex flex-col gap-4 w-full p-4 mt-[-1rem] max-w-[1400px] lg:mx-auto bg-[var(--background-light-color)]"
-    > 
-      <ProfileLoading />
-    </ul>
-  );
+  
   if (isError) return (<></>);
   return (
     <ul
@@ -54,6 +47,7 @@ export default function page () {
     > 
       <ProfileLI 
         user={userData?.data}
+        isLoading={isLoading}
       />
     </ul>
   )

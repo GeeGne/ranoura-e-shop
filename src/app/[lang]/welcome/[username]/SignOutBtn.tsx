@@ -2,9 +2,10 @@ import BtnA from '@/components/BtnA';
 
 type Props = {
   className?: string;
+  isLoading?: boolean;
 } & React.ComponentPropsWithRef<"div"> ;
 
-export default function SignOutBtn ({ className, ...props }: Props) {
+export default function SignOutBtn ({ className, isLoading, ...props }: Props) {
   return (
     <div    
       className={`
@@ -14,7 +15,11 @@ export default function SignOutBtn ({ className, ...props }: Props) {
     >
       <BtnA
         className={`
-          px-4 py-2 bg-primary text-md text-heading-invert font-bold rounded-md
+          px-4 py-2 text-md font-bold rounded-md
+          ${isLoading 
+            ? '--opacity-blink bg-background-deep-light text-background-deep-light' 
+            : 'bg-primary text-heading-invert'
+          }
         `}
       >
         Signout
