@@ -16,7 +16,20 @@ type UserProps = {
   last_name: string;
   phone_number: string;
   email: string;
-}
+  address: addressProps;
+  role: roleProps;
+};
+
+type addressProps = {
+  address_details?: string;
+  second_address?: string;
+  notes?: string;
+};
+
+type roleProps = {
+  name?: string;
+  description?: string;
+};
 
 export default function ProfileLI ({ user, isLoading = false, ...props }: Props) {
 
@@ -102,7 +115,10 @@ export default function ProfileLI ({ user, isLoading = false, ...props }: Props)
     </>
   )
 
-  const { first_name, last_name, email, phone_number }: UserProps = user;
+  const { first_name, last_name, email, phone_number, address }: UserProps = user;
+
+  // DEBUG & UI
+  console.log('user: ', user);
 
   return (
     <>
@@ -141,6 +157,12 @@ export default function ProfileLI ({ user, isLoading = false, ...props }: Props)
             <span className="text-md text-body font-bold">{isEn ? 'Email' : 'الايميل'}</span>
             <span className="text-md text-heading">{email}</span>
           </li>
+          <li
+            className="flex flex-col"
+          >
+            <span className="text-md text-body font-bold">{isEn ? 'Phone Number' : 'رقم الهاتف'}</span>
+            <span className="text-md text-heading">{phone_number}</span>
+          </li>
         </ul>
       </li>     
       <li
@@ -163,8 +185,20 @@ export default function ProfileLI ({ user, isLoading = false, ...props }: Props)
           <li
             className="flex flex-col"
           >
-            <span className="text-md text-body font-bold">{first_name}</span>
-            <span className="text-md text-heading">{first_name}</span>
+            <span className="text-md text-body font-bold">{isEn ? 'Address' : 'العنوان'}</span>
+            <span className="text-md text-heading">{address?.address_details}</span>
+          </li>
+          <li
+            className="flex flex-col"
+          >
+            <span className="text-md text-body font-bold">{isEn ? 'Second Address' : 'العنوان الثاني'}</span>
+            <span className="text-md text-heading">{address?.second_address}</span>
+          </li>
+          <li
+            className="flex flex-col"
+          >
+            <span className="text-md text-body font-bold">{isEn ? 'Notes' : 'ملاحظات'}</span>
+            <span className="text-md text-heading">{address?.notes}</span>
           </li>
         </ul>
       </li>

@@ -37,11 +37,12 @@ export async function POST(req: NextRequest) {
         400
       )
 
-    const { first_name, last_name, password_hash, address, role } = await prisma.user.findUnique({
+    const { first_name, last_name, phone_number, password_hash, address, role } = await prisma.user.findUnique({
       where: { email },
       select: {
         first_name: true,
         last_name: true,
+        phone_number: true,
         password_hash: true,
         role: {
           select: {
@@ -60,10 +61,6 @@ export async function POST(req: NextRequest) {
             notes: true,
           }
         }
-      },
-      include: {
-        role: true,
-        address: true,
       }
     });
     if (!password_hash || !first_name || !last_name) 
@@ -116,6 +113,7 @@ export async function POST(req: NextRequest) {
           first_name,
           last_name,
           email,
+          phone_number,
           userRole,
           address
         },

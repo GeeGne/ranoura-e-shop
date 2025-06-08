@@ -13,6 +13,6 @@ export default async function get () {
   } catch (err) {
     const error = err as Error;
     console.error('unable to authenticate user: ', error.message);
-    throw error;
+    return null;
   }
 }

@@ -27,13 +27,13 @@ export default function Layout (
   });
 
   useEffect(() => {
-    if (isError || isLoading) return;
-    updateThemeVariables(themesData.data);
+    if (isError || isLoading || !themesData?.data) return;
+    updateThemeVariables(themesData?.data);
   }, [themesData]);
 
   // DEBUG & UI
   // console.log('userData: ', userData);
-
+  // console.log('themesData: ', themesData);
 
   return (
     <>

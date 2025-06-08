@@ -41,21 +41,20 @@ export async function GET(req: NextResponse) {
     if (!email) throw null;
     
     
-    const { first_name, last_name, role, address } = await prisma.user.findUnique({
+    const { first_name, last_name, phone_number, role, address } = await prisma.user.findUnique({
       where: {
         email
       },
       select: {
         first_name: true,
         last_name: true,
+        phone_number: true,
         role: {
-
           select: {
             role: {
               select: {
-              name: true,
-              description: true
-
+                name: true,
+                description: true
               }
             }
           }
@@ -70,11 +69,13 @@ export async function GET(req: NextResponse) {
       }
     });
     const { role: userRole } = role;
+
     return NextResponse.json({
       data: {
         first_name,
         last_name,
         email,
+        phone_number,
         address,
         userRole,
       },
