@@ -118,7 +118,7 @@ export default function ProfileLI ({ user, isLoading = false, ...props }: Props)
   const { first_name, last_name, email, phone_number, address }: UserProps = user;
 
   // DEBUG & UI
-  console.log('user: ', user);
+  // console.log('user: ', user);
 
   return (
     <>

@@ -2,6 +2,7 @@
 
 // HOOKS
 import { useEffect } from 'react';
+import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 
 // COMPONENTS
@@ -11,6 +12,8 @@ import UserPfp from '@/app/[lang]/welcome/[username]/UserPfp';
 import Username from '@/app/[lang]/welcome/[username]/Username';
 import NavTile from '@/app/[lang]/welcome/[username]/NavTile';
 import SignOutBtn from '@/app/[lang]/welcome/[username]/SignOutBtn';
+import EosIconsAdminOutlined from '@/components/svgs/EosIconsAdminOutlined';
+import MaterialSymbolsDashboardRounded from '@/components/svgs/MaterialSymbolsDashboardRounded';
 
 // STORES
 import { useTabNameStore } from '@/stores/index';
@@ -43,9 +46,27 @@ export default function layout ({ children }: Readonly<{children: React.ReactNod
         className="px-4"
         slugNameAndLinkArray={slugNameAndLinkArray}     
       />
-      <Banner isLoading={isLoading}/>
+      <div
+        className="relative"
+      >
+        <Banner isLoading={isLoading}/>
+        <Link
+          href="/dashboard"
+          className="
+            absolute top-[calc(100%+1rem)] right-4
+            flex items-center justify-center w-10 h-10 rounded-full
+            cursor-pointer hover:bg-background-light z-[10]
+            transition-all duration-300 ease-in-out
+          "
+        >
+          <MaterialSymbolsDashboardRounded
+            className="text-primary"
+            type="button"
+          />    
+        </Link>
+      </div>
       <UserPfp 
-        className="mt-[-60.5px]" 
+        className="mt-[-60.5px] z-[5]" 
         isLoading={isLoading}
       />
       <Username isLoading={isLoading} />

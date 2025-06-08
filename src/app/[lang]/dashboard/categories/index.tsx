@@ -142,7 +142,7 @@ export default function Categories ({className, props}: Props) {
             `}
           >
             <Link
-              href={`/admin/${itm.slug}`}
+              href={`/dashboard/${itm.slug}`}
               className="inline-block flex w-full"
             >
               <div
@@ -197,7 +197,7 @@ export default function Categories ({className, props}: Props) {
             `}
           >
             <Link
-              href={`/admin/${itm.slug}`}
+              href={`/dashboard/${itm.slug}`}
               className="inline-block flex w-full"
             >
               <div
