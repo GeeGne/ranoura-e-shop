@@ -23,7 +23,7 @@ export async function middleware(req: NextRequest) {
   const redirectUrl = await getAuthRedirect(pathname, authToken);
   console.log('authToken: ', authToken);
   if (redirectUrl) 
-    return NextResponse.redirect(new URL(redirectUrl || '', req.url));
+    return NextResponse.redirect(new URL(redirectUrl, req.url));
 
   const localToUse = preferredLocale && locales.includes(preferredLocale) 
     ? preferredLocale
@@ -31,14 +31,14 @@ export async function middleware(req: NextRequest) {
 
   if (hasLocalePrefix(pathname)) return NextResponse.next();
 
-  const hasAdmin = req.url.endsWith('admin');
-  if (hasAdmin) {
+  const hasDashboard = req.url.endsWith('dashboard');
+  if (hasDashboard) {
     console.log('url: ', `${pathname}${defaultAdminUrl}`);
     const newUrl = new URL(`${pathname}${defaultAdminUrl}`, req.url);
     return NextResponse.redirect(newUrl);
   }
   
-  console.log('has no Admin');
+  console.log('has no Dashboard');
 
   const newUrl = new URL(
     pathname === '/' ? `/${localToUse}` : `/${localToUse}${pathname}`,

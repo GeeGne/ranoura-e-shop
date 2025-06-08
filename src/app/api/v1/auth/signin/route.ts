@@ -29,7 +29,6 @@ async function nextError (code: string, message: string, status = 404) {
 // @access private
 export async function POST(req: NextRequest) {
   try {
-    console.log('posting!');
     const { email, password } = await req.json();
     if (!email || !password) 
       return nextError(
@@ -38,13 +37,33 @@ export async function POST(req: NextRequest) {
         400
       )
 
-    const { id, first_name, last_name, password_hash } = await prisma.user.findUnique({
+    const { first_name, last_name, password_hash, address, role } = await prisma.user.findUnique({
       where: { email },
       select: {
-        id: true,
         first_name: true,
         last_name: true,
-        password_hash: true
+        password_hash: true,
+        role: {
+          select: {
+            role: {
+              select: {
+                name: true,
+                description: true,
+              }
+            }
+          }
+        },
+        address: {
+          select: {
+            address_details: true,
+            second_address: true,
+            notes: true,
+          }
+        }
+      },
+      include: {
+        role: true,
+        address: true,
       }
     });
     if (!password_hash || !first_name || !last_name) 
@@ -54,6 +73,7 @@ export async function POST(req: NextRequest) {
         401
       );
 
+    const { role: userRole } = role;
     const isPassCorrect = await bcrypt.compare(password, password_hash);
     if (!isPassCorrect) 
       return nextError(
@@ -90,11 +110,14 @@ export async function POST(req: NextRequest) {
         maxAge: 7 * 24 * 15 * 60 * 1000
       }
     );
+    
     return NextResponse.json({
         data: {
           first_name,
           last_name,
           email,
+          userRole,
+          address
         },
         message: {
           en: 'authentication success!',

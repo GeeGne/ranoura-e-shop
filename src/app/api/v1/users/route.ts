@@ -1,3 +1,5 @@
+// app/api/v1/users/route.ts
+export const runtime = 'nodejs' // Force Node.js runtime
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import bcrypt from 'bcrypt';
@@ -56,9 +58,25 @@ export async function POST(req: NextRequest) {
         last_name,
         email,
         phone_number,
-        password_hash
+        password_hash,
+        address: {
+          create: {
+            address_details: "test",
+            second_address: "second",
+            notes: "notes",
+          }
+        },
+        role: {
+          create: {
+            role_id: 2 
+          }
+        },
+      },
+      include: {
+        address: true,
+        role: true
       }
-    })
+    });
 
     const fullNameSlug = createSlug(first_name, last_name);
 

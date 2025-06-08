@@ -1,7 +1,5 @@
 generator client {
-  provider        = "prisma-client-js"
-  output          = "./node_modules/.prisma/client"
-  previewFeatures = ["driverAdapters"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -25,11 +23,10 @@ model User {
   status          String         @default("active")
   timezone        String         @default("UTC+3")
   updated_at      DateTime?      @updatedAt
-  addresses       UserAddress?
-  roles           UserRole[]
+  address         UserAddress?
+  role            UserRole?
   RefreshToken    RefreshToken[]
 }
-
 model UserAddress {
   id              Int       @id @default(autoincrement())
   user_id         Int       @unique
@@ -38,7 +35,7 @@ model UserAddress {
   notes           String?
   created_at      DateTime  @default(now())
   updated_at      DateTime? @updatedAt
-  user            User      @relation(fields: [user_id], references: [id])
+  user            User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
 
 model Role {
@@ -49,12 +46,11 @@ model Role {
 }
 
 model UserRole {
-  user_id Int
-  role_id Int
+  user_id Int @unique
+  role_id Int @default(2)
   role    Role @relation(fields: [role_id], references: [id])
   user    User @relation(fields: [user_id], references: [id])
 
-  @@id([user_id, role_id])
 }
 
 model RefreshToken {

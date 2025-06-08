@@ -40,19 +40,43 @@ export async function GET(req: NextResponse) {
     const { email }: any = await verifyToken(authToken);
     if (!email) throw null;
     
-    const { first_name, last_name } = await prisma.user.findUnique({
-      where: { email },
+    
+    const { first_name, last_name, role, address } = await prisma.user.findUnique({
+      where: {
+        email
+      },
       select: {
         first_name: true,
         last_name: true,
+        role: {
+
+          select: {
+            role: {
+              select: {
+              name: true,
+              description: true
+
+              }
+            }
+          }
+        },
+        address: {
+          select: {
+            address_details: true,
+            second_address: true,
+            notes: true
+          }
+        }
       }
     });
-
+    const { role: userRole } = role;
     return NextResponse.json({
       data: {
         first_name,
         last_name,
         email,
+        address,
+        userRole,
       },
       message: {
         en: 'authentication success!',
