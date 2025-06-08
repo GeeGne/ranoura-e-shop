@@ -37,6 +37,7 @@ export default function layout ({ children }: Readonly<{children: React.ReactNod
     queryKey: ['user'],
     queryFn: getUserData,
   });
+  const isAdmin = userData?.data?.userRole?.name === 'admin';
 
   return (
     <div
@@ -50,20 +51,23 @@ export default function layout ({ children }: Readonly<{children: React.ReactNod
         className="relative"
       >
         <Banner isLoading={isLoading}/>
-        <Link
-          href="/dashboard"
-          className="
-            absolute top-[calc(100%+1rem)] right-4
-            flex items-center justify-center w-10 h-10 rounded-full
-            cursor-pointer hover:bg-background-light z-[10]
-            transition-all duration-300 ease-in-out
-          "
-        >
-          <MaterialSymbolsDashboardRounded
-            className="text-primary"
-            type="button"
-          />    
-        </Link>
+        {isAdmin 
+          && <Link
+            href="/dashboard"
+            className="
+              absolute top-[calc(100%+1rem)] right-4
+              flex items-center justify-center w-10 h-10 rounded-full
+              cursor-pointer hover:bg-background-light z-[10]
+              transition-all duration-300 ease-in-out
+            "
+          >
+            <MaterialSymbolsDashboardRounded
+              className="text-primary"
+              type="button"
+            />    
+          </Link>
+        }
+        
       </div>
       <UserPfp 
         className="mt-[-60.5px] z-[5]" 
