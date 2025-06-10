@@ -50,7 +50,29 @@ model UserRole {
   role_id Int @default(2)
   role    Role @relation(fields: [role_id], references: [id])
   user    User @relation(fields: [user_id], references: [id])
+}
 
+model Products {
+  id String @id @default(uuid())
+  name Json
+  slug String @unique
+  description Json
+  price Int
+  discount_percent Int @default(0)
+  type String
+  categories String[]
+  is_new Boolean @default(false)
+  is_outOfStock Boolean @default(false)
+  sizes String[]
+  colors String[]
+  images Json
+  stock Json
+  lists Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+  @@index([type])
 }
 
 model RefreshToken {

@@ -47,7 +47,12 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const { first_name, last_name, email, phone_number, password } = await req.json();
-    if (!first_name || !last_name || !email || !phone_number || !password) throw new Error('User inputs are not valid.')
+    if (!first_name || !last_name || !email || !phone_number || !password) 
+      return nextError(
+        'MISSING_REQUIRED_FIELDS',
+        'The request is missing required fileds',
+        400
+      );
 
     const saltRounds = 12;
     const password_hash = await bcrypt.hash(password, saltRounds);
