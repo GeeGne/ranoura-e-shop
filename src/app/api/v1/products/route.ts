@@ -20,6 +20,7 @@ async function nextError (code: string, message: string, status = 404) {
 // @access private (admin, owner - only)
 export async function POST (req: NextRequest) {
   try {
+    console.log('workign');
     const productData = await req.json();
     if (!productData) return nextError(
       'REQUEST_FAILED',
