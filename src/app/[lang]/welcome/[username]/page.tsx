@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 
 // COMPONENTS
 import ProfileLI from '@/app/[lang]/welcome/[username]/ProfileLI';
-import ProfileLoading from '@/app/[lang]/welcome/[username]/ProfileLoading';
+// import ProfileLoading from '@/app/[lang]/welcome/[username]/ProfileLoading';
 import LineMdTextBoxToTextBoxMultipleTransition from '@/components/svgs/LineMdTextBoxToTextBoxMultipleTransition';
 
 // STORES
@@ -39,8 +39,8 @@ export default function page () {
   // console.log([ ...new Set(user.map(itm => itm.category)) ])
   // console.log(categoryArray);
   // console.log('userData: ', userData);
+  // console.log('isError: ', isError);
   
-  if (isError) return (<></>);
   return (
     <ul
       className="flex flex-col gap-4 w-full p-4 mt-[-1rem] max-w-[1400px] lg:mx-auto bg-[var(--background-light-color)]"
@@ -48,6 +48,7 @@ export default function page () {
       <ProfileLI 
         user={userData?.data}
         isLoading={isLoading}
+        isError={isError}
       />
     </ul>
   )

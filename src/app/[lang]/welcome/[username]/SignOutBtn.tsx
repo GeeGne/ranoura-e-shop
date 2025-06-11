@@ -83,7 +83,7 @@ export default function SignOutBtn ({ className, isLoading, ...props }: Props) {
         `}
       >
         <span className={`${isMutating ? 'opacity-0' : 'opacity-100'}`}>
-          Signout
+          {isEn ? 'Signout' : 'تسجيل الخروج'}
         </span>
         <SvgSpinnersRingResize 
           className={`

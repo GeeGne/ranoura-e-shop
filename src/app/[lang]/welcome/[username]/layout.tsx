@@ -16,19 +16,22 @@ import EosIconsAdminOutlined from '@/components/svgs/EosIconsAdminOutlined';
 import MaterialSymbolsDashboardRounded from '@/components/svgs/MaterialSymbolsDashboardRounded';
 
 // STORES
-import { useTabNameStore } from '@/stores/index';
+import { useTabNameStore, useLanguageStore } from '@/stores/index';
 
 // API
 import getUserData from '@/lib/api/auth/me/get';
 
 export default function layout ({ children }: Readonly<{children: React.ReactNode}>) {
-  
+
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
+
   const setTabName = useTabNameStore((state: any) => state.setTabName);
   const tabName = useTabNameStore((state: any) => state.tabName);
   
   const slugNameAndLinkArray = [
     {
-      name: "User",
+      name: isEn ? "User" : "المستخدم",
       href: "/welcome/asd"
     } 
   ];
@@ -73,10 +76,11 @@ export default function layout ({ children }: Readonly<{children: React.ReactNod
         className="mt-[-60.5px] z-[5]" 
         isLoading={isLoading}
       />
-      <Username isLoading={isLoading} />
+      <Username isLoading={isLoading} lang={lang} />
       <NavTile 
         className="sticky top-[5.4rem] z-[5]" 
         tabName={tabName}
+        lang={lang}
         isLoading={isLoading}
       />
         {children}

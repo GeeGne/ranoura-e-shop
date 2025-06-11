@@ -11,6 +11,7 @@ export default async function getAuthRedirect(pathname: string, authToken?: stri
   }
 
   if (!isAuthTokenVerified && protectedRoutes.some(route => pathname.startsWith(route))) {
+    console.log('getAuth, working!')
     return '/signin';
   }
 

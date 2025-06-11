@@ -3,11 +3,12 @@ import Link from 'next/link';
 type Props = {
   className?: string;
   tabName?: string;
+  lang?: string;
   isLoading?: boolean;
 } & React.ComponentPropsWithRef<"nav">;
 
-export default function NavTile ({ className, tabName, isLoading = false, ...props }: Props) {
-
+export default function NavTile ({ className, tabName, lang, isLoading = false, ...props }: Props) {
+  const isEn = lang === 'en';
   if (isLoading) return (
     <nav
       className={`
@@ -79,7 +80,7 @@ export default function NavTile ({ className, tabName, isLoading = false, ...pro
             transition-all duration-300 ease-in-out
           `}        
         >
-          Profile
+          {isEn ? 'Profile' : 'البروفايل'}
         </span>
       </Link>
       <Link
@@ -97,7 +98,7 @@ export default function NavTile ({ className, tabName, isLoading = false, ...pro
             transition-all duration-300 ease-in-out
           `}                
         >
-          Orders 
+          {isEn ? 'Orders' : 'الاوردرات'} 
         </span>
       </Link>
     </nav>
