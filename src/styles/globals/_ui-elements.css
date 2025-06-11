@@ -215,6 +215,10 @@
   box-shadow: inset -4px 0px 6px 2px var(--inbetween-color);
 }
 
-.border-style {
+.border-style-sm {
+  clip-path: polygon(100% 0, 95% 50%, 100% 100%, 0% 100%, 5% 50%, 0% 0%);
+}
+
+.border-style-md {
   clip-path: polygon(100% 0, 90% 50%, 100% 100%, 0% 100%, 10% 50%, 0% 0%);
 }

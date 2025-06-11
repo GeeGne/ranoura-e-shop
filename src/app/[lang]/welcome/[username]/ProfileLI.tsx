@@ -122,67 +122,69 @@ export default function ProfileLI ({ user, isLoading = false, isError = false, .
 
   if (isError) return(
     <div
-      className="grid grid-cols-1 md:grid-cols-2 gap-6 p-12 py-4 bg-background rounded-lg"
+      className="w-full bg-background rounded-lg"
     >
-      <WarningSvg 
-        className="col-span-1 text-content w-[300px] h-[300px]"
-      />
-      <ul
-        className="col-span-1 list-disc text-lg text-heading font-bold md:my-auto"
-      >
-        {isEn 
-          ? 'Connection failed, Try:' 
-          : 'فشل في محاوله الاتصال, جرب:'
-        }
-        <li
-          className="text-base text-body"
-        >
-          {isEn
-            ? 'Refreshing the page'
-            : 'اعاده تحميل الصفحه'
-          }
-        </li>
-        <li
-          className="text-base text-body"
-        >
-          {isEn
-            ? 'Checking your internet'
-            : 'تفحص اتصالك بلانترنت'
-          }
-        </li>
-        <li
-          className="text-base text-body"
-        >
-          {isEn
-            ? 'Restarting your browser'
-            : 'اعاده تشغيل المتصفح'
-          }
-        </li>
-      </ul>
       <div
-        className="border-style flex gap-2 md:col-span-2 md:mx-auto bg-content-invert py-4 px-16"
+        className="
+          grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[700px]
+          mx-auto py-4
+        "
       >
-        <span className="text-body font-bold">
-          {isEn 
-            ? 'If the problem continues,'
-            : 'اذا المشكله مازالت,'
-          }
-        </span>
-        <Link 
-          href="google.com"
-          className="text-heading font-bold underline"
+        <WarningSvg 
+          className="col-span-1 text-content w-[300px] h-[300px] mx-auto"
+        />
+        <ul
+          className="col-span-1 list-disc text-lg text-heading font-bold md:my-auto mx-auto"
         >
           {isEn 
-            ? 'Please contact support.'
-            : 'الرجاء التوصل مع الدعم.'
+            ? 'Connection failed, Try:' 
+            : 'فشل في محاوله الاتصال, جرب:'
           }
-        </Link>
+          <li
+            className="text-base text-body"
+          >
+            {isEn
+              ? 'Refreshing the page'
+              : 'اعاده تحميل الصفحه'
+            }
+          </li>
+          <li
+            className="text-base text-body"
+          >
+            {isEn
+              ? 'Checking your internet'
+              : 'تفحص اتصالك بلانترنت'
+            }
+          </li>
+          <li
+            className="text-base text-body"
+          >
+            {isEn
+              ? 'Restarting your browser'
+              : 'اعاده تشغيل المتصفح'
+            }
+          </li>
+        </ul>
+        <div
+          className="border-style-sm md:border-style-md flex gap-2 md:col-span-2 md:mx-auto bg-content-invert py-4 px-8 md:px-16"
+        >
+          <span className="text-body font-bold">
+            {isEn 
+              ? 'If the problem continues,'
+              : 'اذا المشكله مازالت,'
+            }
+          </span>
+          <Link 
+            href="google.com"
+            className="text-heading font-bold underline"
+          >
+            {isEn 
+              ? 'Please contact support.'
+              : 'الرجاء التوصل مع الدعم.'
+            }
+          </Link>
+        </div>
       </div>
-      <h3 className="md:col-span-2 md:mx-auto text-body font-bold">
-        <span>
-
-        </span>
-      </h3>
     </div>
   )
 

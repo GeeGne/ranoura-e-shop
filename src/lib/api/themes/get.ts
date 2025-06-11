@@ -12,7 +12,8 @@ export default async function get () {
     const results = await response.json();
     return results
   } catch (err) {
-    console.error('Error while fetching Themes: ',err);
-    throw err;
+    const error = err as Error;
+    console.error('Error while fetching Themes: ', error.message);
+    throw error;
   }
 }
