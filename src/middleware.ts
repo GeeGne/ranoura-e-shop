@@ -34,7 +34,7 @@ export async function middleware(req: NextRequest) {
           success: false , message: 'Forbidden: Admin access required' 
         }, { status: 403});
       }
-      // return NextResponse.next();
+      return NextResponse.next();
     default:
       const preferredLocale = req.cookies.get('preferredLang')?.value;
       const authToken = req.cookies.get('accessToken')?.value;

@@ -16,9 +16,9 @@ async function nextError (code: string, message: string, status = 404) {
 
 
 // @desc recieve object files
-// @route /api/v1/:bucket-name/:file-path
+// @route /api/v1/object/:bucket-name/:file-path
 // @access public
-async function GET (req: NextRequest) {
+export async function GET (req: NextRequest) {
   try {
 
   } catch (err) {
@@ -35,23 +35,45 @@ async function GET (req: NextRequest) {
 // @desc upload object files
 // @route /api/v1/object/:bucket-name/:file-path
 // @access private (admin, owner)
-async function POST (
+export async function POST (
   req: NextRequest,
-  { params }: { params: { bucketName: string, filePath: string } }
+  { params }: { params: { bucketName: string, filePath: any } }
 ) {
   try {
-    const { file } = await req.json();
-    const { bucketName, filePath } = (await params);
+    const formData = await req.formData();
+    const file = formData.get('file');
+    if (!file) return nextError(
+      'FILE_NOT_INCLUDED',
+      'Error while getting pfp url',
+      501
+    );
+
+    // const bucketName = (await params).bucketName;
+    const bucketName = (await params).bucketName;
+    const filePath = (await params).filePath.join('/');
+
+    console.log('bucketName: ', bucketName);
+    console.log('filePath: ', filePath);
+    console.log('file: ', file);
     const { data, error: bucketError } = await supabase.storage
       .from(bucketName)
-      .upload(filePath, file);
-    if (bucketError) throw new Error (`Error while uploading pfp img: ${bucketError.message}`)
+      .upload('/' + filePath, file);
+    if (!bucketError) return nextError(
+      'STORAGE_UPLOAD_FAIL',
+      `Error while uploading to storge`,
+      404
+    )
     
     const { data: { publicUrl } } = supabase.storage
       .from(bucketName)
       .getPublicUrl(filePath);
-    if (!publicUrl) throw new Error ('Error while getting pfp url');
-
+    if (!publicUrl) return nextError(
+      'sdfa',
+      'Error while getting pfp url',
+      404
+    );
+    console.log('publicUrl: ', publicUrl);
+    return NextResponse.json({ message: 'ok' }, { status: 200 })
     return publicUrl;
 
   } catch (err) {
