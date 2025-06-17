@@ -5,6 +5,7 @@ import prisma from '@/lib/prisma';
 import bcrypt from 'bcrypt';
 import { cookies } from 'next/headers';
 import { generateTokens } from '@/utils/jwt';
+import { v4 as uuidv4 } from 'uuid';
 
 const createSlug = (first_name: string, last_name: string) => 
   `${first_name} ${last_name}`
@@ -56,7 +57,6 @@ export async function POST(req: NextRequest) {
 
     const saltRounds = 12;
     const password_hash = await bcrypt.hash(password, saltRounds);
-
     await prisma.user.create({
       data: {
         first_name,
@@ -126,3 +126,61 @@ export async function POST(req: NextRequest) {
     )
   }
 }
+
+// DEBUG
+// console.log({first_name, last_name, email, phone_number, password, password_hash})
+
+
+
+// export async function POST(req: NextRequest) {
+  // try {
+    // const { first_name, last_name, email, phone_number, password } = await req.json();
+    // 
+    // if (!first_name || !last_name || !email || !phone_number || !password) {
+      // return nextError('MISSING_REQUIRED_FIELDS', 'The request is missing required fields', 400);
+    // }
+// 
+    // const saltRounds = 12;
+    // const password_hash = await bcrypt.hash(password, saltRounds);
+    // 
+    // Create user with explicit UUID
+    // const newUser = await prisma.user.create({
+      // data: {
+        // id: uuidv4(), // Explicit UUID
+        // first_name,
+        // last_name,
+        // email,
+        // phone_number,
+        // password_hash,
+        // Temporarily remove nested creates to isolate the issue
+      // }
+    // });
+// 
+    // Then create address separately
+    // await prisma.userAddress.create({
+      // data: {
+        // user_id: newUser.id,
+        // address_details: "test",
+        // second_address: "second",
+        // notes: "notes",
+      // }
+    // });
+// 
+    // Then create role separately
+    // await prisma.userRole.create({
+      // data: {
+        // user_id: newUser.id,
+        // role_id: 2
+      // }
+    // });
+// 
+    // Rest of your code...
+  // } catch (error) {
+    // console.error('Full error details:', error);
+    // return nextError(
+      // 'USER_CREATE_FAILED',
+      // 'Unable to create new account',
+      // 400
+    // );
+  // }
+// }

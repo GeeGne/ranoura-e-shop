@@ -8,7 +8,7 @@ datasource db {
 }
 
 model User {
-  id              Int            @id @default(autoincrement())
+  id              String            @id @default(uuid())
   email           String         @unique
   created_at      DateTime       @default(now())
   date_of_birth   DateTime?
@@ -29,7 +29,7 @@ model User {
 }
 model UserAddress {
   id              Int       @id @default(autoincrement())
-  user_id         Int       @unique
+  user_id         String       @unique
   address_details String
   second_address  String?
   notes           String?
@@ -46,7 +46,8 @@ model Role {
 }
 
 model UserRole {
-  user_id Int @unique
+  id Int @id @default(autoincrement())
+  user_id String @unique
   role_id Int @default(2)
   role    Role @relation(fields: [role_id], references: [id])
   user    User @relation(fields: [user_id], references: [id])
@@ -78,7 +79,7 @@ model Products {
 model RefreshToken {
   id        String   @id @default(uuid())
   token     String   @unique
-  user_id   Int
+  user_id   String @unique
   user      User     @relation(fields: [user_id], references: [id])
   expiresAt DateTime
   createdAt DateTime @default(now())

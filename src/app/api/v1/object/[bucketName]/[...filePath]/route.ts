@@ -20,6 +20,8 @@ async function nextError (code: string, message: string, status = 404) {
 // @access public
 export async function GET (req: NextRequest) {
   try {
+    // const bucketName = (await params).bucketName;
+    // const filePath = (await params).filePath.join('/');
 
   } catch (err) {
     const error = err as Error;
@@ -48,7 +50,6 @@ export async function POST (
       501
     );
 
-    // const bucketName = (await params).bucketName;
     const bucketName = (await params).bucketName;
     const filePath = (await params).filePath.join('/');
 
@@ -57,7 +58,7 @@ export async function POST (
     console.log('file: ', file);
     const { data, error: bucketError } = await supabase.storage
       .from(bucketName)
-      .upload('/' + filePath, file);
+      .upload(filePath, file);
     if (bucketError) return nextError(
       'STORAGE_UPLOAD_FAIL',
       `Error while uploading to storge`,
