@@ -58,7 +58,7 @@ export async function POST (
     const { data, error: bucketError } = await supabase.storage
       .from(bucketName)
       .upload('/' + filePath, file);
-    if (!bucketError) return nextError(
+    if (bucketError) return nextError(
       'STORAGE_UPLOAD_FAIL',
       `Error while uploading to storge`,
       404
@@ -73,7 +73,7 @@ export async function POST (
       404
     );
     console.log('publicUrl: ', publicUrl);
-    return NextResponse.json({ message: 'ok' }, { status: 200 })
+    return NextResponse.json({ message: 'ok', data }, { status: 200 })
     return publicUrl;
 
   } catch (err) {
