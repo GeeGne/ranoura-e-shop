@@ -1,30 +1,26 @@
 import { supabase } from '@/lib/supabaseClient';
 
-// recieve object files
+// async function uploadProfilePictureToStorage ({ userId }) {
+//   try {
+//     const fileName = `${Date.now()}-pfp`;
+//     const filePath = `profile-pictures/${userData.user?.id}/${fileName}`;
+//     const { data, error: bucketError } = await supabase.storage
+//       .from('assets')
+//       .upload(filePath, file
+//       );
+//     if (bucketError) throw new Error (`Error while uploading pfp img: ${bucketError.message}`)
+    
+//     const { data: { publicUrl } } = supabase.storage
+//       .from('assets')
+//       .getPublicUrl(filePath);
+//     if (!publicUrl) throw new Error ('Error while getting pfp url');
 
-export default async function get (picture_url: string) {
-  try {
-    const { data: userData, error: userDataError } = await supabase.auth.getUser();
-    if (userDataError) throw new Error (`Couldn't get user Data, please refresh your browser`);
+//     return publicUrl;
+//   } catch (err) {
+//     const error = err as Error;
+//     console.error(error.message);
+//     throw err;
+//   }
+// }
 
-    const { data, error } = await supabase
-      .from('user_profile')
-      .upsert(
-        {
-          user_id: userData.user.id,
-          picture_url
-        },{
-          onConflict: 'user_id',
-          ignoreDuplicates: false
-        }
-      )
-      .select();
-    if (error) throw new Error ('Failed to update user picture URL: ' + error.message);
-      
-    return data;
-  } catch(err) {
-    const error = err as Error;
-    console.error(error.message);
-    throw err;
-  }
-}
+// export default uploadProfilePictureToStorage;

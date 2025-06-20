@@ -24,7 +24,6 @@ export default async function post ({
     if (!response.ok) throw new Error ('Unable to connect to the server');
 
     const results = await response.json();
-    console.log('signin results: ', results);
     return results;
   } catch (err) {
     const error = err as Error;

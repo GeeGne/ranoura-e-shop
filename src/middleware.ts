@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from '@/utils/jwt';
 import getAuthRedirect from '@/utils/middleware/getAuthRedirect';
-import checkUserRole from '@/lib/api/auth/role/get';
+import checkUserRole from '@/utils/checkUserRole';
 
 // supported locales
 const locales = ['en', 'ar'];
@@ -28,7 +28,8 @@ export async function middleware(req: NextRequest) {
       console.log('starts with api!');
       if (pathname.startsWith('/api/v1/products') && method === 'POST') {
         console.log('A products api request!');
-        const { isRoleMatched } = await checkUserRole('admin');
+        const isRoleMatched = await checkUserRole('admin');
+        console.log('isRoleMatched: ', isRoleMatched);
         if (isRoleMatched) return NextResponse.next();
         return NextResponse.json({ 
           success: false , message: 'Forbidden: Admin access required' 
