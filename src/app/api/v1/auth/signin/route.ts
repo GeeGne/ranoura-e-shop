@@ -81,7 +81,7 @@ export async function POST(req: NextRequest) {
     
     const fullNameSlug = createSlug(first_name, last_name);
     console.log('fullNameSlug: ', fullNameSlug);
-    const { accessToken, refreshToken } = await generateTokens(fullNameSlug, email);
+    const { accessToken, refreshToken } = await generateTokens(fullNameSlug, email, userRole.name);
     const cookieStore = await cookies();
     
     cookieStore.set(

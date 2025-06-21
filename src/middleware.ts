@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from '@/utils/jwt';
 import getAuthRedirect from '@/utils/middleware/getAuthRedirect';
-import checkUserRole from '@/utils/checkUserRole';
+import checkUserRole from '@/lib/api/auth/role/get';
 
 // supported locales
 const locales = ['en', 'ar'];
@@ -28,9 +28,16 @@ export async function middleware(req: NextRequest) {
       console.log('starts with api!');
       if (pathname.startsWith('/api/v1/products') && method === 'POST') {
         console.log('A products api request!');
-        const isRoleMatched = await checkUserRole('admin');
-        console.log('isRoleMatched: ', isRoleMatched);
-        if (isRoleMatched) return NextResponse.next();
+
+        const authToken: any = req.cookies.get('accessToken')?.value;
+        
+        const { role }: { role?: string | null | undefined | any; } = await verifyToken(authToken);
+
+        const isAdmin = role === 'admin';
+        const isOwner = role === 'owner';
+
+        if (isAdmin || isOwner) return NextResponse.next();
+
         return NextResponse.json({ 
           success: false , message: 'Forbidden: Admin access required' 
         }, { status: 403});
@@ -72,7 +79,6 @@ export async function middleware(req: NextRequest) {
       
       return NextResponse.redirect(newUrl, 307);
   }
-
 }
 
 export const config = {

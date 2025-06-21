@@ -24,10 +24,9 @@ export async function GET (
   { params }: { params: { role: string } }
 ) {
   try {
-    
     const requestedRole = (await params).role.toLowerCase();
     if (!isRoleAvailable(requestedRole)) 
-      return nextError(
+    return nextError(
       'ROLE_TYPE_NOT_AVAILABLE',
       'The requested Rols is Unknown',
       500

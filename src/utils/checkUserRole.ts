@@ -1,3 +1,5 @@
+"use server";
+
 import { NextResponse, NextRequest } from 'next/server';
 import { cookies } from 'next/headers';
 import prisma from '@/lib/prisma';
@@ -21,7 +23,6 @@ async function nextError(code: string, message: string, status = 404) {
 // access private (host-server to host-server req)
 export default async function checkUserRole (requestedRole: string) {
   try {
-    console.log('working!');
     if (!isRoleAvailable(requestedRole)) 
       throw new Error ('The requested Rols is Unknown');
 
@@ -55,7 +56,6 @@ export default async function checkUserRole (requestedRole: string) {
 
     const isRoleMatched = actualRole === requestedRole;
 
-    
     const response = {
       data: { 
         requestedRole,

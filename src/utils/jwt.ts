@@ -4,6 +4,7 @@ import { SignJWT, jwtVerify } from 'jose';
 type TokenPayload = {
   fullNameSlug: string;
   email: string;
+  role: string;
   tokenType?: 'refresh';
 };
 
@@ -17,16 +18,18 @@ const secretKey = new TextEncoder().encode(JWT_SECRET);
 
 export const generateTokens = async (
   fullNameSlug: string, 
-  email: string
+  email: string,
+  role: string
 ): Promise<GeneratedTokens> => {
-  const accessToken = await new SignJWT({ fullNameSlug, email })
+  const accessToken = await new SignJWT({ fullNameSlug, email, role })
     .setProtectedHeader({ alg: 'HS256' })
     .setExpirationTime('7d')
     .sign(secretKey);
 
   const refreshToken = await new SignJWT({ 
     fullNameSlug, 
-    email, 
+    email,
+    role,
     tokenType: 'refresh' 
   })
     .setProtectedHeader({ alg: 'HS256' })
@@ -38,6 +41,7 @@ export const generateTokens = async (
 
 export const verifyToken = async (token: string): Promise<TokenPayload | null> => {
   try {
+    console.log('token: ', token);
     const { payload } = await jwtVerify(token, secretKey);
     return payload as TokenPayload;
   } catch (err) {
