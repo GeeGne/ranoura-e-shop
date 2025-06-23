@@ -16,6 +16,31 @@ async function nextError (code: string, message: string, status = 404) {
   )
 };
 
+// @dscc get all products
+// @route /api/v1/products
+// @access public
+export async function GET (req: NextRequest) {
+  try {
+    const data = await prisma.products.findMany();
+    if (!data) throw new Error('unable to retrieve the data.');
+
+    const message = 'Success! Products has been fetched.';
+
+    return NextResponse.json({
+      data,
+      message
+    }, { status: 200 });
+  } catch (err) {
+    const error = err as Error;
+    console.error('Error while getting all products: ', error.message);
+    return nextError(
+      'PRODUCTS_FETCH_FAIL',
+      'unable to fetch products',
+      404
+    )
+  }
+}
+
 // @desc Create new product
 // @route /api/v1/products/
 // @access private (admin, owner - only)
@@ -57,6 +82,7 @@ export async function POST (req: NextRequest) {
         type,
         categories,
         is_new,
+        is_outOfStock,
         sizes,
         colors,
         images,

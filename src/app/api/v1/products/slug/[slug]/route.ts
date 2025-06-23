@@ -14,6 +14,9 @@ async function nextError (code: string, message: string, status = 404) {
   )
 };
 
+// @desc get specefic product
+// @route /api/v1/products/slug/:slug
+// @access private(admin, owner)
 export async function GET(
   req: NextRequest,
   { params }: { params: { slug: string}}
@@ -21,13 +24,13 @@ export async function GET(
   try {
     const productSlug = (await params).slug;
 
-    const productData = await prisma.products.findunique({
+    const data = await prisma.products.findUnique({
       where: {
         slug: productSlug
       }
     })
 
-    if (!productData) return nextError(
+    if (!data) return nextError(
       'PRODUCT_FETCH_FAIL',
       'product doesn\'t exists or wronge slug',
       501
@@ -36,9 +39,7 @@ export async function GET(
     const message = 'Product is fetched successfully!';
 
     return NextResponse.json({
-      data: {
-        productData
-      },
+      data, 
       message
     }, { status: 200 })
   } catch (err) {
@@ -52,22 +53,25 @@ export async function GET(
   }
 }
 
+// @desc update specific product
+// @route /api/v1/products/:id
+// @access private(owner, admin)
 export async function PUT(
   req: NextRequest,
   { params }: { params: { slug: string}}
 ) {
   try {
     const productSlug = (await params).slug;
-    const data = await req.json();
+    const requestedData = await req.json();
 
-    const productData = await prisma.products.update({
+    const data = await prisma.products.update({
       where: {
         slug: productSlug
       },
-      data
+      data: requestedData
     })
 
-    if (!productData) return nextError(
+    if (!data) return nextError(
       'PRODUCT_UPDATE_FAIL',
       'product doesn\'t exists or wronge slug',
       501
@@ -76,9 +80,7 @@ export async function PUT(
     const message = 'Product is updated successfully!';
 
     return NextResponse.json({
-      data: {
-        productData
-      },
+      data,
       message
     }, { status: 201 });
 

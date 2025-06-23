@@ -62,16 +62,16 @@ export async function PUT(
 ) {
   try {
     const productId = (await params).id;
-    const data = await req.json();
+    const requestedData = await req.json();
 
-    const productData = await prisma.products.update({
+    const data = await prisma.products.update({
       where: {
         id: productId
       },
-      data
+      data: requestedData
     })
 
-    if (!productData) return nextError(
+    if (!data) return nextError(
       'PRODUCT_UPDATE_FAIL',
       'product doesn\'t exists or wronge id',
       501
@@ -80,9 +80,7 @@ export async function PUT(
     const message = 'Product is updated successfully!';
 
     return NextResponse.json({
-      data: {
-        productData
-      },
+      data,
       message
     }, { status: 201 });
 

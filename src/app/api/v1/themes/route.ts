@@ -43,7 +43,7 @@ export async function GET(req: NextRequest) {
 // @access private
 export async function PUT(req: NextRequest) {
   try {
-    const themesData = await req.formData();
+    const themesData = await req.json();
 
     await prisma.themes.update({ 
       where: { id: 1 }, 

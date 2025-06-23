@@ -45,7 +45,10 @@ export default async function put ({
         content_invert_color,          
       })
     })
-    if(!response.ok) throw new Error ("Failed while updating.")
+    if(!response.ok) { 
+      const error = await response.json();
+      throw new Error(error.message);
+    }
 
     const message = await response.json();
     return message;
