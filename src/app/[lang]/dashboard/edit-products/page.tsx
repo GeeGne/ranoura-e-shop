@@ -8,7 +8,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTabNameStore } from '@/stores/index';
 
 // COMPONENTS
-import Table from '@/app/[lang]/dashboard/edit-themes/Table';
+import Table from '@/app/[lang]/dashboard/edit-products/Table';
 
 // API
 import getAllProducts from '@/lib/api/products/get';
@@ -22,17 +22,21 @@ export default function page () {
     setTabName('edit-products');
   }, []);
 
-  const { data } = useQuery({
+  const { data: products, isLoading, isError } = useQuery({
     queryFn: getAllProducts,
     queryKey: ['products'],
   })
 
   // UI & DEBUG
-  console.log('product data: ', data);
-  
+  console.log('product data: ', products);
+
   return (
     <div className="flex flex-col gap-4 p-4">
-      <Table />
+      <Table 
+        products={products?.data}
+        isLoading={isLoading}
+        isError={isError}
+      />
     </div>
   )
 }

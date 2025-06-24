@@ -1,0 +1,324 @@
+// HOOKS
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+
+// COMPONENTS
+import ColorPallete from '@/components/ColorPallete';
+import LoadingTable from '@/components/LoadingTable';
+import ErrorLayout from '@/components/ErrorLayout';
+import LineMdLink from '@/components/svgs/LineMdLink';
+import TablerCopy from '@/components/svgs/TablerCopy';
+import MaterialSymbolsCheckRounded from '@/components/svgs/MaterialSymbolsCheckRounded';
+import SolarGalleryBold from '@/components/svgs/SolarGalleryBold';
+import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingResize';
+import SolarGalleryCheckBold from '@/components/svgs/SolarGalleryCheckBold';
+import LineMdCloseCircleFilled from '@/components/svgs/LineMdCloseCircleFilled';
+import getColor from '@/utils/getColor';
+
+// JSON
+import urlsTable from '@/json/cmsTables/urlsTable.json';
+import themePallets from '@/json/themePallets.json';
+import messages from '@/json/messages.json';
+import colorsArray from '@/json/colors.json';
+
+// STORES
+import { useTabNameStore, useLanguageStore, useAlertMessageStore } from '@/stores/index';
+
+// API
+import getThemeVars from '@/lib/api/themes/get';
+import updateThemeVars from '@/lib/api/themes/put';
+
+// UTILS
+import updateThemeVariables from '@/utils/updateThemeVariables';
+
+// LIB
+import getMessage from '@/lib/messages/index';
+
+import {
+  useReactTable,
+  getCoreRowModel,
+  ColumnDef,
+  flexRender,
+} from '@tanstack/react-table';
+
+type Props = {
+  products?: any[];
+  isLoading?: boolean;
+  isError?: boolean;
+}
+
+export default function Table({ products, isLoading = false, isError = false }: Props) {
+
+  const queryClient = useQueryClient();
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
+  const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
+  const setAlertType = useAlertMessageStore((state) => state.setType);
+  const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
+  const [ isThemeMutating, setIsThemeMutating ] = useState<{toggle: boolean, index: number}>({
+    toggle: false, index: 0
+  });
+  
+  
+  const updateThemeVarsMutation = useMutation({
+    mutationFn: updateThemeVars,
+    onMutate: () => {
+      setIsThemeMutating(val => ({ toggle: true, index: val.index }));
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['themes']});
+      queryClient.refetchQueries({ queryKey: ['themes']});
+      setIsThemeMutating(val => ({ toggle: false, index: val.index }));
+
+      setAlertToggle(Date.now());
+      setAlertType("success");
+      setAlertMessage(data.message[isEn ? 'en' : 'ar']);
+    },
+    onError: (error: any) => {
+      setIsThemeMutating(val => ({ toggle: false, index: val.index }));
+
+      setAlertToggle(Date.now());
+      setAlertType("error");
+      setAlertMessage(getMessage(error.code, 'en'))
+    }
+  });
+
+  function isErrorWithCode(error: unknown): error is { code: string } {
+    return typeof error === 'object' && error !== null && 'code' in error;
+  }
+
+  const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    const { type, index, schemeId } = e.currentTarget.dataset;
+
+    switch (type) {
+      case 'set_theme_button_is_clicked':
+        
+        break;
+      case 'copy_button_is_clicked':
+        try {
+          await navigator?.clipboard?.writeText("Text is copied");
+          setAlertToggle(Date.now());
+          setAlertType('success');
+          setAlertMessage(isEn ? 'URL is added to clipboard successfully!' : '!تم نسخ الرابط بنجاح');
+        } catch (err) {
+          console.error('Error while copying text: ', err)
+        }
+        break;
+      default:
+        console.error('Unknown type: ', type);
+    }
+  }
+
+
+  // DEBUG & UI
+  // console.log('themes data: ', data);
+
+  if (isLoading) return (
+    <LoadingTable />
+  )
+
+  if (isError) return (
+    <ErrorLayout 
+      title={isEn ? 'Unable To Load' : 'لم يتم التحميل'}
+      description={isEn ? 'Please Refresh the page or try again later' : 'الرجاء اعاده تحميل الصفحه او حاول مره اخرى لاحقا'}
+    />
+  )
+  
+  return (
+    <div className="flex flex-col gap-4 overflow-x-auto">
+      <h3
+        className="sticky left-0 text-lg text-heading"
+      >
+        {isEn ? 'Schemes' : 'سكيمات'}
+      </h3>
+      <table
+        className="
+          min-w-full overflow-hidden 
+          divide-y divide-underline bg-white rounded-lg whitespace-nowrap
+        "
+      >
+        <thead className="text-body">
+          <tr>
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'NAME' : 'الاسم'}
+            </th>
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'ID' : 'الرمز'}
+            </th>
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'PRICE' : 'السعر'}
+            </th>
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'DISCOUNT' : 'التخفيض'}
+            </th>
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'SIZES' : 'المقاسات'}
+            </th>
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'COLORS' : 'الالوان'}
+            </th>
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'DESCRIPTION' : 'حول'}
+            </th>
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'IMAGES' : 'الصور'}
+            </th>
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'OPTIONS' : 'الخيارات'}
+            </th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-underline">
+          {products?.map((itm, i) => 
+            <tr 
+              key={i}
+              className={`
+                transition-all duration-300 ease-in-out
+                bg-transparent hover:bg-yellow-50
+              `}
+            >
+              {/* <td className="px-6 py-4 text-heading">{itm.name[isEn ? 'en' : 'ar']}</td> */}
+              <td 
+                className={`
+                  px-6 py-4 text-heading font-normal
+                `}
+              >
+                <div
+                  className="
+                    flex flex-row items-center w-[300px] h-[150px] items-center gap-2
+                  "
+                >
+                  <div
+                    className="
+                      flex w-2 h-[150px] bg-green-500 rounded-md shrink-0
+                    "
+                  />
+                  <img 
+                    src={"/assets/img/cloth-5-gold.avif"}
+                    className="
+                      h-[150px] aspect-[2/3] shrink-0
+                      object-cover object-center rounded-lg
+                    "
+                  />
+                  <span
+                    className="flex items-center shrink-0 h-[150px]"
+                  >
+                    {itm.name[isEn ? 'en' : 'ar']}
+                  </span>
+                </div>
+              </td>
+              <td 
+                className={`
+                  px-6 py-4 text-sm text-body
+                  transition-all duration-300 ease-in-out
+                `}
+              >
+                <span
+                  className="
+                    flex items-center h-[150px] 
+                  "
+                >
+                  {itm?.id}
+                </span>
+              </td>
+              <td 
+                className={`
+                  px-6 py-4 text-sm text-body
+                  transition-all duration-300 ease-in-out
+                `}
+              >
+                <span
+                  className="
+                    flex items-center h-[150px] 
+                  "
+                >
+                  {itm?.price}
+                </span>
+              </td>
+              <td 
+                className={`
+                  px-6 py-4 text-sm text-body
+                  transition-all duration-300 ease-in-out
+                `}
+              >
+                <span
+                  className="
+                    flex items-center h-[150px] 
+                  "
+                >
+                  {itm?.discount_percent}%
+                </span>
+              </td>
+              <td 
+                className={`
+                  px-6 py-4 text-sm text-body
+                  transition-all duration-300 ease-in-out
+                `}
+              >
+                <ul
+                  className="
+                    flex items-center gap-2 h-[150px] 
+                  "
+                >
+                  {itm.colors.map((color: string) => 
+                    <li
+                      className="w-5 h-5 rounded-full"
+                      style={{ backgroundColor: getColor(colorsArray, color).hex }}
+                    />  
+                  )}
+                </ul>
+              </td>
+              <td className="px-6">
+                <div className="flex gap-2">
+                  <button 
+                    className={`
+                      relative bg-background-light rounded-md
+                      transition-all duration-500 ease-in-out
+                      bg-background-light
+                    `}
+                    data-index={i}
+                    data-type="set_theme_button_is_clicked"
+                    data-scheme-id={itm.scheme_id}
+                    onClick={handleClick}
+                  >
+                    <SvgSpinnersRingResize 
+                      className={`
+                        absolute top-1/2 left-1/2
+                        translate-x-[-50%] translate-y-[-50%]
+                        w-7 h-7 p-1 rounded-md cursor-pointer 
+                        transition-all duration-200 ease-in-out text-heading
+                        ${isThemeMutating.toggle && isThemeMutating.index === i
+                          ? 'visible opacity-100'
+                          : 'invisible opacity-0' 
+                        }
+                      `}
+                    />    
+                    <SolarGalleryBold 
+                      className={`
+                        w-7 h-7 p-1 rounded-md cursor-pointer 
+                        transition-all duration-200 ease-in-out text-heading
+                        }
+                      `}
+                    />    
+                    <SolarGalleryCheckBold 
+                      className={`
+                        absolute top-1/2 left-1/2
+                        translate-x-[-50%] translate-y-[-50%]
+                        w-7 h-7 p-1 rounded-md cursor-pointer text-heading-invert
+                        transition-all duration-200 ease-in-out
+                      `}
+                    />    
+                  </button>
+                </div>
+              </td>
+              <td>
+                asdf
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
+  );
+}
