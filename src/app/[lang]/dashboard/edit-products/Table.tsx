@@ -14,7 +14,7 @@ import SolarGalleryBold from '@/components/svgs/SolarGalleryBold';
 import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingResize';
 import SolarGalleryCheckBold from '@/components/svgs/SolarGalleryCheckBold';
 import LineMdCloseCircleFilled from '@/components/svgs/LineMdCloseCircleFilled';
-import getColor from '@/utils/getColor';
+import LineMdEdit from '@/components/svgs/LineMdEdit';
 
 // JSON
 import urlsTable from '@/json/cmsTables/urlsTable.json';
@@ -31,6 +31,7 @@ import updateThemeVars from '@/lib/api/themes/put';
 
 // UTILS
 import updateThemeVariables from '@/utils/updateThemeVariables';
+import getColor from '@/utils/getColor';
 
 // LIB
 import getMessage from '@/lib/messages/index';
@@ -153,10 +154,10 @@ export default function Table({ products, isLoading = false, isError = false }: 
               {isEn ? 'DISCOUNT' : 'التخفيض'}
             </th>
             <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
-              {isEn ? 'SIZES' : 'المقاسات'}
+              {isEn ? 'COLORS' : 'الالوان'}
             </th>
             <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
-              {isEn ? 'COLORS' : 'الالوان'}
+              {isEn ? 'SIZES' : 'المقاسات'}
             </th>
             <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
               {isEn ? 'DESCRIPTION' : 'حول'}
@@ -269,6 +270,51 @@ export default function Table({ products, isLoading = false, isError = false }: 
                   )}
                 </ul>
               </td>
+              <td 
+                className={`
+                  px-6 py-4 text-sm text-body
+                  transition-all duration-300 ease-in-out
+                `}
+              >
+                <ul
+                  className="
+                    flex items-center h-[150px] gap-2 
+                  "
+                >
+                  {itm.sizes.map((size: string) =>
+                    <li
+                      className="
+                        flex items-center justify-center 
+                        bg-primary w-6 h-6 text-heading-invert rounded-md
+                      "
+                    >
+                      {size}
+                    </li>
+                  )}
+                </ul>
+              </td>
+              <td 
+                className={`
+                  px-6 py-4 text-sm text-body
+                  transition-all duration-300 ease-in-out
+                `}
+              >
+                <span
+                  className="
+                    flex items-center h-[150px] 
+                  "
+                >
+                  {itm?.description[lang]}
+                </span>
+              </td>
+              <td
+                className={`
+                  px-6 py-4 text-sm text-body
+                  transition-all duration-300 ease-in-out
+                `}
+              >
+                -
+              </td>
               <td className="px-6">
                 <div className="flex gap-2">
                   <button 
@@ -282,38 +328,15 @@ export default function Table({ products, isLoading = false, isError = false }: 
                     data-scheme-id={itm.scheme_id}
                     onClick={handleClick}
                   >
-                    <SvgSpinnersRingResize 
-                      className={`
-                        absolute top-1/2 left-1/2
-                        translate-x-[-50%] translate-y-[-50%]
-                        w-7 h-7 p-1 rounded-md cursor-pointer 
-                        transition-all duration-200 ease-in-out text-heading
-                        ${isThemeMutating.toggle && isThemeMutating.index === i
-                          ? 'visible opacity-100'
-                          : 'invisible opacity-0' 
-                        }
-                      `}
-                    />    
-                    <SolarGalleryBold 
+                    <LineMdEdit 
                       className={`
                         w-7 h-7 p-1 rounded-md cursor-pointer 
                         transition-all duration-200 ease-in-out text-heading
                         }
-                      `}
-                    />    
-                    <SolarGalleryCheckBold 
-                      className={`
-                        absolute top-1/2 left-1/2
-                        translate-x-[-50%] translate-y-[-50%]
-                        w-7 h-7 p-1 rounded-md cursor-pointer text-heading-invert
-                        transition-all duration-200 ease-in-out
                       `}
                     />    
                   </button>
                 </div>
-              </td>
-              <td>
-                asdf
               </td>
             </tr>
           )}
