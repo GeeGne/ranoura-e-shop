@@ -189,11 +189,23 @@ const useLanguageStore = create<LanguageProps>()(
   )  
 );
 
+type EditProductWindowProps = {
+  toggle: boolean;
+  setToggle: (value: boolean) => void;
+}
+
+const useEditProductWindowStore = create<EditProductWindowProps>()(
+  (set) => ({
+    toggle: false,
+    setToggle: (toggle) => set({ toggle })    
+  })
+)
+
 export { 
   useCartStore, useNavbarStore, 
   useTabNameStore, useFilterWindowStore,
   useFavouritesStore, useFavouriteConfettiToggle,
   useLayoutRefStore, useAlertMessageStore,
   useFooterListStore, useAllProductImagesStore,
-  useLanguageStore
+  useLanguageStore, useEditProductWindowStore
 };

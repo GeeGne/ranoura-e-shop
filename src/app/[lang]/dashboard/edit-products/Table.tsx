@@ -23,7 +23,7 @@ import messages from '@/json/messages.json';
 import colorsArray from '@/json/colors.json';
 
 // STORES
-import { useTabNameStore, useLanguageStore, useAlertMessageStore } from '@/stores/index';
+import { useTabNameStore, useLanguageStore, useAlertMessageStore, useEditProductWindowStore } from '@/stores/index';
 
 // API
 import getThemeVars from '@/lib/api/themes/get';
@@ -57,6 +57,7 @@ export default function Table({ products, isLoading = false, isError = false }: 
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
+  const setEditProductWindowToggle = useEditProductWindowStore(state => state.setToggle);
   const [ isThemeMutating, setIsThemeMutating ] = useState<{toggle: boolean, index: number}>({
     toggle: false, index: 0
   });
@@ -90,11 +91,11 @@ export default function Table({ products, isLoading = false, isError = false }: 
   }
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    const { type, index, schemeId } = e.currentTarget.dataset;
+    const { type, productId } = e.currentTarget.dataset;
 
     switch (type) {
-      case 'set_theme_button_is_clicked':
-        
+      case 'edit_product_button_is_clicked':
+        setEditProductWindowToggle(true);       
         break;
       case 'copy_button_is_clicked':
         try {
@@ -323,9 +324,8 @@ export default function Table({ products, isLoading = false, isError = false }: 
                       transition-all duration-500 ease-in-out
                       bg-background-light
                     `}
-                    data-index={i}
-                    data-type="set_theme_button_is_clicked"
-                    data-scheme-id={itm.scheme_id}
+                    data-product-id={itm.id}
+                    data-type="edit_product_button_is_clicked"
                     onClick={handleClick}
                   >
                     <LineMdEdit 

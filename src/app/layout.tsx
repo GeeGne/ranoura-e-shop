@@ -19,6 +19,7 @@ import FilterWindow from '@/components/fixedLayouts/FilterWindow';
 import SelectLang from '@/components/fixedLayouts/SelectLang';
 import AlertMessage from '@/components/fixedLayouts/AlertMessage';
 import AllProductImages from '@/components/fixedLayouts/AllProductImages';
+import EditProductWindow from '@/components/fixedLayouts/EditProductWindow';
 import BottomBorder from '@/components/svgs/BottomBorder';
 
 // STORES
@@ -39,12 +40,12 @@ export default function RootLayout({
   const lang = useLanguageStore(state => state.lang);
   const [ onScroll, setOnScroll ] = useState<any>(null);
 
-  const pathNameIncludesAdmin = () => pathname.includes('/dashboard');
+  const pathNameIncludesDashboard = () => pathname.includes('/dashboard');
 
   // DEBUG & UI
   // const handleScroll = (e: any) => console.log('wrokign');
   // console.log(layoutRef);
-  // console.log(pathNameIncludesAdmin());
+  // console.log(pathNameIncludesDashboard());
 
   return (
     <html lang={lang} dir={lang === 'en' ? 'ltr' : 'rtl'}>
@@ -60,12 +61,12 @@ export default function RootLayout({
             <Header 
               onScroll={onScroll} 
               layoutRef={layoutRef}
-              className={`${pathNameIncludesAdmin() ? 'hidden' : 'visible'}`}
+              className={`${pathNameIncludesDashboard() ? 'hidden' : 'visible'}`}
             />
             <Main
               className={`
                 relative bg-background
-                ${pathNameIncludesAdmin() ? 'pb-[0rem]' : 'pb-[2rem] md:pb-[3rem] lg:pb-[3rem]'}
+                ${pathNameIncludesDashboard() ? 'pb-[0rem]' : 'pb-[2rem] md:pb-[3rem] lg:pb-[3rem]'}
               `}
             >
               {children}
@@ -73,12 +74,12 @@ export default function RootLayout({
                 className={`
                   absolute top-[100%] origin-top scale-x-[105%]
                   scale-y-[50%] md:scale-y-[35%] lg:scale-y-[25%] text-primary rotate-180
-                  ${pathNameIncludesAdmin() ? 'hidden' : 'visible'}
+                  ${pathNameIncludesDashboard() ? 'hidden' : 'visible'}
                 `}
               />
             </Main>
             <Footer 
-              className={`${pathNameIncludesAdmin() ? 'hidden' : 'visible'}`}
+              className={`${pathNameIncludesDashboard() ? 'hidden' : 'visible'}`}
             />
           </div>
           <FixedLayouts>
@@ -89,6 +90,7 @@ export default function RootLayout({
             <FilterWindow />    
             <AlertMessage />
             <AllProductImages />
+            <EditProductWindow />
           </FixedLayouts>
         </Providers>
       </body>
