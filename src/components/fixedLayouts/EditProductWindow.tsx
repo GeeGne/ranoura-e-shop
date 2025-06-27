@@ -1,3 +1,7 @@
+// COMPONENTS
+import RiAddLine from '@/components/svgs/RiAddLine';
+import RiCheckFill from '@/components/svgs/RiCheckFill';
+
 // STORES
 import { useTabNameStore, useLanguageStore, useEditProductWindowStore } from '@/stores/index';
 
@@ -42,21 +46,23 @@ export default function EditProductWindow () {
         className={`
           absolute top-1/2 left-1/2
           translate-x-[-50%] translate-y-[-50%]
-          w-[200px] h-auto rounded-lg
+          h-auto rounded-lg
           bg-background overflow-hidden
           transition-all delay-200 duration-300 ease-[cubic-bezier(.24,.16,.35,1.29)]
           ${toggle ? 'scale-100' : 'scale-50'}
         `}
       >
-        <h2
+        <section
           className="
             flex text-body-light justify-center py-4 font-bold
           "
         >
-          {isEn ? 'EDIT PRODUCT' : 'تعديل المنتج'}
-        </h2>
+          <h2>
+            {isEn ? 'EDIT PRODUCT' : 'تعديل المنتج'}
+          </h2>
+        </section>
         <hr className="px-2 border-inbetween"/>
-        <div
+        <section
           className="flex w-full justify-center py-4"
         >
           <img 
@@ -65,9 +71,297 @@ export default function EditProductWindow () {
               w-[100px] aspect-2/3 rounded-md
             "
           />
-        </div>
+        </section>
+        <section
+          className="
+            flex flex-col gap-2 w-full h-full p-2
+          "
+        >
+          <label
+            className="
+              flex gap-4 items-center w-full bg-background-light rounded-lg p-2
+            "
+            htmlFor="nameEn"
+          >
+            <h3 className="text-body font-bold">
+              {isEn ? 'NAME' : 'الاسم'}
+            </h3>
+            <h4 className="ml-auto">
+              en:
+            </h4>
+            <input 
+              className="p-2 text-heading rounded-lg"
+              value="swater very hot" 
+              type="text"
+              id="nameEn"
+              name="nameEn"
+              readOnly
+            />
+            <h4>
+              ar:
+            </h4>
+            <input 
+              className="p-2 text-heading rounded-lg"
+              value="swater very hot" 
+              type="text"
+              id="nameAr"
+              name="nameAr"
+              readOnly
+            />
+          </label>
+          <label
+            className="
+              flex gap-4 items-center w-full bg-background-light rounded-lg p-2
+            "
+            htmlFor="descritpionEn"
+          >
+            <h3 className="text-body font-bold">
+              {isEn ? 'DESCRIPTION' : 'حول'}
+            </h3>
+            <h4 className="ml-auto">
+              en:
+            </h4>
+            <input 
+              className="p-2 text-heading rounded-lg"
+              value="swater very hot" 
+              type="text"
+              id="descriptionEn"
+              name="descriptionEn"
+              readOnly
+            />
+            <h4>
+              ar:
+            </h4>
+            <input 
+              className="p-2 text-heading rounded-lg"
+              value="swater very hot" 
+              type="text"
+              id="descripionAr"
+              name="descripionAr"
+              readOnly
+            />
+          </label>
+          <div
+            className="
+              flex gap-4 items-center w-full bg-background-light rounded-lg p-2
+            "
+          >
+            <h3 className="text-body font-bold">
+              {isEn ? 'SIZES' : 'المقاسات'}
+            </h3>
+            <form
+              className="flex gap-4 ml-auto"
+            >
+              <label
+                className="peer-checked:bg-green-500 relative flex gap-2 items-center border border-inbetween px-2 py-1 rounded-lg bg-background overflow-hidden"
+                htmlFor="sizeXSmall"
+              >
+                <input
+                  className="peer invisible text-heading rounded-lg" 
+                  type="checkbox"
+                  id="sizeXSmall"
+                  name="sizeXSmall"
+                />{' '}
+                <h4
+                  className="text-heading text-sm font-bold z-[5]"
+                >
+                  XS
+                </h4>
+                <RiAddLine
+                  className="
+                    peer-checked:invisible visible
+                    peer-checked:opacity-0 opacity-100 
+                    absolute left-2 w-4 h-4 z-[5]
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+                <RiCheckFill
+                  className="
+                    peer-checked:visible invisible
+                    peer-checked:opacity-100 opacity-0 
+                    absolute left-2 w-4 h-4 z-[5]
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+                <div 
+                  className="
+                    peer-checked:visible invisible
+                    peer-checked:opacity-100 opacity-0 
+                    absolute top-0 left-0 w-full h-full
+                    bg-green-400
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+              </label>
+              <label
+                className="peer-checked:bg-green-500 relative flex gap-2 items-center border border-inbetween px-2 py-1 rounded-lg bg-background overflow-hidden"
+                htmlFor="sizeSmall"
+              >
+                <input
+                  className="peer invisible text-heading rounded-lg" 
+                  type="checkbox"
+                  id="sizeSmall"
+                  name="sizeSmall"
+                />{' '}
+                <h4
+                  className="text-heading text-sm font-bold z-[5]"
+                >
+                  S
+                </h4>
+                <RiAddLine
+                  className="
+                    peer-checked:invisible visible
+                    peer-checked:opacity-0 opacity-100 
+                    absolute left-2 w-4 h-4 z-[5]
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+                <RiCheckFill
+                  className="
+                    peer-checked:visible invisible
+                    peer-checked:opacity-100 opacity-0 
+                    absolute left-2 w-4 h-4 z-[5]
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+                <div 
+                  className="
+                    peer-checked:visible invisible
+                    peer-checked:opacity-100 opacity-0 
+                    absolute top-0 left-0 w-full h-full
+                    bg-green-400
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+              </label>
+              <label
+                className="peer-checked:bg-green-500 relative flex gap-2 items-center border border-inbetween px-2 py-1 rounded-lg bg-background overflow-hidden"
+                htmlFor="sizeMedium"
+              >
+                <input
+                  className="peer invisible text-heading rounded-lg" 
+                  type="checkbox"
+                  id="sizeMedium"
+                  name="sizeMedium"
+                />{' '}
+                <h4
+                  className="text-heading text-sm font-bold z-[5]"
+                >
+                  M
+                </h4>
+                <RiAddLine
+                  className="
+                    peer-checked:invisible visible
+                    peer-checked:opacity-0 opacity-100 
+                    absolute left-2 w-4 h-4 z-[5]
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+                <RiCheckFill
+                  className="
+                    peer-checked:visible invisible
+                    peer-checked:opacity-100 opacity-0 
+                    absolute left-2 w-4 h-4 z-[5]
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+                <div 
+                  className="
+                    peer-checked:visible invisible
+                    peer-checked:opacity-100 opacity-0 
+                    absolute top-0 left-0 w-full h-full
+                    bg-green-400
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+              </label>
+              <label
+                className="peer-checked:bg-green-500 relative flex gap-2 items-center border border-inbetween px-2 py-1 rounded-lg bg-background overflow-hidden"
+                htmlFor="sizeLarge"
+              >
+                <input
+                  className="peer invisible text-heading rounded-lg" 
+                  type="checkbox"
+                  id="sizeLarge"
+                  name="sizeLarge"
+                />{' '}
+                <h4
+                  className="text-heading text-sm font-bold z-[5]"
+                >
+                  L
+                </h4>
+                <RiAddLine
+                  className="
+                    peer-checked:invisible visible
+                    peer-checked:opacity-0 opacity-100 
+                    absolute left-2 w-4 h-4 z-[5]
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+                <RiCheckFill
+                  className="
+                    peer-checked:visible invisible
+                    peer-checked:opacity-100 opacity-0 
+                    absolute left-2 w-4 h-4 z-[5]
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+                <div 
+                  className="
+                    peer-checked:visible invisible
+                    peer-checked:opacity-100 opacity-0 
+                    absolute top-0 left-0 w-full h-full
+                    bg-green-400
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+              </label>
+              <label
+                className="peer-checked:bg-green-500 relative flex gap-2 items-center border border-inbetween px-2 py-1 rounded-lg bg-background overflow-hidden"
+                htmlFor="sizeExtraLarge"
+              >
+                <input
+                  className="peer invisible text-heading rounded-lg" 
+                  type="checkbox"
+                  id="sizeExtraLarge"
+                  name="sizeExtraLarge"
+                />{' '}
+                <h4
+                  className="text-heading text-sm font-bold z-[5]"
+                >
+                  XL
+                </h4>
+                <RiAddLine
+                  className="
+                    peer-checked:invisible visible
+                    peer-checked:opacity-0 opacity-100 
+                    absolute left-2 w-4 h-4 z-[5]
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+                <RiCheckFill
+                  className="
+                    peer-checked:visible invisible
+                    peer-checked:opacity-100 opacity-0 
+                    absolute left-2 w-4 h-4 z-[5]
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+                <div 
+                  className="
+                    peer-checked:visible invisible
+                    peer-checked:opacity-100 opacity-0 
+                    absolute top-0 left-0 w-full h-full
+                    bg-green-400
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+              </label>
+            </form>
+          </div>
+        </section>
         <hr className="px-2 border-inbetween"/>
-        <div
+        <section
           className="
             relative flex w-full
           "
@@ -99,7 +393,7 @@ export default function EditProductWindow () {
           >
             accept
           </button>
-        </div>
+        </section>
       </div>
     </div>
   )

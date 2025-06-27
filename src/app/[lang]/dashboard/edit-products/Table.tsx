@@ -112,7 +112,6 @@ export default function Table({ products, isLoading = false, isError = false }: 
     }
   }
 
-
   // DEBUG & UI
   // console.log('themes data: ', data);
 
@@ -263,10 +262,11 @@ export default function Table({ products, isLoading = false, isError = false }: 
                     flex items-center gap-2 h-[150px] 
                   "
                 >
-                  {itm.colors.map((color: string) => 
+                  {itm.colors.map((color: string, index: number) => 
                     <li
                       className="w-5 h-5 rounded-full"
                       style={{ backgroundColor: getColor(colorsArray, color).hex }}
+                      key={index}
                     />  
                   )}
                 </ul>
