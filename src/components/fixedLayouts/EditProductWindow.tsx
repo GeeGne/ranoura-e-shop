@@ -5,6 +5,12 @@ import RiCheckFill from '@/components/svgs/RiCheckFill';
 // STORES
 import { useTabNameStore, useLanguageStore, useEditProductWindowStore } from '@/stores/index';
 
+// JSON
+import colorsArray from '@/json/colors.json';
+
+// UTILS
+import getColor from '@/utils/getColor';
+
 // ASSETS
 const ramdanBanner = "/assets/img/ramadan-nights.webp";
 const ramdanBanner2 = "/assets/img/ramadan-nights-2.avif";
@@ -19,6 +25,7 @@ export default function EditProductWindow () {
   const isEn = lang === 'en';
   const toggle = useEditProductWindowStore(state => state.toggle);
   const setToggle = useEditProductWindowStore(state => state.setToggle);
+  const productColors = ["Sky", "Coral", "Pink", "Wine"];
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const { type } = e.currentTarget.dataset;
@@ -359,6 +366,67 @@ export default function EditProductWindow () {
               </label>
             </form>
           </div>
+          <label
+            className="
+              flex gap-4 items-center w-full bg-background-light rounded-lg p-2
+            "
+            htmlFor="descritpionEn"
+          >
+            <h3 className="text-body font-bold">
+              {isEn ? 'COLORS' : 'الالوان'}
+            </h3>
+              <ul
+                className="
+                  flex items-center gap-2 py-2 ml-auto 
+                "
+              >
+                {productColors.map((color: string, index: number) => 
+                  <li
+                    className="w-5 h-5 rounded-full"
+                    style={{ backgroundColor: getColor(colorsArray, color).hex }}
+                    key={index}
+                  />  
+                )}
+              </ul>
+          </label>
+          <label
+            className="
+              flex gap-4 items-center w-full bg-background-light rounded-lg p-2
+            "
+            htmlFor="price"
+          >
+            <h3 className="text-body font-bold">
+              {isEn ? 'PRICE' : 'السعر'}
+            </h3>
+              <input
+                className="
+                  flex items-center gap-2 p-2 ml-auto rounded-lg w-20
+                "
+                type="text"
+                name="price"
+                id="price"
+                value="20"
+              />
+          </label>
+          <label
+            className="
+              flex gap-4 items-center w-full bg-background-light rounded-lg p-2
+            "
+            htmlFor="discount"
+          >
+            <h3 className="text-body font-bold">
+              {isEn ? 'DISCOUNT' : 'التخفيض'}
+            </h3>
+              <input
+                className="
+                  flex items-center gap-2 p-2 ml-auto rounded-lg w-20
+                "
+                type="text"
+                name="discount"
+                id="discount"
+                value="20"
+              />
+          </label>
         </section>
         <hr className="px-2 border-inbetween"/>
         <section
