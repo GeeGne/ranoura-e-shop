@@ -20,6 +20,7 @@ import SelectLang from '@/components/fixedLayouts/SelectLang';
 import AlertMessage from '@/components/fixedLayouts/AlertMessage';
 import AllProductImages from '@/components/fixedLayouts/AllProductImages';
 import EditProductWindow from '@/components/fixedLayouts/EditProductWindow';
+import AddProductImgAddWindow from '@/components/fixedLayouts/AddProductImgAddWindow';
 import BottomBorder from '@/components/svgs/BottomBorder';
 
 // STORES
@@ -91,6 +92,7 @@ export default function RootLayout({
             <AlertMessage />
             <AllProductImages />
             <EditProductWindow />
+            <AddProductImgAddWindow />
           </FixedLayouts>
         </Providers>
       </body>

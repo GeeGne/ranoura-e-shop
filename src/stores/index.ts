@@ -201,11 +201,24 @@ const useEditProductWindowStore = create<EditProductWindowProps>()(
   })
 )
 
+type AddProductImgWindowProps = {
+  toggle: boolean;
+  setToggle: (value: boolean) => void;
+}
+
+const useAddProductImgWindowStore = create<AddProductImgWindowProps>()(
+  (set) => ({
+    toggle: false,
+    setToggle: (toggle) => set({ toggle })    
+  })
+)
+
 export { 
   useCartStore, useNavbarStore, 
   useTabNameStore, useFilterWindowStore,
   useFavouritesStore, useFavouriteConfettiToggle,
   useLayoutRefStore, useAlertMessageStore,
   useFooterListStore, useAllProductImagesStore,
-  useLanguageStore, useEditProductWindowStore
+  useLanguageStore, useEditProductWindowStore,
+  useAddProductImgWindowStore
 };

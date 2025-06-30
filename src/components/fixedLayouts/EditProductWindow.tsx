@@ -27,6 +27,110 @@ export default function EditProductWindow () {
   const setToggle = useEditProductWindowStore(state => state.setToggle);
   const productColors = ["Sky", "Coral", "Pink", "Wine"];
 
+  const productData = {
+    id: 3,
+    name: {"en": "Blossom Sweater", "ar": "سترة بلوسوم"},
+    slug: "bolssom-sweater",
+    description: {"en": "Cozy Floral-Embroidered Relaxed Sweater", "ar": "كنزة مريحة مطرزة بزهور"},
+    type: "t-shirts",
+    categories: ["clothing", "t-shirts", "new", "what's-new", "sale", "hot-deals", "latest-arrivals"],
+    forced_new: true,
+    sizes: ["M", "L"],
+    colors: ["White", "Black"],
+    images: [
+      {
+        main: "/assets/img/cloth-c-white.avif",
+        second: "/assets/img/cloth-c-white-view-b.avif",
+        color: "White"
+      },{
+        main: "/assets/img/cloth-c-black.avif",
+        second: "/assets/img/cloth-c-black-view-b.avif",
+        color: "Black"
+      }
+    ],
+    stock: {
+      XS: { "emerald": 5, "black": 3 },
+      S: { "emerald": 10, "black": 8 },
+      M: { "emerald": 7, "black": 6 },
+      L: { "emerald": 4, "black": 2 }
+    },
+    price: 45000,
+    discount_percent: 45,
+    lists: [
+      {
+        title: {"en": "PRODUCT DETAILS", "ar": "تفاصيل عن القطعه"},
+        descriptionLists: {
+          en: [
+            "Brand: Ranoura",
+            "Material: Fabric",
+            "Fit: Tight to boy",
+            "NeckLine: None",
+            "Sleeves: Yes",
+            "Design: Italic"
+          ],
+          ar: [
+            "العلامة التجارية: رانورا",
+            "المادة: قماش",
+            "المقاس: ضيق على الجسم",
+            "خط العنق: لا يوجد",
+            "الأكمام: نعم",
+            "التصميم: مائل"
+          ]
+        }
+      },{
+        title: {en: "SIZE INFO", ar: "معلومات عن المقاسات"},
+        descriptionLists: {
+          en: [
+            "True to size",
+            "XXS: 0",
+            "XS: 0-2",
+            "MD: 2-4",
+            "LG: 4-6",
+            "XL: 6-9"
+          ],
+          ar: [
+            "True to size",
+            "XXS: 0",
+            "XS: 0-2",
+            "MD: 2-4",
+            "LG: 4-6",
+            "XL: 6-9"
+          ]
+        }
+      },{
+        title: {"en": "ABOUT RANOURA✧･ﾟ*", "ar": "حول رانورا*ﾟ･✧"},
+        descriptionLists: {
+          en: [
+            "Welcome to Ranoura – where elegance meets excellence. At Ranoura, we pride ourselves on crafting garments from the finest high-end fabrics, designed for those who appreciate quality, style, and sophistication. Each piece is meticulously tailored to provide a perfect blend of comfort and luxury, ensuring you feel confident and radiant in every moment. Discover timeless designs and impeccable craftsmanship that redefine fashion, only at Ranoura."
+          ],
+          ar: [
+            "مرحبًا بكم في رانورا – حيث تلتقي الأناقة بالتميز. في رانورا، نفخر بصناعة الملابس من أجود الأقمشة الفاخرة، مصممة لأولئك الذين يقدرون الجودة والأناقة والرقي. كل قطعة مصممة بعناية فائقة لتوفر مزيجًا مثاليًا من الراحة والفخامة، مما يضمن شعورك بالثقة والإشراق في كل لحظة. اكتشف التصاميم الخالدة والحرفية اللا مثيل لها التي تعيد تعريف الموضة، فقط في رانورا."
+          ]
+        }
+      },{
+        title: {"en": "DELIVERY", "ar": "التوصيل"},
+        descriptionLists: {
+          en: [
+            "Get your favorite Ranoura pieces delivered straight to your doorstep! Enjoy fast and reliable shipping with options for standard delivery (three to five business days) or express delivery (one to two business days) for those last-minute style needs. We carefully package every item to ensure it arrives in perfect condition, ready to shine in your wardrobe."
+          ],
+          ar: [
+            "احصل على قطع رانورا المفضلة لديك ويتم توصيلها مباشرة إلى عتبة بابك! استمتع بالشحن السريع والموثوق مع خيارات التوصيل القياسي (من ثلاثة إلى خمسة أيام عمل) أو التوصيل السريع (من يوم إلى يومين عمل) لتلبية احتياجات الأناقة في اللحظة الأخيرة. نحن نعبئ كل قطعة بعناية لضمان وصولها في حالة مثالية، جاهزة للتألق في خزانة ملابسك."
+          ]
+        }
+      },{
+        title: {"en": "RETURNS", "ar": "المرجوعات"},
+        descriptionLists: {
+          en: [
+            "At Ranoura, your satisfaction is our priority. If something isn't quite right, you can easily return it within fourteen days of receiving your order. Items must be unworn, unwashed, and with original tags attached. Simply follow our hassle-free returns process, and we'll ensure you get a refund or exchange as quickly as possible."
+          ], 
+          ar: [
+            "في رانورا، رضاكم هو أولويتنا. إذا كان هناك شيء غير مناسب تمامًا، يمكنكم إرجاعه بسهولة خلال أربعة عشر يومًا من استلام طلبكم. يجب أن تكون الأغراض غير ملبوسة وغير مغسولة ومع العلامات الأصلية مرفقة. ما عليكم سوى اتباع عملية الإرجاع السهلة لدينا، وسنضمن حصولكم على استرداد أو استبدال في أسرع وقت ممكن."
+          ]
+        }  
+      }
+    ]
+  }
+
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const { type } = e.currentTarget.dataset;
 
@@ -160,7 +264,11 @@ export default function EditProductWindow () {
               className="flex gap-4 ml-auto"
             >
               <label
-                className="peer-checked:bg-green-500 relative flex gap-2 items-center border border-inbetween px-2 py-1 rounded-lg bg-background overflow-hidden"
+                className="
+                  peer-checked:bg-green-500 relative flex gap-2 items-center 
+                  border border-inbetween px-2 py-1 
+                  rounded-lg bg-background overflow-hidden cursor-pointer
+                "
                 htmlFor="sizeXSmall"
               >
                 <input
@@ -201,7 +309,11 @@ export default function EditProductWindow () {
                 />
               </label>
               <label
-                className="peer-checked:bg-green-500 relative flex gap-2 items-center border border-inbetween px-2 py-1 rounded-lg bg-background overflow-hidden"
+                className="
+                  peer-checked:bg-green-500 relative flex gap-2 items-center 
+                  border border-inbetween px-2 py-1 
+                  rounded-lg bg-background overflow-hidden cursor-pointer
+                "
                 htmlFor="sizeSmall"
               >
                 <input
@@ -242,7 +354,11 @@ export default function EditProductWindow () {
                 />
               </label>
               <label
-                className="peer-checked:bg-green-500 relative flex gap-2 items-center border border-inbetween px-2 py-1 rounded-lg bg-background overflow-hidden"
+                className="
+                  peer-checked:bg-green-500 relative flex gap-2 items-center 
+                  border border-inbetween px-2 py-1 
+                  rounded-lg bg-background overflow-hidden cursor-pointer
+                "
                 htmlFor="sizeMedium"
               >
                 <input
@@ -283,7 +399,11 @@ export default function EditProductWindow () {
                 />
               </label>
               <label
-                className="peer-checked:bg-green-500 relative flex gap-2 items-center border border-inbetween px-2 py-1 rounded-lg bg-background overflow-hidden"
+                className="
+                  peer-checked:bg-green-500 relative flex gap-2 items-center 
+                  border border-inbetween px-2 py-1 
+                  rounded-lg bg-background overflow-hidden cursor-pointer
+                "
                 htmlFor="sizeLarge"
               >
                 <input
@@ -324,7 +444,11 @@ export default function EditProductWindow () {
                 />
               </label>
               <label
-                className="peer-checked:bg-green-500 relative flex gap-2 items-center border border-inbetween px-2 py-1 rounded-lg bg-background overflow-hidden"
+                className="
+                  peer-checked:bg-green-500 relative flex gap-2 items-center 
+                  border border-inbetween px-2 py-1 
+                  rounded-lg bg-background overflow-hidden cursor-pointer
+                "
                 htmlFor="sizeExtraLarge"
               >
                 <input
@@ -410,23 +534,214 @@ export default function EditProductWindow () {
           </label>
           <label
             className="
-              flex gap-4 items-center w-full bg-background-light rounded-lg p-2
+              flex gap-2 items-center w-full bg-background-light rounded-lg p-2
             "
             htmlFor="discount"
           >
             <h3 className="text-body font-bold">
               {isEn ? 'DISCOUNT' : 'التخفيض'}
             </h3>
+            <input
+              className="
+                flex items-center gap-2 p-2 ml-auto rounded-lg w-10 text-center
+              "
+              type="text"
+              name="discount"
+              id="discount"
+              value="20"
+            />
+            <span className="text-heading font-bold">%</span>
+          </label>
+          <div
+            className="
+              flex gap-4 items-center w-full bg-background-light rounded-lg p-2
+            "
+          >
+            <h3 className="text-body font-bold">
+              {isEn ? 'NEW' : 'جديد'}
+            </h3>
+            <label
+              className="
+                relative ml-auto w-10 h-5 
+                rounded-full overflow-hidden border border-inbetween
+                bg-green-500 cursor-pointer
+              "
+              htmlFor="new"
+            >
               <input
                 className="
-                  flex items-center gap-2 p-2 ml-auto rounded-lg w-20
+                  peer invisible flex items-center gap-2 p-2 ml-auto rounded-lg w-10 text-center
                 "
-                type="text"
-                name="discount"
-                id="discount"
+                type="checkbox"
+                name="new"
+                id="new"
                 value="20"
               />
-          </label>
+              <div
+                className="
+                  absolute peer-checked:left-[calc(100%-18px)] left-[2px] top-1/2  
+                  translate-y-[-50%] w-4 h-4 aspect-1/1 
+                  bg-background rounded-full border border-background-light z-[5]
+                  transition-all duration-300 ease-in-out
+                "
+              />
+              <div
+                className="
+                  absolute top-0 left-0   
+                  w-full h-full aspect-1/1 peer-checked:bg-green-500 bg-inbetween
+                  transition-all duration-300 ease-in-out
+                "
+              />
+            </label>
+          </div>
+          <div
+            className="
+              flex gap-4 items-center w-full bg-background-light rounded-lg p-2
+            "
+          >
+            <h3 className="text-body font-bold">
+              {isEn ? 'state' : 'الحاله'}
+            </h3>
+            <form
+              className="flex gap-4 ml-auto"
+            >
+              <label
+                className="
+                  relative flex gap-2 items-center 
+                  border border-inbetween px-2 py-1 
+                  rounded-lg bg-background overflow-hidden cursor-pointer
+                "
+                htmlFor="stateAvailable"
+              >
+                <input
+                  className="peer invisible text-heading rounded-lg" 
+                  type="radio"
+                  id="stateAvailable"
+                  name="productState"
+                />{' '}
+                <h4
+                  className="text-heading text-sm font-bold z-[5]"
+                >
+                  {isEn ? 'available' : 'متاح'}
+                </h4>
+                <RiAddLine
+                  className="
+                    peer-checked:invisible visible
+                    peer-checked:opacity-0 opacity-100 
+                    absolute left-2 w-4 h-4 z-[5]
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+                <RiCheckFill
+                  className="
+                    peer-checked:visible invisible
+                    peer-checked:opacity-100 opacity-0 
+                    absolute left-2 w-4 h-4 z-[5]
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+                <div 
+                  className="
+                    peer-checked:visible invisible
+                    peer-checked:opacity-100 opacity-0 
+                    absolute top-0 left-0 w-full h-full
+                    bg-green-400
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+              </label>
+              <label
+                className="
+                  relative flex gap-2 items-center 
+                  border border-inbetween px-2 py-1 
+                  rounded-lg bg-background overflow-hidden cursor-pointer
+                "
+                htmlFor="stateOutOfStock"
+              >
+                <input
+                  className="peer invisible text-heading rounded-lg" 
+                  type="radio"
+                  id="stateOutOfStock"
+                  name="productState"
+                />{' '}
+                <h4
+                  className="text-heading text-sm font-bold z-[5]"
+                >
+                  {isEn ? 'out of stock' : 'غير متوفر'}
+                </h4>
+                <RiAddLine
+                  className="
+                    peer-checked:invisible visible
+                    peer-checked:opacity-0 opacity-100 
+                    absolute left-2 w-4 h-4 z-[5]
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+                <RiCheckFill
+                  className="
+                    peer-checked:visible invisible
+                    peer-checked:opacity-100 opacity-0 
+                    absolute left-2 w-4 h-4 z-[5]
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+                <div 
+                  className="
+                    peer-checked:visible invisible
+                    peer-checked:opacity-100 opacity-0 
+                    absolute top-0 left-0 w-full h-full
+                    bg-yellow-400
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+              </label>
+              <label
+                className="
+                  relative flex gap-2 items-center 
+                  border border-inbetween px-2 py-1 
+                  rounded-lg bg-background overflow-hidden cursor-pointer
+                "
+                htmlFor="stateHidden"
+              >
+                <input
+                  className="peer invisible text-heading rounded-lg" 
+                  type="radio"
+                  id="stateHidden"
+                  name="productState"
+                />{' '}
+                <h4
+                  className="text-heading text-sm font-bold z-[5]"
+                >
+                  {isEn ? 'hidden' : 'مخفي'}
+                </h4>
+                <RiAddLine
+                  className="
+                    peer-checked:invisible visible
+                    peer-checked:opacity-0 opacity-100 
+                    absolute left-2 w-4 h-4 z-[5]
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+                <RiCheckFill
+                  className="
+                    peer-checked:visible invisible
+                    peer-checked:opacity-100 opacity-0 
+                    absolute left-2 w-4 h-4 z-[5]
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+                <div 
+                  className="
+                    peer-checked:visible invisible
+                    peer-checked:opacity-100 opacity-0 
+                    absolute top-0 left-0 w-full h-full
+                    bg-red-400
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+              </label>
+            </form>
+          </div>
         </section>
         <hr className="px-2 border-inbetween"/>
         <section
