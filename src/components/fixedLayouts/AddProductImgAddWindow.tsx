@@ -16,11 +16,23 @@ export default function AddProductImgAddWindow () {
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
 
-  // const toggle = useAddProductImgWindowStore(state => state.toggle);
+  const toggle = useAddProductImgWindowStore(state => state.toggle);
   const setToggle = useAddProductImgWindowStore(state => state.setToggle);
 
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const { type } = e.currentTarget.dataset;
+
+    switch (type) {
+      case 'cancel_button_is_clicked':
+        setToggle(false);
+        break;
+      default:
+        console.error('Unknown type: ', type);
+    }
+  }
+
   // DEBUG & UI
-  const toggle = true;
+  // const toggle = true;
 
   return (
     <div
@@ -59,7 +71,7 @@ export default function AddProductImgAddWindow () {
               transition-all duration-300 ease-in-out
             "
             data-type="cancel_button_is_clicked"
-            // onClick={handleClick}
+            onClick={handleClick}
           >
             cancel
           </button>
