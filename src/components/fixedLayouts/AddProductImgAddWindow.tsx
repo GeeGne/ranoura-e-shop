@@ -49,7 +49,7 @@ export default function AddProductImgAddWindow () {
   // DEBUG & UI
   // const addToggle = true;
   // console.log('addToggle: ', addToggle);
-  console.log('selectedColor: ', selectedColor);
+  // console.log('selectedColor: ', selectedColor);
 
   return (
     <div
@@ -57,7 +57,7 @@ export default function AddProductImgAddWindow () {
         fixed top-0 left-0
         w-full h-full
         bg-[var(--shade-color)] z-[4000]
-        transition-all duration-300 ease-out
+        transition-all duration-200 ease-out
         ${addToggle ? 'visible opacity-100 backdrop-blur-[3px]' : 'invisible opacity-0 backdrop-blur-[0px]'}
       `}
     >
@@ -67,8 +67,8 @@ export default function AddProductImgAddWindow () {
           translate-x-[-50%] translate-y-[-50%]
           h-auto rounded-lg
           bg-background overflow-hidden
-          transition-all delay-200 duration-300 ease-[cubic-bezier(.24,.16,.35,1.29)]
-          ${addToggle ? 'scale-100' : 'scale-50'}
+          transition-all delay-100 duration-200 ease-[cubic-bezier(0.68, -0.6, 0.32, 1.6)]
+          ${addToggle ? 'scale-100 opacity-100' : 'scale-[80%] opacity-0'}
         `}
       >
         <section
@@ -142,14 +142,28 @@ export default function AddProductImgAddWindow () {
               className="flex flex-col gap-2 w-[130px] bg-background-deep-light p-2 rounded-lg"
             >
               <div
-                className="bg-yellow-500 py-2 flex-1 rounded-lg text-center text-heading-invert"
+                className="relative flex bg-yellow-500 w-full h-[50px] rounded-lg text-center text-heading-invert"
                 style={{backgroundColor: selectedColor?.hex || 'black'}}
               >
                 <span
-                  className="drop-shadow-sm font-bold"
+                  className="
+                    absolute top-1/2 left-1/2
+                    translate-x-[-50%] translate-y-[-50%]
+                    text-sm text-heading-invert z-[10]
+                    "
                 >
                   {selectedColor?.name || 'unSelected'}
                 </span>
+                <div
+                  className="
+                    absolute top-1/2 left-1/2
+                    translate-x-[-50%] translate-y-[-50%]
+                    text-sm text-transparent bg-shade drop-shadow-lg
+                    h-4 px-1 blur-[3px] z-[5] rounded-full 
+                  "
+                >
+                  {selectedColor?.name || 'unSelected'}
+                </div>
               </div>
               <button 
                 className="
@@ -168,6 +182,109 @@ export default function AddProductImgAddWindow () {
                 </span>
               </button>
             </div>
+          </div>
+          <div
+            className="
+              flex gap-4 items-center w-full bg-background-light rounded-lg p-2
+            "
+          >
+            <h3 className="text-body font-bold">
+              {isEn ? 'TYPE' : 'الصنف'}
+            </h3>
+            <form
+              className="flex gap-4 ml-auto"
+            >
+              <label
+                className="
+                  relative flex gap-2 items-center 
+                  border border-inbetween px-2 py-1 
+                  rounded-lg bg-background overflow-hidden cursor-pointer
+                "
+                htmlFor="imageTypeA"
+              >
+                <input
+                  className="peer invisible text-heading rounded-lg" 
+                  type="radio"
+                  id="imageTypeA"
+                  name="imageType"
+                />{' '}
+                <h4
+                  className="text-heading text-sm font-bold z-[5]"
+                >
+                  {isEn ? 'A (Primary)' : 'A (رئيسي)'}
+                </h4>
+                <RiAddLine
+                  className="
+                    peer-checked:invisible visible
+                    peer-checked:opacity-0 opacity-100 
+                    absolute left-2 w-4 h-4 z-[5]
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+                <RiCheckFill
+                  className="
+                    peer-checked:visible invisible
+                    peer-checked:opacity-100 opacity-0 
+                    absolute left-2 w-4 h-4 z-[5]
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+                <div 
+                  className="
+                    peer-checked:visible invisible
+                    peer-checked:opacity-100 opacity-0 
+                    absolute top-0 left-0 w-full h-full
+                    bg-green-400
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+              </label>
+              <label
+                className="
+                  relative flex gap-2 items-center 
+                  border border-inbetween px-2 py-1 
+                  rounded-lg bg-background overflow-hidden cursor-pointer
+                "
+                htmlFor="imageTypeB"
+              >
+                <input
+                  className="peer invisible text-heading rounded-lg" 
+                  type="radio"
+                  id="imageTypeB"
+                  name="imageType"
+                />{' '}
+                <h4
+                  className="text-heading text-sm font-bold z-[5]"
+                >
+                  {isEn ? 'B (Secondary)' : 'B (ثانوي)'}
+                </h4>
+                <RiAddLine
+                  className="
+                    peer-checked:invisible visible
+                    peer-checked:opacity-0 opacity-100 
+                    absolute left-2 w-4 h-4 z-[5]
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+                <RiCheckFill
+                  className="
+                    peer-checked:visible invisible
+                    peer-checked:opacity-100 opacity-0 
+                    absolute left-2 w-4 h-4 z-[5]
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+                <div 
+                  className="
+                    peer-checked:visible invisible
+                    peer-checked:opacity-100 opacity-0 
+                    absolute top-0 left-0 w-full h-full
+                    bg-green-400
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+              </label>
+            </form>
           </div>
         </section>
         <hr className="border-inbetween" />

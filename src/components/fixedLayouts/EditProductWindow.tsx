@@ -159,7 +159,7 @@ export default function EditProductWindow () {
         fixed top-0 left-0
         w-full h-full
         bg-[var(--shade-color)] z-[3000]
-        transition-all duration-300 ease-out
+        transition-all duration-200 ease-out
         ${editToggle ? 'visible opacity-100 backdrop-blur-[3px]' : 'invisible opacity-0 backdrop-blur-[0px]'}
       `}
     >
@@ -169,8 +169,8 @@ export default function EditProductWindow () {
           translate-x-[-50%] translate-y-[-50%]
           h-auto rounded-lg
           bg-background overflow-hidden
-          transition-all delay-200 duration-300 ease-[cubic-bezier(.24,.16,.35,1.29)]
-          ${editToggle ? 'scale-100' : 'scale-50'}
+          transition-all delay-100 duration-200 ease-[cubic-bezier(0.68, -0.6, 0.32, 1.6)]
+          ${editToggle ? 'scale-100 opacity-100' : 'scale-[0.8] opacity-0'}
         `}
       >
         <section
