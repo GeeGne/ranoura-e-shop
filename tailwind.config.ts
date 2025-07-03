@@ -30,7 +30,8 @@ export default {
         "background-deep-light": "var(--background-deep-light-color)",
         "background-deep-light-invert": "var(--background-deep-light-invert-color)",
         foreground: "var(--background-invert-color)",
-        underline: "grey-50"
+        underline: "grey-50",
+        shade: "var(--shade-color)"
       },
     },
   },

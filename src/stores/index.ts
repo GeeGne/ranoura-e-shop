@@ -213,6 +213,22 @@ const useAddProductImgWindowStore = create<AddProductImgWindowProps>()(
   })
 )
 
+type SelectImgColorWindowProps = {
+  toggle: boolean;
+  setToggle: (value: boolean) => void;
+  selectedColor: null | Record<string, any>;
+  setSelectedColor: (value: null | Record<string, any>) => void;
+}
+
+const useSelectImgColorWindowStore = create<SelectImgColorWindowProps>()(
+  (set) => ({
+    toggle: false,
+    setToggle: (toggle) => set({ toggle }),
+    selectedColor: null,
+    setSelectedColor: (selectedColor) => set({ selectedColor })
+  })
+)
+
 export { 
   useCartStore, useNavbarStore, 
   useTabNameStore, useFilterWindowStore,
@@ -220,5 +236,5 @@ export {
   useLayoutRefStore, useAlertMessageStore,
   useFooterListStore, useAllProductImagesStore,
   useLanguageStore, useEditProductWindowStore,
-  useAddProductImgWindowStore
+  useAddProductImgWindowStore, useSelectImgColorWindowStore
 };

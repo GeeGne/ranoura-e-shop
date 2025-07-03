@@ -21,6 +21,7 @@ import AlertMessage from '@/components/fixedLayouts/AlertMessage';
 import AllProductImages from '@/components/fixedLayouts/AllProductImages';
 import EditProductWindow from '@/components/fixedLayouts/EditProductWindow';
 import AddProductImgAddWindow from '@/components/fixedLayouts/AddProductImgAddWindow';
+import SelectImgColorWindow from '@/components/fixedLayouts/SelectImgColorWindow';
 import BottomBorder from '@/components/svgs/BottomBorder';
 
 // STORES
@@ -93,6 +94,7 @@ export default function RootLayout({
             <AllProductImages />
             <EditProductWindow />
             <AddProductImgAddWindow />
+            <SelectImgColorWindow />
           </FixedLayouts>
         </Providers>
       </body>
