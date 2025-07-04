@@ -310,7 +310,10 @@ export default function EditProductWindow () {
                   name="sizeXSmall"
                 />{' '}
                 <h4
-                  className="text-heading text-sm font-bold z-[5]"
+                  className="
+                    peer-checked:text-heading text-body text-sm font-bold z-[5]
+                    transition-all duration-300 ease-in-out
+                    "
                 >
                   XS
                 </h4>
@@ -318,7 +321,7 @@ export default function EditProductWindow () {
                   className="
                     peer-checked:invisible visible
                     peer-checked:opacity-0 opacity-100 
-                    absolute left-2 w-4 h-4 z-[5]
+                    absolute left-2 w-4 h-4 text-body z-[5]
                     transition-all duration-300 ease-in-out
                   "
                 />
@@ -326,7 +329,7 @@ export default function EditProductWindow () {
                   className="
                     peer-checked:visible invisible
                     peer-checked:opacity-100 opacity-0 
-                    absolute left-2 w-4 h-4 z-[5]
+                    absolute left-2 w-4 h-4 text-heading z-[5]
                     transition-all duration-300 ease-in-out
                   "
                 />
@@ -355,7 +358,10 @@ export default function EditProductWindow () {
                   name="sizeSmall"
                 />{' '}
                 <h4
-                  className="text-heading text-sm font-bold z-[5]"
+                  className="
+                    peer-checked:text-heading text-body text-sm font-bold z-[5]
+                    transition-all duration-300 ease-in-out
+                    "
                 >
                   S
                 </h4>
@@ -363,7 +369,7 @@ export default function EditProductWindow () {
                   className="
                     peer-checked:invisible visible
                     peer-checked:opacity-0 opacity-100 
-                    absolute left-2 w-4 h-4 z-[5]
+                    absolute left-2 w-4 h-4 text-body z-[5]
                     transition-all duration-300 ease-in-out
                   "
                 />
@@ -371,7 +377,7 @@ export default function EditProductWindow () {
                   className="
                     peer-checked:visible invisible
                     peer-checked:opacity-100 opacity-0 
-                    absolute left-2 w-4 h-4 z-[5]
+                    absolute left-2 w-4 h-4 text-heading z-[5]
                     transition-all duration-300 ease-in-out
                   "
                 />
@@ -400,7 +406,10 @@ export default function EditProductWindow () {
                   name="sizeMedium"
                 />{' '}
                 <h4
-                  className="text-heading text-sm font-bold z-[5]"
+                  className="
+                    peer-checked:text-heading text-body text-sm font-bold z-[5]
+                    transition-all duration-300 ease-in-out
+                    "
                 >
                   M
                 </h4>
@@ -408,7 +417,7 @@ export default function EditProductWindow () {
                   className="
                     peer-checked:invisible visible
                     peer-checked:opacity-0 opacity-100 
-                    absolute left-2 w-4 h-4 z-[5]
+                    absolute left-2 w-4 h-4 text-body z-[5]
                     transition-all duration-300 ease-in-out
                   "
                 />
@@ -416,7 +425,7 @@ export default function EditProductWindow () {
                   className="
                     peer-checked:visible invisible
                     peer-checked:opacity-100 opacity-0 
-                    absolute left-2 w-4 h-4 z-[5]
+                    absolute left-2 w-4 h-4 text-heading z-[5]
                     transition-all duration-300 ease-in-out
                   "
                 />
@@ -445,7 +454,10 @@ export default function EditProductWindow () {
                   name="sizeLarge"
                 />{' '}
                 <h4
-                  className="text-heading text-sm font-bold z-[5]"
+                  className="
+                    peer-checked:text-heading text-body text-sm font-bold z-[5]
+                    transition-all duration-300 ease-in-out
+                    "
                 >
                   L
                 </h4>
@@ -453,7 +465,7 @@ export default function EditProductWindow () {
                   className="
                     peer-checked:invisible visible
                     peer-checked:opacity-0 opacity-100 
-                    absolute left-2 w-4 h-4 z-[5]
+                    absolute left-2 w-4 h-4 text-body z-[5]
                     transition-all duration-300 ease-in-out
                   "
                 />
@@ -461,7 +473,7 @@ export default function EditProductWindow () {
                   className="
                     peer-checked:visible invisible
                     peer-checked:opacity-100 opacity-0 
-                    absolute left-2 w-4 h-4 z-[5]
+                    absolute left-2 w-4 h-4 text-heading z-[5]
                     transition-all duration-300 ease-in-out
                   "
                 />
@@ -490,7 +502,10 @@ export default function EditProductWindow () {
                   name="sizeExtraLarge"
                 />{' '}
                 <h4
-                  className="text-heading text-sm font-bold z-[5]"
+                  className="
+                    peer-checked:text-heading text-body text-sm font-bold z-[5]
+                    transition-all duration-300 ease-in-out
+                    "
                 >
                   XL
                 </h4>
@@ -498,7 +513,7 @@ export default function EditProductWindow () {
                   className="
                     peer-checked:invisible visible
                     peer-checked:opacity-0 opacity-100 
-                    absolute left-2 w-4 h-4 z-[5]
+                    absolute left-2 w-4 h-4 text-body z-[5]
                     transition-all duration-300 ease-in-out
                   "
                 />
@@ -506,7 +521,7 @@ export default function EditProductWindow () {
                   className="
                     peer-checked:visible invisible
                     peer-checked:opacity-100 opacity-0 
-                    absolute left-2 w-4 h-4 z-[5]
+                    absolute left-2 w-4 h-4 text-heading z-[5]
                     transition-all duration-300 ease-in-out
                   "
                 />
@@ -652,7 +667,10 @@ export default function EditProductWindow () {
                   name="productState"
                 />{' '}
                 <h4
-                  className="text-heading text-sm font-bold z-[5]"
+                  className="
+                    peer-checked:text-heading text-body text-sm font-bold z-[5]
+                    transition-all duration-300 ease-in-out
+                  "
                 >
                   {isEn ? 'available' : 'متاح'}
                 </h4>
@@ -660,7 +678,7 @@ export default function EditProductWindow () {
                   className="
                     peer-checked:invisible visible
                     peer-checked:opacity-0 opacity-100 
-                    absolute left-2 w-4 h-4 z-[5]
+                    absolute left-2 w-4 h-4 text-body z-[5]
                     transition-all duration-300 ease-in-out
                   "
                 />
@@ -668,7 +686,7 @@ export default function EditProductWindow () {
                   className="
                     peer-checked:visible invisible
                     peer-checked:opacity-100 opacity-0 
-                    absolute left-2 w-4 h-4 z-[5]
+                    absolute left-2 w-4 h-4 text-heading z-[5]
                     transition-all duration-300 ease-in-out
                   "
                 />
@@ -697,7 +715,10 @@ export default function EditProductWindow () {
                   name="productState"
                 />{' '}
                 <h4
-                  className="text-heading text-sm font-bold z-[5]"
+                  className="
+                    peer-checked:text-heading text-body text-sm font-bold z-[5]
+                    transition-all duration-300 ease-in-out
+                  "
                 >
                   {isEn ? 'out of stock' : 'غير متوفر'}
                 </h4>
@@ -705,7 +726,7 @@ export default function EditProductWindow () {
                   className="
                     peer-checked:invisible visible
                     peer-checked:opacity-0 opacity-100 
-                    absolute left-2 w-4 h-4 z-[5]
+                    absolute left-2 w-4 h-4 text-body z-[5]
                     transition-all duration-300 ease-in-out
                   "
                 />
@@ -713,7 +734,7 @@ export default function EditProductWindow () {
                   className="
                     peer-checked:visible invisible
                     peer-checked:opacity-100 opacity-0 
-                    absolute left-2 w-4 h-4 z-[5]
+                    absolute left-2 w-4 h-4 text-heading z-[5]
                     transition-all duration-300 ease-in-out
                   "
                 />
@@ -742,7 +763,10 @@ export default function EditProductWindow () {
                   name="productState"
                 />{' '}
                 <h4
-                  className="text-heading text-sm font-bold z-[5]"
+                  className="
+                    peer-checked:text-heading text-body text-sm font-bold z-[5]
+                    transition-all duration-300 ease-in-out
+                  "
                 >
                   {isEn ? 'hidden' : 'مخفي'}
                 </h4>
@@ -750,7 +774,7 @@ export default function EditProductWindow () {
                   className="
                     peer-checked:invisible visible
                     peer-checked:opacity-0 opacity-100 
-                    absolute left-2 w-4 h-4 z-[5]
+                    absolute left-2 w-4 h-4 text-body z-[5]
                     transition-all duration-300 ease-in-out
                   "
                 />
@@ -758,7 +782,7 @@ export default function EditProductWindow () {
                   className="
                     peer-checked:visible invisible
                     peer-checked:opacity-100 opacity-0 
-                    absolute left-2 w-4 h-4 z-[5]
+                    absolute left-2 w-4 h-4 text-heading z-[5]
                     transition-all duration-300 ease-in-out
                   "
                 />

@@ -209,7 +209,10 @@ export default function AddProductImgAddWindow () {
                   name="imageType"
                 />{' '}
                 <h4
-                  className="text-heading text-sm font-bold z-[5]"
+                  className="
+                    peer-checked:text-heading text-body text-sm font-bold z-[5]
+                    transition-all duration-300 ease-in-outs
+                  "
                 >
                   {isEn ? 'A (Primary)' : 'A (رئيسي)'}
                 </h4>
@@ -217,7 +220,7 @@ export default function AddProductImgAddWindow () {
                   className="
                     peer-checked:invisible visible
                     peer-checked:opacity-0 opacity-100 
-                    absolute left-2 w-4 h-4 z-[5]
+                    absolute left-2 w-4 h-4 text-body z-[5]
                     transition-all duration-300 ease-in-out
                   "
                 />
@@ -225,7 +228,7 @@ export default function AddProductImgAddWindow () {
                   className="
                     peer-checked:visible invisible
                     peer-checked:opacity-100 opacity-0 
-                    absolute left-2 w-4 h-4 z-[5]
+                    absolute left-2 w-4 h-4 text-heading z-[5]
                     transition-all duration-300 ease-in-out
                   "
                 />
@@ -254,7 +257,10 @@ export default function AddProductImgAddWindow () {
                   name="imageType"
                 />{' '}
                 <h4
-                  className="text-heading text-sm font-bold z-[5]"
+                  className="
+                    peer-checked:text-heading text-body text-sm font-bold z-[5]
+                    transition-all duration-300 ease-in-outs
+                  "
                 >
                   {isEn ? 'B (Secondary)' : 'B (ثانوي)'}
                 </h4>
@@ -262,7 +268,7 @@ export default function AddProductImgAddWindow () {
                   className="
                     peer-checked:invisible visible
                     peer-checked:opacity-0 opacity-100 
-                    absolute left-2 w-4 h-4 z-[5]
+                    absolute left-2 w-4 h-4 text-body z-[5]
                     transition-all duration-300 ease-in-out
                   "
                 />
@@ -270,7 +276,7 @@ export default function AddProductImgAddWindow () {
                   className="
                     peer-checked:visible invisible
                     peer-checked:opacity-100 opacity-0 
-                    absolute left-2 w-4 h-4 z-[5]
+                    absolute left-2 w-4 h-4 text-heading z-[5]
                     transition-all duration-300 ease-in-out
                   "
                 />
