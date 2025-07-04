@@ -1,3 +1,6 @@
+// HOOKS
+import { useEffect, useRef } from 'react';
+
 // COMPONENTS
 import RiAddLine from '@/components/svgs/RiAddLine';
 import RiCheckFill from '@/components/svgs/RiCheckFill';
@@ -31,6 +34,17 @@ export default function EditProductWindow () {
   const setEditToggle = useEditProductWindowStore(state => state.setToggle);
   const addToggle = useAddProductImgWindowStore(state => state.toggle);
   const setAddToggle = useAddProductImgWindowStore(state => state.setToggle);
+
+  const nameEnInptRef = useRef<HTMLInputElement>(null);
+  const nameArInptRef = useRef<HTMLInputElement>(null);
+  const descriptionEnInptRef = useRef<HTMLInputElement>(null);
+  const descriptionArInptRef = useRef<HTMLInputElement>(null);
+
+  const sizeXSInptRef = useRef<(HTMLInputElement | null)>(null);
+  const sizeSInptRef = useRef<(HTMLInputElement | null)>(null);
+  const sizeMInptRef = useRef<(HTMLInputElement | null)>(null);
+  const sizeLInptRef = useRef<(HTMLInputElement | null)>(null);
+  const sizeXLInptRef = useRef<(HTMLInputElement | null)>(null);
 
   const productColors = ["Sky", "Coral", "Pink", "Wine"];
 
@@ -153,6 +167,41 @@ export default function EditProductWindow () {
     }
   }
 
+  useEffect(() => {
+    const setDefaultValues = () => {
+      if (nameEnInptRef.current) 
+        nameEnInptRef.current.value = productData.name.en;
+      if (nameArInptRef.current) 
+        nameArInptRef.current.value = productData.name.ar;
+      if (descriptionEnInptRef.current) 
+        descriptionEnInptRef.current.value = productData.description.en;
+      if (descriptionArInptRef.current) 
+        descriptionArInptRef.current.value = productData.description.ar;
+
+      if (sizeXSInptRef.current && productData.sizes.includes("XS")) 
+        sizeXSInptRef.current.checked = true;
+
+      if (sizeSInptRef.current && productData.sizes.includes("S")) 
+        sizeSInptRef.current.checked = true;
+
+      if (sizeMInptRef.current && productData.sizes.includes("M")) 
+        sizeMInptRef.current.checked = true;
+
+      if (sizeLInptRef.current && productData.sizes.includes("L")) 
+        sizeLInptRef.current.checked = true;
+
+      if (sizeXLInptRef.current && productData.sizes.includes("XL")) 
+        sizeXLInptRef.current.checked = true;
+
+
+    }
+    setDefaultValues();
+  }, []);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+  }
+
   return (
     <div
       className={`
@@ -234,22 +283,20 @@ export default function EditProductWindow () {
             </h4>
             <input 
               className="p-2 text-heading rounded-lg"
-              value="swater very hot" 
               type="text"
               id="nameEn"
               name="nameEn"
-              readOnly
+              ref={nameEnInptRef}
             />
             <h4>
               ar:
             </h4>
             <input 
               className="p-2 text-heading rounded-lg"
-              value="swater very hot" 
               type="text"
               id="nameAr"
               name="nameAr"
-              readOnly
+              ref={nameArInptRef}
             />
           </label>
           <label
@@ -270,18 +317,18 @@ export default function EditProductWindow () {
               type="text"
               id="descriptionEn"
               name="descriptionEn"
-              readOnly
+              ref={descriptionEnInptRef}
             />
             <h4>
               ar:
             </h4>
             <input 
               className="p-2 text-heading rounded-lg"
-              value="swater very hot" 
               type="text"
               id="descripionAr"
               name="descripionAr"
-              readOnly
+              onChange={handleChange}
+              ref={descriptionArInptRef}
             />
           </label>
           <div
@@ -308,6 +355,7 @@ export default function EditProductWindow () {
                   type="checkbox"
                   id="sizeXSmall"
                   name="sizeXSmall"
+                  ref={sizeXSInptRef}
                 />{' '}
                 <h4
                   className="
@@ -356,6 +404,7 @@ export default function EditProductWindow () {
                   type="checkbox"
                   id="sizeSmall"
                   name="sizeSmall"
+                  ref={sizeSInptRef}
                 />{' '}
                 <h4
                   className="
@@ -404,6 +453,7 @@ export default function EditProductWindow () {
                   type="checkbox"
                   id="sizeMedium"
                   name="sizeMedium"
+                  ref={sizeMInptRef}
                 />{' '}
                 <h4
                   className="
@@ -452,6 +502,7 @@ export default function EditProductWindow () {
                   type="checkbox"
                   id="sizeLarge"
                   name="sizeLarge"
+                  ref={sizeLInptRef}
                 />{' '}
                 <h4
                   className="
@@ -500,6 +551,7 @@ export default function EditProductWindow () {
                   type="checkbox"
                   id="sizeExtraLarge"
                   name="sizeExtraLarge"
+                  ref={sizeXLInptRef}
                 />{' '}
                 <h4
                   className="
