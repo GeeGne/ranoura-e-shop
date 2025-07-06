@@ -45,8 +45,15 @@ export default function EditProductWindow () {
   const sizeMInptRef = useRef<(HTMLInputElement | null)>(null);
   const sizeLInptRef = useRef<(HTMLInputElement | null)>(null);
   const sizeXLInptRef = useRef<(HTMLInputElement | null)>(null);
+  
+  const priceInptRef = useRef<(HTMLInputElement | null)>(null);
+  const discountInptRef = useRef<(HTMLInputElement | null)>(null);
 
-  const productColors = ["Sky", "Coral", "Pink", "Wine"];
+  const newInptRef = useRef<(HTMLInputElement | null)>(null);
+
+  const stateAvailableInptRef = useRef<(HTMLInputElement | null)>(null);
+  const statetOutOfStockInptRef = useRef<(HTMLInputElement | null)>(null);
+  const stateHiddenInptRef = useRef<(HTMLInputElement | null)>(null);
 
   const productData = {
     id: 3,
@@ -55,7 +62,8 @@ export default function EditProductWindow () {
     description: {"en": "Cozy Floral-Embroidered Relaxed Sweater", "ar": "كنزة مريحة مطرزة بزهور"},
     type: "t-shirts",
     categories: ["clothing", "t-shirts", "new", "what's-new", "sale", "hot-deals", "latest-arrivals"],
-    forced_new: true,
+    is_new: true,
+    state: "available",
     sizes: ["M", "L"],
     colors: ["White", "Black"],
     images: [
@@ -169,6 +177,7 @@ export default function EditProductWindow () {
 
   useEffect(() => {
     const setDefaultValues = () => {
+      // Name And Description
       if (nameEnInptRef.current) 
         nameEnInptRef.current.value = productData.name.en;
       if (nameArInptRef.current) 
@@ -178,22 +187,35 @@ export default function EditProductWindow () {
       if (descriptionArInptRef.current) 
         descriptionArInptRef.current.value = productData.description.ar;
 
+      // Sizes
       if (sizeXSInptRef.current && productData.sizes.includes("XS")) 
         sizeXSInptRef.current.checked = true;
-
       if (sizeSInptRef.current && productData.sizes.includes("S")) 
         sizeSInptRef.current.checked = true;
-
       if (sizeMInptRef.current && productData.sizes.includes("M")) 
         sizeMInptRef.current.checked = true;
-
       if (sizeLInptRef.current && productData.sizes.includes("L")) 
         sizeLInptRef.current.checked = true;
-
       if (sizeXLInptRef.current && productData.sizes.includes("XL")) 
         sizeXLInptRef.current.checked = true;
 
+      // Price and Discount
+      if (priceInptRef.current) 
+        priceInptRef.current.value = String(productData.price);
+      if (discountInptRef.current) 
+        discountInptRef.current.value = String(productData.discount_percent);
 
+      // New
+      if (newInptRef.current) 
+        newInptRef.current.value = String(productData.is_new);
+
+      // State
+      if (stateAvailableInptRef.current && productData.state === "available") 
+        stateAvailableInptRef.current.checked = true;
+      if (statetOutOfStockInptRef.current && productData.state === "out-of-stock") 
+        statetOutOfStockInptRef.current.checked = true;
+      if (stateHiddenInptRef.current && productData.state === "hidden") 
+        stateHiddenInptRef.current.checked = true;
     }
     setDefaultValues();
   }, []);
@@ -603,7 +625,7 @@ export default function EditProductWindow () {
                   flex items-center gap-2 py-2 ml-auto 
                 "
               >
-                {productColors.map((color: string, index: number) => 
+                {productData.colors.map((color: string, index: number) => 
                   <li
                     className="w-5 h-5 rounded-full"
                     style={{ backgroundColor: getColor(colorsArray, color).hex }}
@@ -628,7 +650,7 @@ export default function EditProductWindow () {
               type="text"
               name="price"
               id="price"
-              value="20"
+              ref={priceInptRef}
             />
           </label>
           <label
@@ -647,7 +669,7 @@ export default function EditProductWindow () {
               type="text"
               name="discount"
               id="discount"
-              value="20"
+              ref={discountInptRef}
             />
             <span className="text-heading font-bold">%</span>
           </label>
@@ -674,7 +696,7 @@ export default function EditProductWindow () {
                 type="checkbox"
                 name="new"
                 id="new"
-                value="20"
+                ref={newInptRef}
               />
               <div
                 className="
@@ -717,6 +739,7 @@ export default function EditProductWindow () {
                   type="radio"
                   id="stateAvailable"
                   name="productState"
+                  ref={stateAvailableInptRef}
                 />{' '}
                 <h4
                   className="
@@ -765,6 +788,7 @@ export default function EditProductWindow () {
                   type="radio"
                   id="stateOutOfStock"
                   name="productState"
+                  ref={statetOutOfStockInptRef}
                 />{' '}
                 <h4
                   className="
@@ -813,6 +837,7 @@ export default function EditProductWindow () {
                   type="radio"
                   id="stateHidden"
                   name="productState"
+                  ref={stateHiddenInptRef}
                 />{' '}
                 <h4
                   className="

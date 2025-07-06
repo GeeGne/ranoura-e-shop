@@ -17,7 +17,7 @@ import colorsArray from '@/json/colors.json';
 // UTILS
 import getColor from '@/utils/getColor';
 
-export default function AddProductImgAddWindow () {
+export default function AddProductImgWindow () {
 
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';

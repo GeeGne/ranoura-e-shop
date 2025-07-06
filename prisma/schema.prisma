@@ -63,7 +63,7 @@ model Products {
   type String
   categories String[]
   is_new Boolean @default(false)
-  is_outOfStock Boolean @default(false)
+  state String @default("available") // availabe & out-of-stock & hidden
   sizes String[]
   colors String[]
   images Json
