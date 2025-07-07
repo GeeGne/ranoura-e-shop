@@ -207,7 +207,7 @@ export default function EditProductWindow () {
 
       // New
       if (newInptRef.current) 
-        newInptRef.current.value = String(productData.is_new);
+        newInptRef.current.checked = productData.is_new;
 
       // State
       if (stateAvailableInptRef.current && productData.state === "available") 

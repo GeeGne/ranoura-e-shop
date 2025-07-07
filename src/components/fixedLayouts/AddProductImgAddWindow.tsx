@@ -29,7 +29,85 @@ export default function AddProductImgWindow () {
   const setColorToggle = useSelectImgColorWindowStore(state => state.setToggle);
   const selectedColor = useSelectImgColorWindowStore(state => state.selectedColor);
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement | HTMLDivElement>) => {
+  const handleClick = (
+    e: React.MouseEvent<HTMLButtonElement | HTMLDivElement | HTMLLabelElement>
+  ) => {
+    const { type } = e.currentTarget.dataset;
+
+    switch (type) {
+      case 'cancel_button_is_clicked':
+        setAddToggle(false);
+        break;
+      case 'add_new_image_button_is_clicked':
+        break;
+      case 'change_color_button_is_clicked':
+        setColorToggle(true);
+        break;
+      default:
+        console.error('Unknown type: ', type);
+    }
+  }
+
+  const handleDragEnter = (
+    e: React.MouseEvent<HTMLButtonElement | HTMLDivElement | HTMLLabelElement>
+  ) => {
+    const { type } = e.currentTarget.dataset;
+
+    switch (type) {
+      case 'cancel_button_is_clicked':
+        setAddToggle(false);
+        break;
+      case 'add_new_image_button_is_clicked':
+        break;
+      case 'change_color_button_is_clicked':
+        setColorToggle(true);
+        break;
+      default:
+        console.error('Unknown type: ', type);
+    }
+  }
+
+  const handleDragLeave = (
+    e: React.MouseEvent<HTMLButtonElement | HTMLDivElement | HTMLLabelElement>
+  ) => {
+    const { type } = e.currentTarget.dataset;
+
+    switch (type) {
+      case 'cancel_button_is_clicked':
+        setAddToggle(false);
+        break;
+      case 'add_new_image_button_is_clicked':
+        break;
+      case 'change_color_button_is_clicked':
+        setColorToggle(true);
+        break;
+      default:
+        console.error('Unknown type: ', type);
+    }
+  }
+
+  const handleDragOver = (
+    e: React.MouseEvent<HTMLButtonElement | HTMLDivElement | HTMLLabelElement>
+  ) => {
+    const { type } = e.currentTarget.dataset;
+
+    switch (type) {
+      case 'cancel_button_is_clicked':
+        setAddToggle(false);
+        break;
+      case 'add_new_image_button_is_clicked':
+        break;
+      case 'change_color_button_is_clicked':
+        setColorToggle(true);
+        break;
+      default:
+        console.error('Unknown type: ', type);
+    }
+  }
+
+  const handleDrop = (
+    e: React.MouseEvent<HTMLButtonElement | HTMLDivElement | HTMLLabelElement>
+  ) => {
     const { type } = e.currentTarget.dataset;
 
     switch (type) {
@@ -90,17 +168,31 @@ export default function AddProductImgWindow () {
             <h3 className="text-body font-bold">
               {isEn ? 'IMAGE UPLOAD' : ''}
             </h3>
-            <div
+            <label
               className="
-                flex flex-col items-center justify-center 
+                relative flex flex-col items-center justify-center 
                 w-[300px] h-[200px] aspect-2/3 rounded-md mx-auto
                 bg-background-light cursor-pointer 
                 border border-dashed border-inbetween border-[2px]
               "
               role="button"
               data-type="add_new_image_button_is_clicked"
+              htmlFor="productImage"
               onClick={handleClick}
+              onDragEnter={handleDragEnter}
+              onDragLeave={handleDragLeave}
+              onDragOver={handleDragOver}
+              onDrop={handleDrop}
             >
+              <input 
+                className="
+                  absolute top-0 left-0 invisible opacity-0
+                "
+                type="file"
+                accept="image/*"
+                name="productImage"
+                id="productImage"
+              />
               <LineMdImageFilled 
                 className="text-inbetween w-8 h-8"
               />
@@ -130,7 +222,7 @@ export default function AddProductImgWindow () {
 
                 </span>
               </div>
-            </div>
+            </label>
           </div>
           <div
             className="flex items-center justify-between w-full p-2 gap-8 bg-background-light rounded-lg"
