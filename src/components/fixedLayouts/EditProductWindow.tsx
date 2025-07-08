@@ -229,7 +229,7 @@ export default function EditProductWindow () {
       className={`
         fixed top-0 left-0
         w-full h-full
-        bg-[var(--shade-color)] z-[3000]
+        bg-[var(--shade-color)] z-[1000]
         transition-all duration-200 ease-out
         ${editToggle ? 'visible opacity-100 backdrop-blur-[3px]' : 'invisible opacity-0 backdrop-blur-[0px]'}
       `}
@@ -335,7 +335,6 @@ export default function EditProductWindow () {
             </h4>
             <input 
               className="p-2 text-heading rounded-lg"
-              value="swater very hot" 
               type="text"
               id="descriptionEn"
               name="descriptionEn"

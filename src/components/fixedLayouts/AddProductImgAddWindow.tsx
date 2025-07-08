@@ -1,13 +1,17 @@
+// HOOKS
+import { useState, useRef } from 'react';
+
 // COMPONENTS
 import RiAddLine from '@/components/svgs/RiAddLine';
 import RiCheckFill from '@/components/svgs/RiCheckFill';
 import LineMdImageFilled from '@/components/svgs/LineMdImageFilled';
 import LineMdPlus from '@/components/svgs/LineMdPlus';
 import MdiColor from '@/components/svgs/MdiColor';
+import LineMdClose from '@/components/svgs/LineMdClose';
 
 // STORES
 import { 
-  useTabNameStore, useLanguageStore, 
+  useAlertMessageStore, useLanguageStore, 
   useAddProductImgWindowStore, useSelectImgColorWindowStore
 } from '@/stores/index';
 
@@ -17,10 +21,22 @@ import colorsArray from '@/json/colors.json';
 // UTILS
 import getColor from '@/utils/getColor';
 
+// ASSETS
+const ramdanBanner = "/assets/img/ramadan-nights.webp";
+const ramdanBanner2 = "/assets/img/ramadan-nights-2.avif";
+const outfit1 = "/assets/img/outfit.webp"
+const outfit2 = "assets/img/outfit-2.avif"
+const outfit3 = "assets/img/outfit-3.avif"
+
 export default function AddProductImgWindow () {
 
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
+
+  const [ isFileOnDrag, setIsFileOnDrag ] = useState<boolean>(false);
+  const [ preview, setPreview ] = useState<any>(null);
+
+  const productImgInptRef = useRef<HTMLInputElement>(null);
 
   const addToggle = useAddProductImgWindowStore(state => state.toggle);
   const setAddToggle = useAddProductImgWindowStore(state => state.setToggle);
@@ -28,6 +44,17 @@ export default function AddProductImgWindow () {
   const colorToggle = useSelectImgColorWindowStore(state => state.toggle);
   const setColorToggle = useSelectImgColorWindowStore(state => state.setToggle);
   const selectedColor = useSelectImgColorWindowStore(state => state.selectedColor);
+
+  const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
+  const setAlertType = useAlertMessageStore((state) => state.setType);
+  const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
+
+  const previewUploadedImg = (files: any) => {
+    if (!files[0]) return;
+    const reader = new FileReader();
+    reader.onload = (e: any) => setPreview(e.currentTarget.result);
+    reader.readAsDataURL(files[0])
+  }
 
   const handleClick = (
     e: React.MouseEvent<HTMLButtonElement | HTMLDivElement | HTMLLabelElement>
@@ -38,8 +65,6 @@ export default function AddProductImgWindow () {
       case 'cancel_button_is_clicked':
         setAddToggle(false);
         break;
-      case 'add_new_image_button_is_clicked':
-        break;
       case 'change_color_button_is_clicked':
         setColorToggle(true);
         break;
@@ -48,16 +73,36 @@ export default function AddProductImgWindow () {
     }
   }
 
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const { name } = e.currentTarget;
+
+    switch (name) {
+      case 'productImage':
+        const files = e.currentTarget.files;
+        previewUploadedImg(files);
+        break;
+      default:
+        console.error('Unknown type: ', name);
+    }
+  }
+
   const handleDragEnter = (
     e: React.MouseEvent<HTMLButtonElement | HTMLDivElement | HTMLLabelElement>
   ) => {
+    e.preventDefault();
+    e.stopPropagation();
     const { type } = e.currentTarget.dataset;
 
     switch (type) {
       case 'cancel_button_is_clicked':
         setAddToggle(false);
         break;
-      case 'add_new_image_button_is_clicked':
+      case 'upload_img_label':
+        setIsFileOnDrag(true);
         break;
       case 'change_color_button_is_clicked':
         setColorToggle(true);
@@ -70,13 +115,16 @@ export default function AddProductImgWindow () {
   const handleDragLeave = (
     e: React.MouseEvent<HTMLButtonElement | HTMLDivElement | HTMLLabelElement>
   ) => {
+    e.preventDefault();
+    e.stopPropagation();
     const { type } = e.currentTarget.dataset;
 
     switch (type) {
       case 'cancel_button_is_clicked':
         setAddToggle(false);
         break;
-      case 'add_new_image_button_is_clicked':
+      case 'upload_img_label':
+        setIsFileOnDrag(false);
         break;
       case 'change_color_button_is_clicked':
         setColorToggle(true);
@@ -89,13 +137,16 @@ export default function AddProductImgWindow () {
   const handleDragOver = (
     e: React.MouseEvent<HTMLButtonElement | HTMLDivElement | HTMLLabelElement>
   ) => {
+    e.preventDefault();
+    e.stopPropagation();
     const { type } = e.currentTarget.dataset;
 
     switch (type) {
       case 'cancel_button_is_clicked':
         setAddToggle(false);
         break;
-      case 'add_new_image_button_is_clicked':
+      case 'upload_img_label':
+        setIsFileOnDrag(true);
         break;
       case 'change_color_button_is_clicked':
         setColorToggle(true);
@@ -108,13 +159,27 @@ export default function AddProductImgWindow () {
   const handleDrop = (
     e: React.MouseEvent<HTMLButtonElement | HTMLDivElement | HTMLLabelElement>
   ) => {
+    e.preventDefault();
+    e.stopPropagation();
     const { type } = e.currentTarget.dataset;
 
     switch (type) {
       case 'cancel_button_is_clicked':
         setAddToggle(false);
         break;
-      case 'add_new_image_button_is_clicked':
+      case 'upload_img_label':
+        setIsFileOnDrag(false);
+        const files = e.dataTransfer.files;
+        console.log(files);
+
+        if (files.length === 1) {
+          if (productImgInptRef.current) productImgInptRef.current.files = files;
+          previewUploadedImg(files);
+        } else {
+          setAlertToggle(Date.now());
+          setAlertType("error");
+          setAlertMessage(isEn ? `Please upload only one Image` : `الرجاء رفع صوره واحده فقط`);  
+        }
         break;
       case 'change_color_button_is_clicked':
         setColorToggle(true);
@@ -134,7 +199,7 @@ export default function AddProductImgWindow () {
       className={`
         fixed top-0 left-0
         w-full h-full
-        bg-[var(--shade-color)] z-[4000]
+        bg-[var(--shade-color)] z-[2000]
         transition-all duration-200 ease-out
         ${addToggle ? 'visible opacity-100 backdrop-blur-[3px]' : 'invisible opacity-0 backdrop-blur-[0px]'}
       `}
@@ -169,16 +234,17 @@ export default function AddProductImgWindow () {
               {isEn ? 'IMAGE UPLOAD' : ''}
             </h3>
             <label
-              className="
+              className={`
                 relative flex flex-col items-center justify-center 
-                w-[300px] h-[200px] aspect-2/3 rounded-md mx-auto
+                w-[250px] h-[375px] aspect-2/3 rounded-md mx-auto
                 bg-background-light cursor-pointer 
-                border border-dashed border-inbetween border-[2px]
-              "
+                border border-dashed border-[2px] overflow-hidden
+                transition-all duration-300 ease-in-out
+                ${isFileOnDrag ? 'border-content' : 'border-inbetween'}
+              `}
               role="button"
-              data-type="add_new_image_button_is_clicked"
+              data-type="upload_img_label"
               htmlFor="productImage"
-              onClick={handleClick}
               onDragEnter={handleDragEnter}
               onDragLeave={handleDragLeave}
               onDragOver={handleDragOver}
@@ -192,10 +258,45 @@ export default function AddProductImgWindow () {
                 accept="image/*"
                 name="productImage"
                 id="productImage"
+                onChange={handleChange}
+                ref={productImgInptRef}
               />
               <LineMdImageFilled 
                 className="text-inbetween w-8 h-8"
               />
+              <div
+                className={`
+                  absolute top-0 left-0 
+                  w-full h-full bg-background z-[5] 
+                  transition-all duration-300 ease-in-out
+                  ${preview ? 'visible opacity-100' : 'invisible opacity-0'}
+                `}
+              >
+                <img 
+                  className={`
+                    w-full h-full object-cover position-center
+                  `}
+                  src={preview}
+                />
+                <div
+                  className={`
+                    absolute top-0 left-0 
+                    flex flex-row items-center justify-center
+                    w-full h-full bg-shade
+                    opacity-0 hover:opacity-100
+                    transition-all duration-300 ease-in-out
+                  `}
+                >
+                  <LineMdClose 
+                    className="
+                      text-heading-invert hover:bg-shade
+                      w-12 h-12
+                      transition-all duration-300 ease-in-out
+                    "
+                    role="button"
+                  />
+                </div>
+              </div>
               <span
                 className="text-body text-center text-s font-bold"
               >

@@ -93,6 +93,7 @@ export default function SelectImgColorWindow () {
           >
             {colorsArray.map((itm, i) =>
               <li
+                key={i}
                 className="
                   relative h-[70px] rounded-lg cursor-pointer
                 "
