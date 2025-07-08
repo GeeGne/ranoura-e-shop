@@ -282,8 +282,9 @@ export default function Table({ products, isLoading = false, isError = false }: 
                     flex items-center h-[150px] gap-2 
                   "
                 >
-                  {itm.sizes.map((size: string) =>
+                  {itm.sizes.map((size: string, i: number) =>
                     <li
+                      key={i}
                       className="
                         flex items-center justify-center 
                         bg-primary w-6 h-6 text-heading-invert rounded-md

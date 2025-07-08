@@ -20,7 +20,7 @@ import SelectLang from '@/components/fixedLayouts/SelectLang';
 import AlertMessage from '@/components/fixedLayouts/AlertMessage';
 import AllProductImages from '@/components/fixedLayouts/AllProductImages';
 import EditProductWindow from '@/components/fixedLayouts/EditProductWindow';
-import AddProductImgAddWindow from '@/components/fixedLayouts/AddProductImgAddWindow';
+import AddProductImgWindow from '@/components/fixedLayouts/AddProductImgWindow';
 import SelectImgColorWindow from '@/components/fixedLayouts/SelectImgColorWindow';
 import BottomBorder from '@/components/svgs/BottomBorder';
 
@@ -93,7 +93,7 @@ export default function RootLayout({
             <AlertMessage />
             <AllProductImages />
             <EditProductWindow />
-            <AddProductImgAddWindow />
+            <AddProductImgWindow />
             <SelectImgColorWindow />
           </FixedLayouts>
         </Providers>

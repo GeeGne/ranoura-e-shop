@@ -8,6 +8,7 @@ import LineMdImageFilled from '@/components/svgs/LineMdImageFilled';
 import LineMdPlus from '@/components/svgs/LineMdPlus';
 import MdiColor from '@/components/svgs/MdiColor';
 import LineMdClose from '@/components/svgs/LineMdClose';
+import LineMdFolderArrowUp from '@/components/svgs/LineMdFolderArrowUp';
 
 // STORES
 import { 
@@ -26,7 +27,7 @@ const ramdanBanner = "/assets/img/ramadan-nights.webp";
 const ramdanBanner2 = "/assets/img/ramadan-nights-2.avif";
 const outfit1 = "/assets/img/outfit.webp"
 const outfit2 = "assets/img/outfit-2.avif"
-const outfit3 = "assets/img/outfit-3.avif"
+const outfit3 = "assets/imgb/outfit-3.avif"
 
 export default function AddProductImgWindow () {
 
@@ -53,12 +54,14 @@ export default function AddProductImgWindow () {
     if (!files[0]) return;
     const reader = new FileReader();
     reader.onload = (e: any) => setPreview(e.currentTarget.result);
-    reader.readAsDataURL(files[0])
+    reader.readAsDataURL(files[0]);
   }
 
   const handleClick = (
-    e: React.MouseEvent<HTMLButtonElement | HTMLDivElement | HTMLLabelElement>
+    e: React.MouseEvent<HTMLElement>
   ) => {
+    e.preventDefault();
+    e.stopPropagation();
     const { type } = e.currentTarget.dataset;
 
     switch (type) {
@@ -67,6 +70,15 @@ export default function AddProductImgWindow () {
         break;
       case 'change_color_button_is_clicked':
         setColorToggle(true);
+        break;
+      case 'upload_img_remove_button_is_clicked':
+        if (productImgInptRef.current) productImgInptRef.current.value = "";
+        setPreview(null);
+        break;
+      case 'upload_img_div_box_is_clicked':
+        break;
+      case 'upload_img_upload_button_is_clicked':
+        if (productImgInptRef.current) productImgInptRef.current.click();
         break;
       default:
         console.error('Unknown type: ', type);
@@ -91,7 +103,7 @@ export default function AddProductImgWindow () {
   }
 
   const handleDragEnter = (
-    e: React.MouseEvent<HTMLButtonElement | HTMLDivElement | HTMLLabelElement>
+    e: React.MouseEvent<HTMLElement>
   ) => {
     e.preventDefault();
     e.stopPropagation();
@@ -113,7 +125,7 @@ export default function AddProductImgWindow () {
   }
 
   const handleDragLeave = (
-    e: React.MouseEvent<HTMLButtonElement | HTMLDivElement | HTMLLabelElement>
+    e: React.MouseEvent<HTMLElement>
   ) => {
     e.preventDefault();
     e.stopPropagation();
@@ -135,7 +147,7 @@ export default function AddProductImgWindow () {
   }
 
   const handleDragOver = (
-    e: React.MouseEvent<HTMLButtonElement | HTMLDivElement | HTMLLabelElement>
+    e: React.MouseEvent<HTMLElement>
   ) => {
     e.preventDefault();
     e.stopPropagation();
@@ -157,7 +169,7 @@ export default function AddProductImgWindow () {
   }
 
   const handleDrop = (
-    e: React.MouseEvent<HTMLButtonElement | HTMLDivElement | HTMLLabelElement>
+    e: React.DragEvent<HTMLElement>
   ) => {
     e.preventDefault();
     e.stopPropagation();
@@ -170,7 +182,6 @@ export default function AddProductImgWindow () {
       case 'upload_img_label':
         setIsFileOnDrag(false);
         const files = e.dataTransfer.files;
-        console.log(files);
 
         if (files.length === 1) {
           if (productImgInptRef.current) productImgInptRef.current.files = files;
@@ -281,19 +292,33 @@ export default function AddProductImgWindow () {
                 <div
                   className={`
                     absolute top-0 left-0 
-                    flex flex-row items-center justify-center
+                    flex flex-row items-center justify-center gap-8
                     w-full h-full bg-shade
                     opacity-0 hover:opacity-100
                     transition-all duration-300 ease-in-out
                   `}
+                  data-type="upload_img_div_box_is_clicked"
+                  onClick={handleClick}
                 >
-                  <LineMdClose 
+                  <LineMdFolderArrowUp 
                     className="
                       text-heading-invert hover:bg-shade
-                      w-12 h-12
+                      w-16 h-16 p-2
                       transition-all duration-300 ease-in-out
                     "
                     role="button"
+                    data-type="upload_img_upload_button_is_clicked"
+                    onClick={handleClick}
+                  />
+                  <LineMdClose 
+                    className="
+                      text-heading-invert hover:bg-shade
+                      w-16 h-16 p-2
+                      transition-all duration-300 ease-in-out
+                    "
+                    role="button"
+                    data-type="upload_img_remove_button_is_clicked"
+                    onClick={handleClick}
                   />
                 </div>
               </div>
