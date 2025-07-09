@@ -103,7 +103,7 @@ export default function AddProductImgWindow () {
   }
 
   const handleDragEnter = (
-    e: React.MouseEvent<HTMLElement>
+    e: React.DragEvent<HTMLElement>
   ) => {
     e.preventDefault();
     e.stopPropagation();
@@ -125,7 +125,7 @@ export default function AddProductImgWindow () {
   }
 
   const handleDragLeave = (
-    e: React.MouseEvent<HTMLElement>
+    e: React.DragEvent<HTMLElement>
   ) => {
     e.preventDefault();
     e.stopPropagation();
@@ -147,7 +147,7 @@ export default function AddProductImgWindow () {
   }
 
   const handleDragOver = (
-    e: React.MouseEvent<HTMLElement>
+    e: React.DragEvent<HTMLElement>
   ) => {
     e.preventDefault();
     e.stopPropagation();
@@ -219,8 +219,7 @@ export default function AddProductImgWindow () {
         className={`
           absolute top-1/2 left-1/2
           translate-x-[-50%] translate-y-[-50%]
-          h-auto rounded-lg
-          bg-background overflow-hidden
+          h-auto rounded-lg bg-background 
           transition-all delay-100 duration-200 ease-[cubic-bezier(0.68, -0.6, 0.32, 1.6)]
           ${addToggle ? 'scale-100 opacity-100' : 'scale-[80%] opacity-0'}
         `}

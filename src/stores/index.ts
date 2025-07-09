@@ -192,12 +192,16 @@ const useLanguageStore = create<LanguageProps>()(
 type EditProductWindowProps = {
   toggle: boolean;
   setToggle: (value: boolean) => void;
+  productData: Record<string, any>;
+  setProductData: (value: Record<string, any>) => void;
 }
 
 const useEditProductWindowStore = create<EditProductWindowProps>()(
   (set) => ({
     toggle: false,
-    setToggle: (toggle) => set({ toggle })    
+    setToggle: (toggle) => set({ toggle }),
+    productData: {},
+    setProductData: (productData) => set({ productData })
   })
 )
 

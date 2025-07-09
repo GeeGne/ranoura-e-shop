@@ -58,17 +58,19 @@ export default function Table({ products, isLoading = false, isError = false }: 
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
   const setEditProductWindowToggle = useEditProductWindowStore(state => state.setToggle);
+  const setEditProductWindowProductData = useEditProductWindowStore(state => state.setProductData);
   const [ isThemeMutating, setIsThemeMutating ] = useState<{toggle: boolean, index: number}>({
     toggle: false, index: 0
   });
   
-  
+  const getProduct = (id: string) => products?.find(product => product.id === id);
+
   const updateThemeVarsMutation = useMutation({
     mutationFn: updateThemeVars,
     onMutate: () => {
       setIsThemeMutating(val => ({ toggle: true, index: val.index }));
     },
-    onSuccess: (data) => {
+     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['themes']});
       queryClient.refetchQueries({ queryKey: ['themes']});
       setIsThemeMutating(val => ({ toggle: false, index: val.index }));
@@ -95,7 +97,9 @@ export default function Table({ products, isLoading = false, isError = false }: 
 
     switch (type) {
       case 'edit_product_button_is_clicked':
-        setEditProductWindowToggle(true);       
+        setEditProductWindowToggle(true);
+        console.log('getProduct: ', getProduct(productId));
+        // setEditProductWindowProductData(getProduct(productId));
         break;
       case 'copy_button_is_clicked':
         try {

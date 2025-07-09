@@ -25,13 +25,16 @@ export default {
         "content-invert": "var(--content-invert-color)",  
         inbetween: "var(--inbetween-color)",
         background: "var(--background-color)",
+        "background-invert": "var(--background-invert-color)",
         "background-light": "var(--background-light-color)",
         "background-light-invert": "var(--background-light-invert-color)",
         "background-deep-light": "var(--background-deep-light-color)",
         "background-deep-light-invert": "var(--background-deep-light-invert-color)",
         foreground: "var(--background-invert-color)",
         underline: "grey-50",
-        shade: "var(--shade-color)"
+        shade: "var(--shade-color)",
+        'shade-v2': "var(--shade-v2-color)",
+        'shade-v3': "var(--shade-v3-color)"
       },
     },
   },

@@ -1,11 +1,12 @@
 // HOOKS
-import { useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 // COMPONENTS
 import RiAddLine from '@/components/svgs/RiAddLine';
 import RiCheckFill from '@/components/svgs/RiCheckFill';
 import LineMdImageFilled from '@/components/svgs/LineMdImageFilled';
 import LineMdPlus from '@/components/svgs/LineMdPlus';
+import MdiColor from '@/components/svgs/MdiColor';
 
 // STORES
 import { 
@@ -15,6 +16,7 @@ import {
 
 // JSON
 import colorsArray from '@/json/colors.json';
+import subCategories from '@/json/subCategories.json';
 
 // UTILS
 import getColor from '@/utils/getColor';
@@ -34,6 +36,7 @@ export default function EditProductWindow () {
   const setEditToggle = useEditProductWindowStore(state => state.setToggle);
   const addToggle = useAddProductImgWindowStore(state => state.toggle);
   const setAddToggle = useAddProductImgWindowStore(state => state.setToggle);
+  const [ data, setData ] = useState(null);
 
   const nameEnInptRef = useRef<HTMLInputElement>(null);
   const nameArInptRef = useRef<HTMLInputElement>(null);
@@ -161,9 +164,14 @@ export default function EditProductWindow () {
   }
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement | HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
     const { type } = e.currentTarget.dataset;
 
     switch (type) {
+      case 'fixed_window_is_clicked':
+        setEditToggle(false);
+        break;
       case 'cancel_button_is_clicked':
         setEditToggle(false);
         break;
@@ -233,12 +241,14 @@ export default function EditProductWindow () {
         transition-all duration-200 ease-out
         ${editToggle ? 'visible opacity-100 backdrop-blur-[3px]' : 'invisible opacity-0 backdrop-blur-[0px]'}
       `}
+      data-type="fixed_window_is_clicked"
+      onClick={handleClick}
     >
       <div
         className={`
           absolute top-1/2 left-1/2
           translate-x-[-50%] translate-y-[-50%]
-          h-auto rounded-lg
+          h-[calc(100%-4rem)] rounded-lg overflow-y-scroll
           bg-background overflow-hidden
           transition-all delay-100 duration-200 ease-[cubic-bezier(0.68, -0.6, 0.32, 1.6)]
           ${editToggle ? 'scale-100 opacity-100' : 'scale-[0.8] opacity-0'}
@@ -255,40 +265,84 @@ export default function EditProductWindow () {
         </section>
         <hr className="px-2 border-inbetween"/>
         <section
-          className="flex gap-4 w-full justify-center py-4"
+          className="flex flex-col gap-4 items-center py-4"
         >
-          <img 
-            src={outfit1}
-            className="
-              w-[150px] aspect-2/3 rounded-md
-            "
-          />
-          <div
-            className="
-              flex flex-col items-center justify-center 
-              w-[150px] aspect-2/3 rounded-md bg-background-light cursor-pointer
-              border border-dashed border-inbetween border-[2px]
-            "
-            role="button"
-            data-type="add_new_image_button_is_clicked"
-            onClick={handleClick}
+          <ul
+            className="flex gap-4 w-[516px] overflow-x-scroll justify-center mx-auto"
           >
-            <LineMdImageFilled 
-              className="text-inbetween w-6 h-6"
-            />
-            <span
-              className="text-inbetween text-sm font-bold"
+            {[1, 2, 3, 3, 4].map((itm, i) => 
+              <li
+                key={i}
+                className="
+                  relative shrink-0 w-[200px] h-[300px] rounded-md overflow-hidden
+                "
+              >
+                <img 
+                  src={outfit1}
+                  className="
+                    w-full h-full object-cover object-center rounded-md
+                  "
+                />
+                <div
+                  className="
+                    absolute flex flex-col gap-2 bottom-2 left-2 z-[10]
+                  "
+                >
+                  <div
+                    className="
+                      flex items-center justify-evenly bg-shade 
+                      rounded-full w-[50px] h-[25px] 
+                      border border-solid border-background border-[2px] overflow-hidden
+                    "
+                  >
+                    <MdiColor className="text-heading-invert w-5 h-5" />
+                    <div className="w-4 h-4 bg-red-500 rounded-full" />
+                  </div>
+                  <div
+                    className="
+                      flex items-center justify-evenly bg-shade 
+                      rounded-full w-[50px] h-[25px]
+                      border border-solid border-background border-[2px] overflow-hidden
+                    "
+                  >
+                    <LineMdImageFilled className="text-heading-invert w-5 h-5" />
+                    <div 
+                      className="
+                        rounded-full text-sm font-bold text-center text-heading-invert
+                      ">
+                      A
+                    </div>
+                  </div>
+                </div>
+              </li>
+            )}
+            <li
+              className="
+                flex flex-col shrink-0 items-center justify-center 
+                w-[200px] h-[300px] rounded-md bg-background-light cursor-pointer
+                border border-dashed border-inbetween border-[2px]
+              "
+              role="button"
+              data-type="add_new_image_button_is_clicked"
+              onClick={handleClick}
             >
-              Add New Image
-            </span>
-            <LineMdPlus
-              className="text-inbetween w-7 h-7 py-1"
-            />
-          </div>
+              <LineMdImageFilled 
+                className="text-inbetween w-6 h-6"
+              />
+              <span
+                className="text-inbetween text-sm font-bold"
+              >
+                Add New Image
+              </span>
+              <LineMdPlus
+                className="text-inbetween w-7 h-7 py-1"
+              />
+            </li>
+          </ul>
         </section>
         <section
           className="
-            flex flex-col gap-2 w-full h-full p-2
+            flex flex-col gap-2 w-full h-auto p-2
           "
         >
           <label
@@ -624,11 +678,11 @@ export default function EditProductWindow () {
                   flex items-center gap-2 py-2 ml-auto 
                 "
               >
-                {productData.colors.map((color: string, index: number) => 
+                {productData.colors.map((color: string, i: number) => 
                   <li
+                    key={i}
                     className="w-5 h-5 rounded-full"
                     style={{ backgroundColor: getColor(colorsArray, color).hex }}
-                    key={index}
                   />  
                 )}
               </ul>
@@ -872,6 +926,136 @@ export default function EditProductWindow () {
                   "
                 />
               </label>
+            </form>
+          </div>
+          <div
+            className="
+              flex gap-4 items-center w-full bg-background-light rounded-lg p-2
+            "
+          >
+            <h3 className="w-[300px] text-body font-bold">
+              {isEn ? 'TYPE' : 'الصنف'}
+            </h3>
+            <form
+              className="flex flex-wrap justify-end gap-4 ml-auto"
+            >
+              {subCategories.filter(subCategory => subCategory.type === 'clothing').map((category, i) =>
+                <label
+                  key={i}
+                  className="
+                    relative flex gap-2 items-center 
+                    border border-inbetween px-2 py-1 
+                    rounded-lg bg-background overflow-hidden cursor-pointer
+                  "
+                  htmlFor={Date.now() + category.slug}
+                >
+                  <input
+                    className="peer invisible text-heading rounded-lg" 
+                    type="radio"
+                    id={Date.now() + category.slug}
+                    name="typeClothing"
+                    ref={stateAvailableInptRef}
+                  />{' '}
+                  <h4
+                    className="
+                      peer-checked:text-heading text-body text-sm font-bold z-[5]
+                      transition-all duration-300 ease-in-out
+                    "
+                  >
+                    {category.name[isEn ? 'en' : 'ar']}
+                  </h4>
+                  <RiAddLine
+                    className="
+                      peer-checked:invisible visible
+                      peer-checked:opacity-0 opacity-100 
+                      absolute left-2 w-4 h-4 text-body z-[5]
+                      transition-all duration-300 ease-in-out
+                    "
+                  />
+                  <RiCheckFill
+                    className="
+                      peer-checked:visible invisible
+                      peer-checked:opacity-100 opacity-0 
+                      absolute left-2 w-4 h-4 text-heading z-[5]
+                      transition-all duration-300 ease-in-out
+                    "
+                  />
+                  <div 
+                    className="
+                      peer-checked:visible invisible
+                      peer-checked:opacity-100 opacity-0 
+                      absolute top-0 left-0 w-full h-full
+                      bg-green-400
+                      transition-all duration-300 ease-in-out
+                    "
+                  />
+                </label>
+              )}             
+            </form>
+          </div>
+          <div
+            className="
+              flex gap-4 items-center w-full bg-background-light rounded-lg p-2
+            "
+          >
+            <h3 className="w-[300px] text-body font-bold">
+              {isEn ? 'CATEGORIES' : 'فئات'}
+            </h3>
+            <form
+              className="flex flex-wrap justify-end gap-4 ml-auto"
+            >
+              {subCategories.filter(subCategory => subCategory.type !== 'clothing').map((category, i) =>
+                <label
+                  key={i}
+                  className="
+                    relative flex gap-2 items-center 
+                    border border-inbetween px-2 py-1 
+                    rounded-lg bg-background overflow-hidden cursor-pointer
+                  "
+                  htmlFor={Date.now() + category.slug}
+                >
+                  <input
+                    className="peer invisible text-heading rounded-lg" 
+                    type="radio"
+                    id={Date.now() + category.slug}
+                    name="typeClothing"
+                    ref={stateAvailableInptRef}
+                  />{' '}
+                  <h4
+                    className="
+                      peer-checked:text-heading text-body text-sm font-bold z-[5]
+                      transition-all duration-300 ease-in-out
+                    "
+                  >
+                    {category.name[isEn ? 'en' : 'ar']}
+                  </h4>
+                  <RiAddLine
+                    className="
+                      peer-checked:invisible visible
+                      peer-checked:opacity-0 opacity-100 
+                      absolute left-2 w-4 h-4 text-body z-[5]
+                      transition-all duration-300 ease-in-out
+                    "
+                  />
+                  <RiCheckFill
+                    className="
+                      peer-checked:visible invisible
+                      peer-checked:opacity-100 opacity-0 
+                      absolute left-2 w-4 h-4 text-heading z-[5]
+                      transition-all duration-300 ease-in-out
+                    "
+                  />
+                  <div 
+                    className="
+                      peer-checked:visible invisible
+                      peer-checked:opacity-100 opacity-0 
+                      absolute top-0 left-0 w-full h-full
+                      bg-green-400
+                      transition-all duration-300 ease-in-out
+                    "
+                  />
+                </label>
+              )}             
             </form>
           </div>
         </section>
