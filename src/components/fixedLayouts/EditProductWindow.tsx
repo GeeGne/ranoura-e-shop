@@ -36,7 +36,8 @@ export default function EditProductWindow () {
   const setEditToggle = useEditProductWindowStore(state => state.setToggle);
   const addToggle = useAddProductImgWindowStore(state => state.toggle);
   const setAddToggle = useAddProductImgWindowStore(state => state.setToggle);
-  const [ data, setData ] = useState(null);
+  const productData = useEditProductWindowStore(state => state.productData);
+  const setProductData = useEditProductWindowStore(state => state.setProductData);
 
   const nameEnInptRef = useRef<HTMLInputElement>(null);
   const nameArInptRef = useRef<HTMLInputElement>(null);
@@ -58,7 +59,9 @@ export default function EditProductWindow () {
   const statetOutOfStockInptRef = useRef<(HTMLInputElement | null)>(null);
   const stateHiddenInptRef = useRef<(HTMLInputElement | null)>(null);
 
-  const productData = {
+  const typeInptRefs = useRef<any[]>([]);
+
+  const productData1 = {
     id: 3,
     name: {"en": "Blossom Sweater", "ar": "سترة بلوسوم"},
     slug: "bolssom-sweater",
@@ -163,7 +166,7 @@ export default function EditProductWindow () {
     ]
   }
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement | HTMLDivElement>) => {
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     e.stopPropagation();
     const { type } = e.currentTarget.dataset;
@@ -171,6 +174,8 @@ export default function EditProductWindow () {
     switch (type) {
       case 'fixed_window_is_clicked':
         setEditToggle(false);
+        break;
+      case 'fixed_box_is_clicked':
         break;
       case 'cancel_button_is_clicked':
         setEditToggle(false);
@@ -187,50 +192,59 @@ export default function EditProductWindow () {
     const setDefaultValues = () => {
       // Name And Description
       if (nameEnInptRef.current) 
-        nameEnInptRef.current.value = productData.name.en;
+        nameEnInptRef.current.value = productData?.name.en;
       if (nameArInptRef.current) 
-        nameArInptRef.current.value = productData.name.ar;
+        nameArInptRef.current.value = productData?.name.ar;
       if (descriptionEnInptRef.current) 
-        descriptionEnInptRef.current.value = productData.description.en;
+        descriptionEnInptRef.current.value = productData?.description.en;
       if (descriptionArInptRef.current) 
-        descriptionArInptRef.current.value = productData.description.ar;
+        descriptionArInptRef.current.value = productData?.description.ar;
 
       // Sizes
-      if (sizeXSInptRef.current && productData.sizes.includes("XS")) 
+      if (sizeXSInptRef.current && productData?.sizes.includes("XS")) 
         sizeXSInptRef.current.checked = true;
-      if (sizeSInptRef.current && productData.sizes.includes("S")) 
+      if (sizeSInptRef.current && productData?.sizes.includes("S")) 
         sizeSInptRef.current.checked = true;
-      if (sizeMInptRef.current && productData.sizes.includes("M")) 
+      if (sizeMInptRef.current && productData?.sizes.includes("M")) 
         sizeMInptRef.current.checked = true;
-      if (sizeLInptRef.current && productData.sizes.includes("L")) 
+      if (sizeLInptRef.current && productData?.sizes.includes("L")) 
         sizeLInptRef.current.checked = true;
-      if (sizeXLInptRef.current && productData.sizes.includes("XL")) 
+      if (sizeXLInptRef.current && productData?.sizes.includes("XL")) 
         sizeXLInptRef.current.checked = true;
 
       // Price and Discount
       if (priceInptRef.current) 
-        priceInptRef.current.value = String(productData.price);
+        priceInptRef.current.value = String(productData?.price);
       if (discountInptRef.current) 
-        discountInptRef.current.value = String(productData.discount_percent);
+        discountInptRef.current.value = String(productData?.discount_percent);
 
       // New
       if (newInptRef.current) 
-        newInptRef.current.checked = productData.is_new;
+        newInptRef.current.checked = productData?.is_new;
 
       // State
-      if (stateAvailableInptRef.current && productData.state === "available") 
+      if (stateAvailableInptRef.current && productData?.state === "available") 
         stateAvailableInptRef.current.checked = true;
-      if (statetOutOfStockInptRef.current && productData.state === "out-of-stock") 
+      if (statetOutOfStockInptRef.current && productData?.state === "out-of-stock") 
         statetOutOfStockInptRef.current.checked = true;
-      if (stateHiddenInptRef.current && productData.state === "hidden") 
+      if (stateHiddenInptRef.current && productData?.state === "hidden") 
         stateHiddenInptRef.current.checked = true;
+
+      // Type
+      // typeInptRefs.current.find(el => el.type.dataset === productData?.type).checked = true;
+      console.log('selected type input: ', typeInptRefs.current.find(el => el.dataset.type === productData?.type));
     }
-    setDefaultValues();
-  }, []);
+    if (productData) setDefaultValues();
+  }, [productData]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
   }
+
+  // DEBUG & UI
+  // console.log('productData: ', productData);
+  
+  if (!productData) return;
 
   return (
     <div
@@ -253,6 +267,8 @@ export default function EditProductWindow () {
           transition-all delay-100 duration-200 ease-[cubic-bezier(0.68, -0.6, 0.32, 1.6)]
           ${editToggle ? 'scale-100 opacity-100' : 'scale-[0.8] opacity-0'}
         `}
+        data-type="fixed_box_is_clicked"
+        onClick={handleClick}
       >
         <section
           className="
@@ -678,7 +694,7 @@ export default function EditProductWindow () {
                   flex items-center gap-2 py-2 ml-auto 
                 "
               >
-                {productData.colors.map((color: string, i: number) => 
+                {productData?.colors.map((color: string, i: number) => 
                   <li
                     key={i}
                     className="w-5 h-5 rounded-full"
@@ -774,7 +790,7 @@ export default function EditProductWindow () {
             "
           >
             <h3 className="text-body font-bold">
-              {isEn ? 'state' : 'الحاله'}
+              {isEn ? 'State' : 'الحاله'}
             </h3>
             <form
               className="flex gap-4 ml-auto"
@@ -954,6 +970,7 @@ export default function EditProductWindow () {
                     type="radio"
                     id={Date.now() + category.slug}
                     name="typeClothing"
+                    data-type={category.type}
                     ref={stateAvailableInptRef}
                   />{' '}
                   <h4
@@ -1019,7 +1036,7 @@ export default function EditProductWindow () {
                     type="radio"
                     id={Date.now() + category.slug}
                     name="typeClothing"
-                    ref={stateAvailableInptRef}
+                    ref={(el: any) => typeInptRefs.current[i] = el}
                   />{' '}
                   <h4
                     className="

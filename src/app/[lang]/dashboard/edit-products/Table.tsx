@@ -98,8 +98,8 @@ export default function Table({ products, isLoading = false, isError = false }: 
     switch (type) {
       case 'edit_product_button_is_clicked':
         setEditProductWindowToggle(true);
-        console.log('getProduct: ', getProduct(productId));
-        // setEditProductWindowProductData(getProduct(productId));
+        if (productId) 
+          setEditProductWindowProductData(getProduct(productId));
         break;
       case 'copy_button_is_clicked':
         try {
