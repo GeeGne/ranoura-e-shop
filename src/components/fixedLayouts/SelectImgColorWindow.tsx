@@ -31,9 +31,16 @@ export default function SelectImgColorWindow () {
   const [ selectedColorByName, setSelectedColorByName ] = useState<any>('');
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
+    e.preventDefault();
     const { type, colorName } = e.currentTarget.dataset;
 
     switch (type) {
+      case 'fixed_window_is_clicked':
+        setToggle(false);
+        break;
+      case 'fixed_box_is_clicked':
+        break;
       case 'add_new_image_button_is_clicked':
         break;
       case 'color_button_is_clicked':
@@ -64,6 +71,8 @@ export default function SelectImgColorWindow () {
         transition-all duration-200 ease-out
         ${toggle ? 'visible opacity-100 backdrop-blur-[3px]' : 'invisible opacity-0 backdrop-blur-[0px]'}
       `}
+      data-type="fixed_window_is_clicked"
+      onClick={handleClick}
     >
       <div
         className={`
@@ -74,6 +83,8 @@ export default function SelectImgColorWindow () {
           transition-all delay-100 duration-200 ease-[cubic-bezier(0.68, -0.6, 0.32, 1.6)]
           ${toggle ? 'scale-100 opacity-100' : 'scale-[80%] opacity-0'}
         `}
+        data-type="fixed_box_is_clicked"
+        onClick={handleClick}
       >
         <section
           className="

@@ -232,7 +232,7 @@ export default function EditProductWindow () {
 
       // Type
       // typeInptRefs.current.find(el => el.type.dataset === productData?.type).checked = true;
-      console.log('selected type input: ', typeInptRefs.current.find(el => el.dataset.type === productData?.type));
+      if (typeInptRefs.current) typeInptRefs.current.find(el => el.dataset.type === productData?.type).checked = true;
     }
     if (productData) setDefaultValues();
   }, [productData]);
@@ -970,8 +970,8 @@ export default function EditProductWindow () {
                     type="radio"
                     id={Date.now() + category.slug}
                     name="typeClothing"
-                    data-type={category.type}
-                    ref={stateAvailableInptRef}
+                    data-type={category.slug}
+                    ref={(el: any) => typeInptRefs.current[i] = el}
                   />{' '}
                   <h4
                     className="
@@ -1036,7 +1036,7 @@ export default function EditProductWindow () {
                     type="radio"
                     id={Date.now() + category.slug}
                     name="typeClothing"
-                    ref={(el: any) => typeInptRefs.current[i] = el}
+                    // ref={(el: any) => typeInptRefs.current[i] = el}
                   />{' '}
                   <h4
                     className="

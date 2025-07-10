@@ -65,6 +65,11 @@ export default function AddProductImgWindow () {
     const { type } = e.currentTarget.dataset;
 
     switch (type) {
+      case 'fixed_window_is_clicked':
+        setAddToggle(false);
+        break;
+      case 'fixed_box_is_clicked':
+        break;
       case 'cancel_button_is_clicked':
         setAddToggle(false);
         break;
@@ -179,6 +184,9 @@ export default function AddProductImgWindow () {
       case 'cancel_button_is_clicked':
         setAddToggle(false);
         break;
+      case 'cancel_button_is_clicked':
+        setAddToggle(false);
+        break;
       case 'upload_img_label':
         setIsFileOnDrag(false);
         const files = e.dataTransfer.files;
@@ -214,6 +222,8 @@ export default function AddProductImgWindow () {
         transition-all duration-200 ease-out
         ${addToggle ? 'visible opacity-100 backdrop-blur-[3px]' : 'invisible opacity-0 backdrop-blur-[0px]'}
       `}
+      data-type="fixed_window_is_clicked"
+      onClick={handleClick}
     >
       <div
         className={`
@@ -223,6 +233,8 @@ export default function AddProductImgWindow () {
           transition-all delay-100 duration-200 ease-[cubic-bezier(0.68, -0.6, 0.32, 1.6)]
           ${addToggle ? 'scale-100 opacity-100' : 'scale-[80%] opacity-0'}
         `}
+        data-type="fixed_box_is_clicked"
+        onClick={handleClick}
       >
         <section
           className="
