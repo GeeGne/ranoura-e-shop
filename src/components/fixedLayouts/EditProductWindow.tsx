@@ -61,6 +61,8 @@ export default function EditProductWindow () {
 
   const typeInptRefs = useRef<any[]>([]);
 
+  const categoriesInptRefs = useRef<any[]>([]);
+
   const productData1 = {
     id: 3,
     name: {"en": "Blossom Sweater", "ar": "سترة بلوسوم"},
@@ -167,7 +169,6 @@ export default function EditProductWindow () {
   }
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
     e.stopPropagation();
     const { type } = e.currentTarget.dataset;
 
@@ -231,8 +232,12 @@ export default function EditProductWindow () {
         stateHiddenInptRef.current.checked = true;
 
       // Type
-      // typeInptRefs.current.find(el => el.type.dataset === productData?.type).checked = true;
-      if (typeInptRefs.current) typeInptRefs.current.find(el => el.dataset.type === productData?.type).checked = true;
+      if (typeInptRefs.current) 
+        typeInptRefs.current.find(el => el.dataset.type === productData?.type).checked = true;
+
+      // Categories
+      if (categoriesInptRefs.current) 
+        categoriesInptRefs.current.find(el => productData?.categories.includes(el.dataset.type)).checked = true;
     }
     if (productData) setDefaultValues();
   }, [productData]);
@@ -790,7 +795,7 @@ export default function EditProductWindow () {
             "
           >
             <h3 className="text-body font-bold">
-              {isEn ? 'State' : 'الحاله'}
+              {isEn ? 'STATE' : 'الحاله'}
             </h3>
             <form
               className="flex gap-4 ml-auto"
@@ -1035,8 +1040,9 @@ export default function EditProductWindow () {
                     className="peer invisible text-heading rounded-lg" 
                     type="radio"
                     id={Date.now() + category.slug}
-                    name="typeClothing"
-                    // ref={(el: any) => typeInptRefs.current[i] = el}
+                    name="categories"
+                    data-type={category.slug}
+                    ref={(el: any) => categoriesInptRefs.current[i] = el}
                   />{' '}
                   <h4
                     className="

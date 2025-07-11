@@ -60,7 +60,6 @@ export default function AddProductImgWindow () {
   const handleClick = (
     e: React.MouseEvent<HTMLElement>
   ) => {
-    e.preventDefault();
     e.stopPropagation();
     const { type } = e.currentTarget.dataset;
 

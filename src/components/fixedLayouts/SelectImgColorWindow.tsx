@@ -32,7 +32,6 @@ export default function SelectImgColorWindow () {
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
-    e.preventDefault();
     const { type, colorName } = e.currentTarget.dataset;
 
     switch (type) {
