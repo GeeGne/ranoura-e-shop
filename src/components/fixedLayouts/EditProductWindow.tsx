@@ -39,6 +39,8 @@ export default function EditProductWindow () {
   const productData = useEditProductWindowStore(state => state.productData);
   const setProductData = useEditProductWindowStore(state => state.setProductData);
 
+  const [ updatedData, setUpdatedData ] = useState<Record<any, any>>({test: 'asfd'});
+
   const nameEnInptRef = useRef<HTMLInputElement>(null);
   const nameArInptRef = useRef<HTMLInputElement>(null);
   const descriptionEnInptRef = useRef<HTMLInputElement>(null);
@@ -65,7 +67,7 @@ export default function EditProductWindow () {
 
   const productData1 = {
     id: 3,
-    name: {"en": "Blossom Sweater", "ar": "سترة بلوسوم"},
+    name: {en: "Blossom Sweater", ar: "سترة بلوسوم"},
     slug: "bolssom-sweater",
     description: {"en": "Cozy Floral-Embroidered Relaxed Sweater", "ar": "كنزة مريحة مطرزة بزهور"},
     type: "t-shirts",
@@ -168,27 +170,6 @@ export default function EditProductWindow () {
     ]
   }
 
-  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    e.stopPropagation();
-    const { type } = e.currentTarget.dataset;
-
-    switch (type) {
-      case 'fixed_window_is_clicked':
-        setEditToggle(false);
-        break;
-      case 'fixed_box_is_clicked':
-        break;
-      case 'cancel_button_is_clicked':
-        setEditToggle(false);
-        break;
-      case 'add_new_image_button_is_clicked':
-        setAddToggle(true);
-        break;
-      default:
-        console.error('Unknown type: ', type);
-    }
-  }
-
   useEffect(() => {
     const setDefaultValues = () => {
       // Name And Description
@@ -239,15 +220,79 @@ export default function EditProductWindow () {
       if (categoriesInptRefs.current) 
         categoriesInptRefs.current.find(el => productData?.categories.includes(el.dataset.type)).checked = true;
     }
-    if (productData) setDefaultValues();
+    if (!productData) return;
+    setDefaultValues();
+    setUpdatedData(productData);
   }, [productData]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
+    const { type } = e.currentTarget.dataset;
+
+    switch (type) {
+      case 'fixed_window_is_clicked':
+        setEditToggle(false);
+        break;
+      case 'fixed_box_is_clicked':
+        break;
+      case 'cancel_button_is_clicked':
+        setEditToggle(false);
+        break;
+      case 'add_new_image_button_is_clicked':
+        setAddToggle(true);
+        break;
+      default:
+        console.error('Unknown type: ', type);
+    }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.currentTarget;
+    const { info } = e.currentTarget.dataset;
+
+    switch(name) {
+      case'nameEn':
+        setUpdatedData(val => ({ 
+          ...val, name: {en: value, ar: val.name.ar} 
+        }));
+        break;
+      case'nameAr':
+        setUpdatedData(val => ({ 
+          ...val, name: {en: val.name.en, ar: value} 
+        }));
+        break;
+      case'descriptionEn':
+        setUpdatedData(val => ({ 
+          ...val, description: {en: value, ar: val.description.ar} 
+        }));
+        break;
+      case'descriptionAr':
+        setUpdatedData(val => ({ 
+          ...val, description: {en: val.description.en, ar: value }
+        }));
+        break;
+      case'sizeXSmall':
+      case'sizeSmall':
+      case'sizeMedium':
+      case'sizeLarge':
+      case'sizeExtraLarge':
+        const removeDuplicates = (arr: any[]) => [ ...new Set(arr) ]; 
+        const sizeArray = removeDuplicates(updatedData.sizes);
+        if (e.currentTarget.checked) return setUpdatedData(val => ({ 
+          ...val, sizes: [ ...sizeArray, info ] 
+        }));
+
+        setUpdatedData(val => ({ ...val, sizes: sizeArray.filter((size: string) => size !== info ) }));
+        break;
+      default:
+        console.error('Unknown name: ', name);
+    }
   }
 
   // DEBUG & UI
   // console.log('productData: ', productData);
+  console.log('updatedData: ', updatedData);
   
   if (!productData) return;
 
@@ -267,7 +312,7 @@ export default function EditProductWindow () {
         className={`
           absolute top-1/2 left-1/2
           translate-x-[-50%] translate-y-[-50%]
-          h-[calc(100%-4rem)] rounded-lg overflow-y-scroll
+          h-[calc(100%-2rem)] rounded-lg overflow-y-scroll
           bg-background overflow-hidden
           transition-all delay-100 duration-200 ease-[cubic-bezier(0.68, -0.6, 0.32, 1.6)]
           ${editToggle ? 'scale-100 opacity-100' : 'scale-[0.8] opacity-0'}
@@ -383,6 +428,7 @@ export default function EditProductWindow () {
               type="text"
               id="nameEn"
               name="nameEn"
+              onChange={handleChange}
               ref={nameEnInptRef}
             />
             <h4>
@@ -393,6 +439,7 @@ export default function EditProductWindow () {
               type="text"
               id="nameAr"
               name="nameAr"
+              onChange={handleChange}
               ref={nameArInptRef}
             />
           </label>
@@ -413,6 +460,7 @@ export default function EditProductWindow () {
               type="text"
               id="descriptionEn"
               name="descriptionEn"
+              onChange={handleChange}
               ref={descriptionEnInptRef}
             />
             <h4>
@@ -421,8 +469,8 @@ export default function EditProductWindow () {
             <input 
               className="p-2 text-heading rounded-lg"
               type="text"
-              id="descripionAr"
-              name="descripionAr"
+              id="descriptionAr"
+              name="descriptionAr"
               onChange={handleChange}
               ref={descriptionArInptRef}
             />
@@ -451,6 +499,8 @@ export default function EditProductWindow () {
                   type="checkbox"
                   id="sizeXSmall"
                   name="sizeXSmall"
+                  data-info="XS"
+                  onChange={handleChange}
                   ref={sizeXSInptRef}
                 />{' '}
                 <h4
@@ -500,6 +550,8 @@ export default function EditProductWindow () {
                   type="checkbox"
                   id="sizeSmall"
                   name="sizeSmall"
+                  data-type="S"
+                  onChange={handleChange}
                   ref={sizeSInptRef}
                 />{' '}
                 <h4
@@ -549,6 +601,8 @@ export default function EditProductWindow () {
                   type="checkbox"
                   id="sizeMedium"
                   name="sizeMedium"
+                  data-type="MD"
+                  onChange={handleChange}
                   ref={sizeMInptRef}
                 />{' '}
                 <h4
@@ -598,6 +652,8 @@ export default function EditProductWindow () {
                   type="checkbox"
                   id="sizeLarge"
                   name="sizeLarge"
+                  data-type="LG"
+                  onChange={handleChange}
                   ref={sizeLInptRef}
                 />{' '}
                 <h4
@@ -647,6 +703,8 @@ export default function EditProductWindow () {
                   type="checkbox"
                   id="sizeExtraLarge"
                   name="sizeExtraLarge"
+                  data-type="XL"
+                  onChange={handleChange}
                   ref={sizeXLInptRef}
                 />{' '}
                 <h4

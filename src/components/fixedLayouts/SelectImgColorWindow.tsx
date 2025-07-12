@@ -1,5 +1,5 @@
 // HOOKS
-import { useState } from 'react';
+import { useState, useReducer } from 'react';
 
 // COMPONENTS
 import RiAddLine from '@/components/svgs/RiAddLine';
@@ -75,9 +75,9 @@ export default function SelectImgColorWindow () {
     >
       <div
         className={`
-          absolute top-1/2 left-1/2
+          absolute top-1/2 left-1/2 
           translate-x-[-50%] translate-y-[-50%]
-          h-auto rounded-lg
+          h-[calc(100%-2rem)] rounded-lg overflow-y-scroll
           bg-background overflow-hidden
           transition-all delay-100 duration-200 ease-[cubic-bezier(0.68, -0.6, 0.32, 1.6)]
           ${toggle ? 'scale-100 opacity-100' : 'scale-[80%] opacity-0'}

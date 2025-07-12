@@ -60,6 +60,7 @@ export default function AddProductImgWindow () {
   const handleClick = (
     e: React.MouseEvent<HTMLElement>
   ) => {
+    // e.preventDefault();
     e.stopPropagation();
     const { type } = e.currentTarget.dataset;
 
@@ -68,6 +69,10 @@ export default function AddProductImgWindow () {
         setAddToggle(false);
         break;
       case 'fixed_box_is_clicked':
+        break;
+      case 'upload_img_label':
+      case 'upload_img_upload_button_is_clicked':
+        if (productImgInptRef.current) productImgInptRef.current.click();
         break;
       case 'cancel_button_is_clicked':
         setAddToggle(false);
@@ -80,9 +85,6 @@ export default function AddProductImgWindow () {
         setPreview(null);
         break;
       case 'upload_img_div_box_is_clicked':
-        break;
-      case 'upload_img_upload_button_is_clicked':
-        if (productImgInptRef.current) productImgInptRef.current.click();
         break;
       default:
         console.error('Unknown type: ', type);
@@ -228,7 +230,7 @@ export default function AddProductImgWindow () {
         className={`
           absolute top-1/2 left-1/2
           translate-x-[-50%] translate-y-[-50%]
-          h-auto rounded-lg bg-background 
+          h-[calc(100%-2rem)] rounded-lg bg-background overflow-y-scroll
           transition-all delay-100 duration-200 ease-[cubic-bezier(0.68, -0.6, 0.32, 1.6)]
           ${addToggle ? 'scale-100 opacity-100' : 'scale-[80%] opacity-0'}
         `}
@@ -254,7 +256,7 @@ export default function AddProductImgWindow () {
             <h3 className="text-body font-bold">
               {isEn ? 'IMAGE UPLOAD' : ''}
             </h3>
-            <label
+            <div
               className={`
                 relative flex flex-col items-center justify-center 
                 w-[250px] h-[375px] aspect-2/3 rounded-md mx-auto
@@ -265,7 +267,8 @@ export default function AddProductImgWindow () {
               `}
               role="button"
               data-type="upload_img_label"
-              htmlFor="productImage"
+              // htmlFor="productImage"
+              onClick={handleClick}
               onDragEnter={handleDragEnter}
               onDragLeave={handleDragLeave}
               onDragOver={handleDragOver}
@@ -358,7 +361,7 @@ export default function AddProductImgWindow () {
 
                 </span>
               </div>
-            </label>
+            </div>
           </div>
           <div
             className="flex items-center justify-between w-full p-2 gap-8 bg-background-light rounded-lg"
