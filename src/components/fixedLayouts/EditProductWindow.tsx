@@ -285,6 +285,10 @@ export default function EditProductWindow () {
 
         setUpdatedData(val => ({ ...val, sizes: sizeArray.filter((size: string) => size !== info ) }));
         break;
+      case 'price':
+      case 'discount_percent':
+        setUpdatedData(val => ({ ...val, [name]: value }))
+        break;
       default:
         console.error('Unknown name: ', name);
     }
@@ -782,6 +786,7 @@ export default function EditProductWindow () {
               type="text"
               name="price"
               id="price"
+              onChange={handleChange}
               ref={priceInptRef}
             />
           </label>
@@ -789,7 +794,7 @@ export default function EditProductWindow () {
             className="
               flex gap-2 items-center w-full bg-background-light rounded-lg p-2
             "
-            htmlFor="discount"
+            htmlFor="discount_percent"
           >
             <h3 className="text-body font-bold">
               {isEn ? 'DISCOUNT' : 'التخفيض'}
@@ -799,8 +804,9 @@ export default function EditProductWindow () {
                 flex items-center gap-2 p-2 ml-auto rounded-lg w-10 text-center
               "
               type="text"
-              name="discount"
-              id="discount"
+              name="discount_percent"
+              id="discount_percent"
+              onChange={handleChange}
               ref={discountInptRef}
             />
             <span className="text-heading font-bold">%</span>
