@@ -272,22 +272,23 @@ export default function EditProductWindow () {
           ...val, description: {en: val.description.en, ar: value }
         }));
         break;
-      case'sizeXSmall':
-      case'sizeSmall':
-      case'sizeMedium':
-      case'sizeLarge':
-      case'sizeExtraLarge':
+      case'sizes':
+      case'categories':
         const removeDuplicates = (arr: any[]) => [ ...new Set(arr) ]; 
-        const sizeArray = removeDuplicates(updatedData.sizes);
+        const sizeArray = removeDuplicates(updatedData[name]);
         if (e.currentTarget.checked) return setUpdatedData(val => ({ 
-          ...val, sizes: [ ...sizeArray, info ] 
+          ...val, [name]: [ ...sizeArray, info ] 
         }));
 
-        setUpdatedData(val => ({ ...val, sizes: sizeArray.filter((size: string) => size !== info ) }));
+        setUpdatedData(val => ({ ...val, [name]: sizeArray.filter((name: string) => name !== info ) }));
         break;
       case 'price':
       case 'discount_percent':
-        setUpdatedData(val => ({ ...val, [name]: value }))
+        setUpdatedData(val => ({ ...val, [name]: value }));
+        break;
+      case 'state':
+      case 'type':
+        setUpdatedData(val => ({ ...val, [name]: info }));
         break;
       default:
         console.error('Unknown name: ', name);
@@ -502,7 +503,7 @@ export default function EditProductWindow () {
                   className="peer invisible text-heading rounded-lg" 
                   type="checkbox"
                   id="sizeXSmall"
-                  name="sizeXSmall"
+                  name="sizes"
                   data-info="XS"
                   onChange={handleChange}
                   ref={sizeXSInptRef}
@@ -553,8 +554,8 @@ export default function EditProductWindow () {
                   className="peer invisible text-heading rounded-lg" 
                   type="checkbox"
                   id="sizeSmall"
-                  name="sizeSmall"
-                  data-type="S"
+                  name="sizes"
+                  data-info="S"
                   onChange={handleChange}
                   ref={sizeSInptRef}
                 />{' '}
@@ -604,8 +605,8 @@ export default function EditProductWindow () {
                   className="peer invisible text-heading rounded-lg" 
                   type="checkbox"
                   id="sizeMedium"
-                  name="sizeMedium"
-                  data-type="MD"
+                  name="sizes"
+                  data-info="MD"
                   onChange={handleChange}
                   ref={sizeMInptRef}
                 />{' '}
@@ -655,8 +656,8 @@ export default function EditProductWindow () {
                   className="peer invisible text-heading rounded-lg" 
                   type="checkbox"
                   id="sizeLarge"
-                  name="sizeLarge"
-                  data-type="LG"
+                  name="sizes"
+                  data-info="LG"
                   onChange={handleChange}
                   ref={sizeLInptRef}
                 />{' '}
@@ -706,8 +707,8 @@ export default function EditProductWindow () {
                   className="peer invisible text-heading rounded-lg" 
                   type="checkbox"
                   id="sizeExtraLarge"
-                  name="sizeExtraLarge"
-                  data-type="XL"
+                  name="sizes"
+                  data-info="XL"
                   onChange={handleChange}
                   ref={sizeXLInptRef}
                 />{' '}
@@ -876,7 +877,9 @@ export default function EditProductWindow () {
                   className="peer invisible text-heading rounded-lg" 
                   type="radio"
                   id="stateAvailable"
-                  name="productState"
+                  name="state"
+                  data-info="available"
+                  onChange={handleChange}
                   ref={stateAvailableInptRef}
                 />{' '}
                 <h4
@@ -925,7 +928,9 @@ export default function EditProductWindow () {
                   className="peer invisible text-heading rounded-lg" 
                   type="radio"
                   id="stateOutOfStock"
-                  name="productState"
+                  name="state"
+                  data-info="out-of-stock"
+                  onChange={handleChange}
                   ref={statetOutOfStockInptRef}
                 />{' '}
                 <h4
@@ -974,7 +979,9 @@ export default function EditProductWindow () {
                   className="peer invisible text-heading rounded-lg" 
                   type="radio"
                   id="stateHidden"
-                  name="productState"
+                  name="state"
+                  data-info="hidden"
+                  onChange={handleChange}
                   ref={stateHiddenInptRef}
                 />{' '}
                 <h4
@@ -1038,8 +1045,10 @@ export default function EditProductWindow () {
                     className="peer invisible text-heading rounded-lg" 
                     type="radio"
                     id={Date.now() + category.slug}
-                    name="typeClothing"
+                    name="type"
                     data-type={category.slug}
+                    data-info={category.slug}
+                    onChange={handleChange}
                     ref={(el: any) => typeInptRefs.current[i] = el}
                   />{' '}
                   <h4
@@ -1102,10 +1111,12 @@ export default function EditProductWindow () {
                 >
                   <input
                     className="peer invisible text-heading rounded-lg" 
-                    type="radio"
+                    type="checkbox"
                     id={Date.now() + category.slug}
                     name="categories"
                     data-type={category.slug}
+                    data-info={category.slug}
+                    onChange={handleChange}
                     ref={(el: any) => categoriesInptRefs.current[i] = el}
                   />{' '}
                   <h4
