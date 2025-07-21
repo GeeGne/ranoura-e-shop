@@ -7,6 +7,7 @@ import RiCheckFill from '@/components/svgs/RiCheckFill';
 import LineMdImageFilled from '@/components/svgs/LineMdImageFilled';
 import LineMdPlus from '@/components/svgs/LineMdPlus';
 import MdiColor from '@/components/svgs/MdiColor';
+import CarbonCategory from '@/components/svgs/CarbonCategory';
 
 // STORES
 import { 
@@ -16,7 +17,9 @@ import {
 
 // JSON
 import colorsArray from '@/json/colors.json';
-import subCategories from '@/json/subCategories.json';
+// import subCategories from '@/json/subCategories.json';
+import subCategories from '@/json/subCategoriesV2.json';
+import categories from '@/json/categories.json';
 
 // UTILS
 import getColor from '@/utils/getColor';
@@ -36,7 +39,7 @@ export default function EditProductWindow () {
   const setEditToggle = useEditProductWindowStore(state => state.setToggle);
   const addToggle = useAddProductImgWindowStore(state => state.toggle);
   const setAddToggle = useAddProductImgWindowStore(state => state.setToggle);
-  const productData = useEditProductWindowStore(state => state.productData);
+  // const productData = useEditProductWindowStore(state => state.productData);
   const setProductData = useEditProductWindowStore(state => state.setProductData);
 
   const [ updatedData, setUpdatedData ] = useState<Record<any, any>>({test: 'asfd'});
@@ -65,13 +68,14 @@ export default function EditProductWindow () {
 
   const categoriesInptRefs = useRef<any[]>([]);
 
-  const productData1 = {
+  // const productData1 = {
+  const productData = {
     id: 3,
-    name: {en: "Blossom Sweater", ar: "سترة بلوسوم"},
+    name: { en: "Blossom Sweater", ar: "سترة بلوسوم" },
     slug: "bolssom-sweater",
-    description: {"en": "Cozy Floral-Embroidered Relaxed Sweater", "ar": "كنزة مريحة مطرزة بزهور"},
+    description: { "en": "Cozy Floral-Embroidered Relaxed Sweater", "ar": "كنزة مريحة مطرزة بزهور" },
     type: "t-shirts",
-    categories: ["clothing", "t-shirts", "new", "what's-new", "sale", "hot-deals", "latest-arrivals"],
+    categories: ["clothing/outfit-pairs", "sale/latest-arrivals", "sale/hot-deals"],
     is_new: true,
     state: "available",
     sizes: ["M", "L"],
@@ -220,6 +224,7 @@ export default function EditProductWindow () {
       if (categoriesInptRefs.current) 
         categoriesInptRefs.current.find(el => productData?.categories.includes(el.dataset.type)).checked = true;
     }
+    return;
     if (!productData) return;
     setDefaultValues();
     setUpdatedData(productData);
@@ -1082,7 +1087,9 @@ export default function EditProductWindow () {
             <form
               className="flex flex-wrap justify-end gap-4 ml-auto"
             >
-              {subCategories.filter(subCategory => subCategory.type === 'clothing').map((category, i) =>
+              {subCategories
+                .filter(subCategory => subCategory.parent_category_slug === 'clothing')
+                .map((category, i) =>
                 <label
                   key={i}
                   className="
@@ -1144,67 +1151,99 @@ export default function EditProductWindow () {
               flex gap-4 items-center w-full bg-background-light rounded-lg p-2
             "
           >
-            <h3 className="w-[300px] text-body font-bold">
+            <h3 className="w-auto text-body font-bold">
               {isEn ? 'CATEGORIES' : 'فئات'}
             </h3>
             <form
-              className="flex flex-wrap justify-end gap-4 ml-auto"
+              className="flex flex-1 flex-wrap justify-end gap-4 ml-auto"
             >
-              {subCategories.filter(subCategory => subCategory.type !== 'clothing').map((category, i) =>
-                <label
-                  key={i}
-                  className="
-                    relative flex gap-2 items-center 
-                    border border-inbetween px-2 py-1 
-                    rounded-lg bg-background overflow-hidden cursor-pointer
-                  "
-                  htmlFor={Date.now() + category.slug}
-                >
-                  <input
-                    className="peer invisible text-heading rounded-lg" 
-                    type="checkbox"
-                    id={Date.now() + category.slug}
-                    name="categories"
-                    data-type={category.slug}
-                    data-info={category.slug}
-                    onChange={handleChange}
-                    ref={(el: any) => categoriesInptRefs.current[i] = el}
-                  />{' '}
-                  <h4
-                    className="
-                      peer-checked:text-heading text-body text-sm font-bold z-[5]
-                      transition-all duration-300 ease-in-out
-                    "
+              <ul
+                className="flex flex-col gap-4"
+              >
+                {categories
+                  .filter(category => category.slug !== 'clothing')
+                  .map(category =>
+                  <li
+                    className="flex flex-col gap-4 bg-background p-4 rounded-lg border border-solid border-[2px] border-body-light-invert"
                   >
-                    {category.name[isEn ? 'en' : 'ar']}
-                  </h4>
-                  <RiAddLine
-                    className="
-                      peer-checked:invisible visible
-                      peer-checked:opacity-0 opacity-100 
-                      absolute left-2 w-4 h-4 text-body z-[5]
-                      transition-all duration-300 ease-in-out
-                    "
-                  />
-                  <RiCheckFill
-                    className="
-                      peer-checked:visible invisible
-                      peer-checked:opacity-100 opacity-0 
-                      absolute left-2 w-4 h-4 text-heading z-[5]
-                      transition-all duration-300 ease-in-out
-                    "
-                  />
-                  <div 
-                    className="
-                      peer-checked:visible invisible
-                      peer-checked:opacity-100 opacity-0 
-                      absolute top-0 left-0 w-full h-full
-                      bg-green-400
-                      transition-all duration-300 ease-in-out
-                    "
-                  />
-                </label>
-              )}             
+                    <div
+                      className="flex items-center gap-2"
+                    >
+                      <CarbonCategory 
+                        className="text-heading w-4"
+                      />
+                      <h3
+                        className="text-lg text-heading font-bold"
+                      >
+                        {category.name[isEn ? 'en' : 'ar']}
+                      </h3>
+                    </div>
+                    <ul
+                      className="flex w-full gap-4"
+                    >
+                      {subCategories
+                        .filter(subCategory => subCategory.parent_category_slug === category.slug)
+                        .map((category, i) =>
+                        <li>
+                          <label
+                            key={i}
+                            className="
+                              relative flex gap-2 items-center 
+                              border border-inbetween px-2 py-1 
+                              rounded-lg bg-background overflow-hidden cursor-pointer
+                            "
+                            htmlFor={Date.now() + category.slug}
+                          >
+                            <input
+                              className="peer invisible text-heading rounded-lg" 
+                              type="checkbox"
+                              id={Date.now() + category.slug}
+                              name="categories"
+                              data-type={category.slug}
+                              data-info={category.slug}
+                              onChange={handleChange}
+                              ref={(el: any) => categoriesInptRefs.current[i] = el}
+                            />{' '}
+                            <h4
+                              className="
+                                peer-checked:text-heading text-body text-sm font-bold z-[5]
+                                transition-all duration-300 ease-in-out
+                              "
+                            >
+                              {category.name[isEn ? 'en' : 'ar']}
+                            </h4>
+                            <RiAddLine
+                              className="
+                                peer-checked:invisible visible
+                                peer-checked:opacity-0 opacity-100 
+                                absolute left-2 w-4 h-4 text-body z-[5]
+                                transition-all duration-300 ease-in-out
+                              "
+                            />
+                            <RiCheckFill
+                              className="
+                                peer-checked:visible invisible
+                                peer-checked:opacity-100 opacity-0 
+                                absolute left-2 w-4 h-4 text-heading z-[5]
+                                transition-all duration-300 ease-in-out
+                              "
+                            />
+                            <div 
+                              className="
+                                peer-checked:visible invisible
+                                peer-checked:opacity-100 opacity-0 
+                                absolute top-0 left-0 w-full h-full
+                                bg-green-400
+                                transition-all duration-300 ease-in-out
+                              "
+                            />
+                          </label>
+                        </li>
+                      )}                                   
+                    </ul>
+                  </li>
+                )}
+              </ul>
             </form>
           </div>
         </section>
