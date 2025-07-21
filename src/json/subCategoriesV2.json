@@ -1,0 +1,99 @@
+[
+  {
+    "name": {"en":"JEANS", "ar": "جينز"},
+    "slug": "jeans",
+    "parent_category_slug": "clothing",
+    "path": "clothing/jeans",
+    "image": "/assets/img/cloth-11-sky.avif"
+  },{
+    "name": {"en": "JACKETS", "ar": "جواكيت"},
+    "slug": "jackets",
+    "parent_category_slug": "clothing",
+    "path": "clothing/jackets",
+    "image": "/assets/img/cat_jackets.avif"
+  },{
+    "name": {"en": "DRESSES", "ar": "فساتين"},
+    "slug": "dresses",
+    "parent_category_slug": "clothing",
+    "path": "clothing/dresses",
+    "image": "/assets/img/cat_dresses.avif"
+  },{
+    "name": {"en": "SUITS", "ar": "بدلات"},
+    "slug": "suits",
+    "parent_category_slug": "clothing",
+    "path": "clothing/suits",
+    "image": "/assets/img/cat_suits.avif"
+  },{
+    "name": {"en": "SKIRTS", "ar": "تنانير"},
+    "slug": "skirts",
+    "parent_category_slug": "clothing",
+    "path": "clothing/skirts",
+    "image": "/assets/img/cat_skirts.avif"
+  },{
+    "name": {"en": "ROBES", "ar": "روب"},
+    "slug": "robes",
+    "parent_category_slug": "clothing",
+    "path": "clothing/robes",
+    "image": "/assets/img/cat_robes.avif"
+  },{
+    "name": {"en": "T-SHIRTS", "ar": "تيشيرتات"},
+    "slug": "t-shirts",
+    "parent_category_slug": "clothing",
+    "path": "clothing/t-shirts",
+    "image": "/assets/img/cloth-18-sapphire.avif"
+  },{
+    "name": {"en": "HOODIES", "ar": "هوديز"},
+    "slug": "hoodies",
+    "parent_category_slug": "clothing",
+    "path": "clothing/hoodies",
+    "image": "/assets/img/cloth-9-white.avif"
+  },{
+    "name": {"en": "SHIRTS", "ar": "قمصان"},
+    "slug": "shirts",
+    "parent_category_slug": "clothing",
+    "path": "clothing/shirts",
+    "image": "/assets/img/cloth-7-sky.avif"
+  },{
+    "name": {"en": "PANTS", "ar": "بناطيل"},
+    "slug": "pants",
+    "parent_category_slug": "clothing",
+    "path": "clothing/pants",
+    "image": "/assets/img/cat_pants.avif"
+  },{
+    "name": {"en": "OUTFIT PAIRS", "ar": "اوتفيت كامل"},
+    "slug": "outfit-pairs",
+    "parent_category_slug": "clothing",
+    "path": "clothing/outfit-pairs",
+    "image": "/assets/img/cloth-12-green.avif"
+  },{
+    "name": {"en": "MATCHING SETS", "ar": "تنسيقات من اختيارنا"},
+    "slug": "matching-sets",
+    "parent_category_slug": "clothing",
+    "path": "clothing/matching-sets",
+    "image": "/assets/img/cloth-14-brown.avif"
+  },{
+    "name": {"en": "WHAT'S NEW", "ar": "احدث الكوليكشات"},
+    "slug": "what's-new",
+    "parent_category_slug": "new",
+    "path": "new/what's-new",
+    "image": ""
+  },{
+    "name": {"en": "LATEST ARRIVALS", "ar": "اخر الدروب"},
+    "slug": "latest-arrivals",
+    "parent_category_slug": "sale",
+    "path": "sale/latest-arrivals",
+    "image": ""
+  },{
+    "name": {"en": "HOT DEALS", "ar": "عروض حارقه"},
+    "slug": "hot-deals",
+    "parent_category_slug": "sale",
+    "path": "sale/hot-deals",
+    "image": ""
+  },{
+    "name": {"en": "RAMADAN NIGHTS", "ar": "ليالي رمضان"},
+    "slug": "ramadan-nights",
+    "parent_category_slug": "event",
+    "path": "event/ramadan-nights",
+    "image": ""
+  }
+]

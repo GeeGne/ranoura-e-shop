@@ -606,7 +606,7 @@ export default function EditProductWindow () {
                   type="checkbox"
                   id="sizeMedium"
                   name="sizes"
-                  data-info="MD"
+                  data-info="M"
                   onChange={handleChange}
                   ref={sizeMInptRef}
                 />{' '}
@@ -657,7 +657,7 @@ export default function EditProductWindow () {
                   type="checkbox"
                   id="sizeLarge"
                   name="sizes"
-                  data-info="LG"
+                  data-info="L"
                   onChange={handleChange}
                   ref={sizeLInptRef}
                 />{' '}
@@ -719,6 +719,57 @@ export default function EditProductWindow () {
                     "
                 >
                   XL
+                </h4>
+                <RiAddLine
+                  className="
+                    peer-checked:invisible visible
+                    peer-checked:opacity-0 opacity-100 
+                    absolute left-2 w-4 h-4 text-body z-[5]
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+                <RiCheckFill
+                  className="
+                    peer-checked:visible invisible
+                    peer-checked:opacity-100 opacity-0 
+                    absolute left-2 w-4 h-4 text-heading z-[5]
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+                <div 
+                  className="
+                    peer-checked:visible invisible
+                    peer-checked:opacity-100 opacity-0 
+                    absolute top-0 left-0 w-full h-full
+                    bg-green-400
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+              </label>
+              <label
+                className="
+                  peer-checked:bg-green-500 relative flex gap-2 items-center 
+                  border border-inbetween px-2 py-1 
+                  rounded-lg bg-background overflow-hidden cursor-pointer
+                "
+                htmlFor="sizeExtraLarge"
+              >
+                <input
+                  className="peer invisible text-heading rounded-lg" 
+                  type="checkbox"
+                  id="sizeExtraLarge"
+                  name="sizes"
+                  data-info="2XL"
+                  onChange={handleChange}
+                  ref={sizeXLInptRef}
+                />{' '}
+                <h4
+                  className="
+                    peer-checked:text-heading text-body text-sm font-bold z-[5]
+                    transition-all duration-300 ease-in-out
+                    "
+                >
+                  2XL
                 </h4>
                 <RiAddLine
                   className="

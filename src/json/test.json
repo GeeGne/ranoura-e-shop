@@ -1,0 +1,51 @@
+{
+  "_comment": "version 1",
+  "categories": [
+    {
+      "slug": "hot-deals",
+      "name": "HOT DEALS"
+    },{
+      "slug": "events",
+      "name": "EVENTS"
+    }
+  ],
+  "sub_categories": [
+    {
+      "slug": "latest-deals",
+      "name": "LATEST DEALS",
+      "category_slug": "hot-deals"
+    },{
+      "slug": "christmas-deals",
+      "name": "CHRISTMAS DEALS",
+      "category_slug": "events"
+    },{
+      "slug": "ramadan-deals",
+      "name": "RAMADAN DEALS",
+      "category_slug": "events"
+    }
+  ]
+}
+
+{
+  "_comment": "version 2",
+  "categories": [
+    {
+      "slug": "hot-deals",
+      "name": "HOT DEALS"
+    },{
+      "slug": "events",
+      "name": "EVENTS"
+    }
+  ],
+  "sub_categories": [
+    {
+      "slug": "latest-deals",
+      "name": "LATEST DEALS",
+      "category_slug": "hot-deals"
+    },{
+      "slug": "christmas-deals",
+      "name": "CHRISTMAS DEALS",
+      "category_slug": "events"
+    }
+  ]
+}
