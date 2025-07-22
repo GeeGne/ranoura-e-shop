@@ -75,7 +75,7 @@ export default function EditProductWindow () {
     slug: "bolssom-sweater",
     description: { "en": "Cozy Floral-Embroidered Relaxed Sweater", "ar": "كنزة مريحة مطرزة بزهور" },
     type: "t-shirts",
-    categories: ["clothing/outfit-pairs", "sale/latest-arrivals", "sale/hot-deals"],
+    categories: ["clothing/outfit-pairs", "sale/latest-arrivals", "sale/hot-deals", "event/ramadan-nights"],
     is_new: true,
     state: "available",
     sizes: ["M", "L"],
@@ -218,17 +218,20 @@ export default function EditProductWindow () {
 
       // Type
       if (typeInptRefs.current) 
-        typeInptRefs.current.find(el => el.dataset.type === productData?.type).checked = true;
+        typeInptRefs.current
+          .find(el => el.dataset.type === productData?.type)
+          .checked = true;
 
       // Categories
       if (categoriesInptRefs.current) 
+        console.log('categories el: ', categoriesInptRefs.current);
         categoriesInptRefs.current
-          .find(el => productData?.categories.includes(el.dataset.path)).checked = true;
+          .forEach(el => productData?.categories.includes(el.dataset.path) && (el.checked = true))
     }
     // return;
     if (!productData) return;
     setDefaultValues();
-    setUpdatedData(productData);
+    // setUpdatedData(productData);
   }, [productData]);
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -303,6 +306,8 @@ export default function EditProductWindow () {
   // DEBUG & UI
   // console.log('productData: ', productData);
   console.log('updatedData: ', updatedData);
+
+  console.log('subCategory: ', subCategories.filter(subCategory => subCategory.parent_category_slug !== 'clothing').map((subCategory, index) => ({ ...subCategory, index })))
   
   if (!productData) return;
 
@@ -1097,12 +1102,12 @@ export default function EditProductWindow () {
                     border border-inbetween px-2 py-1 
                     rounded-lg bg-background overflow-hidden cursor-pointer
                   "
-                  htmlFor={Date.now() + category.slug}
+                  htmlFor={category.path}
                 >
                   <input
                     className="peer invisible text-heading rounded-lg" 
                     type="radio"
-                    id={Date.now() + category.slug}
+                    id={category.path}
                     name="type"
                     data-type={category.slug}
                     data-info={category.slug}
@@ -1183,29 +1188,32 @@ export default function EditProductWindow () {
                       className="flex w-full gap-4"
                     >
                       {subCategories
+                        .filter(subCategory => subCategory.parent_category_slug !== 'clothing')
+                        .map((subCategory, index) => ({ index, ...subCategory }))
                         .filter(subCategory => subCategory.parent_category_slug === category.slug)
-                        .map((category, i) =>
-                        <li>
+                        .map((subCategory, index) =>
+                        <li
+                          key={index}
+                        >
                           <label
-                            key={i}
                             className="
                               relative flex gap-2 items-center 
                               border border-inbetween px-2 py-1 
                               rounded-lg bg-background overflow-hidden cursor-pointer
                             "
-                            htmlFor={Date.now() + category.slug}
+                            htmlFor={subCategory.path}
                           >
                             <input
                               className="peer invisible text-heading rounded-lg" 
                               type="checkbox"
-                              id={Date.now() + category.slug}
+                              id={subCategory.path}
                               name="categories"
-                              data-type={category.slug}
-                              data-slug={category.slug}
-                              data-parent_category_slug={category.parent_category_slug}
-                              data-path={category.path}
+                              data-type={subCategory.slug}
+                              data-slug={subCategory.slug}
+                              data-parent_category_slug={subCategory.parent_category_slug}
+                              data-path={subCategory.path}
                               onChange={handleChange}
-                              ref={(el: any) => categoriesInptRefs.current[i] = el}
+                              ref={(el: any) => categoriesInptRefs.current[subCategory.index] = el}
                             />{' '}
                             <h4
                               className="
@@ -1213,7 +1221,7 @@ export default function EditProductWindow () {
                                 transition-all duration-300 ease-in-out
                               "
                             >
-                              {category.name[isEn ? 'en' : 'ar']}
+                              {subCategory.name[isEn ? 'en' : 'ar']}
                             </h4>
                             <RiAddLine
                               className="
