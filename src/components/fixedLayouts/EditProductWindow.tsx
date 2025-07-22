@@ -222,14 +222,14 @@ export default function EditProductWindow () {
 
       // Categories
       if (categoriesInptRefs.current) 
-        categoriesInptRefs.current.find(el => productData?.categories.includes(el.dataset.type)).checked = true;
+        categoriesInptRefs.current
+          .find(el => productData?.categories.includes(el.dataset.path)).checked = true;
     }
-    return;
+    // return;
     if (!productData) return;
     setDefaultValues();
     setUpdatedData(productData);
   }, [productData]);
-
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
@@ -1162,8 +1162,9 @@ export default function EditProductWindow () {
               >
                 {categories
                   .filter(category => category.slug !== 'clothing')
-                  .map(category =>
+                  .map((category, i) =>
                   <li
+                    key={i}
                     className="flex flex-col gap-4 bg-background p-4 rounded-lg border border-solid border-[2px] border-body-light-invert"
                   >
                     <div
@@ -1200,7 +1201,9 @@ export default function EditProductWindow () {
                               id={Date.now() + category.slug}
                               name="categories"
                               data-type={category.slug}
-                              data-info={category.slug}
+                              data-slug={category.slug}
+                              data-parent_category_slug={category.parent_category_slug}
+                              data-path={category.path}
                               onChange={handleChange}
                               ref={(el: any) => categoriesInptRefs.current[i] = el}
                             />{' '}
