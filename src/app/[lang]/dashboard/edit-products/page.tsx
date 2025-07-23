@@ -31,7 +31,7 @@ export default function page () {
   console.log('product data: ', products);
 
   return (
-    <div className="flex flex-col gap-4 p-4">
+    <div className="relative flex flex-col gap-4 p-4">
       <Table 
         products={products?.data}
         isLoading={isLoading}

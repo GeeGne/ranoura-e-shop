@@ -1,5 +1,5 @@
 // HOOKS
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -15,6 +15,7 @@ import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingRes
 import SolarGalleryCheckBold from '@/components/svgs/SolarGalleryCheckBold';
 import LineMdCloseCircleFilled from '@/components/svgs/LineMdCloseCircleFilled';
 import LineMdEdit from '@/components/svgs/LineMdEdit';
+import LineMdChevronSmallRight from '@/components/svgs/LineMdChevronSmallRight';
 
 // JSON
 import urlsTable from '@/json/cmsTables/urlsTable.json';
@@ -63,6 +64,8 @@ export default function Table({ products, isLoading = false, isError = false }: 
     toggle: false, index: 0
   });
   
+  const mainRef = useRef<HTMLElement | null>(null);
+
   const getProduct = (id: string) => products?.find(product => product.id === id);
 
   const updateThemeVarsMutation = useMutation({
@@ -92,10 +95,23 @@ export default function Table({ products, isLoading = false, isError = false }: 
     return typeof error === 'object' && error !== null && 'code' in error;
   }
 
-  const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = async (e: React.MouseEvent<HTMLElement | SVGElement>) => {
     const { type, productId } = e.currentTarget.dataset;
 
     switch (type) {
+      case 'right_arrow_button_is_clicked':
+        const fullWidth = mainRef.current?.scrollWidth;
+        mainRef.current?.scrollTo({
+          left: fullWidth,
+          behavior:'smooth'
+        })
+        break;
+      case 'left_arrow_button_is_clicked':
+        mainRef.current?.scrollTo({
+          left: 0,
+          behavior:'smooth'
+        })
+        break;
       case 'edit_product_button_is_clicked':
         setEditProductWindowToggle(true);
         if (productId) 
@@ -131,19 +147,52 @@ export default function Table({ products, isLoading = false, isError = false }: 
   )
   
   return (
-    <div className="flex flex-col gap-4 overflow-x-auto">
-      <h3
-        className="sticky left-0 text-lg text-heading"
+    <div 
+      className="relative flex flex-col gap-4 overflow-x-auto"
+      ref={mainRef}
+    >
+      <div
+        className="sticky left-0 flex items-center justify-between"
       >
-        {isEn ? 'Schemes' : 'سكيمات'}
-      </h3>
+        <h3
+          className="text-heading"
+        >
+          {isEn ? 'List' : 'القائمه'}
+        </h3>
+        <div
+          className="flex gap-4"
+        >
+          <LineMdChevronSmallRight 
+            role="button"
+            className="
+              border border-solid border-body border-px 
+              text-body rounded-full rotate-180
+              hover:opacity-70
+              transition-all duration-200 ease-in-out
+            "
+            data-type="left_arrow_button_is_clicked"
+            onClick={handleClick}
+          />
+          <LineMdChevronSmallRight 
+            role="button"
+            className="
+              border border-solid border-body border-px 
+              text-body rounded-full
+              hover:opacity-70
+              transition-all duration-200 ease-in-out
+            "
+            data-type="right_arrow_button_is_clicked"
+            onClick={handleClick}
+          />
+        </div>
+      </div>
       <table
         className="
           min-w-full overflow-hidden 
           divide-y divide-underline bg-white rounded-lg whitespace-nowrap
         "
       >
-        <thead className="text-body">
+        <thead className="text-body sicky top-0">
           <tr>
             <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
               {isEn ? 'NAME' : 'الاسم'}
@@ -168,6 +217,12 @@ export default function Table({ products, isLoading = false, isError = false }: 
             </th>
             <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
               {isEn ? 'IMAGES' : 'الصور'}
+            </th>
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'TYPE' : 'الصنف'}
+            </th>
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'CATEGORIES' : 'الفئات'}
             </th>
             <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
               {isEn ? 'OPTIONS' : 'الخيارات'}
@@ -320,6 +375,44 @@ export default function Table({ products, isLoading = false, isError = false }: 
                 `}
               >
                 -
+              </td>
+              <td 
+                className={`
+                  px-6 py-4
+                  transition-all duration-300 ease-in-out
+                `}
+              >
+                <h3
+                  className="
+                    flex items-center h-[150px] gap-2 text-heading text-md
+                  "
+                >
+                  {itm.type}
+                </h3>
+              </td>
+              <td 
+                className={`
+                  px-6 py-4 text-sm text-body
+                  transition-all duration-300 ease-in-out
+                `}
+              >
+                <ul
+                  className="
+                    flex items-center h-[150px] gap-2 
+                  "
+                >
+                  {itm.categories.map((category: string, i: number) =>
+                    <li
+                      key={i}
+                      className="
+                        flex items-center justify-center 
+                        bg-primary w-auto h-6 px-2 text-heading-invert rounded-md
+                      "
+                    >
+                      {category}
+                    </li>
+                  )}
+                </ul>
               </td>
               <td className="px-6">
                 <div className="flex gap-2">

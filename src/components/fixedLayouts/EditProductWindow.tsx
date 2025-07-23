@@ -39,7 +39,7 @@ export default function EditProductWindow () {
   const setEditToggle = useEditProductWindowStore(state => state.setToggle);
   const addToggle = useAddProductImgWindowStore(state => state.toggle);
   const setAddToggle = useAddProductImgWindowStore(state => state.setToggle);
-  // const productData = useEditProductWindowStore(state => state.productData);
+  const productData = useEditProductWindowStore(state => state.productData);
   const setProductData = useEditProductWindowStore(state => state.setProductData);
 
   const [ updatedData, setUpdatedData ] = useState<Record<any, any>>({test: 'asfd'});
@@ -69,7 +69,7 @@ export default function EditProductWindow () {
   const categoriesInptRefs = useRef<any[]>([]);
 
   // const productData1 = {
-  const productData = {
+  const productData1 = {
     id: 3,
     name: { en: "Blossom Sweater", ar: "سترة بلوسوم" },
     slug: "bolssom-sweater",
@@ -231,7 +231,7 @@ export default function EditProductWindow () {
     // return;
     if (!productData) return;
     setDefaultValues();
-    // setUpdatedData(productData);
+    setUpdatedData(productData);
   }, [productData]);
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -283,12 +283,12 @@ export default function EditProductWindow () {
       case'sizes':
       case'categories':
         const removeDuplicates = (arr: any[]) => [ ...new Set(arr) ]; 
-        const sizeArray = removeDuplicates(updatedData[name]);
+        const array = removeDuplicates(updatedData[name]);
         if (e.currentTarget.checked) return setUpdatedData(val => ({ 
-          ...val, [name]: [ ...sizeArray, info ] 
+          ...val, [name]: [ ...array, info ] 
         }));
 
-        setUpdatedData(val => ({ ...val, [name]: sizeArray.filter((name: string) => name !== info ) }));
+        setUpdatedData(val => ({ ...val, [name]: array.filter((name: string) => name !== info ) }));
         break;
       case 'price':
       case 'discount_percent':
@@ -1208,9 +1208,7 @@ export default function EditProductWindow () {
                               type="checkbox"
                               id={subCategory.path}
                               name="categories"
-                              data-type={subCategory.slug}
-                              data-slug={subCategory.slug}
-                              data-parent_category_slug={subCategory.parent_category_slug}
+                              data-info={subCategory.path}
                               data-path={subCategory.path}
                               onChange={handleChange}
                               ref={(el: any) => categoriesInptRefs.current[subCategory.index] = el}
