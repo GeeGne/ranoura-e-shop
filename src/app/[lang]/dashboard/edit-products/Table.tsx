@@ -64,7 +64,7 @@ export default function Table({ products, isLoading = false, isError = false }: 
     toggle: false, index: 0
   });
   
-  const mainRef = useRef<HTMLElement | null>(null);
+  const mainRef = useRef<HTMLDivElement>(null);
 
   const getProduct = (id: string) => products?.find(product => product.id === id);
 
@@ -97,18 +97,18 @@ export default function Table({ products, isLoading = false, isError = false }: 
 
   const handleClick = async (e: React.MouseEvent<HTMLElement | SVGElement>) => {
     const { type, productId } = e.currentTarget.dataset;
+      const fullWidth: number = mainRef.current?.scrollWidth;
 
     switch (type) {
       case 'right_arrow_button_is_clicked':
-        const fullWidth = mainRef.current?.scrollWidth;
         mainRef.current?.scrollTo({
-          left: fullWidth,
+          left: isEn ? fullWidth : 0,
           behavior:'smooth'
         })
         break;
       case 'left_arrow_button_is_clicked':
         mainRef.current?.scrollTo({
-          left: 0,
+          left: isEn ? 0 : -1 * fullWidth,
           behavior:'smooth'
         })
         break;
@@ -152,7 +152,10 @@ export default function Table({ products, isLoading = false, isError = false }: 
       ref={mainRef}
     >
       <div
-        className="sticky left-0 flex items-center justify-between"
+        className={`
+          sticky left-0 flex items-center justify-between
+          ${isEn ? 'left-0' : 'right-0'}
+        `}
       >
         <h3
           className="text-heading"
@@ -164,23 +167,25 @@ export default function Table({ products, isLoading = false, isError = false }: 
         >
           <LineMdChevronSmallRight 
             role="button"
-            className="
+            className={`
               border border-solid border-body border-px 
               text-body rounded-full rotate-180
               hover:opacity-70
               transition-all duration-200 ease-in-out
-            "
+              ${isEn ? 'order-1' : 'order-2'}
+            `}
             data-type="left_arrow_button_is_clicked"
             onClick={handleClick}
           />
           <LineMdChevronSmallRight 
             role="button"
-            className="
+            className={`
               border border-solid border-body border-px 
               text-body rounded-full
               hover:opacity-70
               transition-all duration-200 ease-in-out
-            "
+              ${isEn ? 'order-2' : 'order-1'}
+            `}
             data-type="right_arrow_button_is_clicked"
             onClick={handleClick}
           />

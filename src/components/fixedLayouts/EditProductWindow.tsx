@@ -465,7 +465,7 @@ export default function EditProductWindow () {
             htmlFor="descritpionEn"
           >
             <h3 className="text-body font-bold">
-              {isEn ? 'DESCRIPTION' : 'حول'}
+              {isEn ? 'DESCRIPTION' : 'الوصف'}
             </h3>
             <h4 className="ml-auto">
               en:
@@ -527,20 +527,22 @@ export default function EditProductWindow () {
                   XS
                 </h4>
                 <RiAddLine
-                  className="
+                  className={`
                     peer-checked:invisible visible
                     peer-checked:opacity-0 opacity-100 
-                    absolute left-2 w-4 h-4 text-body z-[5]
+                    absolute w-4 h-4 text-body z-[5]
                     transition-all duration-300 ease-in-out
-                  "
+                    ${isEn ? 'left-2' : 'right-2'}
+                  `}
                 />
                 <RiCheckFill
-                  className="
+                  className={`
                     peer-checked:visible invisible
                     peer-checked:opacity-100 opacity-0 
-                    absolute left-2 w-4 h-4 text-heading z-[5]
+                    absolute w-4 h-4 text-heading z-[5]
                     transition-all duration-300 ease-in-out
-                  "
+                    ${isEn ? 'left-2' : 'right-2'}
+                  `}
                 />
                 <div 
                   className="
@@ -578,20 +580,22 @@ export default function EditProductWindow () {
                   S
                 </h4>
                 <RiAddLine
-                  className="
+                  className={`
                     peer-checked:invisible visible
                     peer-checked:opacity-0 opacity-100 
-                    absolute left-2 w-4 h-4 text-body z-[5]
+                    absolute w-4 h-4 text-body z-[5]
                     transition-all duration-300 ease-in-out
-                  "
+                    ${isEn ? 'left-2' : 'right-2'}
+                  `}
                 />
                 <RiCheckFill
-                  className="
+                  className={`
                     peer-checked:visible invisible
                     peer-checked:opacity-100 opacity-0 
-                    absolute left-2 w-4 h-4 text-heading z-[5]
+                    absolute w-4 h-4 text-heading z-[5]
                     transition-all duration-300 ease-in-out
-                  "
+                    ${isEn ? 'left-2' : 'right-2'}
+                  `}
                 />
                 <div 
                   className="
@@ -629,20 +633,22 @@ export default function EditProductWindow () {
                   M
                 </h4>
                 <RiAddLine
-                  className="
+                  className={`
                     peer-checked:invisible visible
                     peer-checked:opacity-0 opacity-100 
-                    absolute left-2 w-4 h-4 text-body z-[5]
+                    absolute w-4 h-4 text-body z-[5]
                     transition-all duration-300 ease-in-out
-                  "
+                    ${isEn ? 'left-2' : 'right-2'}
+                  `}
                 />
                 <RiCheckFill
-                  className="
+                  className={`
                     peer-checked:visible invisible
                     peer-checked:opacity-100 opacity-0 
-                    absolute left-2 w-4 h-4 text-heading z-[5]
+                    absolute w-4 h-4 text-heading z-[5]
                     transition-all duration-300 ease-in-out
-                  "
+                    ${isEn ? 'left-2' : 'right-2'}
+                  `}
                 />
                 <div 
                   className="
@@ -680,20 +686,22 @@ export default function EditProductWindow () {
                   L
                 </h4>
                 <RiAddLine
-                  className="
+                  className={`
                     peer-checked:invisible visible
                     peer-checked:opacity-0 opacity-100 
-                    absolute left-2 w-4 h-4 text-body z-[5]
+                    absolute w-4 h-4 text-body z-[5]
                     transition-all duration-300 ease-in-out
-                  "
+                    ${isEn ? 'left-2' : 'right-2'}
+                  `}
                 />
                 <RiCheckFill
-                  className="
+                  className={`
                     peer-checked:visible invisible
                     peer-checked:opacity-100 opacity-0 
-                    absolute left-2 w-4 h-4 text-heading z-[5]
+                    absolute w-4 h-4 text-heading z-[5]
                     transition-all duration-300 ease-in-out
-                  "
+                    ${isEn ? 'left-2' : 'right-2'}
+                  `}
                 />
                 <div 
                   className="
@@ -731,20 +739,22 @@ export default function EditProductWindow () {
                   XL
                 </h4>
                 <RiAddLine
-                  className="
+                  className={`
                     peer-checked:invisible visible
                     peer-checked:opacity-0 opacity-100 
-                    absolute left-2 w-4 h-4 text-body z-[5]
+                    absolute w-4 h-4 text-body z-[5]
                     transition-all duration-300 ease-in-out
-                  "
+                    ${isEn ? 'left-2' : 'right-2'}
+                  `}
                 />
                 <RiCheckFill
-                  className="
+                  className={`
                     peer-checked:visible invisible
                     peer-checked:opacity-100 opacity-0 
-                    absolute left-2 w-4 h-4 text-heading z-[5]
+                    absolute w-4 h-4 text-heading z-[5]
                     transition-all duration-300 ease-in-out
-                  "
+                    ${isEn ? 'left-2' : 'right-2'}
+                  `}
                 />
                 <div 
                   className="
@@ -782,20 +792,22 @@ export default function EditProductWindow () {
                   2XL
                 </h4>
                 <RiAddLine
-                  className="
+                  className={`
                     peer-checked:invisible visible
                     peer-checked:opacity-0 opacity-100 
-                    absolute left-2 w-4 h-4 text-body z-[5]
+                    absolute w-4 h-4 text-body z-[5]
                     transition-all duration-300 ease-in-out
-                  "
+                    ${isEn ? 'left-2' : 'right-2'}
+                  `}
                 />
                 <RiCheckFill
-                  className="
+                  className={`
                     peer-checked:visible invisible
                     peer-checked:opacity-100 opacity-0 
-                    absolute left-2 w-4 h-4 text-heading z-[5]
+                    absolute w-4 h-4 text-heading z-[5]
                     transition-all duration-300 ease-in-out
-                  "
+                    ${isEn ? 'left-2' : 'right-2'}
+                  `}
                 />
                 <div 
                   className="
@@ -809,11 +821,10 @@ export default function EditProductWindow () {
               </label>
             </form>  
           </div>
-          <label
+          <div
             className="
               flex gap-4 items-center w-full bg-background-light rounded-lg p-2
             "
-            htmlFor="descritpionEn"
           >
             <h3 className="text-body font-bold">
               {isEn ? 'COLORS' : 'الالوان'}
@@ -831,7 +842,7 @@ export default function EditProductWindow () {
                   />  
                 )}
               </ul>
-          </label>
+          </div>
           <label
             className="
               flex gap-4 items-center w-full bg-background-light rounded-lg p-2
@@ -842,9 +853,10 @@ export default function EditProductWindow () {
               {isEn ? 'PRICE' : 'السعر'}
             </h3>
             <input
-              className="
-                flex items-center gap-2 p-2 ml-auto rounded-lg w-20
-              "
+              className={`
+                flex items-center gap-2 p-2 rounded-lg w-20
+                ${isEn ? 'ml-auto' : 'mr-auto'}
+              `}
               type="text"
               name="price"
               id="price"
@@ -862,9 +874,10 @@ export default function EditProductWindow () {
               {isEn ? 'DISCOUNT' : 'التخفيض'}
             </h3>
             <input
-              className="
-                flex items-center gap-2 p-2 ml-auto rounded-lg w-10 text-center
-              "
+              className={`
+                flex items-center gap-2 p-2 rounded-lg w-10 text-center\
+                ${isEn ? 'ml-auto' : 'mr-auto'}
+              `}
               type="text"
               name="discount_percent"
               id="discount_percent"
@@ -952,20 +965,22 @@ export default function EditProductWindow () {
                   {isEn ? 'available' : 'متاح'}
                 </h4>
                 <RiAddLine
-                  className="
+                  className={`
                     peer-checked:invisible visible
                     peer-checked:opacity-0 opacity-100 
-                    absolute left-2 w-4 h-4 text-body z-[5]
+                    absolute w-4 h-4 text-body z-[5]
                     transition-all duration-300 ease-in-out
-                  "
+                    ${isEn ? 'left-2' : 'right-2'}
+                  `}
                 />
                 <RiCheckFill
-                  className="
+                  className={`
                     peer-checked:visible invisible
                     peer-checked:opacity-100 opacity-0 
-                    absolute left-2 w-4 h-4 text-heading z-[5]
+                    absolute w-4 h-4 text-heading z-[5]
                     transition-all duration-300 ease-in-out
-                  "
+                    ${isEn ? 'left-2' : 'right-2'}
+                  `}
                 />
                 <div 
                   className="
@@ -1003,20 +1018,22 @@ export default function EditProductWindow () {
                   {isEn ? 'out of stock' : 'غير متوفر'}
                 </h4>
                 <RiAddLine
-                  className="
+                  className={`
                     peer-checked:invisible visible
                     peer-checked:opacity-0 opacity-100 
-                    absolute left-2 w-4 h-4 text-body z-[5]
+                    absolute w-4 h-4 text-body z-[5]
                     transition-all duration-300 ease-in-out
-                  "
+                    ${isEn ? 'left-2' : 'right-2'}
+                  `}
                 />
                 <RiCheckFill
-                  className="
+                  className={`
                     peer-checked:visible invisible
                     peer-checked:opacity-100 opacity-0 
-                    absolute left-2 w-4 h-4 text-heading z-[5]
+                    absolute w-4 h-4 text-heading z-[5]
                     transition-all duration-300 ease-in-out
-                  "
+                    ${isEn ? 'left-2' : 'right-2'}
+                  `}
                 />
                 <div 
                   className="
@@ -1054,20 +1071,22 @@ export default function EditProductWindow () {
                   {isEn ? 'hidden' : 'مخفي'}
                 </h4>
                 <RiAddLine
-                  className="
+                  className={`
                     peer-checked:invisible visible
                     peer-checked:opacity-0 opacity-100 
-                    absolute left-2 w-4 h-4 text-body z-[5]
+                    absolute w-4 h-4 text-body z-[5]
                     transition-all duration-300 ease-in-out
-                  "
+                    ${isEn ? 'left-2' : 'right-2'}
+                  `}
                 />
                 <RiCheckFill
-                  className="
+                  className={`
                     peer-checked:visible invisible
                     peer-checked:opacity-100 opacity-0 
-                    absolute left-2 w-4 h-4 text-heading z-[5]
+                    absolute w-4 h-4 text-heading z-[5]
                     transition-all duration-300 ease-in-out
-                  "
+                    ${isEn ? 'left-2' : 'right-2'}
+                  `}
                 />
                 <div 
                   className="
@@ -1123,20 +1142,22 @@ export default function EditProductWindow () {
                     {category.name[isEn ? 'en' : 'ar']}
                   </h4>
                   <RiAddLine
-                    className="
+                    className={`
                       peer-checked:invisible visible
                       peer-checked:opacity-0 opacity-100 
-                      absolute left-2 w-4 h-4 text-body z-[5]
+                      absolute w-4 h-4 text-body z-[5]
                       transition-all duration-300 ease-in-out
-                    "
+                      ${isEn ? 'left-2' : 'right-2'}
+                    `}
                   />
                   <RiCheckFill
-                    className="
+                    className={`
                       peer-checked:visible invisible
                       peer-checked:opacity-100 opacity-0 
-                      absolute left-2 w-4 h-4 text-heading z-[5]
+                      absolute w-4 h-4 text-heading z-[5]
                       transition-all duration-300 ease-in-out
-                    "
+                      ${isEn ? 'left-2' : 'right-2'}
+                    `}
                   />
                   <div 
                     className="
@@ -1222,20 +1243,22 @@ export default function EditProductWindow () {
                               {subCategory.name[isEn ? 'en' : 'ar']}
                             </h4>
                             <RiAddLine
-                              className="
+                              className={`
                                 peer-checked:invisible visible
                                 peer-checked:opacity-0 opacity-100 
-                                absolute left-2 w-4 h-4 text-body z-[5]
+                                absolute w-4 h-4 text-body z-[5]
                                 transition-all duration-300 ease-in-out
-                              "
+                                ${isEn ? 'left-2' : 'right-2'}
+                              `}
                             />
                             <RiCheckFill
-                              className="
+                              className={`
                                 peer-checked:visible invisible
                                 peer-checked:opacity-100 opacity-0 
-                                absolute left-2 w-4 h-4 text-heading z-[5]
+                                absolute w-4 h-4 text-heading z-[5]
                                 transition-all duration-300 ease-in-out
-                              "
+                                ${isEn ? 'left-2' : 'right-2'}
+                              `}
                             />
                             <div 
                               className="
@@ -1278,7 +1301,7 @@ export default function EditProductWindow () {
             data-type="cancel_button_is_clicked"
             onClick={handleClick}
           >
-            cancel
+            {isEn ? 'cancel' : 'تراجع'}
           </button>
           <button
             className="
@@ -1287,7 +1310,7 @@ export default function EditProductWindow () {
               transition-all duration-300 ease-in-out
             "
           >
-            accept
+            {isEn ? 'accept' : 'قبول'}
           </button>
         </section>
       </div>
