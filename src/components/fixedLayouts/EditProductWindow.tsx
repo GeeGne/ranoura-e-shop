@@ -413,7 +413,8 @@ export default function EditProductWindow () {
               <span
                 className="text-inbetween text-sm font-bold"
               >
-                Add New Image
+                
+                {isEn ? 'Add New Image' : 'اضف صوره جديده'}
               </span>
               <LineMdPlus
                 className="text-inbetween w-7 h-7 py-1"

@@ -190,7 +190,7 @@ export default function SelectImgColorWindow () {
             data-type="cancel_button_is_clicked"
             onClick={handleClick}
           >
-            cancel
+            {isEn ? 'cancel' : 'تراجع'}
           </button>
           <button
             className="
@@ -201,7 +201,7 @@ export default function SelectImgColorWindow () {
             data-type="accept_button_is_clicked"
             onClick={handleClick}
           >
-            accept
+            {isEn ? 'accept' : 'قبول'}
           </button>
         </section>
       </div>

@@ -58,7 +58,7 @@ export default function AddProductImgWindow () {
   }
 
   const handleClick = (
-    e: React.MouseEvent<HTMLElement>
+    e: React.MouseEvent<HTMLElement | SVGElement>
   ) => {
     // e.preventDefault();
     e.stopPropagation();
@@ -230,7 +230,7 @@ export default function AddProductImgWindow () {
         className={`
           absolute top-1/2 left-1/2
           translate-x-[-50%] translate-y-[-50%]
-          h-[calc(100%-2rem)] rounded-lg bg-background overflow-y-scroll
+          flex flex-col rounded-lg bg-background overflow-y-scroll
           transition-all delay-100 duration-200 ease-[cubic-bezier(0.68, -0.6, 0.32, 1.6)]
           ${addToggle ? 'scale-100 opacity-100' : 'scale-[80%] opacity-0'}
         `}
@@ -254,7 +254,7 @@ export default function AddProductImgWindow () {
             className="flex items-center w-full p-2 gap-8 bg-background-light rounded-lg"
           >
             <h3 className="text-body font-bold">
-              {isEn ? 'IMAGE UPLOAD' : ''}
+              {isEn ? 'IMAGE UPLOAD' : 'رفع الصوره'}
             </h3>
             <div
               className={`
@@ -338,12 +338,12 @@ export default function AddProductImgWindow () {
               <span
                 className="text-body text-center text-s font-bold"
               >
-                Drag & drop or click to upload
+                {isEn ? 'Drag & drop or click to upload' : 'اسحب واسقط او انقر للرفع'}
               </span>
               <span
                 className="text-inbetween text-center text-s"
               >
-                (Recommended: 1200x800px, AVIF)
+                {isEn ? '(Recommended: 1200x800px, AVIF)' : '(موصى به: 1200x800px, AVIF)'}
               </span>
               <div
                 className="
@@ -357,8 +357,7 @@ export default function AddProductImgWindow () {
                 <span
                   className="text-heading-invert"
                 >
-                  Upload Image
-
+                  {isEn ? 'Upload Image' : 'رفع الصوره'}
                 </span>
               </div>
             </div>
@@ -409,7 +408,7 @@ export default function AddProductImgWindow () {
               >
                 <MdiColor className="text-body w-4 h-4"/>
                 <span>
-                  Change Color
+                  {isEn ? 'Change Color' : 'تغيير اللون'}
                 </span>
               </button>
             </div>
@@ -448,20 +447,22 @@ export default function AddProductImgWindow () {
                   {isEn ? 'A (Primary)' : 'A (رئيسي)'}
                 </h4>
                 <RiAddLine
-                  className="
+                  className={`
                     peer-checked:invisible visible
                     peer-checked:opacity-0 opacity-100 
-                    absolute left-2 w-4 h-4 text-body z-[5]
+                    absolute w-4 h-4 text-body z-[5]
                     transition-all duration-300 ease-in-out
-                  "
+                    ${isEn ? 'left-2' : 'right-2'}
+                  `}
                 />
                 <RiCheckFill
-                  className="
+                  className={`
                     peer-checked:visible invisible
                     peer-checked:opacity-100 opacity-0 
-                    absolute left-2 w-4 h-4 text-heading z-[5]
+                    absolute w-4 h-4 text-heading z-[5]
                     transition-all duration-300 ease-in-out
-                  "
+                    ${isEn ? 'left-2' : 'right-2'}
+                  `}
                 />
                 <div 
                   className="
@@ -496,20 +497,22 @@ export default function AddProductImgWindow () {
                   {isEn ? 'B (Secondary)' : 'B (ثانوي)'}
                 </h4>
                 <RiAddLine
-                  className="
+                  className={`
                     peer-checked:invisible visible
                     peer-checked:opacity-0 opacity-100 
-                    absolute left-2 w-4 h-4 text-body z-[5]
+                    absolute w-4 h-4 text-body z-[5]
                     transition-all duration-300 ease-in-out
-                  "
+                    ${isEn ? 'left-2' : 'right-2'}
+                  `}
                 />
                 <RiCheckFill
-                  className="
+                  className={`
                     peer-checked:visible invisible
                     peer-checked:opacity-100 opacity-0 
-                    absolute left-2 w-4 h-4 text-heading z-[5]
+                    absolute w-4 h-4 text-heading z-[5]
                     transition-all duration-300 ease-in-out
-                  "
+                    ${isEn ? 'left-2' : 'right-2'}
+                  `}
                 />
                 <div 
                   className="
@@ -527,7 +530,7 @@ export default function AddProductImgWindow () {
         <hr className="border-inbetween" />
         <section
           className="
-            relative flex w-full
+            relative flex w-full 
           "
         >
           <div
@@ -546,7 +549,7 @@ export default function AddProductImgWindow () {
             data-type="cancel_button_is_clicked"
             onClick={handleClick}
           >
-            cancel
+            {isEn ? 'cancel' : 'تراجع'}
           </button>
           <button
             className="
@@ -555,7 +558,7 @@ export default function AddProductImgWindow () {
               transition-all duration-300 ease-in-out
             "
           >
-            accept
+            {isEn ? 'accept' : 'قبول'}
           </button>
         </section>
       </div>
