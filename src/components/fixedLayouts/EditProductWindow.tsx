@@ -327,7 +327,7 @@ export default function EditProductWindow () {
         className={`
           absolute top-1/2 left-1/2
           translate-x-[-50%] translate-y-[-50%]
-          h-[calc(100%-2rem)] rounded-lg overflow-y-scroll
+          h-[calc(100%-2rem)] rounded-lg overflow-y-auto
           bg-background overflow-hidden
           transition-all delay-100 duration-200 ease-[cubic-bezier(0.68, -0.6, 0.32, 1.6)]
           ${editToggle ? 'scale-100 opacity-100' : 'scale-[0.8] opacity-0'}
@@ -413,7 +413,6 @@ export default function EditProductWindow () {
               <span
                 className="text-inbetween text-sm font-bold"
               >
-                
                 {isEn ? 'Add New Image' : 'اضف صوره جديده'}
               </span>
               <LineMdPlus
@@ -500,7 +499,10 @@ export default function EditProductWindow () {
               {isEn ? 'SIZES' : 'المقاسات'}
             </h3>
             <form
-              className="flex gap-4 ml-auto"
+              className={`
+                flex gap-4 
+                ${isEn ? 'ml-auto' : 'mr-auto'}
+              `}
             >
               <label
                 className="
@@ -831,9 +833,10 @@ export default function EditProductWindow () {
               {isEn ? 'COLORS' : 'الالوان'}
             </h3>
               <ul
-                className="
-                  flex items-center gap-2 py-2 ml-auto 
-                "
+                className={`
+                  flex items-center gap-2 py-2
+                  ${isEn ? 'ml-auto' : 'mr-auto'}
+                `}
               >
                 {productData?.colors.map((color: string, i: number) => 
                   <li
@@ -896,11 +899,12 @@ export default function EditProductWindow () {
               {isEn ? 'NEW' : 'جديد'}
             </h3>
             <label
-              className="
-                relative ml-auto w-10 h-5 
+              className={`
+                relative w-10 h-5 
                 rounded-full overflow-hidden border border-inbetween
                 bg-green-500 cursor-pointer
-              "
+                ${isEn ? 'ml-auto' : 'mr-auto'}
+              `}
               htmlFor="new"
             >
               <input

@@ -50,6 +50,8 @@ export default function AddProductImgWindow () {
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
 
+  const [ imageSelectedType , setImageSelectedTtype ] = useState<string | null>(null);
+
   const previewUploadedImg = (files: any) => {
     if (!files[0]) return;
     const reader = new FileReader();
@@ -97,11 +99,16 @@ export default function AddProductImgWindow () {
     e.preventDefault();
     e.stopPropagation();
     const { name } = e.currentTarget;
+    const { type } = e.currentTarget.dataset;
 
     switch (name) {
       case 'productImage':
         const files = e.currentTarget.files;
         previewUploadedImg(files);
+        break;
+      case 'imageType':
+        console.log('imageSelectedType: ', type);
+        if (type) setImageSelectedTtype(type);
         break;
       default:
         console.error('Unknown type: ', name);
@@ -218,7 +225,7 @@ export default function AddProductImgWindow () {
     <div
       className={`
         fixed top-0 left-0
-        w-full h-full
+        flex items-center justify-center w-full h-full
         bg-[var(--shade-color)] z-[2000]
         transition-all duration-200 ease-out
         ${addToggle ? 'visible opacity-100 backdrop-blur-[3px]' : 'invisible opacity-0 backdrop-blur-[0px]'}
@@ -228,9 +235,9 @@ export default function AddProductImgWindow () {
     >
       <div
         className={`
-          absolute top-1/2 left-1/2
-          translate-x-[-50%] translate-y-[-50%]
-          flex flex-col rounded-lg bg-background overflow-y-scroll
+          absolute
+          flex flex-col w-auto max-h-full
+          rounded-lg bg-background overflow-y-auto
           transition-all delay-100 duration-200 ease-[cubic-bezier(0.68, -0.6, 0.32, 1.6)]
           ${addToggle ? 'scale-100 opacity-100' : 'scale-[80%] opacity-0'}
         `}
@@ -382,7 +389,7 @@ export default function AddProductImgWindow () {
                     text-sm text-heading-invert z-[10]
                     "
                 >
-                  {selectedColor?.name || 'unSelected'}
+                  {getColor(colorsArray, selectedColor?.name)?.title[lang] || (isEn ? 'unSelected' : 'غير محدد')}
                 </span>
                 <div
                   className="
@@ -392,7 +399,7 @@ export default function AddProductImgWindow () {
                     h-4 px-1 blur-[3px] z-[5] rounded-full 
                   "
                 >
-                  {selectedColor?.name || 'unSelected'}
+                  {getColor(colorsArray, selectedColor?.name)?.title[lang] || (isEn ? 'unSelected' : 'غير محدد')}
                 </div>
               </div>
               <button 
@@ -437,6 +444,8 @@ export default function AddProductImgWindow () {
                   type="radio"
                   id="imageTypeA"
                   name="imageType"
+                  data-type="a"
+                  onChange={handleChange}
                 />{' '}
                 <h4
                   className="
@@ -487,6 +496,8 @@ export default function AddProductImgWindow () {
                   type="radio"
                   id="imageTypeB"
                   name="imageType"
+                  data-type="b"
+                  onChange={handleChange}
                 />{' '}
                 <h4
                   className="
