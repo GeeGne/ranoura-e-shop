@@ -917,12 +917,16 @@ export default function EditProductWindow () {
                 ref={newInptRef}
               />
               <div
-                className="
-                  absolute peer-checked:left-[calc(100%-18px)] left-[2px] top-1/2  
+                className={`
+                  absolute top-1/2  
                   translate-y-[-50%] w-4 h-4 aspect-1/1 
                   bg-background rounded-full border border-background-light z-[5]
                   transition-all duration-300 ease-in-out
-                "
+                  ${isEn 
+                    ? 'left-[2px] peer-checked:left-[calc(100%-18px)]' 
+                    : 'right-[2px] peer-checked:right-[calc(100%-18px)]'
+                  }
+                `}
               />
               <div
                 className="

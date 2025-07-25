@@ -62,7 +62,6 @@ export default function AddProductImgWindow () {
   const handleClick = (
     e: React.MouseEvent<HTMLElement | SVGElement>
   ) => {
-    // e.preventDefault();
     e.stopPropagation();
     const { type } = e.currentTarget.dataset;
 
@@ -96,7 +95,6 @@ export default function AddProductImgWindow () {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    e.preventDefault();
     e.stopPropagation();
     const { name } = e.currentTarget;
     const { type } = e.currentTarget.dataset;
@@ -107,14 +105,12 @@ export default function AddProductImgWindow () {
         previewUploadedImg(files);
         break;
       case 'imageType':
-        console.log('imageSelectedType: ', type);
         if (type) setImageSelectedTtype(type);
         break;
       default:
         console.error('Unknown type: ', name);
     }
   }
-
   const handleDragEnter = (
     e: React.DragEvent<HTMLElement>
   ) => {

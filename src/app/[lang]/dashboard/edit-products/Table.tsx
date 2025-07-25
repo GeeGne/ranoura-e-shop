@@ -16,6 +16,8 @@ import SolarGalleryCheckBold from '@/components/svgs/SolarGalleryCheckBold';
 import LineMdCloseCircleFilled from '@/components/svgs/LineMdCloseCircleFilled';
 import LineMdEdit from '@/components/svgs/LineMdEdit';
 import LineMdChevronSmallRight from '@/components/svgs/LineMdChevronSmallRight';
+import LineMdImageFilled from '@/components/svgs/LineMdImageFilled';
+import MdiColor from '@/components/svgs/MdiColor';
 
 // JSON
 import urlsTable from '@/json/cmsTables/urlsTable.json';
@@ -65,8 +67,21 @@ export default function Table({ products, isLoading = false, isError = false }: 
   });
   
   const mainRef = useRef<HTMLDivElement>(null);
+  const imgUlRefs = useRef<(HTMLUListElement | null)[]>([]);
 
   const getProduct = (id: string) => products?.find(product => product.id === id);
+
+  useEffect(() => {
+    const setImgLiElWidth = () => {
+      imgUlRefs.current.forEach((el: any) => {{
+        const fullWidth = el.scrollWidth;
+        el.style.width = `${fullWidth}px`;
+        console.log('fullWidth for UL: ', fullWidth);
+      }})
+    }
+
+    setImgLiElWidth();
+  }, [products]);
 
   const updateThemeVarsMutation = useMutation({
     mutationFn: updateThemeVars,
@@ -97,7 +112,7 @@ export default function Table({ products, isLoading = false, isError = false }: 
 
   const handleClick = async (e: React.MouseEvent<HTMLElement | SVGElement>) => {
     const { type, productId } = e.currentTarget.dataset;
-      const fullWidth: number = mainRef.current?.scrollWidth;
+      const fullWidth: number = mainRef.current?.scrollWidth || 0;
 
     switch (type) {
       case 'right_arrow_button_is_clicked':
@@ -260,7 +275,7 @@ export default function Table({ products, isLoading = false, isError = false }: 
                     "
                   />
                   <img 
-                    src={"/assets/img/cloth-5-gold.avif"}
+                    src={itm.images[0].main}
                     className="
                       h-[150px] aspect-[2/3] shrink-0
                       object-cover object-center rounded-lg
@@ -375,11 +390,114 @@ export default function Table({ products, isLoading = false, isError = false }: 
               </td>
               <td
                 className={`
-                  px-6 py-4 text-sm text-body
+                  px-6 py-4 text-sm text-body 
                   transition-all duration-300 ease-in-out
                 `}
               >
-                -
+                <ul
+                  className="flex flex-row gap-4 items-center"
+                  ref={el => { imgUlRefs.current[i] = el }}
+                >
+                  {itm.images.map((image: Record<string, string>, i: number) => 
+                    <li
+                      key={i}
+                      className="flex gap-4 shrink-0"
+                    >
+                      <div
+                      className="flex flex-col gap-2 shrink-0"
+                      >
+                        <img
+                          src={image.main}
+                          className="w-[120px] aspect-[2/3] object-cover object-center rounded-lg "
+                        />
+                        <div
+                          className="flex justify-evenly items-center"
+                        >
+                          <div
+                            className="
+                              flex bg-background-light rounded-full overflow-hidden
+                              border border-solid border-px border-background-deep-light
+                            "
+                          >
+                            <MdiColor 
+                              className="p-1 w-6 h-6 text-body"
+                            />
+                            <div
+                              className="p-1 w-6 h-6"
+                              style={{ backgroundColor: getColor(colorsArray, image.color).hex }}
+                            />
+                          </div>
+                          <div
+                            className="
+                              flex bg-background-light rounded-full overflow-hidden
+                              border border-solid border-px border-background-deep-light
+                            "
+                          >
+                            <LineMdImageFilled 
+                              className="p-1 w-6 h-6 text-body"
+                            />
+                            <div
+                              className="
+                                flex items-center justify-center p-1 w-6 h-6 
+                                text-sm font-bold text-heading-invert text-center
+                                bg-heading
+                              "
+                            >
+                              A
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {image.second &&
+                        <div
+                          className="flex flex-col gap-2 shrink-0"
+                        >
+                          <img
+                            src={image.second}
+                            className="w-[120px] aspect-[2/3] object-cover object-center rounded-lg"
+                          />
+                          <div
+                            className="flex justify-evenly items-center"
+                          >
+                            <div
+                              className="
+                                flex bg-background-light rounded-full overflow-hidden
+                                border border-solid border-px border-background-deep-light
+                              "
+                            >
+                              <MdiColor 
+                                className="p-1 w-6 h-6 text-body"
+                              />
+                              <div
+                                className="p-1 w-6 h-6"
+                                style={{ backgroundColor: getColor(colorsArray, image.color).hex }}
+                              />
+                            </div>
+                            <div
+                              className="
+                                flex bg-background-light rounded-full overflow-hidden
+                                border border-solid border-px border-background-deep-light
+                              "
+                            >
+                              <LineMdImageFilled 
+                                className="p-1 w-6 h-6 text-body"
+                              />
+                              <div
+                                className="
+                                  flex items-center justify-center p-1 w-6 h-6 
+                                  text-sm font-bold text-heading-invert text-center
+                                  bg-heading
+                                "
+                              >
+                                B
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      }
+                    </li>
+                  )}
+                </ul>
               </td>
               <td 
                 className={`
