@@ -1,5 +1,6 @@
 // HOOKS
 import { useState, useRef } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 // COMPONENTS
 import RiAddLine from '@/components/svgs/RiAddLine';
@@ -9,12 +10,16 @@ import LineMdPlus from '@/components/svgs/LineMdPlus';
 import MdiColor from '@/components/svgs/MdiColor';
 import LineMdClose from '@/components/svgs/LineMdClose';
 import LineMdFolderArrowUp from '@/components/svgs/LineMdFolderArrowUp';
+import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingResize';
 
 // STORES
 import { 
   useAlertMessageStore, useLanguageStore, 
   useAddProductImgWindowStore, useSelectImgColorWindowStore
 } from '@/stores/index';
+
+// API
+import uploadProductImage from '@/lib/api/object/post';
 
 // JSON
 import colorsArray from '@/json/colors.json';
@@ -51,12 +56,24 @@ export default function AddProductImgWindow () {
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
 
   const [ imageSelectedType , setImageSelectedTtype ] = useState<string | null>(null);
+  const [ productImage, setProductImage ] = useState<File | null>(null);
+  const [ isMutating, setIsMutating ] = useState<boolean>(false);
+  const uploadProductImageMutation = useMutation({
+    mutationFn: uploadProductImage,
+    onSettled: () => {
+      setIsMutating(false);
+    },
+    onMutate: () => {
+      setIsMutating(true);
+    },
+  })
 
   const previewUploadedImg = (files: any) => {
     if (!files[0]) return;
     const reader = new FileReader();
     reader.onload = (e: any) => setPreview(e.currentTarget.result);
     reader.readAsDataURL(files[0]);
+    setProductImage(files[0]);
   }
 
   const handleClick = (
@@ -77,6 +94,14 @@ export default function AddProductImgWindow () {
         break;
       case 'cancel_button_is_clicked':
         setAddToggle(false);
+        break;
+      case 'accept_button_is_clicked':
+        // setAddToggle(false);
+        uploadProductImageMutation.mutate({
+          bucketName: 'assets', 
+          filePath: '/test', 
+          productImage
+        })
         break;
       case 'change_color_button_is_clicked':
         setColorToggle(true);
@@ -216,6 +241,7 @@ export default function AddProductImgWindow () {
   // const addToggle = true;
   // console.log('addToggle: ', addToggle);
   // console.log('selectedColor: ', selectedColor);
+  console.log('imageSelectedType: ', imageSelectedType);
 
   return (
     <div
@@ -560,12 +586,19 @@ export default function AddProductImgWindow () {
           </button>
           <button
             className="
-              flex-1 text-content p-1 
+              flex justify-center flex-1 text-content p-1 
               hover:bg-background-deep-light
               transition-all duration-300 ease-in-out
             "
+            data-type="accept_button_is_clicked"
+            onClick={handleClick}
           >
-            {isEn ? 'accept' : 'قبول'}
+            {isMutating 
+              ? <SvgSpinnersRingResize />
+              : isEn 
+              ? 'accept' 
+              : 'قبول'
+            }
           </button>
         </section>
       </div>

@@ -306,7 +306,6 @@ export default function EditProductWindow () {
   // DEBUG & UI
   // console.log('productData: ', productData);
   console.log('updatedData: ', updatedData);
-
   console.log('subCategory: ', subCategories.filter(subCategory => subCategory.parent_category_slug !== 'clothing').map((subCategory, index) => ({ ...subCategory, index })))
   
   if (!productData) return;
@@ -349,52 +348,109 @@ export default function EditProductWindow () {
           className="flex flex-col gap-4 items-center py-4"
         >
           <ul
-            className="flex gap-4 w-[516px] overflow-x-scroll justify-center mx-auto"
+            className="flex gap-4 w-[516px] overflow-x-scroll mx-auto"
           >
-            {[1, 2, 3, 3, 4].map((itm, i) => 
+            {updatedData.images?.map((image: Record<string, string>, i: number) => 
               <li
                 key={i}
                 className="
-                  relative shrink-0 w-[200px] h-[300px] rounded-md overflow-hidden
+                  flex flex-row gap-4 shrink-0
                 "
               >
-                <img 
-                  src={outfit1}
-                  className="
-                    w-full h-full object-cover object-center rounded-md
-                  "
-                />
                 <div
                   className="
-                    absolute flex flex-col gap-2 bottom-2 left-2 z-[10]
+                    relative shrink-0 w-[200px] h-[300px] rounded-md overflow-hidden
                   "
                 >
+                  <img 
+                    src={image.main}
+                    className="
+                      w-full h-full object-cover object-center rounded-md
+                    "
+                  />
                   <div
                     className="
-                      flex items-center justify-evenly bg-shade 
-                      rounded-full w-[50px] h-[25px] 
-                      border border-solid border-background border-[2px] overflow-hidden
+                      absolute flex flex-col gap-2 bottom-2 left-2 z-[10]
                     "
                   >
-                    <MdiColor className="text-heading-invert w-5 h-5" />
-                    <div className="w-4 h-4 bg-red-500 rounded-full" />
-                  </div>
-                  <div
-                    className="
-                      flex items-center justify-evenly bg-shade 
-                      rounded-full w-[50px] h-[25px]
-                      border border-solid border-background border-[2px] overflow-hidden
-                    "
-                  >
-                    <LineMdImageFilled className="text-heading-invert w-5 h-5" />
-                    <div 
+                    <div
                       className="
-                        rounded-full text-sm font-bold text-center text-heading-invert
-                      ">
-                      A
+                        flex items-center justify-evenly bg-shade 
+                        rounded-full w-[50px] h-[25px] 
+                        border border-solid border-background border-[2px] overflow-hidden
+                      "
+                    >
+                      <MdiColor className="text-heading-invert w-5 h-5" />
+                      <div 
+                        className="w-4 h-4 rounded-full" 
+                        style={{ backgroundColor: getColor(colorsArray, image.color).hex }}
+                      />
+                    </div>
+                    <div
+                      className="
+                        flex items-center justify-evenly bg-shade 
+                        rounded-full w-[50px] h-[25px]
+                        border border-solid border-background border-[2px] overflow-hidden
+                      "
+                    >
+                      <LineMdImageFilled className="text-heading-invert w-5 h-5" />
+                      <div 
+                        className="
+                          rounded-full text-sm font-bold text-center text-heading-invert
+                        ">
+                        A
+                      </div>
                     </div>
                   </div>
                 </div>
+                {image.second &&
+                  <div
+                    className="
+                      relative shrink-0 w-[200px] h-[300px] rounded-md overflow-hidden
+                    "
+                  >
+                    <img 
+                      src={image.second}
+                      className="
+                        w-full h-full object-cover object-center rounded-md
+                      "
+                    />
+                    <div
+                      className="
+                        absolute flex flex-col gap-2 bottom-2 left-2 z-[10]
+                      "
+                    >
+                      <div
+                        className="
+                          flex items-center justify-evenly bg-shade 
+                          rounded-full w-[50px] h-[25px] 
+                          border border-solid border-background border-[2px] overflow-hidden
+                        "
+                      >
+                        <MdiColor className="text-heading-invert w-5 h-5" />
+                        <div 
+                          className="w-4 h-4 rounded-full" 
+                          style={{ backgroundColor: getColor(colorsArray, image.color).hex }}
+                        />
+                      </div>
+                      <div
+                        className="
+                          flex items-center justify-evenly bg-shade 
+                          rounded-full w-[50px] h-[25px]
+                          border border-solid border-background border-[2px] overflow-hidden
+                        "
+                      >
+                        <LineMdImageFilled className="text-heading-invert w-5 h-5" />
+                        <div 
+                          className="
+                            rounded-full text-sm font-bold text-center text-heading-invert
+                          ">
+                          B
+                        </div>
+                      </div>
+                    </div>
+                  </div>                
+                }
               </li>
             )}
             <li
@@ -946,14 +1002,18 @@ export default function EditProductWindow () {
               {isEn ? 'STATE' : 'الحاله'}
             </h3>
             <form
-              className="flex gap-4 ml-auto"
+              className={`
+                flex gap-4
+                ${isEn ? 'ml-auto' : 'mr-auto'}
+              `}
             >
               <label
-                className="
+                className={`
                   relative flex gap-2 items-center 
                   border border-inbetween px-2 py-1 
                   rounded-lg bg-background overflow-hidden cursor-pointer
-                "
+                  ${isEn ? 'order-1' : 'order-3'}
+                `}
                 htmlFor="stateAvailable"
               >
                 <input
@@ -1002,11 +1062,12 @@ export default function EditProductWindow () {
                 />
               </label>
               <label
-                className="
+                className={`
                   relative flex gap-2 items-center 
                   border border-inbetween px-2 py-1 
                   rounded-lg bg-background overflow-hidden cursor-pointer
-                "
+                  ${isEn ? 'order-2' : 'order-2'}
+                `}
                 htmlFor="stateOutOfStock"
               >
                 <input
@@ -1055,11 +1116,12 @@ export default function EditProductWindow () {
                 />
               </label>
               <label
-                className="
+                className={`
                   relative flex gap-2 items-center 
                   border border-inbetween px-2 py-1 
                   rounded-lg bg-background overflow-hidden cursor-pointer
-                "
+                  ${isEn ? 'order-3' : 'order-1'}
+                `}
                 htmlFor="stateHidden"
               >
                 <input
