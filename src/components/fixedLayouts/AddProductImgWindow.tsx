@@ -15,7 +15,8 @@ import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingRes
 // STORES
 import { 
   useAlertMessageStore, useLanguageStore, 
-  useAddProductImgWindowStore, useSelectImgColorWindowStore
+  useAddProductImgWindowStore, useSelectImgColorWindowStore,
+  useStorageStore, useEditProductWindowStore
 } from '@/stores/index';
 
 // API
@@ -51,6 +52,11 @@ export default function AddProductImgWindow () {
   const setColorToggle = useSelectImgColorWindowStore(state => state.setToggle);
   const selectedColor = useSelectImgColorWindowStore(state => state.selectedColor);
 
+  const productData = useEditProductWindowStore(state => state.productData);
+  const setProductData = useEditProductWindowStore(state => state.setProductData);
+
+  const setFileData = useStorageStore(state => state.setFileData);
+
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
@@ -58,6 +64,9 @@ export default function AddProductImgWindow () {
   const [ imageSelectedType , setImageSelectedTtype ] = useState<string | null>(null);
   const [ productImage, setProductImage ] = useState<File | null>(null);
   const [ isMutating, setIsMutating ] = useState<boolean>(false);
+
+  const setFilePath = (productId: string, color: string, viewType: string) => `${productId}/${color}/view-${viewType}`;
+
   const uploadProductImageMutation = useMutation({
     mutationFn: uploadProductImage,
     onSettled: () => {
@@ -66,6 +75,20 @@ export default function AddProductImgWindow () {
     onMutate: () => {
       setIsMutating(true);
     },
+    onSuccess: (data) => {
+      console.log('upload image data result: ', data);
+      setAddToggle(false);
+      setFileData(data);
+      setAlertToggle(Date.now());
+      setAlertType("success");
+      setAlertMessage(data.message[isEn ? 'en' : 'ar']);
+
+    },
+    onError: () => {
+      setAlertToggle(Date.now());
+      setAlertType("error");
+      setAlertMessage(isEn ? 'An Error has accured during uploading the iamge, please try again.' : 'هناك مشكله خلال رفع الصوره, الرجاء المحاوله مره اخرى.');
+    }
   })
 
   const previewUploadedImg = (files: any) => {
@@ -96,12 +119,22 @@ export default function AddProductImgWindow () {
         setAddToggle(false);
         break;
       case 'accept_button_is_clicked':
-        // setAddToggle(false);
-        uploadProductImageMutation.mutate({
-          bucketName: 'assets', 
-          filePath: '/test', 
-          productImage
-        })
+        console.log('productData: ', productData);
+        console.log('selectedColor: ', selectedColor);
+        console.log('imageSelectedType: ', imageSelectedType);
+        console.log('productImage: ', productImage);
+        return;
+        if (!productData && !selectedColor && !imageSelectedType ) {
+          setAlertToggle(Date.now());
+          setAlertType("error");
+          setAlertMessage(isEn ? 'Please make sure are fields are choosed.' : 'الرجاء اختيار من كافه الجداولز');
+          return;
+        }
+        // uploadProductImageMutation.mutate({
+          // bucketName: 'assets', 
+          // filePath: setFilePath(productData?.id, selectedColor, imageSelectedType), 
+          // productImage
+        // })
         break;
       case 'change_color_button_is_clicked':
         setColorToggle(true);
@@ -395,7 +428,7 @@ export default function AddProductImgWindow () {
             className="flex items-center justify-between w-full p-2 gap-8 bg-background-light rounded-lg"
           >
             <h3 className="text-body font-bold">
-              {isEn ? 'COLOR ASSIGNMENT' : 'الالوان'}
+              {isEn ? 'COLOR ASSIGNMENT' : 'اللوان المختار'}
             </h3>
             <div
               className="flex flex-col gap-2 w-[130px] bg-background-deep-light p-2 rounded-lg"

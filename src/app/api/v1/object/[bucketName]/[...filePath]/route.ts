@@ -18,11 +18,11 @@ async function nextError (code: string, message: string, status = 404) {
 // @desc recieve object files
 // @route /api/v1/object/:bucket-name/:file-path
 // @access public
-export async function GET (req: NextRequest) {
+export async function GET (
+  req: NextRequest,
+  { params }: { params: { bucketName: string, filePath: any } }
+) {
   try {
-    // const bucketName = (await params).bucketName;
-    // const filePath = (await params).filePath.join('/');
-
   } catch (err) {
     const error = err as Error;
     console.error('Error while recieving object files: ', error.message);
@@ -69,14 +69,16 @@ export async function POST (
       .from(bucketName)
       .getPublicUrl(filePath);
     if (!publicUrl) return nextError(
-      'sdfa',
-      'Error while getting pfp url',
+      'OBJECT_URL_FETCH_FAIL',
+      'Error while getting object file url',
       404
     );
-    console.log('publicUrl: ', publicUrl);
-    return NextResponse.json({ message: 'ok', data }, { status: 200 })
-    return publicUrl;
 
+    console.log('publicUrl: ', publicUrl);
+    return NextResponse.json({ 
+      message: { en: 'Uploading file process is successful!', ar: 'تم تنصيب الملف بنجاح!'}, 
+      data: { ...data, publicUrl } 
+    }, { status: 200 });
   } catch (err) {
     const error = err as Error;
     console.error('Error while getting object files: ', error.message);
@@ -87,3 +89,6 @@ export async function POST (
     )
   }
 }
+
+// Upload Paths:
+// #Products: /assets/images/products/:product-id/:color/view-a.avif

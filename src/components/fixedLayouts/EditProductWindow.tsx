@@ -831,12 +831,12 @@ export default function EditProductWindow () {
                   border border-inbetween px-2 py-1 
                   rounded-lg bg-background overflow-hidden cursor-pointer
                 "
-                htmlFor="sizeExtraLarge"
+                htmlFor="sizeDoubleExtraLarge"
               >
                 <input
                   className="peer invisible text-heading rounded-lg" 
                   type="checkbox"
-                  id="sizeExtraLarge"
+                  id="sizeDoubleExtraLarge"
                   name="sizes"
                   data-info="2XL"
                   onChange={handleChange}

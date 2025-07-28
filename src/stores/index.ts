@@ -194,7 +194,7 @@ type EditProductWindowProps = {
   setToggle: (value: boolean) => void;
   productData: Record<string, any> | null;
   setProductData: (value: Record<string, any | null>) => void;
-}
+};
 
 const useEditProductWindowStore = create<EditProductWindowProps>()(
   (set) => ({
@@ -203,26 +203,26 @@ const useEditProductWindowStore = create<EditProductWindowProps>()(
     productData: null,
     setProductData: (productData) => set({ productData })
   })
-)
+);
 
 type AddProductImgWindowProps = {
   toggle: boolean;
   setToggle: (value: boolean) => void;
-}
+};
 
 const useAddProductImgWindowStore = create<AddProductImgWindowProps>()(
   (set) => ({
     toggle: false,
     setToggle: (toggle) => set({ toggle })    
   })
-)
+);
 
 type SelectImgColorWindowProps = {
   toggle: boolean;
   setToggle: (value: boolean) => void;
   selectedColor: null | Record<string, any>;
   setSelectedColor: (value: null | Record<string, any>) => void;
-}
+};
 
 const useSelectImgColorWindowStore = create<SelectImgColorWindowProps>()(
   (set) => ({
@@ -230,6 +230,18 @@ const useSelectImgColorWindowStore = create<SelectImgColorWindowProps>()(
     setToggle: (toggle) => set({ toggle }),
     selectedColor: null,
     setSelectedColor: (selectedColor) => set({ selectedColor })
+  })
+);
+
+type StorageProps = {
+  fileData: Record<string, string>;
+  setFileData: (value: Record<string, string>) => void;
+};
+
+const useStorageStore = create<StorageProps>()(
+  (set) => ({
+    fileData: {},
+    setFileData: (fileData) => set({ fileData })
   })
 )
 
@@ -240,5 +252,6 @@ export {
   useLayoutRefStore, useAlertMessageStore,
   useFooterListStore, useAllProductImagesStore,
   useLanguageStore, useEditProductWindowStore,
-  useAddProductImgWindowStore, useSelectImgColorWindowStore
+  useAddProductImgWindowStore, useSelectImgColorWindowStore,
+  useStorageStore
 };
