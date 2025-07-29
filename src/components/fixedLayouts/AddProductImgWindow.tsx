@@ -50,6 +50,7 @@ export default function AddProductImgWindow () {
 
   const colorToggle = useSelectImgColorWindowStore(state => state.toggle);
   const setColorToggle = useSelectImgColorWindowStore(state => state.setToggle);
+  const setSelectedColor = useSelectImgColorWindowStore(state => state.setSelectedColor);
   const selectedColor = useSelectImgColorWindowStore(state => state.selectedColor);
 
   const productData = useEditProductWindowStore(state => state.productData);
@@ -61,11 +62,18 @@ export default function AddProductImgWindow () {
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
 
-  const [ imageSelectedType , setImageSelectedTtype ] = useState<string | null>(null);
+  const [ imageSelectedType , setImageSelectedType ] = useState<Record<string, string> | null>(null);
   const [ productImage, setProductImage ] = useState<File | null>(null);
   const [ isMutating, setIsMutating ] = useState<boolean>(false);
 
   const setFilePath = (productId: string, color: string, viewType: string) => `${productId}/${color}/view-${viewType}`;
+
+  const resetWindowToDefault = () => {
+    setPreview(null);
+    setProductImage(null);
+    setSelectedColor(null);
+    setImageSelectedType(null);
+  };
 
   const uploadProductImageMutation = useMutation({
     mutationFn: uploadProductImage,
@@ -76,6 +84,11 @@ export default function AddProductImgWindow () {
       setIsMutating(true);
     },
     onSuccess: (data) => {
+      const newImageDetails = {
+        [imageSelectedType === 'a' ? 'main' : 'second']: data.publicUrl,
+        color: selectedColor
+      }
+      productData?.images.some(image => image.color === selectedColor)
       console.log('upload image data result: ', data);
       setAddToggle(false);
       setFileData(data);
@@ -107,6 +120,7 @@ export default function AddProductImgWindow () {
 
     switch (type) {
       case 'fixed_window_is_clicked':
+        resetWindowToDefault();
         setAddToggle(false);
         break;
       case 'fixed_box_is_clicked':
@@ -116,6 +130,7 @@ export default function AddProductImgWindow () {
         if (productImgInptRef.current) productImgInptRef.current.click();
         break;
       case 'cancel_button_is_clicked':
+        resetWindowToDefault();
         setAddToggle(false);
         break;
       case 'accept_button_is_clicked':
@@ -123,18 +138,35 @@ export default function AddProductImgWindow () {
         console.log('selectedColor: ', selectedColor);
         console.log('imageSelectedType: ', imageSelectedType);
         console.log('productImage: ', productImage);
-        return;
-        if (!productData && !selectedColor && !imageSelectedType ) {
-          setAlertToggle(Date.now());
-          setAlertType("error");
-          setAlertMessage(isEn ? 'Please make sure are fields are choosed.' : 'الرجاء اختيار من كافه الجداولز');
-          return;
+
+        switch (false) {
+          case productData !== null:
+            setAlertMessage(isEn ? 'Couldn\'t get product data please try again.' : 'عدم القدره على قراءه معلومات المنتج, الرجاء المحاوله مره اخرى.');
+            setAlertType('error');
+            setAlertToggle(Date.now());
+            break;
+          case productImage !== null:
+            setAlertMessage(isEn ? 'Please Select an Image for your product.' : 'الرجاء اختيار صوره للمنتج.');
+            setAlertType('warning');
+            setAlertToggle(Date.now());
+            break;
+          case selectedColor !== null:
+            setAlertMessage(isEn ? 'Please Choose a color that repesents the product' : 'الرجاء اختيار اللون المناسب للمنتج.');
+            setAlertType('warning');
+            setAlertToggle(Date.now());
+            break;
+          case imageSelectedType !== null:
+            setAlertMessage(isEn ? 'Please Choose the view type.' : 'الرجاء اختيار الصنف للعرض.');
+            setAlertType('warning');
+            setAlertToggle(Date.now());
+            break;
+          default:
+            uploadProductImageMutation.mutate({
+              bucketName: 'assets',
+              filePath: setFilePath(productData?.id, selectedColor, imageSelectedType),
+              productImage
+            });
         }
-        // uploadProductImageMutation.mutate({
-          // bucketName: 'assets', 
-          // filePath: setFilePath(productData?.id, selectedColor, imageSelectedType), 
-          // productImage
-        // })
         break;
       case 'change_color_button_is_clicked':
         setColorToggle(true);
@@ -155,7 +187,7 @@ export default function AddProductImgWindow () {
   ) => {
     e.stopPropagation();
     const { name } = e.currentTarget;
-    const { type } = e.currentTarget.dataset;
+    const { type, tag } = e.currentTarget.dataset;
 
     switch (name) {
       case 'productImage':
@@ -163,7 +195,7 @@ export default function AddProductImgWindow () {
         previewUploadedImg(files);
         break;
       case 'imageType':
-        if (type) setImageSelectedTtype(type);
+        if (type && tag) setImageSelectedType({ type, tag });
         break;
       default:
         console.error('Unknown type: ', name);
@@ -499,7 +531,8 @@ export default function AddProductImgWindow () {
                   type="radio"
                   id="imageTypeA"
                   name="imageType"
-                  data-type="a"
+                  data-type="main"
+                  data-tag="a"
                   onChange={handleChange}
                 />{' '}
                 <h4
@@ -551,7 +584,8 @@ export default function AddProductImgWindow () {
                   type="radio"
                   id="imageTypeB"
                   name="imageType"
-                  data-type="b"
+                  data-type="alternate"
+                  data-tag="b"
                   onChange={handleChange}
                 />{' '}
                 <h4

@@ -1,0 +1,117 @@
+[
+  {
+    "id": 1,
+    "name": {"en": "Serenity Set", "ar": "ست سيرينيتي"},
+    "slug": "serenity-set",
+    "description": {"en": "Elegant Ruched Top and Wide-Leg Pants Ensemble", "ar": "بلوزة كشخة مع بنطلون واسع"},
+    "type": "outfit-pairs",
+    "categories": ["clothing/outfit-pairs", "sale/latest-arrivals", "sale/hot-deals"],
+    "forced_new": true,
+    "sizes": ["S", "2XL"],
+    "colors": ["Green", "Pink", "Black", "Plum", "Coral"],
+    "images": [
+      {
+        "main": "/assets/img/cloth-a-green.avif",
+        "second": "/assets/img/cloth-a-green-view-b.avif",
+        "color": "Green"
+      },{
+        "main": "/assets/img/cloth-a-orange.avif",
+        "second": "/assets/img/cloth-a-orange-view-b.avif",
+        "color": "Coral"
+      },{
+        "main": "/assets/img/cloth-a-pink.avif",
+        "second": "/assets/img/cloth-a-pink-view-b.avif",
+        "color": "Pink"
+      },{
+        "main": "/assets/img/cloth-a-red.avif",
+        "second": "/assets/img/cloth-a-red-view-b.avif",
+        "color": "Plum"
+      },{
+        "main": "/assets/img/cloth-a-black.avif",
+        "second": "/assets/img/cloth-a-black-view-b.avif",
+        "color": "Black"
+      }
+    ],
+    "stock": {
+      "XS": { "emerald": 5, "black": 3 },
+      "S": { "emerald": 10, "black": 8 },
+      "M": { "emerald": 7, "black": 6 },
+      "L": { "emerald": 4, "black": 2 }
+    },
+    "price": 2000,
+    "discount_percent": 30,
+    "lists": [
+      {
+        "title": {"en": "PRODUCT DETAILS", "ar": "تفاصيل عن القطعه"},
+        "descriptionLists": {
+          "en": [
+            "Brand: Ranoura",
+            "Material: Fabric",
+            "Fit: Tight to boy",
+            "NeckLine: None",
+            "Sleeves: Yes",
+            "Design: Italic"
+          ],
+          "ar": [
+            "العلامة التجارية: رانورا",
+            "المادة: قماش",
+            "المقاس: ضيق على الجسم",
+            "خط العنق: لا يوجد",
+            "الأكمام: نعم",
+            "التصميم: مائل"
+          ]
+        }
+      },{
+        "title": {"en": "SIZE INFO", "ar": "معلومات عن المقاسات"},
+        "descriptionLists": {
+          "en": [
+            "True to size",
+            "XS: 0",
+            "S: 0-2",
+            "M: 2-4",
+            "L: 4-6",
+            "XL: 6-9"
+          ],
+          "ar": [
+            "True to size",
+            "XS: 0",
+            "S: 0-2",
+            "M: 2-4",
+            "L: 4-6",
+            "XL: 6-9"
+          ]
+        }
+      },{
+        "title": {"en": "ABOUT RANOURA✧･ﾟ*", "ar": "حول رانورا*ﾟ･✧"},
+        "descriptionLists": {
+          "en": [
+            "Welcome to Ranoura – where elegance meets excellence. At Ranoura, we pride ourselves on crafting garments from the finest high-end fabrics, designed for those who appreciate quality, style, and sophistication. Each piece is meticulously tailored to provide a perfect blend of comfort and luxury, ensuring you feel confident and radiant in every moment. Discover timeless designs and impeccable craftsmanship that redefine fashion, only at Ranoura."
+          ],
+          "ar": [
+            "مرحبًا بكم في رانورا – حيث تلتقي الأناقة بالتميز. في رانورا، نفخر بصناعة الملابس من أجود الأقمشة الفاخرة، مصممة لأولئك الذين يقدرون الجودة والأناقة والرقي. كل قطعة مصممة بعناية فائقة لتوفر مزيجًا مثاليًا من الراحة والفخامة، مما يضمن شعورك بالثقة والإشراق في كل لحظة. اكتشف التصاميم الخالدة والحرفية اللا مثيل لها التي تعيد تعريف الموضة، فقط في رانورا."
+          ]
+        }
+      },{
+        "title": {"en": "DELIVERY", "ar": "التوصيل"},
+        "descriptionLists": {
+          "en": [
+            "Get your favorite Ranoura pieces delivered straight to your doorstep! Enjoy fast and reliable shipping with options for standard delivery (three to five business days) or express delivery (one to two business days) for those last-minute style needs. We carefully package every item to ensure it arrives in perfect condition, ready to shine in your wardrobe."
+          ],
+          "ar": [
+            "احصل على قطع رانورا المفضلة لديك ويتم توصيلها مباشرة إلى عتبة بابك! استمتع بالشحن السريع والموثوق مع خيارات التوصيل القياسي (من ثلاثة إلى خمسة أيام عمل) أو التوصيل السريع (من يوم إلى يومين عمل) لتلبية احتياجات الأناقة في اللحظة الأخيرة. نحن نعبئ كل قطعة بعناية لضمان وصولها في حالة مثالية، جاهزة للتألق في خزانة ملابسك."
+          ]
+        }
+      },{
+        "title": {"en": "RETURNS", "ar": "المرجوعات"},
+        "descriptionLists": {
+          "en": [
+            "At Ranoura, your satisfaction is our priority. If something isn't quite right, you can easily return it within fourteen days of receiving your order. Items must be unworn, unwashed, and with original tags attached. Simply follow our hassle-free returns process, and we'll ensure you get a refund or exchange as quickly as possible."
+          ], 
+          "ar": [
+            "في رانورا، رضاكم هو أولويتنا. إذا كان هناك شيء غير مناسب تمامًا، يمكنكم إرجاعه بسهولة خلال أربعة عشر يومًا من استلام طلبكم. يجب أن تكون الأغراض غير ملبوسة وغير مغسولة ومع العلامات الأصلية مرفقة. ما عليكم سوى اتباع عملية الإرجاع السهلة لدينا، وسنضمن حصولكم على استرداد أو استبدال في أسرع وقت ممكن."
+          ]
+        }  
+      }
+    ]
+  }
+]

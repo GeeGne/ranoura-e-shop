@@ -37,10 +37,14 @@ export default function EditProductWindow () {
   const isEn = lang === 'en';
   const editToggle = useEditProductWindowStore(state => state.toggle);
   const setEditToggle = useEditProductWindowStore(state => state.setToggle);
-  const addToggle = useAddProductImgWindowStore(state => state.toggle);
-  const setAddToggle = useAddProductImgWindowStore(state => state.setToggle);
   const productData = useEditProductWindowStore(state => state.productData);
   const setProductData = useEditProductWindowStore(state => state.setProductData);
+
+  const addToggle = useAddProductImgWindowStore(state => state.toggle);
+  const setAddToggle = useAddProductImgWindowStore(state => state.setToggle);
+  const setFilePath = useAddProductImgWindowStore(state => state.setFilePath);
+  const setBucketName = useAddProductImgWindowStore(state => state.setBucketName);
+  
 
   const [ updatedData, setUpdatedData ] = useState<Record<any, any>>({test: 'asfd'});
 
@@ -350,67 +354,21 @@ export default function EditProductWindow () {
           <ul
             className="flex gap-4 w-[516px] overflow-x-scroll mx-auto"
           >
-            {updatedData.images?.map((image: Record<string, string>, i: number) => 
-              <li
-                key={i}
-                className="
-                  flex flex-row gap-4 shrink-0
-                "
-              >
-                <div
+            {updatedData.images?.map((image: any, i: number) => 
+              image.views.map((view: Record<string, string>, viewIndex: number) =>
+                <li
+                  key={`${i}-${viewIndex}`}
                   className="
-                    relative shrink-0 w-[200px] h-[300px] rounded-md overflow-hidden
+                    flex flex-row gap-4 shrink-0
                   "
                 >
-                  <img 
-                    src={image.main}
-                    className="
-                      w-full h-full object-cover object-center rounded-md
-                    "
-                  />
-                  <div
-                    className="
-                      absolute flex flex-col gap-2 bottom-2 left-2 z-[10]
-                    "
-                  >
-                    <div
-                      className="
-                        flex items-center justify-evenly bg-shade 
-                        rounded-full w-[50px] h-[25px] 
-                        border border-solid border-background border-[2px] overflow-hidden
-                      "
-                    >
-                      <MdiColor className="text-heading-invert w-5 h-5" />
-                      <div 
-                        className="w-4 h-4 rounded-full" 
-                        style={{ backgroundColor: getColor(colorsArray, image.color).hex }}
-                      />
-                    </div>
-                    <div
-                      className="
-                        flex items-center justify-evenly bg-shade 
-                        rounded-full w-[50px] h-[25px]
-                        border border-solid border-background border-[2px] overflow-hidden
-                      "
-                    >
-                      <LineMdImageFilled className="text-heading-invert w-5 h-5" />
-                      <div 
-                        className="
-                          rounded-full text-sm font-bold text-center text-heading-invert
-                        ">
-                        A
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {image.second &&
                   <div
                     className="
                       relative shrink-0 w-[200px] h-[300px] rounded-md overflow-hidden
                     "
                   >
                     <img 
-                      src={image.second}
+                      src={view.url}
                       className="
                         w-full h-full object-cover object-center rounded-md
                       "
@@ -445,13 +403,13 @@ export default function EditProductWindow () {
                           className="
                             rounded-full text-sm font-bold text-center text-heading-invert
                           ">
-                          B
+                          {view.tag.toUpperCase()}
                         </div>
                       </div>
                     </div>
-                  </div>                
-                }
-              </li>
+                  </div>
+                </li>
+              )
             )}
             <li
               className="

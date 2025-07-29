@@ -275,7 +275,7 @@ export default function Table({ products, isLoading = false, isError = false }: 
                     "
                   />
                   <img 
-                    src={itm.images[0].main}
+                    src={itm.images[0].views[0].url}
                     className="
                       h-[150px] aspect-[2/3] shrink-0
                       object-cover object-center rounded-lg
@@ -398,63 +398,18 @@ export default function Table({ products, isLoading = false, isError = false }: 
                   className="flex flex-row gap-4 items-center"
                   ref={el => { imgUlRefs.current[i] = el }}
                 >
-                  {itm.images.map((image: Record<string, string>, i: number) => 
-                    <li
-                      key={i}
-                      className="flex gap-4 shrink-0"
-                    >
-                      <div
-                      className="flex flex-col gap-2 shrink-0"
+                  {itm.images.map((image: any, i: number) => 
+                    image.views.map((view: Record<string, string>, viewIndex: number) =>
+                      <li
+                        key={`${i}-${viewIndex}`}
+                        className="flex gap-4 shrink-0"
                       >
-                        <img
-                          src={image.main}
-                          className="w-[120px] aspect-[2/3] object-cover object-center rounded-lg "
-                        />
                         <div
-                          className="flex justify-evenly items-center"
-                        >
-                          <div
-                            className="
-                              flex bg-background-light rounded-full overflow-hidden
-                              border border-solid border-px border-background-deep-light
-                            "
-                          >
-                            <MdiColor 
-                              className="p-1 w-6 h-6 text-body"
-                            />
-                            <div
-                              className="p-1 w-6 h-6"
-                              style={{ backgroundColor: getColor(colorsArray, image.color).hex }}
-                            />
-                          </div>
-                          <div
-                            className="
-                              flex bg-background-light rounded-full overflow-hidden
-                              border border-solid border-px border-background-deep-light
-                            "
-                          >
-                            <LineMdImageFilled 
-                              className="p-1 w-6 h-6 text-body"
-                            />
-                            <div
-                              className="
-                                flex items-center justify-center p-1 w-6 h-6 
-                                text-sm font-bold text-heading-invert text-center
-                                bg-heading
-                              "
-                            >
-                              A
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      {image.second &&
-                        <div
-                          className="flex flex-col gap-2 shrink-0"
+                        className="flex flex-col gap-2 shrink-0"
                         >
                           <img
-                            src={image.second}
-                            className="w-[120px] aspect-[2/3] object-cover object-center rounded-lg"
+                            src={view.url}
+                            className="w-[120px] aspect-[2/3] object-cover object-center rounded-lg "
                           />
                           <div
                             className="flex justify-evenly items-center"
@@ -489,13 +444,13 @@ export default function Table({ products, isLoading = false, isError = false }: 
                                   bg-heading
                                 "
                               >
-                                B
+                                {view.tag.toUpperCase()}
                               </div>
                             </div>
                           </div>
                         </div>
-                      }
-                    </li>
+                      </li>
+                    )
                   )}
                 </ul>
               </td>
