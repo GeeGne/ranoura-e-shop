@@ -66,13 +66,19 @@ export default function AddProductImgWindow () {
   const [ productImage, setProductImage ] = useState<File | null>(null);
   const [ isMutating, setIsMutating ] = useState<boolean>(false);
 
-  const setFilePath = (productId: string, color: string, viewType: string) => `${productId}/${color}/view-${viewType}`;
+  const setFilePath = (productId: string, color: string, viewType: string) => `${productId}/${color}/${Date.now()}-view-${viewType}`;
 
   const resetWindowToDefault = () => {
     setPreview(null);
     setProductImage(null);
     setSelectedColor(null);
     setImageSelectedType(null);
+  };
+
+  const displayAlert = (message: any, type: string) => {
+    setAlertMessage(message);
+    setAlertType(type);
+    setAlertToggle(Date.now());
   };
 
   const uploadProductImageMutation = useMutation({
@@ -84,23 +90,20 @@ export default function AddProductImgWindow () {
       setIsMutating(true);
     },
     onSuccess: (data) => {
-      const newImageDetails = {
-        [imageSelectedType === 'a' ? 'main' : 'second']: data.publicUrl,
-        color: selectedColor
-      }
-      productData?.images.some(image => image.color === selectedColor)
+      const { type, tag }: any = imageSelectedType;
+      const imagesArray = productData?.images.filter((img: any) => img.color !== selectedColor);
+      const choosedImageField = imagesArray.find((img: any) => img.color === selectedColor);
+      const choosedViews = choosedImageField.views.filter((view: any) => view.type !== type);
+      const newfsd = [ ...choosedViews, { url: data.publicUrl, type, tag } ]
+      const newData = {};
       console.log('upload image data result: ', data);
       setAddToggle(false);
       setFileData(data);
-      setAlertToggle(Date.now());
-      setAlertType("success");
-      setAlertMessage(data.message[isEn ? 'en' : 'ar']);
+      displayAlert(data.message[isEn ? 'en' : 'ar'], "success");
 
     },
     onError: () => {
-      setAlertToggle(Date.now());
-      setAlertType("error");
-      setAlertMessage(isEn ? 'An Error has accured during uploading the iamge, please try again.' : 'هناك مشكله خلال رفع الصوره, الرجاء المحاوله مره اخرى.');
+      displayAlert(isEn ? 'An Error has accured during uploading the iamge, please try again.' : 'هناك مشكله خلال رفع الصوره, الرجاء المحاوله مره اخرى.', "error");
     }
   })
 
@@ -141,31 +144,24 @@ export default function AddProductImgWindow () {
 
         switch (false) {
           case productData !== null:
-            setAlertMessage(isEn ? 'Couldn\'t get product data please try again.' : 'عدم القدره على قراءه معلومات المنتج, الرجاء المحاوله مره اخرى.');
-            setAlertType('error');
-            setAlertToggle(Date.now());
+            displayAlert(isEn ? 'Couldn\'t get product data please try again.' : 'عدم القدره على قراءه معلومات المنتج, الرجاء المحاوله مره اخرى.', "error");
             break;
           case productImage !== null:
-            setAlertMessage(isEn ? 'Please Select an Image for your product.' : 'الرجاء اختيار صوره للمنتج.');
-            setAlertType('warning');
-            setAlertToggle(Date.now());
+            displayAlert(isEn ? 'Please Select an Image for your product.' : 'الرجاء اختيار صوره للمنتج.', "warning");
             break;
           case selectedColor !== null:
-            setAlertMessage(isEn ? 'Please Choose a color that repesents the product' : 'الرجاء اختيار اللون المناسب للمنتج.');
-            setAlertType('warning');
-            setAlertToggle(Date.now());
+            displayAlert(isEn ? 'Please Choose a color that repesents the product' : 'الرجاء اختيار اللون المناسب للمنتج.', "warning");
             break;
           case imageSelectedType !== null:
-            setAlertMessage(isEn ? 'Please Choose the view type.' : 'الرجاء اختيار الصنف للعرض.');
-            setAlertType('warning');
-            setAlertToggle(Date.now());
+            displayAlert(isEn ? 'Please Choose the view type.' : 'الرجاء اختيار الصنف للعرض.', "warning");
             break;
           default:
-            uploadProductImageMutation.mutate({
-              bucketName: 'assets',
-              filePath: setFilePath(productData?.id, selectedColor, imageSelectedType),
-              productImage
-            });
+            adjustedProductDataTest();
+            // uploadProductImageMutation.mutate({
+              // bucketName: 'assets',
+              // filePath: setFilePath(productData?.id, selectedColor, imageSelectedType),
+              // productImage
+            // });
         }
         break;
       case 'change_color_button_is_clicked':
@@ -289,9 +285,7 @@ export default function AddProductImgWindow () {
           if (productImgInptRef.current) productImgInptRef.current.files = files;
           previewUploadedImg(files);
         } else {
-          setAlertToggle(Date.now());
-          setAlertType("error");
-          setAlertMessage(isEn ? `Please upload only one Image` : `الرجاء رفع صوره واحده فقط`);  
+          displayAlert(isEn ? `Please upload only one Image` : `الرجاء رفع صوره واحده فقط`, "error"); ""  
         }
         break;
       case 'change_color_button_is_clicked':
@@ -307,6 +301,34 @@ export default function AddProductImgWindow () {
   // console.log('addToggle: ', addToggle);
   // console.log('selectedColor: ', selectedColor);
   console.log('imageSelectedType: ', imageSelectedType);
+  const adjustedProductDataTest = () => {
+    const data = {publicUrl: 'fakeurl/test/yes.avif'};
+    const newView = { 
+      url: data.publicUrl, 
+      type: imageSelectedType?.type, 
+      tag: imageSelectedType?.tag 
+    };
+
+    let imagesArray = productData?.images ? [ ...productData.images ] : [];
+    const colorIndex = imagesArray.findIndex((image: any) => image.color === selectedColor?.name);
+
+    if (colorIndex !== -1) {
+      imagesArray[colorIndex] = {
+        ...imagesArray[colorIndex], 
+        views: [ 
+          ...imagesArray[colorIndex].views.filter((view: any) => view.type !== newView.type), 
+          newView
+        ]
+      }
+      
+    } else {
+      imagesArray = [ ...imagesArray, { color: selectedColor?.name, views: [ newView ] } ];
+    }
+
+    const updatedProductData = { ...productData, images: imagesArray };
+    console.log('old images Data: ', productData)
+    console.log('new images Data: ', updatedProductData)
+  }
 
   return (
     <div
