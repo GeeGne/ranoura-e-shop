@@ -21,6 +21,7 @@ import {
 
 // API
 import uploadProductImage from '@/lib/api/object/post';
+import editProduct from '@/lib/api/products/put';
 
 // JSON
 import colorsArray from '@/json/colors.json';
@@ -81,12 +82,11 @@ export default function AddProductImgWindow () {
     setAlertToggle(Date.now());
   };
 
-    const updateProductImages = () => {
-    const data = {publicUrl: 'fakeurl/test/yes.avif'};
+  const updateProductImages = (data: any) => {
     const newView = { 
       url: data.publicUrl, 
       type: imageSelectedType?.type, 
-      tag: imageSelectedType?.tag 
+      ...(imageSelectedType?.tag && { tag: imageSelectedType?.tag })
     };
 
     let imagesArray = productData?.images ? [ ...productData.images ] : [];
@@ -106,8 +106,10 @@ export default function AddProductImgWindow () {
     }
 
     const updatedProductData = { ...productData, images: imagesArray };
-    console.log('old images Data: ', productData)
-    console.log('new images Data: ', updatedProductData)
+    console.log('old images Data: ', productData);
+    console.log('new images Data: ', updatedProductData);
+
+    return imagesArray;
   }
 
   const uploadProductImageMutation = useMutation({
@@ -128,8 +130,36 @@ export default function AddProductImgWindow () {
       console.log('upload image data result: ', data);
       setAddToggle(false);
       setFileData(data);
+      const images = updateProductImages(data);
       displayAlert(data.message[isEn ? 'en' : 'ar'], "success");
 
+      editProductAfterImageUploadMutation.mutate({id: productData?.id, images})
+    },
+    onError: () => {
+      displayAlert(isEn ? 'An Error has accured during uploading the iamge, please try again.' : 'هناك مشكله خلال رفع الصوره, الرجاء المحاوله مره اخرى.', "error");
+    }
+  })
+
+  const editProductAfterImageUploadMutation = useMutation({
+    mutationFn: editProduct,
+    onSettled: () => {
+      setIsMutating(false);
+    },
+    onMutate: () => {
+      setIsMutating(true);
+    },
+    onSuccess: (data) => {
+      const { type, tag }: any = imageSelectedType;
+      const imagesArray = productData?.images.filter((img: any) => img.color !== selectedColor);
+      const choosedImageField = imagesArray.find((img: any) => img.color === selectedColor);
+      const choosedViews = choosedImageField.views.filter((view: any) => view.type !== type);
+      const newfsd = [ ...choosedViews, { url: data.publicUrl, type, tag } ]
+      const newData = {};
+      console.log('upload image data result: ', data);
+      setAddToggle(false);
+      setFileData(data);
+      updateProductImages(data);
+      displayAlert(data.message[isEn ? 'en' : 'ar'], "success");
     },
     onError: () => {
       displayAlert(isEn ? 'An Error has accured during uploading the iamge, please try again.' : 'هناك مشكله خلال رفع الصوره, الرجاء المحاوله مره اخرى.', "error");
@@ -185,12 +215,11 @@ export default function AddProductImgWindow () {
             displayAlert(isEn ? 'Please Choose the view type.' : 'الرجاء اختيار الصنف للعرض.', "warning");
             break;
           default:
-            updateProductImages();
-            // uploadProductImageMutation.mutate({
-              // bucketName: 'assets',
-              // filePath: setFilePath(productData?.id, selectedColor, imageSelectedType),
-              // productImage
-            // });
+            uploadProductImageMutation.mutate({
+              bucketName: 'assets',
+              filePath: setFilePath(productData?.id, selectedColor, imageSelectedType),
+              productImage
+            });
         }
         break;
       case 'change_color_button_is_clicked':

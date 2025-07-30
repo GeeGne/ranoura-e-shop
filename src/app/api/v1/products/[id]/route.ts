@@ -15,7 +15,7 @@ async function nextError (code: string, message: string, status = 404) {
 };
 
 // @desc get specefic product
-// @route /api/v1/products/slug/:slug
+// @route /api/v1/products/:slug
 // @access private(admin, owner)
 export async function GET(
   req: NextRequest,
@@ -54,7 +54,7 @@ export async function GET(
 }
 
 // @desc update specific product
-// @route /api/v1/products/slug/:slug
+// @route /api/v1/products/:slug
 // @access private(owner, admin)
 export async function PUT(
   req: NextRequest,
@@ -77,7 +77,10 @@ export async function PUT(
       501
     )
 
-    const message = 'Product is updated successfully!';
+    const message = {
+      en: 'Product is updated successfully!',
+      ar: 'تم تعديل المنتج بنجاح!'
+    };
 
     return NextResponse.json({
       data,

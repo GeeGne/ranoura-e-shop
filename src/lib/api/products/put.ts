@@ -17,42 +17,16 @@ type Props = {
   lists: any[];
 }
 
-export default async function put ({ 
-  id,
-  name,
-  slug,
-  description,
-  price,
-  discount_percent,
-  type,
-  categories,
-  is_new,
-  sizes,
-  colors,
-  images,
-  stock,
-  lists,
-}: Props) {
+export default async function put (data: Props) {
   try {
+    const { id, ...requestedData } = data;
+    console.log('requested Data: ', requestedData);
     const url = `${getServerUrl()}/api/v1/products/${id}`;
     const response = await fetch(url, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        id,
-        name,
-        slug,
-        description,
-        price,
-        discount_percent,
-        type,
-        categories,
-        is_new,
-        sizes,
-        colors,
-        images,
-        stock,
-        lists
+        requestedData
       })
     });
     if (!response.ok) throw new Error('Unable to connect to the server.');
