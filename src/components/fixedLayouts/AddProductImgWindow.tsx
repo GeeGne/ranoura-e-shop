@@ -38,6 +38,7 @@ const outfit3 = "assets/imgb/outfit-3.avif"
 
 export default function AddProductImgWindow () {
 
+  const queryClient = useQueryClient();
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
 
@@ -82,7 +83,7 @@ export default function AddProductImgWindow () {
     setAlertToggle(Date.now());
   };
 
-  const updateProductImages = (data: any) => {
+  const updateProductImages = ({ message, data }: any) => {
     const newView = { 
       url: data.publicUrl, 
       type: imageSelectedType?.type, 
@@ -100,7 +101,6 @@ export default function AddProductImgWindow () {
           newView
         ]
       }
-      
     } else {
       imagesArray = [ ...imagesArray, { color: selectedColor?.name, views: [ newView ] } ];
     }
@@ -121,14 +121,7 @@ export default function AddProductImgWindow () {
       setIsMutating(true);
     },
     onSuccess: (data) => {
-      const { type, tag }: any = imageSelectedType;
-      const imagesArray = productData?.images.filter((img: any) => img.color !== selectedColor);
-      const choosedImageField = imagesArray.find((img: any) => img.color === selectedColor);
-      const choosedViews = choosedImageField.views.filter((view: any) => view.type !== type);
-      const newfsd = [ ...choosedViews, { url: data.publicUrl, type, tag } ]
-      const newData = {};
       console.log('upload image data result: ', data);
-      setAddToggle(false);
       setFileData(data);
       const images = updateProductImages(data);
       displayAlert(data.message[isEn ? 'en' : 'ar'], "success");
@@ -149,20 +142,13 @@ export default function AddProductImgWindow () {
       setIsMutating(true);
     },
     onSuccess: (data) => {
-      const { type, tag }: any = imageSelectedType;
-      const imagesArray = productData?.images.filter((img: any) => img.color !== selectedColor);
-      const choosedImageField = imagesArray.find((img: any) => img.color === selectedColor);
-      const choosedViews = choosedImageField.views.filter((view: any) => view.type !== type);
-      const newfsd = [ ...choosedViews, { url: data.publicUrl, type, tag } ]
-      const newData = {};
-      console.log('upload image data result: ', data);
-      setAddToggle(false);
-      setFileData(data);
-      updateProductImages(data);
+      console.log('product Data success results: ', data);
       displayAlert(data.message[isEn ? 'en' : 'ar'], "success");
+      queryClient.invalidateQueries({ queryKey: ['products'] });
+      setAddToggle(false);
     },
-    onError: () => {
-      displayAlert(isEn ? 'An Error has accured during uploading the iamge, please try again.' : 'هناك مشكله خلال رفع الصوره, الرجاء المحاوله مره اخرى.', "error");
+    onError: (data) => {
+      displayAlert(data.message, "error");
     }
   })
 
@@ -217,7 +203,7 @@ export default function AddProductImgWindow () {
           default:
             uploadProductImageMutation.mutate({
               bucketName: 'assets',
-              filePath: setFilePath(productData?.id, selectedColor, imageSelectedType),
+              filePath: setFilePath(productData?.id, selectedColor?.name, imageSelectedType?.type),
               productImage
             });
         }

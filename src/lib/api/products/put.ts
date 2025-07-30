@@ -1,23 +1,6 @@
 import getServerUrl from '@/utils/getServerUrl';
 
-type Props = {
-  id: string;
-  name: Record<string, string>;
-  slug: string;
-  description: Record<string, string>;
-  price: number;
-  discount_percent: number;
-  type: string;
-  categories: Record<string, string>;
-  is_new: boolean;
-  sizes: any[];
-  colors: any[];
-  images: any[];
-  stock: Record<string, string>;
-  lists: any[];
-}
-
-export default async function put (data: Props) {
+export default async function put (data: any) {
   try {
     const { id, ...requestedData } = data;
     console.log('requested Data: ', requestedData);
@@ -25,9 +8,9 @@ export default async function put (data: Props) {
     const response = await fetch(url, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
+      body: JSON.stringify(
         requestedData
-      })
+      )
     });
     if (!response.ok) throw new Error('Unable to connect to the server.');
 

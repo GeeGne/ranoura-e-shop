@@ -15,7 +15,7 @@ async function nextError (code: string, message: string, status = 404) {
 };
 
 // @desc get specefic product
-// @route /api/v1/products/:slug
+// @route /api/v1/products/:id
 // @access private(admin, owner)
 export async function GET(
   req: NextRequest,
@@ -54,7 +54,7 @@ export async function GET(
 }
 
 // @desc update specific product
-// @route /api/v1/products/:slug
+// @route /api/v1/products/:id
 // @access private(owner, admin)
 export async function PUT(
   req: NextRequest,
