@@ -81,6 +81,35 @@ export default function AddProductImgWindow () {
     setAlertToggle(Date.now());
   };
 
+    const updateProductImages = () => {
+    const data = {publicUrl: 'fakeurl/test/yes.avif'};
+    const newView = { 
+      url: data.publicUrl, 
+      type: imageSelectedType?.type, 
+      tag: imageSelectedType?.tag 
+    };
+
+    let imagesArray = productData?.images ? [ ...productData.images ] : [];
+    const colorIndex = imagesArray.findIndex((image: any) => image.color === selectedColor?.name);
+
+    if (colorIndex !== -1) {
+      imagesArray[colorIndex] = {
+        ...imagesArray[colorIndex], 
+        views: [ 
+          ...imagesArray[colorIndex].views.filter((view: any) => view.type !== newView.type), 
+          newView
+        ]
+      }
+      
+    } else {
+      imagesArray = [ ...imagesArray, { color: selectedColor?.name, views: [ newView ] } ];
+    }
+
+    const updatedProductData = { ...productData, images: imagesArray };
+    console.log('old images Data: ', productData)
+    console.log('new images Data: ', updatedProductData)
+  }
+
   const uploadProductImageMutation = useMutation({
     mutationFn: uploadProductImage,
     onSettled: () => {
@@ -156,7 +185,7 @@ export default function AddProductImgWindow () {
             displayAlert(isEn ? 'Please Choose the view type.' : 'الرجاء اختيار الصنف للعرض.', "warning");
             break;
           default:
-            adjustedProductDataTest();
+            updateProductImages();
             // uploadProductImageMutation.mutate({
               // bucketName: 'assets',
               // filePath: setFilePath(productData?.id, selectedColor, imageSelectedType),
@@ -301,34 +330,6 @@ export default function AddProductImgWindow () {
   // console.log('addToggle: ', addToggle);
   // console.log('selectedColor: ', selectedColor);
   console.log('imageSelectedType: ', imageSelectedType);
-  const adjustedProductDataTest = () => {
-    const data = {publicUrl: 'fakeurl/test/yes.avif'};
-    const newView = { 
-      url: data.publicUrl, 
-      type: imageSelectedType?.type, 
-      tag: imageSelectedType?.tag 
-    };
-
-    let imagesArray = productData?.images ? [ ...productData.images ] : [];
-    const colorIndex = imagesArray.findIndex((image: any) => image.color === selectedColor?.name);
-
-    if (colorIndex !== -1) {
-      imagesArray[colorIndex] = {
-        ...imagesArray[colorIndex], 
-        views: [ 
-          ...imagesArray[colorIndex].views.filter((view: any) => view.type !== newView.type), 
-          newView
-        ]
-      }
-      
-    } else {
-      imagesArray = [ ...imagesArray, { color: selectedColor?.name, views: [ newView ] } ];
-    }
-
-    const updatedProductData = { ...productData, images: imagesArray };
-    console.log('old images Data: ', productData)
-    console.log('new images Data: ', updatedProductData)
-  }
 
   return (
     <div
