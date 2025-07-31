@@ -1,5 +1,6 @@
 // HOOKS
 import { useState, useEffect, useRef } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 // COMPONENTS
 import RiAddLine from '@/components/svgs/RiAddLine';
@@ -11,9 +12,12 @@ import CarbonCategory from '@/components/svgs/CarbonCategory';
 
 // STORES
 import { 
-  useTabNameStore, useLanguageStore, 
+  useTabNameStore, useLanguageStore, useAlertMessageStore,
   useEditProductWindowStore, useAddProductImgWindowStore
 } from '@/stores/index';
+
+// API
+import editProduct from '@/lib/api/products/put';
 
 // JSON
 import colorsArray from '@/json/colors.json';
@@ -45,7 +49,16 @@ export default function EditProductWindow () {
   const setFilePath = useAddProductImgWindowStore(state => state.setFilePath);
   const setBucketName = useAddProductImgWindowStore(state => state.setBucketName);
   
+  const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
+  const setAlertType = useAlertMessageStore((state) => state.setType);
+  const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
+  const displayAlert = (message: any, type: string) => {
+    setAlertMessage(message);
+    setAlertType(type);
+    setAlertToggle(Date.now());
+  };
 
+  const [ isMutating, setIsMutating ] = useState<boolean>(false);
   const [ updatedData, setUpdatedData ] = useState<Record<any, any>>({test: 'asfd'});
 
   const nameEnInptRef = useRef<HTMLInputElement>(null);
@@ -238,6 +251,27 @@ export default function EditProductWindow () {
     setUpdatedData(productData);
   }, [productData]);
 
+  const editProductMutation = useMutation({
+    mutationFn: editProduct,
+    onSettled: () => {
+      setIsMutating(false);
+    },
+    onMutate: () => {
+      setIsMutating(true);
+    },
+    onSuccess: (result) => {
+      const { message, data: updatedProductData } = result
+      console.log('product Data success results: ', result);
+      displayAlert(message[isEn ? 'en' : 'ar'], "success");
+      queryClient.invalidateQueries({ queryKey: ['products'] });
+      setProductData(updatedProductData);
+      setAddToggle(false);
+    },
+    onError: (data) => {
+      displayAlert(data.message, "error");
+    }
+  })
+  
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
     const { type } = e.currentTarget.dataset;

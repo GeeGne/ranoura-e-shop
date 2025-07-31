@@ -37,7 +37,14 @@ export async function POST(req: NextRequest) {
         400
       )
 
-    const { first_name, last_name, phone_number, password_hash, address, role } = await prisma.user.findUnique({
+    const { 
+      first_name,
+      last_name, 
+      phone_number, 
+      password_hash, 
+      address, 
+      role 
+    } = await prisma.user.findUnique({
       where: { email },
       select: {
         first_name: true,
@@ -119,7 +126,7 @@ export async function POST(req: NextRequest) {
         },
         message: {
           en: 'authentication success!',
-          ar: 'تم بنجاح'
+          ar: 'تم تسجيل الدخول بنجاح!'
         }
       }, { status: 200 }
     )

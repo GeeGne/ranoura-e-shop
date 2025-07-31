@@ -76,7 +76,10 @@ export default function SigninForm ({ className, ...props }: Props) {
       queryClient.invalidateQueries({ queryKey: ['user'] });
       setAlertToggle(Date.now());
       setAlertType("success");
-      setAlertMessage(data.message[isEn ? 'en' : 'ar']);
+      setAlertMessage(
+        `${data.message[isEn ? 'en' : 'ar']}, ${isEn ? 'proceeding to profile..' : 'جاري التوجه الى واجه المستخدم...'}`
+      );
+
       window.location.reload();
     },
     onError: (error) => {

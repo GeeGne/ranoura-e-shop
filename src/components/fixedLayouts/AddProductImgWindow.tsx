@@ -109,7 +109,7 @@ export default function AddProductImgWindow () {
     console.log('old images Data: ', productData);
     console.log('new images Data: ', updatedProductData);
 
-    return imagesArray;
+    return { images: imagesArray, updatedProductData};
   }
 
   const uploadProductImageMutation = useMutation({
@@ -123,9 +123,8 @@ export default function AddProductImgWindow () {
     onSuccess: (data) => {
       console.log('upload image data result: ', data);
       setFileData(data);
-      const images = updateProductImages(data);
+      const { images } = updateProductImages(data);
       displayAlert(data.message[isEn ? 'en' : 'ar'], "success");
-
       editProductAfterImageUploadMutation.mutate({id: productData?.id, images})
     },
     onError: () => {
@@ -141,10 +140,12 @@ export default function AddProductImgWindow () {
     onMutate: () => {
       setIsMutating(true);
     },
-    onSuccess: (data) => {
-      console.log('product Data success results: ', data);
-      displayAlert(data.message[isEn ? 'en' : 'ar'], "success");
+    onSuccess: (result) => {
+      const { message, data: updatedProductData } = result
+      console.log('product Data success results: ', result);
+      displayAlert(message[isEn ? 'en' : 'ar'], "success");
       queryClient.invalidateQueries({ queryKey: ['products'] });
+      setProductData(updatedProductData);
       setAddToggle(false);
     },
     onError: (data) => {
