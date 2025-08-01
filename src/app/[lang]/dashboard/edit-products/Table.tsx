@@ -71,6 +71,20 @@ export default function Table({ products, isLoading = false, isError = false }: 
 
   const getProduct = (id: string) => products?.find(product => product.id === id);
 
+  const getStateColor = (state: string) => {
+    switch (state) {
+      case 'available':
+        return 'oklch(79.2% 0.209 151.711)'
+      case 'out-of-stock':
+        return 'oklch(85.2% 0.199 91.936)';
+      case 'hidden':
+        return 'oklch(70.4% 0.191 22.216)';
+      default:
+        console.error('Unknown state: ', state);
+        return 'oklch(70.4% 0.191 22.216)';
+    }
+  }
+
   useEffect(() => {
     const setImgLiElWidth = () => {
       imgUlRefs.current.forEach((el: any) => {{
@@ -271,13 +285,29 @@ export default function Table({ products, isLoading = false, isError = false }: 
                 >
                   <div
                     className="
-                      flex w-2 h-[150px] bg-green-500 rounded-md shrink-0
+                      group relative flex w-2 hover:w-8 h-[225px] rounded-md shrink-0
+                      transition-all duration-300 ease-in-out
                     "
-                  />
+                    style={{ backgroundColor: getStateColor(itm.state) }}
+                  >
+                    <ul
+                      className="
+                        absolute top-1/2 left-1/2
+                        translate-x-[-50%] translate-y-[-50%]
+                        text-body font-bold text-center text-sm
+                        unvisible group-hover:visible opacity-0 group-hover:opacity-100
+                        transition-all delay-200 duration-300 ease-in-out
+                      "
+                    >
+                      {Array.from(itm.state.replace(/~/g, ' ')).map((char: any, i) =>
+                        <li key={i}>{char}</li>
+                      )}
+                    </ul>
+                  </div>
                   <img 
                     src={itm.images[0].views[0].url}
                     className="
-                      h-[150px] aspect-[2/3] shrink-0
+                      h-[225px] aspect-[2/3] shrink-0
                       object-cover object-center rounded-lg
                     "
                   />

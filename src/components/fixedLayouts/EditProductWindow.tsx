@@ -9,6 +9,7 @@ import LineMdImageFilled from '@/components/svgs/LineMdImageFilled';
 import LineMdPlus from '@/components/svgs/LineMdPlus';
 import MdiColor from '@/components/svgs/MdiColor';
 import CarbonCategory from '@/components/svgs/CarbonCategory';
+import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingResize';
 
 // STORES
 import { 
@@ -37,8 +38,10 @@ const outfit3 = "assets/img/outfit-3.avif"
 
 export default function EditProductWindow () {
 
+  const queryClient = useQueryClient();
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
+
   const editToggle = useEditProductWindowStore(state => state.toggle);
   const setEditToggle = useEditProductWindowStore(state => state.setToggle);
   const productData = useEditProductWindowStore(state => state.productData);
@@ -243,7 +246,7 @@ export default function EditProductWindow () {
       if (categoriesInptRefs.current) 
         console.log('categories el: ', categoriesInptRefs.current);
         categoriesInptRefs.current
-          .forEach(el => productData?.categories.includes(el.dataset.path) && (el.checked = true))
+          .forEach(el => productData?.categories.includes(el.dataset.path) && (el.checked = true));
     }
     // return;
     if (!productData) return;
@@ -265,7 +268,7 @@ export default function EditProductWindow () {
       displayAlert(message[isEn ? 'en' : 'ar'], "success");
       queryClient.invalidateQueries({ queryKey: ['products'] });
       setProductData(updatedProductData);
-      setAddToggle(false);
+      setEditToggle(false);
     },
     onError: (data) => {
       displayAlert(data.message, "error");
@@ -282,6 +285,9 @@ export default function EditProductWindow () {
         break;
       case 'fixed_box_is_clicked':
         break;
+      case 'accept_button_is_clicked':
+        editProductMutation.mutate(updatedData);
+        break;
       case 'cancel_button_is_clicked':
         setEditToggle(false);
         break;
@@ -294,7 +300,7 @@ export default function EditProductWindow () {
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.currentTarget;
+    const { name, value, checked } = e.currentTarget;
     const { info } = e.currentTarget.dataset;
 
     switch(name) {
@@ -322,15 +328,17 @@ export default function EditProductWindow () {
       case'categories':
         const removeDuplicates = (arr: any[]) => [ ...new Set(arr) ]; 
         const array = removeDuplicates(updatedData[name]);
-        if (e.currentTarget.checked) return setUpdatedData(val => ({ 
+        if (checked) return setUpdatedData(val => ({ 
           ...val, [name]: [ ...array, info ] 
         }));
-
         setUpdatedData(val => ({ ...val, [name]: array.filter((name: string) => name !== info ) }));
         break;
       case 'price':
       case 'discount_percent':
         setUpdatedData(val => ({ ...val, [name]: value }));
+        break;
+      case 'is_new':
+        setUpdatedData(val => ({ ...val, [name]: checked }));
         break;
       case 'state':
       case 'type':
@@ -960,8 +968,9 @@ export default function EditProductWindow () {
                   peer invisible flex items-center gap-2 p-2 ml-auto rounded-lg w-10 text-center
                 "
                 type="checkbox"
-                name="new"
+                name="is_new"
                 id="new"
+                onChange={handleChange}
                 ref={newInptRef}
               />
               <div
@@ -1368,12 +1377,19 @@ export default function EditProductWindow () {
           </button>
           <button
             className="
-              flex-1 text-content p-1 
+              flex justify-center flex-1 text-content p-1 
               hover:bg-background-deep-light
               transition-all duration-300 ease-in-out
             "
+            data-type="accept_button_is_clicked"
+            onClick={handleClick}
           >
-            {isEn ? 'accept' : 'قبول'}
+            {isMutating 
+              ? <SvgSpinnersRingResize />
+              : isEn 
+              ? 'accept' 
+              : 'قبول'
+            }
           </button>
         </section>
       </div>

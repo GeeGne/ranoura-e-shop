@@ -105,17 +105,18 @@ export default function AddProductImgWindow () {
       imagesArray = [ ...imagesArray, { color: selectedColor?.name, views: [ newView ] } ];
     }
 
+    const colors = imagesArray.map(image => image.color);
     const updatedProductData = { ...productData, images: imagesArray };
+    console.log('colors: ', colors);
     console.log('old images Data: ', productData);
     console.log('new images Data: ', updatedProductData);
 
-    return { images: imagesArray, updatedProductData};
+    return { images: imagesArray, updatedProductData, colors};
   }
 
   const uploadProductImageMutation = useMutation({
     mutationFn: uploadProductImage,
     onSettled: () => {
-      setIsMutating(false);
     },
     onMutate: () => {
       setIsMutating(true);
@@ -123,9 +124,9 @@ export default function AddProductImgWindow () {
     onSuccess: (data) => {
       console.log('upload image data result: ', data);
       setFileData(data);
-      const { images } = updateProductImages(data);
+      const { images, colors } = updateProductImages(data);
       displayAlert(data.message[isEn ? 'en' : 'ar'], "success");
-      editProductAfterImageUploadMutation.mutate({id: productData?.id, images})
+      editProductAfterImageUploadMutation.mutate({id: productData?.id, images, colors})
     },
     onError: () => {
       displayAlert(isEn ? 'An Error has accured during uploading the iamge, please try again.' : 'هناك مشكله خلال رفع الصوره, الرجاء المحاوله مره اخرى.', "error");
