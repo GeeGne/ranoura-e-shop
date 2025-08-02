@@ -192,6 +192,8 @@ const useLanguageStore = create<LanguageProps>()(
 type EditProductWindowProps = {
   toggle: boolean;
   setToggle: (value: boolean) => void;
+  trigger: number;
+  setTrigger: (value: number) => void;
   productData: Record<string, any> | null;
   setProductData: (value: Record<string, any | null>) => void;
 };
@@ -200,6 +202,8 @@ const useEditProductWindowStore = create<EditProductWindowProps>()(
   (set) => ({
     toggle: false,
     setToggle: (toggle) => set({ toggle }),
+    trigger: Date.now(),
+    setTrigger: (trigger) => set({ trigger }),
     productData: null,
     setProductData: (productData) => set({ productData })
   })
@@ -208,12 +212,20 @@ const useEditProductWindowStore = create<EditProductWindowProps>()(
 type AddProductImgWindowProps = {
   toggle: boolean;
   setToggle: (value: boolean) => void;
+  bucketName: string,
+  setBucketName: (value: string) => void;
+  filePath: string;
+  setFilePath: (value: string) => void;
 };
 
 const useAddProductImgWindowStore = create<AddProductImgWindowProps>()(
   (set) => ({
     toggle: false,
-    setToggle: (toggle) => set({ toggle })    
+    setToggle: (toggle) => set({ toggle }),
+    bucketName: "",
+    setBucketName: (bucketName) => set({ bucketName }),
+    filePath: "",
+    setFilePath: (filePath) => set({ filePath })
   })
 );
 

@@ -46,6 +46,7 @@ export default function EditProductWindow () {
 
   const editToggle = useEditProductWindowStore(state => state.toggle);
   const setEditToggle = useEditProductWindowStore(state => state.setToggle);
+  const editTrigger = useEditProductWindowStore(state => state.trigger);
   const productData = useEditProductWindowStore(state => state.productData);
   const setProductData = useEditProductWindowStore(state => state.setProductData);
 
@@ -211,6 +212,9 @@ export default function EditProductWindow () {
 
   useEffect(() => {
     const setDefaultValues = () => {
+      // Images (reset to default)
+      setRemovedImagesFilePathArray([]);
+
       // Name And Description
       if (nameEnInptRef.current) 
         nameEnInptRef.current.value = productData?.name.en;
@@ -267,7 +271,7 @@ export default function EditProductWindow () {
     if (!productData) return;
     setDefaultValues();
     setUpdatedData(productData);
-  }, [productData]);
+  }, [productData, editTrigger]);
 
   const editProductMutation = useMutation({
     mutationFn: editProduct,
@@ -292,17 +296,6 @@ export default function EditProductWindow () {
 
   const removeFileFromStorageMutation = useMutation({
     mutationFn: removeFile,
-    onSettled: () => {
-      setIsRemoveImgMutating(false);
-    },
-    onMutate: () => {
-      setIsRemoveImgMutating(true);
-    },
-    onSuccess: (result) => {
-    },
-    onError: (data) => {
-      displayAlert(data.message, "error");
-    }
   })
   
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -319,10 +312,6 @@ export default function EditProductWindow () {
         setAddToggle(true);
         break;
       case 'delete_product_image_button_is_clicked':
-        // if (bucketName && filePath) removeFileFromStorageMutation.mutate({
-          // bucketName,
-          // filePath,
-        // })
         if (url && color) {
           const { images, colors} = filterDeletedImages(url, color);
           setUpdatedData(val => ({ ...val, images, colors }));
@@ -331,6 +320,12 @@ export default function EditProductWindow () {
         break;
       case 'accept_button_is_clicked':
         editProductMutation.mutate(updatedData);
+        const bucketName = "assets";
+
+        removeFileFromStorageMutation.mutate({
+          bucketName,
+          filePath: removedImagesFilePathArray,
+        });
         break;
       case 'cancel_button_is_clicked':
         setEditToggle(false);
@@ -466,7 +461,7 @@ export default function EditProductWindow () {
                         transition-all duration-300 ease-in-out
                       "
                       data-color={image.color}
-                      data-bucketName="assets"
+                      data-bucket-name="assets"
                       data-url={view.url}
                       data-type="delete_product_image_button_is_clicked"
                       onClick={handleClick}

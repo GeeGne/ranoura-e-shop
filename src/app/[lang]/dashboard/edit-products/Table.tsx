@@ -61,6 +61,7 @@ export default function Table({ products, isLoading = false, isError = false }: 
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
   const setEditProductWindowToggle = useEditProductWindowStore(state => state.setToggle);
+  const setEditProductWindowTrigger = useEditProductWindowStore(state => state.setTrigger);
   const setEditProductWindowProductData = useEditProductWindowStore(state => state.setProductData);
   const [ isThemeMutating, setIsThemeMutating ] = useState<{toggle: boolean, index: number}>({
     toggle: false, index: 0
@@ -145,6 +146,7 @@ export default function Table({ products, isLoading = false, isError = false }: 
         setEditProductWindowToggle(true);
         if (productId) 
           setEditProductWindowProductData(getProduct(productId));
+          setEditProductWindowTrigger(Date.now());
         break;
       case 'copy_button_is_clicked':
         try {

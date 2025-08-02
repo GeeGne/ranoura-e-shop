@@ -20,7 +20,7 @@ import {
 } from '@/stores/index';
 
 // API
-import uploadProductImage from '@/lib/api/object/post';
+import uploadProductImage from '@/lib/api/object/bucketName/filePath/post';
 import editProduct from '@/lib/api/products/put';
 
 // JSON
@@ -123,13 +123,15 @@ export default function AddProductImgWindow () {
       setIsMutating(true);
     },
     onSuccess: (data) => {
-      console.log('upload image data result: ', data);
       setFileData(data);
       const { images, colors } = updateProductImages(data);
       displayAlert(data.message[isEn ? 'en' : 'ar'], "success");
       setProductData({ ...productData, images, colors });
-      // editProductAfterImageUploadMutation.mutate({id: productData?.id, images, colors})
       setAddToggle(false);
+      resetWindowToDefault();
+
+      // DEBUG
+      // console.log('upload image data result: ', data);
     },
     onError: () => {
       displayAlert(isEn ? 'An Error has accured during uploading the image, please try again.' : 'هناك مشكله خلال رفع الصوره, الرجاء المحاوله مره اخرى.', "error");
@@ -166,10 +168,11 @@ export default function AddProductImgWindow () {
         setAddToggle(false);
         break;
       case 'accept_button_is_clicked':
-        console.log('productData: ', productData);
-        console.log('selectedColor: ', selectedColor);
-        console.log('imageSelectedType: ', imageSelectedType);
-        console.log('productImage: ', productImage);
+        // DEBUG
+        // console.log('productData: ', productData);
+        // console.log('selectedColor: ', selectedColor);
+        // console.log('imageSelectedType: ', imageSelectedType);
+        // console.log('productImage: ', productImage);
 
         switch (false) {
           case productData !== null:
