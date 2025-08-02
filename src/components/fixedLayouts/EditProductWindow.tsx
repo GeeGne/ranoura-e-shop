@@ -65,7 +65,7 @@ export default function EditProductWindow () {
 
   const [ isMutating, setIsMutating ] = useState<boolean>(false);
   const [ isRemoveImgMutating, setIsRemoveImgMutating ] = useState<boolean>(false);
-  const [ imageToBeRemovedDetails, setImageToBeRemovedDetails ] = useState<any[]>([]);
+  const [ removedImagesFilePathArray, setRemovedImagesFilePathArray ] = useState<any[]>([]);
   const [ updatedData, setUpdatedData ] = useState<Record<any, any>>({test: 'asfd'});
 
   const nameEnInptRef = useRef<HTMLInputElement>(null);
@@ -91,6 +91,17 @@ export default function EditProductWindow () {
   const typeInptRefs = useRef<any[]>([]);
 
   const categoriesInptRefs = useRef<any[]>([]);
+
+  const filterDeletedImages = (url: string, color:string) => {
+    let images = [ ...updatedData?.images ]
+    const imageIndex = images.findIndex(image => image.color === color);
+    const views = images[imageIndex].views.filter((view: any) => view.url !== url)
+    images[imageIndex] = { ...images[imageIndex], views };
+    if (images[imageIndex].views.length === 0) images = images.filter(image => image.color !== color);
+    const colors = images.map(image => image.color);
+
+    return { images, colors };
+  };
 
   // const productData1 = {
   const productData1 = {
@@ -199,9 +210,6 @@ export default function EditProductWindow () {
   }
 
   useEffect(() => {
-  }, [imageToBeRemovedDetails])
-
-  useEffect(() => {
     const setDefaultValues = () => {
       // Name And Description
       if (nameEnInptRef.current) 
@@ -299,7 +307,7 @@ export default function EditProductWindow () {
   
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
-    const { type, bucketName, url: filePath, color } = e.currentTarget.dataset;
+    const { type, bucketName, url, color } = e.currentTarget.dataset;
 
     switch (type) {
       case 'fixed_window_is_clicked':
@@ -308,26 +316,19 @@ export default function EditProductWindow () {
       case 'fixed_box_is_clicked':
         break;
       case 'add_new_image_button_is_clicked':
-        setIsRemoveImgMutating(true);
-        // const image = { url, color }
-        // setImageToBeRemovedDetails(val => [ ...val, image ])
-        if (bucketName && filePath) removeFileFromStorageMutation.mutate({
-          bucketName,
-          filePath,
-        })
-        const targetImage = { url: filePath , color}
-        const imagesArray = [ ...productData?.images ]
-        const imageIndex = imagesArray.findIndex(image => image.color === targetImage.color);
-        const views = imagesArray[imageIndex].views.filter((view: any) => view.url !== targetImage.url)
-        imagesArray[imageIndex] = { ...imagesArray[imageIndex], views: imagesArray[imageIndex].views.filter((view: any) => view.url !== targetImage.url)}
-
-        const filter = imagesArray.filter(image => image.color !== targetImage.color);
-
-        // editProductMutation.mutate()
+        setAddToggle(true);
         break;
       case 'delete_product_image_button_is_clicked':
-        setAddToggle(true);
-         break;
+        // if (bucketName && filePath) removeFileFromStorageMutation.mutate({
+          // bucketName,
+          // filePath,
+        // })
+        if (url && color) {
+          const { images, colors} = filterDeletedImages(url, color);
+          setUpdatedData(val => ({ ...val, images, colors }));
+          setRemovedImagesFilePathArray(val => ([ ...val, url ]));
+        }
+        break;
       case 'accept_button_is_clicked':
         editProductMutation.mutate(updatedData);
         break;
@@ -390,9 +391,10 @@ export default function EditProductWindow () {
   }
 
   // DEBUG & UI
-  console.log('productData: ', productData);
+  // console.log('productData: ', productData);
   console.log('updatedData: ', updatedData);
-  console.log('subCategory: ', subCategories.filter(subCategory => subCategory.parent_category_slug !== 'clothing').map((subCategory, index) => ({ ...subCategory, index })))
+  console.log('removedImagesFilePathArray: ', removedImagesFilePathArray);
+  // console.log('subCategory: ', subCategories.filter(subCategory => subCategory.parent_category_slug !== 'clothing').map((subCategory, index) => ({ ...subCategory, index })))
   
   if (!productData) return;
 
