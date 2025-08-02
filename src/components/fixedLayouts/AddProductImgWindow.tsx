@@ -117,6 +117,7 @@ export default function AddProductImgWindow () {
   const uploadProductImageMutation = useMutation({
     mutationFn: uploadProductImage,
     onSettled: () => {
+      setIsMutating(false);
     },
     onMutate: () => {
       setIsMutating(true);
@@ -126,31 +127,12 @@ export default function AddProductImgWindow () {
       setFileData(data);
       const { images, colors } = updateProductImages(data);
       displayAlert(data.message[isEn ? 'en' : 'ar'], "success");
-      editProductAfterImageUploadMutation.mutate({id: productData?.id, images, colors})
-    },
-    onError: () => {
-      displayAlert(isEn ? 'An Error has accured during uploading the iamge, please try again.' : 'هناك مشكله خلال رفع الصوره, الرجاء المحاوله مره اخرى.', "error");
-    }
-  })
-
-  const editProductAfterImageUploadMutation = useMutation({
-    mutationFn: editProduct,
-    onSettled: () => {
-      setIsMutating(false);
-    },
-    onMutate: () => {
-      setIsMutating(true);
-    },
-    onSuccess: (result) => {
-      const { message, data: updatedProductData } = result
-      console.log('product Data success results: ', result);
-      displayAlert(message[isEn ? 'en' : 'ar'], "success");
-      queryClient.invalidateQueries({ queryKey: ['products'] });
-      setProductData(updatedProductData);
+      setProductData({ ...productData, images, colors });
+      // editProductAfterImageUploadMutation.mutate({id: productData?.id, images, colors})
       setAddToggle(false);
     },
-    onError: (data) => {
-      displayAlert(data.message, "error");
+    onError: () => {
+      displayAlert(isEn ? 'An Error has accured during uploading the image, please try again.' : 'هناك مشكله خلال رفع الصوره, الرجاء المحاوله مره اخرى.', "error");
     }
   })
 

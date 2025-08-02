@@ -52,6 +52,11 @@ export async function POST (
 
     const bucketName = (await params).bucketName;
     const filePath = (await params).filePath.join('/');
+    if (!bucketName || !filePath) return nextError(
+      'MISSING_DETAILS',
+      'Bucket name and File path are required.',
+      400
+    )
 
     console.log('bucketName: ', bucketName);
     console.log('filePath: ', filePath);
@@ -100,7 +105,7 @@ export async function DELETE (
   try {
     const bucketName = (await params).bucketName;
     const filePath = (await params).filePath.join('/');
-    if (bucketName || filePath) return nextError(
+    if (!bucketName || !filePath) return nextError(
       'MISSING_DETAILS',
       'Bucket name and File path are required.',
       400
@@ -108,9 +113,11 @@ export async function DELETE (
 
     console.log('bucketName: ', bucketName);
     console.log('filePath: ', filePath);
+    const path = filePath.split(`/${bucketName}/`)[1];
+    console.log('path: ', path);
     const { data, error: bucketError } = await supabase.storage
       .from(bucketName)
-      .remove([filePath]);
+      .remove([path]);
     if (bucketError) return nextError(
       'STORAGE_DELETE_FAIL',
       `Error while deleting choosen file at storage`,

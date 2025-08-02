@@ -9,6 +9,7 @@ import LineMdImageFilled from '@/components/svgs/LineMdImageFilled';
 import LineMdPlus from '@/components/svgs/LineMdPlus';
 import MdiColor from '@/components/svgs/MdiColor';
 import CarbonCategory from '@/components/svgs/CarbonCategory';
+import LineMdTrash from '@/components/svgs/LineMdTrash';
 import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingResize';
 
 // STORES
@@ -19,6 +20,7 @@ import {
 
 // API
 import editProduct from '@/lib/api/products/put';
+import removeFile from '@/lib/api/object/delete';
 
 // JSON
 import colorsArray from '@/json/colors.json';
@@ -62,6 +64,8 @@ export default function EditProductWindow () {
   };
 
   const [ isMutating, setIsMutating ] = useState<boolean>(false);
+  const [ isRemoveImgMutating, setIsRemoveImgMutating ] = useState<boolean>(false);
+  const [ imageToBeRemovedDetails, setImageToBeRemovedDetails ] = useState<any[]>([]);
   const [ updatedData, setUpdatedData ] = useState<Record<any, any>>({test: 'asfd'});
 
   const nameEnInptRef = useRef<HTMLInputElement>(null);
@@ -195,6 +199,9 @@ export default function EditProductWindow () {
   }
 
   useEffect(() => {
+  }, [imageToBeRemovedDetails])
+
+  useEffect(() => {
     const setDefaultValues = () => {
       // Name And Description
       if (nameEnInptRef.current) 
@@ -274,10 +281,25 @@ export default function EditProductWindow () {
       displayAlert(data.message, "error");
     }
   })
+
+  const removeFileFromStorageMutation = useMutation({
+    mutationFn: removeFile,
+    onSettled: () => {
+      setIsRemoveImgMutating(false);
+    },
+    onMutate: () => {
+      setIsRemoveImgMutating(true);
+    },
+    onSuccess: (result) => {
+    },
+    onError: (data) => {
+      displayAlert(data.message, "error");
+    }
+  })
   
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
-    const { type } = e.currentTarget.dataset;
+    const { type, bucketName, url: filePath, color } = e.currentTarget.dataset;
 
     switch (type) {
       case 'fixed_window_is_clicked':
@@ -285,14 +307,32 @@ export default function EditProductWindow () {
         break;
       case 'fixed_box_is_clicked':
         break;
+      case 'add_new_image_button_is_clicked':
+        setIsRemoveImgMutating(true);
+        // const image = { url, color }
+        // setImageToBeRemovedDetails(val => [ ...val, image ])
+        if (bucketName && filePath) removeFileFromStorageMutation.mutate({
+          bucketName,
+          filePath,
+        })
+        const targetImage = { url: filePath , color}
+        const imagesArray = [ ...productData?.images ]
+        const imageIndex = imagesArray.findIndex(image => image.color === targetImage.color);
+        const views = imagesArray[imageIndex].views.filter((view: any) => view.url !== targetImage.url)
+        imagesArray[imageIndex] = { ...imagesArray[imageIndex], views: imagesArray[imageIndex].views.filter((view: any) => view.url !== targetImage.url)}
+
+        const filter = imagesArray.filter(image => image.color !== targetImage.color);
+
+        // editProductMutation.mutate()
+        break;
+      case 'delete_product_image_button_is_clicked':
+        setAddToggle(true);
+         break;
       case 'accept_button_is_clicked':
         editProductMutation.mutate(updatedData);
         break;
       case 'cancel_button_is_clicked':
         setEditToggle(false);
-        break;
-      case 'add_new_image_button_is_clicked':
-        setAddToggle(true);
         break;
       default:
         console.error('Unknown type: ', type);
@@ -350,7 +390,7 @@ export default function EditProductWindow () {
   }
 
   // DEBUG & UI
-  // console.log('productData: ', productData);
+  console.log('productData: ', productData);
   console.log('updatedData: ', updatedData);
   console.log('subCategory: ', subCategories.filter(subCategory => subCategory.parent_category_slug !== 'clothing').map((subCategory, index) => ({ ...subCategory, index })))
   
@@ -409,6 +449,49 @@ export default function EditProductWindow () {
                       relative shrink-0 w-[200px] h-[300px] rounded-md overflow-hidden
                     "
                   >
+                  <div
+                    className="
+                      group absolute top-0 left-0
+                      flex items-center justify-center
+                      w-full h-full hover:bg-shade z-[15]
+                      transition-all duration-300 ease-in-out
+                    "
+                  >
+                    <button
+                      className="
+                        relative flex items-center gap-2 p-2 rounded-md
+                        invisible group-hover:visible opacity-0 group-hover:opacity-100 hover:bg-shade-v2
+                        transition-all duration-300 ease-in-out
+                      "
+                      data-color={image.color}
+                      data-bucketName="assets"
+                      data-url={view.url}
+                      data-type="delete_product_image_button_is_clicked"
+                      onClick={handleClick}
+                    >
+                      <LineMdTrash 
+                        className={`
+                          text-heading-invert 
+                          ${isRemoveImgMutating ? 'opacity-0' : 'opacity-100'}
+                        `} />
+                      <span
+                        className={`
+                          font-bold text-heading-invert
+                          ${isRemoveImgMutating ? 'opacity-0' : 'opacity-100'}
+                        `}
+                      >
+                        {isEn ? 'DELETE' : 'مسح'}
+                      </span>
+                      <SvgSpinnersRingResize 
+                        className={`
+                          absolute top-1/2 left-1/2
+                          translate-x-[-50%] translate-y-[-50%]
+                          text-heading-invert
+                          ${isRemoveImgMutating ? 'opacity-100' : 'opacity-0'}
+                        `}
+                      />
+                    </button>
+                  </div>
                     <img 
                       src={view.url}
                       className="
