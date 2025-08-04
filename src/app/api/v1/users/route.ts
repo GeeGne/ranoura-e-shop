@@ -1,5 +1,4 @@
-// app/api/v1/users/route.ts
-export const runtime = 'nodejs' // Force Node.js runtime
+export const runtime = 'nodejs'
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import bcrypt from 'bcrypt';
@@ -11,7 +10,7 @@ const createSlug = (first_name: string, last_name: string) =>
   `${first_name} ${last_name}`
   .toLowerCase()
   .trim()
-  .replace(/[^\w\s-]/g, '')
+  .replace(/[^\p{L}\s-]/gu, '')
   .replace(/[\s_-]+/g, '-') 
   .replace(/^-+|-+$/g, '');
 
@@ -57,7 +56,7 @@ export async function POST(req: NextRequest) {
 
     const saltRounds = 12;
     const password_hash = await bcrypt.hash(password, saltRounds);
-    await prisma.user.create({
+    const { role: userRole } = await prisma.user.create({
       data: {
         first_name,
         last_name,
@@ -84,8 +83,8 @@ export async function POST(req: NextRequest) {
     });
 
     const fullNameSlug = createSlug(first_name, last_name);
-
-    const { accessToken, refreshToken } = await generateTokens(fullNameSlug, email);
+    console.log({fullNameSlug})
+    const { accessToken, refreshToken } = await generateTokens(fullNameSlug, email, userRole.name);
     const cookieStore = await cookies();
     
     cookieStore.set(

@@ -42,6 +42,9 @@ export default function layout ({ children }: Readonly<{children: React.ReactNod
   });
   const isAdmin = userData?.data?.userRole?.name === 'admin';
 
+  // DEBUG
+  console.log('userData: ', userData);
+
   return (
     <div
       className="flex flex-col gap-4 max-w-[1400px] mx-auto"
@@ -76,7 +79,7 @@ export default function layout ({ children }: Readonly<{children: React.ReactNod
         className="mt-[-60.5px] z-[5]" 
         isLoading={isLoading}
       />
-      <Username isLoading={isLoading} lang={lang} />
+      <Username isLoading={isLoading} lang={lang} userName={`${userData?.data.first_name} ${userData?.data.last_name}`} />
       <NavTile 
         className="sticky top-[5.4rem] z-[5]" 
         tabName={tabName}

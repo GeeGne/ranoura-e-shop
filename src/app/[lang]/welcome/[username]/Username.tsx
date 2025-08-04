@@ -1,9 +1,10 @@
 type Props = {
+  userName?: string;
   lang?: string;
   isLoading?: boolean;
 } & React.ComponentPropsWithRef<"div">;
 
-export default function Username ({ isLoading = false, lang, ...props }: Props) {
+export default function Username ({ userName = "Ranoura", isLoading = false, lang, ...props }: Props) {
   const isEn = lang === 'en';
   return (
     <div
@@ -26,7 +27,7 @@ export default function Username ({ isLoading = false, lang, ...props }: Props) 
           }
         `}
       >
-        Ranoura
+        {userName}
       </h2>
     </div>
   )

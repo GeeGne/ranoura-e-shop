@@ -6,6 +6,7 @@ type Props = {
 } & React.ComponentPropsWithRef<"section">;
 
 export default function Banner ({ isLoading = false, ...props }: Props) {
+
   return (
     <section
       className={`

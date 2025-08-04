@@ -371,7 +371,7 @@ export default function EditProductWindow () {
         break;
       case 'price':
       case 'discount_percent':
-        setUpdatedData(val => ({ ...val, [name]: value }));
+        setUpdatedData(val => ({ ...val, [name]: Number(value) }));
         break;
       case 'is_new':
         setUpdatedData(val => ({ ...val, [name]: checked }));
@@ -568,11 +568,11 @@ export default function EditProductWindow () {
             "
             htmlFor="nameEn"
           >
-            <h3 className="text-body font-bold">
+            <h3 className="text-body font-bold ml-auto">
               {isEn ? 'NAME' : 'الاسم'}
             </h3>
-            <h4 className="ml-auto">
-              en:
+            <h4 className="px-1 bg-heading text-heading-invert text-sm font-bold rounded-md">
+              EN
             </h4>
             <input 
               className="p-2 text-heading rounded-lg"
@@ -582,8 +582,8 @@ export default function EditProductWindow () {
               onChange={handleChange}
               ref={nameEnInptRef}
             />
-            <h4>
-              ar:
+            <h4 className="px-1 bg-heading text-heading-invert text-sm font-bold rounded-md">
+              AR
             </h4>
             <input 
               className="p-2 text-heading rounded-lg"
@@ -600,11 +600,11 @@ export default function EditProductWindow () {
             "
             htmlFor="descritpionEn"
           >
-            <h3 className="text-body font-bold">
+            <h3 className="text-body font-bold ml-auto">
               {isEn ? 'DESCRIPTION' : 'الوصف'}
             </h3>
-            <h4 className="ml-auto">
-              en:
+            <h4 className="px-1 bg-heading text-heading-invert text-sm font-bold rounded-md">
+              EN
             </h4>
             <input 
               className="p-2 text-heading rounded-lg"
@@ -614,8 +614,8 @@ export default function EditProductWindow () {
               onChange={handleChange}
               ref={descriptionEnInptRef}
             />
-            <h4>
-              ar:
+            <h4 className="px-1 bg-heading text-heading-invert text-sm font-bold rounded-md">
+              AR
             </h4>
             <input 
               className="p-2 text-heading rounded-lg"

@@ -191,15 +191,16 @@
   @apply 
     before:content-[''] before:absolute 
     before:top-[calc(100%-0.2rem)] before:left-1/2 before:translate-x-[-50%] 
-    before:w-8 before:h-[3px] before:bg-content-inbetween before:rounded-full
+    before:w-full before:h-[3px] before:bg-content-inbetween before:rounded-full
 }
 
 .user-nav-not-selected {
   @apply 
     before:content-[''] before:absolute 
     before:top-[calc(100%-0.2rem)] before:left-1/2 before:translate-x-[-50%] 
-    before:w-8 before:h-[3px] before:bg-transparent before:hover:bg-inbetween before:rounded-full
-    before:transition-all before:duration-300 before:ease-in-out 
+    before:w-full before:h-[3px] before:bg-transparent before:hover:bg-inbetween before:rounded-full
+    before:transition-all before:duration-300 ease-in-out
+
 }
 
 .advert-picked-image {
