@@ -15,6 +15,7 @@ import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingRes
 import SolarGalleryCheckBold from '@/components/svgs/SolarGalleryCheckBold';
 import LineMdCloseCircleFilled from '@/components/svgs/LineMdCloseCircleFilled';
 import LineMdEdit from '@/components/svgs/LineMdEdit';
+import LineMdTrash from '@/components/svgs/LineMdTrash';
 import LineMdChevronSmallRight from '@/components/svgs/LineMdChevronSmallRight';
 import LineMdImageFilled from '@/components/svgs/LineMdImageFilled';
 import MdiColor from '@/components/svgs/MdiColor';
@@ -26,7 +27,10 @@ import messages from '@/json/messages.json';
 import colorsArray from '@/json/colors.json';
 
 // STORES
-import { useTabNameStore, useLanguageStore, useAlertMessageStore, useEditProductWindowStore } from '@/stores/index';
+import { 
+  useTabNameStore, useLanguageStore, 
+  useAlertMessageStore, useEditProductWindowStore , useAddProductWindowStore
+} from '@/stores/index';
 
 // API
 import getThemeVars from '@/lib/api/themes/get';
@@ -63,6 +67,7 @@ export default function Table({ products, isLoading = false, isError = false }: 
   const setEditProductWindowToggle = useEditProductWindowStore(state => state.setToggle);
   const setEditProductWindowTrigger = useEditProductWindowStore(state => state.setTrigger);
   const setEditProductWindowProductData = useEditProductWindowStore(state => state.setProductData);
+  const setAddToggle = useAddProductWindowStore(state => state.setToggle);
   const [ isThemeMutating, setIsThemeMutating ] = useState<{toggle: boolean, index: number}>({
     toggle: false, index: 0
   });
@@ -103,7 +108,7 @@ export default function Table({ products, isLoading = false, isError = false }: 
     onMutate: () => {
       setIsThemeMutating(val => ({ toggle: true, index: val.index }));
     },
-     onSuccess: (data) => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['themes']});
       queryClient.refetchQueries({ queryKey: ['themes']});
       setIsThemeMutating(val => ({ toggle: false, index: val.index }));
@@ -141,6 +146,10 @@ export default function Table({ products, isLoading = false, isError = false }: 
           left: isEn ? 0 : -1 * fullWidth,
           behavior:'smooth'
         })
+        break;
+      case 'add_product_button_is_clicked':
+        setAddToggle(true);
+        console.log('click')
         break;
       case 'edit_product_button_is_clicked':
         setEditProductWindowToggle(true);
@@ -194,8 +203,19 @@ export default function Table({ products, isLoading = false, isError = false }: 
           {isEn ? 'List' : 'القائمه'}
         </h3>
         <div
-          className="flex gap-4"
+          className="flex items-center gap-4"
         >
+          <button
+            className="
+              text-sm text-heading-invert font-bold 
+              bg-content p-2 rounded-lg hover:opacity-80
+              transition-all duration-300 ease-in-out
+            "
+            data-type="add_product_button_is_clicked"
+            onClick={handleClick}
+          >
+            {isEn ? '+ ADD PRODUCT' : '+ اضف منتج'}
+          </button>
           <LineMdChevronSmallRight 
             role="button"
             className={`
@@ -249,7 +269,7 @@ export default function Table({ products, isLoading = false, isError = false }: 
               {isEn ? 'SIZES' : 'المقاسات'}
             </th>
             <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
-              {isEn ? 'DESCRIPTION' : 'حول'}
+              {isEn ? 'DESCRIPTION' : 'الوصف'}
             </th>
             <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
               {isEn ? 'IMAGES' : 'الصور'}
@@ -526,6 +546,24 @@ export default function Table({ products, isLoading = false, isError = false }: 
               </td>
               <td className="px-6">
                 <div className="flex gap-2">
+                  <button 
+                    className={`
+                      relative bg-background-light rounded-md
+                      transition-all duration-500 ease-in-out
+                      bg-background-light
+                    `}
+                    data-product-id={itm.id}
+                    data-type="delete_product_button_is_clicked"
+                    onClick={handleClick}
+                  >
+                    <LineMdTrash 
+                      className={`
+                        w-7 h-7 p-1 rounded-md cursor-pointer 
+                        transition-all duration-200 ease-in-out text-heading
+                        }
+                      `}
+                    />    
+                  </button>
                   <button 
                     className={`
                       relative bg-background-light rounded-md

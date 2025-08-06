@@ -15,7 +15,7 @@ import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingRes
 // STORES
 import { 
   useTabNameStore, useLanguageStore, useAlertMessageStore,
-  useEditProductWindowStore, useAddProductImgWindowStore
+  useAddProductWindowStore, useAddProductImgWindowStore
 } from '@/stores/index';
 
 // API
@@ -39,20 +39,18 @@ const outfit1 = "/assets/img/outfit.webp"
 const outfit2 = "assets/img/outfit-2.avif"
 const outfit3 = "assets/img/outfit-3.avif"
 
-export default function EditProductWindow () {
+export default function AddProductWindow () {
 
   const queryClient = useQueryClient();
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
 
-  const editToggle = useEditProductWindowStore(state => state.toggle);
-  const setEditToggle = useEditProductWindowStore(state => state.setToggle);
-  const editTrigger = useEditProductWindowStore(state => state.trigger);
-  const productData = useEditProductWindowStore(state => state.productData);
-  const setProductData = useEditProductWindowStore(state => state.setProductData);
+  const addToggle = useAddProductWindowStore(state => state.toggle);
+  const setAddToggle = useAddProductWindowStore(state => state.setToggle);
+  const editTrigger = useAddProductWindowStore(state => state.trigger);
 
-  const addToggle = useAddProductImgWindowStore(state => state.toggle);
-  const setAddToggle = useAddProductImgWindowStore(state => state.setToggle);
+  const addImgToggle = useAddProductImgWindowStore(state => state.toggle);
+  const setAddImgToggle = useAddProductImgWindowStore(state => state.setToggle);
   const setFilePath = useAddProductImgWindowStore(state => state.setFilePath);
   const setBucketName = useAddProductImgWindowStore(state => state.setBucketName);
   
@@ -68,74 +66,25 @@ export default function EditProductWindow () {
   const [ isMutating, setIsMutating ] = useState<boolean>(false);
   const [ isRemoveImgMutating, setIsRemoveImgMutating ] = useState<boolean>(false);
   const [ removedImagesFilePathArray, setRemovedImagesFilePathArray ] = useState<any[]>([]);
-  const [ updatedData, setUpdatedData ] = useState<Record<any, any>>({test: 'asfd'});
-
-  const nameEnInptRef = useRef<HTMLInputElement>(null);
-  const nameArInptRef = useRef<HTMLInputElement>(null);
-  const descriptionEnInptRef = useRef<HTMLInputElement>(null);
-  const descriptionArInptRef = useRef<HTMLInputElement>(null);
-
-  const sizeXSInptRef = useRef<(HTMLInputElement | null)>(null);
-  const sizeSInptRef = useRef<(HTMLInputElement | null)>(null);
-  const sizeMInptRef = useRef<(HTMLInputElement | null)>(null);
-  const sizeLInptRef = useRef<(HTMLInputElement | null)>(null);
-  const sizeXLInptRef = useRef<(HTMLInputElement | null)>(null);
-  
-  const priceInptRef = useRef<(HTMLInputElement | null)>(null);
-  const discountInptRef = useRef<(HTMLInputElement | null)>(null);
-
-  const newInptRef = useRef<(HTMLInputElement | null)>(null);
-
-  const stateAvailableInptRef = useRef<(HTMLInputElement | null)>(null);
-  const statetOutOfStockInptRef = useRef<(HTMLInputElement | null)>(null);
-  const stateHiddenInptRef = useRef<(HTMLInputElement | null)>(null);
-
-  const typeInptRefs = useRef<any[]>([]);
-
-  const categoriesInptRefs = useRef<any[]>([]);
-
-  const filterDeletedImages = (url: string, color:string) => {
-    let images = [ ...updatedData?.images ]
-    const imageIndex = images.findIndex(image => image.color === color);
-    const views = images[imageIndex].views.filter((view: any) => view.url !== url)
-    images[imageIndex] = { ...images[imageIndex], views };
-    if (images[imageIndex].views.length === 0) images = images.filter(image => image.color !== color);
-    const colors = images.map(image => image.color);
-
-    return { images, colors };
-  };
-
-  // const productData1 = {
-  const productData1 = {
-    id: 3,
-    name: { en: "Blossom Sweater", ar: "سترة بلوسوم" },
-    slug: "bolssom-sweater",
-    description: { "en": "Cozy Floral-Embroidered Relaxed Sweater", "ar": "كنزة مريحة مطرزة بزهور" },
-    type: "t-shirts",
-    categories: ["clothing/outfit-pairs", "sale/latest-arrivals", "sale/hot-deals", "event/ramadan-nights"],
-    is_new: true,
-    state: "available",
-    sizes: ["M", "L"],
-    colors: ["White", "Black"],
-    images: [
-      {
-        main: "/assets/img/cloth-c-white.avif",
-        second: "/assets/img/cloth-c-white-view-b.avif",
-        color: "White"
-      },{
-        main: "/assets/img/cloth-c-black.avif",
-        second: "/assets/img/cloth-c-black-view-b.avif",
-        color: "Black"
-      }
-    ],
+  const [ productData, setProductData ] = useState<Record<any, any>>({
+    name: { en: "", ar: "" },
+    slug: "",
+    description: { "en": "", "ar": "" },
+    type: "",
+    categories: [],
+    is_new: false,
+    state: "",
+    sizes: [],
+    colors: [],
+    images: [],
     stock: {
       XS: { "emerald": 5, "black": 3 },
       S: { "emerald": 10, "black": 8 },
       M: { "emerald": 7, "black": 6 },
       L: { "emerald": 4, "black": 2 }
     },
-    price: 45000,
-    discount_percent: 45,
+    price: 0,
+    discount_percent: 0,
     lists: [
       {
         title: {"en": "PRODUCT DETAILS", "ar": "تفاصيل عن القطعه"},
@@ -209,70 +158,42 @@ export default function EditProductWindow () {
         }  
       }
     ]
-  }
+  });
 
-  useEffect(() => {
-    const setDefaultValues = () => {
-      // Images (reset to default)
-      setRemovedImagesFilePathArray([]);
+  const nameEnInptRef = useRef<HTMLInputElement>(null);
+  const nameArInptRef = useRef<HTMLInputElement>(null);
+  const descriptionEnInptRef = useRef<HTMLInputElement>(null);
+  const descriptionArInptRef = useRef<HTMLInputElement>(null);
 
-      // Name And Description
-      if (nameEnInptRef.current) 
-        nameEnInptRef.current.value = productData?.name.en;
-      if (nameArInptRef.current) 
-        nameArInptRef.current.value = productData?.name.ar;
-      if (descriptionEnInptRef.current) 
-        descriptionEnInptRef.current.value = productData?.description.en;
-      if (descriptionArInptRef.current) 
-        descriptionArInptRef.current.value = productData?.description.ar;
+  const sizeXSInptRef = useRef<(HTMLInputElement | null)>(null);
+  const sizeSInptRef = useRef<(HTMLInputElement | null)>(null);
+  const sizeMInptRef = useRef<(HTMLInputElement | null)>(null);
+  const sizeLInptRef = useRef<(HTMLInputElement | null)>(null);
+  const sizeXLInptRef = useRef<(HTMLInputElement | null)>(null);
+  
+  const priceInptRef = useRef<(HTMLInputElement | null)>(null);
+  const discountInptRef = useRef<(HTMLInputElement | null)>(null);
 
-      // Sizes
-      if (sizeXSInptRef.current && productData?.sizes.includes("XS")) 
-        sizeXSInptRef.current.checked = true;
-      if (sizeSInptRef.current && productData?.sizes.includes("S")) 
-        sizeSInptRef.current.checked = true;
-      if (sizeMInptRef.current && productData?.sizes.includes("M")) 
-        sizeMInptRef.current.checked = true;
-      if (sizeLInptRef.current && productData?.sizes.includes("L")) 
-        sizeLInptRef.current.checked = true;
-      if (sizeXLInptRef.current && productData?.sizes.includes("XL")) 
-        sizeXLInptRef.current.checked = true;
+  const newInptRef = useRef<(HTMLInputElement | null)>(null);
 
-      // Price and Discount
-      if (priceInptRef.current) 
-        priceInptRef.current.value = String(productData?.price);
-      if (discountInptRef.current) 
-        discountInptRef.current.value = String(productData?.discount_percent);
+  const stateAvailableInptRef = useRef<(HTMLInputElement | null)>(null);
+  const statetOutOfStockInptRef = useRef<(HTMLInputElement | null)>(null);
+  const stateHiddenInptRef = useRef<(HTMLInputElement | null)>(null);
 
-      // New
-      if (newInptRef.current) 
-        newInptRef.current.checked = productData?.is_new;
+  const typeInptRefs = useRef<any[]>([]);
 
-      // State
-      if (stateAvailableInptRef.current && productData?.state === "available") 
-        stateAvailableInptRef.current.checked = true;
-      if (statetOutOfStockInptRef.current && productData?.state === "out-of-stock") 
-        statetOutOfStockInptRef.current.checked = true;
-      if (stateHiddenInptRef.current && productData?.state === "hidden") 
-        stateHiddenInptRef.current.checked = true;
+  const categoriesInptRefs = useRef<any[]>([]);
 
-      // Type
-      if (typeInptRefs.current) 
-        typeInptRefs.current
-          .find(el => el.dataset.type === productData?.type)
-          .checked = true;
+  const filterDeletedImages = (url: string, color:string) => {
+    let images = [ ...productData?.images ]
+    const imageIndex = images.findIndex(image => image.color === color);
+    const views = images[imageIndex].views.filter((view: any) => view.url !== url)
+    images[imageIndex] = { ...images[imageIndex], views };
+    if (images[imageIndex].views.length === 0) images = images.filter(image => image.color !== color);
+    const colors = images.map(image => image.color);
 
-      // Categories
-      if (categoriesInptRefs.current) 
-        console.log('categories el: ', categoriesInptRefs.current);
-        categoriesInptRefs.current
-          .forEach(el => productData?.categories.includes(el.dataset.path) && (el.checked = true));
-    }
-    // return;
-    if (!productData) return;
-    setDefaultValues();
-    setUpdatedData(productData);
-  }, [productData, editTrigger]);
+    return { images, colors };
+  };
 
   const editProductMutation = useMutation({
     mutationFn: editProduct,
@@ -288,7 +209,7 @@ export default function EditProductWindow () {
       displayAlert(message[isEn ? 'en' : 'ar'], "success");
       queryClient.invalidateQueries({ queryKey: ['products'] });
       setProductData(updatedProductData);
-      setEditToggle(false);
+      setAddToggle(false);
     },
     onError: (data) => {
       displayAlert(data.message, "error");
@@ -305,22 +226,22 @@ export default function EditProductWindow () {
 
     switch (type) {
       case 'fixed_window_is_clicked':
-        setEditToggle(false);
+        setAddToggle(false);
         break;
       case 'fixed_box_is_clicked':
         break;
       case 'add_new_image_button_is_clicked':
-        setAddToggle(true);
+        setAddImgToggle(true);
         break;
       case 'delete_product_image_button_is_clicked':
         if (url && color) {
           const { images, colors} = filterDeletedImages(url, color);
-          setUpdatedData(val => ({ ...val, images, colors }));
+          setProductData(val => ({ ...val, images, colors }));
           setRemovedImagesFilePathArray(val => ([ ...val, url ]));
         }
         break;
       case 'accept_button_is_clicked':
-        editProductMutation.mutate(updatedData);
+        editProductMutation.mutate(productData);
         const bucketName = "assets";
 
         removeFileFromStorageMutation.mutate({
@@ -329,7 +250,7 @@ export default function EditProductWindow () {
         });
         break;
       case 'cancel_button_is_clicked':
-        setEditToggle(false);
+        setAddToggle(false);
         break;
       default:
         console.error('Unknown type: ', type);
@@ -342,49 +263,44 @@ export default function EditProductWindow () {
 
     switch(name) {
       case'nameEn':
-        setUpdatedData(val => ({ 
+        setProductData(val => ({ 
           ...val, name: {en: value, ar: val.name.ar}, slug: createSlug(value) 
         }));
         break;
       case'nameAr':
-        setUpdatedData(val => ({ 
+        setProductData(val => ({ 
           ...val, name: {en: val.name.en, ar: value} 
         }));
         break;
       case'descriptionEn':
-        setUpdatedData(val => ({ 
+        setProductData(val => ({ 
           ...val, description: {en: value, ar: val.description.ar} 
         }));
         break;
       case'descriptionAr':
-        setUpdatedData(val => ({ 
+        setProductData(val => ({ 
           ...val, description: {en: val.description.en, ar: value }
         }));
         break;
       case'sizes':
       case'categories':
         const removeDuplicates = (arr: any[]) => [ ...new Set(arr) ]; 
-        const array = removeDuplicates(updatedData[name]);
-        if (checked) return setUpdatedData(val => ({ 
+        const array = removeDuplicates(productData[name]);
+        if (checked) return setProductData(val => ({ 
           ...val, [name]: [ ...array, info ] 
         }));
-        setUpdatedData(val => ({ ...val, [name]: array.filter((name: string) => name !== info ) }));
+        setProductData(val => ({ ...val, [name]: array.filter((name: string) => name !== info ) }));
         break;
       case 'price':
       case 'discount_percent':
-        setUpdatedData(val => ({ ...val, [name]: Number(value) }));
+        setProductData(val => ({ ...val, [name]: Number(value) }));
         break;
       case 'is_new':
-        setUpdatedData(val => ({ ...val, [name]: checked }));
+        setProductData(val => ({ ...val, [name]: checked }));
         break;
       case 'state':
-        setUpdatedData(val => ({ ...val, [name]: info }));
       case 'type':
-        const categoriesArray = [ ...updatedData.categories ];
-        const categoriesFiltered = categoriesArray.filter(val => !val.includes('clothing'));
-        setUpdatedData(val => ({ 
-          ...val, [name]: info , categories: [ ...categoriesFiltered, `clothing/${info}` ]
-        }));
+        setProductData(val => ({ ...val, [name]: info }));
         break;
       default:
         console.error('Unknown name: ', name);
@@ -393,12 +309,12 @@ export default function EditProductWindow () {
 
   // DEBUG & UI
   // console.log('productData: ', productData);
-  console.log('updatedData: ', updatedData);
+  console.log('addToggle: ', addToggle);
+  console.log('productData: ', productData);
+  console.log('productData: ', productData);
   console.log('removedImagesFilePathArray: ', removedImagesFilePathArray);
   // console.log('subCategory: ', subCategories.filter(subCategory => subCategory.parent_category_slug !== 'clothing').map((subCategory, index) => ({ ...subCategory, index })))
   
-  if (!productData) return;
-
   return (
     <div
       className={`
@@ -406,7 +322,7 @@ export default function EditProductWindow () {
         w-full h-full
         bg-[var(--shade-color)] z-[1000]
         transition-all duration-200 ease-out
-        ${editToggle ? 'visible opacity-100 backdrop-blur-[3px]' : 'invisible opacity-0 backdrop-blur-[0px]'}
+        ${addToggle ? 'visible opacity-100 backdrop-blur-[3px]' : 'invisible opacity-0 backdrop-blur-[0px]'}
       `}
       data-type="fixed_window_is_clicked"
       onClick={handleClick}
@@ -418,7 +334,7 @@ export default function EditProductWindow () {
           h-[calc(100%-2rem)] rounded-lg overflow-y-auto
           bg-background overflow-hidden
           transition-all delay-100 duration-200 ease-[cubic-bezier(0.68, -0.6, 0.32, 1.6)]
-          ${editToggle ? 'scale-100 opacity-100' : 'scale-[0.8] opacity-0'}
+          ${addToggle ? 'scale-100 opacity-100' : 'scale-[0.8] opacity-0'}
         `}
         data-type="fixed_box_is_clicked"
         onClick={handleClick}
@@ -429,7 +345,7 @@ export default function EditProductWindow () {
           "
         >
           <h2>
-            {isEn ? 'EDIT PRODUCT' : 'تعديل المنتج'}
+            {isEn ? 'ADD NEW PRODUCT' : 'اضف منتج جديد'}
           </h2>
         </section>
         <hr className="px-2 border-inbetween"/>
@@ -439,7 +355,7 @@ export default function EditProductWindow () {
           <ul
             className="flex gap-4 w-[516px] overflow-x-scroll mx-auto"
           >
-            {updatedData.images?.map((image: any, i: number) => 
+            {productData.images?.map((image: any, i: number) => 
               image.views.map((view: Record<string, string>, viewIndex: number) =>
                 <li
                   key={`${i}-${viewIndex}`}
@@ -572,7 +488,7 @@ export default function EditProductWindow () {
             className="
               flex gap-4 items-center w-full bg-background-light rounded-lg p-2
             "
-            htmlFor="nameEn"
+            htmlFor="add_nameEn"
           >
             <h3 className="text-body font-bold ml-auto">
               {isEn ? 'NAME' : 'الاسم'}
@@ -583,7 +499,7 @@ export default function EditProductWindow () {
             <input 
               className="p-2 text-heading rounded-lg"
               type="text"
-              id="nameEn"
+              id="add_nameEn"
               name="nameEn"
               onChange={handleChange}
               ref={nameEnInptRef}
@@ -594,7 +510,7 @@ export default function EditProductWindow () {
             <input 
               className="p-2 text-heading rounded-lg"
               type="text"
-              id="nameAr"
+              id="add_nameAr"
               name="nameAr"
               onChange={handleChange}
               ref={nameArInptRef}
@@ -604,7 +520,7 @@ export default function EditProductWindow () {
             className="
               flex gap-4 items-center w-full bg-background-light rounded-lg p-2
             "
-            htmlFor="descritpionEn"
+            htmlFor="add_descritpionEn"
           >
             <h3 className="text-body font-bold ml-auto">
               {isEn ? 'DESCRIPTION' : 'الوصف'}
@@ -615,7 +531,7 @@ export default function EditProductWindow () {
             <input 
               className="p-2 text-heading rounded-lg"
               type="text"
-              id="descriptionEn"
+              id="add_descritpionEn"
               name="descriptionEn"
               onChange={handleChange}
               ref={descriptionEnInptRef}
@@ -626,7 +542,7 @@ export default function EditProductWindow () {
             <input 
               className="p-2 text-heading rounded-lg"
               type="text"
-              id="descriptionAr"
+              id="add_descriptionAr"
               name="descriptionAr"
               onChange={handleChange}
               ref={descriptionArInptRef}
@@ -652,12 +568,12 @@ export default function EditProductWindow () {
                   border border-inbetween px-2 py-1 
                   rounded-lg bg-background overflow-hidden cursor-pointer
                 "
-                htmlFor="sizeXSmall"
+                htmlFor="add_sizeXSmall"
               >
                 <input
                   className="peer invisible text-heading rounded-lg" 
                   type="checkbox"
-                  id="sizeXSmall"
+                  id="add_sizeXSmall"
                   name="sizes"
                   data-info="XS"
                   onChange={handleChange}
@@ -705,12 +621,12 @@ export default function EditProductWindow () {
                   border border-inbetween px-2 py-1 
                   rounded-lg bg-background overflow-hidden cursor-pointer
                 "
-                htmlFor="sizeSmall"
+                htmlFor="add_sizeSmall"
               >
                 <input
                   className="peer invisible text-heading rounded-lg" 
                   type="checkbox"
-                  id="sizeSmall"
+                  id="add_sizeSmall"
                   name="sizes"
                   data-info="S"
                   onChange={handleChange}
@@ -758,12 +674,12 @@ export default function EditProductWindow () {
                   border border-inbetween px-2 py-1 
                   rounded-lg bg-background overflow-hidden cursor-pointer
                 "
-                htmlFor="sizeMedium"
+                htmlFor="add_sizeMedium"
                 >
                 <input
                   className="peer invisible text-heading rounded-lg" 
                   type="checkbox"
-                  id="sizeMedium"
+                  id="add_sizeMedium"
                   name="sizes"
                   data-info="M"
                   onChange={handleChange}
@@ -811,12 +727,12 @@ export default function EditProductWindow () {
                   border border-inbetween px-2 py-1 
                   rounded-lg bg-background overflow-hidden cursor-pointer
                 "
-                htmlFor="sizeLarge"
+                htmlFor="add_sizeLarge"
               >
                 <input
                   className="peer invisible text-heading rounded-lg" 
                   type="checkbox"
-                  id="sizeLarge"
+                  id="add_sizeLarge"
                   name="sizes"
                   data-info="L"
                   onChange={handleChange}
@@ -864,12 +780,12 @@ export default function EditProductWindow () {
                   border border-inbetween px-2 py-1 
                   rounded-lg bg-background overflow-hidden cursor-pointer
                 "
-                htmlFor="sizeExtraLarge"
+                htmlFor="add_sizeExtraLarge"
               >
                 <input
                   className="peer invisible text-heading rounded-lg" 
                   type="checkbox"
-                  id="sizeExtraLarge"
+                  id="add_sizeExtraLarge"
                   name="sizes"
                   data-info="XL"
                   onChange={handleChange}
@@ -917,12 +833,12 @@ export default function EditProductWindow () {
                   border border-inbetween px-2 py-1 
                   rounded-lg bg-background overflow-hidden cursor-pointer
                 "
-                htmlFor="sizeDoubleExtraLarge"
+                htmlFor="add_sizeDoubleExtraLarge"
               >
                 <input
                   className="peer invisible text-heading rounded-lg" 
                   type="checkbox"
-                  id="sizeDoubleExtraLarge"
+                  id="add_sizeDoubleExtraLarge"
                   name="sizes"
                   data-info="2XL"
                   onChange={handleChange}
@@ -980,12 +896,13 @@ export default function EditProductWindow () {
                   ${isEn ? 'ml-auto' : 'mr-auto'}
                 `}
               >
-                {productData?.colors.map((color: string, i: number) => 
-                  <li
-                    key={i}
-                    className="w-5 h-5 rounded-full"
-                    style={{ backgroundColor: getColor(colorsArray, color).hex }}
-                  />  
+                {productData?.colors.length >= 1 
+                  && productData?.colors.map((color: string, i: number) => 
+                    <li
+                      key={i}
+                      className="w-5 h-5 rounded-full"
+                      style={{ backgroundColor: getColor(colorsArray, color).hex }}
+                    />  
                 )}
               </ul>
           </div>
@@ -993,7 +910,7 @@ export default function EditProductWindow () {
             className="
               flex gap-4 items-center w-full bg-background-light rounded-lg p-2
             "
-            htmlFor="price"
+            htmlFor="add_price"
           >
             <h3 className="text-body font-bold">
               {isEn ? 'PRICE' : 'السعر'}
@@ -1005,7 +922,7 @@ export default function EditProductWindow () {
               `}
               type="text"
               name="price"
-              id="price"
+              id="add_price"
               onChange={handleChange}
               ref={priceInptRef}
             />
@@ -1014,7 +931,7 @@ export default function EditProductWindow () {
             className="
               flex gap-2 items-center w-full bg-background-light rounded-lg p-2
             "
-            htmlFor="discount_percent"
+            htmlFor="add_discount_percent"
           >
             <h3 className="text-body font-bold">
               {isEn ? 'DISCOUNT' : 'التخفيض'}
@@ -1026,7 +943,7 @@ export default function EditProductWindow () {
               `}
               type="text"
               name="discount_percent"
-              id="discount_percent"
+              id="add_discount_percent"
               onChange={handleChange}
               ref={discountInptRef}
             />
@@ -1047,7 +964,7 @@ export default function EditProductWindow () {
                 bg-green-500 cursor-pointer
                 ${isEn ? 'ml-auto' : 'mr-auto'}
               `}
-              htmlFor="new"
+              htmlFor="add_new"
             >
               <input
                 className="
@@ -1055,7 +972,7 @@ export default function EditProductWindow () {
                 "
                 type="checkbox"
                 name="is_new"
-                id="new"
+                id="add_new"
                 onChange={handleChange}
                 ref={newInptRef}
               />
@@ -1101,12 +1018,12 @@ export default function EditProductWindow () {
                   rounded-lg bg-background overflow-hidden cursor-pointer
                   ${isEn ? 'order-1' : 'order-3'}
                 `}
-                htmlFor="stateAvailable"
+                htmlFor="add_stateAvailable"
               >
                 <input
                   className="peer invisible text-heading rounded-lg" 
                   type="radio"
-                  id="stateAvailable"
+                  id="add_stateAvailable"
                   name="state"
                   data-info="available"
                   onChange={handleChange}
@@ -1155,12 +1072,12 @@ export default function EditProductWindow () {
                   rounded-lg bg-background overflow-hidden cursor-pointer
                   ${isEn ? 'order-2' : 'order-2'}
                 `}
-                htmlFor="stateOutOfStock"
+                htmlFor="add_stateOutOfStock"
               >
                 <input
                   className="peer invisible text-heading rounded-lg" 
                   type="radio"
-                  id="stateOutOfStock"
+                  id="add_stateOutOfStock"
                   name="state"
                   data-info="out-of-stock"
                   onChange={handleChange}
@@ -1209,12 +1126,12 @@ export default function EditProductWindow () {
                   rounded-lg bg-background overflow-hidden cursor-pointer
                   ${isEn ? 'order-3' : 'order-1'}
                 `}
-                htmlFor="stateHidden"
+                htmlFor="add_stateHidden"
               >
                 <input
                   className="peer invisible text-heading rounded-lg" 
                   type="radio"
-                  id="stateHidden"
+                  id="add_stateHidden"
                   name="state"
                   data-info="hidden"
                   onChange={handleChange}
@@ -1279,12 +1196,12 @@ export default function EditProductWindow () {
                     border border-inbetween px-2 py-1 
                     rounded-lg bg-background overflow-hidden cursor-pointer
                   "
-                  htmlFor={category.path}
+                  htmlFor={'add_' + category.path}
                 >
                   <input
                     className="peer invisible text-heading rounded-lg" 
                     type="radio"
-                    id={category.path}
+                    id={'add_' + category.path}
                     name="type"
                     data-type={category.slug}
                     data-info={category.slug}
@@ -1380,12 +1297,12 @@ export default function EditProductWindow () {
                               border border-inbetween px-2 py-1 
                               rounded-lg bg-background overflow-hidden cursor-pointer
                             "
-                            htmlFor={subCategory.path}
+                            htmlFor={'add_' + subCategory.path}
                           >
                             <input
                               className="peer invisible text-heading rounded-lg" 
                               type="checkbox"
-                              id={subCategory.path}
+                              id={'add_' + subCategory.path}
                               name="categories"
                               data-info={subCategory.path}
                               data-path={subCategory.path}
