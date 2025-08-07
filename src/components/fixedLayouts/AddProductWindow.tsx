@@ -15,7 +15,7 @@ import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingRes
 // STORES
 import { 
   useTabNameStore, useLanguageStore, useAlertMessageStore,
-  useAddProductWindowStore, useAddProductImgWindowStore
+  useAddProductWindowStore, useAddProductImgWindowStore, useProductDataStore
 } from '@/stores/index';
 
 // API
@@ -48,6 +48,8 @@ export default function AddProductWindow () {
   const addToggle = useAddProductWindowStore(state => state.toggle);
   const setAddToggle = useAddProductWindowStore(state => state.setToggle);
   const editTrigger = useAddProductWindowStore(state => state.trigger);
+  const productData = useProductDataStore(state => state.productData);
+  const setProductData = useProductDataStore(state => state.setProductData);
 
   const addImgToggle = useAddProductImgWindowStore(state => state.toggle);
   const setAddImgToggle = useAddProductImgWindowStore(state => state.setToggle);
@@ -66,99 +68,6 @@ export default function AddProductWindow () {
   const [ isMutating, setIsMutating ] = useState<boolean>(false);
   const [ isRemoveImgMutating, setIsRemoveImgMutating ] = useState<boolean>(false);
   const [ removedImagesFilePathArray, setRemovedImagesFilePathArray ] = useState<any[]>([]);
-  const [ productData, setProductData ] = useState<Record<any, any>>({
-    name: { en: "", ar: "" },
-    slug: "",
-    description: { "en": "", "ar": "" },
-    type: "",
-    categories: [],
-    is_new: false,
-    state: "",
-    sizes: [],
-    colors: [],
-    images: [],
-    stock: {
-      XS: { "emerald": 5, "black": 3 },
-      S: { "emerald": 10, "black": 8 },
-      M: { "emerald": 7, "black": 6 },
-      L: { "emerald": 4, "black": 2 }
-    },
-    price: 0,
-    discount_percent: 0,
-    lists: [
-      {
-        title: {"en": "PRODUCT DETAILS", "ar": "تفاصيل عن القطعه"},
-        descriptionLists: {
-          en: [
-            "Brand: Ranoura",
-            "Material: Fabric",
-            "Fit: Tight to boy",
-            "NeckLine: None",
-            "Sleeves: Yes",
-            "Design: Italic"
-          ],
-          ar: [
-            "العلامة التجارية: رانورا",
-            "المادة: قماش",
-            "المقاس: ضيق على الجسم",
-            "خط العنق: لا يوجد",
-            "الأكمام: نعم",
-            "التصميم: مائل"
-          ]
-        }
-      },{
-        title: {en: "SIZE INFO", ar: "معلومات عن المقاسات"},
-        descriptionLists: {
-          en: [
-            "True to size",
-            "XXS: 0",
-            "XS: 0-2",
-            "MD: 2-4",
-            "LG: 4-6",
-            "XL: 6-9"
-          ],
-          ar: [
-            "True to size",
-            "XXS: 0",
-            "XS: 0-2",
-            "MD: 2-4",
-            "LG: 4-6",
-            "XL: 6-9"
-          ]
-        }
-      },{
-        title: {"en": "ABOUT RANOURA✧･ﾟ*", "ar": "حول رانورا*ﾟ･✧"},
-        descriptionLists: {
-          en: [
-            "Welcome to Ranoura – where elegance meets excellence. At Ranoura, we pride ourselves on crafting garments from the finest high-end fabrics, designed for those who appreciate quality, style, and sophistication. Each piece is meticulously tailored to provide a perfect blend of comfort and luxury, ensuring you feel confident and radiant in every moment. Discover timeless designs and impeccable craftsmanship that redefine fashion, only at Ranoura."
-          ],
-          ar: [
-            "مرحبًا بكم في رانورا – حيث تلتقي الأناقة بالتميز. في رانورا، نفخر بصناعة الملابس من أجود الأقمشة الفاخرة، مصممة لأولئك الذين يقدرون الجودة والأناقة والرقي. كل قطعة مصممة بعناية فائقة لتوفر مزيجًا مثاليًا من الراحة والفخامة، مما يضمن شعورك بالثقة والإشراق في كل لحظة. اكتشف التصاميم الخالدة والحرفية اللا مثيل لها التي تعيد تعريف الموضة، فقط في رانورا."
-          ]
-        }
-      },{
-        title: {"en": "DELIVERY", "ar": "التوصيل"},
-        descriptionLists: {
-          en: [
-            "Get your favorite Ranoura pieces delivered straight to your doorstep! Enjoy fast and reliable shipping with options for standard delivery (three to five business days) or express delivery (one to two business days) for those last-minute style needs. We carefully package every item to ensure it arrives in perfect condition, ready to shine in your wardrobe."
-          ],
-          ar: [
-            "احصل على قطع رانورا المفضلة لديك ويتم توصيلها مباشرة إلى عتبة بابك! استمتع بالشحن السريع والموثوق مع خيارات التوصيل القياسي (من ثلاثة إلى خمسة أيام عمل) أو التوصيل السريع (من يوم إلى يومين عمل) لتلبية احتياجات الأناقة في اللحظة الأخيرة. نحن نعبئ كل قطعة بعناية لضمان وصولها في حالة مثالية، جاهزة للتألق في خزانة ملابسك."
-          ]
-        }
-      },{
-        title: {"en": "RETURNS", "ar": "المرجوعات"},
-        descriptionLists: {
-          en: [
-            "At Ranoura, your satisfaction is our priority. If something isn't quite right, you can easily return it within fourteen days of receiving your order. Items must be unworn, unwashed, and with original tags attached. Simply follow our hassle-free returns process, and we'll ensure you get a refund or exchange as quickly as possible."
-          ], 
-          ar: [
-            "في رانورا، رضاكم هو أولويتنا. إذا كان هناك شيء غير مناسب تمامًا، يمكنكم إرجاعه بسهولة خلال أربعة عشر يومًا من استلام طلبكم. يجب أن تكون الأغراض غير ملبوسة وغير مغسولة ومع العلامات الأصلية مرفقة. ما عليكم سوى اتباع عملية الإرجاع السهلة لدينا، وسنضمن حصولكم على استرداد أو استبدال في أسرع وقت ممكن."
-          ]
-        }  
-      }
-    ]
-  });
 
   const nameEnInptRef = useRef<HTMLInputElement>(null);
   const nameArInptRef = useRef<HTMLInputElement>(null);
@@ -183,6 +92,71 @@ export default function AddProductWindow () {
   const typeInptRefs = useRef<any[]>([]);
 
   const categoriesInptRefs = useRef<any[]>([]);
+
+  useEffect(() => {
+    const setDefaultValues = () => {
+      // Images (reset to default)
+      setRemovedImagesFilePathArray([]);
+
+      // Name And Description
+      if (nameEnInptRef.current) 
+        nameEnInptRef.current.value = productData?.name.en;
+      if (nameArInptRef.current) 
+        nameArInptRef.current.value = productData?.name.ar;
+      if (descriptionEnInptRef.current) 
+        descriptionEnInptRef.current.value = productData?.description.en;
+      if (descriptionArInptRef.current) 
+        descriptionArInptRef.current.value = productData?.description.ar;
+
+      // Sizes
+      if (sizeXSInptRef.current)
+        sizeXSInptRef.current.checked = productData?.sizes.includes("XS") ? true : false;
+      if (sizeSInptRef.current) 
+        sizeSInptRef.current.checked = productData?.sizes.includes("S") ? true : false;
+      if (sizeMInptRef.current) 
+        sizeMInptRef.current.checked = productData?.sizes.includes("M") ? true : false;
+      if (sizeLInptRef.current) 
+        sizeLInptRef.current.checked = productData?.sizes.includes("L") ? true : false;
+      if (sizeXLInptRef.current) 
+        sizeXLInptRef.current.checked = productData?.sizes.includes("XL") ? true : false;
+
+      // Price and Discount
+      if (priceInptRef.current) 
+        priceInptRef.current.value = String(productData?.price);
+      if (discountInptRef.current) 
+        discountInptRef.current.value = String(productData?.discount_percent);
+
+      // New
+      if (newInptRef.current) 
+        newInptRef.current.checked = productData?.is_new;
+
+      // State
+      const state = productData?.state;
+      if (stateAvailableInptRef.current) 
+        stateAvailableInptRef.current.checked = state === "available" ? true : false;
+      if (statetOutOfStockInptRef.current) 
+        statetOutOfStockInptRef.current.checked = state === "out-of-stock" ? true : false;
+      if (stateHiddenInptRef.current) 
+        stateHiddenInptRef.current.checked = state === "hidden" ? true : false;
+
+      // Type
+        const checkedRef = typeInptRefs.current.find(el => el.dataset.type === productData?.type)
+        if (checkedRef) {
+          checkedRef.checked = true;
+        } else {
+          typeInptRefs.current.forEach(el => el.checked = false);
+        };
+
+      // Categories
+      if (categoriesInptRefs.current) 
+        console.log('categories el: ', categoriesInptRefs.current);
+        categoriesInptRefs.current
+          .forEach(el => (el.checked = productData?.categories.includes(el.dataset.path) ? true : false));
+    }
+    // return;
+    if (!productData) return;
+    setDefaultValues();
+  }, [productData]);
 
   const filterDeletedImages = (url: string, color:string) => {
     let images = [ ...productData?.images ]
@@ -236,7 +210,7 @@ export default function AddProductWindow () {
       case 'delete_product_image_button_is_clicked':
         if (url && color) {
           const { images, colors} = filterDeletedImages(url, color);
-          setProductData(val => ({ ...val, images, colors }));
+          setProductData({ ...productData, images, colors });
           setRemovedImagesFilePathArray(val => ([ ...val, url ]));
         }
         break;
@@ -263,44 +237,50 @@ export default function AddProductWindow () {
 
     switch(name) {
       case'nameEn':
-        setProductData(val => ({ 
-          ...val, name: {en: value, ar: val.name.ar}, slug: createSlug(value) 
-        }));
+        setProductData({ 
+          ...productData, name: {en: value, ar: productData?.name.ar}, slug: createSlug(value) 
+        });
         break;
       case'nameAr':
-        setProductData(val => ({ 
-          ...val, name: {en: val.name.en, ar: value} 
-        }));
+        setProductData({ 
+          ...productData, name: {en: productData?.name.en, ar: value} 
+        });
         break;
       case'descriptionEn':
-        setProductData(val => ({ 
-          ...val, description: {en: value, ar: val.description.ar} 
-        }));
+        setProductData({ 
+          ...productData, description: {en: value, ar: productData?.description.ar} 
+        });
         break;
       case'descriptionAr':
-        setProductData(val => ({ 
-          ...val, description: {en: val.description.en, ar: value }
-        }));
+        setProductData({ 
+          ...productData, description: {en: productData?.description.en, ar: value }
+        });
         break;
       case'sizes':
       case'categories':
         const removeDuplicates = (arr: any[]) => [ ...new Set(arr) ]; 
         const array = removeDuplicates(productData[name]);
-        if (checked) return setProductData(val => ({ 
-          ...val, [name]: [ ...array, info ] 
-        }));
-        setProductData(val => ({ ...val, [name]: array.filter((name: string) => name !== info ) }));
+        if (checked) return setProductData({ 
+          ...productData, [name]: [ ...array, info ] 
+        });
+        setProductData({ ...productData, [name]: array.filter((name: string) => name !== info ) });
         break;
       case 'price':
       case 'discount_percent':
-        setProductData(val => ({ ...val, [name]: Number(value) }));
+        setProductData({ ...productData, [name]: Number(value) });
         break;
       case 'is_new':
-        setProductData(val => ({ ...val, [name]: checked }));
+        setProductData({ ...productData, [name]: checked });
         break;
       case 'state':
+        setProductData({ ...productData, [name]: info });
       case 'type':
-        setProductData(val => ({ ...val, [name]: info }));
+        const categoriesArray = [ ...productData?.categories ];
+        const categoriesFiltered = categoriesArray.filter(val => !val.includes('clothing'));
+        setProductData({ 
+          ...productData, [name]: info , categories: [ ...categoriesFiltered, `clothing/${info}` ]
+        });
+
         break;
       default:
         console.error('Unknown name: ', name);
@@ -355,7 +335,7 @@ export default function AddProductWindow () {
           <ul
             className="flex gap-4 w-[516px] overflow-x-scroll mx-auto"
           >
-            {productData.images?.map((image: any, i: number) => 
+            {productData?.images.map((image: any, i: number) => 
               image.views.map((view: Record<string, string>, viewIndex: number) =>
                 <li
                   key={`${i}-${viewIndex}`}

@@ -15,7 +15,7 @@ import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingRes
 // STORES
 import { 
   useTabNameStore, useLanguageStore, useAlertMessageStore,
-  useEditProductWindowStore, useAddProductImgWindowStore
+  useEditProductWindowStore, useAddProductImgWindowStore, useProductDataStore
 } from '@/stores/index';
 
 // API
@@ -48,8 +48,8 @@ export default function EditProductWindow () {
   const editToggle = useEditProductWindowStore(state => state.toggle);
   const setEditToggle = useEditProductWindowStore(state => state.setToggle);
   const editTrigger = useEditProductWindowStore(state => state.trigger);
-  const productData = useEditProductWindowStore(state => state.productData);
-  const setProductData = useEditProductWindowStore(state => state.setProductData);
+  const productData = useProductDataStore(state => state.productData);
+  const setProductData = useProductDataStore(state => state.setProductData);
 
   const addToggle = useAddProductImgWindowStore(state => state.toggle);
   const setAddToggle = useAddProductImgWindowStore(state => state.setToggle);
@@ -227,16 +227,16 @@ export default function EditProductWindow () {
         descriptionArInptRef.current.value = productData?.description.ar;
 
       // Sizes
-      if (sizeXSInptRef.current && productData?.sizes.includes("XS")) 
-        sizeXSInptRef.current.checked = true;
-      if (sizeSInptRef.current && productData?.sizes.includes("S")) 
-        sizeSInptRef.current.checked = true;
-      if (sizeMInptRef.current && productData?.sizes.includes("M")) 
-        sizeMInptRef.current.checked = true;
-      if (sizeLInptRef.current && productData?.sizes.includes("L")) 
-        sizeLInptRef.current.checked = true;
-      if (sizeXLInptRef.current && productData?.sizes.includes("XL")) 
-        sizeXLInptRef.current.checked = true;
+      if (sizeXSInptRef.current)
+        sizeXSInptRef.current.checked = productData?.sizes.includes("XS") ? true : false;
+      if (sizeSInptRef.current) 
+        sizeSInptRef.current.checked = productData?.sizes.includes("S") ? true : false;
+      if (sizeMInptRef.current) 
+        sizeMInptRef.current.checked = productData?.sizes.includes("M") ? true : false;
+      if (sizeLInptRef.current) 
+        sizeLInptRef.current.checked = productData?.sizes.includes("L") ? true : false;
+      if (sizeXLInptRef.current) 
+        sizeXLInptRef.current.checked = productData?.sizes.includes("XL") ? true : false;
 
       // Price and Discount
       if (priceInptRef.current) 
@@ -249,24 +249,27 @@ export default function EditProductWindow () {
         newInptRef.current.checked = productData?.is_new;
 
       // State
-      if (stateAvailableInptRef.current && productData?.state === "available") 
-        stateAvailableInptRef.current.checked = true;
-      if (statetOutOfStockInptRef.current && productData?.state === "out-of-stock") 
-        statetOutOfStockInptRef.current.checked = true;
-      if (stateHiddenInptRef.current && productData?.state === "hidden") 
-        stateHiddenInptRef.current.checked = true;
+      const state = productData?.state;
+      if (stateAvailableInptRef.current) 
+        stateAvailableInptRef.current.checked = state === "available" ? true : false;
+      if (statetOutOfStockInptRef.current) 
+        statetOutOfStockInptRef.current.checked = state === "out-of-stock" ? true : false;
+      if (stateHiddenInptRef.current) 
+        stateHiddenInptRef.current.checked = state === "hidden" ? true : false;
 
       // Type
-      if (typeInptRefs.current) 
-        typeInptRefs.current
-          .find(el => el.dataset.type === productData?.type)
-          .checked = true;
+        const checkedRef = typeInptRefs.current.find(el => el.dataset.type === productData?.type)
+        if (checkedRef) {
+          checkedRef.checked = true;
+        } else {
+          typeInptRefs.current.forEach(el => el.checked = false);
+        };
 
       // Categories
       if (categoriesInptRefs.current) 
         console.log('categories el: ', categoriesInptRefs.current);
         categoriesInptRefs.current
-          .forEach(el => productData?.categories.includes(el.dataset.path) && (el.checked = true));
+          .forEach(el => (el.checked = productData?.categories.includes(el.dataset.path) ? true : false));
     }
     // return;
     if (!productData) return;

@@ -29,7 +29,8 @@ import colorsArray from '@/json/colors.json';
 // STORES
 import { 
   useTabNameStore, useLanguageStore, 
-  useAlertMessageStore, useEditProductWindowStore , useAddProductWindowStore
+  useAlertMessageStore, useEditProductWindowStore, 
+  useAddProductWindowStore, useProductDataStore
 } from '@/stores/index';
 
 // API
@@ -61,12 +62,17 @@ export default function Table({ products, isLoading = false, isError = false }: 
   const queryClient = useQueryClient();
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
+
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
+
   const setEditProductWindowToggle = useEditProductWindowStore(state => state.setToggle);
   const setEditProductWindowTrigger = useEditProductWindowStore(state => state.setTrigger);
   const setEditProductWindowProductData = useEditProductWindowStore(state => state.setProductData);
+
+  const setProductData = useProductDataStore(state => state.setProductData);
+
   const setAddToggle = useAddProductWindowStore(state => state.setToggle);
   const [ isThemeMutating, setIsThemeMutating ] = useState<{toggle: boolean, index: number}>({
     toggle: false, index: 0
@@ -149,12 +155,104 @@ export default function Table({ products, isLoading = false, isError = false }: 
         break;
       case 'add_product_button_is_clicked':
         setAddToggle(true);
-        console.log('click')
+        setProductData({
+          name: { en: "", ar: "" },
+          slug: "",
+          description: { "en": "", "ar": "" },
+          type: "",
+          categories: [],
+          is_new: false,
+          state: "",
+          sizes: [],
+          colors: [],
+          images: [],
+          stock: {
+            XS: { "emerald": 5, "black": 3 },
+            S: { "emerald": 10, "black": 8 },
+            M: { "emerald": 7, "black": 6 },
+            L: { "emerald": 4, "black": 2 }
+          },
+          price: 0,
+          discount_percent: 0,
+          lists: [
+            {
+              title: {"en": "PRODUCT DETAILS", "ar": "تفاصيل عن القطعه"},
+              descriptionLists: {
+                en: [
+                  "Brand: Ranoura",
+                  "Material: Fabric",
+                  "Fit: Tight to boy",
+                  "NeckLine: None",
+                  "Sleeves: Yes",
+                  "Design: Italic"
+                ],
+                ar: [
+                  "العلامة التجارية: رانورا",
+                  "المادة: قماش",
+                  "المقاس: ضيق على الجسم",
+                  "خط العنق: لا يوجد",
+                  "الأكمام: نعم",
+                  "التصميم: مائل"
+                ]
+              }
+            },{
+              title: {en: "SIZE INFO", ar: "معلومات عن المقاسات"},
+              descriptionLists: {
+                en: [
+                  "True to size",
+                  "XXS: 0",
+                  "XS: 0-2",
+                  "MD: 2-4",
+                  "LG: 4-6",
+                  "XL: 6-9"
+                ],
+                ar: [
+                  "True to size",
+                  "XXS: 0",
+                  "XS: 0-2",
+                  "MD: 2-4",
+                  "LG: 4-6",
+                  "XL: 6-9"
+                ]
+              }
+            },{
+              title: {"en": "ABOUT RANOURA✧･ﾟ*", "ar": "حول رانورا*ﾟ･✧"},
+              descriptionLists: {
+                en: [
+                  "Welcome to Ranoura – where elegance meets excellence. At Ranoura, we pride ourselves on crafting garments from the finest high-end fabrics, designed for those who appreciate quality, style, and sophistication. Each piece is meticulously tailored to provide a perfect blend of comfort and luxury, ensuring you feel confident and radiant in every moment. Discover timeless designs and impeccable craftsmanship that redefine fashion, only at Ranoura."
+                ],
+                ar: [
+                  "مرحبًا بكم في رانورا – حيث تلتقي الأناقة بالتميز. في رانورا، نفخر بصناعة الملابس من أجود الأقمشة الفاخرة، مصممة لأولئك الذين يقدرون الجودة والأناقة والرقي. كل قطعة مصممة بعناية فائقة لتوفر مزيجًا مثاليًا من الراحة والفخامة، مما يضمن شعورك بالثقة والإشراق في كل لحظة. اكتشف التصاميم الخالدة والحرفية اللا مثيل لها التي تعيد تعريف الموضة، فقط في رانورا."
+                ]
+              }
+            },{
+              title: {"en": "DELIVERY", "ar": "التوصيل"},
+              descriptionLists: {
+                en: [
+                  "Get your favorite Ranoura pieces delivered straight to your doorstep! Enjoy fast and reliable shipping with options for standard delivery (three to five business days) or express delivery (one to two business days) for those last-minute style needs. We carefully package every item to ensure it arrives in perfect condition, ready to shine in your wardrobe."
+                ],
+                ar: [
+                  "احصل على قطع رانورا المفضلة لديك ويتم توصيلها مباشرة إلى عتبة بابك! استمتع بالشحن السريع والموثوق مع خيارات التوصيل القياسي (من ثلاثة إلى خمسة أيام عمل) أو التوصيل السريع (من يوم إلى يومين عمل) لتلبية احتياجات الأناقة في اللحظة الأخيرة. نحن نعبئ كل قطعة بعناية لضمان وصولها في حالة مثالية، جاهزة للتألق في خزانة ملابسك."
+                ]
+              }
+            },{
+              title: {"en": "RETURNS", "ar": "المرجوعات"},
+              descriptionLists: {
+                en: [
+                  "At Ranoura, your satisfaction is our priority. If something isn't quite right, you can easily return it within fourteen days of receiving your order. Items must be unworn, unwashed, and with original tags attached. Simply follow our hassle-free returns process, and we'll ensure you get a refund or exchange as quickly as possible."
+                ], 
+                ar: [
+                  "في رانورا، رضاكم هو أولويتنا. إذا كان هناك شيء غير مناسب تمامًا، يمكنكم إرجاعه بسهولة خلال أربعة عشر يومًا من استلام طلبكم. يجب أن تكون الأغراض غير ملبوسة وغير مغسولة ومع العلامات الأصلية مرفقة. ما عليكم سوى اتباع عملية الإرجاع السهلة لدينا، وسنضمن حصولكم على استرداد أو استبدال في أسرع وقت ممكن."
+                ]
+              }  
+            }
+          ]
+        });
         break;
       case 'edit_product_button_is_clicked':
         setEditProductWindowToggle(true);
         if (productId) 
-          setEditProductWindowProductData(getProduct(productId));
+          setProductData(getProduct(productId));
           setEditProductWindowTrigger(Date.now());
         break;
       case 'copy_button_is_clicked':
