@@ -189,26 +189,6 @@ const useLanguageStore = create<LanguageProps>()(
   )  
 );
 
-type AddProductWindowProps = {
-  toggle: boolean;
-  setToggle: (value: boolean) => void;
-  trigger: number;
-  setTrigger: (value: number) => void;
-  productData: Record<string, any> | null;
-  setProductData: (value: Record<string, any | null>) => void;
-};
-
-const useAddProductWindowStore = create<AddProductWindowProps>()(
-  (set) => ({
-    toggle: false,
-    setToggle: (toggle) => set({ toggle }),
-    trigger: Date.now(),
-    setTrigger: (trigger) => set({ trigger }),
-    productData: null,
-    setProductData: (productData) => set({ productData })
-  })
-);
-
 type EditProductWindowProps = {
   toggle: boolean;
   setToggle: (value: boolean) => void;
@@ -387,8 +367,7 @@ export {
   useFavouritesStore, useFavouriteConfettiToggle,
   useLayoutRefStore, useAlertMessageStore,
   useFooterListStore, useAllProductImagesStore,
-  useLanguageStore, useAddProductWindowStore,
-  useEditProductWindowStore, useAddProductImgWindowStore, 
-  useSelectImgColorWindowStore, useStorageStore,
-  useProductDataStore
+  useLanguageStore, useEditProductWindowStore, 
+  useAddProductImgWindowStore, useSelectImgColorWindowStore, 
+  useStorageStore, useProductDataStore
 };

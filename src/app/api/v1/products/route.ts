@@ -57,7 +57,7 @@ export async function POST (req: NextRequest) {
     const {
       name, slug, description,
       price, discount_percent, type,
-      categories, is_new, is_outOfStock, sizes,
+      categories, is_new, sizes,
       colors, images, stock, lists
     } = productData;
 
@@ -82,7 +82,6 @@ export async function POST (req: NextRequest) {
         type,
         categories,
         is_new,
-        is_outOfStock,
         sizes,
         colors,
         images,

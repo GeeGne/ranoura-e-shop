@@ -19,7 +19,6 @@ import FilterWindow from '@/components/fixedLayouts/FilterWindow';
 import SelectLang from '@/components/fixedLayouts/SelectLang';
 import AlertMessage from '@/components/fixedLayouts/AlertMessage';
 import AllProductImages from '@/components/fixedLayouts/AllProductImages';
-import AddProductWindow from '@/components/fixedLayouts/AddProductWindow';
 import EditProductWindow from '@/components/fixedLayouts/EditProductWindow';
 import AddProductImgWindow from '@/components/fixedLayouts/AddProductImgWindow';
 import SelectImgColorWindow from '@/components/fixedLayouts/SelectImgColorWindow';
@@ -93,7 +92,6 @@ export default function RootLayout({
             <FilterWindow />    
             <AlertMessage />
             <AllProductImages />
-            <AddProductWindow />
             <EditProductWindow />
             <AddProductImgWindow />
             <SelectImgColorWindow />

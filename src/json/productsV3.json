@@ -3,6 +3,7 @@
     "id": 1,
     "name": {"en": "Serenity Set", "ar": "ست سيرينيتي"},
     "slug": "serenity-set",
+    "state": "available",
     "description": {"en": "Elegant Ruched Top and Wide-Leg Pants Ensemble", "ar": "بلوزة كشخة مع بنطلون واسع"},
     "type": "outfit-pairs",
     "categories": ["clothing/outfit-pairs", "sale/latest-arrivals", "sale/hot-deals"],
@@ -11,25 +12,17 @@
     "colors": ["Green", "Pink", "Black", "Plum", "Coral"],
     "images": [
       {
-        "main": "/assets/img/cloth-a-green.avif",
-        "second": "/assets/img/cloth-a-green-view-b.avif",
-        "color": "Green"
+        "color": "pink",
+        "views": [
+          { "url": "/assets/img/cloth-a-green.avif", "type": "main" },
+          { "url": "/assets/img/cloth-a-green.avif", "type": "alternate" }
+        ]
       },{
-        "main": "/assets/img/cloth-a-orange.avif",
-        "second": "/assets/img/cloth-a-orange-view-b.avif",
-        "color": "Coral"
-      },{
-        "main": "/assets/img/cloth-a-pink.avif",
-        "second": "/assets/img/cloth-a-pink-view-b.avif",
-        "color": "Pink"
-      },{
-        "main": "/assets/img/cloth-a-red.avif",
-        "second": "/assets/img/cloth-a-red-view-b.avif",
-        "color": "Plum"
-      },{
-        "main": "/assets/img/cloth-a-black.avif",
-        "second": "/assets/img/cloth-a-black-view-b.avif",
-        "color": "Black"
+        "color": "green",
+        "views": [
+          { "url": "/assets/img/cloth-a-green.avif", "type": "main" },
+          { "url": "/assets/img/cloth-a-green.avif", "type": "alternate" }
+        ]
       }
     ],
     "stock": {

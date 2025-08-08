@@ -8,7 +8,7 @@ const createSlug = (first_name: string, last_name: string) =>
   `${first_name} ${last_name}`
   .toLowerCase()
   .trim()
-  .replace(/[^\w\s-]/g, '')
+  .replace(/[^\p{L}\s-]/gu, '')
   .replace(/[\s_-]+/g, '-') 
   .replace(/^-+|-+$/g, '');
 
@@ -85,7 +85,7 @@ export async function POST(req: NextRequest) {
         'Invalid email or password, please enter the correct values.',
         401
       );
-    
+      console.log({ first_name, last_name })
     const fullNameSlug = createSlug(first_name, last_name);
     console.log('fullNameSlug: ', fullNameSlug);
     const { accessToken, refreshToken } = await generateTokens(fullNameSlug, email, userRole.name);
