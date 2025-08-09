@@ -15,7 +15,7 @@ import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingRes
 // STORES
 import { 
   useTabNameStore, useLanguageStore, useAlertMessageStore,
-  useEditProductWindowStore, useAddProductImgWindowStore, useProductDataStore
+  useEditProductWindowStore, useAddProductImgWindowStore
 } from '@/stores/index';
 
 // API
@@ -48,8 +48,8 @@ export default function EditProductWindow () {
   const editToggle = useEditProductWindowStore(state => state.toggle);
   const setEditToggle = useEditProductWindowStore(state => state.setToggle);
   const editTrigger = useEditProductWindowStore(state => state.trigger);
-  const productData = useProductDataStore(state => state.productData);
-  const setProductData = useProductDataStore(state => state.setProductData);
+  const productData = useEditProductWindowStore(state => state.productData);
+  const setProductData = useEditProductWindowStore(state => state.setProductData);
 
   const addToggle = useAddProductImgWindowStore(state => state.toggle);
   const setAddToggle = useAddProductImgWindowStore(state => state.setToggle);

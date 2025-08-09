@@ -16,6 +16,7 @@ import LoadingScreen from '@/components/fixedLayouts/LoadingScreen';
 import Cart from '@/components/fixedLayouts/Cart';
 import Navbar from '@/components/fixedLayouts/navbar/Index';
 import FilterWindow from '@/components/fixedLayouts/FilterWindow';
+import ActivityWindow from '@/components/fixedLayouts/ActivityWindow';
 import SelectLang from '@/components/fixedLayouts/SelectLang';
 import AlertMessage from '@/components/fixedLayouts/AlertMessage';
 import AllProductImages from '@/components/fixedLayouts/AllProductImages';
@@ -89,7 +90,8 @@ export default function RootLayout({
             <Cart />
             <Navbar />
             <SelectLang />
-            <FilterWindow />    
+            <FilterWindow />
+            <ActivityWindow />
             <AlertMessage />
             <AllProductImages />
             <EditProductWindow />

@@ -44,8 +44,9 @@ export const verifyToken = async (token: string): Promise<TokenPayload | null> =
     console.log('token: ', token);
     const { payload } = await jwtVerify(token, secretKey);
     return payload as TokenPayload;
-  } catch (err) {
-    console.error('Token verification failed:', err instanceof Error ? err.message : 'Unknown error');
+  } catch (error) {
+    const err = error as Error;
+    console.error('Token verification failed:', err.message);
     return null;
   }
 };

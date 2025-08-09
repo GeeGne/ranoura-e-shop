@@ -30,8 +30,10 @@ export async function middleware(req: NextRequest) {
         console.log('A products api request!');
 
         const authToken: any = req.cookies.get('accessToken')?.value;
+        console.log('authToken', authToken);
         
         const { role }: { role?: string | null | undefined | any; } = await verifyToken(authToken);
+        console.log('role', role);
 
         const isAdmin = role === 'admin';
         const isOwner = role === 'owner';

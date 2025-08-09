@@ -61,18 +61,18 @@ export async function POST (req: NextRequest) {
       colors, images, stock, lists
     } = productData;
 
-    if (
-      !name || !slug || !description ||
-      !price || !type ||
-      !categories || !sizes ||
-      !colors || !images || !stock || !lists
-    ) return nextError(
-      'MISSING_REQUIRED_FIELDS',
-      'The request is missing required fields',
-      400
-    );
+    // if (
+    //   !name || !slug || !description ||
+    //   !price || !type ||
+    //   !categories || !sizes ||
+    //   !colors || !images || !stock || !lists
+    // ) return nextError(
+    //   'MISSING_REQUIRED_FIELDS',
+    //   'The request is missing required fields',
+    //   400
+    // );
 
-    await prisma.products.create({
+    const data = await prisma.products.create({
       data: {
         name,
         slug,
@@ -91,11 +91,11 @@ export async function POST (req: NextRequest) {
     })
 
     const message = {
-      en: "New product has been saved successfully!",
+      en: "New product has been created successfully!",
       ar: "تم حفظ المتنج الجديد بنجاح!"
     };
 
-    return NextResponse.json({ message }, { status: 201 });
+    return NextResponse.json({ data, message }, { status: 201 });
   } catch (err) {
     const error = err as Error;
     console.error('Error while creating the Product: ', error.message);

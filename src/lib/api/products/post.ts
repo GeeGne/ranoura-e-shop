@@ -3,7 +3,7 @@ import getServerUrl from '@/utils/getServerUrl';
 // add new product
 export default async function post (data: Record<any, any>) {
   try {
-    const url = `${getServerUrl()}/api/v1`;
+    const url = `${getServerUrl()}/api/v1/products`;
     const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
@@ -15,7 +15,7 @@ export default async function post (data: Record<any, any>) {
     }
 
     const result = await response.json();
-    throw result;
+    return result;
   } catch (error) {
     const err = error as Error;
     console.error('Error while adding new product: ', err.message);

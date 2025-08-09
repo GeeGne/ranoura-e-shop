@@ -361,6 +361,22 @@ const useStorageStore = create<StorageProps>()(
   })
 )
 
+type ActivityProps = {
+  toggle: boolean,
+  setToggle: (value: boolean) => void,
+  message: string,
+  setMessage: (value: string) => void,
+}
+
+const useActivityWindowStore = create<ActivityProps>()(
+  (set) => ({
+    toggle: false,
+    setToggle: (toggle) => set({ toggle }),
+    message: "LOADING...",
+    setMessage: (message) => set({ message })
+  })
+)
+
 export { 
   useCartStore, useNavbarStore, 
   useTabNameStore, useFilterWindowStore,
@@ -369,5 +385,6 @@ export {
   useFooterListStore, useAllProductImagesStore,
   useLanguageStore, useEditProductWindowStore, 
   useAddProductImgWindowStore, useSelectImgColorWindowStore, 
-  useStorageStore, useProductDataStore
+  useStorageStore, useProductDataStore,
+  useActivityWindowStore
 };

@@ -1,6 +1,6 @@
 const defaultProductData = () => ({
   name: { en: "", ar: "" },
-  slug: "",
+  slug: `${Date.now()}`,
   description: { "en": "", "ar": "" },
   type: "",
   categories: [],

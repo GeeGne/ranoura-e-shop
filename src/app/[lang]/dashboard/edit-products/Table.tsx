@@ -30,13 +30,13 @@ import colorsArray from '@/json/colors.json';
 import { 
   useTabNameStore, useLanguageStore, 
   useAlertMessageStore, useEditProductWindowStore, 
-  useProductDataStore
+  useActivityWindowStore
 } from '@/stores/index';
 
 // API
 import getThemeVars from '@/lib/api/themes/get';
 import updateThemeVars from '@/lib/api/themes/put';
-import addProduct from '@/lib/api/themes/put';
+import addProduct from '@/lib/api/products/post';
 
 // UTILS
 import updateThemeVariables from '@/utils/updateThemeVariables';
@@ -59,6 +59,8 @@ type Props = {
   isError?: boolean;
 }
 
+const blankImg = "/assets/img/empty(2).webp";
+
 export default function Table({ products, isLoading = false, isError = false }: Props) {
 
   const queryClient = useQueryClient();
@@ -73,16 +75,16 @@ export default function Table({ products, isLoading = false, isError = false }: 
   const setEditProductWindowTrigger = useEditProductWindowStore(state => state.setTrigger);
   const setEditProductWindowProductData = useEditProductWindowStore(state => state.setProductData);
 
-  const setProductData = useProductDataStore(state => state.setProductData);
+  const activityWindowToggle = useActivityWindowStore(state => state.toggle);
+  const setActivityWindowToggle = useActivityWindowStore(state => state.setToggle);
+  const activityWindowMessage = useActivityWindowStore(state => state.message);
+  const setActivityWindowMessage = useActivityWindowStore(state => state.setMessage);
 
-  const [ isThemeMutating, setIsThemeMutating ] = useState<{toggle: boolean, index: number}>({
-    toggle: false, index: 0
-  });
-  
   const mainRef = useRef<HTMLDivElement>(null);
   const imgUlRefs = useRef<(HTMLUListElement | null)[]>([]);
 
   const getProduct = (id: string) => products?.find(product => product.id === id);
+  const doesProductHaveImg = (product: Record<string, string>) => product.images.length !== 0;
 
   const getStateColor = (state: string) => {
     switch (state) {
@@ -112,24 +114,28 @@ export default function Table({ products, isLoading = false, isError = false }: 
 
   const addProductMutation = useMutation({
     mutationFn: addProduct,
-    onMutate: () => {
-      setIsThemeMutating(val => ({ toggle: true, index: val.index }));
+    onSettled: () => {
+      setActivityWindowToggle(false);
     },
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['themes']});
-      queryClient.refetchQueries({ queryKey: ['themes']});
-      setIsThemeMutating(val => ({ toggle: false, index: val.index }));
-
+    onMutate: () => {
+      setActivityWindowToggle(true);
+      setActivityWindowMessage(isEn ? 'Creating new Product...' : 'جاري انشاء منتج جديد...')
+    },
+    onSuccess: (data: any) => {
+      const { data: productData } = data;
+      queryClient.invalidateQueries({ queryKey: ['products']});
       setAlertToggle(Date.now());
       setAlertType("success");
-      setAlertMessage(data.message[isEn ? 'en' : 'ar']);
+      setAlertMessage(data?.message[isEn ? 'en' : 'ar']);
+      
+      setEditProductWindowToggle(true);
+      setEditProductWindowTrigger(Date.now());
+      setEditProductWindowProductData(productData);
     },
     onError: (error: any) => {
-      setIsThemeMutating(val => ({ toggle: false, index: val.index }));
-
       setAlertToggle(Date.now());
       setAlertType("error");
-      setAlertMessage(getMessage(error.code, 'en'))
+      setAlertMessage(isEn ? "Couldn't create new product, please try again." : "فشل في محاوله انشاء مجتمع جديد, الرجاء محاوله مره اخرى.")
     }
   });
 
@@ -155,13 +161,13 @@ export default function Table({ products, isLoading = false, isError = false }: 
         })
         break;
       case 'add_product_button_is_clicked':
-        console.log('defaultProductData', defaultProductData());
-        // addProductMutation.mutate(defaultProductData());
+        // console.log('defaultProductData', defaultProductData());
+        addProductMutation.mutate(defaultProductData());
         break;
       case 'edit_product_button_is_clicked':
         setEditProductWindowToggle(true);
         if (productId) 
-          setProductData(getProduct(productId));
+          setEditProductWindowProductData(getProduct(productId));
           setEditProductWindowTrigger(Date.now());
         break;
       case 'copy_button_is_clicked':
@@ -214,14 +220,26 @@ export default function Table({ products, isLoading = false, isError = false }: 
         >
           <button
             className="
-              text-sm text-heading-invert font-bold 
+              relative text-sm text-heading-invert font-bold 
               bg-content p-2 rounded-lg hover:opacity-80
               transition-all duration-300 ease-in-out
             "
             data-type="add_product_button_is_clicked"
             onClick={handleClick}
           >
-            {isEn ? '+ ADD PRODUCT' : '+ اضف منتج'}
+            <SvgSpinnersRingResize 
+              className={`
+                absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]
+                ${activityWindowToggle ? 'visible opacity-100' : 'invisible opacity-0'}  
+              `}
+            /> 
+            <span
+              className={`
+                ${activityWindowToggle ? 'invisible opacity-0' : 'visible opacity-100'}  
+              `}
+            >
+              {isEn ? '+ ADD PRODUCT' : '+ اضف منتج'}
+            </span> 
           </button>
           <LineMdChevronSmallRight 
             role="button"
@@ -334,7 +352,7 @@ export default function Table({ products, isLoading = false, isError = false }: 
                     </ul>
                   </div>
                   <img 
-                    src={itm.images[0].views[0].url}
+                    src={doesProductHaveImg(itm) ? itm.images[0].views[0].url : blankImg}
                     className="
                       h-[225px] aspect-[2/3] shrink-0
                       object-cover object-center rounded-lg
@@ -343,7 +361,7 @@ export default function Table({ products, isLoading = false, isError = false }: 
                   <span
                     className="flex items-center shrink-0 h-[150px]"
                   >
-                    {itm.name[isEn ? 'en' : 'ar']}
+                    {itm.name[isEn ? 'en' : 'ar'] || '---'}
                   </span>
                 </div>
               </td>
@@ -444,7 +462,7 @@ export default function Table({ products, isLoading = false, isError = false }: 
                     flex items-center h-[150px] 
                   "
                 >
-                  {itm?.description[lang]}
+                  {itm?.description[lang] || '---'}
                 </span>
               </td>
               <td
@@ -524,7 +542,7 @@ export default function Table({ products, isLoading = false, isError = false }: 
                     flex items-center h-[150px] gap-2 text-heading text-md
                   "
                 >
-                  {itm.type}
+                  {itm.type || '---'}
                 </h3>
               </td>
               <td 
