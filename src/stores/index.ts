@@ -115,12 +115,16 @@ const useFavouriteConfettiToggle = create<FavouriteConfettiToggleProps>(
 type LayoutRefProps = {
   layoutRef?: any;
   setLayoutRef: (value: any) => void;
+  onLayoutScroll: any;
+  setOnLayoutScroll: (value: any) => void;
 };
 
 const useLayoutRefStore = create<LayoutRefProps>(
   (set) => ({
     layoutRef: null,
-    setLayoutRef: (layoutRef: any) => set({ layoutRef })
+    setLayoutRef: (layoutRef: any) => set({ layoutRef }),
+    onLayoutScroll: "",
+    setOnLayoutScroll: (onLayoutScroll) => set({ onLayoutScroll })
   })
 );
 

@@ -40,8 +40,13 @@ export default function RootLayout({
   const pathname = usePathname();
   const layoutRef = useLayoutRefStore(state => state.layoutRef);
   const setLayoutRef = useLayoutRefStore(state => state.setLayoutRef);
+  const setOnLayoutScroll = useLayoutRefStore(state => state.setOnLayoutScroll);
   const lang = useLanguageStore(state => state.lang);
   const [ onScroll, setOnScroll ] = useState<any>(null);
+
+  useEffect(() => {
+    setOnLayoutScroll(onScroll)
+  }, [onScroll]);
 
   const pathNameIncludesDashboard = () => pathname.includes('/dashboard');
 

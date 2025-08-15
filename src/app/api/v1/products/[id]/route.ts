@@ -97,3 +97,19 @@ export async function PUT(
     )
   }
 }
+
+export async function DELETE (
+  { params }: { params: { id: string } }
+) {
+  try {
+
+  } catch (err) {
+    const error = err as Error;
+    console.error('Error while deleting product: ', error.message);
+    return nextError(
+      'FAIL',
+      'Error message',
+      404
+    )
+  }
+}

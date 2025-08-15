@@ -28,9 +28,9 @@ import colorsArray from '@/json/colors.json';
 
 // STORES
 import { 
-  useTabNameStore, useLanguageStore, 
-  useAlertMessageStore, useEditProductWindowStore, 
-  useActivityWindowStore
+  useLanguageStore, useAlertMessageStore, 
+  useEditProductWindowStore, useActivityWindowStore, 
+  useLayoutRefStore
 } from '@/stores/index';
 
 // API
@@ -54,6 +54,7 @@ import {
 } from '@tanstack/react-table';
 
 type Props = {
+  scroll?: string;
   products?: any[];
   isLoading?: boolean;
   isError?: boolean;
@@ -61,11 +62,13 @@ type Props = {
 
 const blankImg = "/assets/img/empty(2).webp";
 
-export default function Table({ products, isLoading = false, isError = false }: Props) {
+export default function Table({ scroll, products, isLoading = false, isError = false }: Props) {
 
   const queryClient = useQueryClient();
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
+
+  const layoutRef = useLayoutRefStore(state => state.layoutRef);
 
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
@@ -112,6 +115,44 @@ export default function Table({ products, isLoading = false, isError = false }: 
     setImgLiElWidth();
   }, [products]);
 
+  useEffect(() => {
+    console.log('scroll:', scroll);
+    const fullWidth: number = mainRef.current?.scrollWidth || 0;
+    const fullHeight: number = layoutRef?.scrollHeight || 0;
+
+    switch (scroll) {
+      case 'right':
+        mainRef.current?.scrollTo({
+          left: isEn ? fullWidth : 0,
+          behavior:'smooth'
+        })
+        break;
+      case 'left':
+        mainRef.current?.scrollTo({
+          left: isEn ? 0 : -1 * fullWidth,
+          behavior:'smooth'
+        })
+        break;
+      case 'up':
+        layoutRef.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+        console.log('click');
+        break;
+      case 'down':
+        layoutRef.scrollTo({
+          top: fullHeight,
+          behavior:'smooth'
+        })
+        break;
+      case 'none':
+        break;
+      default:
+        console.error("Unknown scroll type: ", scroll);
+    }
+  }, [scroll]);
+
   const addProductMutation = useMutation({
     mutationFn: addProduct,
     onSettled: () => {
@@ -145,40 +186,9 @@ export default function Table({ products, isLoading = false, isError = false }: 
 
   const handleClick = async (e: React.MouseEvent<HTMLElement | SVGElement>) => {
     const { type, productId } = e.currentTarget.dataset;
-      const fullWidth: number = mainRef.current?.scrollWidth || 0;
 
     switch (type) {
-      case 'right_arrow_button_is_clicked':
-        mainRef.current?.scrollTo({
-          left: isEn ? fullWidth : 0,
-          behavior:'smooth'
-        })
-        break;
-      case 'left_arrow_button_is_clicked':
-        mainRef.current?.scrollTo({
-          left: isEn ? 0 : -1 * fullWidth,
-          behavior:'smooth'
-        })
-        break;
-      case 'add_product_button_is_clicked':
-        // console.log('defaultProductData', defaultProductData());
-        addProductMutation.mutate(defaultProductData());
-        break;
-      case 'edit_product_button_is_clicked':
-        setEditProductWindowToggle(true);
-        if (productId) 
-          setEditProductWindowProductData(getProduct(productId));
-          setEditProductWindowTrigger(Date.now());
-        break;
-      case 'copy_button_is_clicked':
-        try {
-          await navigator?.clipboard?.writeText("Text is copied");
-          setAlertToggle(Date.now());
-          setAlertType('success');
-          setAlertMessage(isEn ? 'URL is added to clipboard successfully!' : '!تم نسخ الرابط بنجاح');
-        } catch (err) {
-          console.error('Error while copying text: ', err)
-        }
+      case '':
         break;
       default:
         console.error('Unknown type: ', type);
@@ -204,69 +214,6 @@ export default function Table({ products, isLoading = false, isError = false }: 
       className="relative flex flex-col gap-4 overflow-x-auto"
       ref={mainRef}
     >
-      <div
-        className={`
-          sticky left-0 flex items-center justify-between
-          ${isEn ? 'left-0' : 'right-0'}
-        `}
-      >
-        <h3
-          className="text-heading"
-        >
-          {isEn ? 'List' : 'القائمه'}
-        </h3>
-        <div
-          className="flex items-center gap-4"
-        >
-          <button
-            className="
-              relative text-sm text-heading-invert font-bold 
-              bg-content p-2 rounded-lg hover:opacity-80
-              transition-all duration-300 ease-in-out
-            "
-            data-type="add_product_button_is_clicked"
-            onClick={handleClick}
-          >
-            <SvgSpinnersRingResize 
-              className={`
-                absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]
-                ${activityWindowToggle ? 'visible opacity-100' : 'invisible opacity-0'}  
-              `}
-            /> 
-            <span
-              className={`
-                ${activityWindowToggle ? 'invisible opacity-0' : 'visible opacity-100'}  
-              `}
-            >
-              {isEn ? '+ ADD PRODUCT' : '+ اضف منتج'}
-            </span> 
-          </button>
-          <LineMdChevronSmallRight 
-            role="button"
-            className={`
-              border border-solid border-body border-px 
-              text-body rounded-full rotate-180
-              hover:opacity-70
-              transition-all duration-200 ease-in-out
-              ${isEn ? 'order-1' : 'order-2'}
-            `}
-            data-type="left_arrow_button_is_clicked"
-            onClick={handleClick}
-          />
-          <LineMdChevronSmallRight 
-            role="button"
-            className={`
-              border border-solid border-body border-px 
-              text-body rounded-full
-              hover:opacity-70
-              transition-all duration-200 ease-in-out
-              ${isEn ? 'order-2' : 'order-1'}
-            `}
-            data-type="right_arrow_button_is_clicked"
-            onClick={handleClick}
-          />
-        </div>
-      </div>
       <table
         className="
           min-w-full overflow-hidden 
@@ -322,7 +269,7 @@ export default function Table({ products, isLoading = false, isError = false }: 
               {/* <td className="px-6 py-4 text-heading">{itm.name[isEn ? 'en' : 'ar']}</td> */}
               <td 
                 className={`
-                  px-6 py-4 text-heading font-normal
+                  h-[250px] px-6 py-4 text-heading font-normal
                 `}
               >
                 <div
