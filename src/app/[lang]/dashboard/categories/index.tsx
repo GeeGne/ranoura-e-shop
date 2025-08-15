@@ -54,6 +54,7 @@ export default function Categories ({className, props}: Props) {
         relative flex flex-col gap-2
         bg-primary overflow-hidden whitespace-nowrap
         transition-all duration-300 ease-in-out
+        z-[100]
         ${toggle ? isEn ? 'w-[200px]' : 'w-[250px]' : 'w-12 hover:w-16'}
       `}
       { ...props }
