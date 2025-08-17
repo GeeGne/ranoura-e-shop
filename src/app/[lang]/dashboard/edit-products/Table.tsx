@@ -4,57 +4,30 @@ import Link from 'next/link';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 // COMPONENTS
-import ColorPallete from '@/components/ColorPallete';
 import LoadingTable from '@/components/LoadingTable';
 import ErrorLayout from '@/components/ErrorLayout';
-import LineMdLink from '@/components/svgs/LineMdLink';
-import TablerCopy from '@/components/svgs/TablerCopy';
-import MaterialSymbolsCheckRounded from '@/components/svgs/MaterialSymbolsCheckRounded';
-import SolarGalleryBold from '@/components/svgs/SolarGalleryBold';
-import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingResize';
-import SolarGalleryCheckBold from '@/components/svgs/SolarGalleryCheckBold';
-import LineMdCloseCircleFilled from '@/components/svgs/LineMdCloseCircleFilled';
 import LineMdEdit from '@/components/svgs/LineMdEdit';
 import LineMdTrash from '@/components/svgs/LineMdTrash';
-import LineMdChevronSmallRight from '@/components/svgs/LineMdChevronSmallRight';
 import LineMdImageFilled from '@/components/svgs/LineMdImageFilled';
 import MdiColor from '@/components/svgs/MdiColor';
 
 // JSON
-import urlsTable from '@/json/cmsTables/urlsTable.json';
-import themePallets from '@/json/themePallets.json';
-import messages from '@/json/messages.json';
 import colorsArray from '@/json/colors.json';
 
 // STORES
 import { 
-  useLanguageStore, useAlertMessageStore, 
-  useEditProductWindowStore, useActivityWindowStore, 
-  useLayoutRefStore
+  useLanguageStore, useLayoutRefStore, useActionConfirmWindowStore, useAlertMessageStore
 } from '@/stores/index';
 
 // API
-import getThemeVars from '@/lib/api/themes/get';
-import updateThemeVars from '@/lib/api/themes/put';
-import addProduct from '@/lib/api/products/post';
+import deleteProduct from '@/lib/api/products/delete';
 
 // UTILS
-import updateThemeVariables from '@/utils/updateThemeVariables';
 import getColor from '@/utils/getColor';
-import defaultProductData from '@/utils/defaultProductData';
-
-// LIB
-import getMessage from '@/lib/messages/index';
-
-import {
-  useReactTable,
-  getCoreRowModel,
-  ColumnDef,
-  flexRender,
-} from '@tanstack/react-table';
 
 type Props = {
   scroll?: string;
+  scrollTrigger?: number;
   products?: any[];
   isLoading?: boolean;
   isError?: boolean;
@@ -62,7 +35,7 @@ type Props = {
 
 const blankImg = "/assets/img/empty(2).webp";
 
-export default function Table({ scroll, products, isLoading = false, isError = false }: Props) {
+export default function Table({ scroll, scrollTrigger, products, isLoading = false, isError = false }: Props) {
 
   const queryClient = useQueryClient();
   const lang = useLanguageStore(state => state.lang);
@@ -70,23 +43,21 @@ export default function Table({ scroll, products, isLoading = false, isError = f
 
   const layoutRef = useLayoutRefStore(state => state.layoutRef);
 
+  const action = useActionConfirmWindowStore(state => state.action);
+  const setAction = useActionConfirmWindowStore(state => state.setAction);
+  const setActionWindowToggle = useActionConfirmWindowStore(state => state.setToggle);
+  const setActionWindowIsLoading = useActionConfirmWindowStore(state => state.setIsLoading);
+  const setTitle = useActionConfirmWindowStore(state => state.setTitle);
+  const setDescription = useActionConfirmWindowStore(state => state.setDescription);
+  const setBtnTitle = useActionConfirmWindowStore(state => state.setBtnTitle);
+
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
 
-  const setEditProductWindowToggle = useEditProductWindowStore(state => state.setToggle);
-  const setEditProductWindowTrigger = useEditProductWindowStore(state => state.setTrigger);
-  const setEditProductWindowProductData = useEditProductWindowStore(state => state.setProductData);
-
-  const activityWindowToggle = useActivityWindowStore(state => state.toggle);
-  const setActivityWindowToggle = useActivityWindowStore(state => state.setToggle);
-  const activityWindowMessage = useActivityWindowStore(state => state.message);
-  const setActivityWindowMessage = useActivityWindowStore(state => state.setMessage);
-
   const mainRef = useRef<HTMLDivElement>(null);
   const imgUlRefs = useRef<(HTMLUListElement | null)[]>([]);
 
-  const getProduct = (id: string) => products?.find(product => product.id === id);
   const doesProductHaveImg = (product: Record<string, string>) => product.images.length !== 0;
 
   const getStateColor = (state: string) => {
@@ -104,8 +75,14 @@ export default function Table({ scroll, products, isLoading = false, isError = f
   }
 
   useEffect(() => {
+    const { name, productId, isConfirmed } = action;
+    if (name !== "remove product" || !isConfirmed) return;
+    if (productId) useDeleteProductMuation.mutate(productId);
+  }, [action])
+
+  useEffect(() => {
     const setImgLiElWidth = () => {
-      imgUlRefs.current.forEach((el: any) => {{
+      imgUlRefs?.current.filter(el => el).forEach((el: any) => {{
         const fullWidth = el.scrollWidth;
         el.style.width = `${fullWidth}px`;
         console.log('fullWidth for UL: ', fullWidth);
@@ -116,7 +93,6 @@ export default function Table({ scroll, products, isLoading = false, isError = f
   }, [products]);
 
   useEffect(() => {
-    console.log('scroll:', scroll);
     const fullWidth: number = mainRef.current?.scrollWidth || 0;
     const fullHeight: number = layoutRef?.scrollHeight || 0;
 
@@ -151,44 +127,44 @@ export default function Table({ scroll, products, isLoading = false, isError = f
       default:
         console.error("Unknown scroll type: ", scroll);
     }
-  }, [scroll]);
-
-  const addProductMutation = useMutation({
-    mutationFn: addProduct,
-    onSettled: () => {
-      setActivityWindowToggle(false);
-    },
-    onMutate: () => {
-      setActivityWindowToggle(true);
-      setActivityWindowMessage(isEn ? 'Creating new Product...' : 'جاري انشاء منتج جديد...')
-    },
-    onSuccess: (data: any) => {
-      const { data: productData } = data;
-      queryClient.invalidateQueries({ queryKey: ['products']});
-      setAlertToggle(Date.now());
-      setAlertType("success");
-      setAlertMessage(data?.message[isEn ? 'en' : 'ar']);
-      
-      setEditProductWindowToggle(true);
-      setEditProductWindowTrigger(Date.now());
-      setEditProductWindowProductData(productData);
-    },
-    onError: (error: any) => {
-      setAlertToggle(Date.now());
-      setAlertType("error");
-      setAlertMessage(isEn ? "Couldn't create new product, please try again." : "فشل في محاوله انشاء مجتمع جديد, الرجاء محاوله مره اخرى.")
-    }
-  });
-
+  }, [ scroll, scrollTrigger ]);
+  console.log('scrollTrigger: ', scrollTrigger);
   function isErrorWithCode(error: unknown): error is { code: string } {
     return typeof error === 'object' && error !== null && 'code' in error;
   }
 
+  const useDeleteProductMuation = useMutation({
+    mutationFn: deleteProduct,
+    onSettled: () => {
+      setActionWindowIsLoading(false);
+    },
+    onMutate: () => {
+      setActionWindowIsLoading(true);
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['products'] });
+      setActionWindowToggle(false);
+      setAlertToggle(Date.now());
+      setAlertType("success");
+      setAlertMessage(data.message[lang]);
+    },
+    onError: () => {
+      setAlertToggle(Date.now());
+      setAlertType("error");
+      setAlertMessage(isEn ? 'Error while deleting the product, please try again later.' : 'حدث خطأ لحذف المنتج, الرجاء المحاوله مره اخرى.');
+    }
+  })
+
   const handleClick = async (e: React.MouseEvent<HTMLElement | SVGElement>) => {
-    const { type, productId } = e.currentTarget.dataset;
+    const { type, productId, productName } = e.currentTarget.dataset;
 
     switch (type) {
-      case '':
+      case 'delete_product_button_is_clicked':
+        setActionWindowToggle(true);
+        if (productId) setAction({ name: "remove product", productId, isConfirmed: false });
+        setTitle({ en: `Delete Product?`, ar: "حذف المنتج؟" });
+        setDescription({ en: `Are you sure you want to delete "${productName}"? This action cannot be undone.`, ar: "تأكيد مطلوب" });
+        setBtnTitle({ en: `Confirm (Delete)`, ar: "تأكيد (حذف)" });
         break;
       default:
         console.error('Unknown type: ', type);
@@ -525,6 +501,7 @@ export default function Table({ scroll, products, isLoading = false, isError = f
                       bg-background-light
                     `}
                     data-product-id={itm.id}
+                    data-product-name={itm.name[lang]}
                     data-type="delete_product_button_is_clicked"
                     onClick={handleClick}
                   >

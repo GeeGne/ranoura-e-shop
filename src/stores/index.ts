@@ -381,6 +381,38 @@ const useActivityWindowStore = create<ActivityProps>()(
   })
 )
 
+type ActionConfirmWindowProps = {
+  toggle: boolean;
+  setToggle: (value: boolean) => void;
+  isLoading: boolean;
+  setIsLoading: (value: boolean) => void;
+  title: Record<string, string>;
+  setTitle: (value: Record<string, string>) => void;
+  description: Record<string, string>;
+  setDescription: (value: Record<string, string>) => void;
+  action: Record<string, string | boolean>;
+  setAction: (value: Record<string, string | boolean>) => void;
+  btnTitle: Record<string, string | boolean>;
+  setBtnTitle: (value: Record<string, string | boolean>) => void;
+}
+
+const useActionConfirmWindowStore = create<ActionConfirmWindowProps>()(
+  (set) => ({
+    toggle: false,
+    setToggle: (toggle) => set({ toggle }),
+    isLoading: false,
+    setIsLoading: (isLoading) => set({ isLoading }),
+    title: {en: "This is a title", ar: "هذا عنوان"},
+    setTitle: (title) => set({ title }),
+    description: {en: "This is a description", ar: "هذه رساله"},
+    setDescription: (description) => set({ description }),
+    btnTitle: {en: "confirm", ar: "تأكيد"},
+    setBtnTitle: (btnTitle) => set({ btnTitle }),
+    action: { name: "some name", isConfirmed: false },
+    setAction: (action) => set({ action })
+  })
+)
+
 export { 
   useCartStore, useNavbarStore, 
   useTabNameStore, useFilterWindowStore,
@@ -390,5 +422,5 @@ export {
   useLanguageStore, useEditProductWindowStore, 
   useAddProductImgWindowStore, useSelectImgColorWindowStore, 
   useStorageStore, useProductDataStore,
-  useActivityWindowStore
+  useActivityWindowStore, useActionConfirmWindowStore
 };

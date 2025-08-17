@@ -58,7 +58,7 @@ export async function GET(
 // @access private(owner, admin)
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string}}
+  { params }: { params: { id: string} }
 ) {
   try {
     const productId = (await params).id;
@@ -98,17 +98,35 @@ export async function PUT(
   }
 }
 
+// @desc update specific product
+// @route /api/v1/products/:id
+// @access private(owner, admin)
 export async function DELETE (
+  req: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
+    const productId = (await params).id;
+    const deleteProduct = await prisma.products.delete({
+      where: {
+        id: productId
+      }
+    });
 
+    const message = {
+      en: 'Product has been deleted successfully!',
+      ar: 'تم حذف المنتج بنجاح!'
+    }
+
+    return NextResponse.json({
+      message,
+    }, { status: 200 })
   } catch (err) {
     const error = err as Error;
     console.error('Error while deleting product: ', error.message);
     return nextError(
       'FAIL',
-      'Error message',
+      'Error Deleting the choosen Product',
       404
     )
   }

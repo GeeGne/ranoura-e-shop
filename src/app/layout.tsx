@@ -15,11 +15,12 @@ import FixedLayouts from '@/components/fixedLayouts/Index';
 import LoadingScreen from '@/components/fixedLayouts/LoadingScreen';
 import Cart from '@/components/fixedLayouts/Cart';
 import Navbar from '@/components/fixedLayouts/navbar/Index';
-import FilterWindow from '@/components/fixedLayouts/FilterWindow';
-import ActivityWindow from '@/components/fixedLayouts/ActivityWindow';
 import SelectLang from '@/components/fixedLayouts/SelectLang';
 import AlertMessage from '@/components/fixedLayouts/AlertMessage';
 import AllProductImages from '@/components/fixedLayouts/AllProductImages';
+import FilterWindow from '@/components/fixedLayouts/FilterWindow';
+import ActivityWindow from '@/components/fixedLayouts/ActivityWindow';
+import ActionConfirmWindow from '@/components/fixedLayouts/ActionConfirmWindow';
 import EditProductWindow from '@/components/fixedLayouts/EditProductWindow';
 import AddProductImgWindow from '@/components/fixedLayouts/AddProductImgWindow';
 import SelectImgColorWindow from '@/components/fixedLayouts/SelectImgColorWindow';
@@ -95,10 +96,11 @@ export default function RootLayout({
             <Cart />
             <Navbar />
             <SelectLang />
-            <FilterWindow />
-            <ActivityWindow />
             <AlertMessage />
             <AllProductImages />
+            <FilterWindow />
+            <ActivityWindow />
+            <ActionConfirmWindow />
             <EditProductWindow />
             <AddProductImgWindow />
             <SelectImgColorWindow />

@@ -22,6 +22,10 @@ export default function page () {
 
   const [ scrollTable, setScrollTable ] = useState<string>("none")
   const handleScrollTableData = (data: string) => setScrollTable(data);
+
+  const [ scrollTrigger, setScrollTrigger ] = useState<number>(Date.now())
+  const handleScrollTableTrigger = (data: number) => setScrollTrigger(data);
+
   useEffect(() => {
     setTabName('edit-products');
   }, []);
@@ -38,9 +42,13 @@ export default function page () {
 
   return (
     <div className="relative flex flex-col p-4">
-      <NavTile onScrollTableData={handleScrollTableData} />
+      <NavTile 
+        onScrollTableData={handleScrollTableData} 
+        onScrollTableTrigger={handleScrollTableTrigger} 
+      />
       <Table
         scroll={scrollTable}
+        scrollTrigger={scrollTrigger}
         products={products?.data}
         isLoading={isLoading}
         isError={isError}

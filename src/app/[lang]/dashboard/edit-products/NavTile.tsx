@@ -21,7 +21,7 @@ import addProduct from '@/lib/api/products/post';
 // UTILS
 import defaultProductData from '@/utils/defaultProductData';
 
-export default function NavTile ({ onScrollTableData }: any) {
+export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: any) {
   
   const queryClient = useQueryClient();
   const isEn = true;
@@ -40,7 +40,6 @@ export default function NavTile ({ onScrollTableData }: any) {
   const setEditProductWindowToggle = useEditProductWindowStore(state => state.setToggle);
   const setEditProductWindowTrigger = useEditProductWindowStore(state => state.setTrigger);
   const setEditProductWindowProductData = useEditProductWindowStore(state => state.setProductData);
-
 
   useEffect(() => {
     if (onLayoutScroll) {
@@ -83,15 +82,19 @@ export default function NavTile ({ onScrollTableData }: any) {
     switch (type) {
       case 'right_arrow_button_is_clicked':
         onScrollTableData(scrollDirection);
+        onScrollTableTrigger(Date.now());
         break;
       case 'left_arrow_button_is_clicked':
         onScrollTableData(scrollDirection);
+        onScrollTableTrigger(Date.now());
         break;
       case 'up_arrow_button_is_clicked':
         onScrollTableData(scrollDirection);
+        onScrollTableTrigger(Date.now());
         break;
       case 'down_arrow_button_is_clicked':
         onScrollTableData(scrollDirection);
+        onScrollTableTrigger(Date.now());
         break;
       case 'add_product_button_is_clicked':
         // console.log('defaultProductData', defaultProductData());

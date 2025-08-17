@@ -10,7 +10,7 @@ import MdiColor from '@/components/svgs/MdiColor';
 import LineMdConfirm from '@/components/svgs/LineMdConfirm';
 
 // STORES
-import { useTabNameStore, useLanguageStore, useSelectImgColorWindowStore } from '@/stores/index';
+import { useLanguageStore, useSelectImgColorWindowStore } from '@/stores/index';
 
 // JSON
 import colorsArray from '@/json/colors.json';
