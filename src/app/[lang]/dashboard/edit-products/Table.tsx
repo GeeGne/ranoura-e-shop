@@ -16,7 +16,9 @@ import colorsArray from '@/json/colors.json';
 
 // STORES
 import { 
-  useLanguageStore, useLayoutRefStore, useActionConfirmWindowStore, useAlertMessageStore
+  useLanguageStore, useLayoutRefStore, 
+  useActionConfirmWindowStore, useAlertMessageStore,
+  useEditProductWindowStore
 } from '@/stores/index';
 
 // API
@@ -50,6 +52,11 @@ export default function Table({ scroll, scrollTrigger, products, isLoading = fal
   const setTitle = useActionConfirmWindowStore(state => state.setTitle);
   const setDescription = useActionConfirmWindowStore(state => state.setDescription);
   const setBtnTitle = useActionConfirmWindowStore(state => state.setBtnTitle);
+  
+
+  const setEditProductWindowToggle = useEditProductWindowStore(state => state.setToggle);
+  const setEditProductWindowTrigger = useEditProductWindowStore(state => state.setTrigger);
+  const setEditProductWindowProductData = useEditProductWindowStore(state => state.setProductData);
 
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
@@ -58,6 +65,7 @@ export default function Table({ scroll, scrollTrigger, products, isLoading = fal
   const mainRef = useRef<HTMLDivElement>(null);
   const imgUlRefs = useRef<(HTMLUListElement | null)[]>([]);
 
+  const getProduct = (id: string) => products?.find(product => product.id === id);
   const doesProductHaveImg = (product: Record<string, string>) => product.images.length !== 0;
 
   const getStateColor = (state: string) => {
@@ -165,6 +173,12 @@ export default function Table({ scroll, scrollTrigger, products, isLoading = fal
         setTitle({ en: `Delete Product?`, ar: "حذف المنتج؟" });
         setDescription({ en: `Are you sure you want to delete "${productName}"? This action cannot be undone.`, ar: "تأكيد مطلوب" });
         setBtnTitle({ en: `Confirm (Delete)`, ar: "تأكيد (حذف)" });
+        break;
+      case 'edit_product_button_is_clicked':
+        setEditProductWindowToggle(true);
+        if (productId) 
+          setEditProductWindowProductData(getProduct(productId));
+          setEditProductWindowTrigger(Date.now());
         break;
       default:
         console.error('Unknown type: ', type);
