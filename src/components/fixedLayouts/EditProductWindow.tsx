@@ -51,10 +51,7 @@ export default function EditProductWindow () {
   const productData = useEditProductWindowStore(state => state.productData);
   const setProductData = useEditProductWindowStore(state => state.setProductData);
 
-  const addToggle = useAddProductImgWindowStore(state => state.toggle);
   const setAddToggle = useAddProductImgWindowStore(state => state.setToggle);
-  const setFilePath = useAddProductImgWindowStore(state => state.setFilePath);
-  const setBucketName = useAddProductImgWindowStore(state => state.setBucketName);
   
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
@@ -396,8 +393,8 @@ export default function EditProductWindow () {
 
   // DEBUG & UI
   // console.log('productData: ', productData);
-  console.log('updatedData: ', updatedData);
-  console.log('removedImagesFilePathArray: ', removedImagesFilePathArray);
+  // console.log('updatedData: ', updatedData);
+  // console.log('removedImagesFilePathArray: ', removedImagesFilePathArray);
   // console.log('subCategory: ', subCategories.filter(subCategory => subCategory.parent_category_slug !== 'clothing').map((subCategory, index) => ({ ...subCategory, index })))
   
   if (!productData) return;

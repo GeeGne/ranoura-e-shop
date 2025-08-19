@@ -7,6 +7,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model GeneralSettings {
+  id Int @id @default(autoincrement())
+}
+
 model User {
   id              String            @id @default(uuid())
   email           String         @unique
@@ -27,6 +31,7 @@ model User {
   role            UserRole?
   RefreshToken    RefreshToken[]
 }
+
 model UserAddress {
   id              Int       @id @default(autoincrement())
   user_id         String       @unique
