@@ -9,6 +9,7 @@ datasource db {
 
 model GeneralSettings {
   id Int @id @default(autoincrement())
+  film_tape Boolean @default(true)
 }
 
 model User {
