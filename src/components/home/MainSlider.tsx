@@ -1,15 +1,31 @@
+// HOOKS
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+
 // COMPONENTS
 import FilmTape from "@/components/FilmTape";
-import DisplayImg from "@/components/DisplayImg";
+
+// API
+import getGeneralSettingsData from '@/lib/api/general-settings/get';
 
 export default function MainSlider ({ ...props }) {
 
+  const { data: generalSettingsData, isLoading, isError } = useQuery({
+    queryKey: ['general-settings'],
+    queryFn: getGeneralSettingsData
+  });
+
+  const  isFilmTapeEnabled = () => (isError || isLoading) ? false : generalSettingsData?.data?.film_tape;
+
+  // DEBUG & UI
+  console.log('generalSettingsData: ', generalSettingsData);
+
   return (
     <div
-      className="
-        relative flex w-full 
+      className={`
+        flex w-full 
         bg-primary
-      "
+        ${isFilmTapeEnabled() ? 'relative' : 'hidden'}
+      `}
       { ...props }
       style={{direction: 'ltr', fontFamily: 'Sofia Sans Condensed, sans-serif'}}
     >
