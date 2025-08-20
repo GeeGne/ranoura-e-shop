@@ -6,39 +6,22 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 // COMPONENTS
 import LoadingTable from '@/components/LoadingTable'
 import ErrorLayout from '@/components/ErrorLayout';
-import LineMdLink from '@/components/svgs/LineMdLink';
-import TablerCopy from '@/components/svgs/TablerCopy';
-import MaterialSymbolsCheckRounded from '@/components/svgs/MaterialSymbolsCheckRounded';
 import SolarGalleryBold from '@/components/svgs/SolarGalleryBold';
 import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingResize';
 import SolarGalleryCheckBold from '@/components/svgs/SolarGalleryCheckBold';
-import LineMdCloseCircleFilled from '@/components/svgs/LineMdCloseCircleFilled';
 
 // JSON
-import urlsTable from '@/json/cmsTables/urlsTable.json';
 import themePallets from '@/json/themePallets.json';
-import messages from '@/json/messages.json';
 
 // STORES
-import { useTabNameStore, useLanguageStore, useAlertMessageStore } from '@/stores/index';
+import { useLanguageStore, useAlertMessageStore } from '@/stores/index';
 
 // API
 import getThemeVars from '@/lib/api/themes/get';
 import updateThemeVars from '@/lib/api/themes/put';
 
-// UTILS
-import updateThemeVariables from '@/utils/updateThemeVariables';
-
 // LIB
 import getMessage from '@/lib/messages/index';
-
-import {
-  useReactTable,
-  getCoreRowModel,
-  ColumnDef,
-  flexRender,
-} from '@tanstack/react-table';
-
 
 export default function Table() {
 
@@ -121,7 +104,6 @@ export default function Table() {
         console.error('Unknown type: ', type);
     }
   }
-
 
   // DEBUG & UI
   // console.log('themes data: ', data);
