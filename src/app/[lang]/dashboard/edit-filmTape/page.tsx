@@ -67,6 +67,7 @@ export default function page () {
       setAlertMessage(data?.message[isEn ? 'en' : 'ar']);
     },
     onError: () => {
+      queryClient.invalidateQueries({ queryKey: ['general-settings']});
       setAlertToggle(Date.now());
       setAlertType("error");
       setAlertMessage(isEn ? "Couldn't save the new changes, please try again." : "فشل في محاوله حفظ التغييرات الجديده, الرجاء محاوله مره اخرى.")

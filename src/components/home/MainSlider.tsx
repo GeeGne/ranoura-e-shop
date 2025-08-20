@@ -14,17 +14,17 @@ export default function MainSlider ({ ...props }) {
     queryFn: getGeneralSettingsData
   });
 
-  const  isFilmTapeEnabled = () => (isError || isLoading) ? false : generalSettingsData?.data?.film_tape;
+  const  isFilmTapeEnabled = !isError && !isLoading && generalSettingsData?.data?.film_tape;
 
   // DEBUG & UI
-  console.log('generalSettingsData: ', generalSettingsData);
+  // console.log('generalSettingsData: ', generalSettingsData);
 
   return (
     <div
       className={`
         flex w-full 
         bg-primary
-        ${isFilmTapeEnabled() ? 'relative' : 'hidden'}
+        ${isFilmTapeEnabled ? 'relative' : 'hidden'}
       `}
       { ...props }
       style={{direction: 'ltr', fontFamily: 'Sofia Sans Condensed, sans-serif'}}
