@@ -30,7 +30,7 @@ export default function FilmTape ({ className = '', ...props }: Props) {
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
           <Image
-            className="bg-red-500 w-full h-full object-cover"
+            className="bg-shade w-full h-full object-cover"
             src={img1}
             alt="test"
             loading="lazy"
@@ -41,7 +41,7 @@ export default function FilmTape ({ className = '', ...props }: Props) {
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
           <Image
-            className="bg-red-500 w-full h-full object-cover"
+            className="bg-shade w-full h-full object-cover"
             src={img2}
             alt="test"
             loading="lazy"
@@ -52,7 +52,7 @@ export default function FilmTape ({ className = '', ...props }: Props) {
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
           <Image
-            className="bg-red-500 w-full h-full object-cover"
+            className="bg-shade w-full h-full object-cover"
             src={img3}
             alt="test"
             loading="lazy"
@@ -63,7 +63,7 @@ export default function FilmTape ({ className = '', ...props }: Props) {
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
           <Image
-            className="bg-red-500 w-full h-full object-cover"
+            className="bg-shade w-full h-full object-cover"
             src={img1}
             alt="test"
             loading="lazy"
@@ -74,7 +74,7 @@ export default function FilmTape ({ className = '', ...props }: Props) {
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
           <Image
-            className="bg-red-500 w-full h-full object-cover"
+            className="bg-shade w-full h-full object-cover"
             src={img2}
             alt="test"
             loading="lazy"
@@ -85,7 +85,7 @@ export default function FilmTape ({ className = '', ...props }: Props) {
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
           <Image
-            className="bg-red-500 w-full h-full object-cover"
+            className="bg-shade w-full h-full object-cover"
             src={img3}
             alt="test"
             loading="lazy"
@@ -96,7 +96,7 @@ export default function FilmTape ({ className = '', ...props }: Props) {
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
           <Image
-            className="bg-red-500 w-full h-full object-cover"
+            className="bg-shade w-full h-full object-cover"
             src={img1}
             alt="test"
             loading="lazy"
@@ -107,7 +107,7 @@ export default function FilmTape ({ className = '', ...props }: Props) {
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
           <Image
-            className="bg-red-500 w-full h-full object-cover"
+            className="bg-shade w-full h-full object-cover"
             src={img2}
             alt="test"
             loading="lazy"
@@ -118,7 +118,7 @@ export default function FilmTape ({ className = '', ...props }: Props) {
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
           <Image
-            className="bg-red-500 w-full h-full object-cover"
+            className="bg-shade w-full h-full object-cover"
             src={img2}
             alt="test"
             loading="lazy"
@@ -129,7 +129,7 @@ export default function FilmTape ({ className = '', ...props }: Props) {
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
           <Image
-            className="bg-red-500 w-full h-full object-cover"
+            className="bg-shade w-full h-full object-cover"
             src={img1}
             alt="test"
             loading="lazy"
@@ -140,7 +140,7 @@ export default function FilmTape ({ className = '', ...props }: Props) {
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
           <Image
-            className="bg-red-500 w-full h-full object-cover"
+            className="bg-shade w-full h-full object-cover"
             src={img3}
             alt="test"
             loading="lazy"
@@ -151,7 +151,7 @@ export default function FilmTape ({ className = '', ...props }: Props) {
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
           <Image
-            className="bg-red-500 w-full h-full object-cover"
+            className="bg-shade w-full h-full object-cover"
             src={img3}
             alt="test"
             loading="lazy"
@@ -162,7 +162,7 @@ export default function FilmTape ({ className = '', ...props }: Props) {
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
           <Image
-            className="bg-red-500 w-full h-full object-cover"
+            className="bg-shade w-full h-full object-cover"
             src={img1}
             alt="test"
             loading="lazy"
@@ -173,7 +173,7 @@ export default function FilmTape ({ className = '', ...props }: Props) {
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
           <Image
-            className="bg-red-500 w-full h-full object-cover"
+            className="bg-shade w-full h-full object-cover"
             src={img2}
             alt="test"
             loading="lazy"
@@ -184,7 +184,7 @@ export default function FilmTape ({ className = '', ...props }: Props) {
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
           <Image
-            className="bg-red-500 w-full h-full object-cover"
+            className="bg-shade w-full h-full object-cover"
             src={img3}
             alt="test"
             loading="lazy"
@@ -195,7 +195,7 @@ export default function FilmTape ({ className = '', ...props }: Props) {
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
           <Image
-            className="bg-red-500 w-full h-full object-cover"
+            className="bg-shade w-full h-full object-cover"
             src={img1}
             alt="test"
             loading="lazy"
@@ -206,7 +206,7 @@ export default function FilmTape ({ className = '', ...props }: Props) {
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
           <Image
-            className="bg-red-500 w-full h-full object-cover"
+            className="bg-shade w-full h-full object-cover"
             src={img2}
             alt="test"
             loading="lazy"
@@ -217,7 +217,7 @@ export default function FilmTape ({ className = '', ...props }: Props) {
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
           <Image
-            className="bg-red-500 w-full h-full object-cover"
+            className="bg-shade w-full h-full object-cover"
             src={img3}
             alt="test"
             loading="lazy"
@@ -228,7 +228,7 @@ export default function FilmTape ({ className = '', ...props }: Props) {
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
           <Image
-            className="bg-red-500 w-full h-full object-cover"
+            className="bg-shade w-full h-full object-cover"
             src={img1}
             alt="test"
             loading="lazy"
@@ -239,7 +239,7 @@ export default function FilmTape ({ className = '', ...props }: Props) {
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
           <Image
-            className="bg-red-500 w-full h-full object-cover"
+            className="bg-shade w-full h-full object-cover"
             src={img2}
             alt="test"
             loading="lazy"
@@ -250,7 +250,7 @@ export default function FilmTape ({ className = '', ...props }: Props) {
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
           <Image
-            className="bg-red-500 w-full h-full object-cover"
+            className="bg-shade w-full h-full object-cover"
             src={img2}
             alt="test"
             loading="lazy"
@@ -261,7 +261,7 @@ export default function FilmTape ({ className = '', ...props }: Props) {
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
           <Image
-            className="bg-red-500 w-full h-full object-cover"
+            className="bg-shade w-full h-full object-cover"
             src={img1}
             alt="test"
             loading="lazy"
@@ -272,7 +272,7 @@ export default function FilmTape ({ className = '', ...props }: Props) {
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
           <Image
-            className="bg-red-500 w-full h-full object-cover"
+            className="bg-shade w-full h-full object-cover"
             src={img3}
             alt="test"
             loading="lazy"
@@ -283,7 +283,7 @@ export default function FilmTape ({ className = '', ...props }: Props) {
           className="w-full shrink-0 aspect-[3/4] bg-[var(--background-color)] rounded-2xl overflow-hidden"
         >
           <Image
-            className="bg-red-500 w-full h-full object-cover"
+            className="bg-shade w-full h-full object-cover"
             src={img3}
             alt="test"
             loading="lazy"

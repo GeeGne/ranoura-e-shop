@@ -85,7 +85,7 @@ export default function Table({ scroll, scrollTrigger, products, isLoading = fal
   useEffect(() => {
     const { name, productId, isConfirmed } = action;
     if (name !== "remove product" || !isConfirmed) return;
-    if (productId) useDeleteProductMuation.mutate(productId);
+    if (productId) useDeleteProductMuation.mutate(productId.toString());
   }, [action])
 
   useEffect(() => {

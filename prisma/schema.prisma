@@ -82,6 +82,14 @@ model Products {
   @@index([type])
 }
 
+model Categories {
+  id Int @id @default(autoincrement())
+  name Json @default("{\"en\": \"Unknown Name\", \"ar\": \"مجهول الاسم\"}") 
+  slug String @unique
+  navbarImg String?
+  navbarLgImg String?
+}
+
 model RefreshToken {
   id        String   @id @default(uuid())
   token     String   @unique
