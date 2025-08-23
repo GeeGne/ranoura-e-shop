@@ -38,44 +38,44 @@ export async function GET (req: NextRequest) {
   }
 }
 
-// @desc Create new product
-// @route /api/v1/sub-categories
+// @desc Create Category
+// @route /api/v1/categories
 // @access private (admin, owner - only)
 export async function POST (req: NextRequest) {
   try {
-    const subCategoriesData = await req.json();
-    console.log('subCategoriesData: ', subCategoriesData);
-    if (!subCategoriesData) return nextError(
+    const categoriesData = await req.json();
+    console.log('categoriesData: ', categoriesData);
+    if (!categoriesData) return nextError(
       'REQUEST_FAILED',
-      'Error while getting subCategories request',
+      'Error while getting Categories request',
       401
     );
 
     const {
-      name, slug, type
-    } = subCategoriesData;
+      name, slug
+    } = categoriesData;
 
-    if (!name || !slug || type) nextError(
+    if (!name || !slug) nextError(
       'MISSING_FIELDS',
       'Please fill all the fields',
       404
     )
 
-    const data = await prisma.subCategories.create({
-      data: subCategoriesData
+    const data = await prisma.categories.create({
+      data: categoriesData
     })
 
     const message = {
-      en: "New Sub-Category has been created successfully!",
+      en: "New Category has been created successfully!",
       ar: "تم حفظ المتنج الجديد بنجاح!"
     };
 
     return NextResponse.json({ data, message }, { status: 201 });
   } catch (err) {
     const error = err as Error;
-    console.error('Error while creating the Sub-Category: ', error.message);
+    console.error('Error while creating the Category: ', error.message);
     return nextError(
-      'NEW_PRODUCT_FAIL',
+      'NEW_CATEGORY_FAIL',
       'Failed to create new subCategory',
       500
     )

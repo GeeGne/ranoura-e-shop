@@ -88,6 +88,7 @@ model Categories {
   slug String @unique
   navbarImg String?
   navbarLgImg String?
+  imgUrl String?
 }
 
 model SubCategories {
