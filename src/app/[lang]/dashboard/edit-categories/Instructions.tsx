@@ -37,7 +37,7 @@ export default function Instructions () {
               bg-body-light rounded-lg"
           >
             <span
-              className="text-body-invert font-bold text-[70px]"
+              className="text-heading-invert font-bold text-[70px]"
             >
               1
             </span>
@@ -77,10 +77,10 @@ export default function Instructions () {
                   <span className="font-bold">Purpose:</span> Large banner image.
                 </li>
                 <li>
-                  <span className="font-bold">Aspect Ratio:</span> 2:1 (Width must be exactly twice the height. For example: 1200px wide x 600px high).
+                  <span className="font-bold">Aspect Ratio: 2:1</span> (Width must be exactly twice the height. For example: 1200px wide x 600px high).
                 </li>
                 <li>
-                  <span className="font-bold">Recommended Format:</span> AVIF (For the best quality and fastest loading). PNG or high-quality JPG are also accepted.
+                  <span className="font-bold">Recommended Format: AVIF</span> (For the best quality and fastest loading). PNG or high-quality JPG are also accepted.
                 </li>
                 <li>
                   <span className="font-bold">Max File Size:</span> Aim for under 400 KB.
@@ -116,7 +116,7 @@ export default function Instructions () {
               bg-body-light rounded-lg"
           >
             <span
-              className="text-body-invert font-bold text-[70px]"
+              className="text-heading-invert font-bold text-[70px]"
             >
               2
             </span>
@@ -148,19 +148,19 @@ export default function Instructions () {
               <span
                 className="text-heading"
               >
-                This image will be displayed prominently at the top of the category page on desktop computers.
+                This image will be used in the navigation menu on mobile devices and as an icon in compact spaces.
               </span>  
               <ul
                 className="list-disc px-4"
               >
                 <li>
-                  <span className="font-bold">Purpose:</span> Large banner image.
+                  <span className="font-bold">Purpose:</span> Small icon or thumbnail.
                 </li>
                 <li>
-                  <span className="font-bold">Aspect Ratio:</span> 2:1 (Width must be exactly twice the height. For example: 1200px wide x 600px high).
+                  <span className="font-bold">Aspect Ratio: 1:1</span> (Image must be a perfect square. For example: 400px wide x 400px high).
                 </li>
                 <li>
-                  <span className="font-bold">Recommended Format:</span> AVIF (For the best quality and fastest loading). PNG or high-quality JPG are also accepted.
+                  <span className="font-bold">Recommended Format: AVIF</span> (For the best quality and fastest loading). PNG or high-quality JPG are also accepted.
                 </li>
                 <li>
                   <span className="font-bold">Max File Size:</span> Aim for under 400 KB.
@@ -171,10 +171,10 @@ export default function Instructions () {
                     className="list-disc px-4"
                   >
                     <li>
-                      Use a wide, landscape-oriented image that represents the entire category.
+                      Use a simple, recognizable symbol or a tightly cropped product photo from your category.
                     </li>
                     <li>
-                      Ensure any important details are centered, as the edges may be cropped on some screens.
+                      Avoid small text or complex details, as it will be displayed at a small size.
                     </li>
                   </ul>
                 </li>

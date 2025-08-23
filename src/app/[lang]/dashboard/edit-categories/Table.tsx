@@ -6,6 +6,8 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 // COMPONENTS
 import LoadingTable from '@/components/LoadingTable'
 import ErrorLayout from '@/components/ErrorLayout';
+import LineMdEdit from '@/components/svgs/LineMdEdit';
+import LineMdTrash from '@/components/svgs/LineMdTrash';
 import SolarGalleryBold from '@/components/svgs/SolarGalleryBold';
 import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingResize';
 import SolarGalleryCheckBold from '@/components/svgs/SolarGalleryCheckBold';
@@ -23,11 +25,16 @@ import updateThemeVars from '@/lib/api/themes/put';
 // LIB
 import getMessage from '@/lib/messages/index';
 
+// ASSETS
+const navBarImg = "/assets/img/background(5).webp";
+const navBarLgImg = "/assets/img/background(7).webp";
+
 export default function Table() {
 
   const queryClient = useQueryClient();
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
+  const subCategoriesArray = ['Hot Deals', 'Hot Sales'];
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
@@ -65,7 +72,7 @@ export default function Table() {
       <h3
         className="sticky left-0 text-lg text-heading"
       >
-        {isEn ? 'Schemes' : 'سكيمات'}
+        {isEn ? 'List' : 'القائمه'}
       </h3>
       <table
         className="
@@ -98,10 +105,10 @@ export default function Table() {
           >
             <td 
               className="
-                px-6 py-4 text-sm text-body
+                px-6 py-4 text-sm text-heading font-bold
               "
             >
-              test
+              What's New
             </td>
             <td 
               className={`
@@ -109,7 +116,77 @@ export default function Table() {
                 transition-all duration-300 ease-in-out
               `}
             >
-              test
+              <ul
+                className="flex flex-row gap-2"
+              >
+                {subCategoriesArray.map(val => 
+                  <li
+                    className="text-heading-invert bg-heading font-bold p-2 rounded-lg"
+                  >
+                    {val}
+                  </li>
+                )}
+              </ul>
+            </td>
+            <td 
+              className={`
+                px-6 py-4 text-sm text-body min-w-[300px] min-h-[250px]
+                transition-all duration-300 ease-in-out
+              `}
+            >
+              <img 
+                src={navBarImg}
+                className="w-[200px] aspect-[1/1] object-center object-cover rounded-lg"
+              />
+            </td>
+            <td 
+              className={`
+                px-6 py-4 text-sm text-body min-w-[500px] min-h-[250px]
+                transition-all duration-300 ease-in-out
+              `}
+            >
+              <img 
+                src={navBarLgImg}
+                className="w-[400px] aspect-[2/1] object-center object-cover rounded-lgg"
+              />
+            </td>
+            <td className="px-6">
+              <div className="flex gap-2">
+                <button 
+                  className={`
+                    relative bg-background-light rounded-md
+                    transition-all duration-500 ease-in-out
+                    bg-background-light
+                  `}
+                  data-type="delete_product_button_is_clicked"
+                  onClick={handleClick}
+                >
+                  <LineMdTrash 
+                    className={`
+                      w-7 h-7 p-1 rounded-md cursor-pointer 
+                      transition-all duration-200 ease-in-out text-heading
+                      }
+                    `}
+                  />    
+                </button>
+                <button 
+                  className={`
+                    relative bg-background-light rounded-md
+                    transition-all duration-500 ease-in-out
+                    bg-background-light
+                  `}
+                  data-type="edit_product_button_is_clicked"
+                  onClick={handleClick}
+                >
+                  <LineMdEdit 
+                    className={`
+                      w-7 h-7 p-1 rounded-md cursor-pointer 
+                      transition-all duration-200 ease-in-out text-heading
+                      }
+                    `}
+                  />    
+                </button>
+              </div>
             </td>
           </tr>
         </tbody>

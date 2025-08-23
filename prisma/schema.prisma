@@ -90,6 +90,14 @@ model Categories {
   navbarLgImg String?
 }
 
+model SubCategories {
+  id Int @id @default(autoincrement())
+  name Json @default("{\"en\": \"Unknown Name\", \"ar\": \"مجهول الاسم\"}")
+  slug  String @unique
+  type String
+  image String?
+}
+
 model RefreshToken {
   id        String   @id @default(uuid())
   token     String   @unique
