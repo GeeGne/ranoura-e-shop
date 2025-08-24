@@ -68,7 +68,7 @@ export default function Table() {
   )
   
   return (
-    <div className="flex flex-col gap-4 overflow-x-auto">
+    <div className="flex flex-col gap-4 overflow-x-auto py-4">
       <h3
         className="sticky left-0 text-lg text-heading"
       >
@@ -76,7 +76,7 @@ export default function Table() {
       </h3>
       <table
         className="
-          min-w-full overflow-hidden 
+          min-w-full overflow-hidden
           divide-y divide-underline bg-white rounded-lg whitespace-nowrap
         "
       >
@@ -93,6 +93,9 @@ export default function Table() {
             </th>
             <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
               {isEn ? 'HERO IMAGE' : 'الشعار الرئيسي'}
+            </th>
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'IMAGE LINK' : 'رابط الصوره'}
             </th>
             <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
               {isEn ? 'OPTIONS' : 'الخيارات'}
@@ -149,6 +152,44 @@ export default function Table() {
                 src={navBarLgImg}
                 className="w-[400px] aspect-[2/1] object-center object-cover rounded-lgg"
               />
+            </td>
+            <td className="px-6">
+              <div className="flex gap-2">
+                <button 
+                  className={`
+                    relative bg-background-light rounded-md
+                    transition-all duration-500 ease-in-out
+                    bg-background-light
+                  `}
+                  data-type="delete_product_button_is_clicked"
+                  onClick={handleClick}
+                >
+                  <LineMdTrash 
+                    className={`
+                      w-7 h-7 p-1 rounded-md cursor-pointer 
+                      transition-all duration-200 ease-in-out text-heading
+                      }
+                    `}
+                  />    
+                </button>
+                <button 
+                  className={`
+                    relative bg-background-light rounded-md
+                    transition-all duration-500 ease-in-out
+                    bg-background-light
+                  `}
+                  data-type="edit_product_button_is_clicked"
+                  onClick={handleClick}
+                >
+                  <LineMdEdit 
+                    className={`
+                      w-7 h-7 p-1 rounded-md cursor-pointer 
+                      transition-all duration-200 ease-in-out text-heading
+                      }
+                    `}
+                  />    
+                </button>
+              </div>
             </td>
             <td className="px-6">
               <div className="flex gap-2">

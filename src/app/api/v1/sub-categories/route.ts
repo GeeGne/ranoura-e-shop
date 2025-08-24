@@ -13,15 +13,18 @@ async function nextError (code: string, message: string, status = 404) {
   )
 };
 
-// @dscc get all products
-// @route /api/v1/products
+// @dscc get all Sub-Categories
+// @route /api/v1/sub-categories
 // @access public
 export async function GET (req: NextRequest) {
   try {
-    const data = await prisma.products.findMany();
+    const data = await prisma.subCategories.findMany();
     if (!data) throw new Error('unable to retrieve the data.');
 
-    const message = 'Success! Products has been fetched.';
+    const message = {
+      en: 'Success! Sub-Categores has been fetched.',
+      ar: 'تم الحصول على الاقسام الفرعيه بنجاح.'
+    };
 
     return NextResponse.json({
       data,
@@ -29,10 +32,10 @@ export async function GET (req: NextRequest) {
     }, { status: 200 });
   } catch (err) {
     const error = err as Error;
-    console.error('Error while getting all products: ', error.message);
+    console.error('Error while getting all sub-categories: ', error.message);
     return nextError(
-      'PRODUCTS_FETCH_FAIL',
-      'unable to fetch products',
+      'SUBCATEGORIES_FETCH_FAIL',
+      'unable to fetch sub-categories',
       404
     )
   }
