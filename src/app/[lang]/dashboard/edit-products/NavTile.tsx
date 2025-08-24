@@ -6,14 +6,16 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 // STORES
 import { 
-  useAlertMessageStore, useEditProductWindowStore, 
-  useActivityWindowStore, useLayoutRefStore
+  useLanguageStore, useAlertMessageStore, 
+  useEditProductWindowStore, useActivityWindowStore, 
+  useLayoutRefStore
 } from '@/stores/index';
 
 // COMPONENTS
 import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingResize';
 import LineMdChevronSmallRight from '@/components/svgs/LineMdChevronSmallRight';
 import LineMdChevronSmallDown from '@/components/svgs/LineMdChevronSmallDown';
+import LineMdPlus from '@/components/svgs/LineMdPlus';
 
 // API
 import addProduct from '@/lib/api/products/post';
@@ -24,7 +26,9 @@ import defaultProductData from '@/utils/defaultProductData';
 export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: any) {
   
   const queryClient = useQueryClient();
-  const isEn = true;
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
+
   const [ isLayoutScrolled, setIsLayoutScrolled ] = useState<boolean>(false);
 
   const onLayoutScroll = useLayoutRefStore(state => state.onLayoutScroll);
@@ -142,7 +146,8 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
       >
         <button
           className="
-            relative text-sm text-heading-invert font-bold 
+            relative flex items-center justify-center gap-2
+            text-sm text-heading-invert font-bold 
             bg-content p-2 rounded-lg hover:opacity-80
             transition-all duration-300 ease-in-out
           "
@@ -155,12 +160,13 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
               ${activityWindowToggle ? 'visible opacity-100' : 'invisible opacity-0'}  
             `}
           /> 
+          <LineMdPlus className="w-5 h-5"/>
           <span
             className={`
               ${activityWindowToggle ? 'invisible opacity-0' : 'visible opacity-100'}  
             `}
           >
-            {isEn ? '+ ADD PRODUCT' : '+ اضف منتج'}
+            {isEn ? 'ADD PRODUCT' : 'اضف منتج'}
           </span> 
         </button>
         <div

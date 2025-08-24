@@ -146,7 +146,7 @@ export default function Table() {
                     .map((result: Record<string, any>) => 
                     <li
                       className="
-                        text-heading-invert bg-heading text-sm 
+                        flex items-center justify-center text-heading-invert bg-heading text-sm 
                         font-bold px-2 py-1 rounded-lg
                       "
                     >
@@ -203,36 +203,26 @@ export default function Table() {
               <td className="px-6">
                 <div className="flex gap-2">
                   <button 
-                    className={`
-                      relative bg-background-light rounded-md
-                      transition-all duration-500 ease-in-out
-                      bg-background-light
-                    `}
                     data-type="delete_product_button_is_clicked"
                     onClick={handleClick}
                   >
                     <LineMdTrash 
                       className={`
-                        w-7 h-7 p-1 rounded-md cursor-pointer 
-                        transition-all duration-200 ease-in-out text-heading
-                        }
+                        w-7 h-7 p-1 text-heading rounded-md cursor-pointer
+                        bg-background-light hover:bg-background-deep-light active:opacity-60
+                        transition-all duration-200 ease-out
                       `}
                     />    
                   </button>
                   <button 
-                    className={`
-                      relative bg-background-light rounded-md
-                      transition-all duration-500 ease-in-out
-                      bg-background-light
-                    `}
                     data-type="edit_product_button_is_clicked"
                     onClick={handleClick}
                   >
                     <LineMdEdit 
                       className={`
-                        w-7 h-7 p-1 rounded-md cursor-pointer 
-                        transition-all duration-200 ease-in-out text-heading
-                        }
+                        w-7 h-7 p-1 text-heading rounded-md cursor-pointer
+                        bg-background-light hover:bg-background-deep-light active:opacity-60
+                        transition-all duration-200 ease-out
                       `}
                     />    
                   </button>

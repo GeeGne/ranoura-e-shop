@@ -509,40 +509,30 @@ export default function Table({ scroll, scrollTrigger, products, isLoading = fal
               <td className="px-6">
                 <div className="flex gap-2">
                   <button 
-                    className={`
-                      relative bg-background-light rounded-md
-                      transition-all duration-500 ease-in-out
-                      bg-background-light
-                    `}
                     data-product-id={itm.id}
                     data-product-name={itm.name[lang]}
                     data-type="delete_product_button_is_clicked"
                     onClick={handleClick}
                   >
                     <LineMdTrash 
-                      className={`
-                        w-7 h-7 p-1 rounded-md cursor-pointer 
-                        transition-all duration-200 ease-in-out text-heading
-                        }
-                      `}
+                      className="
+                        w-7 h-7 p-1 text-heading rounded-md cursor-pointer
+                        bg-background-light hover:bg-background-deep-light active:opacity-60
+                        transition-all duration-200 ease-out
+                      "
                     />    
                   </button>
                   <button 
-                    className={`
-                      relative bg-background-light rounded-md
-                      transition-all duration-500 ease-in-out
-                      bg-background-light
-                    `}
                     data-product-id={itm.id}
                     data-type="edit_product_button_is_clicked"
                     onClick={handleClick}
                   >
                     <LineMdEdit 
-                      className={`
-                        w-7 h-7 p-1 rounded-md cursor-pointer 
-                        transition-all duration-200 ease-in-out text-heading
-                        }
-                      `}
+                      className="
+                        w-7 h-7 p-1 text-heading rounded-md cursor-pointer
+                        bg-background-light hover:bg-background-deep-light active:opacity-60
+                        transition-all duration-200 ease-out
+                      "
                     />    
                   </button>
                 </div>

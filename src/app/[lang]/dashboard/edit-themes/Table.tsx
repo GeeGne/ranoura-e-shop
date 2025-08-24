@@ -261,8 +261,9 @@ export default function Table() {
                     />    
                     <SolarGalleryBold 
                       className={`
-                        w-7 h-7 p-1 rounded-md cursor-pointer 
-                        transition-all duration-200 ease-in-out text-heading
+                        w-7 h-7 p-1 text-heading rounded-md cursor-pointer
+                        bg-background-light hover:bg-background-deep-light active:opacity-60
+                        transition-all duration-200 ease-out
                         ${isSameTheme(itm.scheme_id) || isThemeMutating.toggle && isThemeMutating.index === i
                           ? 'invisible opacity-0'
                           : 'visible opacity-100' 
