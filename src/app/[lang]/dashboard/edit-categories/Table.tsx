@@ -8,19 +8,17 @@ import LoadingTable from '@/components/LoadingTable'
 import ErrorLayout from '@/components/ErrorLayout';
 import LineMdEdit from '@/components/svgs/LineMdEdit';
 import LineMdTrash from '@/components/svgs/LineMdTrash';
+import LineMdPlus from '@/components/svgs/LineMdPlus';
 import SolarGalleryBold from '@/components/svgs/SolarGalleryBold';
 import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingResize';
 import SolarGalleryCheckBold from '@/components/svgs/SolarGalleryCheckBold';
-
-// JSON
-import themePallets from '@/json/themePallets.json';
 
 // STORES
 import { useLanguageStore, useAlertMessageStore } from '@/stores/index';
 
 // API
-import getThemeVars from '@/lib/api/themes/get';
-import updateThemeVars from '@/lib/api/themes/put';
+import getCategories from '@/lib/api/categories/get';
+import getSubCategories from '@/lib/api/sub-categories/get';
 
 // LIB
 import getMessage from '@/lib/messages/index';
@@ -39,6 +37,24 @@ export default function Table() {
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
   
+  const { 
+    data: categoriesData, 
+    isLoading: isCategoriesDataLoading, 
+    isError: isCategoriesDataError 
+  } = useQuery({
+    queryKey: ['categories'],
+    queryFn: getCategories
+  })
+  
+  const { 
+    data: subCategoriesData, 
+    isLoading: isSubCategoriesDataLoading, 
+    isError: isSubCategoriesDataError 
+  } = useQuery({
+    queryKey: ['sub-categories'],
+    queryFn: getSubCategories
+  })
+
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     const { type, index, schemeId } = e.currentTarget.dataset;
 
@@ -52,6 +68,8 @@ export default function Table() {
 
   // DEBUG & UI
   // console.log('themes data: ', data);
+  console.log('categoriesData: ', categoriesData);
+  console.log('subCategoriesData: ', subCategoriesData);
 
   const isLoading = false;
   const isError = false;
@@ -103,133 +121,125 @@ export default function Table() {
           </tr>
         </thead>
         <tbody className="divide-y divide-underline">
-          <tr 
-            className="px-6"
-          >
-            <td 
-              className="
-                px-6 py-4 text-sm text-heading font-bold
-              "
+          {categoriesData?.data?.map((category: Record<string, any>) =>
+            <tr 
+              className="px-6"
             >
-              What's New
-            </td>
-            <td 
-              className={`
-                px-6 py-4 text-sm text-body
-                transition-all duration-300 ease-in-out
-              `}
-            >
-              <ul
-                className="flex flex-row gap-2"
+              <td 
+                className="
+                  px-6 py-4 text-heading font-bold
+                "
               >
-                {subCategoriesArray.map(val => 
+                {category.name[lang]}
+              </td>
+              <td 
+                className={`
+                  px-6 py-4 text-sm text-body
+                  transition-all duration-300 ease-in-out
+                `}
+              >
+                <ul
+                  className="flex flex-row flex-wrap min-w-[300px] gap-2"
+                >
+                  {subCategoriesData?.data
+                    ?.filter((subCategory: Record<string, any>) => subCategory.type === category.slug)
+                    .map((result: Record<string, any>) => 
+                    <li
+                      className="
+                        text-heading-invert bg-heading text-sm 
+                        font-bold px-2 py-1 rounded-lg
+                      "
+                    >
+                      {result.name[lang]}
+                    </li>
+                  )}
                   <li
-                    className="text-heading-invert bg-heading font-bold p-2 rounded-lg"
+                    className="
+                      bg-background-light text-sm 
+                      font-bold px-2 py-1 rounded-lg
+                      hover:bg-background-deep-light active:opacity-60
+                      transition-all duration-200 ease-out
+                    "
+                    role="button"
                   >
-                    {val}
+                    <LineMdPlus className="text-heading" />
                   </li>
-                )}
-              </ul>
-            </td>
-            <td 
-              className={`
-                px-6 py-4 text-sm text-body min-w-[300px] min-h-[250px]
-                transition-all duration-300 ease-in-out
-              `}
-            >
-              <img 
-                src={navBarImg}
-                className="w-[200px] aspect-[1/1] object-center object-cover rounded-lg"
-              />
-            </td>
-            <td 
-              className={`
-                px-6 py-4 text-sm text-body min-w-[500px] min-h-[250px]
-                transition-all duration-300 ease-in-out
-              `}
-            >
-              <img 
-                src={navBarLgImg}
-                className="w-[400px] aspect-[2/1] object-center object-cover rounded-lgg"
-              />
-            </td>
-            <td className="px-6">
-              <div className="flex gap-2">
-                <button 
-                  className={`
-                    relative bg-background-light rounded-md
-                    transition-all duration-500 ease-in-out
-                    bg-background-light
-                  `}
-                  data-type="delete_product_button_is_clicked"
-                  onClick={handleClick}
+                </ul>
+              </td>
+              <td 
+                className={`
+                  px-6 py-4 text-sm text-body min-w-[300px] min-h-[250px]
+                  transition-all duration-300 ease-in-out
+                `}
+              >
+                <img 
+                  src={category.navbarImg}
+                  className="w-[200px] aspect-[1/1] object-center object-cover rounded-lg"
+                />
+              </td>
+              <td 
+                className={`
+                  px-6 py-4 text-sm text-body min-w-[500px] min-h-[250px]
+                  transition-all duration-300 ease-in-out
+                `}
+              >
+                <img 
+                  src={category.navbarLgImg}
+                  className="w-[400px] aspect-[2/1] object-center object-cover rounded-lgg"
+                />
+              </td>
+              <td className="px-6">
+                <Link
+                  className="
+                    text-content text-sm underline hover:text-heading
+                    transition-all duraiton-200 ease-in-out
+                  "
+                  href="category.imgUrl"
+                  target="_blank"
                 >
-                  <LineMdTrash 
+                  {category.imgUrl}
+                </Link>
+              </td>
+              <td className="px-6">
+                <div className="flex gap-2">
+                  <button 
                     className={`
-                      w-7 h-7 p-1 rounded-md cursor-pointer 
-                      transition-all duration-200 ease-in-out text-heading
-                      }
+                      relative bg-background-light rounded-md
+                      transition-all duration-500 ease-in-out
+                      bg-background-light
                     `}
-                  />    
-                </button>
-                <button 
-                  className={`
-                    relative bg-background-light rounded-md
-                    transition-all duration-500 ease-in-out
-                    bg-background-light
-                  `}
-                  data-type="edit_product_button_is_clicked"
-                  onClick={handleClick}
-                >
-                  <LineMdEdit 
+                    data-type="delete_product_button_is_clicked"
+                    onClick={handleClick}
+                  >
+                    <LineMdTrash 
+                      className={`
+                        w-7 h-7 p-1 rounded-md cursor-pointer 
+                        transition-all duration-200 ease-in-out text-heading
+                        }
+                      `}
+                    />    
+                  </button>
+                  <button 
                     className={`
-                      w-7 h-7 p-1 rounded-md cursor-pointer 
-                      transition-all duration-200 ease-in-out text-heading
-                      }
+                      relative bg-background-light rounded-md
+                      transition-all duration-500 ease-in-out
+                      bg-background-light
                     `}
-                  />    
-                </button>
-              </div>
-            </td>
-            <td className="px-6">
-              <div className="flex gap-2">
-                <button 
-                  className={`
-                    relative bg-background-light rounded-md
-                    transition-all duration-500 ease-in-out
-                    bg-background-light
-                  `}
-                  data-type="delete_product_button_is_clicked"
-                  onClick={handleClick}
-                >
-                  <LineMdTrash 
-                    className={`
-                      w-7 h-7 p-1 rounded-md cursor-pointer 
-                      transition-all duration-200 ease-in-out text-heading
-                      }
-                    `}
-                  />    
-                </button>
-                <button 
-                  className={`
-                    relative bg-background-light rounded-md
-                    transition-all duration-500 ease-in-out
-                    bg-background-light
-                  `}
-                  data-type="edit_product_button_is_clicked"
-                  onClick={handleClick}
-                >
-                  <LineMdEdit 
-                    className={`
-                      w-7 h-7 p-1 rounded-md cursor-pointer 
-                      transition-all duration-200 ease-in-out text-heading
-                      }
-                    `}
-                  />    
-                </button>
-              </div>
-            </td>
-          </tr>
+                    data-type="edit_product_button_is_clicked"
+                    onClick={handleClick}
+                  >
+                    <LineMdEdit 
+                      className={`
+                        w-7 h-7 p-1 rounded-md cursor-pointer 
+                        transition-all duration-200 ease-in-out text-heading
+                        }
+                      `}
+                    />    
+                  </button>
+                </div>
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>
