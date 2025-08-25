@@ -37,7 +37,13 @@ type Props = {
 
 const blankImg = "/assets/img/empty(2).webp";
 
-export default function Table({ scroll, scrollTrigger, products, isLoading = false, isError = false }: Props) {
+export default function Table({ 
+  scroll, 
+  scrollTrigger, 
+  products, 
+  isLoading = false, 
+  isError = false 
+}: Props) {
 
   const queryClient = useQueryClient();
   const lang = useLanguageStore(state => state.lang);
@@ -122,7 +128,6 @@ export default function Table({ scroll, scrollTrigger, products, isLoading = fal
           top: 0,
           behavior: 'smooth'
         });
-        console.log('click');
         break;
       case 'down':
         layoutRef.scrollTo({
@@ -136,7 +141,7 @@ export default function Table({ scroll, scrollTrigger, products, isLoading = fal
         console.error("Unknown scroll type: ", scroll);
     }
   }, [ scroll, scrollTrigger ]);
-  console.log('scrollTrigger: ', scrollTrigger);
+
   function isErrorWithCode(error: unknown): error is { code: string } {
     return typeof error === 'object' && error !== null && 'code' in error;
   }

@@ -269,7 +269,7 @@ export default function Table() {
                           : 'visible opacity-100' 
                         }
                       `}
-                    />    
+                    />
                     <SolarGalleryCheckBold 
                       className={`
                         absolute top-1/2 left-1/2

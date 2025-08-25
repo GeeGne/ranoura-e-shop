@@ -17,7 +17,7 @@ export default function Instructions () {
 
   return (
     <section
-      className="bg-background-light p-4 rounded-lg"
+      className="py-4 rounded-lg"
     >
       <h3
         className="text-heading text-lg font-bold"
@@ -28,7 +28,7 @@ export default function Instructions () {
         className="flex flex-col lg:flex-row justify-between lg:justify-normal gap-8 p-4"
       >
         <div
-          className="relative flex flex-col lg:flex-1 items-center gap-4 bg-background p-4 rounded-lg"
+          className="relative flex flex-col lg:flex-1 items-center gap-4 bg-white p-4 rounded-lg"
         >
           <div
             className="
@@ -107,7 +107,7 @@ export default function Instructions () {
           />
         </div>
         <div
-          className="relative flex flex-col lg:flex-1 items-center gap-4 bg-background p-4 rounded-lg"
+          className="relative flex flex-col lg:flex-1 items-center gap-4 bg-white p-4 rounded-lg"
         >
         <div
             className="
