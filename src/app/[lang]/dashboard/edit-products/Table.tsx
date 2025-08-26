@@ -176,7 +176,10 @@ export default function Table({
         setActionWindowToggle(true);
         if (productId) setAction({ name: "remove product", productId, isConfirmed: false });
         setTitle({ en: `Delete Product?`, ar: "حذف المنتج؟" });
-        setDescription({ en: `Are you sure you want to delete "${productName}"? This action cannot be undone.`, ar: "تأكيد مطلوب" });
+        setDescription({ 
+          en: `Are you sure you want to delete "${productName}"? This action cannot be undone.`, 
+          ar: `هل أنت متأكد أنك تريد حذف "${productName}"؟ لا يمكن التراجع عن هذا الإجراء.` }
+        );
         setBtnTitle({ en: `Confirm (Delete)`, ar: "تأكيد (حذف)" });
         break;
       case 'edit_product_button_is_clicked':

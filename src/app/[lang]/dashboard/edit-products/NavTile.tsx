@@ -125,7 +125,6 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
           absolute top-0 left-1/2 translate-x-[-50%] 
           w-[100vw] h-[calc(100%+1rem)]
           bg-gradient-to-t from-transparent to-heading from-0% to-100% z-[-1]
-          ${isEn ? 'left-0' : 'right-0'}
           ${isLayoutScrolled 
             ? 'opacity-100'
             : 'opacity-0'

@@ -97,6 +97,8 @@ model SubCategories {
   slug  String @unique
   type String
   image String?
+
+  @@index([slug])
 }
 
 model RefreshToken {

@@ -18,12 +18,11 @@ import SolarGalleryCheckBold from '@/components/svgs/SolarGalleryCheckBold';
 // STORES
 import { 
   useLanguageStore, useAlertMessageStore, 
-  useLayoutRefStore, useAddSubCategoryWindowStore
+  useLayoutRefStore, useAddSubCategoryWindowStore, useActivityWindowStore
 } from '@/stores/index';
 
 // API
-import getCategories from '@/lib/api/categories/get';
-import getSubCategories from '@/lib/api/sub-categories/get';
+import deleteSubCategory from '@/lib/api/sub-categories/slug/delete';
 
 // LIB
 import getMessage from '@/lib/messages/index';
@@ -66,6 +65,10 @@ export default function Table({
   
   const setNewSubCategoryToggle = useAddSubCategoryWindowStore(state => state.setToggle);
   const setNewSubCategoryType = useAddSubCategoryWindowStore(state => state.setCategorySlug);
+
+  const activityWindowToggle = useActivityWindowStore(state => state.toggle);
+  const setActivityWindowToggle = useActivityWindowStore(state => state.setToggle);
+  const setActivityWindowMessage = useActivityWindowStore(state => state.setMessage);
 
   const subCategoriesArray = ['Hot Deals', 'Hot Sales'];
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
@@ -110,6 +113,32 @@ export default function Table({
     }
   }, [ scroll, scrollTrigger ]);
 
+  const deleteSubCategoryMutation = useMutation({
+    mutationFn: deleteSubCategory,
+    onSettled: () => {
+      setActivityWindowToggle(false);
+    },
+    onMutate: () => {
+      setActivityWindowToggle(true);
+      setActivityWindowMessage(isEn ? 'Deleting the SubCategory...' : 'جاري حذف القسم الفرعي...')
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['sub-categories']});
+      setAlertToggle(Date.now());
+      setAlertType("success");
+      setAlertMessage(data?.message[isEn ? 'en' : 'ar']);
+    },
+    onError: () => {
+      setAlertToggle(Date.now());
+      setAlertType("error");
+      setAlertMessage(
+        isEn 
+          ? "Couldn't create new product, please try again." 
+          : "فشل في محاوله انشاء مجتمع جديد, الرجاء محاوله مره اخرى."
+      )
+    }
+  })
+
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement | HTMLLIElement>) => {
     const { type, categorySlug, subCategorySlug } = e.currentTarget.dataset;
 
@@ -117,6 +146,7 @@ export default function Table({
       case 'sub_category_block_is_clicked':
         console.log('categorySlug: ', categorySlug);
         console.log('subCategorySlug: ', subCategorySlug);
+        if (subCategorySlug) deleteSubCategoryMutation.mutate(subCategorySlug)
         break;
       case 'add_new_sub_category_button_is_clicked':
         setNewSubCategoryToggle(true);
@@ -218,14 +248,14 @@ export default function Table({
                       onClick={handleClick}
                     >
                       <LineMdMenuToCloseAltTransition
-                        className="
-                          absolute top-0 right-0
-                          translate-x-[50%] translate-y-[-50%]
+                        className={`
+                          absolute top-0 translate-y-[-50%]
                           w-4 h-4 p-[3px] bg-background-light text-heading rounded-full
                           invisible group-hover:visible opacity-0 group-hover:opacity-100 
                           scale-0 group-hover:scale-100
                           transition-all duration-200 ease-out
-                        "
+                          ${isEn ? 'right-0 translate-x-[50%]' : 'left-0 translate-x-[-50%]'}
+                        `}
                       />
                       <span>
                         {result.name[lang]}
