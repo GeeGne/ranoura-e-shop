@@ -16,7 +16,10 @@ import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingRes
 import SolarGalleryCheckBold from '@/components/svgs/SolarGalleryCheckBold';
 
 // STORES
-import { useLanguageStore, useAlertMessageStore, useLayoutRefStore } from '@/stores/index';
+import { 
+  useLanguageStore, useAlertMessageStore, 
+  useLayoutRefStore, useAddSubCategoryWindowStore
+} from '@/stores/index';
 
 // API
 import getCategories from '@/lib/api/categories/get';
@@ -61,6 +64,8 @@ export default function Table({
   const mainRef = useRef<any>(null);
   const layoutRef = useLayoutRefStore(state => state.layoutRef);
   
+  const setNewSubCategoryToggle = useAddSubCategoryWindowStore(state => state.setToggle);
+
   const subCategoriesArray = ['Hot Deals', 'Hot Sales'];
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
@@ -104,11 +109,16 @@ export default function Table({
     }
   }, [ scroll, scrollTrigger ]);
 
-  const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    const { type, index, schemeId } = e.currentTarget.dataset;
+  const handleClick = async (e: React.MouseEvent<HTMLButtonElement | HTMLLIElement>) => {
+    const { type, categorySlug, subCategorySlug } = e.currentTarget.dataset;
 
     switch (type) {
-      case '':
+      case 'sub_category_block_is_clicked':
+        console.log('categorySlug: ', categorySlug);
+        console.log('subCategorySlug: ', subCategorySlug);
+        break;
+      case 'add_new_sub_category_button_is_clicked':
+        setNewSubCategoryToggle(true);
         break;
       default:
         console.error('Unknown type: ', type);
@@ -117,11 +127,8 @@ export default function Table({
 
   // DEBUG & UI
   // console.log('themes data: ', data);
-  console.log('categories: ', categories);
-  console.log('subCategories: ', subCategories);
-
-  const isLoading = false;
-  const isError = false;
+  // console.log('categories: ', categories);
+  // console.log('subCategories: ', subCategories);
 
   if (isCategoriesLoading || isSubCategoriesLoading) return (
     <LoadingTable />
@@ -171,6 +178,7 @@ export default function Table({
         <tbody className="divide-y divide-underline">
           {categories?.map((category: Record<string, any>) =>
             <tr 
+              key={category.id}
               className="px-6"
             >
               <td 
@@ -193,6 +201,7 @@ export default function Table({
                     ?.filter((subCategory: Record<string, any>) => subCategory.type === category.slug)
                     .map((result: Record<string, any>) => 
                     <li
+                      key={result.id}
                       className="
                         group relative flex items-center justify-center text-heading-invert bg-heading text-sm 
                         font-bold px-2 py-1 rounded-lg
@@ -200,6 +209,10 @@ export default function Table({
                         transition-all duration-200 ease-out
                       "
                       role="button"
+                      data-type="sub_category_block_is_clicked"
+                      data-sub-category-slug={result.slug}
+                      data-category-slug={category.slug}
+                      onClick={handleClick}
                     >
                       <LineMdMenuToCloseAltTransition
                         className="
@@ -224,6 +237,8 @@ export default function Table({
                       transition-all duration-200 ease-out
                     "
                     role="button"
+                    data-type="add_new_sub_category_button_is_clicked"
+                    onClick={handleClick}
                   >
                     <LineMdPlus className="text-heading" />
                   </li>

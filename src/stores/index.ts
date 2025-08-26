@@ -413,6 +413,18 @@ const useActionConfirmWindowStore = create<ActionConfirmWindowProps>()(
   })
 )
 
+type AddSubCategoryWindowProps = {
+  toggle: boolean;
+  setToggle: (value: boolean) => void;
+}
+
+const useAddSubCategoryWindowStore = create<AddSubCategoryWindowProps>()(
+  (set) => ({
+    toggle: false,
+    setToggle: (toggle) => set({ toggle }),
+  })
+)
+
 export { 
   useCartStore, useNavbarStore, 
   useTabNameStore, useFilterWindowStore,
@@ -422,5 +434,6 @@ export {
   useLanguageStore, useEditProductWindowStore, 
   useAddProductImgWindowStore, useSelectImgColorWindowStore, 
   useStorageStore, useProductDataStore,
-  useActivityWindowStore, useActionConfirmWindowStore
+  useActivityWindowStore, useActionConfirmWindowStore,
+  useAddSubCategoryWindowStore
 };
