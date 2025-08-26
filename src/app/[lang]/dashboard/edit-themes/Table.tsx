@@ -28,9 +28,11 @@ export default function Table() {
   const queryClient = useQueryClient();
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
+
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
+  
   const [ isThemeMutating, setIsThemeMutating ] = useState<{toggle: boolean, index: number}>({
     toggle: false, index: 0
   });
@@ -79,16 +81,24 @@ export default function Table() {
     }
   }, [error, isError, isLoading]);
 
+  const addIsProcessingNote = () => {
+    setAlertToggle(Date.now());
+    setAlertType("warning");
+    setAlertMessage(isEn ? 'Please wait until the operation is finished' : 'الرجاء الانتظار حتى انتهاء من العمليه');
+  }
+
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     const { type, index, schemeId } = e.currentTarget.dataset;
 
     switch (type) {
       case 'set_theme_button_is_clicked':
+        if (isThemeMutating.toggle) return addIsProcessingNote();
+        
         const themeData = getTheme(Number(schemeId));
         if (isSameTheme(Number(schemeId)) || !themeData) return;
         
         updateThemeVarsMutation.mutate(themeData);
-        setIsThemeMutating( {toggle: false, index: Number(index) });
+        setIsThemeMutating( { toggle: false, index: Number(index) });
         break;
       case 'copy_button_is_clicked':
         try {
@@ -237,6 +247,10 @@ export default function Table() {
                     className={`
                       relative bg-background-light rounded-md
                       transition-all duration-500 ease-in-out
+                      ${isThemeMutating.toggle && isThemeMutating.index === i
+                        ? 'cursor-progress'
+                        : 'cursor-pointer' 
+                      }
                       ${isSameTheme(itm.scheme_id)
                         ? 'bg-content' 
                         : 'bg-background-light'
@@ -251,7 +265,7 @@ export default function Table() {
                       className={`
                         absolute top-1/2 left-1/2
                         translate-x-[-50%] translate-y-[-50%]
-                        w-7 h-7 p-1 rounded-md cursor-pointer 
+                        w-7 h-7 p-1 rounded-md 
                         transition-all duration-200 ease-in-out text-heading
                         ${isThemeMutating.toggle && isThemeMutating.index === i
                           ? 'visible opacity-100'
@@ -261,7 +275,7 @@ export default function Table() {
                     />    
                     <SolarGalleryBold 
                       className={`
-                        w-7 h-7 p-1 text-heading rounded-md cursor-pointer
+                        w-7 h-7 p-1 text-heading rounded-md
                         bg-background-light hover:bg-background-deep-light active:opacity-60
                         transition-all duration-200 ease-out
                         ${isSameTheme(itm.scheme_id) || isThemeMutating.toggle && isThemeMutating.index === i
@@ -274,7 +288,7 @@ export default function Table() {
                       className={`
                         absolute top-1/2 left-1/2
                         translate-x-[-50%] translate-y-[-50%]
-                        w-7 h-7 p-1 rounded-md cursor-pointer text-heading-invert
+                        w-7 h-7 p-1 rounded-md text-heading-invert
                         transition-all duration-200 ease-in-out
                         ${isSameTheme(itm.scheme_id)
                           ? 'visible opacity-100' 

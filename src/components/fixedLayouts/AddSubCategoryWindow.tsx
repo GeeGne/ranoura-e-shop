@@ -1,28 +1,80 @@
 // HOOKS
 import { useState, useReducer } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 // COMPONENTS
 import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingResize';
 
 // STORES
-import { useLanguageStore, useAddSubCategoryWindowStore } from '@/stores/index';
+import { useLanguageStore, useAddSubCategoryWindowStore, useAlertMessageStore } from '@/stores/index';
 
-export default function ActionConfirmWindow () {
+// API
+import addNewSubCategory from '@/lib/api/sub-categories/post';
+
+// UTILS
+import createSlug from '@/utils/createSlug';
+
+export default function AddSubCategoryWindow () {
 
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
 
   const toggle = useAddSubCategoryWindowStore(state => state.toggle);
   const setToggle = useAddSubCategoryWindowStore(state => state.setToggle);
-  const isLoading = false;
+  const categorySlug = useAddSubCategoryWindowStore(state => state.categorySlug);
+
+  const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
+  const setAlertType = useAlertMessageStore((state) => state.setType);
+  const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
+
+  const [ isLoading, setIsLoading ] = useState<boolean>(false);
+  const [ name, setName ] = useState<Record<string, string>>({ en: "", ar: "" });
+
+  const addNewSubCategoryMutation = useMutation({
+    mutationFn: addNewSubCategory,
+    onSettled: () => {
+      setIsLoading(false);
+    },
+    onMutate: () => {
+      setIsLoading(true);
+    },
+    onSuccess: () => {
+
+    },
+    onError: () => {
+
+    },
+  })
+
+  const addIsProcessingNote = () => {
+    setAlertToggle(Date.now());
+    setAlertType("warning");
+    setAlertMessage(isEn ? 'Please wait until the operation is finished' : 'الرجاء الانتظار حتى انتهاء من العمليه');
+  }
+
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
     const { type } = e.currentTarget.dataset;
 
     switch (type) {
       case 'accept_button_is_clicked':
+        if (isLoading) {
+          setAlertToggle(Date.now());
+          setAlertType("warning");
+          setAlertMessage(isEn ? 'Please wait until the operation is finished' : 'الرجاء الانتظار حتى انتهاء من العمليه');
+          return;
+        };
+
+        const newSubCategoryInfo = {
+          name,
+          slug: createSlug(name.en),
+          type: categorySlug
+        }
+
+        addNewSubCategoryMutation.mutate(newSubCategoryInfo)
         break;
       case 'cancel_button_is_clicked':
+        if (isLoading) return addIsProcessingNote();
         setToggle(false);
         break;
       default:
@@ -30,9 +82,23 @@ export default function ActionConfirmWindow () {
     }
   }
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.currentTarget;
+
+    switch (name) {
+      case 'enSubCategory':
+        setName(val => ({ ...val, en: value}))
+        break;
+      case 'arSubCategory':
+        setName(val => ({ ...val, ar: value}))
+        break;
+      default:
+        console.error('Unknown name: ', name);
+    }
+  }
+
   // DEBUG & UI
-  // const toggle = true;
-  // console.log('toggle: ', toggle);
+  console.log('name: ', name);
 
   return (
     <div
@@ -73,6 +139,7 @@ export default function ActionConfirmWindow () {
         >
           <label
             className="flex items-center justify-between"
+            htmlFor="enSubCategory"
           >
             <h3
               className="text-body"
@@ -82,10 +149,14 @@ export default function ActionConfirmWindow () {
             <input 
               className="text-body bg-background-light p-2 rounded-md"
               type="text"
+              name="enSubCategory"
+              id="enSubCategory"
+              onChange={handleChange}
             />
           </label>
           <label
             className="flex gap-2 items-center justify-between"
+            htmlFor="arSubCategory"
           >
             <h3
               className="text-body"
@@ -95,6 +166,9 @@ export default function ActionConfirmWindow () {
             <input 
               className="text-body bg-background-light p-2 rounded-md"
               type="text"
+              id="arSubCategory"
+              name="arSubCategory"
+              onChange={handleChange}
             />
           </label>
         </section>
@@ -123,10 +197,11 @@ export default function ActionConfirmWindow () {
             {isEn ? 'cancel' : 'تراجع'}
           </button>
           <button
-            className="
+            className={`
               relative flex-1 p-1 
               hover:bg-background-deep-light
-            "
+              ${isLoading ? 'cursor-progress' : 'cursor-pointer'}
+            `}
             data-type="accept_button_is_clicked"
             onClick={handleClick}
           >

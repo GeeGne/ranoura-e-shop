@@ -299,6 +299,12 @@ export default function EditProductWindow () {
     mutationFn: removeFile,
   })
   
+  const addIsProcessingNote = () => {
+    setAlertToggle(Date.now());
+    setAlertType("warning");
+    setAlertMessage(isEn ? 'Please wait until the operation is finished' : 'الرجاء الانتظار حتى انتهاء من العمليه');
+  }
+
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
     const { type, bucketName, url, color } = e.currentTarget.dataset;
@@ -320,6 +326,8 @@ export default function EditProductWindow () {
         }
         break;
       case 'accept_button_is_clicked':
+        if (isMutating) return addIsProcessingNote();
+    
         editProductMutation.mutate(updatedData);
         const bucketName = "assets";
 
@@ -329,6 +337,12 @@ export default function EditProductWindow () {
         });
         break;
       case 'cancel_button_is_clicked':
+        if (isMutating) {
+          setAlertToggle(Date.now());
+          setAlertType("warning");
+          setAlertMessage(isEn ? 'Please wait until the operation is finished' : 'الرجاء الانتظار حتى انتهاء من العمليه');
+          return;
+        };
         setEditToggle(false);
         break;
       default:
@@ -1462,11 +1476,12 @@ export default function EditProductWindow () {
             {isEn ? 'cancel' : 'تراجع'}
           </button>
           <button
-            className="
+            className={`
               flex justify-center flex-1 text-content p-1 
               hover:bg-background-deep-light
               transition-all duration-300 ease-in-out
-            "
+              ${isMutating ? 'cursor-progress' : 'cursor-pointer'}
+            `}
             data-type="accept_button_is_clicked"
             onClick={handleClick}
           >

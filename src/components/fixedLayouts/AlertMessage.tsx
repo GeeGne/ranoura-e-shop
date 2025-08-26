@@ -96,7 +96,7 @@ export default function AlertMessage () {
         p-6 bg-[var(--background-light-color)] hover:bg-[var(--background-deep-light-color)] active:bg-[var(--background-deep-color)]
         drop-shadow-xl rounded-lg overflow-hidden
         transition-all duration-200 ease-in-out
-        cursor-pointer z-[3000]
+        cursor-pointer z-[6000]
       "
       ref={wrapperRef}
       data-type="wrapper_is_clicked"
@@ -158,7 +158,7 @@ export default function AlertMessage () {
         p-6 bg-[var(--background-light-color)] hover:bg-[var(--background-deep-light-color)] active:bg-[var(--background-deep-color)]
         drop-shadow-xl rounded-lg overflow-hidden
         transition-all duration-200 ease-in-out
-        cursor-pointer z-[3000]
+        cursor-pointer z-[6000]
       "
       ref={wrapperRef}
       data-type="wrapper_is_clicked"
@@ -220,7 +220,7 @@ export default function AlertMessage () {
         p-6 bg-[var(--background-light-color)] hover:bg-[var(--background-deep-light-color)] active:bg-[var(--background-deep-color)]
         drop-shadow-xl rounded-lg overflow-hidden
         transition-all duration-200 ease-in-out
-        cursor-pointer z-[3000]
+        cursor-pointer z-[6000]
       "
       ref={wrapperRef}
       data-type="wrapper_is_clicked"
@@ -282,7 +282,7 @@ export default function AlertMessage () {
         p-6 bg-[var(--background-light-color)] hover:bg-[var(--background-deep-light-color)] active:bg-[var(--background-deep-color)]
         drop-shadow-xl rounded-lg overflow-hidden
         transition-all duration-200 ease-in-out
-        cursor-pointer z-[3000]
+        cursor-pointer z-[6000]
       "
       ref={wrapperRef}
       data-type="wrapper_is_clicked"
@@ -430,7 +430,7 @@ export default function AlertMessage () {
         p-6 bg-[var(--background-light-color)] hover:bg-[var(--background-deep-light-color)] active:bg-[var(--background-deep-color)]
         drop-shadow-xl rounded-lg overflow-hidden
         transition-all duration-200 ease-in-out
-        cursor-pointer z-[3000]
+        cursor-pointer z-[6000]
       "
       ref={wrapperRef}
       data-type="wrapper_is_clicked"
@@ -492,7 +492,7 @@ export default function AlertMessage () {
         p-6 bg-[var(--background-light-color)] hover:bg-[var(--background-deep-light-color)] active:bg-[var(--background-deep-color)]
         drop-shadow-xl rounded-lg overflow-hidden
         transition-all duration-200 ease-in-out
-        cursor-pointer z-[3000]
+        cursor-pointer z-[6000]
       "
       ref={wrapperRef}
       data-type="wrapper_is_clicked"

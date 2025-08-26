@@ -120,6 +120,12 @@ export default function SignupForm ({ className, ...props }: Props) {
       default:
         return true;    
     }
+  };
+
+  const addIsProcessingNote = () => {
+    setAlertToggle(Date.now());
+    setAlertType("warning");
+    setAlertMessage(isEn ? 'Please wait until the operation is finished' : 'الرجاء الانتظار حتى انتهاء من العمليه');
   }
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -236,6 +242,8 @@ export default function SignupForm ({ className, ...props }: Props) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (isProcessing) return addIsProcessingNote();
 
     const { first_name, last_name, email, phone_number, password, cPassword } = signInForm;
     const { firstName, lastName, email: userEmail, phoneNumber, password: userPassword, cPassword: userCPassword } = validate;
@@ -736,7 +744,11 @@ export default function SignupForm ({ className, ...props }: Props) {
         }
       </label>
       <BtnA
-        className="relative md:col-span-2 bg-primary w-full text-heading-invert font-bold py-2 rounded-md"
+        className={`
+          relative md:col-span-2 bg-primary w-full 
+          text-heading-invert font-bold py-2 rounded-md
+          ${isProcessing ? 'cursor-progress' : 'cursor-pointer'}
+        `}
         type="submit"
       >
         <SvgSpinnersRingResize 

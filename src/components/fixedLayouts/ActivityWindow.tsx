@@ -47,7 +47,7 @@ export default function ActivityWindow () {
   const setToggle = useActivityWindowStore(state => state.setToggle);
   const message = useActivityWindowStore(state => state.message);
   const setMessage = useActivityWindowStore(state => state.setMessage);
-
+  
   return (
     <div
       className={`

@@ -100,6 +100,12 @@ export default function SigninForm ({ className, ...props }: Props) {
     }
   };
 
+  const addIsProcessingNote = () => {
+    setAlertToggle(Date.now());
+    setAlertType("warning");
+    setAlertMessage(isEn ? 'Please wait until the operation is finished' : 'الرجاء الانتظار حتى انتهاء من العمليه');
+  }
+
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     const { type } = e.currentTarget.dataset;
 
@@ -179,6 +185,9 @@ export default function SigninForm ({ className, ...props }: Props) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (isProcessing) return addIsProcessingNote();
+
     console.log('submit is clicked!')
     const { email, password } = signInForm;
     const { email: userEmail, password: userPassword } = validate;
@@ -393,7 +402,11 @@ export default function SigninForm ({ className, ...props }: Props) {
         }
       </label>
       <BtnA
-        className="relative md:col-span-2 bg-primary w-full text-heading-invert font-bold py-2 rounded-md"
+        className={`
+          relative md:col-span-2 bg-primary 
+          w-full text-heading-invert font-bold py-2 rounded-md
+          ${isProcessing ? 'cursor-progress' : 'cursor-pointer'}
+        `}
         type="submit"
       >
         <SvgSpinnersRingResize 

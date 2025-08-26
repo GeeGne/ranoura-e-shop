@@ -416,12 +416,16 @@ const useActionConfirmWindowStore = create<ActionConfirmWindowProps>()(
 type AddSubCategoryWindowProps = {
   toggle: boolean;
   setToggle: (value: boolean) => void;
+  categorySlug: string;
+  setCategorySlug: (value: string) => void;
 }
 
 const useAddSubCategoryWindowStore = create<AddSubCategoryWindowProps>()(
   (set) => ({
     toggle: false,
     setToggle: (toggle) => set({ toggle }),
+    categorySlug: "",
+    setCategorySlug: (categorySlug) => set({ categorySlug })
   })
 )
 

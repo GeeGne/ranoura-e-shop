@@ -146,6 +146,12 @@ export default function AddProductImgWindow () {
     setProductImage(files[0]);
   }
 
+  const addIsProcessingNote = () => {
+    setAlertToggle(Date.now());
+    setAlertType("warning");
+    setAlertMessage(isEn ? 'Please wait until the operation is finished' : 'الرجاء الانتظار حتى انتهاء من العمليه');
+  }
+
   const handleClick = (
     e: React.MouseEvent<HTMLElement | SVGElement>
   ) => {
@@ -164,6 +170,13 @@ export default function AddProductImgWindow () {
         if (productImgInptRef.current) productImgInptRef.current.click();
         break;
       case 'cancel_button_is_clicked':
+        if (isMutating) {
+          setAlertToggle(Date.now());
+          setAlertType("warning");
+          setAlertMessage(isEn ? 'Please wait until the operation is finished' : 'الرجاء الانتظار حتى انتهاء من العمليه');
+          return;
+        };
+
         resetWindowToDefault();
         setAddToggle(false);
         break;
@@ -173,6 +186,8 @@ export default function AddProductImgWindow () {
         // console.log('selectedColor: ', selectedColor);
         // console.log('imageSelectedType: ', imageSelectedType);
         // console.log('productImage: ', productImage);
+
+        if (isMutating) return addIsProcessingNote();
 
         switch (false) {
           case productData !== null:
@@ -677,11 +692,12 @@ export default function AddProductImgWindow () {
             {isEn ? 'cancel' : 'تراجع'}
           </button>
           <button
-            className="
+            className={`
               flex justify-center flex-1 text-content p-1 
               hover:bg-background-deep-light
               transition-all duration-300 ease-in-out
-            "
+              ${isMutating ? 'cursor-progress' : 'cursor-pointer'}
+            `}
             data-type="accept_button_is_clicked"
             onClick={handleClick}
           >

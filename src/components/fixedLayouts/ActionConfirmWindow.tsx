@@ -5,7 +5,7 @@ import { useState, useReducer } from 'react';
 import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingResize';
 
 // STORES
-import { useLanguageStore, useActionConfirmWindowStore } from '@/stores/index';
+import { useLanguageStore, useActionConfirmWindowStore, useAlertMessageStore } from '@/stores/index';
 
 export default function ActionConfirmWindow () {
 
@@ -24,15 +24,34 @@ export default function ActionConfirmWindow () {
   const setAction = useActionConfirmWindowStore(state => state.setAction);
   const btnTitle = useActionConfirmWindowStore(state => state.btnTitle);
 
+  const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
+  const setAlertType = useAlertMessageStore((state) => state.setType);
+  const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
+
+  const addIsProcessingNote = () => {
+    setAlertToggle(Date.now());
+    setAlertType("warning");
+    setAlertMessage(isEn ? 'Please wait until the operation is finished' : 'الرجاء الانتظار حتى انتهاء من العمليه');
+  };
+
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
     const { type } = e.currentTarget.dataset;
 
     switch (type) {
       case 'accept_button_is_clicked':
+        if (isLoading) return addIsProcessingNote();
+
         setAction({ ...action, isConfirmed: true})
         break;
       case 'cancel_button_is_clicked':
+        if (isLoading) {
+          setAlertToggle(Date.now());
+          setAlertType("warning");
+          setAlertMessage(isEn ? 'Please wait until the operation is finished' : 'الرجاء الانتظار حتى انتهاء من العمليه');
+          return;
+        };
+
         setToggle(false);
         break;
       default:
@@ -110,10 +129,11 @@ export default function ActionConfirmWindow () {
             {isEn ? 'cancel' : 'تراجع'}
           </button>
           <button
-            className="
+            className={`
               relative flex-1 p-1 
               hover:bg-background-deep-light
-            "
+              ${isLoading ? 'cursor-progress' : 'cursor-pointer'}
+            `}
             data-type="accept_button_is_clicked"
             onClick={handleClick}
           >
