@@ -15,7 +15,7 @@ import addNewSubCategory from '@/lib/api/sub-categories/post';
 import createSlug from '@/utils/createSlug';
 
 export default function AddSubCategoryWindow () {
-
+  const queryClient = useQueryClient();
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
 
@@ -38,11 +38,21 @@ export default function AddSubCategoryWindow () {
     onMutate: () => {
       setIsLoading(true);
     },
-    onSuccess: () => {
-
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['sub-categories'] });
+      setAlertToggle(Date.now());
+      setAlertType("success");
+      setAlertMessage(data.message[isEn ? 'en' : 'ar']);
+      setToggle(false);
     },
     onError: () => {
-
+      setAlertToggle(Date.now());
+      setAlertType("error");
+      setAlertMessage(
+        isEn 
+          ? 'Error while Creating a new Sub Category, please try again later.' 
+          : 'حصل خطأ خلال انشاء قسم فرعي, الرجاء المحاوله مره اخرى.'
+      );
     },
   })
 
@@ -57,13 +67,8 @@ export default function AddSubCategoryWindow () {
     const { type } = e.currentTarget.dataset;
 
     switch (type) {
-      case 'accept_button_is_clicked':
-        if (isLoading) {
-          setAlertToggle(Date.now());
-          setAlertType("warning");
-          setAlertMessage(isEn ? 'Please wait until the operation is finished' : 'الرجاء الانتظار حتى انتهاء من العمليه');
-          return;
-        };
+      case 'add_button_is_clicked':
+        if (isLoading) addIsProcessingNote();
 
         const newSubCategoryInfo = {
           name,
@@ -71,7 +76,8 @@ export default function AddSubCategoryWindow () {
           type: categorySlug
         }
 
-        addNewSubCategoryMutation.mutate(newSubCategoryInfo)
+        console.log('newSubCategoryInfo: ', newSubCategoryInfo);
+        addNewSubCategoryMutation.mutate(newSubCategoryInfo);
         break;
       case 'cancel_button_is_clicked':
         if (isLoading) return addIsProcessingNote();
@@ -87,7 +93,7 @@ export default function AddSubCategoryWindow () {
 
     switch (name) {
       case 'enSubCategory':
-        setName(val => ({ ...val, en: value}))
+        setName(val => ({ ...val, en: value.toUpperCase()}))
         break;
       case 'arSubCategory':
         setName(val => ({ ...val, ar: value}))
@@ -98,7 +104,8 @@ export default function AddSubCategoryWindow () {
   }
 
   // DEBUG & UI
-  console.log('name: ', name);
+  // console.log('name: ', name);
+  // console.log('categorySlug: ', categorySlug);
 
   return (
     <div
@@ -202,7 +209,7 @@ export default function AddSubCategoryWindow () {
               hover:bg-background-deep-light
               ${isLoading ? 'cursor-progress' : 'cursor-pointer'}
             `}
-            data-type="accept_button_is_clicked"
+            data-type="add_button_is_clicked"
             onClick={handleClick}
           >
             <span

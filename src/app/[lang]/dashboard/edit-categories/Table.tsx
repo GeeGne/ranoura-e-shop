@@ -65,6 +65,7 @@ export default function Table({
   const layoutRef = useLayoutRefStore(state => state.layoutRef);
   
   const setNewSubCategoryToggle = useAddSubCategoryWindowStore(state => state.setToggle);
+  const setNewSubCategoryType = useAddSubCategoryWindowStore(state => state.setCategorySlug);
 
   const subCategoriesArray = ['Hot Deals', 'Hot Sales'];
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
@@ -119,6 +120,8 @@ export default function Table({
         break;
       case 'add_new_sub_category_button_is_clicked':
         setNewSubCategoryToggle(true);
+        console.log('categorySlug: ', categorySlug);
+        if (categorySlug) setNewSubCategoryType(categorySlug);
         break;
       default:
         console.error('Unknown type: ', type);
@@ -238,6 +241,7 @@ export default function Table({
                     "
                     role="button"
                     data-type="add_new_sub_category_button_is_clicked"
+                    data-category-slug={category.slug}
                     onClick={handleClick}
                   >
                     <LineMdPlus className="text-heading" />
