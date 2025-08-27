@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 // COMPONENTS
-import Instructions from '@/app/[lang]/dashboard/edit-categories/Instructions';
+import Instructions from '@/app/[lang]/dashboard/edit-categories/instructions/index';
 import NavTile from '@/app/[lang]/dashboard/edit-categories/NavTile';
 import Table from '@/app/[lang]/dashboard/edit-categories/Table';
 

@@ -18,6 +18,7 @@ import Navbar from '@/components/fixedLayouts/navbar/Index';
 import SelectLang from '@/components/fixedLayouts/SelectLang';
 import AlertMessage from '@/components/fixedLayouts/AlertMessage';
 import AllProductImages from '@/components/fixedLayouts/AllProductImages';
+import ImageDisplayerWindow from '@/components/fixedLayouts/ImageDisplayerWindow';
 import FilterWindow from '@/components/fixedLayouts/FilterWindow';
 import ActivityWindow from '@/components/fixedLayouts/ActivityWindow';
 import ActionConfirmWindow from '@/components/fixedLayouts/ActionConfirmWindow';
@@ -99,6 +100,7 @@ export default function RootLayout({
             <SelectLang />
             <AlertMessage />
             <AllProductImages />
+            <ImageDisplayerWindow />
             <FilterWindow />
             <ActivityWindow />
             <ActionConfirmWindow />

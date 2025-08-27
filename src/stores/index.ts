@@ -429,6 +429,22 @@ const useAddSubCategoryWindowStore = create<AddSubCategoryWindowProps>()(
   })
 )
 
+type ImageDisplayerWindowProps = {
+  toggle: boolean;
+  setToggle: (value: boolean) => void;
+  url: string;
+  setUrl: (value: string) => void;
+}
+
+const useImageDisplayerWindow = create<ImageDisplayerWindowProps>()(
+  (set) => ({
+    toggle: false,
+    setToggle: (toggle) => set({ toggle }),
+    url: "",
+    setUrl: (url) => set({ url })
+  })
+)
+
 export { 
   useCartStore, useNavbarStore, 
   useTabNameStore, useFilterWindowStore,
@@ -439,5 +455,5 @@ export {
   useAddProductImgWindowStore, useSelectImgColorWindowStore, 
   useStorageStore, useProductDataStore,
   useActivityWindowStore, useActionConfirmWindowStore,
-  useAddSubCategoryWindowStore
+  useAddSubCategoryWindowStore, useImageDisplayerWindow
 };

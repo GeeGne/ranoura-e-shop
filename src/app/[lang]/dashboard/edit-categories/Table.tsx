@@ -10,6 +10,7 @@ import LineMdEdit from '@/components/svgs/LineMdEdit';
 import LineMdTrash from '@/components/svgs/LineMdTrash';
 import LineMdPlus from '@/components/svgs/LineMdPlus';
 import LineMdMinus from '@/components/svgs/LineMdMinus';
+import MingcuteAspectRatioFill from '@/components/svgs/MingcuteAspectRatioFill';
 import LineMdMenuToCloseAltTransition from '@/components/svgs/LineMdMenuToCloseAltTransition';
 import SolarGalleryBold from '@/components/svgs/SolarGalleryBold';
 import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingResize';
@@ -18,7 +19,8 @@ import SolarGalleryCheckBold from '@/components/svgs/SolarGalleryCheckBold';
 // STORES
 import { 
   useLanguageStore, useAlertMessageStore, 
-  useLayoutRefStore, useAddSubCategoryWindowStore, useActivityWindowStore
+  useLayoutRefStore, useAddSubCategoryWindowStore, 
+  useActivityWindowStore, useImageDisplayerWindow
 } from '@/stores/index';
 
 // API
@@ -70,7 +72,9 @@ export default function Table({
   const setActivityWindowToggle = useActivityWindowStore(state => state.setToggle);
   const setActivityWindowMessage = useActivityWindowStore(state => state.setMessage);
 
-  const subCategoriesArray = ['Hot Deals', 'Hot Sales'];
+  const setImageDisplayerToggle = useImageDisplayerWindow(state => state.setToggle);
+  const setImageDisplayerUrl = useImageDisplayerWindow(state => state.setUrl);
+
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
@@ -139,8 +143,8 @@ export default function Table({
     }
   })
 
-  const handleClick = async (e: React.MouseEvent<HTMLButtonElement | HTMLLIElement>) => {
-    const { type, categorySlug, subCategorySlug } = e.currentTarget.dataset;
+  const handleClick = async (e: React.MouseEvent<HTMLButtonElement | HTMLLIElement | SVGElement>) => {
+    const { type, categorySlug, subCategorySlug, imageUrl } = e.currentTarget.dataset;
 
     switch (type) {
       case 'sub_category_block_is_clicked':
@@ -150,8 +154,11 @@ export default function Table({
         break;
       case 'add_new_sub_category_button_is_clicked':
         setNewSubCategoryToggle(true);
-        console.log('categorySlug: ', categorySlug);
         if (categorySlug) setNewSubCategoryType(categorySlug);
+        break;
+      case 'expand_image_button_is_clicked':
+        setImageDisplayerToggle(true);
+        if (imageUrl) setImageDisplayerUrl(imageUrl);
         break;
       default:
         console.error('Unknown type: ', type);
@@ -284,10 +291,51 @@ export default function Table({
                   transition-all duration-300 ease-in-out
                 `}
               >
-                <img 
-                  src={category.navbarImg}
-                  className="w-[200px] aspect-[1/1] object-center object-cover rounded-lg"
-                />
+                <div
+                  className="
+                    group relative w-[200px] aspect-[1/1] rounded-lg overflow-hidden
+                  "
+                >
+                  <div
+                    className="
+                      absolute top-0 left-0 w-full h-full bg-shade
+                      flex flex-row gap-4 items-center justify-center
+                      text-heading-invert
+                      unvisible group-hover:visible opacity-0 group-hover:opacity-100
+                      transition-all duration-300 ease-in-out
+                    "
+                  >
+                    <LineMdTrash
+                      className="
+                        w-10 h-10 hover:bg-shade-v2 p-2
+                        rounded-md active:opacity-80 cursor-pointer
+                        transition-all duration-200 ease-out
+                      "
+                    />
+                    <LineMdEdit
+                      className="
+                        w-10 h-10 hover:bg-shade-v2 p-2
+                        rounded-md active:opacity-80 cursor-pointer
+                        transition-all duration-200 ease-out
+                      "
+                    />
+                    <MingcuteAspectRatioFill
+                      className="
+                        w-10 h-10 hover:bg-shade-v2 p-2
+                        rounded-md active:opacity-80 cursor-pointer
+                        transition-all duration-200 ease-out
+                      "
+                      role="button"
+                      data-type="expand_image_button_is_clicked"
+                      data-image-url={category.navbarImg}
+                      onClick={handleClick}
+                    />
+                  </div>
+                  <img 
+                    src={category.navbarImg}
+                    className="w-full object-center object-cover"
+                  />
+                </div>
               </td>
               <td 
                 className={`
@@ -295,10 +343,51 @@ export default function Table({
                   transition-all duration-300 ease-in-out
                 `}
               >
-                <img 
-                  src={category.navbarLgImg}
-                  className="w-[400px] aspect-[2/1] object-center object-cover rounded-lgg"
-                />
+                <div
+                  className="
+                    group relative w-[400px] aspect-[2/1] rounded-lg overflow-hidden
+                  "
+                >
+                  <div
+                    className="
+                      absolute top-0 left-0 w-full h-full bg-shade
+                      flex flex-row gap-4 items-center justify-center
+                      text-heading-invert
+                      unvisible group-hover:visible opacity-0 group-hover:opacity-100
+                      transition-all duration-300 ease-in-out
+                    "
+                  >
+                    <LineMdTrash
+                      className="
+                        w-10 h-10 hover:bg-shade-v2 p-2
+                        rounded-md active:opacity-80 cursor-pointer
+                        transition-all duration-200 ease-out
+                      "
+                    />
+                    <LineMdEdit
+                      className="
+                        w-10 h-10 hover:bg-shade-v2 p-2
+                        rounded-md active:opacity-80 cursor-pointer
+                        transition-all duration-200 ease-out
+                      "
+                    />
+                    <MingcuteAspectRatioFill
+                      className="
+                        w-10 h-10 hover:bg-shade-v2 p-2
+                        rounded-md active:opacity-80 cursor-pointer
+                        transition-all duration-200 ease-out
+                      "
+                      role="button"
+                      data-type="expand_image_button_is_clicked"
+                      data-image-url={category.navbarLgImg}
+                      onClick={handleClick}
+                    />
+                  </div>
+                  <img 
+                    src={category.navbarLgImg}
+                    className="w-full object-center object-cover"
+                  />
+                </div>
               </td>
               <td className="px-6">
                 <Link
