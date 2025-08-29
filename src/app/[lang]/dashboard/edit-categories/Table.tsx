@@ -25,6 +25,7 @@ import {
 
 // API
 import deleteSubCategory from '@/lib/api/sub-categories/slug/delete';
+import uploadProductImage from '@/lib/api/object/bucketName/filePath/post';
 
 // LIB
 import getMessage from '@/lib/messages/index';
@@ -128,20 +129,41 @@ export default function Table({
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['sub-categories']});
-      setAlertToggle(Date.now());
-      setAlertType("success");
-      setAlertMessage(data?.message[isEn ? 'en' : 'ar']);
+      displayAlert(data.message[isEn ? 'en' : 'ar'], "success");
     },
     onError: () => {
-      setAlertToggle(Date.now());
-      setAlertType("error");
-      setAlertMessage(
+      displayAlert(
         isEn 
-          ? "Couldn't create new product, please try again." 
+          ? "Couldn't create new Sub-Category, please try again." 
           : "فشل في محاوله انشاء مجتمع جديد, الرجاء محاوله مره اخرى."
-      )
+      , "error");
     }
   })
+
+  const uploadSubCategoryImageMutation = useMutation({
+    mutationFn: uploadProductImage,
+    onSettled: () => {
+      setActivityWindowToggle(false);
+    },
+    onMutate: () => {
+      setActivityWindowToggle(true);
+    },
+    onSuccess: (data) => {
+      displayAlert(data.message[isEn ? 'en' : 'ar'], "success");
+
+      // DEBUG
+      // console.log('upload image data result: ', data);
+    },
+    onError: () => {
+      displayAlert(isEn ? 'An Error has accured during uploading the image, please try again.' : 'هناك مشكله خلال رفع الصوره, الرجاء المحاوله مره اخرى.', "error");
+    }
+  })
+
+  const displayAlert = (message: any, type: string) => {
+    setAlertMessage(message);
+    setAlertType(type);
+    setAlertToggle(Date.now());
+  };
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement | HTMLLIElement | SVGElement>) => {
     const { type, categorySlug, subCategorySlug, imageUrl } = e.currentTarget.dataset;
@@ -162,6 +184,28 @@ export default function Table({
         break;
       default:
         console.error('Unknown type: ', type);
+    }
+  }
+
+  const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, files } = e.currentTarget;
+    const { categorySlug, imageType } = e.currentTarget.dataset;
+
+    switch (name) {
+      case 'navBarImgEditInpt':
+      case 'navBarLgImgEditInpt':
+        console.log('files: ', files);
+        const subCategoryImage = files[0]
+        console.log('subCategoryImage: ', subCategoryImage);
+        return;
+        uploadSubCategoryImageMutation.mutate({
+          bucketName: 'assets',
+          filePath: setFilePath(`images/categories/${categorySlug}`, imageType),
+          subCategoryImage
+        });
+        break;
+      default:
+        console.error('Unknown name: ', name);
     }
   }
 
@@ -312,13 +356,32 @@ export default function Table({
                         transition-all duration-200 ease-out
                       "
                     />
-                    <LineMdEdit
-                      className="
-                        w-10 h-10 hover:bg-shade-v2 p-2
-                        rounded-md active:opacity-80 cursor-pointer
-                        transition-all duration-200 ease-out
-                      "
-                    />
+                    <label
+                      className=""
+                      htmlFor="navBarImgEditInpt"
+                    >
+                      <LineMdEdit
+                        className="
+                          w-10 h-10 hover:bg-shade-v2 p-2
+                          rounded-md active:opacity-80 cursor-pointer
+                          transition-all duration-200 ease-out
+                        "
+                      />
+                      <input
+                        className="
+                          absolute top-1/2 left-1/2
+                          translate-x-[-50%] translate-y-[-50%] w-0 h-0
+                          unvisible opacity-0
+                        "
+                        type="file"
+                        accept="image/*"
+                        id="navBarImgEditInpt"
+                        name="navBarImgEditInpt"
+                        data-image-type="navbar"
+                        data-category-slug={category.slug}
+                        onChange={handleChange}
+                      />
+                    </label>
                     <MingcuteAspectRatioFill
                       className="
                         w-10 h-10 hover:bg-shade-v2 p-2
@@ -337,7 +400,7 @@ export default function Table({
                   />
                 </div>
               </td>
-              <td 
+              <td
                 className={`
                   px-6 py-4 text-sm text-body min-w-[500px] min-h-[250px]
                   transition-all duration-300 ease-in-out
@@ -364,13 +427,31 @@ export default function Table({
                         transition-all duration-200 ease-out
                       "
                     />
-                    <LineMdEdit
-                      className="
-                        w-10 h-10 hover:bg-shade-v2 p-2
-                        rounded-md active:opacity-80 cursor-pointer
-                        transition-all duration-200 ease-out
-                      "
-                    />
+                    <label
+                      className=""
+                      htmlFor="navBarLgImgEditInpt"
+                    >
+                      <LineMdEdit
+                        className="
+                          w-10 h-10 hover:bg-shade-v2 p-2
+                          rounded-md active:opacity-80 cursor-pointer
+                          transition-all duration-200 ease-out
+                        "
+                      />
+                      <input
+                        className="
+                          absolute top-1/2 left-1/2
+                          translate-x-[-50%] translate-y-[-50%] w-0 h-0
+                          unvisible opacity-0
+                        "
+                        type="file"
+                        accept="image/*"
+                        id="navBarLgImgEditInpt"
+                        name="navBarLgImgEditInpt"
+                        data-image-type="hero"
+                        onChange={handleChange}
+                      />
+                    </label>
                     <MingcuteAspectRatioFill
                       className="
                         w-10 h-10 hover:bg-shade-v2 p-2
@@ -383,7 +464,7 @@ export default function Table({
                       onClick={handleClick}
                     />
                   </div>
-                  <img 
+                  <img
                     src={category.navbarLgImg}
                     className="w-full object-center object-cover"
                   />

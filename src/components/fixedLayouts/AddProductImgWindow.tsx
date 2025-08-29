@@ -16,7 +16,7 @@ import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingRes
 import { 
   useAlertMessageStore, useLanguageStore, 
   useAddProductImgWindowStore, useSelectImgColorWindowStore,
-  useStorageStore, useEditProductWindowStore
+  useEditProductWindowStore
 } from '@/stores/index';
 
 // API
@@ -58,8 +58,6 @@ export default function AddProductImgWindow () {
   const productData = useEditProductWindowStore(state => state.productData);
   const setProductData = useEditProductWindowStore(state => state.setProductData);
 
-  const setFileData = useStorageStore(state => state.setFileData);
-
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
@@ -68,7 +66,7 @@ export default function AddProductImgWindow () {
   const [ productImage, setProductImage ] = useState<File | null>(null);
   const [ isMutating, setIsMutating ] = useState<boolean>(false);
 
-  const setFilePath = (productId: string, color: string, viewType: string) => `${productId}/${color}/${Date.now()}-view-${viewType}`;
+  const setFilePath = (productId: string, color: string, viewType: any) => `${productId}/${color}/${Date.now()}-view-${viewType}`;
 
   const resetWindowToDefault = () => {
     setPreview(null);
@@ -123,7 +121,6 @@ export default function AddProductImgWindow () {
       setIsMutating(true);
     },
     onSuccess: (data) => {
-      setFileData(data);
       const { images, colors } = updateProductImages(data);
       displayAlert(data.message[isEn ? 'en' : 'ar'], "success");
       setProductData({ ...productData, images, colors });
@@ -205,7 +202,7 @@ export default function AddProductImgWindow () {
           default:
             uploadProductImageMutation.mutate({
               bucketName: 'assets',
-              filePath: setFilePath(productData?.id, selectedColor?.name, imageSelectedType?.type),
+              filePath: setFilePath(`images/products/${productData?.slug}`, selectedColor?.name, imageSelectedType?.type),
               productImage
             });
         }
