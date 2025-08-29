@@ -141,3 +141,5 @@ export async function DELETE (
 
 // Upload Paths:
 // #Products: /assets/images/products/:product-id/:color/view-a.avif
+// #Products: /assets/images/products/:product-slug/:color/view-a.avif
+// #categories: /assets/images/categories/:category-slug/hero.avif

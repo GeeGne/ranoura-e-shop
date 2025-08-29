@@ -32,7 +32,7 @@ export async function PUT (
     });
 
     const message = {
-      en: 'Category has been deleted successfully!',
+      en: 'Category has been updated successfully!',
       ar: 'تم تحديث القسم بنجاح!'
     }
 
@@ -44,7 +44,7 @@ export async function PUT (
     const error = err as Error;
     console.error('Error while updating Category: ', error.message);
     return nextError(
-      'CATEGORY_DELETE_FAIL',
+      'CATEGORY_UPDATE_FAIL',
       'Error Updating the choosen Category',
       404
     )

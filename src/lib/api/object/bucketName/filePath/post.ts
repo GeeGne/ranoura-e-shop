@@ -5,17 +5,17 @@ import getServerUrl from '@/utils/getServerUrl';
 type Props = {
   bucketName: string;
   filePath: string;
-  productImage: any;
+  file: any;
 }
 
 export default async function post ({ 
   bucketName, 
   filePath,
-  productImage
+  file
 }: Props) {
   try {
     const formData = new FormData();
-    formData.append('file', productImage);
+    formData.append('file', file);
 
     const url = `${getServerUrl()}/api/v1/object/${bucketName}/${filePath}`;
     const response = await fetch(url, {

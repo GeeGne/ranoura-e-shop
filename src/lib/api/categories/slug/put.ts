@@ -9,7 +9,7 @@ type Props = {
 
 export default async function put ({ slug, data }: Props) {
   try {
-    const url = `${getServerUrl()}/api/v1/categoires/${slug}`;
+    const url = `${getServerUrl()}/api/v1/categories/${slug}`;
     const response = await fetch(url, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json'},

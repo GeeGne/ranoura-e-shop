@@ -69,6 +69,7 @@ export default function Table({
   const mainRef = useRef<any>(null);
   const layoutRef = useLayoutRefStore(state => state.layoutRef);
   const targetedCategorySlug = useRef<string | null>(null);
+  const targetedCategoryImageType = useRef<string | null>(null);
 
   const setNewSubCategoryToggle = useAddSubCategoryWindowStore(state => state.setToggle);
   const setNewSubCategoryType = useAddSubCategoryWindowStore(state => state.setCategorySlug);
@@ -174,12 +175,12 @@ export default function Table({
       setActivityWindowToggle(true);
       setActivityWindowMessage(isEn ? 'Uploading the Image...' : 'جاري رفع الصوره...');
     },
-    onSuccess: (data) => {
-      const { publicUrl } = data;
-      displayAlert(data.message[isEn ? 'en' : 'ar'], "success");
-      if (targetedCategorySlug.current) updateCategoryMutation.mutate({ 
+    onSuccess: (results) => {
+      const { publicUrl } = results.data;
+      displayAlert(results.message[isEn ? 'en' : 'ar'], "success");
+      if (targetedCategorySlug.current && targetedCategoryImageType.current) updateCategoryMutation.mutate({ 
         slug: targetedCategorySlug.current, 
-        data: {url: publicUrl} 
+        data: { [targetedCategoryImageType.current]: publicUrl } 
       });
 
       // DEBUG
@@ -222,7 +223,7 @@ export default function Table({
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, files } = e.currentTarget;
-    const { categorySlug, imageType } = e.currentTarget.dataset;
+    const { categorySlug, imageType, variableName } = e.currentTarget.dataset;
 
     switch (name) {
       case 'navBarImgEditInpt':
@@ -235,6 +236,7 @@ export default function Table({
           file
         });
         if (categorySlug) (targetedCategorySlug.current = categorySlug);
+        if (variableName)  (targetedCategoryImageType.current = variableName);
 
         // DEBUG
         // console.log('file: ', file);
@@ -393,7 +395,7 @@ export default function Table({
                       />
                       <label
                         className=""
-                        htmlFor="navBarImgEditInpt"
+                        htmlFor={`navBarImgEditInpt_${category.slug}`}
                       >
                         <LineMdEdit
                           className="
@@ -410,9 +412,10 @@ export default function Table({
                           "
                           type="file"
                           accept="image/*"
-                          id="navBarImgEditInpt"
+                          id={`navBarImgEditInpt_${category.slug}`}
                           name="navBarImgEditInpt"
                           data-image-type="navbar"
+                          data-variable-name="navbarImg"
                           data-category-slug={category.slug}
                           onChange={handleChange}
                         />
@@ -434,10 +437,27 @@ export default function Table({
                       className="w-full object-center object-cover"
                     />
                   </div>
-                  : <div
+                  : <label
                     className="
-                      group relative w-[200px] aspect-[1/1] rounded-lg overflow-hidden
-                  ">
+                      flex relative w-[200px] aspect-[1/1] rounded-lg overflow-hidden cursor-pointer
+                    "
+                    htmlFor="navBarImgEditInpt"
+                  >
+                    <input
+                      className="
+                        absolute top-1/2 left-1/2
+                        translate-x-[-50%] translate-y-[-50%] w-0 h-0
+                        unvisible opacity-0
+                      "
+                      type="file"
+                      accept="image/*"
+                      id="navBarImgEditInpt"
+                      name="navBarImgEditInpt"
+                      data-image-type="navbar"
+                      data-variable-name="navbarImg"
+                      data-category-slug={category.slug}
+                      onChange={handleChange}
+                    />
                     <div
                       className="
                         absolute top-0 left-0 w-full h-full bg-background-light
@@ -489,7 +509,7 @@ export default function Table({
                         </span>
                       </div>
                     </div>
-                  </div>
+                  </label>
                 }
               </td>
               <td
@@ -522,7 +542,7 @@ export default function Table({
                       />
                       <label
                         className=""
-                        htmlFor="navBarLgImgEditInpt"
+                        htmlFor={`navBarLgImgEditInpt_${category.slug}`}
                       >
                         <LineMdEdit
                           className="
@@ -539,9 +559,11 @@ export default function Table({
                           "
                           type="file"
                           accept="image/*"
-                          id="navBarLgImgEditInpt"
+                          id={`navBarLgImgEditInpt_${category.slug}`}
                           name="navBarLgImgEditInpt"
                           data-image-type="hero"
+                          data-variable-name="navbarLgImg"
+                          data-category-slug={category.slug}
                           onChange={handleChange}
                         />
                       </label>
@@ -562,11 +584,27 @@ export default function Table({
                       className="w-full object-center object-cover"
                     />
                   </div>
-                  : <div
+                  : <label
                     className="
-                      group relative w-[400px] aspect-[2/1] rounded-lg overflow-hidden
+                      relative flex w-[400px] aspect-[2/1] rounded-lg overflow-hidden cursor-pointer
                     "
+                    htmlFor={`navBarLgImgEditInpt_${category.slug}`}
                   >
+                    <input
+                      className="
+                        absolute top-1/2 left-1/2
+                        translate-x-[-50%] translate-y-[-50%] w-0 h-0
+                        unvisible opacity-0
+                      "
+                      type="file"
+                      accept="image/*"
+                      id={`navBarLgImgEditInpt_${category.slug}`}
+                      name="navBarLgImgEditInpt"
+                      data-image-type="hero"
+                      data-variable-name="navbarLgImg"
+                      data-category-slug={category.slug}
+                      onChange={handleChange}
+                    />
                     <div
                       className="
                         absolute top-0 left-0 w-full h-full bg-background-light
@@ -618,7 +656,7 @@ export default function Table({
                         </span>
                       </div>
                     </div>
-                  </div>
+                  </label>
                 }
               </td>
               <td className="px-6">
