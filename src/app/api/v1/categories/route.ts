@@ -78,7 +78,7 @@ export async function POST (req: NextRequest) {
     console.error('Error while creating the Category: ', error.message);
     return nextError(
       'NEW_CATEGORY_FAIL',
-      'Failed to create new subCategory',
+      'Failed to create new Category',
       500
     )
   }

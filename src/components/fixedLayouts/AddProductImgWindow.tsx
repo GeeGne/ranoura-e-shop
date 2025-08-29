@@ -203,7 +203,7 @@ export default function AddProductImgWindow () {
             uploadProductImageMutation.mutate({
               bucketName: 'assets',
               filePath: setFilePath(`images/products/${productData?.slug}`, selectedColor?.name, imageSelectedType?.type),
-              productImage
+              file: productImage
             });
         }
         break;

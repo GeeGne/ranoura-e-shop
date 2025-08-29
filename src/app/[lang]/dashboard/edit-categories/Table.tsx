@@ -10,6 +10,8 @@ import LineMdEdit from '@/components/svgs/LineMdEdit';
 import LineMdTrash from '@/components/svgs/LineMdTrash';
 import LineMdPlus from '@/components/svgs/LineMdPlus';
 import LineMdMinus from '@/components/svgs/LineMdMinus';
+import LineMdArrowsDiagonal from '@/components/svgs/LineMdArrowsDiagonal';
+import GardenFileImage26 from '@/components/svgs/GardenFileImage26';
 import MingcuteAspectRatioFill from '@/components/svgs/MingcuteAspectRatioFill';
 import LineMdMenuToCloseAltTransition from '@/components/svgs/LineMdMenuToCloseAltTransition';
 import SolarGalleryBold from '@/components/svgs/SolarGalleryBold';
@@ -25,7 +27,8 @@ import {
 
 // API
 import deleteSubCategory from '@/lib/api/sub-categories/slug/delete';
-import uploadProductImage from '@/lib/api/object/bucketName/filePath/post';
+import uploadStorageFile from '@/lib/api/object/bucketName/filePath/post';
+import updateCategory from '@/lib/api/categories/slug/put';
 
 // LIB
 import getMessage from '@/lib/messages/index';
@@ -65,11 +68,11 @@ export default function Table({
   
   const mainRef = useRef<any>(null);
   const layoutRef = useLayoutRefStore(state => state.layoutRef);
-  
+  const targetedCategorySlug = useRef<string | null>(null);
+
   const setNewSubCategoryToggle = useAddSubCategoryWindowStore(state => state.setToggle);
   const setNewSubCategoryType = useAddSubCategoryWindowStore(state => state.setCategorySlug);
 
-  const activityWindowToggle = useActivityWindowStore(state => state.toggle);
   const setActivityWindowToggle = useActivityWindowStore(state => state.setToggle);
   const setActivityWindowMessage = useActivityWindowStore(state => state.setMessage);
 
@@ -118,6 +121,28 @@ export default function Table({
     }
   }, [ scroll, scrollTrigger ]);
 
+  const updateCategoryMutation = useMutation({
+    mutationFn: updateCategory,
+    onSettled: () => {
+      setActivityWindowToggle(false);
+    },
+    onMutate: () => {
+      setActivityWindowToggle(true);
+      setActivityWindowMessage(isEn ? 'Updating the Category...' : 'جاري تحديث القسم...')
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['categories']});
+      displayAlert(data.message[isEn ? 'en' : 'ar'], "success");
+    },
+    onError: () => {
+      displayAlert(
+        isEn 
+          ? "Couldn't update Category, please try again." 
+          : "فشل في محاوله تحديث القسم, الرجاء محاوله مره اخرى."
+      , "error");
+    }
+  });
+
   const deleteSubCategoryMutation = useMutation({
     mutationFn: deleteSubCategory,
     onSettled: () => {
@@ -140,16 +165,22 @@ export default function Table({
     }
   })
 
-  const uploadSubCategoryImageMutation = useMutation({
-    mutationFn: uploadProductImage,
+  const uploadCategoryImageMutation = useMutation({
+    mutationFn: uploadStorageFile,
     onSettled: () => {
       setActivityWindowToggle(false);
     },
     onMutate: () => {
       setActivityWindowToggle(true);
+      setActivityWindowMessage(isEn ? 'Uploading the Image...' : 'جاري رفع الصوره...');
     },
     onSuccess: (data) => {
+      const { publicUrl } = data;
       displayAlert(data.message[isEn ? 'en' : 'ar'], "success");
+      if (targetedCategorySlug.current) updateCategoryMutation.mutate({ 
+        slug: targetedCategorySlug.current, 
+        data: {url: publicUrl} 
+      });
 
       // DEBUG
       // console.log('upload image data result: ', data);
@@ -158,6 +189,8 @@ export default function Table({
       displayAlert(isEn ? 'An Error has accured during uploading the image, please try again.' : 'هناك مشكله خلال رفع الصوره, الرجاء المحاوله مره اخرى.', "error");
     }
   })
+
+  const setFilePath = (filePath: string, imageType: any) => `${filePath}/${Date.now()}-${imageType}`;
 
   const displayAlert = (message: any, type: string) => {
     setAlertMessage(message);
@@ -194,15 +227,17 @@ export default function Table({
     switch (name) {
       case 'navBarImgEditInpt':
       case 'navBarLgImgEditInpt':
-        console.log('files: ', files);
-        const subCategoryImage = files[0]
-        console.log('subCategoryImage: ', subCategoryImage);
-        return;
-        uploadSubCategoryImageMutation.mutate({
+        if (!files) return;
+        const file: any = files[0];
+        uploadCategoryImageMutation.mutate({
           bucketName: 'assets',
           filePath: setFilePath(`images/categories/${categorySlug}`, imageType),
-          subCategoryImage
+          file
         });
+        if (categorySlug) (targetedCategorySlug.current = categorySlug);
+
+        // DEBUG
+        // console.log('file: ', file);
         break;
       default:
         console.error('Unknown name: ', name);
@@ -335,70 +370,127 @@ export default function Table({
                   transition-all duration-300 ease-in-out
                 `}
               >
-                <div
-                  className="
-                    group relative w-[200px] aspect-[1/1] rounded-lg overflow-hidden
-                  "
-                >
-                  <div
+                {category.navbarImg 
+                  ? <div
                     className="
-                      absolute top-0 left-0 w-full h-full bg-shade
-                      flex flex-row gap-4 items-center justify-center
-                      text-heading-invert
-                      unvisible group-hover:visible opacity-0 group-hover:opacity-100
-                      transition-all duration-300 ease-in-out
-                    "
-                  >
-                    <LineMdTrash
+                    group relative w-[200px] aspect-[1/1] rounded-lg overflow-hidden
+                  ">
+                    <div
                       className="
-                        w-10 h-10 hover:bg-shade-v2 p-2
-                        rounded-md active:opacity-80 cursor-pointer
-                        transition-all duration-200 ease-out
+                        absolute top-0 left-0 w-full h-full bg-shade
+                        flex flex-row gap-4 items-center justify-center
+                        text-heading-invert
+                        unvisible group-hover:visible opacity-0 group-hover:opacity-100
+                        transition-all duration-300 ease-in-out
                       "
-                    />
-                    <label
-                      className=""
-                      htmlFor="navBarImgEditInpt"
                     >
-                      <LineMdEdit
+                      <LineMdTrash
                         className="
                           w-10 h-10 hover:bg-shade-v2 p-2
                           rounded-md active:opacity-80 cursor-pointer
                           transition-all duration-200 ease-out
                         "
                       />
-                      <input
+                      <label
+                        className=""
+                        htmlFor="navBarImgEditInpt"
+                      >
+                        <LineMdEdit
+                          className="
+                            w-10 h-10 hover:bg-shade-v2 p-2
+                            rounded-md active:opacity-80 cursor-pointer
+                            transition-all duration-200 ease-out
+                          "
+                        />
+                        <input
+                          className="
+                            absolute top-1/2 left-1/2
+                            translate-x-[-50%] translate-y-[-50%] w-0 h-0
+                            unvisible opacity-0
+                          "
+                          type="file"
+                          accept="image/*"
+                          id="navBarImgEditInpt"
+                          name="navBarImgEditInpt"
+                          data-image-type="navbar"
+                          data-category-slug={category.slug}
+                          onChange={handleChange}
+                        />
+                      </label>
+                      <MingcuteAspectRatioFill
                         className="
-                          absolute top-1/2 left-1/2
-                          translate-x-[-50%] translate-y-[-50%] w-0 h-0
-                          unvisible opacity-0
+                          w-10 h-10 hover:bg-shade-v2 p-2
+                          rounded-md active:opacity-80 cursor-pointer
+                          transition-all duration-200 ease-out
                         "
-                        type="file"
-                        accept="image/*"
-                        id="navBarImgEditInpt"
-                        name="navBarImgEditInpt"
-                        data-image-type="navbar"
-                        data-category-slug={category.slug}
-                        onChange={handleChange}
+                        role="button"
+                        data-type="expand_image_button_is_clicked"
+                        data-image-url={category.navbarImg}
+                        onClick={handleClick}
                       />
-                    </label>
-                    <MingcuteAspectRatioFill
-                      className="
-                        w-10 h-10 hover:bg-shade-v2 p-2
-                        rounded-md active:opacity-80 cursor-pointer
-                        transition-all duration-200 ease-out
-                      "
-                      role="button"
-                      data-type="expand_image_button_is_clicked"
-                      data-image-url={category.navbarImg}
-                      onClick={handleClick}
+                    </div>
+                    <img 
+                      src={category.navbarImg}
+                      className="w-full object-center object-cover"
                     />
                   </div>
-                  <img 
-                    src={category.navbarImg}
-                    className="w-full object-center object-cover"
-                  />
-                </div>
+                  : <div
+                    className="
+                      group relative w-[200px] aspect-[1/1] rounded-lg overflow-hidden
+                  ">
+                    <div
+                      className="
+                        absolute top-0 left-0 w-full h-full bg-background-light
+                        border border-dashed border-[4px] border-body-light
+                        flex flex-row gap-4 items-center justify-center
+                        text-heading-invert
+                        transition-all duration-300 ease-in-out
+                      "
+                    />
+                    <LineMdPlus
+                      className="
+                        absolute top-1/2 left-1/2
+                        translate-x-[-50%] translate-y-[-50%]
+                        w-12 h-12 text-body-light
+                      "
+                    />
+                    <div
+                      className="
+                        absolute bottom-0 left-1/2 translate-x-[-50%]
+                        flex items-center justify-evenly w-full p-4
+                      "
+                    >
+                      <div
+                        className="relative bg-body-light p-1 rounded-lg"
+                      >
+                        <LineMdArrowsDiagonal className="text-background-light w-8 h-8" />
+                        <span
+                          className="
+                            absolute top-1/2 left-1/2
+                            translate-x-[-50%] translate-y-[-50%]
+                            text-base text-background-light font-bold
+                            bg-body-light rounded-full
+                          "
+                        >
+                          1:1
+                        </span>
+                      </div>
+                      <div
+                        className="flex items-center gap-2 bg-body-light p-2 rounded-lg"
+                      >
+                        <GardenFileImage26 className="text-background-light" />
+                        <span
+                          className="
+                            text-base text-background-light font-bold
+                            bg-body-light rounded-full
+                          "
+                        >
+                          AVIF
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                }
               </td>
               <td
                 className={`
@@ -406,69 +498,128 @@ export default function Table({
                   transition-all duration-300 ease-in-out
                 `}
               >
-                <div
-                  className="
-                    group relative w-[400px] aspect-[2/1] rounded-lg overflow-hidden
-                  "
-                >
-                  <div
+                {category.navbarLgImg 
+                  ? <div
                     className="
-                      absolute top-0 left-0 w-full h-full bg-shade
-                      flex flex-row gap-4 items-center justify-center
-                      text-heading-invert
-                      unvisible group-hover:visible opacity-0 group-hover:opacity-100
-                      transition-all duration-300 ease-in-out
+                      group relative w-[400px] aspect-[2/1] rounded-lg overflow-hidden
                     "
                   >
-                    <LineMdTrash
+                    <div
                       className="
-                        w-10 h-10 hover:bg-shade-v2 p-2
-                        rounded-md active:opacity-80 cursor-pointer
-                        transition-all duration-200 ease-out
+                        absolute top-0 left-0 w-full h-full bg-shade
+                        flex flex-row gap-4 items-center justify-center
+                        text-heading-invert
+                        unvisible group-hover:visible opacity-0 group-hover:opacity-100
+                        transition-all duration-300 ease-in-out
                       "
-                    />
-                    <label
-                      className=""
-                      htmlFor="navBarLgImgEditInpt"
                     >
-                      <LineMdEdit
+                      <LineMdTrash
                         className="
                           w-10 h-10 hover:bg-shade-v2 p-2
                           rounded-md active:opacity-80 cursor-pointer
                           transition-all duration-200 ease-out
                         "
                       />
-                      <input
+                      <label
+                        className=""
+                        htmlFor="navBarLgImgEditInpt"
+                      >
+                        <LineMdEdit
+                          className="
+                            w-10 h-10 hover:bg-shade-v2 p-2
+                            rounded-md active:opacity-80 cursor-pointer
+                            transition-all duration-200 ease-out
+                          "
+                        />
+                        <input
+                          className="
+                            absolute top-1/2 left-1/2
+                            translate-x-[-50%] translate-y-[-50%] w-0 h-0
+                            unvisible opacity-0
+                          "
+                          type="file"
+                          accept="image/*"
+                          id="navBarLgImgEditInpt"
+                          name="navBarLgImgEditInpt"
+                          data-image-type="hero"
+                          onChange={handleChange}
+                        />
+                      </label>
+                      <MingcuteAspectRatioFill
                         className="
-                          absolute top-1/2 left-1/2
-                          translate-x-[-50%] translate-y-[-50%] w-0 h-0
-                          unvisible opacity-0
+                          w-10 h-10 hover:bg-shade-v2 p-2
+                          rounded-md active:opacity-80 cursor-pointer
+                          transition-all duration-200 ease-out
                         "
-                        type="file"
-                        accept="image/*"
-                        id="navBarLgImgEditInpt"
-                        name="navBarLgImgEditInpt"
-                        data-image-type="hero"
-                        onChange={handleChange}
+                        role="button"
+                        data-type="expand_image_button_is_clicked"
+                        data-image-url={category.navbarImg}
+                        onClick={handleClick}
                       />
-                    </label>
-                    <MingcuteAspectRatioFill
-                      className="
-                        w-10 h-10 hover:bg-shade-v2 p-2
-                        rounded-md active:opacity-80 cursor-pointer
-                        transition-all duration-200 ease-out
-                      "
-                      role="button"
-                      data-type="expand_image_button_is_clicked"
-                      data-image-url={category.navbarLgImg}
-                      onClick={handleClick}
+                    </div>
+                    <img 
+                      src={category.navbarLgImg}
+                      className="w-full object-center object-cover"
                     />
                   </div>
-                  <img
-                    src={category.navbarLgImg}
-                    className="w-full object-center object-cover"
-                  />
-                </div>
+                  : <div
+                    className="
+                      group relative w-[400px] aspect-[2/1] rounded-lg overflow-hidden
+                    "
+                  >
+                    <div
+                      className="
+                        absolute top-0 left-0 w-full h-full bg-background-light
+                        border border-dashed border-[4px] border-body-light
+                        flex flex-row gap-4 items-center justify-center
+                        text-heading-invert
+                        transition-all duration-300 ease-in-out
+                      "
+                    />
+                    <LineMdPlus
+                      className="
+                        absolute top-1/2 left-1/2
+                        translate-x-[-50%] translate-y-[-50%]
+                        w-12 h-12 text-body-light
+                      "
+                    />
+                    <div
+                      className="
+                        absolute bottom-0 left-1/2 translate-x-[-50%]
+                        flex items-center justify-evenly w-full p-4
+                      "
+                    >
+                      <div
+                        className="relative bg-body-light p-1 rounded-lg"
+                      >
+                        <LineMdArrowsDiagonal className="text-background-light w-8 h-8" />
+                        <span
+                          className="
+                            absolute top-1/2 left-1/2
+                            translate-x-[-50%] translate-y-[-50%]
+                            text-base text-background-light font-bold
+                            bg-body-light rounded-full
+                          "
+                        >
+                          2:1
+                        </span>
+                      </div>
+                      <div
+                        className="flex items-center gap-2 bg-body-light p-2 rounded-lg"
+                      >
+                        <GardenFileImage26 className="text-background-light" />
+                        <span
+                          className="
+                            text-base text-background-light font-bold
+                            bg-body-light rounded-full
+                          "
+                        >
+                          AVIF
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                }
               </td>
               <td className="px-6">
                 <Link
