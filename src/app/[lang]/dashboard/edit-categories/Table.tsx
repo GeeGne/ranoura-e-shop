@@ -75,6 +75,7 @@ export default function Table({
 
   const setEditImageUrlWindowToggle = useEditImageUrlCategoryWindowStore(state => state.setToggle);
   const setEditImageUrlWindowImageUrl = useEditImageUrlCategoryWindowStore(state => state.setImageUrl);
+  const setNewSubCategorySetSlug = useEditImageUrlCategoryWindowStore(state => state.setSlug);
 
   const setNewSubCategoryToggle = useAddSubCategoryWindowStore(state => state.setToggle);
   const setNewSubCategoryType = useAddSubCategoryWindowStore(state => state.setCategorySlug);
@@ -224,6 +225,7 @@ export default function Table({
       case 'edit_image_url_button_is_clicked':
         setEditImageUrlWindowToggle(true);
         if (imageUrl) setEditImageUrlWindowImageUrl(imageUrl);
+        if (categorySlug) setNewSubCategorySetSlug(categorySlug);
         break;
       default:
         console.error('Unknown type: ', type);
@@ -697,6 +699,7 @@ export default function Table({
                   <button 
                     data-type="edit_image_url_button_is_clicked"
                     data-image-url={category.imgUrl}
+                    data-category-slug={category.slug}
                     onClick={handleClick}
                   >
                     <MdiLinkEdit 

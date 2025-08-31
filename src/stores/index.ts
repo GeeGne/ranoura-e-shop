@@ -450,6 +450,8 @@ type EditImageUrlCategoryWindowProps = {
   setToggle: (value: boolean) => void;
   imageUrl: string | null;
   setImageUrl: (value: string) => void;
+  slug: string | null;
+  setSlug: (value: string) => void;
 }
 
 const useEditImageUrlCategoryWindowStore = create<EditImageUrlCategoryWindowProps>()(
@@ -457,7 +459,9 @@ const useEditImageUrlCategoryWindowStore = create<EditImageUrlCategoryWindowProp
     toggle: true,
     setToggle: (toggle) => set({ toggle }),
     imageUrl: null,
-    setImageUrl: (imageUrl) => set({ imageUrl })
+    setImageUrl: (imageUrl) => set({ imageUrl }),
+    slug: null,
+    setSlug: (slug) => set({ slug })
   })
 )
 

@@ -1,5 +1,5 @@
 // HOOKS
-import { useState, useRef, useReducer } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 // COMPONENTS
@@ -11,6 +11,7 @@ import { useLanguageStore, useEditImageUrlCategoryWindowStore, useAlertMessageSt
 
 // API
 import addNewSubCategory from '@/lib/api/sub-categories/post';
+import updateCategory from '@/lib/api/categories/slug/put';
 
 // UTILS
 import createSlug from '@/utils/createSlug';
@@ -25,6 +26,7 @@ export default function EditImageUrlCategoryWindow () {
   const toggle = useEditImageUrlCategoryWindowStore(state => state.toggle);
   const setToggle = useEditImageUrlCategoryWindowStore(state => state.setToggle);
   const imageUrl = useEditImageUrlCategoryWindowStore(state => state.imageUrl);
+  const categorySlug = useEditImageUrlCategoryWindowStore(state => state.slug);
 
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
@@ -32,6 +34,13 @@ export default function EditImageUrlCategoryWindow () {
 
   const [ isLoading, setIsLoading ] = useState<boolean>(false);
   const [ name, setName ] = useState<Record<string, string>>({ en: "", ar: "" });
+
+
+  const [ imgUrlValue, setImageUrlValue ] = useState<string>("");
+
+  useEffect(() => {
+    if (imgUrlInptRef.current) imgUrlInptRef.current.value = "";
+  }, [toggle])
 
   const addNewSubCategoryMutation = useMutation({
     mutationFn: addNewSubCategory,
@@ -59,10 +68,48 @@ export default function EditImageUrlCategoryWindow () {
     },
   })
 
+  const updateCategoryMutation = useMutation({
+    mutationFn: updateCategory,
+    onSettled: () => {
+      setIsLoading(false);
+    },
+    onMutate: () => {
+      setIsLoading(true);
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['categories']});
+      displayAlert(data.message[isEn ? 'en' : 'ar'], "success");
+      setToggle(false);
+    },
+    onError: () => {
+      displayAlert(
+        isEn 
+          ? "Couldn't update Image Url, please try again." 
+          : "فشل في محاوله تحديث رابط الصوره, الرجاء محاوله مره اخرى."
+      , "error");
+    }
+  });
+
+  const displayAlert = (message: any, type: string) => {
+    setAlertMessage(message);
+    setAlertType(type);
+    setAlertToggle(Date.now());
+  };
+
   const addIsProcessingNote = () => {
     setAlertToggle(Date.now());
     setAlertType("warning");
     setAlertMessage(isEn ? 'Please wait until the operation is finished' : 'الرجاء الانتظار حتى انتهاء من العمليه');
+  }
+
+  const isValidHttpUrl = async (url: string) => {
+    try {
+      const newUrl = new URL(url);
+      console.log('newUrl: ', newUrl);
+      return newUrl.protocol === 'http:' || newUrl.protocol === 'https:';
+    } catch (err) {
+      return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
+    }
   }
 
   const handleClick = async (e: React.MouseEvent<HTMLElement | SVGElement>) => {
@@ -70,11 +117,20 @@ export default function EditImageUrlCategoryWindow () {
     const { type } = e.currentTarget.dataset;
 
     switch (type) {
+      case 'fixed_window_is_clicked':
+        if (isLoading) return addIsProcessingNote();
+        setToggle(false);
+        break;
       case 'save_button_is_clicked':
         if (isLoading) addIsProcessingNote();
-
-        // console.log('newSubCategoryInfo: ', newSubCategoryInfo);
-        // addNewSubCategoryMutation.mutate(newSubCategoryInfo);
+        const isValidHTTPUrl = await isValidHttpUrl(imgUrlValue);
+        if (!isValidHTTPUrl) return displayAlert(
+          isEn 
+            ? "Please enter a valid HTTP or HTTPS URL." 
+            : "الرجاء تنصيب رابط صحيح."
+        , "error");
+        if (imgUrlValue && categorySlug) updateCategoryMutation
+          .mutate({ slug: categorySlug ,data: { imgUrl: imgUrlValue} });
         break;
         case 'cancel_button_is_clicked':
           if (isLoading) return addIsProcessingNote();
@@ -83,8 +139,7 @@ export default function EditImageUrlCategoryWindow () {
         case 'past_button_is_clicked':
           const clipBoardText = await navigator.clipboard.readText();
           if (imgUrlInptRef.current) imgUrlInptRef.current.value = clipBoardText;
-          // console.log('newSubCategoryInfo: ', newSubCategoryInfo);
-          // addNewSubCategoryMutation.mutate(newSubCategoryInfo);
+          setImageUrlValue(clipBoardText);
           break;
       default:
         console.error('Unknown type: ', type);
@@ -96,10 +151,7 @@ export default function EditImageUrlCategoryWindow () {
 
     switch (name) {
       case 'imgUrlInpt':
-        setName(val => ({ ...val, en: value.toUpperCase()}))
-        break;
-      case 'arSubCategory':
-        setName(val => ({ ...val, ar: value}))
+        setImageUrlValue(value);
         break;
       default:
         console.error('Unknown name: ', name);
@@ -107,7 +159,8 @@ export default function EditImageUrlCategoryWindow () {
   }
 
   // DEBUG & UI
-  console.log('imageUrl: ', imageUrl);
+  // console.log('imageUrl: ', imageUrl);
+  console.log('imgUrlValue: ', imgUrlValue);
 
   return (
     <div
