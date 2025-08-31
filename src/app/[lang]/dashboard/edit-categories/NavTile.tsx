@@ -8,7 +8,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { 
   useLanguageStore, useAlertMessageStore, 
   useEditProductWindowStore, useActivityWindowStore, 
-  useLayoutRefStore
+  useLayoutRefStore, useAddCategoryWindowStore
 } from '@/stores/index';
 
 // COMPONENTS
@@ -29,7 +29,6 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
 
-  const onLayoutScroll = useLayoutRefStore(state => state.onLayoutScroll);
   const [ isMainRefStuck, setIsMainRefStuck ] = useState<boolean>(false);
   const mainRef = useRef<HTMLDivElement>(null);
 
@@ -44,6 +43,8 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
   const setEditProductWindowToggle = useEditProductWindowStore(state => state.setToggle);
   const setEditProductWindowTrigger = useEditProductWindowStore(state => state.setTrigger);
   const setEditProductWindowProductData = useEditProductWindowStore(state => state.setProductData);
+
+  const setAddCategoryWindowToggle = useAddCategoryWindowStore(state => state.setToggle);
 
   const addProductMutation = useMutation({
     mutationFn: addProduct,
@@ -117,9 +118,8 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
         onScrollTableData(scrollDirection);
         onScrollTableTrigger(Date.now());
         break;
-      case 'add_product_button_is_clicked':
-        // console.log('defaultProductData', defaultProductData());
-        addProductMutation.mutate(defaultProductData());
+      case 'add_category_button_is_clicked':
+        setAddCategoryWindowToggle(true);
         break;
       default:
         console.error('Unknown type: ', type);
@@ -168,7 +168,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
             bg-content p-2 rounded-lg hover:opacity-80
             transition-all duration-300 ease-in-out
           "
-          data-type="add_product_button_is_clicked"
+          data-type="add_category_button_is_clicked"
           onClick={handleClick}
         >
           <SvgSpinnersRingResize 

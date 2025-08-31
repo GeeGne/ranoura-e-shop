@@ -24,6 +24,7 @@ import ActivityWindow from '@/components/fixedLayouts/ActivityWindow';
 import ActionConfirmWindow from '@/components/fixedLayouts/ActionConfirmWindow';
 import EditProductWindow from '@/components/fixedLayouts/EditProductWindow';
 import AddProductImgWindow from '@/components/fixedLayouts/AddProductImgWindow';
+import AddCategoryWindow from '@/components/fixedLayouts/AddCategoryWindow';
 import EditImageUrlCategoryWindow from '@/components/fixedLayouts/EditImageUrlCategoryWindow';
 import AddSubCategoryWindow from '@/components/fixedLayouts/AddSubCategoryWindow';
 import SelectImgColorWindow from '@/components/fixedLayouts/SelectImgColorWindow';
@@ -107,6 +108,7 @@ export default function RootLayout({
             <ActionConfirmWindow />
             <EditProductWindow />
             <AddProductImgWindow />
+            <AddCategoryWindow />
             <EditImageUrlCategoryWindow />
             <AddSubCategoryWindow />
             <SelectImgColorWindow />
