@@ -9,6 +9,7 @@ import ErrorLayout from '@/components/ErrorLayout';
 import LineMdEdit from '@/components/svgs/LineMdEdit';
 import LineMdTrash from '@/components/svgs/LineMdTrash';
 import LineMdPlus from '@/components/svgs/LineMdPlus';
+import MdiLinkEdit from '@/components/svgs/MdiLinkEdit';
 import LineMdMinus from '@/components/svgs/LineMdMinus';
 import LineMdArrowsDiagonal from '@/components/svgs/LineMdArrowsDiagonal';
 import GardenFileImage26 from '@/components/svgs/GardenFileImage26';
@@ -22,7 +23,8 @@ import SolarGalleryCheckBold from '@/components/svgs/SolarGalleryCheckBold';
 import { 
   useLanguageStore, useAlertMessageStore, 
   useLayoutRefStore, useAddSubCategoryWindowStore, 
-  useActivityWindowStore, useImageDisplayerWindow
+  useActivityWindowStore, useImageDisplayerWindow,
+  useEditImageUrlCategoryWindowStore
 } from '@/stores/index';
 
 // API
@@ -70,6 +72,9 @@ export default function Table({
   const layoutRef = useLayoutRefStore(state => state.layoutRef);
   const targetedCategorySlug = useRef<string | null>(null);
   const targetedCategoryImageType = useRef<string | null>(null);
+
+  const setEditImageUrlWindowToggle = useEditImageUrlCategoryWindowStore(state => state.setToggle);
+  const setEditImageUrlWindowImageUrl = useEditImageUrlCategoryWindowStore(state => state.setImageUrl);
 
   const setNewSubCategoryToggle = useAddSubCategoryWindowStore(state => state.setToggle);
   const setNewSubCategoryType = useAddSubCategoryWindowStore(state => state.setCategorySlug);
@@ -215,6 +220,10 @@ export default function Table({
       case 'expand_image_button_is_clicked':
         setImageDisplayerToggle(true);
         if (imageUrl) setImageDisplayerUrl(imageUrl);
+        break;
+      case 'edit_image_url_button_is_clicked':
+        setEditImageUrlWindowToggle(true);
+        if (imageUrl) setEditImageUrlWindowImageUrl(imageUrl);
         break;
       default:
         console.error('Unknown type: ', type);
@@ -686,10 +695,11 @@ export default function Table({
                     />    
                   </button>
                   <button 
-                    data-type="edit_product_button_is_clicked"
+                    data-type="edit_image_url_button_is_clicked"
+                    data-image-url={category.imgUrl}
                     onClick={handleClick}
                   >
-                    <LineMdEdit 
+                    <MdiLinkEdit 
                       className={`
                         w-7 h-7 p-1 text-heading rounded-md cursor-pointer
                         bg-background-light hover:bg-background-deep-light active:opacity-60

@@ -445,6 +445,22 @@ const useImageDisplayerWindow = create<ImageDisplayerWindowProps>()(
   })
 )
 
+type EditImageUrlCategoryWindowProps = {
+  toggle: boolean;
+  setToggle: (value: boolean) => void;
+  imageUrl: string | null;
+  setImageUrl: (value: string) => void;
+}
+
+const useEditImageUrlCategoryWindowStore = create<EditImageUrlCategoryWindowProps>()(
+  (set) => ({
+    toggle: true,
+    setToggle: (toggle) => set({ toggle }),
+    imageUrl: null,
+    setImageUrl: (imageUrl) => set({ imageUrl })
+  })
+)
+
 export { 
   useCartStore, useNavbarStore, 
   useTabNameStore, useFilterWindowStore,
@@ -455,5 +471,6 @@ export {
   useAddProductImgWindowStore, useSelectImgColorWindowStore, 
   useStorageStore, useProductDataStore,
   useActivityWindowStore, useActionConfirmWindowStore,
-  useAddSubCategoryWindowStore, useImageDisplayerWindow
+  useAddSubCategoryWindowStore, useImageDisplayerWindow,
+  useEditImageUrlCategoryWindowStore
 };
