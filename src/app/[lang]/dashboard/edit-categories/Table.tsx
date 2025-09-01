@@ -24,7 +24,7 @@ import {
   useLanguageStore, useAlertMessageStore, 
   useLayoutRefStore, useAddSubCategoryWindowStore, 
   useActivityWindowStore, useImageDisplayerWindow,
-  useEditImageUrlCategoryWindowStore
+  useEditImageUrlCategoryWindowStore, useActionConfirmWindowStore
 } from '@/stores/index';
 
 // API
@@ -87,6 +87,14 @@ export default function Table({
   const setImageDisplayerToggle = useImageDisplayerWindow(state => state.setToggle);
   const setImageDisplayerUrl = useImageDisplayerWindow(state => state.setUrl);
 
+  const action = useActionConfirmWindowStore(state => state.action);
+  const setAction = useActionConfirmWindowStore(state => state.setAction);
+  const setActionWindowToggle = useActionConfirmWindowStore(state => state.setToggle);
+  const setActionWindowIsLoading = useActionConfirmWindowStore(state => state.setIsLoading);
+  const setTitle = useActionConfirmWindowStore(state => state.setTitle);
+  const setDescription = useActionConfirmWindowStore(state => state.setDescription);
+  const setBtnTitle = useActionConfirmWindowStore(state => state.setBtnTitle);
+
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
@@ -129,6 +137,12 @@ export default function Table({
     }
   }, [ scroll, scrollTrigger ]);
 
+  useEffect(() => {
+    const { name, categorySlug, isConfirmed } = action;
+    if (name !== "remove category" || !isConfirmed) return;
+    if (categorySlug) deleteCategoryMutation.mutate(categorySlug.toString());
+  }, [action])
+
   const updateCategoryMutation = useMutation({
     mutationFn: updateCategory,
     onSettled: () => {
@@ -154,15 +168,16 @@ export default function Table({
   const deleteCategoryMutation = useMutation({
     mutationFn: deleteCategory,
     onSettled: () => {
-      setActivityWindowToggle(false);
+      setActionWindowIsLoading(false);
     },
     onMutate: () => {
-      setActivityWindowToggle(true);
+      setActionWindowIsLoading(true);
       setActivityWindowMessage(isEn ? 'Deleting the Category...' : 'جاري حذف القسم...')
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['categories']});
       displayAlert(data.message[isEn ? 'en' : 'ar'], "success");
+      setActionWindowToggle(false);
     },
     onError: () => {
       displayAlert(
@@ -229,7 +244,7 @@ export default function Table({
   };
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement | HTMLLIElement | SVGElement>) => {
-    const { type, categorySlug, subCategorySlug, imageUrl } = e.currentTarget.dataset;
+    const { type, categorySlug, subCategorySlug, categoryNameEn, categoryNameAr, imageUrl } = e.currentTarget.dataset;
 
     switch (type) {
       case 'sub_category_block_is_clicked':
@@ -251,7 +266,14 @@ export default function Table({
         if (categorySlug) setNewSubCategorySetSlug(categorySlug);
         break;
       case 'delete_product_button_is_clicked':
-        if (categorySlug) deleteCategoryMutation.mutate(categorySlug);
+        setActionWindowToggle(true);
+        if (categorySlug) setAction({ name: "remove category", categorySlug, isConfirmed: false });
+        setTitle({ en: `Delete Category?`, ar: "حذف القسم؟" });
+        setDescription({ 
+          en: `Are you sure you want to delete "${categoryNameEn}"? This action cannot be undone.`, 
+          ar: `هل أنت متأكد أنك تريد حذف "${categoryNameAr}"؟ لا يمكن التراجع عن هذا الإجراء.` }
+        );
+        setBtnTitle({ en: `Confirm (Delete)`, ar: "تأكيد (حذف)" });      
         break;
       default:
         console.error('Unknown type: ', type);
@@ -697,22 +719,29 @@ export default function Table({
                 }
               </td>
               <td className="px-6">
-                <Link
-                  className="
-                    text-content text-sm underline hover:text-heading
-                    transition-all duraiton-200 ease-in-out
-                  "
-                  href="category.imgUrl"
-                  target="_blank"
-                >
-                  {category.imgUrl}
-                </Link>
+                {category.imgUrl 
+                  ? <Link
+                    className="
+                      text-content text-sm underline hover:text-heading
+                      transition-all duraiton-200 ease-in-out
+                    "
+                    href="category.imgUrl"
+                    target="_blank"
+                  >
+                    {category.imgUrl}
+                  </Link>
+                  : <span>
+                    --
+                  </span>
+                }
               </td>
               <td className="px-6">
                 <div className="flex gap-2">
                   <button 
                     data-type="delete_product_button_is_clicked"
                     data-category-slug={category.slug}
+                    data-category-name-en={category.name.en}
+                    data-category-name-ar={category.name.ar}
                     onClick={handleClick}
                   >
                     <LineMdTrash 

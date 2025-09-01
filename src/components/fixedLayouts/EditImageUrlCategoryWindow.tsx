@@ -203,7 +203,10 @@ export default function EditImageUrlCategoryWindow () {
             className="relative flex items-center justify-between"
           >
             <div
-              className="group absolute top-1/2 right-4 translate-y-[-50%]"
+              className={`
+                group absolute top-1/2 translate-y-[-50%]
+                ${isEn ? 'right-4' : 'left-4'}
+              `}
             >
               <LsiconPasteFilled 
                 className="
@@ -223,7 +226,7 @@ export default function EditImageUrlCategoryWindow () {
                   transition-all duration-200 ease-out
                 "
               >
-                Paste
+                {isEn ? 'Paste' : 'لصق'}
               </span>
             </div>
             <input 
