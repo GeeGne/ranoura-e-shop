@@ -28,9 +28,10 @@ import {
 } from '@/stores/index';
 
 // API
+import updateCategory from '@/lib/api/categories/slug/put';
+import deleteCategory from '@/lib/api/categories/slug/delete';
 import deleteSubCategory from '@/lib/api/sub-categories/slug/delete';
 import uploadStorageFile from '@/lib/api/object/bucketName/filePath/post';
-import updateCategory from '@/lib/api/categories/slug/put';
 
 // LIB
 import getMessage from '@/lib/messages/index';
@@ -150,6 +151,28 @@ export default function Table({
     }
   });
 
+  const deleteCategoryMutation = useMutation({
+    mutationFn: deleteCategory,
+    onSettled: () => {
+      setActivityWindowToggle(false);
+    },
+    onMutate: () => {
+      setActivityWindowToggle(true);
+      setActivityWindowMessage(isEn ? 'Deleting the Category...' : 'جاري حذف القسم...')
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['categories']});
+      displayAlert(data.message[isEn ? 'en' : 'ar'], "success");
+    },
+    onError: () => {
+      displayAlert(
+        isEn 
+          ? "Couldn't delete Category, please try again." 
+          : "فشل في محاوله حذف القسم, الرجاء محاوله مره اخرى."
+      , "error");
+    }
+  })
+
   const deleteSubCategoryMutation = useMutation({
     mutationFn: deleteSubCategory,
     onSettled: () => {
@@ -166,8 +189,8 @@ export default function Table({
     onError: () => {
       displayAlert(
         isEn 
-          ? "Couldn't create new Sub-Category, please try again." 
-          : "فشل في محاوله انشاء مجتمع جديد, الرجاء محاوله مره اخرى."
+          ? "Couldn't delete Sub-Category, please try again." 
+          : "فشل في محاوله حذف القسم الفرعي, الرجاء محاوله مره اخرى."
       , "error");
     }
   })
@@ -226,6 +249,9 @@ export default function Table({
         setEditImageUrlWindowToggle(true);
         if (imageUrl) setEditImageUrlWindowImageUrl(imageUrl);
         if (categorySlug) setNewSubCategorySetSlug(categorySlug);
+        break;
+      case 'delete_product_button_is_clicked':
+        if (categorySlug) deleteCategoryMutation.mutate(categorySlug);
         break;
       default:
         console.error('Unknown type: ', type);
@@ -686,6 +712,7 @@ export default function Table({
                 <div className="flex gap-2">
                   <button 
                     data-type="delete_product_button_is_clicked"
+                    data-category-slug={category.slug}
                     onClick={handleClick}
                   >
                     <LineMdTrash 

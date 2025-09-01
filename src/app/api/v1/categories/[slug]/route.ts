@@ -60,7 +60,6 @@ export async function DELETE (
 ) {
   try {
     const { slug } = await params;
-    console.log('slug: ', slug);
     const data = await prisma.categories.delete({
       where: {
         slug

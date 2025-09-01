@@ -1,9 +1,9 @@
 import getServerUrl from '@/utils/getServerUrl';
 
-// add new Sub-Category
+// add new Category
 export default async function post (data: Record<any, any>) {
   try {
-    const url = `${getServerUrl()}/api/v1/sub-categories`;
+    const url = `${getServerUrl()}/api/v1/categories`;
     const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
@@ -18,7 +18,7 @@ export default async function post (data: Record<any, any>) {
     return result;
   } catch (error) {
     const err = error as Error;
-    console.error('Error while adding new sub-category: ', err.message);
+    console.error('Error while adding new Category: ', err.message);
     throw err;
   }
 }

@@ -9,7 +9,7 @@ import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingRes
 import { useLanguageStore, useAddCategoryWindowStore, useAlertMessageStore } from '@/stores/index';
 
 // API
-import addNewSubCategory from '@/lib/api/sub-categories/post';
+import addNewCategory from '@/lib/api/categories/post';
 
 // UTILS
 import createSlug from '@/utils/createSlug';
@@ -21,7 +21,6 @@ export default function AddCategoryWindow () {
 
   const toggle = useAddCategoryWindowStore(state => state.toggle);
   const setToggle = useAddCategoryWindowStore(state => state.setToggle);
-  const categorySlug = useAddCategoryWindowStore(state => state.categorySlug);
 
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
@@ -30,8 +29,8 @@ export default function AddCategoryWindow () {
   const [ isLoading, setIsLoading ] = useState<boolean>(false);
   const [ name, setName ] = useState<Record<string, string>>({ en: "", ar: "" });
 
-  const addNewSubCategoryMutation = useMutation({
-    mutationFn: addNewSubCategory,
+  const addNewCategoryMutation = useMutation({
+    mutationFn: addNewCategory,
     onSettled: () => {
       setIsLoading(false);
     },
@@ -39,7 +38,7 @@ export default function AddCategoryWindow () {
       setIsLoading(true);
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['sub-categories'] });
+      queryClient.invalidateQueries({ queryKey: ['categories'] });
       setAlertToggle(Date.now());
       setAlertType("success");
       setAlertMessage(data.message[isEn ? 'en' : 'ar']);
@@ -50,34 +49,35 @@ export default function AddCategoryWindow () {
       setAlertType("error");
       setAlertMessage(
         isEn 
-          ? 'Error while Creating a new Sub Category, please try again later.' 
-          : 'حصل خطأ خلال انشاء قسم فرعي, الرجاء المحاوله مره اخرى.'
+          ? 'Error while Creating a new Category, please try again later.' 
+          : 'حصل خطأ خلال انشاء قسم, الرجاء المحاوله مره اخرى.'
       );
     },
-  })
+  });
 
   const addIsProcessingNote = () => {
     setAlertToggle(Date.now());
     setAlertType("warning");
     setAlertMessage(isEn ? 'Please wait until the operation is finished' : 'الرجاء الانتظار حتى انتهاء من العمليه');
-  }
+  };
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
     const { type } = e.currentTarget.dataset;
 
     switch (type) {
+      case 'fixed_window_is_clicked':
+        setToggle(false);
+        break;
       case 'add_button_is_clicked':
         if (isLoading) addIsProcessingNote();
 
-        const newSubCategoryInfo = {
+        const newCategoryInfo = {
           name,
           slug: createSlug(name.en),
-          type: categorySlug
         }
 
-        console.log('newSubCategoryInfo: ', newSubCategoryInfo);
-        addNewSubCategoryMutation.mutate(newSubCategoryInfo);
+        addNewCategoryMutation.mutate(newCategoryInfo);
         break;
       case 'cancel_button_is_clicked':
         if (isLoading) return addIsProcessingNote();
@@ -86,22 +86,22 @@ export default function AddCategoryWindow () {
       default:
         console.error('Unknown type: ', type);
     }
-  }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.currentTarget;
 
     switch (name) {
-      case 'enSubCategory':
+      case 'enCategory':
         setName(val => ({ ...val, en: value.toUpperCase()}))
         break;
-      case 'arSubCategory':
+      case 'arCategory':
         setName(val => ({ ...val, ar: value}))
         break;
       default:
         console.error('Unknown name: ', name);
     }
-  }
+  };
 
   // DEBUG & UI
   // console.log('name: ', name);
@@ -137,7 +137,7 @@ export default function AddCategoryWindow () {
           "
         >
           <h2>
-            {isEn ? 'Add new SubCategory' : 'انشئ مجموعه فرعيه جديده'}
+            {isEn ? 'Add new Category' : 'انشئ مجموعه جديده'}
           </h2>
         </section>
         <hr className="border-inbetween" />
@@ -146,7 +146,7 @@ export default function AddCategoryWindow () {
         >
           <label
             className="flex items-center justify-between"
-            htmlFor="enSubCategory"
+            htmlFor="enCategory"
           >
             <h3
               className="text-body"
@@ -156,14 +156,14 @@ export default function AddCategoryWindow () {
             <input 
               className="text-body bg-background-light p-2 rounded-md"
               type="text"
-              name="enSubCategory"
-              id="enSubCategory"
+              name="enCategory"
+              id="enCategory"
               onChange={handleChange}
             />
           </label>
           <label
             className="flex gap-2 items-center justify-between"
-            htmlFor="arSubCategory"
+            htmlFor="arCategory"
           >
             <h3
               className="text-body"
@@ -173,8 +173,8 @@ export default function AddCategoryWindow () {
             <input 
               className="text-body bg-background-light p-2 rounded-md"
               type="text"
-              id="arSubCategory"
-              name="arSubCategory"
+              id="arCategory"
+              name="arCategory"
               onChange={handleChange}
             />
           </label>

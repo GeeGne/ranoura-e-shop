@@ -128,7 +128,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
 
   // UI & DEBUG
   // console.log("onLayoutScroll: ", onLayoutScroll.target.scrollTop);
-  console.log("isMainRefStuck: ", isMainRefStuck);
+  // console.log("isMainRefStuck: ", isMainRefStuck);
 
   return(
     <div

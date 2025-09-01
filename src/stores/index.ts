@@ -472,7 +472,7 @@ type EditImageUrlCategoryWindowProps = {
 
 const useEditImageUrlCategoryWindowStore = create<EditImageUrlCategoryWindowProps>()(
   (set) => ({
-    toggle: true,
+    toggle: false,
     setToggle: (toggle) => set({ toggle }),
     imageUrl: null,
     setImageUrl: (imageUrl) => set({ imageUrl }),
