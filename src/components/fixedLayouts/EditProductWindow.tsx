@@ -1,6 +1,6 @@
 // HOOKS
 import { useState, useEffect, useRef } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 // COMPONENTS
 import RiAddLine from '@/components/svgs/RiAddLine';
@@ -21,12 +21,12 @@ import {
 // API
 import editProduct from '@/lib/api/products/put';
 import removeFile from '@/lib/api/object/delete';
+import getCategories from '@/lib/api/categories/get';
+import getSubCategories from '@/lib/api/sub-categories/get';
 
 // JSON
 import colorsArray from '@/json/colors.json';
 // import subCategories from '@/json/subCategories.json';
-import subCategories from '@/json/subCategoriesV2.json';
-import categories from '@/json/categories.json';
 
 // UTILS
 import getColor from '@/utils/getColor';
@@ -91,6 +91,24 @@ export default function EditProductWindow () {
 
   const categoriesInptRefs = useRef<any[]>([]);
 
+  const { 
+    data: categories, 
+    isLoading: isCategoriesDataLoading, 
+    isError: isCategoriesDataError 
+  } = useQuery({
+    queryKey: ['categories'],
+    queryFn: getCategories
+  })
+  
+  const { 
+    data: subCategories, 
+    isLoading: isSubCategoriesDataLoading, 
+    isError: isSubCategoriesDataError 
+  } = useQuery({
+    queryKey: ['sub-categories'],
+    queryFn: getSubCategories
+  })
+
   const filterDeletedImages = (url: string, color:string) => {
     let images = [ ...updatedData?.images ]
     const imageIndex = images.findIndex(image => image.color === color);
@@ -101,112 +119,6 @@ export default function EditProductWindow () {
 
     return { images, colors };
   };
-
-  // const productData1 = {
-  const productData1 = {
-    id: 3,
-    name: { en: "Blossom Sweater", ar: "سترة بلوسوم" },
-    slug: "bolssom-sweater",
-    description: { "en": "Cozy Floral-Embroidered Relaxed Sweater", "ar": "كنزة مريحة مطرزة بزهور" },
-    type: "t-shirts",
-    categories: ["clothing/outfit-pairs", "sale/latest-arrivals", "sale/hot-deals", "event/ramadan-nights"],
-    is_new: true,
-    state: "available",
-    sizes: ["M", "L"],
-    colors: ["White", "Black"],
-    images: [
-      {
-        main: "/assets/img/cloth-c-white.avif",
-        second: "/assets/img/cloth-c-white-view-b.avif",
-        color: "White"
-      },{
-        main: "/assets/img/cloth-c-black.avif",
-        second: "/assets/img/cloth-c-black-view-b.avif",
-        color: "Black"
-      }
-    ],
-    stock: {
-      XS: { "emerald": 5, "black": 3 },
-      S: { "emerald": 10, "black": 8 },
-      M: { "emerald": 7, "black": 6 },
-      L: { "emerald": 4, "black": 2 }
-    },
-    price: 45000,
-    discount_percent: 45,
-    lists: [
-      {
-        title: {"en": "PRODUCT DETAILS", "ar": "تفاصيل عن القطعه"},
-        descriptionLists: {
-          en: [
-            "Brand: Ranoura",
-            "Material: Fabric",
-            "Fit: Tight to boy",
-            "NeckLine: None",
-            "Sleeves: Yes",
-            "Design: Italic"
-          ],
-          ar: [
-            "العلامة التجارية: رانورا",
-            "المادة: قماش",
-            "المقاس: ضيق على الجسم",
-            "خط العنق: لا يوجد",
-            "الأكمام: نعم",
-            "التصميم: مائل"
-          ]
-        }
-      },{
-        title: {en: "SIZE INFO", ar: "معلومات عن المقاسات"},
-        descriptionLists: {
-          en: [
-            "True to size",
-            "XXS: 0",
-            "XS: 0-2",
-            "MD: 2-4",
-            "LG: 4-6",
-            "XL: 6-9"
-          ],
-          ar: [
-            "True to size",
-            "XXS: 0",
-            "XS: 0-2",
-            "MD: 2-4",
-            "LG: 4-6",
-            "XL: 6-9"
-          ]
-        }
-      },{
-        title: {"en": "ABOUT RANOURA✧･ﾟ*", "ar": "حول رانورا*ﾟ･✧"},
-        descriptionLists: {
-          en: [
-            "Welcome to Ranoura – where elegance meets excellence. At Ranoura, we pride ourselves on crafting garments from the finest high-end fabrics, designed for those who appreciate quality, style, and sophistication. Each piece is meticulously tailored to provide a perfect blend of comfort and luxury, ensuring you feel confident and radiant in every moment. Discover timeless designs and impeccable craftsmanship that redefine fashion, only at Ranoura."
-          ],
-          ar: [
-            "مرحبًا بكم في رانورا – حيث تلتقي الأناقة بالتميز. في رانورا، نفخر بصناعة الملابس من أجود الأقمشة الفاخرة، مصممة لأولئك الذين يقدرون الجودة والأناقة والرقي. كل قطعة مصممة بعناية فائقة لتوفر مزيجًا مثاليًا من الراحة والفخامة، مما يضمن شعورك بالثقة والإشراق في كل لحظة. اكتشف التصاميم الخالدة والحرفية اللا مثيل لها التي تعيد تعريف الموضة، فقط في رانورا."
-          ]
-        }
-      },{
-        title: {"en": "DELIVERY", "ar": "التوصيل"},
-        descriptionLists: {
-          en: [
-            "Get your favorite Ranoura pieces delivered straight to your doorstep! Enjoy fast and reliable shipping with options for standard delivery (three to five business days) or express delivery (one to two business days) for those last-minute style needs. We carefully package every item to ensure it arrives in perfect condition, ready to shine in your wardrobe."
-          ],
-          ar: [
-            "احصل على قطع رانورا المفضلة لديك ويتم توصيلها مباشرة إلى عتبة بابك! استمتع بالشحن السريع والموثوق مع خيارات التوصيل القياسي (من ثلاثة إلى خمسة أيام عمل) أو التوصيل السريع (من يوم إلى يومين عمل) لتلبية احتياجات الأناقة في اللحظة الأخيرة. نحن نعبئ كل قطعة بعناية لضمان وصولها في حالة مثالية، جاهزة للتألق في خزانة ملابسك."
-          ]
-        }
-      },{
-        title: {"en": "RETURNS", "ar": "المرجوعات"},
-        descriptionLists: {
-          en: [
-            "At Ranoura, your satisfaction is our priority. If something isn't quite right, you can easily return it within fourteen days of receiving your order. Items must be unworn, unwashed, and with original tags attached. Simply follow our hassle-free returns process, and we'll ensure you get a refund or exchange as quickly as possible."
-          ], 
-          ar: [
-            "في رانورا، رضاكم هو أولويتنا. إذا كان هناك شيء غير مناسب تمامًا، يمكنكم إرجاعه بسهولة خلال أربعة عشر يومًا من استلام طلبكم. يجب أن تكون الأغراض غير ملبوسة وغير مغسولة ومع العلامات الأصلية مرفقة. ما عليكم سوى اتباع عملية الإرجاع السهلة لدينا، وسنضمن حصولكم على استرداد أو استبدال في أسرع وقت ممكن."
-          ]
-        }  
-      }
-    ]
-  }
 
   useEffect(() => {
     const setDefaultValues = () => {
@@ -409,9 +321,15 @@ export default function EditProductWindow () {
   // console.log('productData: ', productData);
   // console.log('updatedData: ', updatedData);
   // console.log('removedImagesFilePathArray: ', removedImagesFilePathArray);
-  // console.log('subCategory: ', subCategories.filter(subCategory => subCategory.parent_category_slug !== 'clothing').map((subCategory, index) => ({ ...subCategory, index })))
+  // console.log('subCategory: ', subCategories.filter(subCategory => subCategory.type !== 'clothing').map((subCategory, index) => ({ ...subCategory, index })))
+  // console.log('subCategory:', subCategories);
+  // console.log('category: ', categories);
   
-  if (!productData) return;
+  if (
+    !productData || isCategoriesDataLoading 
+    || isSubCategoriesDataLoading || isCategoriesDataError
+    || isSubCategoriesDataError
+  ) return;
 
   return (
     <div
@@ -1283,9 +1201,9 @@ export default function EditProductWindow () {
             <form
               className="flex flex-wrap justify-end gap-4 ml-auto"
             >
-              {subCategories
-                .filter(subCategory => subCategory.parent_category_slug === 'clothing')
-                .map((category, i) =>
+              {subCategories.data
+                ?.filter((subCategory: Record<string, any>) => subCategory.type === 'clothing')
+                .map((category: Record<string, any>, i: number) =>
                 <label
                   key={i}
                   className="
@@ -1358,9 +1276,9 @@ export default function EditProductWindow () {
               <ul
                 className="flex flex-col gap-4"
               >
-                {categories
-                  .filter(category => category.slug !== 'clothing')
-                  .map((category, i) =>
+                {categories.data
+                  ?.filter((category: Record<string, any>) => category.slug !== 'clothing')
+                  .map((category: Record<string, any>, i: number) =>
                   <li
                     key={i}
                     className="flex flex-col gap-4 bg-background p-4 rounded-lg border border-solid border-[2px] border-body-light-invert"
@@ -1380,11 +1298,11 @@ export default function EditProductWindow () {
                     <ul
                       className="flex w-full gap-4"
                     >
-                      {subCategories
-                        .filter(subCategory => subCategory.parent_category_slug !== 'clothing')
-                        .map((subCategory, index) => ({ index, ...subCategory }))
-                        .filter(subCategory => subCategory.parent_category_slug === category.slug)
-                        .map((subCategory, index) =>
+                      {subCategories.data
+                        .filter((subCategory: Record<string, any>) => subCategory.type !== 'clothing')
+                        .map((subCategory: Record<string, any>, index: number) => ({ index, ...subCategory }))
+                        .filter((subCategory: Record<string, any>) => subCategory.type === category.slug)
+                        .map((subCategory: Record<string, any>, index: number) =>
                         <li
                           key={index}
                         >

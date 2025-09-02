@@ -356,7 +356,8 @@ export default function Table({
           </tr>
         </thead>
         <tbody className="divide-y divide-underline">
-          {categories?.map((category: Record<string, any>) =>
+          {categories?.sort((a, b) => a.id - b.id)
+            .map((category: Record<string, any>) =>
             <tr 
               key={category.id}
               className="px-6"
@@ -634,7 +635,7 @@ export default function Table({
                         "
                         role="button"
                         data-type="expand_image_button_is_clicked"
-                        data-image-url={category.navbarImg}
+                        data-image-url={category.navbarLgImg}
                         onClick={handleClick}
                       />
                     </div>
@@ -736,22 +737,26 @@ export default function Table({
                 }
               </td>
               <td className="px-6">
-                <div className="flex gap-2">
-                  <button 
-                    data-type="delete_product_button_is_clicked"
-                    data-category-slug={category.slug}
-                    data-category-name-en={category.name.en}
-                    data-category-name-ar={category.name.ar}
-                    onClick={handleClick}
-                  >
-                    <LineMdTrash 
-                      className={`
-                        w-7 h-7 p-1 text-heading rounded-md cursor-pointer
-                        bg-background-light hover:bg-background-deep-light active:opacity-60
-                        transition-all duration-200 ease-out
-                      `}
-                    />    
-                  </button>
+                <div 
+                  className="flex gap-2"
+                >
+                  {category.slug === 'clothing' ||
+                    <button 
+                      data-type="delete_product_button_is_clicked"
+                      data-category-slug={category.slug}
+                      data-category-name-en={category.name.en}
+                      data-category-name-ar={category.name.ar}
+                      onClick={handleClick}
+                    >
+                      <LineMdTrash 
+                        className={`
+                          w-7 h-7 p-1 text-heading rounded-md cursor-pointer
+                          bg-background-light hover:bg-background-deep-light active:opacity-60
+                          transition-all duration-200 ease-out
+                        `}
+                      />    
+                    </button>
+                  }
                   <button 
                     data-type="edit_image_url_button_is_clicked"
                     data-image-url={category.imgUrl}
