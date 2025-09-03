@@ -96,6 +96,7 @@ model SubCategories {
   name Json @default("{\"en\": \"Unknown Name\", \"ar\": \"مجهول الاسم\"}")
   slug  String @unique
   type String
+  path String
   image String?
 
   @@index([slug])

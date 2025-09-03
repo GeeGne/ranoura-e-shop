@@ -73,7 +73,8 @@ export default function AddSubCategoryWindow () {
         const newSubCategoryInfo = {
           name,
           slug: createSlug(name.en),
-          type: categorySlug
+          type: categorySlug,
+          path: `${categorySlug}/${createSlug(name.en)}`
         }
 
         console.log('newSubCategoryInfo: ', newSubCategoryInfo);

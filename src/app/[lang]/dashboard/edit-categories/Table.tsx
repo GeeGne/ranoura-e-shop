@@ -12,6 +12,7 @@ import LineMdPlus from '@/components/svgs/LineMdPlus';
 import MdiLinkEdit from '@/components/svgs/MdiLinkEdit';
 import LineMdMinus from '@/components/svgs/LineMdMinus';
 import LineMdArrowsDiagonal from '@/components/svgs/LineMdArrowsDiagonal';
+import FluentZoomFit24Regular from '@/components/svgs/FluentZoomFit24Regular';
 import GardenFileImage26 from '@/components/svgs/GardenFileImage26';
 import MingcuteAspectRatioFill from '@/components/svgs/MingcuteAspectRatioFill';
 import LineMdMenuToCloseAltTransition from '@/components/svgs/LineMdMenuToCloseAltTransition';
@@ -480,7 +481,7 @@ export default function Table({
                           onChange={handleChange}
                         />
                       </label>
-                      <MingcuteAspectRatioFill
+                      <FluentZoomFit24Regular
                         className="
                           w-10 h-10 hover:bg-shade-v2 p-2
                           rounded-md active:opacity-80 cursor-pointer
@@ -627,7 +628,7 @@ export default function Table({
                           onChange={handleChange}
                         />
                       </label>
-                      <MingcuteAspectRatioFill
+                      <FluentZoomFit24Regular
                         className="
                           w-10 h-10 hover:bg-shade-v2 p-2
                           rounded-md active:opacity-80 cursor-pointer
