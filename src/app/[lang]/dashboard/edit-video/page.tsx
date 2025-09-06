@@ -6,14 +6,13 @@ import { useState, useRef, useEffect } from 'react';
 // STORES
 import { useTabNameStore } from '@/stores/index';
 
-// COMPONENTTS
-import RanouraInstagramCurvedV2 from "@/components/svgs/RanouraInstagramCurvedV2";
-import LineMdPlayFilledToPauseTransition from "@/components/svgs/LineMdPlayFilledToPauseTransition";
-import LineMdPauseToPlayFilledTransition from "@/components/svgs/LineMdPauseToPlayFilledTransition";
-
-// ASSETS
-const introVideo = "/assets/video/intro-video(2).mp4";
-const introVideoLowerRes = "/assets/video/Intro-Video(2)(24 frame)(720p).mp4";
+// COMPONENTS
+import VideoDisplay from '@/app/[lang]/dashboard/edit-video/VideoDisplay';
+import IonDesktopOutline from '@/components/svgs/IonDesktopOutline';
+import FamiconsTabletPortraitSharp from '@/components/svgs/FamiconsTabletPortraitSharp';
+import FamiconsPhonePortraitOutline from '@/components/svgs/FamiconsPhonePortraitOutline';
+import UilExpandAlt from '@/components/svgs/UilExpandAlt';
+import HugeiconsArrowExpand01 from '@/components/svgs/HugeiconsArrowExpand01';
 
 export default function page () {  
   
@@ -23,191 +22,102 @@ export default function page () {
     setTabName('edit-video');
   }, []);
 
-  const [ mainWrapperCoordinates, setMainWrapperCoordinates ] = useState<{x: number, y: number}>({x: 0, y: 0});
-  const [ isVideoPause, setIsVideoPause ] = useState<boolean>(false);
-  const vidRef = useRef<HTMLVideoElement>(null)
-
-  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    const { type } = e.currentTarget.dataset;
-
-    switch (type) {
-      case 'main_wrapper':
-        if (isVideoPause) {
-          vidRef.current?.play()
-        } else {
-          vidRef.current?.pause()
-        } 
-        setIsVideoPause(val => !val);
-        break;
-      default:
-        console.error("Unknown type:", type);
-    }
-  };
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    const { type } = e.currentTarget.dataset;
-
-    switch (type) {
-      case 'main_wrapper':
-        const x = e.clientX;
-        const y = e.clientY;
-        setMainWrapperCoordinates({ x, y })
-        break;
-      default:
-        console.error("Unknown type:", type);
-    }
-  }
-
-  const handleMouseEnter = (e: React.MouseEvent<HTMLElement>) => {
-    const { type } = e.currentTarget.dataset;
-
-    switch (type) {
-      case 'main_wrapper':
-        const x = e.clientX;
-        const y = e.clientY;
-        setMainWrapperCoordinates({ x, y });
-        break;
-      default:
-        console.error("Unknown type:", type);
-    }
-  }
-
-  const handleMouseLeave = (e: React.MouseEvent<HTMLElement>) => {
-    const { type } = e.currentTarget.dataset;
-
-    switch (type) {
-      case 'main_wrapper':
-        const x = e.clientX;
-        const y = e.clientY;
-        setMainWrapperCoordinates({ x, y })
-        break;
-      default:
-        console.error("Unknown type:", type);
-    }
-  }
-
   return (
     <div>
-      This is Video Page.
-      <section
-        className={`
-          group relative z-[1] bg-primary cursor-default md:hover:cursor-none
-          w-full h-svh
-        `}
-        data-type="main_wrapper"
-        onClick={handleClick}
-        onMouseMove={handleMouseMove}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      > 
-        <video 
-          autoPlay 
-          muted 
-          loop 
-          playsInline
-          className="
-            absolute bottom-0 left-0 bg-primary
-            w-full h-[calc(100%+100px)] object-cover 
-          "
-          ref={vidRef}
-          preload="auto"
-          onWaiting={() => console.log('waiting')}
-          onCanPlay={() => console.log('canPlay')}
-          onCanPlayThrough={() => console.log('canPlayThrought')}
+      <section>
+        <span
+          className="text-heading font-bold text-lg"
         >
-          <source
-            media="(min-width: 768px)"
-            src={introVideo} 
-          />
-          <source 
-            media="(max-width: 768px)"
-            src={introVideoLowerRes} 
-          />
-        </video>
+          Preview
+        </span>
         <div
-          className="
-            absolute bottom-0 left-0 w-full h-full 
-            bg-gradient-to-t from-primary
-          "
-        />
-        <button
-          className={`
-            hidden md:inline absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] origin-center
-            w-16 h-16 opacity-0 group-hover:opacity-100
-            transition-opacity duration-300 ease-in 
-          `}
-          style={{top: mainWrapperCoordinates.y, left: mainWrapperCoordinates.x}}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
         >
-          <RanouraInstagramCurvedV2
-            className="
-              absolute top-1/2 left-1/2 origin-center text-heading-invert
-              --rotate-translate-ani duration--5s w-full h-full z-[10]"
-          />
-          {isVideoPause 
-            ? <LineMdPauseToPlayFilledTransition
-                className=" 
-                  absolute top-1/2 left-1/2 
-                  translate-x-[-50%] translate-y-[-50%] 
-                  text-heading-invert w-[2rem] h-[2rem] z-[10]
-                "
-              />
-            : <LineMdPlayFilledToPauseTransition
-                className=" 
-                  absolute top-1/2 left-1/2 
-                  translate-x-[-50%] translate-y-[-50%] 
-                  text-heading-invert w-[2rem] h-[2rem] z-[10]
-                "
-              />
-          }
           <div
-            className=" 
-              absolute top-1/2 left-1/2 
-              translate-x-[-50%] translate-y-[-50%] 
-              backdrop-invert-[100%] backdrop-contrast-[150%] backdrop-brightness-[130%]  w-full h-full rounded-full
-              scale-[0%] group-active:scale-[120%]
-              transition-all delay-100 duration-200 ease-in-out z-[15]
-            "
-          />
-        </button>
-        <button
-          className={`
-            inline md:hidden absolute top-[70%] left-4 translate-y-[-50%] origin-center
-            w-16 h-16 
-            transition-opacity duration-300 ease-in 
-          `}
-        >
-          <RanouraInstagramCurvedV2
             className="
-              absolute top-1/2 left-1/2 origin-center text-body-invert 
-              --rotate-translate-ani duration--5s w-full h-full z-[10]"
-          />
-          {isVideoPause 
-            ? <LineMdPauseToPlayFilledTransition
-                className=" 
-                  absolute top-1/2 left-1/2 
-                  translate-x-[-50%] translate-y-[-50%] 
-                  text-body-invert w-[2rem] h-[2rem] z-[10]
-                "
-              />
-          
-            : <LineMdPlayFilledToPauseTransition
-                className=" 
-                  absolute top-1/2 left-1/2 
-                  translate-x-[-50%] translate-y-[-50%] 
-                  text-body-invert w-[2rem] h-[2rem] z-[10]
-                "
-              />
-          }
-          <div
-            className=" 
-              absolute top-1/2 left-1/2 
-              translate-x-[-50%] translate-y-[-50%] 
-              backdrop-invert-[100%] backdrop-contrast-[150%] backdrop-brightness-[130%]  w-full h-full rounded-full
-              scale-[0%] group-active:scale-[120%]
-              transition-all delay-200 duration-200 ease-in-out z-[15]
+              flex flex-col gap-2 items-center justify-center 
+              bg-background-light p-4 rounded-lg
             "
-          />
-        </button>
+          >
+            <span
+              className="text-body font-bold"
+            >
+              DESKTOP
+            </span>
+            <div className="relative w-12 h-12">
+              <IonDesktopOutline 
+                className="
+                  absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]
+                  w-full h-full text-body bg-background-light z-[5]
+                "
+              />
+              <HugeiconsArrowExpand01 
+                className="
+                  absolute top-1/2 left-1/2
+                  translate-x-[-50%] translate-y-[-50%]
+                  text-body rotate-45 w-[100px] h-[100px]
+                "
+              />
+            </div>
+            <VideoDisplay className="w-[300px] aspect-[16/9]"/>
+          </div>
+          <div
+            className="
+              flex flex-col gap-2 items-center justify-center 
+              bg-background-light p-4 rounded-lg
+            "
+          >
+            <span
+              className="text-body font-bold"
+            >
+              SMARTPHONE
+            </span>
+            <div className="relative w-12 h-12">
+              <FamiconsPhonePortraitOutline
+                className="
+                  absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]
+                  w-full h-full text-body bg-background-light z-[5]
+                "
+              />
+              <HugeiconsArrowExpand01 
+                className="
+                  absolute top-1/2 left-1/2
+                  translate-x-[-50%] translate-y-[-50%]
+                  text-body rotate-45 w-[100px] h-[100px]
+                "
+              />
+            </div>
+            <VideoDisplay className="w-[200px] aspect-[9/16]"/>
+          </div>
+          <div
+            className="
+              flex flex-col gap-2 items-center justify-center 
+              bg-background-light p-4 rounded-lg
+            "
+          >
+            <span
+              className="text-body font-bold"
+            >
+              TABLET
+            </span>
+            <div className="relative w-12 h-12">
+              <FamiconsTabletPortraitSharp 
+                className="
+                  absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]
+                  w-full h-full text-body bg-background-light z-[5]
+                "
+              />
+              <HugeiconsArrowExpand01 
+                className="
+                  absolute top-1/2 left-1/2
+                  translate-x-[-50%] translate-y-[-50%]
+                  text-body rotate-45 w-[100px] h-[100px]
+                "
+              />
+            </div>
+            <VideoDisplay className="w-[250px] aspect-[3/4]"/>
+          </div>
+        </div>
       </section>
     </div>
   )
