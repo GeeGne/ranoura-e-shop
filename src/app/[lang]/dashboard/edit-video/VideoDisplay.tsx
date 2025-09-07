@@ -45,8 +45,9 @@ export default function VideoDisplay ({ className }: Props) {
 
     switch (type) {
       case 'main_wrapper':
-        const x = e.clientX;
-        const y = e.clientY;
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY- rect.top;
         setMainWrapperCoordinates({ x, y })
         break;
       default:
@@ -59,8 +60,9 @@ export default function VideoDisplay ({ className }: Props) {
 
     switch (type) {
       case 'main_wrapper':
-        const x = e.clientX;
-        const y = e.clientY;
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY- rect.top;
         setMainWrapperCoordinates({ x, y });
         break;
       default:
@@ -73,8 +75,9 @@ export default function VideoDisplay ({ className }: Props) {
 
     switch (type) {
       case 'main_wrapper':
-        const x = e.clientX;
-        const y = e.clientY;
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY- rect.top;
         setMainWrapperCoordinates({ x, y })
         break;
       default:
@@ -83,19 +86,19 @@ export default function VideoDisplay ({ className }: Props) {
   }
 
   // DEBUG & UI
-  console.log('mainWrapperCoordinates: ', mainWrapperCoordinates);
+  // console.log('mainWrapperCoordinates: ', mainWrapperCoordinates);
 
   return (
     <section
       className={`
-        group relative z-[1] bg-primary cursor-default md:hover:cursor-none
+        group relative z-[1] bg-primary cursor-none
         rounded-lg overflow-hidden
         ${className}
       `}
       data-type="main_wrapper"
       onClick={handleClick}
-      onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
+      onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     > 
       <video 
@@ -129,15 +132,15 @@ export default function VideoDisplay ({ className }: Props) {
       />
       <button
         className={`
-          inline absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] origin-center
-          w-16 h-16 opacity-0 group-hover:opacity-100
+          inline absolute origin-center cursor-none
+          translate-x-[-50%] translate-y-[-50%] w-16 h-16 opacity-0 group-hover:opacity-100
           transition-opacity duration-300 ease-in 
         `}
         style={{top: mainWrapperCoordinates.y, left: mainWrapperCoordinates.x}}
       >
         <RanouraInstagramCurvedV2
           className="
-            absolute top-1/2 left-1/2 origin-center text-heading-invert
+            absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] origin-center text-heading-invert
             --rotate-translate-ani duration--5s w-full h-full z-[10]"
         />
         {isVideoPause 

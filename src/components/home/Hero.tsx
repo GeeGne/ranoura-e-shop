@@ -50,8 +50,10 @@ export default function Hero({ className = "", ...props }: Props) {
 
     switch (type) {
       case 'main_wrapper':
-        const x = e.clientX;
-        const y = e.clientY;
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY- rect.top;
+
         setMainWrapperCoordinates({ x, y })
         break;
       default:
@@ -64,8 +66,10 @@ export default function Hero({ className = "", ...props }: Props) {
 
     switch (type) {
       case 'main_wrapper':
-        const x = e.clientX;
-        const y = e.clientY;
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY- rect.top;
+
         setMainWrapperCoordinates({ x, y });
         break;
       default:
@@ -78,8 +82,10 @@ export default function Hero({ className = "", ...props }: Props) {
 
     switch (type) {
       case 'main_wrapper':
-        const x = e.clientX;
-        const y = e.clientY;
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY- rect.top;
+
         setMainWrapperCoordinates({ x, y })
         break;
       default:
@@ -172,7 +178,7 @@ export default function Hero({ className = "", ...props }: Props) {
       <button
         className={`
           hidden md:inline absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] origin-center
-          w-16 h-16 opacity-0 group-hover:opacity-100
+          w-16 h-16 opacity-0 group-hover:opacity-100 cursor-none
           transition-opacity duration-300 ease-in 
         `}
         style={{top: mainWrapperCoordinates.y, left: mainWrapperCoordinates.x}}

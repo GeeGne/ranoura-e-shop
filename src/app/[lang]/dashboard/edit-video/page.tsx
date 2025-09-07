@@ -53,7 +53,7 @@ export default function page () {
               />
               <HugeiconsArrowExpand01 
                 className="
-                  absolute top-1/2 left-1/2
+                  hidden absolute top-1/2 left-1/2
                   translate-x-[-50%] translate-y-[-50%]
                   text-body rotate-45 w-[100px] h-[100px]
                 "
@@ -81,7 +81,7 @@ export default function page () {
               />
               <HugeiconsArrowExpand01 
                 className="
-                  absolute top-1/2 left-1/2
+                  hidden absolute top-1/2 left-1/2
                   translate-x-[-50%] translate-y-[-50%]
                   text-body rotate-45 w-[100px] h-[100px]
                 "
@@ -109,7 +109,7 @@ export default function page () {
               />
               <HugeiconsArrowExpand01 
                 className="
-                  absolute top-1/2 left-1/2
+                  hidden absolute top-1/2 left-1/2
                   translate-x-[-50%] translate-y-[-50%]
                   text-body rotate-45 w-[100px] h-[100px]
                 "
