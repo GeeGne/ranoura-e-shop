@@ -17,8 +17,6 @@ import getAllProducts from '@/lib/api/products/get';
 export default function page () {  
   
   const setTabName = useTabNameStore((state: any) => state.setTabName);
-  const isEn = true;
-
 
   const [ scrollTable, setScrollTable ] = useState<string>("none")
   const handleScrollTableData = (data: string) => setScrollTable(data);
