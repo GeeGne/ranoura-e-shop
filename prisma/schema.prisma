@@ -140,5 +140,5 @@ model HeroVideo {
   mp4_url String?
   webm_url String?
   poster_url String?
-  mute Boolean @default(false)
+  mute Boolean @default(true)
 }
