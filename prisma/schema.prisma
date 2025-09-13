@@ -134,3 +134,11 @@ model Themes {
   created_at              DateTime  @default(now())
   updated_at              DateTime? @updatedAt
 }
+
+model HeroVideo {
+  id Int @id @default(1)
+  mp4_url String?
+  webm_url String?
+  poster_url String?
+  mute Boolean @default(false)
+}

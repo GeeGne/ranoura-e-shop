@@ -1,5 +1,7 @@
 // COMPONENTS
 import Switch from '@/components/Switch';
+import MaterialSymbolsLightDataTable from '@/components/svgs/MaterialSymbolsLightDataTable';
+import TablerVideoFilled from '@/components/svgs/TablerVideoFilled';
 import LineMdArrowsDiagonal from '@/components/svgs/LineMdArrowsDiagonal';
 import LineMdEdit from '@/components/svgs/LineMdEdit';
 import LineMdTrash from '@/components/svgs/LineMdTrash';
@@ -36,7 +38,7 @@ export default function Options ({ isEn = true }: Props) {
             {isEn ? '(optional)' : 'اختياري'}
           </p>
         </div>
-        {true 
+        {false 
           ? <div
             className="
             group relative w-[200px] aspect-[1/1] rounded-lg overflow-hidden
@@ -176,7 +178,7 @@ export default function Options ({ isEn = true }: Props) {
           <p
             className="text-body font-bold"
           >
-            WEBM
+            WebM
           </p>
           <p
             className="text-sm text-body-light font-bold"
@@ -184,7 +186,7 @@ export default function Options ({ isEn = true }: Props) {
             {isEn ? '(required)' : 'مطلوب'}
           </p>
         </div>
-        {true 
+        {false 
           ? <div
             className="
             group relative w-[200px] aspect-[1/1] rounded-lg overflow-hidden
@@ -281,36 +283,50 @@ export default function Options ({ isEn = true }: Props) {
             />
             <div
               className="
+                absolute top-0 left-1/2 translate-x-[-50%]
+                flex items-center justify-evenly p-4
+              "
+            >
+              <div
+                className="flex items-center shrink-0 gap-2 bg-body-light p-2 rounded-lg"
+              >
+                <MaterialSymbolsLightDataTable
+                  className="
+                    flex items-center justify-evenly bg-body-light text-background-light
+                  "
+                />
+                <span className="font-bold text-background-light">2 MB</span>
+              </div>
+            </div>
+            <div
+              className="
                 absolute bottom-0 left-1/2 translate-x-[-50%]
                 flex items-center justify-evenly w-full p-4
               "
             >
               <div
-                className="relative bg-body-light p-1 rounded-lg"
+                className="flex items-center h-10 bg-body-light p-1 rounded-lg"
               >
-                <LineMdArrowsDiagonal className="text-background-light w-8 h-8" />
                 <span
                   className="
-                    absolute top-1/2 left-1/2
-                    translate-x-[-50%] translate-y-[-50%]
                     text-base text-background-light font-bold
                     bg-body-light rounded-full
                   "
                 >
-                  1:1
+                  1080p
                 </span>
               </div>
               <div
                 className="flex items-center gap-2 bg-body-light p-2 rounded-lg"
               >
-                <GardenFileImage26 className="text-background-light" />
+                <TablerVideoFilled className="w-6 h-6 text-background-light" />
                 <span
                   className="
                     text-base text-background-light font-bold
                     bg-body-light rounded-full
                   "
                 >
-                  AVIF
+                  WebM
                 </span>
               </div>
             </div>
@@ -324,7 +340,7 @@ export default function Options ({ isEn = true }: Props) {
           <p
             className="text-body font-bold"
           >
-            MP4
+            Mp4
           </p>
           <p
             className="text-sm text-body-light font-bold"
@@ -332,7 +348,7 @@ export default function Options ({ isEn = true }: Props) {
             {isEn ? '(required)' : 'مطلوب'}
           </p>
         </div>
-        {true 
+        {false 
           ? <div
             className="
             group relative w-[200px] aspect-[1/1] rounded-lg overflow-hidden
@@ -429,36 +445,50 @@ export default function Options ({ isEn = true }: Props) {
             />
             <div
               className="
+                absolute top-0 left-1/2 translate-x-[-50%]
+                flex items-center justify-evenly p-4
+              "
+            >
+              <div
+                className="flex items-center shrink-0 gap-2 bg-body-light p-2 rounded-lg"
+              >
+                <MaterialSymbolsLightDataTable
+                  className="
+                    flex items-center justify-evenly bg-body-light text-background-light
+                  "
+                />
+                <span className="font-bold text-background-light">2 MB</span>
+              </div>
+            </div>
+            <div
+              className="
                 absolute bottom-0 left-1/2 translate-x-[-50%]
                 flex items-center justify-evenly w-full p-4
               "
             >
               <div
-                className="relative bg-body-light p-1 rounded-lg"
+                className="flex items-center h-10 bg-body-light p-1 rounded-lg"
               >
-                <LineMdArrowsDiagonal className="text-background-light w-8 h-8" />
                 <span
                   className="
-                    absolute top-1/2 left-1/2
-                    translate-x-[-50%] translate-y-[-50%]
                     text-base text-background-light font-bold
                     bg-body-light rounded-full
                   "
                 >
-                  1:1
+                  1080p
                 </span>
               </div>
               <div
                 className="flex items-center gap-2 bg-body-light p-2 rounded-lg"
               >
-                <GardenFileImage26 className="text-background-light" />
+                <TablerVideoFilled className="w-6 h-6 text-background-light" />
                 <span
                   className="
                     text-base text-background-light font-bold
                     bg-body-light rounded-full
                   "
                 >
-                  AVIF
+                  Mp4
                 </span>
               </div>
             </div>
