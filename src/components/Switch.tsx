@@ -1,0 +1,64 @@
+// HOOKS
+import { useState, useRef, useId } from 'react';
+
+type Props = {
+  isEn?: boolean;
+};
+
+export default function Switch ({ isEn = true }:Props) {
+
+  const [ isChecked, setIsChecked ] = useState<boolean>(false);
+  const inptRef = useRef<HTMLInputElement>(null);
+  const id = useId();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, checked } = e.currentTarget;
+    const { info } = e.currentTarget.dataset;
+
+    setIsChecked(checked);
+  }
+
+  // DEBUG
+  // console.log('isChecked: ', isChecked);
+
+  return (
+    <label
+      className={`
+        relative w-10 h-6
+        rounded-full overflow-hidden
+        cursor-pointer
+        ${isEn ? 'ml-auto' : 'mr-auto'}
+      `}
+      htmlFor={id}
+    >
+      <input
+        className="
+          peer invisible flex items-center gap-2 p-2 ml-auto rounded-lg w-10 text-center
+        "
+        type="checkbox"
+        id={id}
+        onChange={handleChange}
+        ref={inptRef}
+      />
+      <div
+        className={`
+          absolute top-1/2  
+          translate-y-[-50%] w-5 h-5 aspect-1/1 
+          bg-background rounded-full border border-background-light z-[5]
+          transition-all duration-300 ease-in-out
+          ${isEn 
+            ? 'left-[2px] peer-checked:left-[calc(100%-22px)]' 
+            : 'right-[2px] peer-checked:right-[calc(100%-22px)]'
+          }
+        `}
+      />
+      <div
+        className="
+          absolute top-0 left-0   
+          w-full h-full aspect-1/1 peer-checked:bg-green-400 bg-inbetween
+          transition-all duration-300 ease-in-out
+        "
+      />
+    </label>
+  )
+}
