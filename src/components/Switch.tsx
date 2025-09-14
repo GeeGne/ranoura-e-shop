@@ -1,21 +1,25 @@
 // HOOKS
-import { useState, useRef, useId } from 'react';
+import { useEffect, useState, useRef, useId } from 'react';
 
 type Props = {
   isEn?: boolean;
+  isChecked?: boolean;
+  onSwitchToggle?: any;
 };
 
-export default function Switch ({ isEn = true }:Props) {
+export default function Switch ({ isEn = true, isChecked = true, onSwitchToggle }: Props) {
 
-  const [ isChecked, setIsChecked ] = useState<boolean>(false);
   const inptRef = useRef<HTMLInputElement>(null);
   const id = useId();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, checked } = e.currentTarget;
-    const { info } = e.currentTarget.dataset;
+  useEffect(() => {
+    if (inptRef.current) inptRef.current.checked = isChecked;
+  }, [])
 
-    setIsChecked(checked);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { checked } = e.currentTarget;
+
+    onSwitchToggle(checked);
   }
 
   // DEBUG

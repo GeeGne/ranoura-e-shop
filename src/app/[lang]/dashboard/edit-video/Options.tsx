@@ -1,3 +1,6 @@
+// HOOKS
+import { useRef, useState } from 'react';
+
 // COMPONENTS
 import Switch from '@/components/Switch';
 import MaterialSymbolsLightDataTable from '@/components/svgs/MaterialSymbolsLightDataTable';
@@ -18,6 +21,13 @@ type Props = {
 };
 
 export default function Options ({ isEn = true }: Props) {
+
+  const [ isSwitchChekced, setIsSwitchChecked ] = useState<boolean>(false);
+
+  const onSwitchToggle = (data: boolean) => setIsSwitchChecked(data);
+
+  // DEBUG 
+  console.log('isSwitchChekced: ', isSwitchChekced);
   return (
     <section className="flex flex-col gap-4">
       <span className="text-heading font-bold text-lg">
@@ -510,7 +520,10 @@ export default function Options ({ isEn = true }: Props) {
             (recommended = yes)
           </p>
         </div>
-        <Switch />
+        <Switch 
+          isChecked={false}
+          onSwitchToggle={onSwitchToggle}
+        />
       </div>
     </section>
   )
