@@ -2,6 +2,7 @@
 
 // HOOKS
 import { useState, useRef, useEffect } from "react";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 // STORES
 import { useTabNameStore, useLanguageStore } from "@/stores/index";
@@ -17,6 +18,9 @@ import FamiconsPhonePortraitOutline from "@/components/svgs/FamiconsPhonePortrai
 import UilExpandAlt from "@/components/svgs/UilExpandAlt";
 import HugeiconsArrowExpand01 from "@/components/svgs/HugeiconsArrowExpand01";
 
+// API
+import getHeroVideoData from '@/lib/api/hero-video/get';
+
 export default function page() {
   const setTabName = useTabNameStore((state: any) => state.setTabName);
   const lang = useLanguageStore((state) => state.lang);
@@ -26,13 +30,28 @@ export default function page() {
     setTabName("edit-video");
   }, []);
 
+  const { data: heroVideo, isLoading, isError } = useQuery({
+    queryKey: ['hero-video'],
+    queryFn: getHeroVideoData,
+  });
+
+
+  // DEBUG
+  console.log('heroVideoDetails Data: ', heroVideo);
+
+  if (isError || isLoading) return (<></>);
+
   return (
     <div
       className="flex flex-col gap-4"
     >
       <Guidelines isEn={isEn} />
       <Preview isEn={isEn} />
-      <Options isEn={isEn} />
+      <Options 
+        isEn={isEn} 
+        isLoading={isLoading}
+        data={heroVideo.data} 
+      />
     </div>
   );
 }

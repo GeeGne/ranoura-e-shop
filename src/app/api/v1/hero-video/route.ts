@@ -21,7 +21,7 @@ async function nextError (code: string, message: string, status = 404) {
 // @access public
 export async function GET (req: NextRequest) {
   try {
-    const data = await prisma.videoHero.findUnique({
+    const data = await prisma.heroVideo.findUnique({
       where: {
         id: 1
       }

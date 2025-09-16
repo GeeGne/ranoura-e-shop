@@ -3,20 +3,22 @@ import { useEffect, useState, useRef, useId } from 'react';
 
 type Props = {
   isEn?: boolean;
+  isLoading: boolean;
   isChecked?: boolean;
   onSwitchToggle?: any;
 };
 
-export default function Switch ({ isEn = true, isChecked = true, onSwitchToggle }: Props) {
+export default function Switch ({ isEn = true, isChecked = true, onSwitchToggle, isLoading }: Props) {
 
   const inptRef = useRef<HTMLInputElement>(null);
   const id = useId();
 
   useEffect(() => {
     if (inptRef.current) inptRef.current.checked = isChecked;
-  }, [])
+  }, [isChecked]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
     const { checked } = e.currentTarget;
 
     onSwitchToggle(checked);
@@ -24,6 +26,18 @@ export default function Switch ({ isEn = true, isChecked = true, onSwitchToggle 
 
   // DEBUG
   // console.log('isChecked: ', isChecked);
+  // isLoading = true;
+  
+  if (isLoading) return (
+    <div
+      className={`
+        --opacity-blink w-10 h-6 bg-background-deep-light
+        rounded-full overflow-hidden
+        cursor-pointer
+        ${isEn ? 'ml-auto' : 'mr-auto'}
+      `}
+    />
+  );
 
   return (
     <label

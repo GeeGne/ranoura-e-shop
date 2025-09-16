@@ -1,5 +1,6 @@
 // HOOKS
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 // COMPONENTS
 import Switch from '@/components/Switch';
@@ -12,22 +13,122 @@ import LineMdPlus from '@/components/svgs/LineMdPlus';
 import FluentZoomFit24Regular from '@/components/svgs/FluentZoomFit24Regular';
 import GardenFileImage26 from '@/components/svgs/GardenFileImage26';
 
+// STORES
+import { useActivityWindowStore, useAlertMessageStore } from '@/stores/index';
+
+// API
+import updateHeroVideoDetails from '@/lib/api/hero-video/put';
+
 // ASSETS
 const posterImg = "/assets/img/background(5).webp";
 const navBarLgImg = "/assets/img/background(7).webp";
 
 type Props = {
   isEn?: boolean;
+  isLoading: boolean;
+  data: Record<string, string> | null;
 };
 
-export default function Options ({ isEn = true }: Props) {
+export default function Options ({ isEn = true, data, isLoading }: Props) {
 
+  const queryClient = useQueryClient();
   const [ isSwitchChekced, setIsSwitchChecked ] = useState<boolean>(false);
+  const onSwitchToggle = (data: boolean) => updateHeroVideoMutation.mutate({ mute: data });
 
-  const onSwitchToggle = (data: boolean) => setIsSwitchChecked(data);
+  const setActivityWindowToggle = useActivityWindowStore(state => state.setToggle);
+  const setActivityWindowMessage = useActivityWindowStore(state => state.setMessage);
 
-  // DEBUG 
-  console.log('isSwitchChekced: ', isSwitchChekced);
+  const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
+  const setAlertType = useAlertMessageStore((state) => state.setType);
+  const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
+
+  const displayAlert = (message: any, type: string) => {
+    setAlertMessage(message);
+    setAlertType(type);
+    setAlertToggle(Date.now());
+  };
+
+  const updateHeroVideoMutation = useMutation({
+    mutationFn: updateHeroVideoDetails,
+    onSettled: () => {
+      setActivityWindowToggle(false);
+    },
+    onMutate: () => {
+      setActivityWindowToggle(true);
+      setActivityWindowMessage(isEn ? 'Updating the Video Settings...' : 'جاري تحديث اعدادات الفيديو...')
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['hero-video']});
+      displayAlert(data.message[isEn ? 'en' : 'ar'], "success");
+    },
+    onError: () => {
+      displayAlert(
+        isEn 
+          ? "Couldn't update Video Settings, please try again." 
+          : "فشل في محاوله تحديث اعدادات الفيديو, الرجاء محاوله مره اخرى."
+      , "error");
+    },
+  })
+
+  // DEBUG & UI
+  // console.log('isSwitchChekced: ', isSwitchChekced);
+  isLoading = true;
+
+  if (isLoading) return (
+    <section className="flex flex-col gap-4">
+      <span className="--opacity-blink w-20 text-transparent bg-background-deep-light rounded-lg font-bold text-lg">
+        //////////////////
+      </span>
+      {['///////////////', '/////////////////////', '//////////'].map((itm, i) => 
+        <div
+          key={i}
+          className="flex justify-between items-center w-full"
+        >
+          <div
+            className="--opacity-blink text-transparent bg-background-deep-light rounded-lg"
+          >
+            <p
+              className="text-transparent font-bold"
+            >
+              {itm}
+            </p>
+            <p
+              className="text-transparent text-sm font-bold"
+            >
+              {itm}
+            </p>
+          </div>
+          <div
+            className="
+              --opacity-blink w-[200px] aspect-[1/1] rounded-lg bg-background-deep-light
+            "
+          />
+        </div>
+      )}
+      <div
+        className="flex justify-between items-center w-full"
+      >
+        <div
+          className="--opacity-blink text-transparent bg-background-deep-light rounded-lg"
+        >
+          <p
+            className="text-transparent font-bold"
+          >
+            /////////////////////////
+          </p>
+          <p
+            className="text-transparent text-sm font-bold"
+          >
+            /////////////////////////
+          </p>
+        </div>
+        <Switch 
+          isLoading={true}
+        />
+      </div>
+    </section>
+  )
+
   return (
     <section className="flex flex-col gap-4">
       <span className="text-heading font-bold text-lg">
@@ -40,12 +141,12 @@ export default function Options ({ isEn = true }: Props) {
           <p
             className="text-body font-bold"
           >
-            {isEn ? 'Poster' : 'بوستر'}
+            ///////////////
           </p>
           <p
             className="text-sm text-body-light font-bold"
           >
-            {isEn ? '(optional)' : 'اختياري'}
+            ///////////////
           </p>
         </div>
         {false 
@@ -521,7 +622,7 @@ export default function Options ({ isEn = true }: Props) {
           </p>
         </div>
         <Switch 
-          isChecked={false}
+          isChecked={data.mute}
           onSwitchToggle={onSwitchToggle}
         />
       </div>

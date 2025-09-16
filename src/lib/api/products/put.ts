@@ -8,14 +8,11 @@ export default async function put (data: any) {
     const response = await fetch(url, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(
-        requestedData
-      )
+      body: JSON.stringify(requestedData)
     });
     if (!response.ok) throw new Error('Unable to connect to the server.');
 
     const result = await response.json();
-    console.log('result: ', result);
     return result;
   } catch (err) {
     const error = err as Error;

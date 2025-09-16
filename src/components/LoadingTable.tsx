@@ -3,14 +3,14 @@ export default function LoadingTable () {
   return (
     <div className="flex flex-col gap-4 overflow-x-auto">
       <h3
-        className="--opacity-blink w-[6rem] h-4 rounded-lg sticky left-0 text-lg text-transparent bg-[var(--background-deep-light-color)]"
+        className="--opacity-blink w-[6rem] h-4 rounded-lg sticky left-0 text-lg text-transparent bg-background-deep-light"
       >
         Schemes
       </h3>
       <table
         className="
           --opacity-blink min-w-full overflow-hidden 
-          divide-y divide-underline bg-[var(--background-deep-light-color)] rounded-lg whitespace-nowrap
+          divide-y divide-underline bg-background-deep-light rounded-lg whitespace-nowrap
         "
       >
         <thead className="text-body">

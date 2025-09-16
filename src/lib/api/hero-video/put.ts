@@ -2,7 +2,7 @@ import getServerUrl from '@/utils/getServerUrl';
 
 // Update Hero Video Details Data
 
-export default async function put (data: Record<string, string>) {
+export default async function put (data: Record<string, any>) {
   try {
 
     const url = `${getServerUrl()}/api/v1/hero-video`;
