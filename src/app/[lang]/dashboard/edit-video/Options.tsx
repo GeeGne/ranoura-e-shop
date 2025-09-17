@@ -18,6 +18,7 @@ import { useActivityWindowStore, useAlertMessageStore } from '@/stores/index';
 
 // API
 import updateHeroVideoDetails from '@/lib/api/hero-video/put';
+import uploadStorageFile from '@/lib/api/object/bucketName/filePath/post';
 
 // ASSETS
 const posterImg = "/assets/img/background(5).webp";
@@ -32,7 +33,6 @@ type Props = {
 export default function Options ({ isEn = true, data, isLoading }: Props) {
 
   const queryClient = useQueryClient();
-  const [ isSwitchChekced, setIsSwitchChecked ] = useState<boolean>(false);
   const onSwitchToggle = (data: boolean) => updateHeroVideoMutation.mutate({ mute: data });
 
   const setActivityWindowToggle = useActivityWindowStore(state => state.setToggle);
@@ -41,6 +41,8 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
+
+  const targetedRow = useRef<string>(null);
 
   const displayAlert = (message: any, type: string) => {
     setAlertMessage(message);
@@ -70,9 +72,51 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
     },
   })
 
+  const uploadFileMutation = useMutation({
+    mutationFn: uploadStorageFile,
+    onSettled: () => {
+      setActivityWindowToggle(false);
+    },
+    onMutate: () => {
+      setActivityWindowToggle(true);
+      setActivityWindowMessage(isEn ? 'Uploading the Image...' : 'جاري رفع الصوره...');
+    },
+    onSuccess: (results) => {
+      const { publicUrl } = results.data;
+      displayAlert(results.message[isEn ? 'en' : 'ar'], "success");
+      if (targetedRow.current) updateHeroVideoMutation.mutate({ [targetedRow.current]: publicUrl });
+      // DEBUG
+      // console.log('upload image data result: ', data);
+    },
+    onError: () => {
+      displayAlert(isEn ? 'An Error has accured during uploading the image, please try again.' : 'هناك مشكله خلال رفع الصوره, الرجاء المحاوله مره اخرى.', "error");
+    }
+  })
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, files } = e.currentTarget;
+    const { rowName } = e.currentTarget.dataset;
+
+    switch (name) {
+      case 'PosterUpload':
+        if (!files) return;
+        const file: any = files[0];
+        uploadFileMutation.mutate({
+          bucketName: 'assets',
+          filePath: `images/hero-video/poster/${Date.now()}`,
+          file
+        });
+        uploadFileMutation.mutate(file);
+        if (rowName) targetedRow.current = rowName;
+        break;
+      default:
+        console.error('Unknown name: ', name);
+    }
+  }
+
   // DEBUG & UI
   // console.log('isSwitchChekced: ', isSwitchChekced);
-  isLoading = true;
+  // isLoading = true;
 
   if (isLoading) return (
     <section className="flex flex-col gap-4">
@@ -141,15 +185,15 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
           <p
             className="text-body font-bold"
           >
-            ///////////////
+            {isEn ? 'Poster' : 'بوستر'}
           </p>
           <p
             className="text-sm text-body-light font-bold"
           >
-            ///////////////
+            {isEn ? '(optional)' : 'اختياري'}
           </p>
         </div>
-        {false 
+        {data?.poster_url 
           ? <div
             className="
             group relative w-[200px] aspect-[1/1] rounded-lg overflow-hidden
@@ -213,7 +257,7 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
             className="
               flex relative w-[200px] aspect-[1/1] rounded-lg overflow-hidden cursor-pointer
             "
-            htmlFor="navBarImgEditInpt"
+            htmlFor="PosterUpload"
           >
             <input
               className="
@@ -223,10 +267,10 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
               "
               type="file"
               accept="image/*"
-              id="navBarImgEditInpt"
-              name="navBarImgEditInpt"
-              data-image-type="navbar"
-              data-variable-name="navbarImg"
+              id="PosterUpload"
+              name="PosterUpload"
+              data-row-name="poster_url"
+              onChange={handleChange}
             />
             <div
               className="
@@ -336,7 +380,7 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
                     unvisible opacity-0
                   "
                   type="file"
-                  accept="image/*"
+                  accept="video/webm"
                   id="edit-video-poster"
                   name="edit-video-poster"
                 />
@@ -370,7 +414,7 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
                 unvisible opacity-0
               "
               type="file"
-              accept="image/*"
+              accept="video/webm"
               id="navBarImgEditInpt"
               name="navBarImgEditInpt"
               data-image-type="navbar"
@@ -498,7 +542,7 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
                     unvisible opacity-0
                   "
                   type="file"
-                  accept="image/*"
+                  accept="video/mp4"
                   id="edit-video-poster"
                   name="edit-video-poster"
                 />
@@ -532,7 +576,7 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
                 unvisible opacity-0
               "
               type="file"
-              accept="image/*"
+              accept="video/mp4"
               id="navBarImgEditInpt"
               name="navBarImgEditInpt"
               data-image-type="navbar"
@@ -622,7 +666,8 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
           </p>
         </div>
         <Switch 
-          isChecked={data.mute}
+          isChecked={!!data?.mute}
+          isLoading={isLoading}
           onSwitchToggle={onSwitchToggle}
         />
       </div>

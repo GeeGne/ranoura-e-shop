@@ -15,9 +15,10 @@ const introVideoLowerRes = "/assets/video/Intro-Video(2)(24 frame)(720p).mp4";
 
 type Props = {
   className?: string;
+  isLoading?: boolean;
 };
 
-export default function VideoDisplay ({ className }: Props) {
+export default function VideoDisplay ({ className, isLoading = false }: Props) {
   
   const [ mainWrapperCoordinates, setMainWrapperCoordinates ] = useState<{x: number, y: number}>({x: 0, y: 0});
   const [ isVideoPause, setIsVideoPause ] = useState<boolean>(false);
@@ -87,6 +88,16 @@ export default function VideoDisplay ({ className }: Props) {
 
   // DEBUG & UI
   // console.log('mainWrapperCoordinates: ', mainWrapperCoordinates);
+
+  if (isLoading) return (
+    <section
+      className={`
+        --opacity-blink text-transparent bg-background-deep-light
+        rounded-lg overflow-hidden
+        ${className}
+      `}
+    /> 
+  )
 
   return (
     <section
