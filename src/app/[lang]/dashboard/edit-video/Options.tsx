@@ -100,26 +100,21 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
   const deleteFileMutation = useMutation({ mutationFn: deleteStorageFile });
 
   const handleClick = (e: React.MouseEvent<HTMLElement | SVGElement>) => {
-    const { type, imageUrl, filePath } = e.currentTarget.dataset;
+    const { type, imageUrl, filePath, rowName } = e.currentTarget.dataset;
 
     switch (type) {
       case 'delete_poster_button_is_clicked':
+      case 'delete_webm_button_is_clicked':
+      case 'delete_mp4_button_is_clicked':
         if (filePath) deleteFileMutation.mutate({
           bucketName: 'assets',
           filePath
         });
-        updateHeroVideoMutation.mutate({ poster_url: null });
+        if (rowName) updateHeroVideoMutation.mutate({ [rowName]: null });
         break;
       case 'expand_image_button_is_clicked':
         setImageDisplayerToggle(true);
         if (imageUrl) setImageDisplayerUrl(imageUrl);
-        break;
-      case 'delete_webm_button_is_clicked':
-        if (filePath) deleteFileMutation.mutate({
-          bucketName: 'assets',
-          filePath
-        });
-        updateHeroVideoMutation.mutate({ webm_url: null });
         break;
       default:
         console.error('Unknown type: ', type);
@@ -128,38 +123,25 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, files } = e.currentTarget;
-    const { rowName, filePath } = e.currentTarget.dataset;
+    const { rowName, filePath, storePath } = e.currentTarget.dataset;
 
     switch (name) {
       case 'posterUpload':
       case 'posterEdit':
-        if (!files) return;
-        const posterImg: any = files[0];
-        uploadFileMutation.mutate({
-          bucketName: 'assets',
-          filePath: `hero-video/poster/${Date.now()}`,
-          file: posterImg
-        });
-        if (filePath) deleteFileMutation.mutate({
-          bucketName: 'assets',
-          filePath
-        });
-        if (rowName) targetedRow.current = rowName;
-        break;
       case 'webmUpload':
       case 'webmEdit':
+      case 'mp4Upload':
+      case 'mp4Edit':
         if (!files) return;
-
+        const file: any = files[0];
+        uploadFileMutation.mutate({
+          bucketName: 'assets',
+          filePath: `${storePath}/${Date.now()}`,
+          file
+        });
         if (filePath) deleteFileMutation.mutate({
           bucketName: 'assets',
           filePath
-        });
-
-        const webmVideo: any = files[0];
-        uploadFileMutation.mutate({
-          bucketName: 'assets',
-          filePath: `hero-video/webm/${Date.now()}`,
-          file: webmVideo
         });
         if (rowName) targetedRow.current = rowName;
         break;
@@ -294,6 +276,7 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
                   id="posterEdit"
                   name="posterEdit"
                   data-row-name="poster_url"
+                  data-store-path="hero-video/poster"
                   data-file-path={data?.poster_url}
                   onChange={handleChange}
                 />
@@ -306,6 +289,7 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
                 "
                 role="button"
                 data-type="delete_poster_button_is_clicked"
+                data-row-name="poster_url"
                 data-file-path={data?.poster_url}
                 onClick={handleClick}
               />
@@ -332,6 +316,7 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
               id="posterUpload"
               name="posterUpload"
               data-row-name="poster_url"
+              data-store-path="hero-video/poster"
               data-file-path={data?.poster_url}
               onChange={handleChange}
             />
@@ -418,17 +403,15 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
                 transition-all duration-300 ease-in-out
               "
             >
-              <LineMdTrash
+              <FluentZoomFit24Regular
                 className="
                   w-10 h-10 hover:bg-shade-v2 p-2
                   rounded-md active:opacity-80 cursor-pointer
                   transition-all duration-200 ease-out
                 "
                 role="button"
-                data-type="delete_webm_button_is_clicked"
-                data-row-name="webm_url"
-                data-file-path={data?.webm_url}
-                onClick={handleClick}
+                data-type="expand_image_button_is_clicked"
+                data-image-url={posterImg}
               />
               <label
                 className=""
@@ -452,25 +435,28 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
                   id="webmEdit"
                   name="webmEdit"
                   data-row-name="webm_url"
+                  data-store-path="hero-video/webm"
                   data-file-path={data?.webm_url}
                   onChange={handleChange}
                 />
               </label>
-              <FluentZoomFit24Regular
+              <LineMdTrash
                 className="
                   w-10 h-10 hover:bg-shade-v2 p-2
                   rounded-md active:opacity-80 cursor-pointer
                   transition-all duration-200 ease-out
                 "
                 role="button"
-                data-type="expand_image_button_is_clicked"
-                data-image-url={posterImg}
+                data-type="delete_webm_button_is_clicked"
+                data-row-name="webm_url"
+                data-file-path={data?.webm_url}
+                onClick={handleClick}
               />
             </div>
             <video
               autoPlay muted loop playsInline 
-              className="w-full object-center object-cover"
-              preload="metadatas"
+              className="w-full h-full object-center object-cover"
+              preload="metadata"
             >
               <source
                 src={data.webm_url}
@@ -495,6 +481,7 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
               id="webmUpload"
               name="webmUpload"
               data-row-name="webm_url"
+              data-store-path="hero-video/webm"
               data-file-path={data?.webm_url}
               onChange={handleChange}
             />
@@ -581,7 +568,7 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
             {isEn ? '(required)' : 'مطلوب'}
           </p>
         </div>
-        {false 
+        {data?.mp4_url 
           ? <div
             className="
             group relative w-[200px] aspect-[1/1] rounded-lg overflow-hidden
@@ -595,16 +582,19 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
                 transition-all duration-300 ease-in-out
               "
             >
-              <LineMdTrash
+              <FluentZoomFit24Regular
                 className="
                   w-10 h-10 hover:bg-shade-v2 p-2
                   rounded-md active:opacity-80 cursor-pointer
                   transition-all duration-200 ease-out
                 "
+                role="button"
+                data-type="expand_image_button_is_clicked"
+                data-image-url={data.mp4_url}
               />
               <label
                 className=""
-                htmlFor="webmEdit"
+                htmlFor="mp4Edit"
               >
                 <LineMdEdit
                   className="
@@ -621,31 +611,43 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
                   "
                   type="file"
                   accept="video/mp4"
-                  id="edit-video-poster"
-                  name="edit-video-poster"
+                  id="mp4Edit"
+                  name="mp4Edit"
+                  data-row-name="mp4_url"
+                  data-store-path="hero-video/mp4"
+                  data-file-path={data?.mp4_url}
+                  onChange={handleChange}
                 />
               </label>
-              <FluentZoomFit24Regular
+              <LineMdTrash
                 className="
                   w-10 h-10 hover:bg-shade-v2 p-2
                   rounded-md active:opacity-80 cursor-pointer
                   transition-all duration-200 ease-out
                 "
                 role="button"
-                data-type="expand_image_button_is_clicked"
-                data-image-url={posterImg}
+                data-type="delete_mp4_button_is_clicked"
+                data-row-name="mp4_url"
+                data-file-path={data?.mp4_url}
+                onClick={handleClick}
               />
             </div>
-            <img 
-              src={posterImg}
-              className="w-full object-center object-cover"
-            />
+            <video
+              autoPlay muted loop playsInline 
+              className="w-full h-full object-center object-cover"
+              preload="metadata"
+            >
+              <source
+                src={data.mp4_url}
+                type="video/mp4"
+              />
+            </video>
           </div>
           : <label
             className="
               flex relative w-[200px] aspect-[1/1] rounded-lg overflow-hidden cursor-pointer
             "
-            htmlFor="navBarImgEditInpt"
+            htmlFor="mp4Upload"
           >
             <input
               className="
@@ -655,10 +657,11 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
               "
               type="file"
               accept="video/mp4"
-              id="navBarImgEditInpt"
-              name="navBarImgEditInpt"
-              data-image-type="navbar"
-              data-variable-name="navbarImg"
+              id="mp4Upload"
+              name="mp4Upload"
+              data-store-path="hero-video/mp4"
+              data-file-path={data?.mp4_url}
+              onChange={handleChange}
             />
             <div
               className="
