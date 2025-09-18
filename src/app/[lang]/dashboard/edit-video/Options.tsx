@@ -14,7 +14,7 @@ import FluentZoomFit24Regular from '@/components/svgs/FluentZoomFit24Regular';
 import GardenFileImage26 from '@/components/svgs/GardenFileImage26';
 
 // STORES
-import { useActivityWindowStore, useAlertMessageStore } from '@/stores/index';
+import { useActivityWindowStore, useAlertMessageStore, useImageDisplayerWindow } from '@/stores/index';
 
 // API
 import updateHeroVideoDetails from '@/lib/api/hero-video/put';
@@ -41,6 +41,9 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
+
+  const setImageDisplayerToggle = useImageDisplayerWindow(state => state.setToggle);
+  const setImageDisplayerUrl = useImageDisplayerWindow(state => state.setUrl);
 
   const targetedRow = useRef<string>(null);
 
@@ -93,12 +96,28 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
     }
   })
 
+  const handleClick = (e: React.MouseEvent<HTMLElement | SVGElement>) => {
+    const { type, imageUrl } = e.currentTarget.dataset;
+
+    switch (type) {
+      case 'delete_poster_button_is_clicked':
+        break;
+      case 'expand_image_button_is_clicked':
+        setImageDisplayerToggle(true);
+        if (imageUrl) setImageDisplayerUrl(imageUrl);
+        break;
+      default:
+        console.error('Unknown type: ', type);
+    }
+  }
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, files } = e.currentTarget;
     const { rowName } = e.currentTarget.dataset;
 
     switch (name) {
-      case 'PosterUpload':
+      case 'posterUpload':
+      case 'posterEdit':
         if (!files) return;
         const file: any = files[0];
         uploadFileMutation.mutate({
@@ -108,6 +127,10 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
         });
         uploadFileMutation.mutate(file);
         if (rowName) targetedRow.current = rowName;
+        break;
+      case 'expand_image_button_is_clicked':
+        setImageDisplayerToggle(true);
+        if (imageUrl) setImageDisplayerUrl(imageUrl);
         break;
       default:
         console.error('Unknown name: ', name);
@@ -207,16 +230,20 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
                 transition-all duration-300 ease-in-out
               "
             >
-              <LineMdTrash
+              <FluentZoomFit24Regular
                 className="
                   w-10 h-10 hover:bg-shade-v2 p-2
                   rounded-md active:opacity-80 cursor-pointer
                   transition-all duration-200 ease-out
                 "
+                role="button"
+                data-type="expand_image_button_is_clicked"
+                data-image-url={data.poster_url}
+                onClick={handleClick}
               />
               <label
                 className=""
-                htmlFor="edit-video-poster"
+                htmlFor="posterEdit"
               >
                 <LineMdEdit
                   className="
@@ -224,6 +251,9 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
                     rounded-md active:opacity-80 cursor-pointer
                     transition-all duration-200 ease-out
                   "
+                  role="button"
+                  data-type="delete_poster_button_is_clicked"
+                  onClick={handleClick}
                 />
                 <input
                   className="
@@ -233,23 +263,23 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
                   "
                   type="file"
                   accept="image/*"
-                  id="edit-video-poster"
-                  name="edit-video-poster"
+                  id="posterEdit"
+                  name="posterEdit"
+                  data-row-name="poster_url"
+                  onChange={handleChange}
                 />
               </label>
-              <FluentZoomFit24Regular
+              <LineMdTrash
                 className="
                   w-10 h-10 hover:bg-shade-v2 p-2
                   rounded-md active:opacity-80 cursor-pointer
                   transition-all duration-200 ease-out
                 "
-                role="button"
-                data-type="expand_image_button_is_clicked"
-                data-image-url={posterImg}
+
               />
             </div>
             <img 
-              src={posterImg}
+              src={data.poster_url}
               className="w-full object-center object-cover"
             />
           </div>
