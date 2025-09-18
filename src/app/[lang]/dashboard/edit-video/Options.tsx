@@ -19,6 +19,7 @@ import { useActivityWindowStore, useAlertMessageStore, useImageDisplayerWindow }
 // API
 import updateHeroVideoDetails from '@/lib/api/hero-video/put';
 import uploadStorageFile from '@/lib/api/object/bucketName/filePath/post';
+import deleteStorageFile from '@/lib/api/object/bucketName/filePath/delete';
 
 // ASSETS
 const posterImg = "/assets/img/background(5).webp";
@@ -73,7 +74,7 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
           : "فشل في محاوله تحديث اعدادات الفيديو, الرجاء محاوله مره اخرى."
       , "error");
     },
-  })
+  });
 
   const uploadFileMutation = useMutation({
     mutationFn: uploadStorageFile,
@@ -82,7 +83,7 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
     },
     onMutate: () => {
       setActivityWindowToggle(true);
-      setActivityWindowMessage(isEn ? 'Uploading the Image...' : 'جاري رفع الصوره...');
+      setActivityWindowMessage(isEn ? 'Uploading the file...' : 'جاري رفع الملف...');
     },
     onSuccess: (results) => {
       const { publicUrl } = results.data;
@@ -92,19 +93,33 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
       // console.log('upload image data result: ', data);
     },
     onError: () => {
-      displayAlert(isEn ? 'An Error has accured during uploading the image, please try again.' : 'هناك مشكله خلال رفع الصوره, الرجاء المحاوله مره اخرى.', "error");
+      displayAlert(isEn ? 'An Error has accured during uploading the file, please try again.' : 'هناك مشكله خلال رفع الملف, الرجاء المحاوله مره اخرى.', "error");
     }
-  })
+  });
+
+  const deleteFileMutation = useMutation({ mutationFn: deleteStorageFile });
 
   const handleClick = (e: React.MouseEvent<HTMLElement | SVGElement>) => {
-    const { type, imageUrl } = e.currentTarget.dataset;
+    const { type, imageUrl, filePath } = e.currentTarget.dataset;
 
     switch (type) {
       case 'delete_poster_button_is_clicked':
+        if (filePath) deleteFileMutation.mutate({
+          bucketName: 'assets',
+          filePath
+        });
+        updateHeroVideoMutation.mutate({ poster_url: null });
         break;
       case 'expand_image_button_is_clicked':
         setImageDisplayerToggle(true);
         if (imageUrl) setImageDisplayerUrl(imageUrl);
+        break;
+      case 'delete_webm_button_is_clicked':
+        if (filePath) deleteFileMutation.mutate({
+          bucketName: 'assets',
+          filePath
+        });
+        updateHeroVideoMutation.mutate({ webm_url: null });
         break;
       default:
         console.error('Unknown type: ', type);
@@ -113,24 +128,40 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, files } = e.currentTarget;
-    const { rowName } = e.currentTarget.dataset;
+    const { rowName, filePath } = e.currentTarget.dataset;
 
     switch (name) {
       case 'posterUpload':
       case 'posterEdit':
         if (!files) return;
-        const file: any = files[0];
+        const posterImg: any = files[0];
         uploadFileMutation.mutate({
           bucketName: 'assets',
-          filePath: `images/hero-video/poster/${Date.now()}`,
-          file
+          filePath: `hero-video/poster/${Date.now()}`,
+          file: posterImg
         });
-        uploadFileMutation.mutate(file);
+        if (filePath) deleteFileMutation.mutate({
+          bucketName: 'assets',
+          filePath
+        });
         if (rowName) targetedRow.current = rowName;
         break;
-      case 'expand_image_button_is_clicked':
-        setImageDisplayerToggle(true);
-        if (imageUrl) setImageDisplayerUrl(imageUrl);
+      case 'webmUpload':
+      case 'webmEdit':
+        if (!files) return;
+
+        if (filePath) deleteFileMutation.mutate({
+          bucketName: 'assets',
+          filePath
+        });
+
+        const webmVideo: any = files[0];
+        uploadFileMutation.mutate({
+          bucketName: 'assets',
+          filePath: `hero-video/webm/${Date.now()}`,
+          file: webmVideo
+        });
+        if (rowName) targetedRow.current = rowName;
         break;
       default:
         console.error('Unknown name: ', name);
@@ -251,9 +282,6 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
                     rounded-md active:opacity-80 cursor-pointer
                     transition-all duration-200 ease-out
                   "
-                  role="button"
-                  data-type="delete_poster_button_is_clicked"
-                  onClick={handleClick}
                 />
                 <input
                   className="
@@ -266,6 +294,7 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
                   id="posterEdit"
                   name="posterEdit"
                   data-row-name="poster_url"
+                  data-file-path={data?.poster_url}
                   onChange={handleChange}
                 />
               </label>
@@ -275,7 +304,10 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
                   rounded-md active:opacity-80 cursor-pointer
                   transition-all duration-200 ease-out
                 "
-
+                role="button"
+                data-type="delete_poster_button_is_clicked"
+                data-file-path={data?.poster_url}
+                onClick={handleClick}
               />
             </div>
             <img 
@@ -287,7 +319,7 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
             className="
               flex relative w-[200px] aspect-[1/1] rounded-lg overflow-hidden cursor-pointer
             "
-            htmlFor="PosterUpload"
+            htmlFor="posterUpload"
           >
             <input
               className="
@@ -297,9 +329,10 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
               "
               type="file"
               accept="image/*"
-              id="PosterUpload"
-              name="PosterUpload"
+              id="posterUpload"
+              name="posterUpload"
               data-row-name="poster_url"
+              data-file-path={data?.poster_url}
               onChange={handleChange}
             />
             <div
@@ -371,7 +404,7 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
             {isEn ? '(required)' : 'مطلوب'}
           </p>
         </div>
-        {false 
+        {data?.webm_url 
           ? <div
             className="
             group relative w-[200px] aspect-[1/1] rounded-lg overflow-hidden
@@ -391,10 +424,15 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
                   rounded-md active:opacity-80 cursor-pointer
                   transition-all duration-200 ease-out
                 "
+                role="button"
+                data-type="delete_webm_button_is_clicked"
+                data-row-name="webm_url"
+                data-file-path={data?.webm_url}
+                onClick={handleClick}
               />
               <label
                 className=""
-                htmlFor="edit-video-poster"
+                htmlFor="webmEdit"
               >
                 <LineMdEdit
                   className="
@@ -411,8 +449,11 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
                   "
                   type="file"
                   accept="video/webm"
-                  id="edit-video-poster"
-                  name="edit-video-poster"
+                  id="webmEdit"
+                  name="webmEdit"
+                  data-row-name="webm_url"
+                  data-file-path={data?.webm_url}
+                  onChange={handleChange}
                 />
               </label>
               <FluentZoomFit24Regular
@@ -426,16 +467,22 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
                 data-image-url={posterImg}
               />
             </div>
-            <img 
-              src={posterImg}
+            <video
+              autoPlay muted loop playsInline 
               className="w-full object-center object-cover"
-            />
+              preload="metadatas"
+            >
+              <source
+                src={data.webm_url}
+                type="video/webm"
+              />
+            </video>
           </div>
           : <label
             className="
               flex relative w-[200px] aspect-[1/1] rounded-lg overflow-hidden cursor-pointer
             "
-            htmlFor="navBarImgEditInpt"
+            htmlFor="webmUpload"
           >
             <input
               className="
@@ -445,10 +492,11 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
               "
               type="file"
               accept="video/webm"
-              id="navBarImgEditInpt"
-              name="navBarImgEditInpt"
-              data-image-type="navbar"
-              data-variable-name="navbarImg"
+              id="webmUpload"
+              name="webmUpload"
+              data-row-name="webm_url"
+              data-file-path={data?.webm_url}
+              onChange={handleChange}
             />
             <div
               className="
@@ -556,7 +604,7 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
               />
               <label
                 className=""
-                htmlFor="edit-video-poster"
+                htmlFor="webmEdit"
               >
                 <LineMdEdit
                   className="
