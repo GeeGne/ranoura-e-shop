@@ -1,6 +1,7 @@
 // COMPONENTS
 import VideoDisplay from "@/app/[lang]/dashboard/edit-video/VideoDisplay";
 import IonDesktopOutline from "@/components/svgs/IonDesktopOutline";
+import LineMdImageFilled from "@/components/svgs/LineMdImageFilled";
 import FamiconsTabletPortraitSharp from "@/components/svgs/FamiconsTabletPortraitSharp";
 import FamiconsPhonePortraitOutline from "@/components/svgs/FamiconsPhonePortraitOutline";
 import HugeiconsArrowExpand01 from "@/components/svgs/HugeiconsArrowExpand01";
@@ -8,15 +9,10 @@ import HugeiconsArrowExpand01 from "@/components/svgs/HugeiconsArrowExpand01";
 type Props = {
   isEn?: boolean;
   isLoading: boolean;
+  data: Record<string, any> | null;
 };
 
-export default function Preview ({ isEn = true, isLoading }: Props) {
-  const svgComponents = {
-    IonDesktopOutline,
-    FamiconsTabletPortraitSharp,
-    FamiconsPhonePortraitOutline,
-    HugeiconsArrowExpand01
-  };
+export default function Preview ({ isEn = true, isLoading, data }: Props) {
   const layoutDetailsArray = [
     {
       title: { en: 'DESKTOP', ar: 'سطح المكتب' },
@@ -32,7 +28,7 @@ export default function Preview ({ isEn = true, isLoading }: Props) {
       style: 'w-[250px] aspect-[3/4]'
     },{
       title: { en: 'POSTER', ar: 'بوستر' },
-      svgName: FamiconsTabletPortraitSharp,
+      svgName: LineMdImageFilled,
       style: 'w-[250px] aspect-[3/4]'
     },
   ]
@@ -96,7 +92,11 @@ export default function Preview ({ isEn = true, isLoading }: Props) {
                 "
               />
             </div>
-            <VideoDisplay className={itm.style} />
+            <VideoDisplay 
+              className={itm.style} 
+              isLoading={isLoading}
+              data={data}
+            />
           </div>
         )}
       </div>

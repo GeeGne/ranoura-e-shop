@@ -15,10 +15,11 @@ const introVideoLowerRes = "/assets/video/Intro-Video(2)(24 frame)(720p).mp4";
 
 type Props = {
   className?: string;
-  isLoading?: boolean;
+  isLoading: boolean;
+  data?: Record<string, any> | null;
 };
 
-export default function VideoDisplay ({ className, isLoading = false }: Props) {
+export default function VideoDisplay ({ className, isLoading = false, data }: Props) {
   
   const [ mainWrapperCoordinates, setMainWrapperCoordinates ] = useState<{x: number, y: number}>({x: 0, y: 0});
   const [ isVideoPause, setIsVideoPause ] = useState<boolean>(false);
@@ -99,6 +100,8 @@ export default function VideoDisplay ({ className, isLoading = false }: Props) {
     /> 
   )
 
+  const { poster_url, webm_url, mp4_url, mute } = data || {};
+
   return (
     <section
       className={`
@@ -114,9 +117,10 @@ export default function VideoDisplay ({ className, isLoading = false }: Props) {
     > 
       <video 
         autoPlay 
-        muted 
+        muted={mute}
         loop 
         playsInline
+        poster={poster_url}
         className="
           bg-primary w-full h-full object-cover 
         "
@@ -127,12 +131,12 @@ export default function VideoDisplay ({ className, isLoading = false }: Props) {
         onCanPlayThrough={() => console.log('canPlayThrought')}
       >
         <source
-          media="(min-width: 768px)"
-          src={introVideo} 
+          src={webm_url} 
+          type="video/webm"
         />
         <source 
-          media="(max-width: 768px)"
-          src={introVideoLowerRes} 
+          src={mp4_url} 
+          type="video/mp4"
         />
       </video>
       <div

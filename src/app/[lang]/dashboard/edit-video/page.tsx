@@ -10,6 +10,7 @@ import { useTabNameStore, useLanguageStore } from "@/stores/index";
 // COMPONENTS
 import VideoDisplay from "@/app/[lang]/dashboard/edit-video/VideoDisplay";
 import Preview from "@/app/[lang]/dashboard/edit-video/Preview";
+import ErrorLayout from '@/components/ErrorLayout';
 import Options from "@/app/[lang]/dashboard/edit-video/Options";
 import Guidelines from "@/app/[lang]/dashboard/edit-video/Guidelines";
 import IonDesktopOutline from "@/components/svgs/IonDesktopOutline";
@@ -39,18 +40,27 @@ export default function page() {
   // DEBUG
   console.log('heroVideoDetails Data: ', heroVideo);
 
-  if (isError || isLoading) return (<></>);
+  if (isError) return ( 
+    <ErrorLayout 
+      title={isEn ? 'Unable To Load' : 'لم يتم التحميل'}
+      description={isEn ? 'Please Refresh the page or try again later' : 'الرجاء اعاده تحميل الصفحه او حاول مره اخرى لاحقا'}
+    />
+  );
 
   return (
     <div
       className="flex flex-col gap-4"
     >
       <Guidelines isEn={isEn} />
-      <Preview isEn={isEn} />
+      <Preview 
+        isEn={isEn} 
+        isLoading={isLoading}
+        data={heroVideo?.data} 
+      />
       <Options 
         isEn={isEn} 
         isLoading={isLoading}
-        data={heroVideo.data} 
+        data={heroVideo?.data} 
       />
     </div>
   );
