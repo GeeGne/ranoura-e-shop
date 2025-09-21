@@ -444,6 +444,25 @@ const useImageDisplayerWindow = create<ImageDisplayerWindowProps>()(
     setUrl: (url) => set({ url })
   })
 )
+type VideoDisplayerWindowProps = {
+  toggle: boolean;
+  setToggle: (value: boolean) => void;
+  url: string | null;
+  setUrl: (value: string | null) => void;
+  type: string | null;
+  setType: (value: string | null) => void;
+}
+
+const useVideoDisplayerWindowStore = create<VideoDisplayerWindowProps>()(
+  (set) => ({
+    toggle: false,
+    setToggle: (toggle) => set({ toggle }),
+    url: null,
+    setUrl: (url) => set({ url }),
+    type: null,
+    setType: (type) => set({ type })
+  })
+)
 
 type AddCategoryWindowProps = {
   toggle: boolean;
@@ -492,5 +511,6 @@ export {
   useStorageStore, useProductDataStore,
   useActivityWindowStore, useActionConfirmWindowStore,
   useAddSubCategoryWindowStore, useImageDisplayerWindow,
-  useAddCategoryWindowStore, useEditImageUrlCategoryWindowStore
+  useAddCategoryWindowStore, useEditImageUrlCategoryWindowStore,
+  useVideoDisplayerWindowStore
 };

@@ -14,7 +14,10 @@ import FluentZoomFit24Regular from '@/components/svgs/FluentZoomFit24Regular';
 import GardenFileImage26 from '@/components/svgs/GardenFileImage26';
 
 // STORES
-import { useActivityWindowStore, useAlertMessageStore, useImageDisplayerWindow } from '@/stores/index';
+import { 
+  useActivityWindowStore, useAlertMessageStore, 
+  useImageDisplayerWindow, useVideoDisplayerWindowStore
+} from '@/stores/index';
 
 // API
 import updateHeroVideoDetails from '@/lib/api/hero-video/put';
@@ -45,6 +48,10 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
 
   const setImageDisplayerToggle = useImageDisplayerWindow(state => state.setToggle);
   const setImageDisplayerUrl = useImageDisplayerWindow(state => state.setUrl);
+
+  const setVideoDisplayerToggle = useVideoDisplayerWindowStore(state => state.setToggle);
+  const setVideoDisplayerUrl = useVideoDisplayerWindowStore(state => state.setUrl);
+  const setVideoDisplayerType = useVideoDisplayerWindowStore(state => state.setType);
 
   const targetedRow = useRef<string>(null);
 
@@ -100,7 +107,7 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
   const deleteFileMutation = useMutation({ mutationFn: deleteStorageFile });
 
   const handleClick = (e: React.MouseEvent<HTMLElement | SVGElement>) => {
-    const { type, imageUrl, filePath, rowName } = e.currentTarget.dataset;
+    const { type, imageUrl, videoUrl, videoType, filePath, rowName } = e.currentTarget.dataset;
 
     switch (type) {
       case 'delete_poster_button_is_clicked':
@@ -115,6 +122,12 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
       case 'expand_image_button_is_clicked':
         setImageDisplayerToggle(true);
         if (imageUrl) setImageDisplayerUrl(imageUrl);
+        break;
+      case 'expand_video_button_is_clicked':
+        setVideoDisplayerToggle(true);
+        
+        if (videoType) setVideoDisplayerType(videoType);
+        if (videoUrl) setVideoDisplayerUrl(videoUrl);
         break;
       default:
         console.error('Unknown type: ', type);
@@ -410,8 +423,10 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
                   transition-all duration-200 ease-out
                 "
                 role="button"
-                data-type="expand_image_button_is_clicked"
-                data-image-url={posterImg}
+                data-type="expand_video_button_is_clicked"
+                data-video-url={data?.webm_url}
+                data-video-type="video/webm"
+                onClick={handleClick}
               />
               <label
                 className=""
@@ -589,8 +604,10 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
                   transition-all duration-200 ease-out
                 "
                 role="button"
-                data-type="expand_image_button_is_clicked"
-                data-image-url={data.mp4_url}
+                data-type="expand_video_button_is_clicked"
+                data-video-url={data?.mp4_url}
+                data-video-type="video/mp4"
+                onClick={handleClick}
               />
               <label
                 className=""

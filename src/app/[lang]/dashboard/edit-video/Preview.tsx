@@ -92,11 +92,17 @@ export default function Preview ({ isEn = true, isLoading, data }: Props) {
                 "
               />
             </div>
-            <VideoDisplay 
-              className={itm.style} 
-              isLoading={isLoading}
-              data={data}
-            />
+            {itm.title.en === 'POSTER' 
+              ? <img 
+                  src={data?.poster_url}
+                  className="rounded-lg object-cover object-center"
+                />
+              : <VideoDisplay 
+                className={itm.style} 
+                isLoading={isLoading}
+                data={data}
+              />
+            }
           </div>
         )}
       </div>
