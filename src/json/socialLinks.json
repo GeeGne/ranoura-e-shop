@@ -1,0 +1,21 @@
+[
+  {
+    "id": 1,
+    "platform": "Facebook",
+    "url": "",
+    "color": "oklch(70.7% 0.165 254.624)",
+    "icon": "facebook"
+  },{
+    "id": 2,
+    "platform": "Twitter",
+    "url": "",
+    "color": "oklch(78.9% 0.154 211.53)",
+    "icon": "facebook"
+  },{
+    "id": 3,
+    "platform": "Instagram",
+    "url": "",
+    "color": "oklch(71.4% 0.203 305.504)",
+    "icon": "facebook"
+  }
+]

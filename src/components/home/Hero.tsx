@@ -225,7 +225,7 @@ export default function Hero({ className = "", ...props }: Props) {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     > 
-      <video 
+      <video
         autoPlay 
         muted={mute}
         loop 

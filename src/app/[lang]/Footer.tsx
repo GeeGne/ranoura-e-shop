@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 // COMPONENTS
 import FooterList from '@/components/FooterList';
+import SocialIcon from '@/components/SocialIcon';
 import Facebook from '@/components/svgs/Facebook';
 import Instagram from '@/components/svgs/Instagram';
 import Telegram from '@/components/svgs/Telegram';
@@ -12,6 +13,9 @@ import BtnA from '@/components/BtnA';
 
 // STORES
 import { useAlertMessageStore, useLanguageStore } from '@/stores/index';
+
+// JSON
+import socialLinks from '@/json/socialLinks.json';
 
 // ASSETS
 const logo = '/assets/img/ranoura-logo(2).png';
@@ -29,6 +33,12 @@ export default function Footer ({ className, ...props }: Props) {
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
+
+  const iconMap = {
+    facebook: Facebook,
+    instagram: Instagram,
+    telegram: Telegram
+  }
 
   const handleClick = (e: any) => {
     const { type } = e.currentTarget.dataset;
@@ -195,6 +205,25 @@ export default function Footer ({ className, ...props }: Props) {
                 "
               />
             </li>
+          </ul>
+          <ul
+            className="flex flex-row gap-2 text-body-invert"
+          >
+            {socialLinks.map((itm, i) => 
+              <li
+                key={i}
+              >
+                <SocialIcon 
+                  className={`
+                    text-body-invert hover:scale-125 cursor-pointer
+                    transition-all ease-in-out duration-300
+                  `}
+                  icon={itm.icon}
+                  onMouseEnter={e => e.currentTarget.style.color = itm.color} 
+                  onMouseLeave={e => e.currentTarget.style.color = 'var(--font-body-invert-color)'} 
+                />
+              </li>
+            )}
           </ul>
         </div>
         <div
