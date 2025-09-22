@@ -1,3 +1,6 @@
+// COMPONENTS
+import SocialIcon from '@/components/SocialIcon';
+
 export default function Add () {
   return (
     <section>
@@ -6,6 +9,16 @@ export default function Add () {
       >
         Add
       </h2>
+      <label
+        className="flex w-[100px] h-[100px] bg-red-500"
+        htmlFor="iconPicker"
+      >
+        <input 
+          className="invisible opacity-0"
+          name="iconPicker"
+          id="iconPicker"
+        />
+      </label>
     </section>
   )
 }
