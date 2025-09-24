@@ -3,30 +3,50 @@ import { useState } from 'react';
 
 // COMPONENTS
 import SocialIcon from '@/components/SocialIcon';
+import LineMdPlus from '@/components/svgs/LineMdPlus';
+import StashPlusSolid from '@/components/svgs/StashPlusSolid';
 
 // JSON
 import icons from '@/json/icons.json';
 
 export default function Add () {
 
-  const [ selectedIcon, setSelectedIcon ] = useState<string>('facebook');
+  const [ selectedIcon, setSelectedIcon ] = useState<Record<string, string>>({
+    name: "facebook",
+    color: "oklch(70.7% 0.165 254.624)"
+  });
+  const [ url, setUrl ] = useState<string | null>(null);
 
-  const handleClick = (e: React.MouseEvent<SVGElement>) => {
-    const { type, iconName } = e.currentTarget.dataset;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.currentTarget;
+
+    switch (name) {
+      case 'socialLinkUrl':
+        setUrl(value);
+        break;
+      default:
+        console.error('Unknown name: ', name);
+    }
+  }
+
+  const handleClick = (e: React.MouseEvent<SVGElement | HTMLButtonElement>) => {
+    const { type, iconName, iconColor } = e.currentTarget.dataset;
 
     switch (type) {
       case 'icon_button_is_clicked':
-        console.log('click');
-        if (iconName) setSelectedIcon(iconName);
+        if (iconName && iconColor) setSelectedIcon({name: iconName, color: iconColor});
+        break;
+      case 'add_button_is_clicked':
+
         break;
       default:
         console.error('Unknown Type: ', type);
     }
-  }
+  };
 
   return (
     <section
-      className="flex flex-col"
+    className="flex flex-col gap-4"
     >
       <h2
         className="text-heading text-lg font-bold"
@@ -34,12 +54,12 @@ export default function Add () {
         Add
       </h2>
       <div
-        className="flex flex-row gap-4"
+        className="flex flex-row gap-8"
       >
         <div
           className="flex items-center gap-2"
         >
-          <span className="text-heading">Select Icon</span>
+          <span className="text-heading">Icon</span>
           <label
             className="
               relative flex w-[50px] h-[50px] rounded-lg
@@ -55,7 +75,8 @@ export default function Add () {
             />
             <SocialIcon
               className="absolute w-full h-full p-2 text-body" 
-              icon={selectedIcon}
+              style={{color: selectedIcon.color}}
+              icon={selectedIcon.name}
             />
             <ul
               className="
@@ -67,7 +88,7 @@ export default function Add () {
                 transition-all duration-200 ease-in-out
               "
             >
-              {icons.map((name, i) =>
+              {icons.map((itm, i) =>
                 <li
                   key={i}
                 >
@@ -77,10 +98,12 @@ export default function Add () {
                       text-body hover:bg-background-deep-light
                       transition-all duration-200 ease-in-out
                     " 
-                    icon={name}
+                    style={{color: itm.color}}
+                    icon={itm.name}
                     role="button"
                     data-type="icon_button_is_clicked"
-                    data-icon-name={name}
+                    data-icon-name={itm.name}
+                    data-icon-color={itm.color}
                     onClick={handleClick}
                   />        
                 </li>
@@ -93,14 +116,36 @@ export default function Add () {
           className="flex flex-row items-center gap-2"
           htmlFor="socialLinkUrl"
         >
-          <span className="text-heading">url</span>
+          <span className="text-heading">Social URL</span>
           <input
-            className="bg-background-light h-12 text-body font-bold rounded-lg p-2"
+            className="
+              bg-background-light h-12 text-body font-bold rounded-lg p-2
+              border border-solid border-px border-transparent focus:border-inbetween outline-none
+              transition-all duration-200 ease-in-out
+            "
             type="text"
             id="socialLinkUrl"
             name="socialLinkUrl"
+            onChange={handleChange}
           />
         </label>
+        <button
+          className="
+            flex items-center grow-0 px-2 gap-2 bg-primary rounded-lg ml-auto
+            hover:opacity-80 active:opacity-60
+            transition-all duration-200 ease-in-out
+          "
+          data-type="add_button_is_clicked"
+          onClick={handleClick}
+        >
+          <StashPlusSolid 
+            className="
+              text-heading-invert w-5 h-5
+              border border-solid border-[2px] border-heading-invert rounded-full
+            "
+          />
+          <span className="text-heading-invert font-bold">ADD</span>
+        </button>
       </div>
     </section>
   )

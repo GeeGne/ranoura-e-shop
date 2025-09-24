@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 // COMPONENTS
 import Instructions from '@/app/[lang]/dashboard/edit-social-links/Instructions';
 import Add from '@/app/[lang]/dashboard/edit-social-links/Add';
+import Table from '@/app/[lang]/dashboard/edit-social-links/Table';
 
 // STORES
 import { useTabNameStore, useLanguageStore } from '@/stores/index';
@@ -22,10 +23,11 @@ export default function page () {
 
   return (
     <div
-      className="flex flex-col gap-4"
+      className="flex flex-col gap-8"
     >
       <Instructions />
       <Add />
+      <Table />
     </div>
   )
 }

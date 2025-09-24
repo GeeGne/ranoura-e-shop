@@ -1,21 +1,21 @@
 [
   {
     "id": 1,
-    "platform": "Facebook",
-    "url": "",
+    "platform": {"en": "Facebook", "ar": "فيسبوك"},
+    "url": "https://www.facebook.com/",
     "color": "oklch(70.7% 0.165 254.624)",
     "icon": "facebook"
   },{
     "id": 2,
-    "platform": "Twitter",
-    "url": "",
+    "platform": {"en": "Telegram", "ar": "تليجرام"},
+    "url": "https://telegram.org/",
     "color": "oklch(78.9% 0.154 211.53)",
-    "icon": "facebook"
+    "icon": "telegram"
   },{
     "id": 3,
-    "platform": "Instagram",
-    "url": "",
+    "platform": {"en": "Instagram", "ar": "انستغرام"},
+    "url": "https://www.instagram.com/",
     "color": "oklch(71.4% 0.203 305.504)",
-    "icon": "facebook"
+    "icon": "instagram"
   }
 ]
