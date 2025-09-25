@@ -142,3 +142,11 @@ model HeroVideo {
   poster_url String?
   mute Boolean @default(true)
 }
+
+model SocialLinks {
+  id Int @id @default(autoincrement())
+  platform Json
+  url String
+  color String
+  icon String @unique
+}

@@ -1,24 +1,31 @@
 [
   {
-    "name": "facebook",
-    "color": "oklch(70.7% 0.165 254.624)"
+    "icon": "facebook",
+    "color": "oklch(70.7% 0.165 254.624)",
+    "platform": {"en": "Facebook", "ar": "قيسبوك"}
   },{
-    "name": "twitterX",
-    "color": "oklch(70.7% 0.022 261.325)"
+    "icon": "twitterX",
+    "color": "oklch(70.7% 0.022 261.325)",
+    "platform": {"en": "TwitterX", "ar": "اكس"}
   },{
-    "name": "instagram",
-    "color": "oklch(71.4% 0.203 305.504)"
+    "icon": "instagram",
+    "color": "oklch(71.4% 0.203 305.504)",
+    "platform": {"en": "Instagram", "ar": "انستغرام"}
   },{
-    "name": "tiktok",
-    "color": "oklch(70.4% 0.04 256.788)"
+    "icon": "tiktok",
+    "color": "oklch(70.4% 0.04 256.788)",
+    "platform": {"en": "TikTok", "ar": "تيكتوك"}
   },{
-    "name": "whatsapp",
-    "color": "oklch(79.2% 0.209 151.711)"
+    "icon": "whatsapp",
+    "color": "oklch(79.2% 0.209 151.711)",
+    "platform": {"en": "What'sApp", "ar": "واتساب"}
   },{
-    "name": "telegram",
-    "color": "oklch(78.9% 0.154 211.53)"
+    "icon": "telegram",
+    "color": "oklch(78.9% 0.154 211.53)",
+    "platform": {"en": "Telegram", "ar": "تيلجرام"}
   },{
-    "name": "youtube",
-    "color": "oklch(63.7% 0.237 25.331)"
+    "icon": "youtube",
+    "color": "oklch(63.7% 0.237 25.331)",
+    "platform": {"en": "Youtube", "ar": "يوتيوب"}
   }
 ]

@@ -11,8 +11,9 @@ import icons from '@/json/icons.json';
 
 export default function Add () {
 
-  const [ selectedIcon, setSelectedIcon ] = useState<Record<string, string>>({
+  const [ selectedIcon, setSelectedIcon ] = useState<Record<string, any>>({
     name: "facebook",
+    platform: {en: "Facebook", ar: "فيسبوك"},
     color: "oklch(70.7% 0.165 254.624)"
   });
   const [ url, setUrl ] = useState<string | null>(null);
@@ -30,11 +31,15 @@ export default function Add () {
   }
 
   const handleClick = (e: React.MouseEvent<SVGElement | HTMLButtonElement>) => {
-    const { type, iconName, iconColor } = e.currentTarget.dataset;
+    const { type, iconName, iconColor, iconPlatformEn, iconPlatformAr } = e.currentTarget.dataset;
 
     switch (type) {
       case 'icon_button_is_clicked':
-        if (iconName && iconColor) setSelectedIcon({name: iconName, color: iconColor});
+        if (
+          iconName && iconColor && iconPlatformEn && iconPlatformAr
+        ) setSelectedIcon({
+          name: iconName, color: iconColor, platform: { en: iconPlatformEn, ar: iconPlatformAr }
+        });
         break;
       case 'add_button_is_clicked':
 
@@ -99,11 +104,13 @@ export default function Add () {
                       transition-all duration-200 ease-in-out
                     " 
                     style={{color: itm.color}}
-                    icon={itm.name}
+                    icon={itm.icon}
                     role="button"
                     data-type="icon_button_is_clicked"
-                    data-icon-name={itm.name}
+                    data-icon-name={itm.icon}
                     data-icon-color={itm.color}
+                    data-icon-platform-en={itm.platform.en}
+                    data-icon-platform-ar={itm.platform.ar}
                     onClick={handleClick}
                   />        
                 </li>
