@@ -4,7 +4,7 @@ import getServerUrl from '@/utils/getServerUrl';
 
 export default async function deleteSocialLink (id: string) {
   try {
-    const url = `${getServerUrl()}/api/v1/social-links`;
+    const url = `${getServerUrl()}/api/v1/social-links/${id}`;
     const response = await fetch(url, {
       method: "DELETE",
     });

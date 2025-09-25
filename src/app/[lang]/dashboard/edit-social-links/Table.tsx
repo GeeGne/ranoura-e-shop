@@ -3,67 +3,35 @@ import { useState, useRef } from 'react';
 import Link from 'next/link';
 
 // COMPONENTS
+import LoadingTable from '@/components/LoadingTable'
+import SocialIcon from '@/components/SocialIcon';
+import LineMdTrash from '@/components/svgs/LineMdTrash';
 import LineMdLink from '@/components/svgs/LineMdLink';
 import TablerCopy from '@/components/svgs/TablerCopy';
 import MaterialSymbolsCheckRounded from '@/components/svgs/MaterialSymbolsCheckRounded';
 import LineMdCloseCircleFilled from '@/components/svgs/LineMdCloseCircleFilled';
-import SocialIcon from '@/components/SocialIcon';
-import LineMdTrash from '@/components/svgs/LineMdTrash';
 
 // JSON
-import urlsTable from '@/json/cmsTables/urlsTable.json';
 import socialLinks from '@/json/socialLinks.json';
 
 // STORES
 import { useTabNameStore, useLanguageStore, useAlertMessageStore } from '@/stores/index';
 
-import {
-  useReactTable,
-  getCoreRowModel,
-  ColumnDef,
-  flexRender,
-} from '@tanstack/react-table';
-
-type Person = {
-  id: number;
-  name: string;
-  age: number;
-  email: string;
-};
-
-const columns: ColumnDef<Person>[] = [
-  {
-    accessorKey: 'name',
-    header: 'Name',
-  },
-  {
-    accessorKey: 'age',
-    header: 'Age',
-  },
-  {
-    accessorKey: 'email',
-    header: 'Email',
-  },
-];
-
-const data: Person[] = [
-  { id: 1, name: 'John Doe', age: 28, email: 'john@example.com' },
-  { id: 2, name: 'Jane Smith', age: 32, email: 'jane@example.com' },
-];
-
-type UrlCopiedState = {
-  toggle: boolean;
-  index: number | string;
+type Props = {
+  data: Record<string, any> | null;
+  isLoading: boolean
 }
 
-export default function Table() {
+export default function Table({ data, isLoading }:Props) {
+
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
+  const setTabName = useTabNameStore((state: any) => state.setTabName);
 
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
 
-  const [ isUrlCopied, setIsUrlCopied ] = useState<UrlCopiedState>({ toggle: false, index: 0 });
-  const isUrlCopiedTimerId = useRef<any>(0);
 
   const checkToggle = (toggle: boolean, hookIndex: number | string, refIndex: number | string) => {
     if (toggle === true && hookIndex === refIndex) return true;
@@ -75,73 +43,15 @@ export default function Table() {
 
     switch (type) {
       case 'copy_button_is_clicked':
-        try {
-          await navigator?.clipboard?.writeText("Text is copied");
-          setIsUrlCopied({ toggle: true, index: String(index) });
-          clearTimeout(isUrlCopiedTimerId.current);
-          isUrlCopiedTimerId.current = setTimeout(() => setIsUrlCopied({ toggle: false, index: 0 })
-          , 2000);  
-
-          setAlertToggle(Date.now());
-          setAlertType('success');
-          setAlertMessage(isEn ? 'URL is added to clipboard successfully!' : '!تم نسخ الرابط بنجاح');
-        } catch (err) {
-          console.error('Error while copying text: ', err)
-        }
         break;
       default:
         console.error('Unknown type: ', type);
     }
   }
 
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-  });
-
-  const lang = useLanguageStore(state => state.lang);
-  const isEn = lang === 'en';
-  const setTabName = useTabNameStore((state: any) => state.setTabName);
-
-  const people = [
-    {
-      name: 'Jane Cooper',
-      title: 'Regional Paradigm Technician',
-      department: 'Optimization',
-      role: 'Admin',
-      email: 'jane.cooper@example.com',
-      image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-      status: 'Active',
-    },
-    {
-      name: 'Jane Cooper',
-      title: 'Regional Paradigm Technician',
-      department: 'Optimization',
-      role: 'Admin',
-      email: 'jane.cooper@example.com',
-      image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-      status: 'Active',
-    },
-    {
-      name: 'Jane Cooper',
-      title: 'Regional Paradigm Technician',
-      department: 'Optimization',
-      role: 'Admin',
-      email: 'jane.cooper@example.com',
-      image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-      status: 'Active',
-    },
-    {
-      name: 'Jane Cooper',
-      title: 'Regional Paradigm Technician',
-      department: 'Optimization',
-      role: 'Admin',
-      email: 'jane.cooper@example.com',
-      image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-      status: 'Active',
-    }
-  ]
+  if (isLoading) return (
+    <LoadingTable />
+  )
 
   return (
     <section className="flex flex-col gap-4">
@@ -162,7 +72,7 @@ export default function Table() {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {socialLinks.map((itm, i) => (
+            {data?.map((itm: Record<string, string>, i: number) => (
               <tr key={i}>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
