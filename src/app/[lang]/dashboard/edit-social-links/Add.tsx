@@ -1,15 +1,31 @@
 // HOOKS
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 // COMPONENTS
 import SocialIcon from '@/components/SocialIcon';
 import LineMdPlus from '@/components/svgs/LineMdPlus';
 import StashPlusSolid from '@/components/svgs/StashPlusSolid';
+import LsiconPasteFilled from '@/components/svgs/LsiconPasteFilled';
+
+// STORES
+import { useLanguageStore } from '@/stores/index';
+
+// API
+import addSocialLink from '@/lib/api/social-links/post';
 
 // JSON
 import icons from '@/json/icons.json';
 
 export default function Add () {
+
+  const queryClient = useQueryClient();
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
+
+  const soicalLinkUrlInptRef = useRef<HTMLInputElement>(null);
+  
+  const [ imgUrlValue, setImageUrlValue ] = useState<string>("");
 
   const [ selectedIcon, setSelectedIcon ] = useState<Record<string, any>>({
     name: "facebook",
@@ -17,6 +33,23 @@ export default function Add () {
     color: "oklch(70.7% 0.165 254.624)"
   });
   const [ url, setUrl ] = useState<string | null>(null);
+  const [ loading, isLoading ] = useState<boolean>(false);
+
+  const useAddSocialLinkMutation = useMutation({
+    mutationFn: addSocialLink,
+    onSettled: () => {
+
+    },
+    onMutate: () => {
+
+    },
+    onSuccess: () => {
+
+    },
+    onError: () => {
+
+    },
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.currentTarget;
@@ -30,7 +63,7 @@ export default function Add () {
     }
   }
 
-  const handleClick = (e: React.MouseEvent<SVGElement | HTMLButtonElement>) => {
+  const handleClick = async (e: React.MouseEvent<SVGElement | HTMLButtonElement>) => {
     const { type, iconName, iconColor, iconPlatformEn, iconPlatformAr } = e.currentTarget.dataset;
 
     switch (type) {
@@ -42,8 +75,12 @@ export default function Add () {
         });
         break;
       case 'add_button_is_clicked':
-
         break;
+        case 'past_button_is_clicked':
+          const clipBoardText = await navigator.clipboard.readText();
+          if (soicalLinkUrlInptRef.current) soicalLinkUrlInptRef.current.value = clipBoardText;
+          setImageUrlValue(clipBoardText);
+          break;
       default:
         console.error('Unknown Type: ', type);
     }
@@ -120,21 +157,54 @@ export default function Add () {
           </label>
         </div>
         <label
-          className="flex flex-row items-center gap-2"
+          className="flex flex-row flex-1 items-center gap-2"
           htmlFor="socialLinkUrl"
         >
           <span className="text-heading">Social URL</span>
-          <input
-            className="
-              bg-background-light h-12 text-body font-bold rounded-lg p-2
-              border border-solid border-px border-transparent focus:border-inbetween outline-none
-              transition-all duration-200 ease-in-out
-            "
-            type="text"
-            id="socialLinkUrl"
-            name="socialLinkUrl"
-            onChange={handleChange}
-          />
+          <div
+            className="relative grow max-w-[600px]"
+          >
+            <div
+              className={`
+                group absolute top-1/2 translate-y-[-50%]
+                ${isEn ? 'right-4' : 'left-4'}
+              `}
+            >
+              <LsiconPasteFilled 
+                className="
+                  peer w-6 h-6 p-1 rounded-md cursor-pointer
+                  bg-body-light hover:bg-body active:bg-heading text-background-light
+                  transition-all duration-200 ease-out
+                "
+                role="button"
+                data-type="past_button_is_clicked"
+                onClick={handleClick}
+              />
+              <span 
+                className="
+                  absolute bottom-[calc(100%+0.5rem)] left-1/2 translate-x-[-50%]
+                  text-sm text-body-invert bg-body p-1 rounded-md
+                  invisible peer-hover:visible opacity-0 peer-hover:opacity-100
+                  transition-all duration-200 ease-out
+                "
+              >
+                {isEn ? 'Paste' : 'لصق'}
+              </span>
+            </div>
+            <input
+              className="
+                bg-background-light w-full h-12 text-body font-bold rounded-lg p-2
+                border border-solid border-px border-transparent focus:border-inbetween outline-none
+                transition-all duration-200 ease-in-out
+              "
+              placeholder="Example: https://www.facebook.com/your-profile-name"
+              type="text"
+              id="socialLinkUrl"
+              name="socialLinkUrl"
+              onChange={handleChange}
+              ref={soicalLinkUrlInptRef}
+            />
+          </div>
         </label>
         <button
           className="

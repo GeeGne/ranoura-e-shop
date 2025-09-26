@@ -49,9 +49,9 @@ export default function page () {
       <Instructions />
       <Add />
       <Table 
-        data={socialLinks.data} 
+        data={socialLinks?.data} 
         isLoading={isLoading} 
-      />
+      /> 
     </div>
   )
 }
