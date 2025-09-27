@@ -49,7 +49,7 @@ export default function page() {
 
   return (
     <div
-      className="flex flex-col gap-4"
+      className="flex flex-col gap-8"
     >
       <Guidelines isEn={isEn} />
       <Preview 

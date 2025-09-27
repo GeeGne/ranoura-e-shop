@@ -61,7 +61,7 @@ export default function Preview ({ isEn = true, isLoading, data }: Props) {
   );
 
   return (
-    <section>
+    <section className="flex flex-col gap-4">
       <span className="text-heading font-bold text-lg">
         {isEn ? "Preview" : "العرض"}
       </span>

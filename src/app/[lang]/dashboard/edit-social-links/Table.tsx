@@ -42,7 +42,7 @@ export default function Table({ data, isLoading }:Props) {
 
   const checkToggle = (toggle: boolean, hookIndex: number | string, refIndex: number | string) => {
     console.log({ hookIndex, refIndex })
-    if (toggle === true && hookIndex === refIndex) return true;
+    if (toggle === true && hookIndex === String(refIndex)) return true;
     return false
   };
 
@@ -126,13 +126,13 @@ export default function Table({ data, isLoading }:Props) {
                       className={`
                         relative bg-background-light rounded-md
                         transition-all duration-500 ease-in-out
-                        ${checkToggle(isUrlCopied.toggle, isUrlCopied.index, String(itm.id)) 
+                        ${checkToggle(isUrlCopied.toggle, isUrlCopied.index, itm.id) 
                           ? 'bg-green-400' 
                           : 'bg-background-light'
                         }
                       `}
                       data-type="copy_button_is_clicked"
-                      data-index={String(itm.id)}
+                      data-index={itm.id}
                       data-url={itm.url}
                       onClick={handleClick}
                     >
@@ -140,7 +140,7 @@ export default function Table({ data, isLoading }:Props) {
                         className={`
                           w-7 h-7 p-1 rounded-md cursor-pointer 
                           transition-all duration-200 ease-in-out
-                          ${checkToggle(isUrlCopied.toggle, isUrlCopied.index, String(itm.id))
+                          ${checkToggle(isUrlCopied.toggle, isUrlCopied.index, itm.id)
                             ? 'invisible opacity-0'
                             : 'visible opacity-100' 
                           }
@@ -152,7 +152,7 @@ export default function Table({ data, isLoading }:Props) {
                           translate-x-[-50%] translate-y-[-50%]
                           w-7 h-7 p-1 rounded-md cursor-pointer 
                           transition-all duration-200 ease-in-outnter
-                          ${checkToggle(isUrlCopied.toggle, isUrlCopied.index, String(itm.id)) 
+                          ${checkToggle(isUrlCopied.toggle, isUrlCopied.index, itm.id) 
                             ? 'visible opacity-100' 
                             : 'invisible opacity-0'
                           }
