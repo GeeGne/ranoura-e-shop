@@ -5,10 +5,18 @@ type Props = {
   isEn?: boolean;
   isLoading: boolean;
   isChecked?: boolean;
+  className?: string;
   onSwitchToggle?: any;
-};
+} & React.ButtonHTMLAttributes<HTMLElement> ;
 
-export default function Switch ({ isEn = true, isChecked = true, onSwitchToggle, isLoading }: Props) {
+export default function Switch ({ 
+  isEn = true, 
+  isChecked = true, 
+  className,
+  onSwitchToggle, 
+  isLoading, 
+  ...props 
+}: Props) {
 
   const inptRef = useRef<HTMLInputElement>(null);
   const id = useId();
@@ -45,9 +53,10 @@ export default function Switch ({ isEn = true, isChecked = true, onSwitchToggle,
         relative w-10 h-6
         rounded-full overflow-hidden
         cursor-pointer
-        ${isEn ? 'ml-auto' : 'mr-auto'}
+        ${className}
       `}
       htmlFor={id}
+      {...props }
     >
       <input
         className="

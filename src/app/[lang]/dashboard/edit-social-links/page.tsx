@@ -46,11 +46,13 @@ export default function page () {
     <div
       className="flex flex-col gap-8"
     >
-      <Instructions />
-      <Add />
+      <Instructions isEn={isEn} />
+      <Add isEn={isEn} />
       <Table 
         data={socialLinks?.data} 
         isLoading={isLoading} 
+        lang={lang}
+        isEn={isEn}
       /> 
     </div>
   )

@@ -12,7 +12,7 @@ import MaterialSymbolsCheckRounded from '@/components/svgs/MaterialSymbolsCheckR
 import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingResize';
 
 // STORES
-import { useLanguageStore, useAlertMessageStore } from '@/stores/index';
+import { useAlertMessageStore } from '@/stores/index';
 
 // API
 import addSocialLink from '@/lib/api/social-links/post';
@@ -20,11 +20,13 @@ import addSocialLink from '@/lib/api/social-links/post';
 // JSON
 import icons from '@/json/icons.json';
 
-export default function Add () {
+type Props = {
+  isEn?: boolean;
+};
+
+export default function Add ({ isEn = true }: Props) {
 
   const queryClient = useQueryClient();
-  const lang = useLanguageStore(state => state.lang);
-  const isEn = lang === 'en';
 
   const soicalLinkUrlInptRef = useRef<HTMLInputElement>(null);
   const [ isLoading, setIsLoading ] = useState<boolean>(false);
@@ -119,7 +121,7 @@ export default function Add () {
       <h2
         className="text-heading text-lg font-bold"
       >
-        Add
+        {isEn ? 'Add' : 'اضف'}
       </h2>
       <div
         className="flex flex-row gap-8"
@@ -127,7 +129,7 @@ export default function Add () {
         <div
           className="flex items-center gap-2"
         >
-          <span className="text-heading">Icon</span>
+          <span className="text-heading">{isEn ? 'Icon' : 'ايقونه'}</span>
           <label
             className={`
               relative flex w-[50px] h-[50px] rounded-lg
@@ -188,7 +190,7 @@ export default function Add () {
           className="flex flex-row flex-1 items-center gap-2"
           htmlFor="url"
         >
-          <span className="text-heading">Social URL</span>
+          <span className="text-heading">{isEn ? 'Social URL' : 'الرابط الاجتماعي'}</span>
           <div
             className="relative grow max-w-[600px]"
           >
@@ -263,10 +265,10 @@ export default function Add () {
           />
           <span 
             className={`
-               font-bold ${isLoading ? 'text-transparent' : 'text-heading-invert'}
+              font-bold ${isLoading ? 'text-transparent' : 'text-heading-invert'}
             `}
           >
-            ADD
+            {isEn ? 'ADD' : 'اضف'}
           </span>
         </button>
       </div>

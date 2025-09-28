@@ -749,18 +749,18 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
         }
       </div>
       <div
-        className="flex justify-between items-center w-full"
+        className="flex items-center justify-between w-full "
       >
         <div>
           <p
             className="text-body font-bold"
           >
-            Mute
+            {isEn ? 'Mute' : 'كتم الصوت'}
           </p>
           <p
             className="text-sm text-body-light font-bold"
           >
-            (recommended = yes)
+            {isEn ? '(recommended = yes)' : 'مُوصى به = نعم'}
           </p>
         </div>
         <Switch 

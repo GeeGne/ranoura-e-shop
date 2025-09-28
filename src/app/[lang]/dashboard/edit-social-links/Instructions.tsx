@@ -6,7 +6,8 @@ type Props = {
 }
 
 export default function Instructions ({ isEn = true }: Props) {
-  return (
+  
+  if (isEn) return (
     <section
       className="flex flex-col gap-4"
     >
@@ -32,7 +33,7 @@ export default function Instructions ({ isEn = true }: Props) {
         </li>
         <li>
           <span className="text-heading font-bold">Edit: </span>
-          Click the edit icon next to any existing link to change the platform or URL.
+          Links can't be edited once it's created. Please delete the existing link and create a new one.
         </li>
         <li>
           <span className="text-heading font-bold">Remove: </span>
@@ -49,5 +50,51 @@ export default function Instructions ({ isEn = true }: Props) {
         />
       </div>
     </section>
+  )
+
+  return (
+    <section
+      className="flex flex-col gap-4"
+    >
+      <h2
+        className="text-heading text-lg font-bold"
+      >
+        التعليمات
+      </h2>
+      <h3
+        className="text-heading font-bold"
+      >
+        إدارة روابطك الاجتماعية
+      </h3>
+      <p
+        className="text-heading"
+      >
+        قم بربط متجرك الإلكتروني بحساباتك على وسائل التواصل الاجتماعي. أضف، حرّر، أو احذف الروابط الاجتماعية التي تظهر على موقعك (مثل الهيدر، الفوتر، أو صفحة الاتصال).
+      </p>
+      <ul className="text-body list-disc px-4 leading-6" style={{direction: 'rtl', textAlign: 'right'}}>
+        <li>
+          <span className="text-heading font-bold">إضافة: </span>
+          انقر على "إضافة رابط جديد"، اختر المنصة، وأدخل رابط حسابك الكامل.
+        </li>
+        <li>
+          <span className="text-heading font-bold">تعديل: </span>
+          لا يمكن تعديل الروابط بعد إنشائها. يرجى حذف الرابط الحالي وإنشاء رابط جديد.
+        </li>
+        <li>
+          <span className="text-heading font-bold">حذف: </span>
+          انقر على أيقونة الحذف لإزالة الرابط. هذا الإجراء فوري.
+        </li>
+      </ul>
+      <p className="text-body" style={{direction: 'rtl', textAlign: 'right'}}><span className="text-content font-bold">نصيحة: </span>استخدم دائمًا الرابط الكامل (مثال: https://www.instagram.com/اسم المستخدم) لضمان عمل الروابط بشكل صحيح.</p>
+      <div
+        className="flex w-full justify-center"
+      >
+        <img 
+          className="w-[500px] h-auto object-cover object-center"
+          src={socialLinkImg}
+          alt="روابط اجتماعية"
+        />
+      </div>
+    </section> 
   )
 }

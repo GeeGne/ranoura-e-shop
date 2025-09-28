@@ -3,6 +3,9 @@
 // HOOKS
 import { useEffect } from 'react';
 
+// COMPONENTS
+import Table from '@/app/[lang]/dashboard/view-users/Table';
+
 // STORES
 import { useTabNameStore } from '@/stores/index';
 
@@ -16,7 +19,7 @@ export default function page () {
 
   return (
     <div>
-      This is Users Page.
+      <Table />
     </div>
   )
 }
