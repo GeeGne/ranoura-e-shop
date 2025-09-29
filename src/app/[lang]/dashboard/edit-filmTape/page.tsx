@@ -102,12 +102,12 @@ export default function page () {
       className="flex flex-col items-center gap-4 bg-background-light p-4 rounded-lg"
     >
       <div
-        className="flex flex-row w-full"
+        className="flex flex-row w-full items-center justify-center"
       >
         <span
           className="--opacity-blink text-body font-bold text-transparent bg-background-deep-light rounded-lg"
         >
-          Show Film Tape
+          {isEn ? 'Show Film Tape' : 'اظهار شريط الفلم'}
         </span>
         <label
           className={`
@@ -145,19 +145,18 @@ export default function page () {
       className="flex flex-col items-center gap-4 bg-background-light p-4 rounded-lg"
     >
       <div
-        className="flex flex-row w-full"
+        className="flex flex-row w-full justify-between items-center"
       >
         <span
           className="text-body font-bold"
         >
-          Show Film Tape
+          {isEn ? 'Show Film Tape' : 'اظهار شريط الفلم'}
         </span>
         <label
           className={`
             relative w-10 h-5 
-            rounded-full overflow-hidden border border-inbetween
+            rounded-full overflow-hidden
             bg-green-500 cursor-pointer
-            ${isEn ? 'ml-auto' : 'mr-auto'}
           `}
           htmlFor="film_tape"
         >

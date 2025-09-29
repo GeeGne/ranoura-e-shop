@@ -120,7 +120,7 @@ export default function Table({ data, isLoading, isEn = true, lang = 'en' }:Prop
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div
-                    className="flex gap-4"
+                    className="flex gap-2"
                   >
                     <button 
                       className={`

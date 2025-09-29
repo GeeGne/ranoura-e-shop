@@ -248,13 +248,14 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
             group relative w-[200px] aspect-[1/1] rounded-lg overflow-hidden
           ">
             <div
-              className="
+              className={`
                 absolute top-0 left-0 w-full h-full bg-shade
-                flex flex-row gap-4 items-center justify-center
+                flex gap-4 items-center justify-center
                 text-heading-invert
                 unvisible group-hover:visible opacity-0 group-hover:opacity-100
                 transition-all duration-300 ease-in-out
-              "
+                ${isEn ? 'flex-row' : 'flex-row-reverse'}
+              `}
             >
               <FluentZoomFit24Regular
                 className="
@@ -408,13 +409,14 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
             group relative w-[200px] aspect-[1/1] rounded-lg overflow-hidden
           ">
             <div
-              className="
+              className={`
                 absolute top-0 left-0 w-full h-full bg-shade
-                flex flex-row gap-4 items-center justify-center
+                flex gap-4 items-center justify-center
                 text-heading-invert
                 unvisible group-hover:visible opacity-0 group-hover:opacity-100
                 transition-all duration-300 ease-in-out
-              "
+                ${isEn ? 'flex-row' : 'flex-row-reverse'}
+              `}
             >
               <FluentZoomFit24Regular
                 className="
@@ -589,13 +591,14 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
             group relative w-[200px] aspect-[1/1] rounded-lg overflow-hidden
           ">
             <div
-              className="
+              className={`
                 absolute top-0 left-0 w-full h-full bg-shade
-                flex flex-row gap-4 items-center justify-center
+                flex gap-4 items-center justify-center
                 text-heading-invert
                 unvisible group-hover:visible opacity-0 group-hover:opacity-100
                 transition-all duration-300 ease-in-out
-              "
+                ${isEn ? 'flex-row' : 'flex-row-reverse'}
+              `}
             >
               <FluentZoomFit24Regular
                 className="
@@ -764,6 +767,7 @@ export default function Options ({ isEn = true, data, isLoading }: Props) {
           </p>
         </div>
         <Switch 
+          isEn={isEn}
           isChecked={!!data?.mute}
           isLoading={isLoading}
           onSwitchToggle={onSwitchToggle}

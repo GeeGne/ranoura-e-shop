@@ -45,7 +45,7 @@ export default function Instructions ({ isEn = true }: Props) {
         className="flex w-full justify-center"
       >
         <img 
-          className="w-[500px] h-auto object-cover object-center"
+          className="w-[500px] h-auto object-cover object-center rounded-lg"
           src={socialLinkImg}
         />
       </div>
@@ -90,7 +90,7 @@ export default function Instructions ({ isEn = true }: Props) {
         className="flex w-full justify-center"
       >
         <img 
-          className="w-[500px] h-auto object-cover object-center"
+          className="w-[500px] h-auto object-cover object-center rounded-lg"
           src={socialLinkImg}
           alt="روابط اجتماعية"
         />
