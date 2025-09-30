@@ -12,7 +12,7 @@ import LineMdCloseCircleFilled from '@/components/svgs/LineMdCloseCircleFilled';
 import urlsTable from '@/json/cmsTables/urlsTable.json';
 
 // STORES
-import { useTabNameStore, useLanguageStore, useAlertMessageStore } from '@/stores/index';
+import { useAlertMessageStore } from '@/stores/index';
 
 import {
   useReactTable,
@@ -53,7 +53,11 @@ type UrlCopiedState = {
   index: number | string;
 }
 
-export default function Table() {
+type Props = {
+  isEn?: boolean;
+}
+
+export default function Table({ isEn = true }: Props) {
 
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
@@ -96,10 +100,6 @@ export default function Table() {
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
-
-  const lang = useLanguageStore(state => state.lang);
-  const isEn = lang === 'en';
-  const setTabName = useTabNameStore((state: any) => state.setTabName);
 
   const people = [
     {
@@ -145,17 +145,29 @@ export default function Table() {
       <table className="min-w-full divide-y divide-gray-200 rounded-lg overflow-hidden">
         <thead className="bg-gray-50">
           <tr>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Name
+            <th scope="col" className={`px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-gray-500 uppercase tracking-wider`}>
+              {isEn ? 'Name' : 'الاسم'}
             </th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Title
+            <th scope="col" className={`px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-gray-500 uppercase tracking-wider`}>
+              {isEn ? 'Phone Number' : 'رقم الهاتف'}
             </th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Status
+            <th scope="col" className={`px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-gray-500 uppercase tracking-wider`}>
+              {isEn ? 'Address' : 'العنوان'}
             </th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Role
+            <th scope="col" className={`px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-gray-500 uppercase tracking-wider`}>
+              {isEn ? 'Role' : 'دور'}
+            </th>
+            <th scope="col" className={`px-6 py-3  ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-gray-500 uppercase tracking-wider`}>
+              {isEn ? 'Status' : 'الحاله'}
+            </th>
+            <th scope="col" className={`px-6 py-3  ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-gray-500 uppercase tracking-wider`}>
+              {isEn ? 'Notes' : 'ملاحظات'}
+            </th>
+            <th scope="col" className={`px-6 py-3  ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-gray-500 uppercase tracking-wider`}>
+              {isEn ? 'Date of Birth' : 'تاريخ الولاده'}
+            </th>
+            <th scope="col" className={`px-6 py-3  ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-gray-500 uppercase tracking-wider`}>
+              {isEn ? 'Created At' : 'تاريخ الانشاء'}
             </th>
           </tr>
         </thead>
@@ -163,7 +175,7 @@ export default function Table() {
           {people.map((person, i) => (
             <tr key={i}>
               <td className="px-6 py-4 whitespace-nowrap">
-                <div className="flex items-center">
+                <div className="flex items-center gap-2">
                   <div className="flex-shrink-0 h-10 w-10">
                     <img className="h-10 w-10 rounded-full" src={person.image} alt="" />
                   </div>

@@ -7,11 +7,13 @@ import { useEffect } from 'react';
 import Table from '@/app/[lang]/dashboard/view-users/Table';
 
 // STORES
-import { useTabNameStore } from '@/stores/index';
+import { useLanguageStore, useTabNameStore } from '@/stores/index';
 
 export default function page () {  
   
   const setTabName = useTabNameStore((state: any) => state.setTabName);
+  const lang = useLanguageStore((state) => state.lang);
+  const isEn = lang === "en";
 
   useEffect(() => {
     setTabName('view-users');
@@ -19,7 +21,9 @@ export default function page () {
 
   return (
     <div>
-      <Table />
+      <Table 
+        isEn={isEn}
+      />
     </div>
   )
 }
