@@ -1,18 +1,27 @@
 // HOOKS
 import { useState, useRef } from 'react';
 import Link from 'next/link';
+import { useQuery } from '@tanstack/react-query';
 
 // COMPONENTS
+import LoadingTable from '@/components/LoadingTable';
+import ErrorLayout from '@/components/ErrorLayout';
 import LineMdLink from '@/components/svgs/LineMdLink';
 import TablerCopy from '@/components/svgs/TablerCopy';
 import MaterialSymbolsCheckRounded from '@/components/svgs/MaterialSymbolsCheckRounded';
 import LineMdCloseCircleFilled from '@/components/svgs/LineMdCloseCircleFilled';
+
+// API
+import getUsersData from '@/lib/api/users/get';
 
 // JSON
 import urlsTable from '@/json/cmsTables/urlsTable.json';
 
 // STORES
 import { useAlertMessageStore } from '@/stores/index';
+
+// IMAGES
+const pfpImage = '/assets/img/pfp.avif';
 
 import {
   useReactTable,
@@ -65,6 +74,11 @@ export default function Table({ isEn = true }: Props) {
 
   const [ isUrlCopied, setIsUrlCopied ] = useState<UrlCopiedState>({ toggle: false, index: 0 });
   const isUrlCopiedTimerId = useRef<any>(0);
+
+  const { data: usersData, isLoading, isError } = useQuery({
+    queryKey: ['users'],
+    queryFn: getUsersData,
+  });
 
   const checkToggle = (toggle: boolean, hookIndex: number | string, refIndex: number | string) => {
     if (toggle === true && hookIndex === refIndex) return true;
@@ -140,6 +154,21 @@ export default function Table({ isEn = true }: Props) {
     }
   ]
 
+  // DEBUG
+  console.log('users: ', usersData?.data);
+
+  if (isLoading) return (
+    <LoadingTable />
+  )
+
+  if (isError) return (
+    <ErrorLayout 
+      title={isEn ? 'Unable To Load' : 'لم يتم التحميل'}
+      description={isEn ? 'Please Refresh the page or try again later' : 'الرجاء اعاده تحميل الصفحه او حاول مره اخرى لاحقا'}
+    />
+  )
+
+  const users: any = usersData.data;
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full divide-y divide-gray-200 rounded-lg overflow-hidden">
@@ -169,33 +198,40 @@ export default function Table({ isEn = true }: Props) {
             <th scope="col" className={`px-6 py-3  ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-gray-500 uppercase tracking-wider`}>
               {isEn ? 'Created At' : 'تاريخ الانشاء'}
             </th>
+            <th scope="col" className={`px-6 py-3  ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-gray-500 uppercase tracking-wider`}>
+              {isEn ? 'Options' : 'الخيارات'}
+            </th>
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {people.map((person, i) => (
+          {users?.map((user: Record<string, any>, i: number) => (
             <tr key={i}>
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="flex items-center gap-2">
                   <div className="flex-shrink-0 h-10 w-10">
-                    <img className="h-10 w-10 rounded-full" src={person.image} alt="" />
+                    <img className="h-10 w-10 rounded-full" src={user.profile_img_url || pfpImage} alt="" />
                   </div>
                   <div className="ml-4">
-                    <div className="text-sm font-medium text-gray-900">{person.name}</div>
-                    <div className="text-sm text-gray-500">{person.email}</div>
+                    <div className="text-sm font-medium text-gray-900">
+                      {user.first_name + ' ' + user.last_name}
+                    </div>
+                    <div className="text-sm text-gray-500">{user.email}</div>
                   </div>
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">{person.title}</div>
-                <div className="text-sm text-gray-500">{person.department}</div>
+                <div className="text-sm text-gray-900">{user.phone_number}</div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${person.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                  {person.status}
+                <div className="text-sm text-gray-900">{user.phone_number}</div>
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${user.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                  {user.status}
                 </span>
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {person.role}
+                {user.role.role.name}
               </td>
             </tr>
           ))}

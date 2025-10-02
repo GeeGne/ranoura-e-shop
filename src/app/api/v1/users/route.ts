@@ -26,10 +26,33 @@ async function nextError (code: string, message: string, status = 404) {
   )
 };
 
+// @desc get users data
+// @route /api/v1/users
+// @access private(owner, admin)
 export async function GET(req: NextRequest) {
   try {
-    const [ users ] = await prisma.user.findMany();
-    return NextResponse.json(users, { status: 200 })
+    const users = await prisma.user.findMany({
+      include: {
+        address: true,
+        role: {
+          include: {
+            role: true
+          }
+        }
+      },
+      orderBy: {
+        created_at: 'desc'
+      }
+    });
+    
+    const data = {
+      data: users,
+      message: {
+        en: 'users data has fetched successfully!',
+        ar: 'تم استقبال بياتات المستخدمين بنجاح!'
+      }
+    }
+    return NextResponse.json(data, { status: 200 })
   } catch (err) {
     const error = err as Error;
     console.error('Unable to get User Data: ' + error.message);
