@@ -1,5 +1,5 @@
 // HOOKS
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 
@@ -18,7 +18,7 @@ import getUsersData from '@/lib/api/users/get';
 import urlsTable from '@/json/cmsTables/urlsTable.json';
 
 // STORES
-import { useAlertMessageStore } from '@/stores/index';
+import { useAlertMessageStore, useLayoutRefStore } from '@/stores/index';
 
 // IMAGES
 const pfpImage = '/assets/img/pfp.avif';
@@ -64,16 +64,68 @@ type UrlCopiedState = {
 
 type Props = {
   isEn?: boolean;
+  lang?: string;
+  scroll?: string;
+  scrollTrigger?: number;
 }
 
-export default function Table({ isEn = true }: Props) {
+export default function Table({ 
+  isEn = true, 
+  lang = 'en',
+  scroll, 
+  scrollTrigger, 
+}: Props) {
 
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
+  const layoutRef = useLayoutRefStore(state => state.layoutRef);
+  const mainRef = useRef<HTMLDivElement>(null);
 
   const [ isUrlCopied, setIsUrlCopied ] = useState<UrlCopiedState>({ toggle: false, index: 0 });
   const isUrlCopiedTimerId = useRef<any>(0);
+
+  const messages = {
+    noData: {en: 'No information available', ar: 'لا توجد معلومات متاحه'}
+  }
+
+  useEffect(() => {
+    const mainRefFullWidth: number = mainRef.current?.scrollWidth || 0;
+    const mainRefHeight: number = mainRef.current?.scrollHeight || 0;
+    const fullHeight: number = layoutRef?.scrollHeight || 0;
+    const extraHeight = 120;
+
+    switch (scroll) {
+      case 'right':
+        mainRef.current?.scrollTo({
+          left: isEn ? mainRefFullWidth : 0,
+          behavior:'smooth'
+        })
+        break;
+      case 'left':
+        mainRef.current?.scrollTo({
+          left: isEn ? 0 : -1 * mainRefFullWidth,
+          behavior:'smooth'
+        })
+        break;
+      case 'up':
+        layoutRef.scrollTo({
+          top: fullHeight - mainRefHeight - extraHeight,
+          behavior: 'smooth'
+        });
+        break;
+      case 'down':
+        layoutRef.scrollTo({
+          top: fullHeight,
+          behavior:'smooth'
+        })
+        break;
+      case 'none':
+        break;
+      default:
+        console.error("Unknown scroll type: ", scroll);
+    }
+  }, [ scroll, scrollTrigger ]);
 
   const { data: usersData, isLoading, isError } = useQuery({
     queryKey: ['users'],
@@ -84,6 +136,17 @@ export default function Table({ isEn = true }: Props) {
     if (toggle === true && hookIndex === refIndex) return true;
     return false
   };
+
+  const displayDate = (dateString: string) => {
+    return new Date(dateString).toLocaleString(isEn ? 'en-US' : 'ar-EG', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true
+    });
+  }
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     const { type, index } = e.currentTarget.dataset;
@@ -115,44 +178,6 @@ export default function Table({ isEn = true }: Props) {
     getCoreRowModel: getCoreRowModel(),
   });
 
-  const people = [
-    {
-      name: 'Jane Cooper',
-      title: 'Regional Paradigm Technician',
-      department: 'Optimization',
-      role: 'Admin',
-      email: 'jane.cooper@example.com',
-      image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-      status: 'Active',
-    },
-    {
-      name: 'Jane Cooper',
-      title: 'Regional Paradigm Technician',
-      department: 'Optimization',
-      role: 'Admin',
-      email: 'jane.cooper@example.com',
-      image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-      status: 'Active',
-    },
-    {
-      name: 'Jane Cooper',
-      title: 'Regional Paradigm Technician',
-      department: 'Optimization',
-      role: 'Admin',
-      email: 'jane.cooper@example.com',
-      image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-      status: 'Active',
-    },
-    {
-      name: 'Jane Cooper',
-      title: 'Regional Paradigm Technician',
-      department: 'Optimization',
-      role: 'Admin',
-      email: 'jane.cooper@example.com',
-      image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-      status: 'Active',
-    }
-  ]
 
   // DEBUG
   console.log('users: ', usersData?.data);
@@ -170,7 +195,7 @@ export default function Table({ isEn = true }: Props) {
 
   const users: any = usersData.data;
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto" ref={mainRef}>
       <table className="min-w-full divide-y divide-gray-200 rounded-lg overflow-hidden">
         <thead className="bg-gray-50">
           <tr>
@@ -188,9 +213,6 @@ export default function Table({ isEn = true }: Props) {
             </th>
             <th scope="col" className={`px-6 py-3  ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-gray-500 uppercase tracking-wider`}>
               {isEn ? 'Status' : 'الحاله'}
-            </th>
-            <th scope="col" className={`px-6 py-3  ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-gray-500 uppercase tracking-wider`}>
-              {isEn ? 'Notes' : 'ملاحظات'}
             </th>
             <th scope="col" className={`px-6 py-3  ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-gray-500 uppercase tracking-wider`}>
               {isEn ? 'Date of Birth' : 'تاريخ الولاده'}
@@ -212,26 +234,36 @@ export default function Table({ isEn = true }: Props) {
                     <img className="h-10 w-10 rounded-full" src={user.profile_img_url || pfpImage} alt="" />
                   </div>
                   <div className="ml-4">
-                    <div className="text-sm font-medium text-gray-900">
+                    <div className="text-sm font-medium text-heading">
                       {user.first_name + ' ' + user.last_name}
                     </div>
-                    <div className="text-sm text-gray-500">{user.email}</div>
+                    <div className="text-sm text-body-light">{user.email}</div>
                   </div>
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">{user.phone_number}</div>
+                <div className="text-body text-sm">{user.phone_number}</div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">{user.phone_number}</div>
+                <ul className="list-disc">
+                  <li className="text-body text-sm text-gray-900"><span className="text-body font-bold">{isEn ? 'main:' : ':رئيسي'} </span>{user.address.address_details}</li>
+                  <li className="text-body text-sm text-gray-900"><span className="text-body font-bold">{isEn ? 'second:' : ':ثانوي'} </span>{user.address.second_address}</li>
+                  <li className="text-body text-sm text-gray-900"><span className="text-body font-bold">{isEn ? 'notes:' : ':ملاحظات'} </span>{user.address.notes}</li>
+                </ul>
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {user.role.role.name}
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${user.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${true ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                   {user.status}
                 </span>
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {user.role.role.name}
+                {user.date_of_birth ? displayDate(user.date_of_birth) : messages.noData[lang]}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {displayDate(user.created_at)}
               </td>
             </tr>
           ))}
