@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 
 // COMPONENTS
 import Table from '@/app/[lang]/dashboard/view-users/Table';
-import NavTile from '@/app/[lang]/dashboard/edit-products/NavTile';
+import NavTile from '@/app/[lang]/dashboard/view-users/NavTile';
 
 // STORES
 import { useLanguageStore, useTabNameStore } from '@/stores/index';
