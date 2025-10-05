@@ -167,8 +167,8 @@ const useFooterListStore = create<FooterListProps>(
 type LanguageProps = {
   firstTime: boolean;
   setFirstTime: (value: boolean) => void;
-  lang: string;
-  setLang: (value: string) => void;
+  lang: 'en' | 'ar';
+  setLang: (value: 'en' | 'ar') => void;
   isHydrated: boolean;
   setIsHydrated: (isHydrated: boolean) => void;
 };
@@ -177,11 +177,11 @@ const useLanguageStore = create<LanguageProps>()(
   persist(
     (set) => ({
       firstTime: true,
-      setFirstTime: (firstTime: boolean) => set({ firstTime }),
+      setFirstTime: (firstTime) => set({ firstTime }),
       lang: 'en',
-      setLang: (lang: string) => set({ lang }),
+      setLang: (lang) => set({ lang }),
       isHydrated: false, // Default to false
-      setIsHydrated: (isHydrated: boolean) => set({ isHydrated }),
+      setIsHydrated: (isHydrated) => set({ isHydrated }),
     }),
     {
       name:'language-storage',

@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 // COMPONENTS
 import LoadingTable from '@/components/LoadingTable';
 import ErrorLayout from '@/components/ErrorLayout';
+import SolarCart4Bold from "@/components/svgs/SolarCart4Bold";
 import LineMdLink from '@/components/svgs/LineMdLink';
 import TablerCopy from '@/components/svgs/TablerCopy';
 import MaterialSymbolsCheckRounded from '@/components/svgs/MaterialSymbolsCheckRounded';
@@ -64,7 +65,7 @@ type UrlCopiedState = {
 
 type Props = {
   isEn?: boolean;
-  lang?: string;
+  lang?: 'en' | 'ar';
   scroll?: string;
   scrollTrigger?: number;
 }
@@ -84,6 +85,11 @@ export default function Table({
 
   const [ isUrlCopied, setIsUrlCopied ] = useState<UrlCopiedState>({ toggle: false, index: 0 });
   const isUrlCopiedTimerId = useRef<any>(0);
+
+  const [ userOrder, setUserOrder ] = useState<Record<string, any>>({
+    toggle: true,
+    userId: 0
+  })
 
   const messages = {
     noData: {en: 'No information available', ar: 'لا توجد معلومات متاحه'}
@@ -149,23 +155,14 @@ export default function Table({
   }
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    const { type, index } = e.currentTarget.dataset;
+    const { type, userId } = e.currentTarget.dataset;
 
     switch (type) {
-      case 'copy_button_is_clicked':
-        try {
-          await navigator?.clipboard?.writeText("Text is copied");
-          setIsUrlCopied({ toggle: true, index: String(index) });
-          clearTimeout(isUrlCopiedTimerId.current);
-          isUrlCopiedTimerId.current = setTimeout(() => setIsUrlCopied({ toggle: false, index: 0 })
-          , 2000);  
-
-          setAlertToggle(Date.now());
-          setAlertType('success');
-          setAlertMessage(isEn ? 'URL is added to clipboard successfully!' : '!تم نسخ الرابط بنجاح');
-        } catch (err) {
-          console.error('Error while copying text: ', err)
-        }
+      case 'user_orders_button_is_clicked':
+        setUserOrder({ 
+          toggle: userOrder.userId === userId && userOrder.toggle ? false : true,
+          userId
+        })
         break;
       default:
         console.error('Unknown type: ', type);
@@ -181,6 +178,7 @@ export default function Table({
 
   // DEBUG
   console.log('users: ', usersData?.data);
+  console.log('userOrder: ', userOrder);
 
   if (isLoading) return (
     <LoadingTable />
@@ -227,7 +225,7 @@ export default function Table({
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
           {users?.map((user: Record<string, any>, i: number) => (
-            <tr key={i}>
+            <><tr key={i}>
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="flex items-center gap-2">
                   <div className="flex-shrink-0 h-10 w-10">
@@ -265,7 +263,45 @@ export default function Table({
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                 {displayDate(user.created_at)}
               </td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <div className="flex gap-2">
+                  <button 
+                    data-type="user_orders_button_is_clicked"
+                    data-user-id={user.id}
+                    onClick={handleClick}
+                  >
+                    <SolarCart4Bold 
+                      className={`
+                        w-7 h-7 p-1 text-heading rounded-md cursor-pointer
+                        active:opacity-60
+                        transition-all duration-200 ease-out
+                        ${(userOrder.toggle && userOrder.userId === user.id) 
+                          ? 'bg-green-300 hover:bg-green-400' 
+                          : 'bg-background-light hover:bg-background-deep-light'
+                        }
+                      `}
+                    />    
+                  </button>
+                </div>
+              </td>
             </tr>
+            <tr>
+              <td
+                className={`w-full bg-green-500`}
+                colSpan={8}
+              >
+                <div
+                  className={`
+                    flex w-full overflow-hidden
+                    transition-all duration-300 ease-in-out
+                    ${(userOrder.toggle && userOrder.userId === user.id) ? 'h-[500px]' : 'h-[0px]'}
+                  `}
+                >
+
+                  tets
+                </div>
+              </td>
+            </tr></>
           ))}
         </tbody>
       </table>
