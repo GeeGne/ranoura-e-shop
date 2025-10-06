@@ -59,6 +59,7 @@ export async function GET(req: NextResponse) {
             }
           }
         },
+        profile_img_url: true,
         address: {
           select: {
             address_details: true,

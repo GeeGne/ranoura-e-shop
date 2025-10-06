@@ -197,28 +197,28 @@ export default function Table({
       <table className="min-w-full divide-y divide-gray-200 rounded-lg overflow-hidden">
         <thead className="bg-gray-50">
           <tr>
-            <th scope="col" className={`px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-gray-500 uppercase tracking-wider`}>
+            <th scope="col" className={`px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light uppercase tracking-wider`}>
               {isEn ? 'Name' : 'الاسم'}
             </th>
-            <th scope="col" className={`px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-gray-500 uppercase tracking-wider`}>
+            <th scope="col" className={`px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light uppercase tracking-wider`}>
               {isEn ? 'Phone Number' : 'رقم الهاتف'}
             </th>
-            <th scope="col" className={`px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-gray-500 uppercase tracking-wider`}>
+            <th scope="col" className={`px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light uppercase tracking-wider`}>
               {isEn ? 'Address' : 'العنوان'}
             </th>
-            <th scope="col" className={`px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-gray-500 uppercase tracking-wider`}>
+            <th scope="col" className={`px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light uppercase tracking-wider`}>
               {isEn ? 'Role' : 'دور'}
             </th>
-            <th scope="col" className={`px-6 py-3  ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-gray-500 uppercase tracking-wider`}>
+            <th scope="col" className={`px-6 py-3  ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light uppercase tracking-wider`}>
               {isEn ? 'Status' : 'الحاله'}
             </th>
-            <th scope="col" className={`px-6 py-3  ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-gray-500 uppercase tracking-wider`}>
+            <th scope="col" className={`px-6 py-3  ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light uppercase tracking-wider`}>
               {isEn ? 'Date of Birth' : 'تاريخ الولاده'}
             </th>
-            <th scope="col" className={`px-6 py-3  ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-gray-500 uppercase tracking-wider`}>
+            <th scope="col" className={`px-6 py-3  ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light uppercase tracking-wider`}>
               {isEn ? 'Created At' : 'تاريخ الانشاء'}
             </th>
-            <th scope="col" className={`px-6 py-3  ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-gray-500 uppercase tracking-wider`}>
+            <th scope="col" className={`px-6 py-3  ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light uppercase tracking-wider`}>
               {isEn ? 'Options' : 'الخيارات'}
             </th>
           </tr>
@@ -228,19 +228,19 @@ export default function Table({
             <><tr key={i}>
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="flex items-center gap-2">
-                  <div className="flex-shrink-0 h-10 w-10">
-                    <img className="h-10 w-10 rounded-full" src={user.profile_img_url || pfpImage} alt="" />
+                  <div className="flex-shrink-0 h-12 w-12">
+                    <img className="w-full h-full object-cover object-center rounded-full" src={user.profile_img_url || pfpImage} alt="" />
                   </div>
                   <div className="ml-4">
-                    <div className="text-sm font-medium text-heading">
+                    <div className="text-base font-medium text-heading">
                       {user.first_name + ' ' + user.last_name}
                     </div>
                     <div className="text-sm text-body-light">{user.email}</div>
                   </div>
                 </div>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-body text-sm">{user.phone_number}</div>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
+                {user.phone_number}
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <ul className="list-disc">
@@ -249,7 +249,7 @@ export default function Table({
                   <li className="text-body text-sm text-gray-900"><span className="text-body font-bold">{isEn ? 'notes:' : ':ملاحظات'} </span>{user.address.notes}</li>
                 </ul>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
                 {user.role.role.name}
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
@@ -257,13 +257,13 @@ export default function Table({
                   {user.status}
                 </span>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
                 {user.date_of_birth ? displayDate(user.date_of_birth) : messages.noData[lang]}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
                 {displayDate(user.created_at)}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
                 <div className="flex gap-2">
                   <button 
                     data-type="user_orders_button_is_clicked"
