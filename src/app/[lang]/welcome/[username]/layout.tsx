@@ -36,7 +36,7 @@ export default function layout ({ children }: Readonly<{children: React.ReactNod
     } 
   ];
 
-  const { data: userData, isLoading } = useQuery({
+  const { data: userData, isLoading, isError } = useQuery({
     queryKey: ['user'],
     queryFn: getUserData,
   });
@@ -77,7 +77,11 @@ export default function layout ({ children }: Readonly<{children: React.ReactNod
       </div>
       <UserPfp 
         className="mt-[-60.5px] z-[5]" 
+        lang={lang}
+        isEn={isEn}
+        data={userData}
         isLoading={isLoading}
+        isError={isError}
       />
       <Username isLoading={isLoading} lang={lang} userName={`${userData?.data.first_name} ${userData?.data.last_name}`} />
       <NavTile 

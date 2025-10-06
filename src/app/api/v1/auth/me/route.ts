@@ -48,6 +48,7 @@ export async function GET(req: NextResponse) {
       select: {
         first_name: true,
         last_name: true,
+        slug: true,
         phone_number: true,
         role: {
           select: {

@@ -79,10 +79,12 @@ export async function POST(req: NextRequest) {
 
     const saltRounds = 12;
     const password_hash = await bcrypt.hash(password, saltRounds);
+    const slug = createSlug (first_name, last_name);
     const { role: userRole } = await prisma.user.create({
       data: {
         first_name,
         last_name,
+        slug,
         email,
         phone_number,
         password_hash,
@@ -105,9 +107,8 @@ export async function POST(req: NextRequest) {
       }
     });
 
-    const fullNameSlug = createSlug(first_name, last_name);
-    console.log({fullNameSlug})
-    const { accessToken, refreshToken } = await generateTokens(fullNameSlug, email, userRole.name);
+    console.log({slug})
+    const { accessToken, refreshToken } = await generateTokens(slug, email, userRole.name);
     const cookieStore = await cookies();
     
     cookieStore.set(

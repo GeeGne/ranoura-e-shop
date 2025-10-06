@@ -1,34 +1,15 @@
 import getServerUrl from '@/utils/getServerUrl';
 
-// Create New User
+// Update User Details
 
-type Props = {
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone_number: string;
-  password: string;
-}
-
-export default async function post({
-  first_name,
-  last_name,
-  email,
-  phone_number,
-  password  
-}: Props) {
+export default async function put(data: Record<string, any>) {
   try {
-    const url = `${getServerUrl()}/api/v1/users`;
+    const { id, ...requestedData } = data;
+    const url = `${getServerUrl()}/api/v1/users/${id}`;
     const response = await fetch(url, {
-      method: 'POST',
+      method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        first_name,
-        last_name,
-        email,
-        phone_number,
-        password  
-      })
+      body: JSON.stringify(requestedData)
     })
     if (!response.ok) throw new Error ('Unable to connect to the server');
 

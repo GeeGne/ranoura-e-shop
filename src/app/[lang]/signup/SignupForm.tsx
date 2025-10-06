@@ -17,6 +17,9 @@ import { useAlertMessageStore, useLayoutRefStore, useLanguageStore } from '@/sto
 // LIB
 import { validate } from '@/lib/validators/SignUpFormClient';
 
+// UTILS
+import createSlug from '@/utils/createSlug';
+
 // API
 import createNewUser from '@/lib/api/users/post';
 
