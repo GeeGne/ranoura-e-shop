@@ -141,16 +141,16 @@ export async function PUT(req: NextResponse) {
     return NextResponse.json({
       data: userData,
       message: {
-        en: 'authentication success!',
-        ar: 'تم بنجاح'
+        en: 'User Data has been updated successfuly!',
+        ar: 'تم تعديل معلومات المستخدم بنجاح!'
       }
     }, { status: 200 });
   } catch (err) {
     const error = err as Error;
-    console.error('Error accured during authintication proccess', error.message);
+    console.error('Error accured during updating user data: ', error.message);
     return nextError(
       'AUTH_FAILED',
-      'Error during signing up',
+      'Error during updating user data',
       401
     )
   }
