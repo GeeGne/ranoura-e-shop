@@ -37,14 +37,7 @@ export async function POST(req: NextRequest) {
         400
       )
 
-    const { 
-      first_name,
-      last_name, 
-      phone_number, 
-      password_hash, 
-      address, 
-      role 
-    } = await prisma.user.findUnique({
+    const data = await prisma.user.findUnique({
       where: { email },
       select: {
         first_name: true,
@@ -70,6 +63,8 @@ export async function POST(req: NextRequest) {
         }
       }
     });
+
+    const { password_hash, first_name, last_name, role: userRole } = data;
     if (!password_hash || !first_name || !last_name) 
       return nextError(
         'INVALID_CREDENTIALS',
@@ -77,7 +72,6 @@ export async function POST(req: NextRequest) {
         401
       );
 
-    const { role: userRole } = role;
     const isPassCorrect = await bcrypt.compare(password, password_hash);
     if (!isPassCorrect) 
       return nextError(
@@ -85,7 +79,8 @@ export async function POST(req: NextRequest) {
         'Invalid email or password, please enter the correct values.',
         401
       );
-      console.log({ first_name, last_name })
+
+    console.log({ first_name, last_name })
     const fullNameSlug = createSlug(first_name, last_name);
     console.log('fullNameSlug: ', fullNameSlug);
     const { accessToken, refreshToken } = await generateTokens(fullNameSlug, email, userRole.name);
@@ -116,14 +111,7 @@ export async function POST(req: NextRequest) {
     );
     
     return NextResponse.json({
-        data: {
-          first_name,
-          last_name,
-          email,
-          phone_number,
-          userRole,
-          address
-        },
+        data,
         message: {
           en: 'authentication success!',
           ar: 'تم تسجيل الدخول بنجاح!'

@@ -40,7 +40,7 @@ export default function layout ({ children }: Readonly<{children: React.ReactNod
     queryKey: ['user'],
     queryFn: getUserData,
   });
-  const isAdmin = userData?.data?.userRole?.name === 'admin';
+  const isAdmin = userData?.data?.role.role?.name === 'admin';
 
   // DEBUG
   console.log('userData: ', userData);
@@ -79,7 +79,7 @@ export default function layout ({ children }: Readonly<{children: React.ReactNod
         className="mt-[-60.5px] z-[5]" 
         lang={lang}
         isEn={isEn}
-        data={userData}
+        data={userData?.data}
         isLoading={isLoading}
         isError={isError}
       />

@@ -41,7 +41,7 @@ export async function GET(req: NextResponse) {
     if (!email) throw null;
     
     
-    const { first_name, last_name, phone_number, role, address } = await prisma.user.findUnique({
+    const data = await prisma.user.findUnique({
       where: {
         email
       },
@@ -70,17 +70,76 @@ export async function GET(req: NextResponse) {
         }
       }
     });
-    const { role: userRole } = role;
 
     return NextResponse.json({
-      data: {
-        first_name,
-        last_name,
-        email,
-        phone_number,
-        address,
-        userRole,
+      data,
+      message: {
+        en: 'authentication success!',
+        ar: 'تم بنجاح'
+      }
+    }, { status: 200 });
+  } catch (err) {
+    const error = err as Error;
+    console.error('Error accured during authintication proccess', error.message);
+    return nextError(
+      'AUTH_FAILED',
+      'Error during signing up',
+      401
+    )
+  }
+}
+
+// @desc update user personal data
+// @route /api/v1/auth/me
+// @access private
+export async function PUT(req: NextResponse) {
+  try {
+    const cookieStore = await cookies();
+    const { value: authToken }: any = cookieStore.get('accessToken');
+    if (!authToken) 
+      return NextResponse.json(
+        { message: 'No token to signin'},
+        { status: 401 }
+      )
+
+    const { email }: any = await verifyToken(authToken);
+    if (!email) throw null;
+    
+    const data = await req.json();
+    
+    const userData = await prisma.user.update({
+      where: {
+        email
       },
+      data,
+      select: {
+        first_name: true,
+        last_name: true,
+        slug: true,
+        phone_number: true,
+        role: {
+          select: {
+            role: {
+              select: {
+                name: true,
+                description: true
+              }
+            }
+          }
+        },
+        profile_img_url: true,
+        address: {
+          select: {
+            address_details: true,
+            second_address: true,
+            notes: true
+          }
+        }
+      }
+    });
+
+    return NextResponse.json({
+      data: userData,
       message: {
         en: 'authentication success!',
         ar: 'تم بنجاح'

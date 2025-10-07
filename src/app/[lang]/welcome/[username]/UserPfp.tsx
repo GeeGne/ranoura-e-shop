@@ -5,6 +5,8 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 // COMPONENTS
 import EpUser from "@/components/svgs/EpUser";
 import LineMdPlus from '@/components/svgs/LineMdPlus';
+import LineMdEdit from '@/components/svgs/LineMdEdit';
+import LineMdTrash from '@/components/svgs/LineMdTrash';
 
 // STORES
 import { 
@@ -18,12 +20,12 @@ import deleteStorageFile from '@/lib/api/object/bucketName/filePath/delete';
 import updateUserDetails from '@/lib/api/users/id/put';
 
 // ASSETS
-const img_url = 'public/assets/img/pfp_img.png';
+const img_url = '/assets/img/pfp_img.png';
 
 type Props = {
   lang?: 'en' | 'ar';
   isEn?: boolean;
-  data?: Record<string, any>;
+  data?: Record<string, any> | null;
   isLoading?: boolean;
   isError?: boolean;
   className?: string;
@@ -39,7 +41,7 @@ export default function UserPfp ({
   ...props
 }: Props) {
 
-  const { profile_img_url } = data;
+  const { profile_img_url } = data || {};
   const queryClient = useQueryClient();
   const id = useId();
   const setActivityWindowToggle = useActivityWindowStore(state => state.setToggle);
@@ -68,9 +70,11 @@ export default function UserPfp ({
       displayAlert(results.message[isEn ? 'en' : 'ar'], "success");
 
       const pfpImgRow = { profile_img_url: publicUrl }
-      if (data.id) updateUserDetailsMutation.mutate({ id: data.id,  ...pfpImgRow })
+      if (data?.id) updateUserDetailsMutation.mutate({ id: data?.id,  ...pfpImgRow })
+      
       // DEBUG
-      // console.log('upload image data result: ', data);
+      console.log('upload image data result: ', data);
+      console.log('posted image Data: ', { id: data?.id,  ...pfpImgRow });
     },
     onError: () => {
       displayAlert(isEn ? 'An Error has accured during uploading the file, please try again.' : 'هناك مشكله خلال رفع الملف, الرجاء المحاوله مره اخرى.', "error");
@@ -95,7 +99,7 @@ export default function UserPfp ({
     }
   })
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement | SVGSVGElement>) => {
     const { type } = e.currentTarget.dataset;
 
     switch (type) {
@@ -109,11 +113,11 @@ export default function UserPfp ({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, files } = e.currentTarget;
-    const { rowName, storePath } = e.currentTarget.dataset;
+    const { storePath } = e.currentTarget.dataset;
 
     switch (name) {
       case 'pfpImg':
-        if (!files) return;
+        if (!files || !storePath) return;
         const file = files[0];
         uploadFileMutation.mutate({
           bucketName: 'assets',
@@ -147,6 +151,58 @@ export default function UserPfp ({
     </section>
   )  
 
+  if (profile_img_url) return (
+    <section
+      className={`
+        flex items-center justify-center
+        ${className}
+      `}
+      { ...props }
+    >
+      <div
+        className="group relative rounded-full overflow-hidden"
+      >
+        <img
+          className={`
+            flex object-center object-cover 
+            w-[100px] h-[100px]
+          `}
+          src={profile_img_url}
+        />
+        <div
+          className="
+            absolute top-0 left-0 
+            flex items-center justify-center gap-2
+            w-full h-full bg-shade
+            invisible group-hover:visible opacity-0 group-hover:opacity-100
+            transition-all duration-200 ease-in-out
+          "
+        >
+          <LineMdEdit 
+            className="
+              w-8 h-8 p-1
+              text-heading-invert bg-transparent hover:bg-shade-v2 active:opacity-80 rounded-full
+              transition-all duration-200 ease-in-out
+            "
+            role="button"
+            data-type="button_is_clicked"
+            onClick={handleClick}
+          />
+          <LineMdTrash 
+            className="
+              w-8 h-8 p-1
+              text-heading-invert bg-transparent hover:bg-shade-v2 active:opacity-80 rounded-full
+              transition-all duration-200 ease-in-out
+            "
+            role="button"
+            data-type="button_is_clicked"
+            onClick={handleClick}
+          />
+        </div>
+      </div>
+    </section>
+  )
+
   return (
     <section
       className={`
@@ -169,7 +225,7 @@ export default function UserPfp ({
           name="pfpImg"
           id={id}
           data-row-name="profile_img_url"
-          data-store-path={`users/${data.slug}/profile-picture`}
+          data-store-path={`images/users/${data?.slug}/profile-picture`}
           onChange={handleChange}
         />
         <EpUser 
@@ -200,27 +256,5 @@ export default function UserPfp ({
         </div>
       </label>
     </section>
-  )
-  
-  return (
-    <section
-      className={`
-        flex items-center justify-center
-        ${className}
-      `}
-      { ...props }
-    >
-      <div
-        className={`
-          flex items-center justify-center 
-          rounded-full w-[100px] h-[100px]
-          ${isLoading ? '--opacity-blink bg-inbetween' : 'bg-background-light'}
-        `}
-      >
-        <EpUser 
-          className={`w-12 h-12 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
-        />   
-      </div>
-    </section>
-  )
+  )  
 }
