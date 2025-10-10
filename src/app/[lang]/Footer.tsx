@@ -1,5 +1,6 @@
 // HOOKS
 import Link from 'next/link';
+import { useQuery } from '@tanstack/react-query';
 
 // COMPONENTS
 import FooterList from '@/components/FooterList';
@@ -17,6 +18,9 @@ import { useAlertMessageStore, useLanguageStore } from '@/stores/index';
 // JSON
 import socialLinks from '@/json/socialLinks.json';
 
+//API
+import getSocialLinks from '@/lib/api/social-links/get';
+
 // ASSETS
 const logo = '/assets/img/ranoura-logo(2).png';
 const background = '/public/assets/img/background(2).avif';
@@ -33,6 +37,11 @@ export default function Footer ({ className, ...props }: Props) {
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
+
+  const { data: socialLinks, isLoading, isError } = useQuery({
+    queryKey: ['social-links'],
+    queryFn: getSocialLinks,
+  })
 
   const iconMap = {
     facebook: Facebook,
@@ -181,48 +190,29 @@ export default function Footer ({ className, ...props }: Props) {
           <ul
             className="flex flex-row gap-2 text-body-invert"
           >
-            <li>
-              <Facebook 
-                className="
-                  text-body-invert hover:text-blue-400 hover:scale-125 cursor-pointer
-                  transition-all ease-in-out duration-300
-                "
-              />
-            </li>
-            <li>
-              <Instagram 
-                className="
-                  text-body-invert hover:text-fuchsia-400 hover:scale-125 cursor-pointer
-                  transition-all ease-in-out duration-300
-                "
-              />
-            </li>
-            <li>
-              <Telegram
-                className="
-                  text-body-invert hover:text-cyan-400 hover:scale-125 cursor-pointer
-                  transition-all ease-in-out duration-300
-                "
-              />
-            </li>
-          </ul>
-          <ul
-            className="flex flex-row gap-2 text-body-invert"
-          >
-            {socialLinks.map((itm, i) => 
-              <li
+            {isLoading && [1, 2, 3].map((num, i) =>
+              <SocialIcon
                 key={i}
-              >
-                <SocialIcon 
-                  className={`
-                    text-body-invert hover:scale-125 cursor-pointer
-                    transition-all ease-in-out duration-300
-                  `}
-                  icon={itm.icon}
-                  onMouseEnter={e => e.currentTarget.style.color = itm.color} 
-                  onMouseLeave={e => e.currentTarget.style.color = 'var(--font-body-invert-color)'} 
-                />
-              </li>
+                isLoading={isLoading}
+              />
+            )}
+            {socialLinks?.data?.map((result: Record<string, any>, i: number) => 
+              <li key={i}>
+                <Link
+                  href={result.url}
+                  target="blank"
+                >
+                  <SocialIcon 
+                    className="
+                      text-body-invert hover:text-blue-400 hover:scale-125 cursor-pointer
+                      transition-all ease-in-out duration-300
+                    "
+                    icon={result.icon}
+                    onMouseEnter={e => e.currentTarget.style.color = result.color} 
+                    onMouseLeave={e => e.currentTarget.style.color = 'var(--font-body-invert-color)'} 
+                  />
+                </Link>
+              </li>          
             )}
           </ul>
         </div>

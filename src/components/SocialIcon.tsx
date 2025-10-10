@@ -1,4 +1,4 @@
-import { SVGProps } from 'react';
+import { SVGProps, HTMLProps } from 'react';
 
 // COMPONENTS
 import Facebook from '@/components/svgs/Facebook';
@@ -13,22 +13,23 @@ import Email from '@/components/svgs/Email';
 
 
 const iconMap: Record<string, any> = {
-  facebook :Facebook,
-  instagram :Instagram,
-  telegram :Telegram,
-  whatsapp :Whatsapp,
-  twitterX :TwitterX,
-  tiktok :Tiktok,
-  youtube :Youtube,
-  phone :Phone,
-  email :Email
+  facebook: Facebook,
+  instagram: Instagram,
+  telegram: Telegram,
+  whatsapp: Whatsapp,
+  twitterX: TwitterX,
+  tiktok: Tiktok,
+  youtube: Youtube,
+  phone: Phone,
+  email: Email
 };
 
 type Props = {
-  icon: keyof typeof iconMap | any;
-} & SVGProps<SVGSVGElement>;
+  icon?: keyof typeof iconMap | any;
+  isLoading?: boolean;
+} & (SVGProps<SVGSVGElement> & HTMLProps<HTMLDivElement>);
 
-export default function SocialIcon ({ icon, ...props }: Props) {
+export default function SocialIcon ({ icon = 'facebook', isLoading = false, ...props }: Props) {
 
   const IconComponent = iconMap[icon];
 
@@ -37,6 +38,13 @@ export default function SocialIcon ({ icon, ...props }: Props) {
     return null;
   };
   
+  if (isLoading) return (
+    <div 
+      className="--opacity-blink w-6 h-6 bg-background-deep-light rounded-full"
+      { ...props }
+    />
+  )
+
   return (
     <IconComponent 
       { ...props }
