@@ -506,7 +506,12 @@ export default function EditProductWindow () {
             "
             htmlFor="nameEn"
           >
-            <h3 className="text-body font-bold ml-auto">
+            <h3 
+              className={`
+                text-body font-bold
+                ${isEn ? 'mr-auto' : 'ml-auto'}
+              `}
+            >
               {isEn ? 'NAME' : 'الاسم'}
             </h3>
             <h4 className="px-1 bg-heading text-heading-invert text-sm font-bold rounded-md">
@@ -538,10 +543,19 @@ export default function EditProductWindow () {
             "
             htmlFor="descritpionEn"
           >
-            <h3 className="text-body font-bold ml-auto">
+            <h3 
+              className={`
+                text-body font-bold
+                ${isEn ? 'mr-auto' : 'ml-auto'}
+              `}
+              >
               {isEn ? 'DESCRIPTION' : 'الوصف'}
             </h3>
-            <h4 className="px-1 bg-heading text-heading-invert text-sm font-bold rounded-md">
+            <h4 
+              className="
+                px-1 bg-heading text-heading-invert text-sm font-bold rounded-md
+              "
+            >
               EN
             </h4>
             <input 
