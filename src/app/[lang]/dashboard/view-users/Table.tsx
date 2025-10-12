@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 // COMPONENTS
 import LoadingTable from '@/components/LoadingTable';
 import ErrorLayout from '@/components/ErrorLayout';
+import Orders from '@/components/Orders';
 import SolarCart4Bold from "@/components/svgs/SolarCart4Bold";
 import LineMdLink from '@/components/svgs/LineMdLink';
 import TablerCopy from '@/components/svgs/TablerCopy';
@@ -287,18 +288,18 @@ export default function Table({
             </tr>
             <tr>
               <td
-                className={`w-full bg-green-500`}
+                className={`w-full bg-background-light`}
                 colSpan={8}
               >
                 <div
                   className={`
                     flex w-full overflow-hidden
                     transition-all duration-300 ease-in-out
-                    ${(userOrder.toggle && userOrder.userId === user.id) ? 'h-[500px]' : 'h-[0px]'}
+                    ${(userOrder.toggle && userOrder.userId === user.id) ? 'h-auto' : 'h-[0px]'}
                   `}
                 >
 
-                  tets
+                  <Orders />
                 </div>
               </td>
             </tr></>
