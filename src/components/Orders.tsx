@@ -1,3 +1,7 @@
+// COMPONENTS
+import MdiCardAccountDetails from '@/components/svgs/MdiCardAccountDetails';
+import LetsIconsOrderFill from '@/components/svgs/LetsIconsOrderFill';
+
 // JSON
 import orders from '@/json/userOrders.json';
 
@@ -41,7 +45,7 @@ export default function Orders ({ lang = 'en', isEn = true }: Props) {
   }
 
   return (
-    <table className="min-w-full divide-y divide-gray-200 rounded-lg overflow-hidden">
+    <table className="min-w-full divide-y divide-gray-200 overflow-hidden">
       <thead
         className="bg-gray-50"
       >
@@ -123,31 +127,32 @@ export default function Orders ({ lang = 'en', isEn = true }: Props) {
         <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
           {formatDate(orders.created_at)}
         </td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
+          {orders.total}
+        </td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
+          <div className="flex gap-2">
+            <LetsIconsOrderFill 
+              className="
+                w-7 h-7 p-1 text-heading rounded-md cursor-pointer
+                bg-background-light hover:bg-background-deep-light
+                active:opacity-60
+                transition-all duration-200 ease-out
+              "
+              role="button"
+            />
+            <MdiCardAccountDetails 
+              className="
+                w-7 h-7 p-[5px] text-heading rounded-md cursor-pointer
+                bg-background-light hover:bg-background-deep-light
+                active:opacity-60
+                transition-all duration-200 ease-out
+              "
+              role="button"
+            />
+          </div>
+        </td>
       </tbody>
     </table>
-  )
-  return (
-    <ul
-      className="sticky left-4 flex flex-col gap-2"
-    >
-      <li
-        className="flex flex-col gap-2 bg-white p-2 rounded-lg w-[300px]"
-      >
-        <div
-          className="flex items-center justify-between"
-        >
-          <span
-            className="text-body-light font-bold"
-          >
-            15wCCHdEi2tG
-          </span>
-          <span
-            className="text-red-500 font-bold"
-          >
-            On Date
-          </span>
-        </div>
-      </li>
-    </ul>
   )
 }
