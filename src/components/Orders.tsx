@@ -1,9 +1,14 @@
+// HOOKS
+import { useId } from 'react';
+
 // COMPONENTS
 import MdiCardAccountDetails from '@/components/svgs/MdiCardAccountDetails';
 import LetsIconsOrderFill from '@/components/svgs/LetsIconsOrderFill';
+import MdiArrowDownDrop from '@/components/svgs/MdiArrowDownDrop';
 
 // JSON
 import orders from '@/json/userOrders.json';
+import statusColors from '@/json/orderStatus.json';
 
 type Props = {
   lang?: 'en' | 'ar';
@@ -11,6 +16,8 @@ type Props = {
 };
 
 export default function Orders ({ lang = 'en', isEn = true }: Props) {
+
+  const id = useId();
 
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
@@ -29,23 +36,13 @@ export default function Orders ({ lang = 'en', isEn = true }: Props) {
     const now: any = new Date();
     const diffTime = Math.abs(now - date);
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    const diffHours = Math.floor(diffDays * 60)
 
-    return `${diffDays} days ago`;
-  }
-
-  const statusColors = {
-    PENDING: "#FFA500",     
-    CONFIRMED: "#3498DB",   
-    PROCESSING: "#9B59B6", 
-    ONDELIVERY: "#F39C12",  
-    SHIPPED: "#2980B9",     
-    DELIVERED: "#27AE60",   
-    CANCELED: "#E74C3C",    
-    REFUNDED: "#95A5A6"  
+    return `${diffDays || diffHours} ${diffDays ? 'days' : 'hours'} ago`;
   }
 
   return (
-    <table className="min-w-full divide-y divide-gray-200 overflow-hidden">
+    <table className="min-w-full divide-y divide-gray-200">
       <thead
         className="bg-gray-50"
       >
@@ -102,13 +99,13 @@ export default function Orders ({ lang = 'en', isEn = true }: Props) {
           <div className="flex flex-col gap-2">
             <div>
               <span className="text-sm text-body-light">ID: </span>
-              <span className="font-bold text-sm text-body-light">{orders.id}</span>
+              <span className="font-bold text-sm text-body underline">{orders.id}</span>
             </div>
             <div>
               <span className="text-sm text-body-light">Number of items: </span>
-              <span className="font-bold text-sm text-body-light">{orders.products.length} </span>
-              <span className="text-sm text-body-light">Ordered at: </span>
-              <span className="font-bold text-sm text-body-light">{getTimeAgo(orders.created_at)}</span>
+              <span className="font-bold text-sm text-body underline">{orders.products.length} </span>
+              <span className="text-sm text-body-light ml-2">Ordered at: </span>
+              <span className="font-bold text-sm text-body underline">{getTimeAgo(orders.created_at)}</span>
             </div>
           </div>
         </td>
@@ -150,6 +147,53 @@ export default function Orders ({ lang = 'en', isEn = true }: Props) {
               "
               role="button"
             />
+            <label
+              className="
+                relative flex items-center 
+                bg-background-light hover:bg-background-deep-light active:opacity-60 
+                rounded-lg cursor-pointer
+                transition-all duration-200 ease-out
+              "
+              htmlFor={`${id}-status`}
+            >
+              <input 
+                className="
+                  peer absolute w-0 h-0 opacity-0
+                "
+                type="checkbox"
+                name="statusInpt"
+                id={`${id}-status`}
+              />
+              <div 
+                className="
+                  w-[90px] text-center p-1 text-sm bg-transparent font-bold
+                  border-none outline-none cursor-pointer
+                "
+                style={{ color: statusColors[orders.status]}}
+              >
+                {orders.status.toLowerCase()}
+              </div>
+              <MdiArrowDownDrop />
+              <ul
+                className="
+                  absolute top-full left-0 w-full 
+                  flex flex-col p-2
+                  bg-white shadow-lg rounded-lg
+                  invisible peer-checked:visible opacity-0 peer-checked:opacity-100
+                  transition-all duration-200 ease-out
+                "
+              >
+                {Object.entries(statusColors).map(([ name, color ]) => 
+                  <li
+                    className="
+                      p-2 rounded-lg hover:bg-background-light text-body text-sm font-bold
+                    "
+                  >
+                    {name}
+                  </li>
+                )} 
+              </ul>
+            </label>
           </div>
         </td>
       </tbody>

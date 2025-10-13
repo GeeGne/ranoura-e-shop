@@ -293,9 +293,9 @@ export default function Table({
               >
                 <div
                   className={`
-                    flex w-full overflow-hidden
+                    flex w-full
                     transition-all duration-300 ease-in-out
-                    ${(userOrder.toggle && userOrder.userId === user.id) ? 'h-auto' : 'h-[0px]'}
+                    ${(userOrder.toggle && userOrder.userId === user.id) ? 'h-auto' : 'h-[0px] overflow-hidden'}
                   `}
                 >
 
