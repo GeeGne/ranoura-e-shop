@@ -32,7 +32,7 @@ export default function Layout (
   }, [themesData]);
 
   // DEBUG & UI
-  console.log('userData: ', userData);
+  // console.log('userData: ', userData);
   // console.log('themesData: ', themesData);
 
   return (

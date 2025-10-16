@@ -22,7 +22,7 @@ import urlsTable from '@/json/cmsTables/urlsTable.json';
 // STORES
 import { useAlertMessageStore, useLayoutRefStore } from '@/stores/index';
 
-// IMAGES
+// ASSETS
 const pfpImage = '/assets/img/pfp.avif';
 
 import {
@@ -281,7 +281,7 @@ export default function Table({
                           : 'bg-background-light hover:bg-background-deep-light'
                         }
                       `}
-                    />    
+                    />
                   </button>
                 </div>
               </td>
