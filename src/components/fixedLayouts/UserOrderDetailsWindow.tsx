@@ -1,6 +1,9 @@
 // COMPONENTS
 import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingResize';
+import GrommetIconsCheckboxSelected from '@/components/svgs/GrommetIconsCheckboxSelected';
 import IcRoundUpdate from '@/components/svgs/IcRoundUpdate';
+import LaShippingFast from '@/components/svgs/LaShippingFast';
+import PhAddressBook from '@/components/svgs/PhAddressBook';
 
 // STORES
 import { useLanguageStore, useOrderDetailsWindowStore } from '@/stores/index';
@@ -111,6 +114,10 @@ export default function UserOrderDetailsWindow () {
         <section
           className="flex flex-col gap-4 py-4"
         >
+          <div className="flex items-center gap-2">
+            <GrommetIconsCheckboxSelected className="w-6 h-6 text-body"/>
+            <span className="text-lg font-bold text-body">ORDERED ITEMS</span>
+          </div>
           <ul
             className="flex flex-col gap-4 py-4"
           >
@@ -245,7 +252,10 @@ export default function UserOrderDetailsWindow () {
           className="flex flex-col py-4 gap-4"
         >
           <div className="flex flex-col gap-4">
-            <span className="text-lg font-bold text-body">SHIPPING</span>
+            <div className="flex items-center gap-2">
+              <LaShippingFast className="w-6 h-6 text-body"/>
+              <span className="text-lg font-bold text-body">SHIPPING</span>
+            </div>
             <div className="flex gap-4">
               <span className="text-body">City:</span>
               <span className="text-heading">Damascus</span>
@@ -256,7 +266,10 @@ export default function UserOrderDetailsWindow () {
             </div>
           </div>
           <div className="flex flex-col gap-4">
-            <span className="text-lg font-bold text-body">ADDRESS</span>
+            <div className="flex items-center gap-2">
+              <PhAddressBook className="w-6 h-6 text-body"/>
+              <span className="text-lg font-bold text-body">ADDRESS</span>
+            </div>
             <div className="flex gap-4">
               <span className="text-body">Main Address:</span>
               <span className="text-heading">Damascus</span>

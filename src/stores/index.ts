@@ -344,7 +344,7 @@ type OrderDetailsWindowProps = {
 
 const useOrderDetailsWindowStore = create<OrderDetailsWindowProps>()(
   (set) => ({
-    toggle: true,
+    toggle: false,
     setToggle: (toggle) => set({ toggle }),
   })
 );

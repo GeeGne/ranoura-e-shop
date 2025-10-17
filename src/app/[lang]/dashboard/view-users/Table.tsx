@@ -8,6 +8,7 @@ import LoadingTable from '@/components/LoadingTable';
 import ErrorLayout from '@/components/ErrorLayout';
 import Orders from '@/components/Orders';
 import SolarCart4Bold from "@/components/svgs/SolarCart4Bold";
+import MdiBan from "@/components/svgs/MdiBan";
 import LineMdLink from '@/components/svgs/LineMdLink';
 import TablerCopy from '@/components/svgs/TablerCopy';
 import MaterialSymbolsCheckRounded from '@/components/svgs/MaterialSymbolsCheckRounded';
@@ -78,11 +79,12 @@ export default function Table({
   scrollTrigger, 
 }: Props) {
 
-  const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
-  const setAlertType = useAlertMessageStore((state) => state.setType);
-  const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
   const layoutRef = useLayoutRefStore(state => state.layoutRef);
   const mainRef = useRef<HTMLDivElement>(null);
+
+  const setAlertToggle = useAlertMessageStore(state => state.setToggle);
+  const setAlertType = useAlertMessageStore(state => state.setType);
+  const setAlertMessage = useAlertMessageStore(state => state.setMessage);
 
   const [ isUrlCopied, setIsUrlCopied ] = useState<UrlCopiedState>({ toggle: false, index: 0 });
   const isUrlCopiedTimerId = useRef<any>(0);
@@ -198,28 +200,31 @@ export default function Table({
       <table className="min-w-full divide-y divide-gray-200 rounded-lg overflow-hidden">
         <thead className="bg-gray-50">
           <tr>
-            <th scope="col" className={`px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light uppercase tracking-wider`}>
+            <th scope="col" className={`px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light uppercase tracking-wider whitespace-nowrap`}>
               {isEn ? 'Name' : 'الاسم'}
             </th>
-            <th scope="col" className={`px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light uppercase tracking-wider`}>
+            <th scope="col" className={`px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light uppercase tracking-wider whitespace-nowrap`}>
               {isEn ? 'Phone Number' : 'رقم الهاتف'}
             </th>
-            <th scope="col" className={`px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light uppercase tracking-wider`}>
+            <th scope="col" className={`px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light uppercase tracking-wider whitespace-nowrap`}>
               {isEn ? 'Address' : 'العنوان'}
             </th>
-            <th scope="col" className={`px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light uppercase tracking-wider`}>
+            <th scope="col" className={`px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light uppercase tracking-wider whitespace-nowrap`}>
               {isEn ? 'Role' : 'دور'}
             </th>
-            <th scope="col" className={`px-6 py-3  ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light uppercase tracking-wider`}>
+            <th scope="col" className={`px-6 py-3  ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light uppercase tracking-wider whitespace-nowrap`}>
               {isEn ? 'Status' : 'الحاله'}
             </th>
-            <th scope="col" className={`px-6 py-3  ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light uppercase tracking-wider`}>
+            <th scope="col" className={`px-6 py-3  ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light uppercase tracking-wider whitespace-nowrap`}>
               {isEn ? 'Date of Birth' : 'تاريخ الولاده'}
             </th>
-            <th scope="col" className={`px-6 py-3  ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light uppercase tracking-wider`}>
+            <th scope="col" className={`px-6 py-3  ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light uppercase tracking-wider whitespace-nowrap`}>
               {isEn ? 'Created At' : 'تاريخ الانشاء'}
             </th>
-            <th scope="col" className={`px-6 py-3  ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light uppercase tracking-wider`}>
+            <th scope="col" className={`px-6 py-3  ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light uppercase tracking-wider whitespace-nowrap`}>
+              {isEn ? 'Total Orders' : 'اجمالي الاوردرات'}
+            </th>
+            <th scope="col" className={`px-6 py-3  ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light uppercase tracking-wider whitespace-nowrap`}>
               {isEn ? 'Options' : 'الخيارات'}
             </th>
           </tr>
@@ -265,6 +270,9 @@ export default function Table({
                 {displayDate(user.created_at)}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
+                0
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
                 <div className="flex gap-2">
                   <button 
                     data-type="user_orders_button_is_clicked"
@@ -277,28 +285,36 @@ export default function Table({
                         active:opacity-60
                         transition-all duration-200 ease-out
                         ${(userOrder.toggle && userOrder.userId === user.id) 
-                          ? 'bg-green-300 hover:bg-green-400' 
+                          ? 'bg-content-invert hover:opacity-80' 
                           : 'bg-background-light hover:bg-background-deep-light'
                         }
                       `}
                     />
                   </button>
+                  <MdiBan 
+                    className="
+                      w-7 h-7 p-1 text-heading rounded-md cursor-pointer
+                      active:opacity-60
+                      transition-all duration-200 ease-out
+                      bg-background-light hover:bg-background-deep-light
+                    "
+                    role="button"
+                  />
                 </div>
               </td>
             </tr>
             <tr>
               <td
                 className={`w-full bg-background-light`}
-                colSpan={8}
+                colSpan={9}
               >
                 <div
                   className={`
                     flex w-full
                     transition-all duration-300 ease-in-out
-                    ${(userOrder.toggle && userOrder.userId === user.id) ? 'h-auto' : 'h-[0px] overflow-hidden'}
+                    ${(userOrder.toggle && userOrder.userId === user.id) ? 'h-fit' : 'h-[0px] overflow-hidden'}
                   `}
                 >
-
                   <Orders />
                 </div>
               </td>

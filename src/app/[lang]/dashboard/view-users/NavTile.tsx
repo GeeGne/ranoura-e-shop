@@ -15,6 +15,7 @@ import {
 import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingResize';
 import LineMdChevronSmallRight from '@/components/svgs/LineMdChevronSmallRight';
 import LineMdChevronSmallDown from '@/components/svgs/LineMdChevronSmallDown';
+import EpList from '@/components/svgs/EpList';
 import LineMdPlus from '@/components/svgs/LineMdPlus';
 
 // API
@@ -177,13 +178,13 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
               ${activityWindowToggle ? 'visible opacity-100' : 'invisible opacity-0'}  
             `}
           /> 
-          <LineMdPlus className="w-5 h-5"/>
+          <EpList className="w-5 h-5"/>
           <span
             className={`
               ${activityWindowToggle ? 'invisible opacity-0' : 'visible opacity-100'}  
             `}
           >
-            {isEn ? 'ADD CATEGORY' : 'اضف مجموعه'}
+            {isEn ? 'BANNED USERS LIST' : 'قائمه المحظورين'}
           </span> 
         </button>
         <div
