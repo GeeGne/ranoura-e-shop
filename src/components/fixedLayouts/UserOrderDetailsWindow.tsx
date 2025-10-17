@@ -1,5 +1,6 @@
 // COMPONENTS
 import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingResize';
+import IcRoundUpdate from '@/components/svgs/IcRoundUpdate';
 
 // STORES
 import { useLanguageStore, useOrderDetailsWindowStore } from '@/stores/index';
@@ -54,8 +55,7 @@ export default function UserOrderDetailsWindow () {
           absolute top-1/2 left-1/2 
           translate-x-[-50%] translate-y-[-50%]
           w-[80%] flex flex-col px-4
-          rounded-lg overflow-y-scroll
-          bg-background overflow-hidden
+          rounded-lg overflow-y-scroll h-[calc(100vh-4rem)] bg-background
           transition-all delay-100 duration-200 ease-[cubic-bezier(0.68, -0.6, 0.32, 1.6)]
           ${toggle ? 'scale-100 opacity-100' : 'scale-[80%] opacity-0'}
         `}
@@ -94,14 +94,16 @@ export default function UserOrderDetailsWindow () {
             className="flex flex-col gap-2 items-center bg-gren-400"
           >
             <img
-              className="w-[100px] object-cover object-center rounded-full" 
+              className="w-[80px] object-cover object-center rounded-full" 
               src={pfpImage}
             />
             <span className="text-heading">Ahmed El-Ghabra</span>
+            <span className="text-body">bluewhalexweb@outlook.com</span>
           </div>
           <div
-            className="flex justify-end"
+            className="flex justify-end gap-2"
           >
+            <IcRoundUpdate className="text-body"/>
             <span className="text-body">Oct 7, 2025, 01:51 PM</span>
           </div>
         </section>
@@ -112,27 +114,169 @@ export default function UserOrderDetailsWindow () {
           <ul
             className="flex flex-col gap-4 py-4"
           >
-            <li className="flex items-center gap-4 ">
+            <li className="flex gap-4 ">
               <img
-                className="w-[150px] aspect-[2/3] object-center object-cover rounded-lg"
+                className="flex w-[150px] aspect-[2/3] object-center object-cover grow-0 rounded-lg"
                 src={productImg}
               />
-              <div className="flex flex-col gap-2 items-start">
+              <div className="flex flex-col flex-1 gap-2">
                 <span className="text-body">Jeans</span>
                 <span className="text-heading">Graphic Tee for Men & Women</span>
-                <div 
+                <div className="flex items-center mt-auto gap-2">
+                  <div 
+                    className="
+                      flex gap-2 py-1 px-2
+                      rounded-full bg-background-light w-fit
+                    "
+                  >
+                    <div className="w-5 h-5 bg-sky-400 rounded-full" />
+                    <span className="text-sm text-body-light font-bold">Sky</span>
+                  </div>
+                  <div className="h-fit text-sm text-heading-invert bg-heading rounded-md font-bold px-1 py-0">M</div>
+                  <span className="text-sm text-body border font-bold border-[2px] border-body-light px-1  rounded-md">20 %</span>
+                </div>
+              </div>
+              <div className="flex flex-col flex-1 items-end">
+                <span 
                   className="
-                    flex gap-2 py-1 px-2 inline-flex
-                    rounded-full bg-background-light
+                    text-body font-bold border border-px border-background-deep-light 
+                    px-3 py-1 rounded-full my-auto
+                  "
+                  >
+                    3 x 500 SYP
+                </span>
+                <span 
+                  className="
+                    text-heading font-bold mt-auto
                   "
                 >
-                  <div className="w-5 h-5 bg-sky-400 rounded-full" />
-                  <span className="text-sm text-body-light font-bold">Sky</span>
+                  1500 SYP
+                </span>
+              </div>
+            </li>
+            <li className="flex gap-4 ">
+              <img
+                className="flex w-[150px] aspect-[2/3] object-center object-cover grow-0 rounded-lg"
+                src={productImg}
+              />
+              <div className="flex flex-col flex-1 gap-2">
+                <span className="text-body">Jeans</span>
+                <span className="text-heading">Graphic Tee for Men & Women</span>
+                <div className="flex items-center mt-auto gap-2">
+                  <div 
+                    className="
+                      flex gap-2 py-1 px-2
+                      rounded-full bg-background-light w-fit
+                    "
+                  >
+                    <div className="w-5 h-5 bg-sky-400 rounded-full" />
+                    <span className="text-sm text-body-light font-bold">Sky</span>
+                  </div>
+                  <div className="h-fit text-sm text-heading-invert bg-heading rounded-md font-bold px-1 py-0">M</div>
+                  <span className="text-sm text-body border font-bold border-[2px] border-body-light px-1  rounded-md">20 %</span>
                 </div>
-
+              </div>
+              <div className="flex flex-col flex-1 items-end">
+                <span 
+                  className="
+                    text-body font-bold border border-px border-background-deep-light 
+                    px-3 py-1 rounded-full my-auto
+                  "
+                  >
+                    3 x 500 SYP
+                </span>
+                <span 
+                  className="
+                    text-heading font-bold mt-auto
+                  "
+                >
+                  1500 SYP
+                </span>
+              </div>
+            </li>
+            <li className="flex gap-4 ">
+              <img
+                className="flex w-[150px] aspect-[2/3] object-center object-cover grow-0 rounded-lg"
+                src={productImg}
+              />
+              <div className="flex flex-col flex-1 gap-2">
+                <span className="text-body">Jeans</span>
+                <span className="text-heading">Graphic Tee for Men & Women</span>
+                <div className="flex items-center mt-auto gap-2">
+                  <div 
+                    className="
+                      flex gap-2 py-1 px-2
+                      rounded-full bg-background-light w-fit
+                    "
+                  >
+                    <div className="w-5 h-5 bg-sky-400 rounded-full" />
+                    <span className="text-sm text-body-light font-bold">Sky</span>
+                  </div>
+                  <div className="h-fit text-sm text-heading-invert bg-heading rounded-md font-bold px-1 py-0">M</div>
+                  <span className="text-sm text-body border font-bold border-[2px] border-body-light px-1  rounded-md">20 %</span>
+                </div>
+              </div>
+              <div className="flex flex-col flex-1 items-end">
+                <span 
+                  className="
+                    text-body font-bold border border-px border-background-deep-light 
+                    px-3 py-1 rounded-full my-auto
+                  "
+                  >
+                    3 x 500 SYP
+                </span>
+                <span 
+                  className="
+                    text-heading font-bold mt-auto
+                  "
+                >
+                  1500 SYP
+                </span>
               </div>
             </li>
           </ul>
+          <div className="flex w-full justify-between">
+            <span className="font-bold text-body">SUB-TOTAL</span>
+            <span className="font-bold text-heading">500 SYP</span>
+          </div>
+        </section>
+        <hr className="border-background-deep-light"/>
+        <section
+          className="flex flex-col py-4 gap-4"
+        >
+          <div className="flex flex-col gap-4">
+            <span className="text-lg font-bold text-body">SHIPPING</span>
+            <div className="flex gap-4">
+              <span className="text-body">City:</span>
+              <span className="text-heading">Damascus</span>
+            </div>
+            <div className="flex gap-4">
+              <span className="text-body">Ship Cost:</span>
+              <span className="text-heading">100 SYP</span>
+            </div>
+          </div>
+          <div className="flex flex-col gap-4">
+            <span className="text-lg font-bold text-body">ADDRESS</span>
+            <div className="flex gap-4">
+              <span className="text-body">Main Address:</span>
+              <span className="text-heading">Damascus</span>
+            </div>
+            <div className="flex gap-4">
+              <span className="text-body">Secondary Address:</span>
+              <span className="text-heading">Damascus</span>
+            </div>
+            <div className="flex gap-4">
+              <span className="text-body">Notes:</span>
+              <span className="text-heading">Damascus</span>
+            </div>
+          </div>
+        </section>
+        <hr className="border-background-deep-light"/>
+        <section
+          className="flex justify-between py-4 gap-4"
+        >
+          <span className="text-body font-bold">TOTAL</span>
+          <span className="text-content font-bold">600 SYP</span>
         </section>
       </div>
     </div>

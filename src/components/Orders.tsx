@@ -6,6 +6,9 @@ import MdiCardAccountDetails from '@/components/svgs/MdiCardAccountDetails';
 import LetsIconsOrderFill from '@/components/svgs/LetsIconsOrderFill';
 import MdiArrowDownDrop from '@/components/svgs/MdiArrowDownDrop';
 
+// STORES
+import { useOrderDetailsWindowStore } from '@/stores/index';
+
 // JSON
 import orders from '@/json/userOrders.json';
 import statusColors from '@/json/orderStatus.json';
@@ -18,6 +21,7 @@ type Props = {
 export default function Orders ({ lang = 'en', isEn = true }: Props) {
 
   const id = useId();
+  const setOrderDetailsWindowToggle = useOrderDetailsWindowStore(state => state.setToggle);
 
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
@@ -39,6 +43,18 @@ export default function Orders ({ lang = 'en', isEn = true }: Props) {
     const diffHours = Math.floor(diffDays * 60)
 
     return `${diffDays || diffHours} ${diffDays ? 'days' : 'hours'} ago`;
+  }
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement | SVGSVGElement>) => {
+    const { type } = e.currentTarget.dataset;
+
+    switch (type) {
+      case 'order_details_window_is_clicked':
+        setOrderDetailsWindowToggle(true);
+        break;
+      default:
+        console.error('Unknown Type: ', type);
+    }
   }
 
   return (
@@ -137,6 +153,8 @@ export default function Orders ({ lang = 'en', isEn = true }: Props) {
                 transition-all duration-200 ease-out
               "
               role="button"
+              data-type="order_details_window_is_clicked"
+              onClick={handleClick}
             />
             <MdiCardAccountDetails 
               className="
