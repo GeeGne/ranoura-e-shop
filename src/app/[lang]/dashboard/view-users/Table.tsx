@@ -81,6 +81,7 @@ export default function Table({
 
   const layoutRef = useLayoutRefStore(state => state.layoutRef);
   const mainRef = useRef<HTMLDivElement>(null);
+  const orderContainerRef: any = useRef<HTMLElement[]>([]);
 
   const setAlertToggle = useAlertMessageStore(state => state.setToggle);
   const setAlertType = useAlertMessageStore(state => state.setType);
@@ -162,6 +163,7 @@ export default function Table({
 
     switch (type) {
       case 'user_orders_button_is_clicked':
+
         setUserOrder({ 
           toggle: userOrder.userId === userId && userOrder.toggle ? false : true,
           userId
@@ -314,6 +316,7 @@ export default function Table({
                     transition-all duration-300 ease-in-out
                     ${(userOrder.toggle && userOrder.userId === user.id) ? 'h-fit' : 'h-[0px] overflow-hidden'}
                   `}
+                  ref={(el: any) => (orderContainerRef[i] = el)}
                 >
                   <Orders />
                 </div>

@@ -7,7 +7,7 @@ import LetsIconsOrderFill from '@/components/svgs/LetsIconsOrderFill';
 import MdiArrowDownDrop from '@/components/svgs/MdiArrowDownDrop';
 
 // STORES
-import { useOrderDetailsWindowStore } from '@/stores/index';
+import { useOrderDetailsWindowStore, useShippingDetailsWindowStore } from '@/stores/index';
 
 // JSON
 import orders from '@/json/userOrders.json';
@@ -22,6 +22,7 @@ export default function Orders ({ lang = 'en', isEn = true }: Props) {
 
   const id = useId();
   const setOrderDetailsWindowToggle = useOrderDetailsWindowStore(state => state.setToggle);
+  const setShippingDetailsWindowToggle = useShippingDetailsWindowStore(state => state.setToggle);
 
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
@@ -51,6 +52,9 @@ export default function Orders ({ lang = 'en', isEn = true }: Props) {
     switch (type) {
       case 'order_details_window_is_clicked':
         setOrderDetailsWindowToggle(true);
+        break;
+      case 'shipping_details_window_is_clicked':
+        setShippingDetailsWindowToggle(true);
         break;
       default:
         console.error('Unknown Type: ', type);
@@ -164,6 +168,8 @@ export default function Orders ({ lang = 'en', isEn = true }: Props) {
                 transition-all duration-200 ease-out
               "
               role="button"
+              data-type="shipping_details_window_is_clicked"
+              onClick={handleClick}
             />
             <label
               className="

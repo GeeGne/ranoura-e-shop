@@ -349,6 +349,18 @@ const useOrderDetailsWindowStore = create<OrderDetailsWindowProps>()(
   })
 );
 
+type ShippingDetailsWindowProps = {
+  toggle: boolean;
+  setToggle: (value: boolean) => void;
+};
+
+const useShippingDetailsWindowStore = create<ShippingDetailsWindowProps>()(
+  (set) => ({
+    toggle: false,
+    setToggle: (toggle) => set({ toggle }),
+  })
+);
+
 type SelectImgColorWindowProps = {
   toggle: boolean;
   setToggle: (value: boolean) => void;
@@ -524,5 +536,6 @@ export {
   useActivityWindowStore, useActionConfirmWindowStore,
   useAddSubCategoryWindowStore, useImageDisplayerWindow,
   useAddCategoryWindowStore, useEditImageUrlCategoryWindowStore,
-  useVideoDisplayerWindowStore, useOrderDetailsWindowStore
+  useVideoDisplayerWindowStore, useOrderDetailsWindowStore,
+  useShippingDetailsWindowStore
 };

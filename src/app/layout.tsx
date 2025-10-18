@@ -30,6 +30,7 @@ import EditImageUrlCategoryWindow from '@/components/fixedLayouts/EditImageUrlCa
 import AddSubCategoryWindow from '@/components/fixedLayouts/AddSubCategoryWindow';
 import SelectImgColorWindow from '@/components/fixedLayouts/SelectImgColorWindow';
 import UserOrderDetailsWindow from '@/components/fixedLayouts/UserOrderDetailsWindow';
+import ShippingDetailsWindow from '@/components/fixedLayouts/ShippingDetailsWindow';
 import BottomBorder from '@/components/svgs/BottomBorder';
 
 // STORES
@@ -116,6 +117,7 @@ export default function RootLayout({
             <AddSubCategoryWindow />
             <SelectImgColorWindow />
             <UserOrderDetailsWindow />
+            <ShippingDetailsWindow />
           </FixedLayouts>
         </Providers>
       </body>
