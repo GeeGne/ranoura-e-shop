@@ -4,7 +4,7 @@
 import { useState, useEffect } from 'react';
 
 // COMPONENTS
-import Table from '@/app/[lang]/dashboard/view-users/Table';
+import Table from '@/app/[lang]/dashboard/view-orders/Table';
 import NavTile from '@/app/[lang]/dashboard/view-users/NavTile';
 
 // STORES
