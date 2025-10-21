@@ -161,18 +161,19 @@ export default function Table({
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     const { type, userId } = e.currentTarget.dataset;
-    const findElement = (elArray: HTMLElement[], dataString: string, value: string) => 
+    const findElement = (elArray: any, dataString: string, value: any) => 
       elArray.find((el: HTMLElement) => el.dataset[dataString] === value);
 
     switch (type) {
       case 'user_orders_button_is_clicked':
-          const layoutHeight = userOrder.userId === userId && userOrder.toggle 
-            ? 0 
-            : findElement(orderContainerRef.current, 'userId', userId).scrollHeight; 
-          ;
+        const isSameUserAndToggleTrue = () => userOrder.userId === userId && userOrder.toggle;
+        const layoutHeight = isSameUserAndToggleTrue() 
+          ? 0 
+          : findElement(orderContainerRef.current, 'userId', userId).scrollHeight
+        ; 
 
         setUserOrder({ 
-          toggle: userOrder.userId === userId && userOrder.toggle ? false : true,
+          toggle: isSameUserAndToggleTrue() ? false : true,
           userId,
           layoutHeight
         })
@@ -180,7 +181,7 @@ export default function Table({
         if (orderContainerRef) orderContainerRef.current.forEach((el: HTMLElement) => (el.style.overflow = 'hidden'));
         
         if (userOrder.toggle) return;
-        const userOrdersBtnTimeout = setTimeout(() => {
+        const userOrdersBtnTimeoutID = setTimeout(() => {
           if (orderContainerRef.current && userId) {
 
             findElement(orderContainerRef.current, 'userId', userId).style.overflow = 'visible'
@@ -332,20 +333,20 @@ export default function Table({
                   <div
                     className={`
                       flex w-full
-                      transition-all duration-300 ease-in-out
                     `}
                   >
                     <Orders 
+                      className="w-full transition-all duration-300 ease-in-out"
                       lang={lang}
                       isEn={isEn}
-                    style={{
-                      height: (userOrder.toggle && userOrder.userId === user.id)
-                        ? userOrder.layoutHeight
-                        : 0
-                        + 'px'
-                    }}
-                    data-user-id={user.id}
-                    ref={(el: any) => (orderContainerRef.current[i] = el)}
+                      style={{
+                        height: (userOrder.toggle && userOrder.userId === user.id)
+                          ? userOrder.layoutHeight
+                          : 0
+                          + 'px'
+                      }}
+                      data-user-id={user.id}
+                      ref={(el: any) => (orderContainerRef.current[i] = el)}
                       type="user_orders_table"
                     />
                   </div>

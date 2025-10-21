@@ -21,6 +21,7 @@ import statusColors from '@/json/orderStatus.json';
 const pfpImage = '/assets/img/pfp.avif';
 
 type Props = {
+  className?: string;
   lang?: 'en' | 'ar';
   isEn?: boolean;
   type?: 'user_orders_table' | 'orders_table' | 'user_order';
@@ -29,11 +30,12 @@ type Props = {
 } & React.ComponentPropsWithRef<'div'>;
 
 export default function Orders ({ 
+  className,
   lang = 'en', 
   isEn = true, 
   type = 'user_order',
   scroll, 
-  scrollTrigger, 
+  scrollTrigger,
   ...props
 }: Props) {
 
@@ -122,7 +124,7 @@ export default function Orders ({
 
   if (type === 'orders_table') return (
     <div 
-      className="overflow-x-auto" 
+      className={`overflow-x-auto ${className}`} 
       ref={mainRef}
       { ...props }
     >
@@ -316,7 +318,7 @@ export default function Orders ({
 
   if (type === 'user_orders_table') return (
     <div 
-      className="overflow-x-auto" 
+      className={`overflow-x-auto ${className}`} 
       ref={mainRef}
       { ...props }
     >
