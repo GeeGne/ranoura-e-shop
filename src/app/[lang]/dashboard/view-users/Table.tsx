@@ -1,5 +1,5 @@
 // HOOKS
-import { useState, useRef, useEffect } from 'react';
+import { Fragment, useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 
@@ -91,9 +91,10 @@ export default function Table({
   const isUrlCopiedTimerId = useRef<any>(0);
 
   const [ userOrder, setUserOrder ] = useState<Record<string, any>>({
-    toggle: true,
-    userId: 0
-  })
+    toggle: false,
+    userId: 0,
+    layoutHeight: 0 
+  });
 
   const messages = {
     noData: {en: 'No information available', ar: 'لا توجد معلومات متاحه'}
@@ -160,14 +161,31 @@ export default function Table({
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     const { type, userId } = e.currentTarget.dataset;
+    const findElement = (elArray: HTMLElement[], dataString: string, value: string) => 
+      elArray.find((el: HTMLElement) => el.dataset[dataString] === value);
 
     switch (type) {
       case 'user_orders_button_is_clicked':
+          const layoutHeight = userOrder.userId === userId && userOrder.toggle 
+            ? 0 
+            : findElement(orderContainerRef.current, 'userId', userId).scrollHeight; 
+          ;
 
         setUserOrder({ 
           toggle: userOrder.userId === userId && userOrder.toggle ? false : true,
-          userId
+          userId,
+          layoutHeight
         })
+
+        if (orderContainerRef) orderContainerRef.current.forEach((el: HTMLElement) => (el.style.overflow = 'hidden'));
+        
+        if (userOrder.toggle) return;
+        const userOrdersBtnTimeout = setTimeout(() => {
+          if (orderContainerRef.current && userId) {
+
+            findElement(orderContainerRef.current, 'userId', userId).style.overflow = 'visible'
+          }
+        }, 300);
         break;
       default:
         console.error('Unknown type: ', type);
@@ -233,95 +251,107 @@ export default function Table({
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
           {users?.map((user: Record<string, any>, i: number) => (
-            <><tr key={i}>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="flex items-center gap-2">
-                  <div className="flex-shrink-0 h-12 w-12">
-                    <img className="w-full h-full object-cover object-center rounded-full" src={user.profile_img_url || pfpImage} alt="" />
-                  </div>
-                  <div className="ml-4">
-                    <div className="text-base font-medium text-heading">
-                      {user.first_name + ' ' + user.last_name}
+            [
+              <tr key={`user-${i}`}>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="flex items-center gap-2">
+                    <div className="flex-shrink-0 h-12 w-12">
+                      <img className="w-full h-full object-cover object-center rounded-full" src={user.profile_img_url || pfpImage} alt="" />
                     </div>
-                    <div className="text-sm text-body-light">{user.email}</div>
+                    <div className="ml-4">
+                      <div className="text-base font-medium text-heading">
+                        {user.first_name + ' ' + user.last_name}
+                      </div>
+                      <div className="text-sm text-body-light">{user.email}</div>
+                    </div>
                   </div>
-                </div>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
-                {user.phone_number}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <ul className="list-disc">
-                  <li className="text-body text-sm text-gray-900"><span className="text-body font-bold">{isEn ? 'main:' : ':رئيسي'} </span>{user.address.address_details}</li>
-                  <li className="text-body text-sm text-gray-900"><span className="text-body font-bold">{isEn ? 'second:' : ':ثانوي'} </span>{user.address.second_address}</li>
-                  <li className="text-body text-sm text-gray-900"><span className="text-body font-bold">{isEn ? 'notes:' : ':ملاحظات'} </span>{user.address.notes}</li>
-                </ul>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
-                {user.role.role.name}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${true ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                  {user.status}
-                </span>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
-                {user.date_of_birth ? displayDate(user.date_of_birth) : messages.noData[lang]}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
-                {displayDate(user.created_at)}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
-                0
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
-                <div className="flex gap-2">
-                  <button 
-                    data-type="user_orders_button_is_clicked"
-                    data-user-id={user.id}
-                    onClick={handleClick}
-                  >
-                    <SolarCart4Bold 
-                      className={`
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
+                  {user.phone_number}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <ul className="list-disc">
+                    <li className="text-body text-sm text-gray-900"><span className="text-body font-bold">{isEn ? 'main:' : ':رئيسي'} </span>{user.address.address_details}</li>
+                    <li className="text-body text-sm text-gray-900"><span className="text-body font-bold">{isEn ? 'second:' : ':ثانوي'} </span>{user.address.second_address}</li>
+                    <li className="text-body text-sm text-gray-900"><span className="text-body font-bold">{isEn ? 'notes:' : ':ملاحظات'} </span>{user.address.notes}</li>
+                  </ul>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
+                  {user.role.role.name}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${true ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                    {user.status}
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
+                  {user.date_of_birth ? displayDate(user.date_of_birth) : messages.noData[lang]}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
+                  {displayDate(user.created_at)}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
+                  0
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
+                  <div className="flex gap-2">
+                    <button 
+                      data-type="user_orders_button_is_clicked"
+                      data-user-id={user.id}
+                      onClick={handleClick}
+                    >
+                      <SolarCart4Bold 
+                        className={`
+                          w-7 h-7 p-1 text-heading rounded-md cursor-pointer
+                          active:opacity-60
+                          transition-all duration-200 ease-out
+                          ${(userOrder.toggle && userOrder.userId === user.id) 
+                            ? 'bg-content-invert hover:opacity-80' 
+                            : 'bg-background-light hover:bg-background-deep-light'
+                          }
+                        `}
+                      />
+                    </button>
+                    <MdiBan 
+                      className="
                         w-7 h-7 p-1 text-heading rounded-md cursor-pointer
                         active:opacity-60
                         transition-all duration-200 ease-out
-                        ${(userOrder.toggle && userOrder.userId === user.id) 
-                          ? 'bg-content-invert hover:opacity-80' 
-                          : 'bg-background-light hover:bg-background-deep-light'
-                        }
-                      `}
+                        bg-background-light hover:bg-background-deep-light
+                      "
+                      role="button"
                     />
-                  </button>
-                  <MdiBan 
-                    className="
-                      w-7 h-7 p-1 text-heading rounded-md cursor-pointer
-                      active:opacity-60
-                      transition-all duration-200 ease-out
-                      bg-background-light hover:bg-background-deep-light
-                    "
-                    role="button"
-                  />
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td
-                className={`w-full bg-background-light`}
-                colSpan={9}
-              >
-                <div
-                  className={`
-                    flex w-full
-                    transition-all duration-300 ease-in-out
-                    ${(userOrder.toggle && userOrder.userId === user.id) ? 'h-fit' : 'h-[0px] overflow-hidden'}
-                  `}
-                  ref={(el: any) => (orderContainerRef[i] = el)}
+                  </div>
+                </td>
+              </tr>,
+              <tr key={`order-${i}`}>
+                <td
+                  className={`w-full bg-background-light`}
+                  colSpan={9}
                 >
-                  <Orders />
-                </div>
-              </td>
-            </tr></>
+                  <div
+                    className={`
+                      flex w-full
+                      transition-all duration-300 ease-in-out
+                    `}
+                  >
+                    <Orders 
+                      lang={lang}
+                      isEn={isEn}
+                    style={{
+                      height: (userOrder.toggle && userOrder.userId === user.id)
+                        ? userOrder.layoutHeight
+                        : 0
+                        + 'px'
+                    }}
+                    data-user-id={user.id}
+                    ref={(el: any) => (orderContainerRef.current[i] = el)}
+                      type="user_orders_table"
+                    />
+                  </div>
+                </td>
+              </tr>
+            ]
           ))}
         </tbody>
       </table>

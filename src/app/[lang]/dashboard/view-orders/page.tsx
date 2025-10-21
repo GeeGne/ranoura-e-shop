@@ -5,7 +5,8 @@ import { useState, useEffect } from 'react';
 
 // COMPONENTS
 import Table from '@/app/[lang]/dashboard/view-orders/Table';
-import NavTile from '@/app/[lang]/dashboard/view-users/NavTile';
+import NavTile from '@/app/[lang]/dashboard/view-orders/NavTile';
+import Orders from '@/components/Orders';
 
 // STORES
 import { useLanguageStore, useTabNameStore } from '@/stores/index';
@@ -32,11 +33,12 @@ export default function page () {
         onScrollTableData={handleScrollTableData} 
         onScrollTableTrigger={handleScrollTableTrigger} 
       />
-     <Table 
+      <Orders 
         lang={lang}
         isEn={isEn}
         scroll={scrollTable}
         scrollTrigger={scrollTrigger}
+        type="orders_table"
       />
     </div>
   )
