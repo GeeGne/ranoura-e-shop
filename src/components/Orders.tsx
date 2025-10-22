@@ -323,7 +323,7 @@ export default function Orders ({
       { ...props }
     >
       <table 
-        className="min-w-full divide-y divide-gray-200" 
+        className="min-w-full min-h-full divide-y divide-gray-200" 
       >
         <thead
           className="bg-gray-50"

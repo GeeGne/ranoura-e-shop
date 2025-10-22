@@ -81,7 +81,8 @@ export default function Table({
 
   const layoutRef = useLayoutRefStore(state => state.layoutRef);
   const mainRef = useRef<HTMLDivElement>(null);
-  const orderContainerRef: any = useRef<HTMLElement[]>([]);
+  const orderContainerRef = useRef<any[]>([]);
+  const userOrdersBtnTimeoutID = useRef<any>(null);
 
   const setAlertToggle = useAlertMessageStore(state => state.setToggle);
   const setAlertType = useAlertMessageStore(state => state.setType);
@@ -166,27 +167,54 @@ export default function Table({
 
     switch (type) {
       case 'user_orders_button_is_clicked':
-        const isSameUserAndToggleTrue = () => userOrder.userId === userId && userOrder.toggle;
-        const layoutHeight = isSameUserAndToggleTrue() 
-          ? 0 
-          : findElement(orderContainerRef.current, 'userId', userId).scrollHeight
-        ; 
+        const targetElement = findElement(orderContainerRef.current, 'userId', userId);
+        const isSameUser = userOrder.userId === userId;
+        const isTogglingOpen = !isSameUser || !userOrder.toggle;
+        const layoutHeight = isTogglingOpen ? targetElement.scrollHeight : 0 ;
+        // const isSameUserAndToggleTrue = () => userOrder.userId === userId && userOrder.toggle;
 
+        orderContainerRef.current.forEach((el: HTMLElement) => {
+          el.style.overflow = 'hidden'
+        });
+
+        clearTimeout(userOrdersBtnTimeoutID.current);
         setUserOrder({ 
-          toggle: isSameUserAndToggleTrue() ? false : true,
+          toggle: isTogglingOpen,
           userId,
           layoutHeight
-        })
+        });
 
-        if (orderContainerRef) orderContainerRef.current.forEach((el: HTMLElement) => (el.style.overflow = 'hidden'));
-        
-        if (userOrder.toggle) return;
-        const userOrdersBtnTimeoutID = setTimeout(() => {
-          if (orderContainerRef.current && userId) {
-
+        if (isTogglingOpen) {
+          userOrdersBtnTimeoutID.current = setTimeout(() => {
             findElement(orderContainerRef.current, 'userId', userId).style.overflow = 'visible'
-          }
-        }, 300);
+          }, 300);
+        };
+
+        // const updateUserOrderState = () => {
+        //   const layoutHeight = isSameUserAndToggleTrue() 
+        //     ? 0 
+        //     : findElement(orderContainerRef.current, 'userId', userId).scrollHeight
+        //   ; 
+
+        //   setUserOrder({ 
+        //     toggle: isSameUserAndToggleTrue() ? false : true,
+        //     userId,
+        //     layoutHeight
+        //   });
+        // };
+
+
+        // const styleOverFlow = () => {
+        //   if (orderContainerRef) orderContainerRef.current.forEach((el: HTMLElement) => (el.style.overflow = 'hidden'));
+        //   clearTimeout(userOrdersBtnTimeoutID.current);
+        //   if (userOrder.toggle) return;
+        //   userOrdersBtnTimeoutID.current = setTimeout(() => {
+        //     findElement(orderContainerRef.current, 'userId', userId).style.overflow = 'visible'
+        //   }, 300);
+        // };
+
+        // updateUserOrderState();
+        // styleOverFlow();
         break;
       default:
         console.error('Unknown type: ', type);
@@ -332,22 +360,22 @@ export default function Table({
                 >
                   <div
                     className={`
-                      flex w-full
+                      flex w-full transition-all duration-300 ease-in-out
                     `}
                   >
                     <Orders 
                       className="w-full transition-all duration-300 ease-in-out"
                       lang={lang}
                       isEn={isEn}
+                      type="user_orders_table"
+                      ref={(el: any) => (orderContainerRef.current[i] = el)}
+                      data-user-id={user.id}
                       style={{
-                        height: (userOrder.toggle && userOrder.userId === user.id)
+                        maxHeight: (userOrder.toggle && (userOrder.userId === user.id))
                           ? userOrder.layoutHeight
                           : 0
                           + 'px'
                       }}
-                      data-user-id={user.id}
-                      ref={(el: any) => (orderContainerRef.current[i] = el)}
-                      type="user_orders_table"
                     />
                   </div>
                 </td>
