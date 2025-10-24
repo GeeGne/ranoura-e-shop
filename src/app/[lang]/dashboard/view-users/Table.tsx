@@ -171,7 +171,6 @@ export default function Table({
         const isSameUser = userOrder.userId === userId;
         const isTogglingOpen = !isSameUser || !userOrder.toggle;
         const layoutHeight = isTogglingOpen ? targetElement.scrollHeight : 0 ;
-        // const isSameUserAndToggleTrue = () => userOrder.userId === userId && userOrder.toggle;
 
         orderContainerRef.current.forEach((el: HTMLElement) => {
           el.style.overflow = 'hidden'
@@ -189,32 +188,6 @@ export default function Table({
             findElement(orderContainerRef.current, 'userId', userId).style.overflow = 'visible'
           }, 300);
         };
-
-        // const updateUserOrderState = () => {
-        //   const layoutHeight = isSameUserAndToggleTrue() 
-        //     ? 0 
-        //     : findElement(orderContainerRef.current, 'userId', userId).scrollHeight
-        //   ; 
-
-        //   setUserOrder({ 
-        //     toggle: isSameUserAndToggleTrue() ? false : true,
-        //     userId,
-        //     layoutHeight
-        //   });
-        // };
-
-
-        // const styleOverFlow = () => {
-        //   if (orderContainerRef) orderContainerRef.current.forEach((el: HTMLElement) => (el.style.overflow = 'hidden'));
-        //   clearTimeout(userOrdersBtnTimeoutID.current);
-        //   if (userOrder.toggle) return;
-        //   userOrdersBtnTimeoutID.current = setTimeout(() => {
-        //     findElement(orderContainerRef.current, 'userId', userId).style.overflow = 'visible'
-        //   }, 300);
-        // };
-
-        // updateUserOrderState();
-        // styleOverFlow();
         break;
       default:
         console.error('Unknown type: ', type);
@@ -230,7 +203,7 @@ export default function Table({
 
   // DEBUG
   console.log('users: ', usersData?.data);
-  console.log('userOrder: ', userOrder);
+  // console.log('userOrder: ', userOrder);
 
   if (isLoading) return (
     <LoadingTable />

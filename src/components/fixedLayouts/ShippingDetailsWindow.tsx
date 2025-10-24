@@ -1,6 +1,7 @@
 // COMPONENTS
 import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingResize';
 import GrommetIconsCheckboxSelected from '@/components/svgs/GrommetIconsCheckboxSelected';
+import LetsIconsOrder from '@/components/svgs/LetsIconsOrder';
 import IcRoundUpdate from '@/components/svgs/IcRoundUpdate';
 import LaShippingFast from '@/components/svgs/LaShippingFast';
 import PhAddressBook from '@/components/svgs/PhAddressBook';
@@ -90,178 +91,64 @@ export default function ShippingDetailsWindow () {
         </section>
         <hr className="border-background-deep-light"/>
         <section
-          className="grid grid-cols-2 py-4"
-        >
-          <div
-            className="flex flex-col gap-2 items-center bg-gren-400"
-          >
-            <img
-              className="w-[80px] object-cover object-center rounded-full" 
-              src={pfpImage}
-            />
-            <span className="text-heading">bara El-Ghabra</span>
-            <span className="text-body">bluewhalexweb@outlook.com</span>
-          </div>
-          <div
-            className="flex justify-end gap-2"
-          >
-            <IcRoundUpdate className="text-body"/>
-            <span className="text-body">Oct 7, 2025, 01:51 PM</span>
-          </div>
-        </section>
-        <hr className="border-background-deep-light"/>
-        <section
-          className="flex flex-col gap-4 py-4"
+          className="flex flex-col py-4 gap-4"
         >
           <div className="flex items-center gap-2">
-            <GrommetIconsCheckboxSelected className="w-6 h-6 text-body"/>
-            <span className="text-lg font-bold text-body">ORDERED ITEMS</span>
+            <LetsIconsOrder className="w-6 h-6 text-body"/>
+            <span className="text-lg font-bold text-body">ORDER INFORMATION</span>
           </div>
-          <ul
-            className="flex flex-col gap-4 py-4"
+          <div>
+            <span className="text-body">Order ID:&nbsp;</span>
+            <span className="text-heading">ywMTrndU-7K1</span>
+          </div>
+          <div>
+            <span className="text-body">Order Date:&nbsp;</span>
+            <span className="text-heading">2024-09-194T10:22:45</span>
+          </div>
+          <section
+            className="flex flex-col py-4 gap-4"
           >
-            <li className="flex gap-4 ">
-              <img
-                className="flex w-[150px] aspect-[2/3] object-center object-cover grow-0 rounded-lg"
-                src={productImg}
-              />
-              <div className="flex flex-col flex-1 gap-2">
-                <span className="text-body">Jeans</span>
-                <span className="text-heading">Graphic Tee for Men & Women</span>
-                <div className="flex items-center mt-auto gap-2">
-                  <div 
-                    className="
-                      flex gap-2 py-1 px-2
-                      rounded-full bg-background-light w-fit
-                    "
-                  >
-                    <div className="w-5 h-5 bg-sky-400 rounded-full" />
-                    <span className="text-sm text-body-light font-bold">Sky</span>
-                  </div>
-                  <div className="h-fit text-sm text-heading-invert bg-heading rounded-md font-bold px-1 py-0">M</div>
-                  <span className="text-sm text-body border font-bold border-[2px] border-body-light px-1  rounded-md">20 %</span>
-                </div>
+              <div className="flex items-center gap-2">
+                <PhAddressBook className="w-6 h-6 text-body"/>
+                <span className="text-lg font-bold text-body">Customer Information</span>
               </div>
-              <div className="flex flex-col flex-1 items-end">
-                <span 
-                  className="
-                    text-body font-bold border border-px border-background-deep-light 
-                    px-3 py-1 rounded-full my-auto
-                  "
-                  >
-                    3 x 500 SYP
-                </span>
-                <span 
-                  className="
-                    text-heading font-bold mt-auto
-                  "
-                >
-                  1500 SYP
-                </span>
+              <div>
+                <span className="text-body">Name:&nbsp;</span>
+                <span className="text-heading">Jon Ros</span>
               </div>
-            </li>
-            <li className="flex gap-4 ">
-              <img
-                className="flex w-[150px] aspect-[2/3] object-center object-cover grow-0 rounded-lg"
-                src={productImg}
-              />
-              <div className="flex flex-col flex-1 gap-2">
-                <span className="text-body">Jeans</span>
-                <span className="text-heading">Graphic Tee for Men & Women</span>
-                <div className="flex items-center mt-auto gap-2">
-                  <div 
-                    className="
-                      flex gap-2 py-1 px-2
-                      rounded-full bg-background-light w-fit
-                    "
-                  >
-                    <div className="w-5 h-5 bg-sky-400 rounded-full" />
-                    <span className="text-sm text-body-light font-bold">Sky</span>
-                  </div>
-                  <div className="h-fit text-sm text-heading-invert bg-heading rounded-md font-bold px-1 py-0">M</div>
-                  <span className="text-sm text-body border font-bold border-[2px] border-body-light px-1  rounded-md">20 %</span>
-                </div>
+              <div>
+                <span className="text-body">Email:&nbsp;</span>
+                <span className="text-heading">geegnebab@gmail.com</span>
               </div>
-              <div className="flex flex-col flex-1 items-end">
-                <span 
-                  className="
-                    text-body font-bold border border-px border-background-deep-light 
-                    px-3 py-1 rounded-full my-auto
-                  "
-                  >
-                    3 x 500 SYP
-                </span>
-                <span 
-                  className="
-                    text-heading font-bold mt-auto
-                  "
-                >
-                  1500 SYP
-                </span>
+              <div>
+                <span className="text-body">Phone:&nbsp;</span>
+                <span className="text-heading">+943 942 485 356</span>
               </div>
-            </li>
-            <li className="flex gap-4 ">
-              <img
-                className="flex w-[150px] aspect-[2/3] object-center object-cover grow-0 rounded-lg"
-                src={productImg}
-              />
-              <div className="flex flex-col flex-1 gap-2">
-                <span className="text-body">Jeans</span>
-                <span className="text-heading">Graphic Tee for Men & Women</span>
-                <div className="flex items-center mt-auto gap-2">
-                  <div 
-                    className="
-                      flex gap-2 py-1 px-2
-                      rounded-full bg-background-light w-fit
-                    "
-                  >
-                    <div className="w-5 h-5 bg-sky-400 rounded-full" />
-                    <span className="text-sm text-body-light font-bold">Sky</span>
-                  </div>
-                  <div className="h-fit text-sm text-heading-invert bg-heading rounded-md font-bold px-1 py-0">M</div>
-                  <span className="text-sm text-body border font-bold border-[2px] border-body-light px-1  rounded-md">20 %</span>
-                </div>
-              </div>
-              <div className="flex flex-col flex-1 items-end">
-                <span 
-                  className="
-                    text-body font-bold border border-px border-background-deep-light 
-                    px-3 py-1 rounded-full my-auto
-                  "
-                  >
-                    3 x 500 SYP
-                </span>
-                <span 
-                  className="
-                    text-heading font-bold mt-auto
-                  "
-                >
-                  1500 SYP
-                </span>
-              </div>
-            </li>
-          </ul>
-          <div className="flex w-full justify-between">
-            <span className="font-bold text-body">SUB-TOTAL</span>
-            <span className="font-bold text-heading">500 SYP</span>
-          </div>
+          </section>
         </section>
-        <hr className="border-background-deep-light"/>
         <section
           className="flex flex-col py-4 gap-4"
         >
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-2">
               <LaShippingFast className="w-6 h-6 text-body"/>
-              <span className="text-lg font-bold text-body">SHIPPING</span>
+              <span className="text-lg font-bold text-body">SHIPPING ADDRESS</span>
             </div>
-            <div className="flex gap-4">
-              <span className="text-body">City:</span>
+            <div>
+              <span className="text-body">City:&nbsp;</span>
               <span className="text-heading">Damascus</span>
             </div>
-            <div className="flex gap-4">
-              <span className="text-body">Ship Cost:</span>
-              <span className="text-heading">100 SYP</span>
+            <div>
+              <span className="text-body">Address:&nbsp;</span>
+              <span className="text-heading">Near Tolaytola Restaurant</span>
+            </div>
+            <div>
+              <span className="text-body">Second Address:&nbsp;</span>
+              <span className="text-heading">Near White House</span>
+            </div>
+            <div>
+              <span className="text-body">Notes:&nbsp;</span>
+              <span className="text-heading">Between 10Am on a Tuesday</span>
             </div>
           </div>
           <div className="flex flex-col gap-4">
@@ -269,15 +156,44 @@ export default function ShippingDetailsWindow () {
               <PhAddressBook className="w-6 h-6 text-body"/>
               <span className="text-lg font-bold text-body">ADDRESS</span>
             </div>
-            <div className="flex gap-4">
+            <div className="flex gap-2">
               <span className="text-body">Main Address:</span>
               <span className="text-heading">Damascus</span>
             </div>
-            <div className="flex gap-4">
+            <div className="flex gap-2">
               <span className="text-body">Secondary Address:</span>
               <span className="text-heading">Damascus</span>
             </div>
-            <div className="flex gap-4">
+            <div className="flex gap-2">
+              <span className="text-body">Notes:</span>
+              <span className="text-heading">Damascus</span>
+            </div>
+          </div>
+        </section>
+        <section
+          className="flex flex-col py-4 gap-4"
+        >
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-2">
+              <LaShippingFast className="w-6 h-6 text-body"/>
+              <span className="text-lg font-bold text-body">ORDER DETAILS</span>
+            </div>
+              <span className="text-body">ID | PRODUCT NAME | QUANTITY | COLOR | SIZE | TOTAL</span>
+          </div>
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-2">
+              <PhAddressBook className="w-6 h-6 text-body"/>
+              <span className="text-lg font-bold text-body">ADDRESS</span>
+            </div>
+            <div className="flex gap-2">
+              <span className="text-body">Main Address:</span>
+              <span className="text-heading">Damascus</span>
+            </div>
+            <div className="flex gap-2">
+              <span className="text-body">Secondary Address:</span>
+              <span className="text-heading">Damascus</span>
+            </div>
+            <div className="flex gap-2">
               <span className="text-body">Notes:</span>
               <span className="text-heading">Damascus</span>
             </div>
