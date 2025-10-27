@@ -1,7 +1,9 @@
 // COMPONENTS
 import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingResize';
 import GrommetIconsCheckboxSelected from '@/components/svgs/GrommetIconsCheckboxSelected';
+import MaterialSymbolsPrintOutlineRounded from '@/components/svgs/MaterialSymbolsPrintOutlineRounded';
 import LetsIconsOrder from '@/components/svgs/LetsIconsOrder';
+import AkarIconsShippingBox01 from '@/components/svgs/AkarIconsShippingBox01';
 import IcRoundUpdate from '@/components/svgs/IcRoundUpdate';
 import LaShippingFast from '@/components/svgs/LaShippingFast';
 import PhAddressBook from '@/components/svgs/PhAddressBook';
@@ -20,6 +22,7 @@ const pfpImage = '/assets/img/pfp.avif';
 const productImg = '/assets/img/cloth-7-sky.avif';
 
 export default function ShippingDetailsWindow () {
+
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
 
@@ -34,6 +37,9 @@ export default function ShippingDetailsWindow () {
     switch (type) {
       case 'fixed_window_is_clicked':
         setToggle(false);
+        break;
+      case 'print_button_is_clicked':
+        window.print();
         break;
       default:
         console.error('Unknown type: ', type);
@@ -58,38 +64,38 @@ export default function ShippingDetailsWindow () {
           absolute top-1/2 left-1/2 
           translate-x-[-50%] translate-y-[-50%]
           w-[80%] flex flex-col px-4
-          rounded-lg overflow-y-scroll h-[calc(100vh-4rem)] bg-background
+          rounded-lg overflow-y-scroll max-h-[calc(100vh-4rem)] bg-background
           transition-all delay-100 duration-200 ease-[cubic-bezier(0.68, -0.6, 0.32, 1.6)]
           ${toggle ? 'scale-100 opacity-100' : 'scale-[80%] opacity-0'}
         `}
         data-type="fixed_box_is_clicked"
         onClick={handleClick}
       >
-        <section
-          className="flex items-center justify-between py-4"
+        <button
+          className="
+            group absolute top-4 right-4 
+            flex gap-2 p-2 rounded-lg
+            border border-solid border-[2px] border-body-extra-light hover:border-body-light active:border-body
+            transition-all duration-200 ease-in-out
+          "
+          data-type="print_button_is_clicked"
+          onClick={handleClick}
         >
-          <div>
-            <span
-              className="text-body font-bold"
-            >
-              ORDER ID:&nbsp;
-            </span>
-            <span
-              className="text-heading font-bold"
-            >
-              9958229c-684f-4e43-acdf-41dbee706c47 
-            </span>
-          </div>
-          <div
-            className="relative text-yellow-500 font-bold px-2 py-1"
+          <MaterialSymbolsPrintOutlineRounded 
+            className="
+              text-body-light group-hover:text-body group-active:text-heading
+              transition-all duration-200 ease-in-out
+            " 
+          />
+          <span 
+            className="
+              text-body-light font-bold group-hover:text-body group-active:text-heading
+              transition-all duration-200 ease-in-out
+              "
           >
-            proccessing
-            <div
-              className="absolute top-0 left-0 w-full h-full bg-yellow-500 opacity-20 rounded-full"
-            />
-          </div>
-        </section>
-        <hr className="border-background-deep-light"/>
+            Print
+          </span>
+        </button>
         <section
           className="flex flex-col py-4 gap-4"
         >
@@ -105,99 +111,67 @@ export default function ShippingDetailsWindow () {
             <span className="text-body">Order Date:&nbsp;</span>
             <span className="text-heading">2024-09-194T10:22:45</span>
           </div>
-          <section
-            className="flex flex-col py-4 gap-4"
-          >
-              <div className="flex items-center gap-2">
-                <PhAddressBook className="w-6 h-6 text-body"/>
-                <span className="text-lg font-bold text-body">Customer Information</span>
-              </div>
-              <div>
-                <span className="text-body">Name:&nbsp;</span>
-                <span className="text-heading">Jon Ros</span>
-              </div>
-              <div>
-                <span className="text-body">Email:&nbsp;</span>
-                <span className="text-heading">geegnebab@gmail.com</span>
-              </div>
-              <div>
-                <span className="text-body">Phone:&nbsp;</span>
-                <span className="text-heading">+943 942 485 356</span>
-              </div>
-          </section>
         </section>
         <section
           className="flex flex-col py-4 gap-4"
         >
-          <div className="flex flex-col gap-4">
-            <div className="flex items-center gap-2">
-              <LaShippingFast className="w-6 h-6 text-body"/>
-              <span className="text-lg font-bold text-body">SHIPPING ADDRESS</span>
-            </div>
-            <div>
-              <span className="text-body">City:&nbsp;</span>
-              <span className="text-heading">Damascus</span>
-            </div>
-            <div>
-              <span className="text-body">Address:&nbsp;</span>
-              <span className="text-heading">Near Tolaytola Restaurant</span>
-            </div>
-            <div>
-              <span className="text-body">Second Address:&nbsp;</span>
-              <span className="text-heading">Near White House</span>
-            </div>
-            <div>
-              <span className="text-body">Notes:&nbsp;</span>
-              <span className="text-heading">Between 10Am on a Tuesday</span>
-            </div>
+          <div className="flex items-center gap-2">
+            <PhAddressBook className="w-6 h-6 text-body"/>
+            <span className="text-lg font-bold text-body">Customer Information</span>
           </div>
-          <div className="flex flex-col gap-4">
-            <div className="flex items-center gap-2">
-              <PhAddressBook className="w-6 h-6 text-body"/>
-              <span className="text-lg font-bold text-body">ADDRESS</span>
-            </div>
-            <div className="flex gap-2">
-              <span className="text-body">Main Address:</span>
-              <span className="text-heading">Damascus</span>
-            </div>
-            <div className="flex gap-2">
-              <span className="text-body">Secondary Address:</span>
-              <span className="text-heading">Damascus</span>
-            </div>
-            <div className="flex gap-2">
-              <span className="text-body">Notes:</span>
-              <span className="text-heading">Damascus</span>
-            </div>
+          <div>
+            <span className="text-body">Name:&nbsp;</span>
+            <span className="text-heading">Jon Ros</span>
+          </div>
+          <div>
+            <span className="text-body">Email:&nbsp;</span>
+            <span className="text-heading">geegnebab@gmail.com</span>
+          </div>
+          <div>
+            <span className="text-body">Phone:&nbsp;</span>
+            <span className="text-heading">+943 942 485 356</span>
           </div>
         </section>
         <section
           className="flex flex-col py-4 gap-4"
         >
-          <div className="flex flex-col gap-4">
-            <div className="flex items-center gap-2">
-              <LaShippingFast className="w-6 h-6 text-body"/>
-              <span className="text-lg font-bold text-body">ORDER DETAILS</span>
-            </div>
-              <span className="text-body">ID | PRODUCT NAME | QUANTITY | COLOR | SIZE | TOTAL</span>
+          <div className="flex items-center gap-2">
+            <LaShippingFast className="w-6 h-6 text-body"/>
+            <span className="text-lg font-bold text-body">SHIPPING ADDRESS</span>
           </div>
-          <div className="flex flex-col gap-4">
-            <div className="flex items-center gap-2">
-              <PhAddressBook className="w-6 h-6 text-body"/>
-              <span className="text-lg font-bold text-body">ADDRESS</span>
-            </div>
-            <div className="flex gap-2">
-              <span className="text-body">Main Address:</span>
-              <span className="text-heading">Damascus</span>
-            </div>
-            <div className="flex gap-2">
-              <span className="text-body">Secondary Address:</span>
-              <span className="text-heading">Damascus</span>
-            </div>
-            <div className="flex gap-2">
-              <span className="text-body">Notes:</span>
-              <span className="text-heading">Damascus</span>
-            </div>
+          <div>
+            <span className="text-body">City:&nbsp;</span>
+            <span className="text-heading">Damascus</span>
           </div>
+          <div>
+            <span className="text-body">Address:&nbsp;</span>
+            <span className="text-heading">Near Tolaytola Restaurant</span>
+          </div>
+          <div>
+            <span className="text-body">Second Address:&nbsp;</span>
+            <span className="text-heading">Near White House</span>
+          </div>
+          <div>
+            <span className="text-body">Notes:&nbsp;</span>
+            <span className="text-heading">Between 10Am on a Tuesday</span>
+          </div>
+        </section>
+        <section
+          className="flex flex-col py-4 gap-4"
+        >
+          <div className="flex items-center gap-2">
+            <AkarIconsShippingBox01 className="w-6 h-6 text-body"/>
+            <span className="text-lg font-bold text-body">ORDER DETAILS</span>
+          </div>
+          <span className="text-body">ID | PRODUCT NAME | QUANTITY | COLOR | SIZE | TOTAL</span>
+          <div>
+            <span className="text-body">Shipping Cost:</span>
+            <span className="text-heading">20 SYP</span>
+          </div>          
+          <div>
+            <span className="text-body">Order Cost:</span>
+            <span className="text-heading">20 SYP</span>
+          </div>          
         </section>
         <hr className="border-background-deep-light"/>
         <section
