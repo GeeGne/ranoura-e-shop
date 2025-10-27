@@ -264,7 +264,7 @@ export default function Orders ({
                 <label
                   className="
                     relative flex items-center 
-                    bg-background-light hover:bg-background-deep-light active:opacity-60 
+                    bg-background-light hover:bg-background-deep-light 
                     rounded-lg cursor-pointer
                     transition-all duration-200 ease-out
                   "
@@ -291,7 +291,7 @@ export default function Orders ({
                   <ul
                     className="
                       absolute top-full left-0 w-full 
-                      flex flex-col p-2
+                      flex flex-col p-2 z-[5]
                       bg-white shadow-lg rounded-lg
                       invisible peer-checked:visible opacity-0 peer-checked:opacity-100
                       transition-all duration-200 ease-out
@@ -323,7 +323,7 @@ export default function Orders ({
       { ...props }
     >
       <table 
-        className="min-w-full min-h-full divide-y divide-gray-200" 
+        className="min-w-full divide-y divide-gray-200" 
       >
         <thead
           className="bg-gray-50"
@@ -437,7 +437,7 @@ export default function Orders ({
                 <label
                   className="
                     relative flex items-center 
-                    bg-background-light hover:bg-background-deep-light active:opacity-60 
+                    bg-background-light hover:bg-background-deep-light 
                     rounded-lg cursor-pointer
                     transition-all duration-200 ease-out
                   "
@@ -464,7 +464,7 @@ export default function Orders ({
                   <ul
                     className="
                       absolute top-full left-0 w-full 
-                      flex flex-col p-2
+                      flex flex-col p-2 z-[5]
                       bg-white shadow-lg rounded-lg
                       invisible peer-checked:visible opacity-0 peer-checked:opacity-100
                       transition-all duration-200 ease-out

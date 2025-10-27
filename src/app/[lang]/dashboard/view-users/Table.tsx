@@ -1,5 +1,5 @@
 // HOOKS
-import { Fragment, useState, useRef, useEffect } from 'react';
+import { useId, useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 
@@ -9,6 +9,7 @@ import ErrorLayout from '@/components/ErrorLayout';
 import Orders from '@/components/Orders';
 import SolarCart4Bold from "@/components/svgs/SolarCart4Bold";
 import MdiBan from "@/components/svgs/MdiBan";
+import MdiArrowDownDrop from '@/components/svgs/MdiArrowDownDrop';
 import LineMdLink from '@/components/svgs/LineMdLink';
 import TablerCopy from '@/components/svgs/TablerCopy';
 import MaterialSymbolsCheckRounded from '@/components/svgs/MaterialSymbolsCheckRounded';
@@ -79,6 +80,7 @@ export default function Table({
   scrollTrigger, 
 }: Props) {
 
+  const id = useId();
   const layoutRef = useLayoutRefStore(state => state.layoutRef);
   const mainRef = useRef<HTMLDivElement>(null);
   const orderContainerRef = useRef<any[]>([]);
@@ -323,6 +325,46 @@ export default function Table({
                       "
                       role="button"
                     />
+                    <label
+                      className="
+                        relative flex gap-2 items-center 
+                        bg-background-light hover:bg-background-deep-light 
+                        py-1 px-2 cursor-pointer rounded-md cursor-pointers
+                        transition-all duration-200 ease-out
+                      "
+                      htmlFor={`${id}-selectRoleInpt`}
+                    >
+                      <input 
+                        className="
+                          peer absolute top-0 left-0 w-0 h-0
+                        "
+                        type="checkbox"
+                        name="selectRoleInpt"
+                        id={`${id}-selectRoleInpt`}
+                      />
+                      <span className="font-bold text-heading">admin</span>
+                      <MdiArrowDownDrop className="text-heading"/>
+                      <ul
+                        className="
+                          absolute top-full left-0
+                          w-full flex flex-col p-2 gap-2 z-[5]  
+                          bg-white shadow-lg rounded-lg
+                          invisible peer-checked:visible
+                          opacity-0 peer-checked:opacity-100
+                          transition-all duration-200 ease-out
+                        "
+                      >
+                        {[1, 2].map(el => 
+                          <li
+                            className="
+                              p-2 rounded-lg text-body hover:bg-background-light
+                            "
+                          >
+                            admin
+                          </li>
+                        )}
+                      </ul>
+                    </label>
                   </div>
                 </td>
               </tr>,
