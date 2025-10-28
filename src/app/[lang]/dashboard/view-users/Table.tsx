@@ -162,8 +162,8 @@ export default function Table({
     });
   }
 
-  const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    const { type, userId } = e.currentTarget.dataset;
+  const handleClick = async (e: React.MouseEvent<HTMLButtonElement | HTMLLIElement>) => {
+    const { type, userId, selectedRole } = e.currentTarget.dataset;
     const findElement = (elArray: any, dataString: string, value: any) => 
       elArray.find((el: HTMLElement) => el.dataset[dataString] === value);
 
@@ -190,6 +190,9 @@ export default function Table({
             findElement(orderContainerRef.current, 'userId', userId).style.overflow = 'visible'
           }, 300);
         };
+        break;
+      case'role_type_button_is_clicked':
+        console.log('selectedRole', selectedRole);
         break;
       default:
         console.error('Unknown type: ', type);
@@ -329,7 +332,7 @@ export default function Table({
                       className="
                         relative flex gap-2 items-center 
                         bg-background-light hover:bg-background-deep-light 
-                        py-1 px-2 cursor-pointer rounded-md cursor-pointers
+                        px-2 cursor-pointer rounded-md cursor-pointers
                         transition-all duration-200 ease-out
                       "
                       htmlFor={`${id}-selectRoleInpt`}
@@ -342,7 +345,7 @@ export default function Table({
                         name="selectRoleInpt"
                         id={`${id}-selectRoleInpt`}
                       />
-                      <span className="font-bold text-heading">admin</span>
+                      <span className="font-semibold text-heading">admin</span>
                       <MdiArrowDownDrop className="text-heading"/>
                       <ul
                         className="
@@ -354,13 +357,20 @@ export default function Table({
                           transition-all duration-200 ease-out
                         "
                       >
-                        {[1, 2].map(el => 
+                        {['admin', 'costumer'].map(role => 
                           <li
                             className="
-                              p-2 rounded-lg text-body hover:bg-background-light
+                              p-2 rounded-lg text-body 
+                              hover:bg-background-light hover:text-heading font-semibold
+                              transition-all duration-200 ease-out
                             "
+                            role="button"
+                            data-type="role_type_button_is_clicked"
+                            data-selected-role={role}
+                            data-user-id={user.id}
+                            onClick={handleClick}
                           >
-                            admin
+                            {role}
                           </li>
                         )}
                       </ul>
