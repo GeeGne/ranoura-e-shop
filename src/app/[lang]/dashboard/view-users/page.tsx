@@ -2,6 +2,7 @@
 
 // HOOKS
 import { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 // COMPONENTS
 import Table from '@/app/[lang]/dashboard/view-users/Table';
@@ -9,6 +10,9 @@ import NavTile from '@/app/[lang]/dashboard/view-users/NavTile';
 
 // STORES
 import { useLanguageStore, useTabNameStore } from '@/stores/index';
+
+// API
+import getUsersData from '@/lib/api/users/get';
 
 export default function page () {  
   
@@ -26,6 +30,11 @@ export default function page () {
     setTabName('view-users');
   }, []);
 
+  const { data: usersData, isLoading, isError } = useQuery({
+    queryKey: ['users'],
+    queryFn: getUsersData,
+  });
+
   return (
     <div>
       <NavTile 
@@ -37,6 +46,9 @@ export default function page () {
         isEn={isEn}
         scroll={scrollTable}
         scrollTrigger={scrollTrigger}
+        data={usersData}
+        isLoading={isLoading}
+        isError={isError}
       />
     </div>
   )

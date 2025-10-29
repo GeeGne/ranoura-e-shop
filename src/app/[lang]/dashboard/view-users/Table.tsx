@@ -1,7 +1,7 @@
 // HOOKS
 import { useId, useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 // COMPONENTS
 import LoadingTable from '@/components/LoadingTable';
@@ -17,12 +17,17 @@ import LineMdCloseCircleFilled from '@/components/svgs/LineMdCloseCircleFilled';
 
 // API
 import getUsersData from '@/lib/api/users/get';
+import updateUserRole from '@/lib/api/users/id/role/put';
+import getAllUserRoles from '@/lib/api/roles/get';
 
 // JSON
 import urlsTable from '@/json/cmsTables/urlsTable.json';
 
 // STORES
-import { useAlertMessageStore, useLayoutRefStore } from '@/stores/index';
+import { 
+  useAlertMessageStore, useActionConfirmWindowStore, 
+  useLayoutRefStore, useActivityWindowStore
+} from '@/stores/index';
 
 // ASSETS
 const pfpImage = '/assets/img/pfp.avif';
@@ -71,6 +76,9 @@ type Props = {
   lang?: 'en' | 'ar';
   scroll?: string;
   scrollTrigger?: number;
+  data?: Record<any, string> | null | undefined;
+  isLoading?: boolean;
+  isError?: boolean;
 }
 
 export default function Table({ 
@@ -78,20 +86,25 @@ export default function Table({
   lang = 'en',
   scroll, 
   scrollTrigger, 
+  data: usersData = {},
+  isLoading = false,
+  isError = false
 }: Props) {
 
   const id = useId();
+  const queryClient = useQueryClient();
+
   const layoutRef = useLayoutRefStore(state => state.layoutRef);
   const mainRef = useRef<HTMLDivElement>(null);
   const orderContainerRef = useRef<any[]>([]);
   const userOrdersBtnTimeoutID = useRef<any>(null);
 
+  const setActivityWindowToggle = useActivityWindowStore(state => state.setToggle);
+  const setActivityWindowMessage = useActivityWindowStore(state => state.setMessage);
+
   const setAlertToggle = useAlertMessageStore(state => state.setToggle);
   const setAlertType = useAlertMessageStore(state => state.setType);
   const setAlertMessage = useAlertMessageStore(state => state.setMessage);
-
-  const [ isUrlCopied, setIsUrlCopied ] = useState<UrlCopiedState>({ toggle: false, index: 0 });
-  const isUrlCopiedTimerId = useRef<any>(0);
 
   const [ userOrder, setUserOrder ] = useState<Record<string, any>>({
     toggle: false,
@@ -141,11 +154,6 @@ export default function Table({
     }
   }, [ scroll, scrollTrigger ]);
 
-  const { data: usersData, isLoading, isError } = useQuery({
-    queryKey: ['users'],
-    queryFn: getUsersData,
-  });
-
   const checkToggle = (toggle: boolean, hookIndex: number | string, refIndex: number | string) => {
     if (toggle === true && hookIndex === refIndex) return true;
     return false
@@ -161,6 +169,39 @@ export default function Table({
       hour12: true
     });
   }
+
+  const displayAlert = (message: any, type: string) => {
+    setAlertMessage(message);
+    setAlertType(type);
+    setAlertToggle(Date.now());
+  };
+
+  const { data: userRoles } = useQuery({
+    queryKey: ['user-roles'],
+    queryFn: getAllUserRoles
+  });
+
+  const updateUserRoleMutaion = useMutation({
+    mutationFn: updateUserRole,
+    onSettled: () => {
+      setActivityWindowToggle(false);
+    },
+    onMutate: () => {
+      setActivityWindowToggle(true);
+      setActivityWindowMessage(isEn ? 'Updating selected user role...' : 'جاري تحديث منصب المستخدم...')
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['users']});
+      displayAlert(data.message[isEn ? 'en' : 'ar'], "success");
+    },
+    onError: () => {
+      displayAlert(
+        isEn 
+          ? "Couldn't update Video Settings, please try again." 
+          : "فشل في محاوله تحديث اعدادات الفيديو, الرجاء محاوله مره اخرى."
+      , "error");
+    },
+  })
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement | HTMLLIElement>) => {
     const { type, userId, selectedRole } = e.currentTarget.dataset;
@@ -193,6 +234,8 @@ export default function Table({
         break;
       case'role_type_button_is_clicked':
         console.log('selectedRole', selectedRole);
+
+        if (userId && selectedRole) updateUserRoleMutaion.mutate({ userId, roleName: selectedRole })
         break;
       default:
         console.error('Unknown type: ', type);
@@ -208,6 +251,7 @@ export default function Table({
 
   // DEBUG
   console.log('users: ', usersData?.data);
+  console.log('user roles: ', userRoles?.data);
   // console.log('userOrder: ', userOrder);
 
   if (isLoading) return (
@@ -221,7 +265,8 @@ export default function Table({
     />
   )
 
-  const users: any = usersData.data;
+  const users: any = usersData?.data;
+  const roles: any = userRoles?.data;
   return (
     <div className="overflow-x-auto" ref={mainRef}>
       <table className="min-w-full divide-y divide-gray-200 rounded-lg overflow-hidden">
@@ -335,7 +380,7 @@ export default function Table({
                         px-2 cursor-pointer rounded-md cursor-pointers
                         transition-all duration-200 ease-out
                       "
-                      htmlFor={`${id}-selectRoleInpt`}
+                      htmlFor={`${id}-${i}-selectRoleInpt`}
                     >
                       <input 
                         className="
@@ -343,9 +388,9 @@ export default function Table({
                         "
                         type="checkbox"
                         name="selectRoleInpt"
-                        id={`${id}-selectRoleInpt`}
+                        id={`${id}-${i}-selectRoleInpt`}
                       />
-                      <span className="font-semibold text-heading">admin</span>
+                      <span className="font-semibold text-heading">{user.role.role.name}</span>
                       <MdiArrowDownDrop className="text-heading"/>
                       <ul
                         className="
@@ -357,7 +402,7 @@ export default function Table({
                           transition-all duration-200 ease-out
                         "
                       >
-                        {['admin', 'costumer'].map(role => 
+                        {roles.map((role: Record<any, string>) => 
                           <li
                             className="
                               p-2 rounded-lg text-body 
@@ -366,11 +411,11 @@ export default function Table({
                             "
                             role="button"
                             data-type="role_type_button_is_clicked"
-                            data-selected-role={role}
+                            data-selected-role={role.name}
                             data-user-id={user.id}
                             onClick={handleClick}
                           >
-                            {role}
+                            {role.name}
                           </li>
                         )}
                       </ul>
