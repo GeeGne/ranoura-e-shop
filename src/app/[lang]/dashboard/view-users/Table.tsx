@@ -99,6 +99,14 @@ export default function Table({
   const orderContainerRef = useRef<any[]>([]);
   const userOrdersBtnTimeoutID = useRef<any>(null);
 
+  const action = useActionConfirmWindowStore(state => state.action);
+  const setAction = useActionConfirmWindowStore(state => state.setAction);
+  const setActionWindowToggle = useActionConfirmWindowStore(state => state.setToggle);
+  const setActionWindowIsLoading = useActionConfirmWindowStore(state => state.setIsLoading);
+  const setTitle = useActionConfirmWindowStore(state => state.setTitle);
+  const setDescription = useActionConfirmWindowStore(state => state.setDescription);
+  const setBtnTitle = useActionConfirmWindowStore(state => state.setBtnTitle);
+
   const setActivityWindowToggle = useActivityWindowStore(state => state.setToggle);
   const setActivityWindowMessage = useActivityWindowStore(state => state.setMessage);
 
@@ -203,8 +211,8 @@ export default function Table({
     },
   })
 
-  const handleClick = async (e: React.MouseEvent<HTMLButtonElement | HTMLLIElement>) => {
-    const { type, userId, selectedRole } = e.currentTarget.dataset;
+  const handleClick = async (e: React.MouseEvent<HTMLButtonElement | HTMLLIElement | SVGSVGElement>) => {
+    const { type, userId, userName, selectedRole } = e.currentTarget.dataset;
     const findElement = (elArray: any, dataString: string, value: any) => 
       elArray.find((el: HTMLElement) => el.dataset[dataString] === value);
 
@@ -236,6 +244,19 @@ export default function Table({
         console.log('selectedRole', selectedRole);
 
         if (userId && selectedRole) updateUserRoleMutaion.mutate({ userId, roleName: selectedRole })
+        break;
+      case 'ban_user_button_is_clicked':
+        setActionWindowToggle(true);
+        if (userId) setAction({ name: "ban user", userId, isConfirmed: false });
+        setTitle({
+          en: 'Ban User?',
+          ar: 'حظر العضو؟'
+        })
+        setDescription({
+          en: `By clicking on Confrim button. The following user "${userName}" will get banned. (on confrim the account and all its data will get erased automatically)`,
+          ar: `في حال الضغط على زر تأكيد الحظر. سوف يتم حظر المستخدم المعروف ب "${userName}". (في حال التأكيد سوف يتم مسح المعلومات المتعلقه بلمستخدم تلقائيا)`
+        });
+        setBtnTitle({ en: 'Confrim (BAN)', ar: 'تأكيد (حظر)'})
         break;
       default:
         console.error('Unknown type: ', type);
@@ -372,6 +393,10 @@ export default function Table({
                         bg-background-light hover:bg-background-deep-light
                       "
                       role="button"
+                      data-type="ban_user_button_is_clicked"
+                      data-user-id={user.id}
+                      data-user-name={user.first_name + ' ' + user.last_name}
+                      onClick={handleClick}
                     />
                     <label
                       className="

@@ -119,6 +119,13 @@ enum OrderCurrency {
   EUR
 }
 
+model BannedUsers {
+  id Int @id @default(autoincrement())
+  email String @unique
+  full_name String?
+  user_pfp String?
+}
+
 model Products {
   id               String   @id @default(uuid())
   name             Json

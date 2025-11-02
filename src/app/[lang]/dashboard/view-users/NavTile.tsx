@@ -151,14 +151,10 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
           transition-all duration-200 ease-out
         `}
       />
-      <h3
-        className={`
-          ${isMainRefStuck ? 'text-heading-invert' : 'text-heading'}
-          transition-all duration-200 ease-out
-        `}
-      >
-        {isEn ? 'List' : 'القائمه'}
-      </h3>
+      <input 
+        className="bg-background-light text-body-light py-2 px-4 rounded-md border-none outline-none"
+        placeholder="Search By Username..."
+      />
       <div
         className="flex items-center gap-8"
       >
