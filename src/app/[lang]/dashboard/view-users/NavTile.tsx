@@ -1,7 +1,7 @@
 "use client"
 
 // HOOKS
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useId } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 // STORES
@@ -16,6 +16,7 @@ import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingRes
 import LineMdChevronSmallRight from '@/components/svgs/LineMdChevronSmallRight';
 import LineMdChevronSmallDown from '@/components/svgs/LineMdChevronSmallDown';
 import EpList from '@/components/svgs/EpList';
+import IconamoonSearchLight from '@/components/svgs/IconamoonSearchLight';
 import LineMdPlus from '@/components/svgs/LineMdPlus';
 
 // API
@@ -26,6 +27,7 @@ import defaultProductData from '@/utils/defaultProductData';
 
 export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: any) {
   
+  const id = useId();
   const queryClient = useQueryClient();
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
@@ -151,10 +153,62 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
           transition-all duration-200 ease-out
         `}
       />
-      <input 
-        className="bg-background-light text-body-light py-2 px-4 rounded-md border-none outline-none"
-        placeholder="Search By Username..."
-      />
+      <div
+        className="flex gap-4"
+      >
+        <label
+          className="relative cursor-text"
+          htmlFor={`${id}-usernameSearchInpt`}
+        >
+          <input 
+            className="peer bg-background-light text-body-light py-2 px-2 rounded-md border-none outline-none"
+            id={`${id}-usernameSearchInpt`}
+            placeholder=""
+          />
+          <div
+            className="
+              absolute left-2 top-1/2 translate-y-[-50%]
+              invisible peer-focus:invisible peer-placeholder-shown:visible
+              opacity-100 peer-focus:opacity-0 peer-placeholder-shown:opacity-100
+              flex gap-1
+              transition-all duration-200 ease-out
+            "
+          >
+            <IconamoonSearchLight 
+              className="
+                text-body-light w-5 h-5 
+              "
+            />
+            <span className="text-body-light font-semibold">Search By Name...</span>
+          </div>
+        </label>
+        <label
+          className="relative cursor-text"
+          htmlFor={`${id}-emailSearchInpt`}
+        >
+          <input 
+            className="peer bg-background-light text-body-light py-2 px-2 rounded-md border-none outline-none"
+            id={`${id}-emailSearchInpt`}
+            placeholder=""
+          />
+          <div
+            className="
+              absolute left-2 top-1/2 translate-y-[-50%]
+              invisible peer-focus:invisible peer-placeholder-shown:visible
+              opacity-100 peer-focus:opacity-0 peer-placeholder-shown:opacity-100
+              flex gap-1
+              transition-all duration-200 ease-out
+            "
+          >
+            <IconamoonSearchLight 
+              className="
+                text-body-light w-5 h-5 
+              "
+            />
+            <span className="text-body-light font-semibold">Search By Email...</span>
+          </div>
+        </label>
+      </div>
       <div
         className="flex items-center gap-8"
       >
