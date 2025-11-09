@@ -26,6 +26,7 @@ model User {
   password_hash   String
   phone_number    String
   profile_img_url String?
+  is_banned       Boolean @default(false)
   status          String         @default("active")
   timezone        String         @default("UTC+3")
   updated_at      DateTime?      @updatedAt

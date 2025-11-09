@@ -168,6 +168,20 @@ export default function Table({
     }
   }, [ scroll, scrollTrigger ]);
 
+  const getUserStatus = (is_banned: boolean, last_login_at: string) => {
+
+    const now = new Date().getTime();
+    const userLastlogin = new Date(last_login_at).getTime();
+    const differentInMs = now - userLastlogin;
+    const differentInDays = differentInMs / (1000 * 60 * 60 * 24)
+    const isUserInactive = differentInDays >= 90;
+    console.log('differentInDays', differentInDays);
+
+    if (is_banned) return { title: { en: 'Banned', ar: 'محظور' }, textColor: 'oklch(50.5% 0.213 27.518)'};
+    if (isUserInactive) return { title: { en: 'Inactive', ar: 'غير نشط' }, textColor: 'oklch(55.4% 0.135 66.442)' };
+    return { title: { en: 'Active', ar: 'نشط' }, textColor: 'oklch(53.2% 0.157 131.589)' }
+  };
+
   const addFullNameField = (array: any[]) => array.map((fields: Record<any, string>) => ({ ...fields, full_name: fields.first_name + ' ' + fields.last_name }))
 
   const checkToggle = (toggle: boolean, hookIndex: number | string, refIndex: number | string) => {
@@ -339,6 +353,9 @@ export default function Table({
               {isEn ? 'Status' : 'الحاله'}
             </th>
             <th scope="col" className={`px-6 py-3  ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light uppercase tracking-wider whitespace-nowrap`}>
+              {isEn ? 'Last Login' : 'آخر ظهور'}
+            </th>
+            <th scope="col" className={`px-6 py-3  ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light uppercase tracking-wider whitespace-nowrap`}>
               {isEn ? 'Date of Birth' : 'تاريخ الولاده'}
             </th>
             <th scope="col" className={`px-6 py-3  ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light uppercase tracking-wider whitespace-nowrap`}>
@@ -383,9 +400,19 @@ export default function Table({
                   {user.role.role.name}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${true ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                    {user.status}
+                  <span 
+                    className="relative text-xs font-bold py-1 px-2"
+                    style={{ color: getUserStatus(user.is_banned, user.last_login_at).textColor}}
+                  >
+                    {getUserStatus(user.is_banned, user.last_login_at).title[lang].toLowerCase()}
+                  <div
+                    className="absolute top-0 left-0 w-full h-full opacity-20 rounded-full"
+                    style={{ backgroundColor: getUserStatus(user.is_banned, user.last_login_at).textColor}}
+                  />
                   </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
+                  {displayDate(user.last_login_at)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
                   {user.date_of_birth ? displayDate(user.date_of_birth) : messages.noData[lang]}

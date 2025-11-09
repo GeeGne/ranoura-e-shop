@@ -40,7 +40,11 @@ export async function GET(req: NextResponse) {
     const { email }: any = await verifyToken(authToken);
     if (!email) throw null;
     
-    
+    const updateUserLastLogin = await prisma.user.update({
+      where: { email },
+      data: { last_login_at: new Date() }
+    });
+
     const data = await prisma.user.findUnique({
       where: {
         email
