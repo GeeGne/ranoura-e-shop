@@ -8,7 +8,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { 
   useLanguageStore, useAlertMessageStore, 
   useEditProductWindowStore, useActivityWindowStore, 
-  useLayoutRefStore, useAddCategoryWindowStore
+  useLayoutRefStore, useAddCategoryWindowStore, useViewUsersNavTileStore
 } from '@/stores/index';
 
 // COMPONENTS
@@ -48,6 +48,11 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
   const setEditProductWindowProductData = useEditProductWindowStore(state => state.setProductData);
 
   const setAddCategoryWindowToggle = useAddCategoryWindowStore(state => state.setToggle);
+
+  const searchNameTerm = useViewUsersNavTileStore(state => state.searchByNameTerm);
+  const setSearchNameTerm = useViewUsersNavTileStore(state => state.setSearchByNameTerm);
+  const searchEmailTerm = useViewUsersNavTileStore(state => state.searchByEmailTerm);
+  const setSearchEmailTerm = useViewUsersNavTileStore(state => state.setSearchByEmailTerm);
 
   const addProductMutation = useMutation({
     mutationFn: addProduct,
@@ -101,6 +106,21 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
     if (mainRef.current) observeSticky(mainRef.current)
   }, []);
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.currentTarget;
+
+    switch (name) {
+      case 'searchByNameInpt':
+        setSearchNameTerm(value);
+        break;
+      case 'searchByEmailInpt':
+        setSearchEmailTerm(value);
+        break;
+      default:
+        console.error('Unknown name: ', name);
+    }
+  }
+
   const handleClick = async (e: React.MouseEvent<HTMLElement | SVGElement>) => {
     const { type, scrollDirection } = e.currentTarget.dataset;
 
@@ -132,6 +152,8 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
   // UI & DEBUG
   // console.log("onLayoutScroll: ", onLayoutScroll.target.scrollTop);
   // console.log("isMainRefStuck: ", isMainRefStuck);
+  console.log("searchNameTerm: ", searchNameTerm);
+  console.log("searchEmailTerm: ", searchEmailTerm);
 
   return(
     <div
@@ -158,12 +180,14 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
       >
         <label
           className="relative cursor-text"
-          htmlFor={`${id}-usernameSearchInpt`}
+          htmlFor={`${id}-searchByNameInpt`}
         >
           <input 
             className="peer bg-background-light text-body-light py-2 px-2 rounded-md border-none outline-none"
-            id={`${id}-usernameSearchInpt`}
+            id={`${id}-searchByNameInpt`}
             placeholder=""
+            name="searchByNameInpt"
+            onChange={handleChange}
           />
           <div
             className="
@@ -184,12 +208,14 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
         </label>
         <label
           className="relative cursor-text"
-          htmlFor={`${id}-emailSearchInpt`}
+          htmlFor={`${id}-searchByEmailInpt`}
         >
           <input 
             className="peer bg-background-light text-body-light py-2 px-2 rounded-md border-none outline-none"
-            id={`${id}-emailSearchInpt`}
+            id={`${id}-searchByEmailInpt`}
             placeholder=""
+            name="searchByEmailInpt"
+            onChange={handleChange}
           />
           <div
             className="

@@ -26,8 +26,11 @@ import urlsTable from '@/json/cmsTables/urlsTable.json';
 // STORES
 import { 
   useAlertMessageStore, useActionConfirmWindowStore, 
-  useLayoutRefStore, useActivityWindowStore
+  useLayoutRefStore, useActivityWindowStore, useViewUsersNavTileStore
 } from '@/stores/index';
+
+// UTILS
+import filterByQuery from '@/utils/filterByQuery';
 
 // ASSETS
 const pfpImage = '/assets/img/pfp.avif';
@@ -114,6 +117,9 @@ export default function Table({
   const setAlertType = useAlertMessageStore(state => state.setType);
   const setAlertMessage = useAlertMessageStore(state => state.setMessage);
 
+  const searchNameTerm = useViewUsersNavTileStore(state => state.searchByNameTerm);
+  const searchEmailTerm = useViewUsersNavTileStore(state => state.searchByEmailTerm);
+
   const [ userOrder, setUserOrder ] = useState<Record<string, any>>({
     toggle: false,
     userId: 0,
@@ -161,6 +167,8 @@ export default function Table({
         console.error("Unknown scroll type: ", scroll);
     }
   }, [ scroll, scrollTrigger ]);
+
+  const addFullNameField = (array: any[]) => array.map((fields: Record<any, string>) => ({ ...fields, full_name: fields.first_name + ' ' + fields.last_name }))
 
   const checkToggle = (toggle: boolean, hookIndex: number | string, refIndex: number | string) => {
     if (toggle === true && hookIndex === refIndex) return true;
@@ -287,7 +295,29 @@ export default function Table({
   )
 
   const users: any = usersData?.data;
+  const filteredUsersbasedOnSearcByhNameTerm  = filterByQuery(
+    addFullNameField(users), 
+    { 
+      searchTerms: [searchNameTerm],
+      searchFields: [ 'full_name' ],
+      filteringType: 'prefix',
+      caseSensitive: false,
+      specificSearch: false
+    }
+  );
+  const filteredUsersbasedOnSearchByEmailAndNameTerm  = filterByQuery(
+    addFullNameField(filteredUsersbasedOnSearcByhNameTerm), 
+    { 
+      searchTerms: [searchEmailTerm],
+      searchFields: [ 'email' ],
+      filteringType: 'prefix',
+      caseSensitive: false,
+      specificSearch: false
+    }
+  );
   const roles: any = userRoles?.data;
+
+  console.log('addFullNameField(users): ', addFullNameField(users))
   return (
     <div className="overflow-x-auto" ref={mainRef}>
       <table className="min-w-full divide-y divide-gray-200 rounded-lg overflow-hidden">
@@ -323,7 +353,7 @@ export default function Table({
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {users?.map((user: Record<string, any>, i: number) => (
+          {filteredUsersbasedOnSearchByEmailAndNameTerm?.map((user: Record<string, any>, i: number) => (
             [
               <tr key={`user-${i}`}>
                 <td className="px-6 py-4 whitespace-nowrap">
@@ -333,7 +363,7 @@ export default function Table({
                     </div>
                     <div className="ml-4">
                       <div className="text-base font-medium text-heading">
-                        {user.first_name + ' ' + user.last_name}
+                        {user.full_name}
                       </div>
                       <div className="text-sm text-body-light">{user.email}</div>
                     </div>

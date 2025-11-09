@@ -1,4 +1,3 @@
-
 type FilteringTypeProps = 'contains' | 'prefix' | 'exact_match' | 'suffix';
 
 export default function filterByQuery(
@@ -45,6 +44,8 @@ export default function filterByQuery(
     if (hasSearchFields) {    
       return searchFields[filteringMethod]((field: string) => {
         const value = normilizeTerm(itm[field]);
+        const isFieldEmpty = field === '';
+        if (isFieldEmpty) return false;
         return searchTerms.some((searchTerm: string) => 
           filterFn(value, normilizeTerm(searchTerm))
         );

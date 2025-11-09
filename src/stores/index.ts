@@ -524,6 +524,22 @@ const useEditImageUrlCategoryWindowStore = create<EditImageUrlCategoryWindowProp
   })
 )
 
+type ViewUsersNavTileStoreProps = {
+  searchByNameTerm?: string;
+  setSearchByNameTerm: (value: string) => void;
+  searchByEmailTerm?: string;
+  setSearchByEmailTerm: (value: string) => void;
+}
+
+const useViewUsersNavTileStore = create<ViewUsersNavTileStoreProps>()(
+  (set) => ({
+    searchByNameTerm: '',
+    setSearchByNameTerm: (searchByNameTerm) => set({ searchByNameTerm }),
+    searchByEmailTerm: '',
+    setSearchByEmailTerm: (searchByEmailTerm) => set({ searchByEmailTerm }),
+  })
+);
+
 export { 
   useCartStore, useNavbarStore, 
   useTabNameStore, useFilterWindowStore,
@@ -537,5 +553,5 @@ export {
   useAddSubCategoryWindowStore, useImageDisplayerWindow,
   useAddCategoryWindowStore, useEditImageUrlCategoryWindowStore,
   useVideoDisplayerWindowStore, useOrderDetailsWindowStore,
-  useShippingDetailsWindowStore
+  useShippingDetailsWindowStore, useViewUsersNavTileStore
 };
