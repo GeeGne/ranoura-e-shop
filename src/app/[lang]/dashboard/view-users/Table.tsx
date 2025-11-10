@@ -11,6 +11,7 @@ import SolarCart4Bold from "@/components/svgs/SolarCart4Bold";
 import MdiBan from "@/components/svgs/MdiBan";
 import GgUnblock from "@/components/svgs/GgUnblock";
 import MdiArrowDownDrop from '@/components/svgs/MdiArrowDownDrop';
+import IconamoonSearchLight from '@/components/svgs/IconamoonSearchLight';
 import LineMdLink from '@/components/svgs/LineMdLink';
 import TablerCopy from '@/components/svgs/TablerCopy';
 import MaterialSymbolsCheckRounded from '@/components/svgs/MaterialSymbolsCheckRounded';
@@ -279,12 +280,13 @@ export default function Table({
 
     switch (type) {
       case 'user_orders_button_is_clicked':
-        const targetElement = findElement(orderContainerRef.current, 'userId', userId);
+        const orderContainerRefNoNull = orderContainerRef.current.filter(el => el !== null);
+        const targetElement = findElement(orderContainerRefNoNull, 'userId', userId);
         const isSameUser = userOrder.userId === userId;
         const isTogglingOpen = !isSameUser || !userOrder.toggle;
         const layoutHeight = isTogglingOpen ? targetElement.scrollHeight : 0 ;
 
-        orderContainerRef.current.forEach((el: HTMLElement) => {
+        orderContainerRefNoNull.forEach((el: HTMLElement) => {
           el.style.overflow = 'hidden'
         });
 
@@ -297,7 +299,7 @@ export default function Table({
 
         if (isTogglingOpen) {
           userOrdersBtnTimeoutID.current = setTimeout(() => {
-            findElement(orderContainerRef.current, 'userId', userId).style.overflow = 'visible'
+            findElement(orderContainerRefNoNull, 'userId', userId).style.overflow = 'visible'
           }, 300);
         };
         break;
@@ -426,10 +428,19 @@ export default function Table({
           <tbody className="bg-white divide-y divide-gray-200">
             <tr className="px-6 py-4 whitespace-nowrap">
               <td
-                className="text-center p-4 text-body font-semibold text-lg"
-                colSpan={9}
+                className="p-4"
+                colSpan={10}
               >
-                {isEn ? 'No Results Found.' : 'لا توجد اي نتائج.'}
+                <div
+                  className="w-full justify-center flex gap-2 "
+                >
+                  <IconamoonSearchLight className="text-body" />
+                  <span
+                    className="text-body font-semibold text-lg"
+                  >
+                    {isEn ? 'No Results Found.' : 'لا توجد اي نتائج.'}
+                  </span>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -588,7 +599,7 @@ export default function Table({
               <tr key={`order-${i}`}>
                 <td
                   className={`w-full bg-background-light`}
-                  colSpan={9}
+                  colSpan={10}
                 >
                   <div
                     className={`
