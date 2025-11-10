@@ -314,7 +314,7 @@ export default function Table({
     { 
       searchTerms: [searchNameTerm],
       searchFields: [ 'full_name' ],
-      filteringType: 'prefix',
+      filteringType: 'contains',
       caseSensitive: false,
       specificSearch: false
     }
@@ -324,11 +324,12 @@ export default function Table({
     { 
       searchTerms: [searchEmailTerm],
       searchFields: [ 'email' ],
-      filteringType: 'prefix',
+      filteringType: 'contains',
       caseSensitive: false,
       specificSearch: false
     }
   );
+  const isUsersFilteredArrayEmpty = filteredUsersbasedOnSearchByEmailAndNameTerm.length === 0;
   const roles: any = userRoles?.data;
 
   console.log('addFullNameField(users): ', addFullNameField(users))
@@ -369,6 +370,18 @@ export default function Table({
             </th>
           </tr>
         </thead>
+        {isUsersFilteredArrayEmpty &&
+          <tbody className="bg-white divide-y divide-gray-200">
+            <tr className="px-6 py-4 whitespace-nowrap">
+              <td
+                className="text-center p-4 text-body font-semibold text-lg"
+                colSpan={9}
+              >
+                {isEn ? 'No Results Found.' : 'لا توجد اي نتائج.'}
+              </td>
+            </tr>
+          </tbody>
+        }
         <tbody className="bg-white divide-y divide-gray-200">
           {filteredUsersbasedOnSearchByEmailAndNameTerm?.map((user: Record<string, any>, i: number) => (
             [
