@@ -9,6 +9,7 @@ import ErrorLayout from '@/components/ErrorLayout';
 import Orders from '@/components/Orders';
 import SolarCart4Bold from "@/components/svgs/SolarCart4Bold";
 import MdiBan from "@/components/svgs/MdiBan";
+import GgUnblock from "@/components/svgs/GgUnblock";
 import MdiArrowDownDrop from '@/components/svgs/MdiArrowDownDrop';
 import LineMdLink from '@/components/svgs/LineMdLink';
 import TablerCopy from '@/components/svgs/TablerCopy';
@@ -17,6 +18,7 @@ import LineMdCloseCircleFilled from '@/components/svgs/LineMdCloseCircleFilled';
 
 // API
 import getUsersData from '@/lib/api/users/get';
+import updateUserData from '@/lib/api/users/id/put';
 import updateUserRole from '@/lib/api/users/id/role/put';
 import getAllUserRoles from '@/lib/api/roles/get';
 
@@ -168,6 +170,19 @@ export default function Table({
     }
   }, [ scroll, scrollTrigger ]);
 
+  useEffect(() => {
+    const { name, userId, isConfirmed } = action;
+    if (name === 'ban user' && isConfirmed) {
+      setActionWindowIsLoading(true);
+      updateUserDataMutaion.mutate({ id: userId, is_banned: true });
+    }
+
+    if (name === 'unban user' && isConfirmed) {
+      setActionWindowIsLoading(true);
+      updateUserDataMutaion.mutate({ id: userId, is_banned: false});
+    };
+  }, [ action ])
+
   const getUserStatus = (is_banned: boolean, last_login_at: string) => {
 
     const now = new Date().getTime();
@@ -231,6 +246,30 @@ export default function Table({
           : "فشل في محاوله تحديث اعدادات الفيديو, الرجاء محاوله مره اخرى."
       , "error");
     },
+  });
+
+  const updateUserDataMutaion = useMutation({
+    mutationFn: updateUserData,
+    onSettled: () => {
+      setActivityWindowToggle(false);
+    },
+    onMutate: () => {
+      setActivityWindowToggle(true);
+      setActivityWindowMessage(isEn ? 'Updating selected user data...' : 'جاري تحديث بيانات المستخدم...')
+    },
+    onSuccess: (data) => {
+      setActionWindowToggle(false);
+      setActionWindowIsLoading(false);
+      queryClient.invalidateQueries({ queryKey: ['users']});
+      displayAlert(data.message[isEn ? 'en' : 'ar'], "success");
+    },
+    onError: () => {
+      displayAlert(
+        isEn 
+          ? "Couldn't update Video Settings, please try again." 
+          : "فشل في محاوله تحديث اعدادات الفيديو, الرجاء محاوله مره اخرى."
+      , "error");
+    },
   })
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement | HTMLLIElement | SVGSVGElement>) => {
@@ -275,10 +314,23 @@ export default function Table({
           ar: 'حظر العضو؟'
         })
         setDescription({
-          en: `By clicking on Confrim button. The following user "${userName}" will get banned. (on confrim the account and all its data will get erased automatically)`,
-          ar: `في حال الضغط على زر تأكيد الحظر. سوف يتم حظر المستخدم المعروف ب "${userName}". (في حال التأكيد سوف يتم مسح المعلومات المتعلقه بلمستخدم تلقائيا)`
+          en: `By clicking on Confrim button. The following user "${userName}" will get banned. (Unbanning the user later is possible.)`,
+          ar: `في حال الضغط على زر تأكيد الحظر. سوف يتم حظر المستخدم المعروف ب "${userName}". (رفع الحظر عن المستخدم متاح لاحقا)`
         });
         setBtnTitle({ en: 'Confrim (BAN)', ar: 'تأكيد (حظر)'})
+        break;
+      case 'unBan_user_button_is_clicked':
+        setActionWindowToggle(true);
+        if (userId) setAction({ name: "unban user", userId, isConfirmed: false });
+        setTitle({
+          en: 'Un-Ban User?',
+          ar: 'رفع الحظر عن العضو؟'
+        })
+        setDescription({
+          en: `By clicking on Confrim button. The following user "${userName}" won't be banned anymore. (Banning the user later is possible.)`,
+          ar: `في حال الضغط على زر تأكيد الحظر. سوف يتم رفع حظر المستخدم المعروف ب "${userName}". (حظر المستخدم متاح لاحقا)`
+        });
+        setBtnTitle({ en: 'Confrim (UNBAN)', ar: 'تأكيد (رفع الحظر)'})
         break;
       default:
         console.error('Unknown type: ', type);
@@ -455,19 +507,34 @@ export default function Table({
                         `}
                       />
                     </button>
-                    <MdiBan 
-                      className="
-                        w-7 h-7 p-1 text-heading rounded-md cursor-pointer
-                        active:opacity-60
-                        transition-all duration-200 ease-out
-                        bg-background-light hover:bg-background-deep-light
-                      "
-                      role="button"
-                      data-type="ban_user_button_is_clicked"
-                      data-user-id={user.id}
-                      data-user-name={user.first_name + ' ' + user.last_name}
-                      onClick={handleClick}
-                    />
+                    {user.is_banned 
+                      ? <GgUnblock 
+                        className="
+                          w-7 h-7 p-1 text-heading rounded-md cursor-pointer
+                          active:opacity-60
+                          transition-all duration-200 ease-out
+                          bg-background-light hover:bg-background-deep-light
+                        "
+                        role="button"
+                        data-type="unBan_user_button_is_clicked"
+                        data-user-id={user.id}
+                        data-user-name={user.first_name + ' ' + user.last_name}
+                        onClick={handleClick}
+                      />
+                      : <MdiBan 
+                        className="
+                          w-7 h-7 p-1 text-heading rounded-md cursor-pointer
+                          active:opacity-60
+                          transition-all duration-200 ease-out
+                          bg-background-light hover:bg-background-deep-light
+                        "
+                        role="button"
+                        data-type="ban_user_button_is_clicked"
+                        data-user-id={user.id}
+                        data-user-name={user.first_name + ' ' + user.last_name}
+                        onClick={handleClick}
+                      />
+                    }
                     <label
                       className="
                         relative flex gap-2 items-center 
