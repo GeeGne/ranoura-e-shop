@@ -15,6 +15,7 @@ import {
 import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingResize';
 import LineMdChevronSmallRight from '@/components/svgs/LineMdChevronSmallRight';
 import LineMdChevronSmallDown from '@/components/svgs/LineMdChevronSmallDown';
+import FlowbiteSortOutline from '@/components/svgs/FlowbiteSortOutline';
 import EpList from '@/components/svgs/EpList';
 import IconamoonSearchLight from '@/components/svgs/IconamoonSearchLight';
 import LineMdPlus from '@/components/svgs/LineMdPlus';
@@ -31,8 +32,14 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
   const queryClient = useQueryClient();
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
+  const sortByArray = [ 
+    { name:'None', fieldName: '' },
+    { name:'Created At', fieldName: 'created_at' },
+    { name:'Last Login', fieldName: 'last_login_at' }
+  ];
 
   const [ isMainRefStuck, setIsMainRefStuck ] = useState<boolean>(false);
+  const [ selectedSortBy, setSelectedSortBy ] = useState<string>("")
   const mainRef = useRef<HTMLDivElement>(null);
 
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
@@ -53,6 +60,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
   const setSearchNameTerm = useViewUsersNavTileStore(state => state.setSearchByNameTerm);
   const searchEmailTerm = useViewUsersNavTileStore(state => state.searchByEmailTerm);
   const setSearchEmailTerm = useViewUsersNavTileStore(state => state.setSearchByEmailTerm);
+  const setSelectedSortByField = useViewUsersNavTileStore(state => state.setSelectedSortByField);
 
   const addProductMutation = useMutation({
     mutationFn: addProduct,
@@ -122,7 +130,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
   }
 
   const handleClick = async (e: React.MouseEvent<HTMLElement | SVGElement>) => {
-    const { type, scrollDirection } = e.currentTarget.dataset;
+    const { type, scrollDirection, fieldName, sortName } = e.currentTarget.dataset;
 
     switch (type) {
       case 'right_arrow_button_is_clicked':
@@ -143,6 +151,10 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
         break;
       case 'add_category_button_is_clicked':
         setAddCategoryWindowToggle(true);
+        break;
+      case 'sort_by_list_button_is_clicked':
+        if (fieldName) setSelectedSortByField(fieldName);
+        if (sortName) setSelectedSortBy(sortName)
         break;
       default:
         console.error('Unknown type: ', type);
@@ -176,93 +188,124 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
         `}
       />
       <div
-        className="flex gap-4"
+        className="flex flex-col gap-4"
       >
-        <label
-          className="relative cursor-text"
-          htmlFor={`${id}-searchByNameInpt`}
+        <div
+          className="flex gap-4"
         >
-          <input 
-            className="peer bg-background-light text-body-light py-2 px-2 rounded-md border-none outline-none"
-            id={`${id}-searchByNameInpt`}
-            placeholder=""
-            name="searchByNameInpt"
-            onChange={handleChange}
-          />
-          <div
-            className="
-              absolute left-2 top-1/2 translate-y-[-50%]
-              invisible peer-focus:invisible peer-placeholder-shown:visible
-              opacity-100 peer-focus:opacity-0 peer-placeholder-shown:opacity-100
-              flex gap-1
-              transition-all duration-200 ease-out
-            "
+          <label
+            className="relative cursor-text"
+            htmlFor={`${id}-searchByNameInpt`}
           >
-            <IconamoonSearchLight 
-              className="
-                text-body-light w-5 h-5 
-              "
+            <input 
+              className="peer bg-background-light text-body-light py-2 px-2 rounded-md border-none outline-none"
+              id={`${id}-searchByNameInpt`}
+              placeholder=""
+              name="searchByNameInpt"
+              onChange={handleChange}
             />
-            <span className="text-body-light font-semibold">Search By Name...</span>
-          </div>
-        </label>
-        <label
-          className="relative cursor-text"
-          htmlFor={`${id}-searchByEmailInpt`}
-        >
-          <input 
-            className="peer bg-background-light text-body-light py-2 px-2 rounded-md border-none outline-none"
-            id={`${id}-searchByEmailInpt`}
-            placeholder=""
-            name="searchByEmailInpt"
-            onChange={handleChange}
-          />
-          <div
-            className="
-              absolute left-2 top-1/2 translate-y-[-50%]
-              invisible peer-focus:invisible peer-placeholder-shown:visible
-              opacity-100 peer-focus:opacity-0 peer-placeholder-shown:opacity-100
-              flex gap-1
-              transition-all duration-200 ease-out
-            "
+            <div
+              className="
+                absolute left-2 top-1/2 translate-y-[-50%]
+                invisible peer-focus:invisible peer-placeholder-shown:visible
+                opacity-100 peer-focus:opacity-0 peer-placeholder-shown:opacity-100
+                flex gap-1
+                transition-all duration-200 ease-out
+              "
+            >
+              <IconamoonSearchLight 
+                className="
+                  text-body-light w-5 h-5 
+                "
+              />
+              <span className="text-body-light font-semibold">Search By Name...</span>
+            </div>
+          </label>
+          <label
+            className="relative cursor-text"
+            htmlFor={`${id}-searchByEmailInpt`}
           >
-            <IconamoonSearchLight 
-              className="
-                text-body-light w-5 h-5 
-              "
+            <input 
+              className="peer bg-background-light text-body-light py-2 px-2 rounded-md border-none outline-none"
+              id={`${id}-searchByEmailInpt`}
+              placeholder=""
+              name="searchByEmailInpt"
+              onChange={handleChange}
             />
-            <span className="text-body-light font-semibold">Search By Email...</span>
-          </div>
-        </label>
+            <div
+              className="
+                absolute left-2 top-1/2 translate-y-[-50%]
+                invisible peer-focus:invisible peer-placeholder-shown:visible
+                opacity-100 peer-focus:opacity-0 peer-placeholder-shown:opacity-100
+                flex gap-1
+                transition-all duration-200 ease-out
+              "
+            >
+              <IconamoonSearchLight 
+                className="
+                  text-body-light w-5 h-5 
+                "
+              />
+              <span className="text-body-light font-semibold">Search By Email...</span>
+            </div>
+          </label>
+        </div>
+        <div>
+          <label
+            className="
+              relative flex items-center w-fit gap-2 p-2 
+              grow-0 rounded-md cursor-pointer
+              bg-white hover:bg-background-light active:bg-background-deep-light
+              translate-all duration-200 ease-in-out
+            "
+            htmlFor={`${id}-sortByInpt`}
+          >
+            <input
+              className="
+                peer absolute w-0 h-0 invisible opacity-0
+              "
+              id={`${id}-sortByInpt`}
+              type="checkbox"
+              name="sortByInpt"
+            />
+            <FlowbiteSortOutline className="w-4 h-4 text-body" />
+            <span className="text-sm text-body font-semibold">Sort By</span>
+            <span className="text-sm text-content font-semibold">
+              {selectedSortBy === 'None' ? '' : selectedSortBy}
+            </span>
+            <ul
+              className="
+                absolute top-0 peer-checked:top-[calc(100%+0.5rem)] left-0 w-full
+                flex flex-col gap-1
+                invisible peer-checked:visible opacity-0 peer-checked:opacity-100
+                p-1 rounded-lg shadow-lg bg-white
+                translate-all duration-200 ease-in-out
+              "
+            >
+              {sortByArray.map((itm, i) => 
+                <li
+                  key={i}
+                  className="
+                    text-center hover:bg-background-light
+                    text-sm text-body hover:text-heading font-semibold p-1 rounded-lg
+                    translate-all duration-200 ease-in-out
+                  "
+                  role="button"
+                  data-type="sort_by_list_button_is_clicked"
+                  data-field-name={itm.fieldName}
+                  data-sort-name={itm.name}
+                  onClick={handleClick}
+                >
+                  {itm.name}
+                </li>
+              )}
+            </ul>
+          </label>
+        </div>
       </div>
       <div
         className="flex items-center gap-8"
       >
-        <button
-          className="
-            relative flex items-center justify-center gap-2
-            text-sm text-heading-invert font-bold 
-            bg-content p-2 rounded-lg hover:opacity-80
-            transition-all duration-300 ease-in-out
-          "
-          data-type="add_category_button_is_clicked"
-          onClick={handleClick}
-        >
-          <SvgSpinnersRingResize 
-            className={`
-              absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]
-              ${activityWindowToggle ? 'visible opacity-100' : 'invisible opacity-0'}  
-            `}
-          /> 
-          <EpList className="w-5 h-5"/>
-          <span
-            className={`
-              ${activityWindowToggle ? 'invisible opacity-0' : 'visible opacity-100'}  
-            `}
-          >
-            {isEn ? 'BANNED USERS LIST' : 'قائمه المحظورين'}
-          </span> 
-        </button>
         <div
           className="flex items-center"
         >

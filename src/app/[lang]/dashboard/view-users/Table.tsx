@@ -122,6 +122,7 @@ export default function Table({
 
   const searchNameTerm = useViewUsersNavTileStore(state => state.searchByNameTerm);
   const searchEmailTerm = useViewUsersNavTileStore(state => state.searchByEmailTerm);
+  const selectedSortByField = useViewUsersNavTileStore(state => state.selectedSortByField);
 
   const [ userOrder, setUserOrder ] = useState<Record<string, any>>({
     toggle: false,
@@ -383,10 +384,15 @@ export default function Table({
       specificSearch: false
     }
   );
+  const addSortToUserBasedOnField = selectedSortByField 
+    ? filteredUsersbasedOnSearchByEmailAndNameTerm.sort((a, b) => new Date(b[selectedSortByField]).getTime() - new Date(a[selectedSortByField]).getTime() )
+    : filteredUsersbasedOnSearchByEmailAndNameTerm
+  ;
   const isUsersFilteredArrayEmpty = filteredUsersbasedOnSearchByEmailAndNameTerm.length === 0;
   const roles: any = userRoles?.data;
 
-  console.log('addFullNameField(users): ', addFullNameField(users))
+  console.log('addFullNameField(users): ', addFullNameField(users));
+  console.log('selectedSortByField: ', selectedSortByField);
   return (
     <div className="overflow-x-auto" ref={mainRef}>
       <table className="min-w-full divide-y divide-gray-200 rounded-lg overflow-hidden">
@@ -446,7 +452,7 @@ export default function Table({
           </tbody>
         }
         <tbody className="bg-white divide-y divide-gray-200">
-          {filteredUsersbasedOnSearchByEmailAndNameTerm?.map((user: Record<string, any>, i: number) => (
+          {addSortToUserBasedOnField?.map((user: Record<string, any>, i: number) => (
             [
               <tr key={`user-${i}`}>
                 <td className="px-6 py-4 whitespace-nowrap">
@@ -567,7 +573,7 @@ export default function Table({
                       <MdiArrowDownDrop className="text-heading"/>
                       <ul
                         className="
-                          absolute top-full left-0
+                          absolute top-0 peer-checked:top-[calc(100%+0.5rem)] left-0
                           w-full flex flex-col p-2 gap-2 z-[5]  
                           bg-white shadow-lg rounded-lg
                           invisible peer-checked:visible

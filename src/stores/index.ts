@@ -529,6 +529,8 @@ type ViewUsersNavTileStoreProps = {
   setSearchByNameTerm: (value: string) => void;
   searchByEmailTerm?: string;
   setSearchByEmailTerm: (value: string) => void;
+  selectedSortByField?: string;
+  setSelectedSortByField: (value: string) => void;
 }
 
 const useViewUsersNavTileStore = create<ViewUsersNavTileStoreProps>()(
@@ -537,6 +539,8 @@ const useViewUsersNavTileStore = create<ViewUsersNavTileStoreProps>()(
     setSearchByNameTerm: (searchByNameTerm) => set({ searchByNameTerm }),
     searchByEmailTerm: '',
     setSearchByEmailTerm: (searchByEmailTerm) => set({ searchByEmailTerm }),
+    selectedSortByField: 'none',
+    setSelectedSortByField: (selectedSortByField) => set({ selectedSortByField }),
   })
 );
 
