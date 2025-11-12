@@ -199,20 +199,45 @@ export default function Table({
     return { title: { en: 'Active', ar: 'نشط' }, textColor: 'oklch(53.2% 0.157 131.589)' }
   };
 
-  const addFullNameField = (array: any[]) => array.map(
-    (fields: Record<any, string>) => (
-      { ...fields, full_name: fields.first_name + ' ' + fields.last_name }
-    )
-  );
+  const getProcessedUsers = () => {
+  
+    const users: any = usersData?.data;
+    if (!users) return [];
 
-  const sortArray = (array: any[], field: any) => {
-    return [...array].sort((a, b) => {
-      if (field === 'none' || !field) return 0;
-      const dateA = new Date(a[field]).getTime();
-      const dateB = new Date(b[field]).getTime();
+    const usersWithFullName = users.map(
+      (fields: Record<any, string>) => (
+        { ...fields, full_name: fields.first_name + ' ' + fields.last_name }
+      )
+    );
+    const nameFilteredUsers = filterByQuery(
+      usersWithFullName, 
+      { 
+        searchTerms: [searchNameTerm],
+        searchFields: [ 'full_name' ],
+        filteringType: 'contains',
+        caseSensitive: false,
+        specificSearch: false
+      }
+    );
+    const emailFilteredUsers = filterByQuery(
+      nameFilteredUsers, 
+      { 
+        searchTerms: [searchEmailTerm],
+        searchFields: [ 'email' ],
+        filteringType: 'contains',
+        caseSensitive: false,
+        specificSearch: false
+      }
+    );
+    const sortUsers = [...emailFilteredUsers].sort((a, b) => {
+      if (selectedSortByField === 'none' || !selectedSortByField) return 0;
+      const dateA = new Date(a[selectedSortByField]).getTime();
+      const dateB = new Date(b[selectedSortByField]).getTime();
       return dateA - dateB;
     });
-  };
+
+    return sortUsers;
+  }
 
   const checkToggle = (toggle: boolean, hookIndex: number | string, refIndex: number | string) => {
     if (toggle === true && hookIndex === refIndex) return true;
@@ -375,34 +400,12 @@ export default function Table({
     />
   )
 
-  const users: any = usersData?.data;
-  const usersWithFullName= addFullNameField(users);
-  const filteredUsersbasedOnSearcByhNameTerm  = filterByQuery(
-    usersWithFullName, 
-    { 
-      searchTerms: [searchNameTerm],
-      searchFields: [ 'full_name' ],
-      filteringType: 'contains',
-      caseSensitive: false,
-      specificSearch: false
-    }
-  );
-  const filteredUsers  = filterByQuery(
-    filteredUsersbasedOnSearcByhNameTerm, 
-    { 
-      searchTerms: [searchEmailTerm],
-      searchFields: [ 'email' ],
-      filteringType: 'contains',
-      caseSensitive: false,
-      specificSearch: false
-    }
-  );
-  const sortedUsers = sortArray(filteredUsers, selectedSortByField);
-  ;
-  const isUsersFilteredArrayEmpty = sortedUsers.length === 0;
+  const processedUsers = getProcessedUsers();
+  const isUsersFilteredArrayEmpty = processedUsers.length === 0;
   const roles: any = userRoles?.data;
 
-  console.log('addFullNameField(users): ', addFullNameField(users));
+  // DEBUG & UI
+  // console.log('addFullNameField(users): ', addFullNameField(users));
   console.log('selectedSortByField: ', selectedSortByField);
   return (
     <div className="overflow-x-auto" ref={mainRef}>
@@ -463,7 +466,7 @@ export default function Table({
           </tbody>
         }
         <tbody className="bg-white divide-y divide-gray-200">
-          {sortedUsers?.map((user: Record<string, any>, i: number) => (
+          {processedUsers?.map((user: Record<string, any>, i: number) => (
             [
               <tr key={`user-${i}`}>
                 <td className="px-6 py-4 whitespace-nowrap">

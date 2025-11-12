@@ -16,6 +16,8 @@ import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingRes
 import LineMdChevronSmallRight from '@/components/svgs/LineMdChevronSmallRight';
 import LineMdChevronSmallDown from '@/components/svgs/LineMdChevronSmallDown';
 import FlowbiteSortOutline from '@/components/svgs/FlowbiteSortOutline';
+import BxFilter from '@/components/svgs/BxFilter';
+import CarbonCloseFilled from '@/components/svgs/CarbonCloseFilled';
 import EpList from '@/components/svgs/EpList';
 import IconamoonSearchLight from '@/components/svgs/IconamoonSearchLight';
 import LineMdPlus from '@/components/svgs/LineMdPlus';
@@ -32,14 +34,26 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
   const queryClient = useQueryClient();
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
+
   const sortByArray = [ 
     { name:'None', fieldName: 'none' },
     { name:'Created At', fieldName: 'created_at' },
     { name:'Last Login', fieldName: 'last_login_at' }
   ];
 
+  const filterArray = [ 
+    { name:'None', fieldName: 'none' },
+    { name:'Active', fieldName: 'created_at' },
+    { name:'Inactive', fieldName: 'last_login_at' },
+    { name:'Banned', fieldName: 'last_login_at' },
+    { name:'Owner', fieldName: 'last_login_at' },
+    { name:'Admin', fieldName: 'last_login_at' },
+    { name:'Customer', fieldName: 'last_login_at' }
+  ];
+
   const [ isMainRefStuck, setIsMainRefStuck ] = useState<boolean>(false);
   const [ selectedSortBy, setSelectedSortBy ] = useState<string>("")
+  const [ selectedFilterTags, setSelectedFilterTags ] = useState<any[]>([]);
   const mainRef = useRef<HTMLDivElement>(null);
 
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
@@ -130,7 +144,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
   }
 
   const handleClick = async (e: React.MouseEvent<HTMLElement | SVGElement>) => {
-    const { type, scrollDirection, fieldName, sortName } = e.currentTarget.dataset;
+    const { type, scrollDirection, fieldName, sortName, filterName } = e.currentTarget.dataset;
 
     switch (type) {
       case 'right_arrow_button_is_clicked':
@@ -155,6 +169,10 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
       case 'sort_by_list_button_is_clicked':
         if (fieldName) setSelectedSortByField(fieldName);
         if (sortName) setSelectedSortBy(sortName)
+        break;
+      case 'filter_list_button_is_clicked':
+        // if (fieldName) setSelectedFilterTags(fieldName);
+        if (filterName) setSelectedFilterTags((val: any) => ([...val, filterName]))
         break;
       default:
         console.error('Unknown type: ', type);
@@ -250,7 +268,9 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
             </div>
           </label>
         </div>
-        <div>
+        <div
+          className="flex gap-4"
+        >
           <label
             className="
               relative flex items-center w-fit gap-2 p-2 
@@ -301,6 +321,68 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
               )}
             </ul>
           </label>
+          <label
+            className="
+              relative flex items-center w-fit gap-2 p-2 
+              grow-0 rounded-md cursor-pointer
+              bg-white hover:bg-background-light active:bg-background-deep-light
+              translate-all duration-200 ease-in-out
+            "
+            htmlFor={`${id}-filterInpt`}
+          >
+            <input
+              className="
+                peer absolute w-0 h-0 invisible opacity-0
+              "
+              id={`${id}-filterInpt`}
+              type="checkbox"
+              name="filterInpt"
+            />
+            <BxFilter className="w-4 h-4 text-body" />
+            <span className="text-sm text-body font-semibold">Filter</span>
+            <ul
+              className="
+                absolute top-0 peer-checked:top-[calc(100%+0.5rem)] left-1/2 min-w-full
+                translate-x-[-50%]
+                flex flex-col gap-1
+                invisible peer-checked:visible opacity-0 peer-checked:opacity-100
+                p-1 rounded-lg shadow-lg bg-white
+                translate-all duration-200 ease-in-out
+              "
+            >
+              {filterArray.map((itm, i) => 
+                <li
+                  key={i}
+                  className="
+                    text-center hover:bg-background-light whitespace-nowrap
+                    text-sm text-body hover:text-heading font-semibold p-1 rounded-lg
+                    translate-all duration-200 ease-in-out
+                  "
+                  role="button"
+                  data-type="filter_list_button_is_clicked"
+                  data-field-name={itm.fieldName}
+                  data-filter-name={itm.name}
+                  onClick={handleClick}
+                >
+                  {itm.name}
+                </li>
+              )}
+            </ul>
+          </label>
+          <ul
+            className="flex gap-4"
+          >
+            {selectedFilterTags.map(tag =>
+              <li
+                className="
+                  relative text-sm font-semibold text-heading p-2 
+                  rounded-lg text-center
+                  border border-solid border-px border-heading"
+              >
+                {tag}
+              </li>
+            )}
+          </ul>
         </div>
       </div>
       <div
