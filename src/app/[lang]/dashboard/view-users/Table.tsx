@@ -199,7 +199,20 @@ export default function Table({
     return { title: { en: 'Active', ar: 'نشط' }, textColor: 'oklch(53.2% 0.157 131.589)' }
   };
 
-  const addFullNameField = (array: any[]) => array.map((fields: Record<any, string>) => ({ ...fields, full_name: fields.first_name + ' ' + fields.last_name }))
+  const addFullNameField = (array: any[]) => array.map(
+    (fields: Record<any, string>) => (
+      { ...fields, full_name: fields.first_name + ' ' + fields.last_name }
+    )
+  );
+
+  const sortArray = (array: any[], field: any) => {
+    return [...array].sort((a, b) => {
+      if (field === 'none' || !field) return 0;
+      const dateA = new Date(a[field]).getTime();
+      const dateB = new Date(b[field]).getTime();
+      return dateA - dateB;
+    });
+  };
 
   const checkToggle = (toggle: boolean, hookIndex: number | string, refIndex: number | string) => {
     if (toggle === true && hookIndex === refIndex) return true;
@@ -346,7 +359,6 @@ export default function Table({
     getCoreRowModel: getCoreRowModel(),
   });
 
-
   // DEBUG
   console.log('users: ', usersData?.data);
   console.log('user roles: ', userRoles?.data);
@@ -364,8 +376,9 @@ export default function Table({
   )
 
   const users: any = usersData?.data;
+  const usersWithFullName= addFullNameField(users);
   const filteredUsersbasedOnSearcByhNameTerm  = filterByQuery(
-    addFullNameField(users), 
+    usersWithFullName, 
     { 
       searchTerms: [searchNameTerm],
       searchFields: [ 'full_name' ],
@@ -374,8 +387,8 @@ export default function Table({
       specificSearch: false
     }
   );
-  const filteredUsersbasedOnSearchByEmailAndNameTerm  = filterByQuery(
-    addFullNameField(filteredUsersbasedOnSearcByhNameTerm), 
+  const filteredUsers  = filterByQuery(
+    filteredUsersbasedOnSearcByhNameTerm, 
     { 
       searchTerms: [searchEmailTerm],
       searchFields: [ 'email' ],
@@ -384,11 +397,9 @@ export default function Table({
       specificSearch: false
     }
   );
-  const addSortToUserBasedOnField = selectedSortByField 
-    ? filteredUsersbasedOnSearchByEmailAndNameTerm.sort((a, b) => new Date(b[selectedSortByField]).getTime() - new Date(a[selectedSortByField]).getTime() )
-    : filteredUsersbasedOnSearchByEmailAndNameTerm
+  const sortedUsers = sortArray(filteredUsers, selectedSortByField);
   ;
-  const isUsersFilteredArrayEmpty = filteredUsersbasedOnSearchByEmailAndNameTerm.length === 0;
+  const isUsersFilteredArrayEmpty = sortedUsers.length === 0;
   const roles: any = userRoles?.data;
 
   console.log('addFullNameField(users): ', addFullNameField(users));
@@ -452,7 +463,7 @@ export default function Table({
           </tbody>
         }
         <tbody className="bg-white divide-y divide-gray-200">
-          {addSortToUserBasedOnField?.map((user: Record<string, any>, i: number) => (
+          {sortedUsers?.map((user: Record<string, any>, i: number) => (
             [
               <tr key={`user-${i}`}>
                 <td className="px-6 py-4 whitespace-nowrap">

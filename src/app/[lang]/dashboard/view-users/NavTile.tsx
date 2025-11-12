@@ -33,7 +33,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
   const sortByArray = [ 
-    { name:'None', fieldName: '' },
+    { name:'None', fieldName: 'none' },
     { name:'Created At', fieldName: 'created_at' },
     { name:'Last Login', fieldName: 'last_login_at' }
   ];
