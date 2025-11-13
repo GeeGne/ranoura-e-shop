@@ -42,13 +42,13 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
   ];
 
   const filterArray = [ 
-    { name:'None', fieldName: 'none' },
-    { name:'Active', fieldName: 'created_at' },
-    { name:'Inactive', fieldName: 'last_login_at' },
-    { name:'Banned', fieldName: 'last_login_at' },
-    { name:'Owner', fieldName: 'last_login_at' },
-    { name:'Admin', fieldName: 'last_login_at' },
-    { name:'Customer', fieldName: 'last_login_at' }
+    { name:'None', fieldName: 'none', value: 'none' },
+    { name:'Active', fieldName: 'status', value: 'active' },
+    { name:'Inactive', fieldName: 'status', value: 'inactive' },
+    { name:'Banned', fieldName: 'status', value: 'banned' },
+    { name:'Owner', fieldName: 'role', value: 'owner' },
+    { name:'Admin', fieldName: 'role', value: 'admin' },
+    { name:'Customer', fieldName: 'role', value: 'customer' },
   ];
 
   const [ isMainRefStuck, setIsMainRefStuck ] = useState<boolean>(false);
@@ -172,7 +172,18 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
         break;
       case 'filter_list_button_is_clicked':
         // if (fieldName) setSelectedFilterTags(fieldName);
-        if (filterName) setSelectedFilterTags((val: any) => ([...val, filterName]))
+        if (filterName) setSelectedFilterTags((val: any) => {
+          const isNoneTagSelected = filterName === 'None';
+          if (isNoneTagSelected) return [];
+
+          const hasFilterTag = val.some((tag: string) => tag === filterName );
+          if (hasFilterTag) return val;
+
+          return [...val, filterName]
+        });
+        break;
+      case 'selected_filter_tag_button_is_clicked':
+        if (filterName) setSelectedFilterTags((val: any) => val.filter((itm: string) => itm !== filterName));
         break;
       default:
         console.error('Unknown type: ', type);
@@ -216,7 +227,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
             htmlFor={`${id}-searchByNameInpt`}
           >
             <input 
-              className="peer bg-background-light text-body-light py-2 px-2 rounded-md border-none outline-none"
+              className="peer bg-white text-body-light py-2 px-2 rounded-md border-none outline-none"
               id={`${id}-searchByNameInpt`}
               placeholder=""
               name="searchByNameInpt"
@@ -244,7 +255,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
             htmlFor={`${id}-searchByEmailInpt`}
           >
             <input 
-              className="peer bg-background-light text-body-light py-2 px-2 rounded-md border-none outline-none"
+              className="peer bg-white text-body-light py-2 px-2 rounded-md border-none outline-none"
               id={`${id}-searchByEmailInpt`}
               placeholder=""
               name="searchByEmailInpt"
@@ -364,7 +375,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
                   data-filter-name={itm.name}
                   onClick={handleClick}
                 >
-                  {itm.name}
+                    {itm.name}
                 </li>
               )}
             </ul>
@@ -375,11 +386,33 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
             {selectedFilterTags.map(tag =>
               <li
                 className="
-                  relative text-sm font-semibold text-heading p-2 
-                  rounded-lg text-center
-                  border border-solid border-px border-heading"
+                  --zoom-in group relative p-2 
+                  rounded-lg text-sm text-center cursor-pointer
+                  active:opacity-70
+                  border border-solid border-px border-heading
+                  transition-all duration-200 ease-in-out
+                "
+                role="button"
+                data-type="selected_filter_tag_button_is_clicked"
+                data-filter-name={tag}
+                onClick={handleClick}
               >
-                {tag}
+                <span
+                  className="
+                    text-sm font-semibold text-heading
+                  "
+                >
+                  {tag}
+                </span>
+                <CarbonCloseFilled
+                  className="
+                    absolute top-0 right-0 
+                    translate-x-[50%] translate-y-[-50%]
+                    text-heading w-5 h-5 p-px
+                    scale-0 group-hover:scale-100
+                    transition-all duration-200 ease-in-out
+                  "
+                />
               </li>
             )}
           </ul>

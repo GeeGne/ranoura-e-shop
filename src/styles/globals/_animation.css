@@ -160,6 +160,16 @@
   }
 }
 
+@keyFrames zoom-in {
+  from {
+    scale: 0%
+  }
+
+  to {
+    scale: 100%
+  }
+}
+
 .--opacity-blink {
   animation-name: opacity-blink;
   animation-duration: 3s;
@@ -239,5 +249,11 @@
   animation-duration: 5s;
   animation-iteration-count: infinite;
   animation-fill-mode: linear;
+  animation-fill-mode: both;
+}
+
+.--zoom-in {
+  animation-name: zoom-in;
+  animation-duration: 0.3s;
   animation-fill-mode: both;
 }

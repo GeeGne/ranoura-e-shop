@@ -194,9 +194,9 @@ export default function Table({
     const isUserInactive = differentInDays >= 90;
     console.log('differentInDays', differentInDays);
 
-    if (is_banned) return { title: { en: 'Banned', ar: 'محظور' }, textColor: 'oklch(50.5% 0.213 27.518)'};
-    if (isUserInactive) return { title: { en: 'Inactive', ar: 'غير نشط' }, textColor: 'oklch(55.4% 0.135 66.442)' };
-    return { title: { en: 'Active', ar: 'نشط' }, textColor: 'oklch(53.2% 0.157 131.589)' }
+    if (is_banned) return { title: { en: 'Banned', ar: 'محظور' }, name:'banned', textColor: 'oklch(50.5% 0.213 27.518)'};
+    if (isUserInactive) return { title: { en: 'Inactive', ar: 'غير نشط' }, name:'inactive', textColor: 'oklch(55.4% 0.135 66.442)' };
+    return { title: { en: 'Active', ar: 'نشط' }, name:'active', textColor: 'oklch(53.2% 0.157 131.589)' }
   };
 
   const getProcessedUsers = () => {
@@ -205,12 +205,23 @@ export default function Table({
     if (!users) return [];
 
     const usersWithFullName = users.map(
-      (fields: Record<any, string>) => (
-        { ...fields, full_name: fields.first_name + ' ' + fields.last_name }
+      (user: Record<any, any>) => (
+        { ...user, full_name: user.first_name + ' ' + user.last_name }
+      )
+    );
+
+    const usersWithAdjustedRoleTag = usersWithFullName.map(
+      (user: Record<any, any>) => (
+        { ...user, role: user.role.role.name }
+      )
+    );
+    const usersWithAdjustedStatus = usersWithAdjustedRoleTag.map(
+      (user: Record<any, any>) => (
+        { ...user, status: getUserStatus(user.is_banned, user.last_login_at).name }
       )
     );
     const nameFilteredUsers = filterByQuery(
-      usersWithFullName, 
+      usersWithAdjustedStatus, 
       { 
         searchTerms: [searchNameTerm],
         searchFields: [ 'full_name' ],
@@ -493,7 +504,7 @@ export default function Table({
                   </ul>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
-                  {user.role.role.name}
+                  {user.role}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span 
@@ -583,7 +594,7 @@ export default function Table({
                         name="selectRoleInpt"
                         id={`${id}-${i}-selectRoleInpt`}
                       />
-                      <span className="font-semibold text-heading">{user.role.role.name}</span>
+                      <span className="font-semibold text-heading">{user.role}</span>
                       <MdiArrowDownDrop className="text-heading"/>
                       <ul
                         className="
