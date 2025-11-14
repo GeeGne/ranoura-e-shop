@@ -160,12 +160,14 @@
   }
 }
 
-@keyFrames zoom-in {
+@keyframes zoom-in {
   from {
-    scale: 0%
+    opacity: 0;
+    scale: 70%
   }
 
   to {
+    opacity: 1;
     scale: 100%
   }
 }
@@ -254,6 +256,7 @@
 
 .--zoom-in {
   animation-name: zoom-in;
-  animation-duration: 0.3s;
+  animation-duration: 0.2s;
   animation-fill-mode: both;
+  animation-timing-function: ease-out;
 }

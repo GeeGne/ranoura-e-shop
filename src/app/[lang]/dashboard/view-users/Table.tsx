@@ -252,7 +252,7 @@ export default function Table({
       return dateA - dateB;
     });
     const tagFilteredUsers = sortUsers.filter(user => {
-      const areFiltersEmpty = selectedFilterTags?.length === 0 || true;
+      const areFiltersEmpty = selectedFilterTags?.length === 0;
       if (areFiltersEmpty) return true;
       return selectedFilterTags?.some(tag => user[tag.fieldName] === tag.value);
     });

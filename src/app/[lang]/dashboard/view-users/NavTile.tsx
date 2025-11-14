@@ -393,7 +393,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
                 className="
                   --zoom-in group relative p-2 
                   rounded-lg text-sm text-center cursor-pointer
-                  active:opacity-70
+                  active:opacity-70 bg-background
                   border border-solid border-px border-heading
                   transition-all duration-200 ease-in-out
                 "
@@ -413,7 +413,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
                   className="
                     absolute top-0 right-0 
                     translate-x-[50%] translate-y-[-50%]
-                    text-heading w-5 h-5 p-px
+                    text-heading bg-background rounded-full w-5 h-5 p-px
                     scale-0 group-hover:scale-100
                     transition-all duration-200 ease-in-out
                   "
