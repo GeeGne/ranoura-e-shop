@@ -124,6 +124,9 @@ export default function Table({
   const searchEmailTerm = useViewUsersNavTileStore(state => state.searchByEmailTerm);
   const selectedSortByField = useViewUsersNavTileStore(state => state.selectedSortByField);
 
+  const selectedFilterTags = useViewUsersNavTileStore(state => state.selectedFilterTags);
+  const setSelectedFilterTags = useViewUsersNavTileStore(state => state.setSelectedFilterTags);
+
   const [ userOrder, setUserOrder ] = useState<Record<string, any>>({
     toggle: false,
     userId: 0,
@@ -241,13 +244,20 @@ export default function Table({
       }
     );
     const sortUsers = [...emailFilteredUsers].sort((a, b) => {
-      if (selectedSortByField === 'none' || !selectedSortByField) return 0;
+      const isSortEmpty = selectedSortByField === 'none' || !selectedSortByField;
+      if (isSortEmpty) return 0;
+
       const dateA = new Date(a[selectedSortByField]).getTime();
       const dateB = new Date(b[selectedSortByField]).getTime();
       return dateA - dateB;
     });
-
-    return sortUsers;
+    const tagFilteredUsers = sortUsers.filter(user => {
+      const areFiltersEmpty = selectedFilterTags?.length === 0 || true;
+      if (areFiltersEmpty) return true;
+      return selectedFilterTags?.some(tag => user[tag.fieldName] === tag.value);
+    });
+    
+    return tagFilteredUsers;
   }
 
   const checkToggle = (toggle: boolean, hookIndex: number | string, refIndex: number | string) => {
