@@ -53,7 +53,6 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
 
   const [ isMainRefStuck, setIsMainRefStuck ] = useState<boolean>(false);
   const [ selectedSortBy, setSelectedSortBy ] = useState<string>("")
-  const [ selectedFilterTags, setSelectedFilterTags ] = useState<any[]>([]);
   const mainRef = useRef<HTMLDivElement>(null);
 
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
@@ -75,6 +74,8 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
   const searchEmailTerm = useViewUsersNavTileStore(state => state.searchByEmailTerm);
   const setSearchEmailTerm = useViewUsersNavTileStore(state => state.setSearchByEmailTerm);
   const setSelectedSortByField = useViewUsersNavTileStore(state => state.setSelectedSortByField);
+  const selectedFilterTags = useViewUsersNavTileStore(state => state.selectedFilterTags);
+  const setSelectedFilterTags = useViewUsersNavTileStore(state => state.setSelectedFilterTags);
 
   const addProductMutation = useMutation({
     mutationFn: addProduct,
@@ -144,7 +145,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
   }
 
   const handleClick = async (e: React.MouseEvent<HTMLElement | SVGElement>) => {
-    const { type, scrollDirection, fieldName, sortName, filterName } = e.currentTarget.dataset;
+    const { type, scrollDirection, fieldName, sortName, filterName, value } = e.currentTarget.dataset;
 
     switch (type) {
       case 'right_arrow_button_is_clicked':
@@ -172,18 +173,20 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
         break;
       case 'filter_list_button_is_clicked':
         // if (fieldName) setSelectedFilterTags(fieldName);
-        if (filterName) setSelectedFilterTags((val: any) => {
-          const isNoneTagSelected = filterName === 'None';
-          if (isNoneTagSelected) return [];
+        const isNoneTagSelected = filterName === 'None';
+        if (isNoneTagSelected) return setSelectedFilterTags([]);
 
-          const hasFilterTag = val.some((tag: string) => tag === filterName );
-          if (hasFilterTag) return val;
+        const hasFilterTag = selectedFilterTags?.some((tag: Record<string, any>) => tag.value === value );
+        if (hasFilterTag) return selectedFilterTags;
 
-          return [...val, filterName]
-        });
+        if (selectedFilterTags) setSelectedFilterTags([
+          ...selectedFilterTags, { name: filterName, fieldName, value } 
+        ]);
         break;
       case 'selected_filter_tag_button_is_clicked':
-        if (filterName) setSelectedFilterTags((val: any) => val.filter((itm: string) => itm !== filterName));
+        if (selectedFilterTags) setSelectedFilterTags(
+          selectedFilterTags.filter((tag: Record<string, any>) => tag.value !== value
+        ));
         break;
       default:
         console.error('Unknown type: ', type);
@@ -371,11 +374,12 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
                   "
                   role="button"
                   data-type="filter_list_button_is_clicked"
-                  data-field-name={itm.fieldName}
                   data-filter-name={itm.name}
+                  data-field-name={itm.fieldName}
+                  data-value={itm.value}
                   onClick={handleClick}
                 >
-                    {itm.name}
+                  {itm.name}
                 </li>
               )}
             </ul>
@@ -383,8 +387,9 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
           <ul
             className="flex gap-4"
           >
-            {selectedFilterTags.map(tag =>
+            {selectedFilterTags?.map((tag, i) =>
               <li
+                key={i}
                 className="
                   --zoom-in group relative p-2 
                   rounded-lg text-sm text-center cursor-pointer
@@ -394,7 +399,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
                 "
                 role="button"
                 data-type="selected_filter_tag_button_is_clicked"
-                data-filter-name={tag}
+                data-value={tag.value}
                 onClick={handleClick}
               >
                 <span
@@ -402,7 +407,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
                     text-sm font-semibold text-heading
                   "
                 >
-                  {tag}
+                  {tag.name}
                 </span>
                 <CarbonCloseFilled
                   className="
