@@ -188,6 +188,23 @@ export default function Table({
     };
   }, [ action ])
 
+  const translateRole = (role: string) => {
+    if (isEn) return role;
+    switch (role) {
+      case 'owner':
+        return 'مالك';
+      case 'admin':
+        return 'ادمن';
+      case 'customer':
+        return 'عميل';
+      case 'support':
+        return 'دعم';
+      default:
+        console.warn(`The Current "${role}" Role isn\'t included to be translated.`);
+        return role;
+    }
+  }
+
   const getUserStatus = (is_banned: boolean, last_login_at: string) => {
 
     const now = new Date().getTime();
@@ -212,7 +229,6 @@ export default function Table({
         { ...user, full_name: user.first_name + ' ' + user.last_name }
       )
     );
-
     const usersWithAdjustedRoleTag = usersWithFullName.map(
       (user: Record<any, any>) => (
         { ...user, role: user.role.role.name }
@@ -244,11 +260,11 @@ export default function Table({
       }
     );
     const sortUsers = [...emailFilteredUsers].sort((a, b) => {
-      const isSortEmpty = selectedSortByField === 'none' || !selectedSortByField;
+      const isSortEmpty = selectedSortByField?.value === 'none';
       if (isSortEmpty) return 0;
 
-      const dateA = new Date(a[selectedSortByField]).getTime();
-      const dateB = new Date(b[selectedSortByField]).getTime();
+      const dateA = new Date(a[selectedSortByField?.fieldName]).getTime();
+      const dateB = new Date(b[selectedSortByField?.fieldName]).getTime();
       return dateA - dateB;
     });
     const tagFilteredUsers = sortUsers.filter(user => {
@@ -514,7 +530,7 @@ export default function Table({
                   </ul>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
-                  {user.role}
+                  {translateRole(user.role)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span 
@@ -604,7 +620,7 @@ export default function Table({
                         name="selectRoleInpt"
                         id={`${id}-${i}-selectRoleInpt`}
                       />
-                      <span className="font-semibold text-heading">{user.role}</span>
+                      <span className="font-semibold text-heading">{translateRole(user.role)}</span>
                       <MdiArrowDownDrop className="text-heading"/>
                       <ul
                         className="
@@ -629,7 +645,7 @@ export default function Table({
                             data-user-id={user.id}
                             onClick={handleClick}
                           >
-                            {role.name}
+                            {translateRole(role.name)}
                           </li>
                         )}
                       </ul>

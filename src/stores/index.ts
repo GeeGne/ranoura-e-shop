@@ -529,10 +529,8 @@ type ViewUsersNavTileStoreProps = {
   setSearchByNameTerm: (value: string) => void;
   searchByEmailTerm?: string;
   setSearchByEmailTerm: (value: string) => void;
-  selectedSortByField?: string;
-  setSelectedSortByField: (value: string) => void;
-  filterFields?: string;
-  setFilterFields: (value: string) => void;
+  selectedSortByField?: Record<string, any>;
+  setSelectedSortByField: (value: Record<string, any>) => void;
   selectedFilterTags?: any[];
   setSelectedFilterTags: (value: any[]) => void;
 }
@@ -543,10 +541,8 @@ const useViewUsersNavTileStore = create<ViewUsersNavTileStoreProps>()(
     setSearchByNameTerm: (searchByNameTerm) => set({ searchByNameTerm }),
     searchByEmailTerm: '',
     setSearchByEmailTerm: (searchByEmailTerm) => set({ searchByEmailTerm }),
-    selectedSortByField: 'none',
+    selectedSortByField: { name: 'None', fieldName: '', value: 'none'},
     setSelectedSortByField: (selectedSortByField) => set({ selectedSortByField }),
-    filterFields: 'none',
-    setFilterFields: (filterFields) => set({ filterFields }),
     selectedFilterTags: [],
     setSelectedFilterTags: (selectedFilterTags) => set({ selectedFilterTags })
   })

@@ -36,19 +36,19 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
   const isEn = lang === 'en';
 
   const sortByArray = [ 
-    { name:'None', fieldName: 'none' },
-    { name:'Created At', fieldName: 'created_at' },
-    { name:'Last Login', fieldName: 'last_login_at' }
+    { name: { en: 'None', ar: 'لاشيء' }, fieldName: 'none', value: 'none' },
+    { name: { en: 'Created At', ar: 'تاريخ الانشاء' }, fieldName: 'created_at', value: 'created at' },
+    { name: { en: 'Last Login', ar: 'اخر ظهور' }, fieldName: 'last_login_at', value: 'last login' }
   ];
 
   const filterArray = [ 
-    { name:'None', fieldName: 'none', value: 'none' },
-    { name:'Active', fieldName: 'status', value: 'active' },
-    { name:'Inactive', fieldName: 'status', value: 'inactive' },
-    { name:'Banned', fieldName: 'status', value: 'banned' },
-    { name:'Owner', fieldName: 'role', value: 'owner' },
-    { name:'Admin', fieldName: 'role', value: 'admin' },
-    { name:'Customer', fieldName: 'role', value: 'customer' },
+    { name:{ en: 'None', ar: 'لاشيء' }, fieldName: 'none', value: 'none' },
+    { name:{ en: 'Active', ar: 'فعال' }, fieldName: 'status', value: 'active' },
+    { name:{ en: 'Inactive', ar: 'غير فعال' }, fieldName: 'status', value: 'inactive' },
+    { name:{ en: 'Banned', ar: 'محظور' }, fieldName: 'status', value: 'banned' },
+    { name:{ en: 'Owner', ar: 'مالك' }, fieldName: 'role', value: 'owner' },
+    { name:{ en: 'Admin', ar: 'ادمن' }, fieldName: 'role', value: 'admin' },
+    { name:{ en: 'Customer', ar: 'عميل' }, fieldName: 'role', value: 'customer' },
   ];
 
   const [ isMainRefStuck, setIsMainRefStuck ] = useState<boolean>(false);
@@ -73,36 +73,10 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
   const setSearchNameTerm = useViewUsersNavTileStore(state => state.setSearchByNameTerm);
   const searchEmailTerm = useViewUsersNavTileStore(state => state.searchByEmailTerm);
   const setSearchEmailTerm = useViewUsersNavTileStore(state => state.setSearchByEmailTerm);
+  const selectedSortByField = useViewUsersNavTileStore(state => state.selectedSortByField);
   const setSelectedSortByField = useViewUsersNavTileStore(state => state.setSelectedSortByField);
   const selectedFilterTags = useViewUsersNavTileStore(state => state.selectedFilterTags);
   const setSelectedFilterTags = useViewUsersNavTileStore(state => state.setSelectedFilterTags);
-
-  const addProductMutation = useMutation({
-    mutationFn: addProduct,
-    onSettled: () => {
-      setActivityWindowToggle(false);
-    },
-    onMutate: () => {
-      setActivityWindowToggle(true);
-      setActivityWindowMessage(isEn ? 'Creating new Product...' : 'جاري انشاء منتج جديد...')
-    },
-    onSuccess: (data: any) => {
-      const { data: productData } = data;
-      queryClient.invalidateQueries({ queryKey: ['products']});
-      setAlertToggle(Date.now());
-      setAlertType("success");
-      setAlertMessage(data?.message[isEn ? 'en' : 'ar']);
-      
-      setEditProductWindowToggle(true);
-      setEditProductWindowTrigger(Date.now());
-      setEditProductWindowProductData(productData);
-    },
-    onError: (error: any) => {
-      setAlertToggle(Date.now());
-      setAlertType("error");
-      setAlertMessage(isEn ? "Couldn't create new product, please try again." : "فشل في محاوله انشاء مجتمع جديد, الرجاء محاوله مره اخرى.")
-    }
-  });
 
   useEffect(() => {
     const observeSticky = (stickyRef: HTMLElement) => {
@@ -168,12 +142,11 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
         setAddCategoryWindowToggle(true);
         break;
       case 'sort_by_list_button_is_clicked':
-        if (fieldName) setSelectedSortByField(fieldName);
-        if (sortName) setSelectedSortBy(sortName)
+        if (sortName && fieldName) setSelectedSortByField({ name: sortName, fieldName, value })
         break;
       case 'filter_list_button_is_clicked':
         // if (fieldName) setSelectedFilterTags(fieldName);
-        const isNoneTagSelected = filterName === 'None';
+        const isNoneTagSelected = filterName === 'None' || filterName === 'لاشيء';
         if (isNoneTagSelected) return setSelectedFilterTags([]);
 
         const hasFilterTag = selectedFilterTags?.some((tag: Record<string, any>) => tag.value === value );
@@ -237,20 +210,20 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
               onChange={handleChange}
             />
             <div
-              className="
-                absolute left-2 top-1/2 translate-y-[-50%]
+              className={`
+                absolute ${isEn ? 'left-2' : 'right-2'} top-1/2 translate-y-[-50%]
                 invisible peer-focus:invisible peer-placeholder-shown:visible
                 opacity-100 peer-focus:opacity-0 peer-placeholder-shown:opacity-100
                 flex gap-1
                 transition-all duration-200 ease-out
-              "
+              `}
             >
               <IconamoonSearchLight 
                 className="
                   text-body-light w-5 h-5 
                 "
               />
-              <span className="text-body-light font-semibold">Search By Name...</span>
+              <span className="text-body-light font-semibold">{isEn ? 'Search By Name...' : 'البحث بالاسم...'}</span>
             </div>
           </label>
           <label
@@ -265,20 +238,20 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
               onChange={handleChange}
             />
             <div
-              className="
-                absolute left-2 top-1/2 translate-y-[-50%]
+              className={`
+                absolute ${isEn ? 'left-2' : 'right-2'} top-1/2 translate-y-[-50%]
                 invisible peer-focus:invisible peer-placeholder-shown:visible
                 opacity-100 peer-focus:opacity-0 peer-placeholder-shown:opacity-100
                 flex gap-1
                 transition-all duration-200 ease-out
-              "
+              `}
             >
               <IconamoonSearchLight 
                 className="
                   text-body-light w-5 h-5 
                 "
               />
-              <span className="text-body-light font-semibold">Search By Email...</span>
+              <span className="text-body-light font-semibold">{isEn ? 'Search By Email...' : 'البحث بالايميل...'}</span>
             </div>
           </label>
         </div>
@@ -303,9 +276,12 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
               name="sortByInpt"
             />
             <FlowbiteSortOutline className="w-4 h-4 text-body" />
-            <span className="text-sm text-body font-semibold">Sort By</span>
+            <span className="text-sm text-body font-semibold">{isEn ? 'Sort By' : 'ترتيب حسب'}</span>
             <span className="text-sm text-content font-semibold">
-              {selectedSortBy === 'None' ? '' : selectedSortBy}
+              {selectedSortByField?.value === 'none'  
+                ? '' 
+                : selectedSortByField?.name
+              }
             </span>
             <ul
               className="
@@ -327,10 +303,11 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
                   role="button"
                   data-type="sort_by_list_button_is_clicked"
                   data-field-name={itm.fieldName}
-                  data-sort-name={itm.name}
+                  data-value={itm.value}
+                  data-sort-name={itm.name[lang]}
                   onClick={handleClick}
                 >
-                  {itm.name}
+                  {itm.name[lang]}
                 </li>
               )}
             </ul>
@@ -353,7 +330,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
               name="filterInpt"
             />
             <BxFilter className="w-4 h-4 text-body" />
-            <span className="text-sm text-body font-semibold">Filter</span>
+            <span className="text-sm text-body font-semibold">{isEn ? 'Filter' : 'تصنيف'}</span>
             <ul
               className="
                 absolute top-0 peer-checked:top-[calc(100%+0.5rem)] left-1/2 min-w-full
@@ -374,12 +351,12 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
                   "
                   role="button"
                   data-type="filter_list_button_is_clicked"
-                  data-filter-name={itm.name}
+                  data-filter-name={itm.name[lang]}
                   data-field-name={itm.fieldName}
                   data-value={itm.value}
                   onClick={handleClick}
                 >
-                  {itm.name}
+                  {itm.name[lang]}
                 </li>
               )}
             </ul>

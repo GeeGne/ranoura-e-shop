@@ -79,6 +79,7 @@ model UserOrders {
 
   // SHIPPING INFORMATION
   customer_full_name String
+  email String
   shipping_address   Json?
   shipping_cost      Decimal? @default(0)
 
