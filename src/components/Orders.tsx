@@ -27,6 +27,9 @@ type Props = {
   type?: 'user_orders_table' | 'orders_table' | 'user_order';
   scroll?: string;
   scrollTrigger?: number;
+  data: Record<string, any> | null;
+  isLoading?: boolean;
+  isError?: boolean;
 } & React.ComponentPropsWithRef<'div'>;
 
 export default function Orders ({ 
@@ -36,6 +39,9 @@ export default function Orders ({
   type = 'user_order',
   scroll, 
   scrollTrigger,
+  data,
+  isLoading = false,
+  isError = false,
   ...props
 }: Props) {
 
@@ -191,7 +197,6 @@ export default function Orders ({
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
           <tr>
-
             <td className="px-6 py-4 whitespace-nowrap">
               <div className="flex items-center gap-2">
                 <div className="flex-shrink-0 h-12 w-12">
