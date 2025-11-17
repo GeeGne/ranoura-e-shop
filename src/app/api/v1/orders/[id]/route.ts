@@ -14,37 +14,34 @@ async function nextError (code: string, message: string, status = 404) {
   )
 };
 
-// @desc get user orders
-// @route /api/v1/users/:id/orders
-// @access public
+// @desc get specific order based on order id
+// @route /api/v1/orders/:id
+// @access private(owner, admin)
 export async function GET(
   req: NextRequest,
   { params }: { params: { id: string}}
 ) {
   try {
-    const userId = (await params).id;
+    const orderId = (await params).id;
 
-    const data = await prisma.userOrders.findMany({
+    const data = await prisma.userOrders.findUnique({
       where: {
-        user_id: userId
-      },
-      include: {
-        user: true
+        id: orderId
       }
-    })
+    });
 
     if (!data) return nextError(
-      'USER_ORDERS_FETCH_FAIL',
-      'user orders doesn\'t exists or wronge id',
+      'ORDER_FETCH_FAIL',
+      'order doesn\'t exists or wronge id',
       501
-    )
+    );
 
-    const message = 'User Orders is fetched successfully!';
+    const message = 'Order is fetched successfully!';
 
     return NextResponse.json({
       data,
       message
-    }, { status: 200 })
+    }, { status: 200 });
   } catch (err) {
     const error = err as Error;
     console.error('error: ', error.message);
@@ -56,33 +53,31 @@ export async function GET(
   }
 }
 
-// @desc add new order
-// @route /api/v1/users/id:/orders
-// @access public
-export async function POST(
+// @desc update selected order
+// @route /api/v1/orders/id:
+// @access private (owner, admin)
+export async function PUT(
   req: NextRequest,
   { params }: { params: { id: string} }
 ) {
   try {
-    const userId = (await params).id;
+    const orderId = (await params).id;
     const requestedData = await req.json();
 
-    const data = await prisma.userOrders.create({
-      data: {
-        ...requestedData,
-        user_id: userId
-      }
-    })
+    const data = await prisma.userOrders.update({
+      where: { id: orderId },
+      data: requestedData
+    });
 
     if (!data) return nextError(
-      'ORDER_CREATE_FAIL',
+      'ORDER_UPDATE_FAIL',
       'order doesn\'t exists or wronge id',
       501
     )
 
     const message = {
-      en: 'Order is created successfully!',
-      ar: 'تم انشاء الطلب بنجاح!'
+      en: 'Order is updated successfully!',
+      ar: 'تم تعديل الطلب بنجاح!'
     };
 
     return NextResponse.json({
