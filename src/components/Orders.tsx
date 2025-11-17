@@ -5,6 +5,8 @@ import { useEffect, useRef, useId } from 'react';
 import MdiCardAccountDetails from '@/components/svgs/MdiCardAccountDetails';
 import LetsIconsOrderFill from '@/components/svgs/LetsIconsOrderFill';
 import MdiArrowDownDrop from '@/components/svgs/MdiArrowDownDrop';
+import LoadingTable from '@/components/LoadingTable';
+import ErrorLayout from '@/components/ErrorLayout';
 
 // STORES
 import { 
@@ -27,7 +29,7 @@ type Props = {
   type?: 'user_orders_table' | 'orders_table' | 'user_order';
   scroll?: string;
   scrollTrigger?: number;
-  data: Record<string, any> | null;
+  data: any[] | null;
   isLoading?: boolean;
   isError?: boolean;
 } & React.ComponentPropsWithRef<'div'>;
@@ -126,7 +128,21 @@ export default function Orders ({
       default:
         console.error('Unknown Type: ', type);
     }
-  }
+  };
+
+  // DEBUG & UI
+  console.log('orders: ', data);
+
+  if (isLoading) return (
+    <LoadingTable />
+  )
+
+  if (isError) return (
+    <ErrorLayout 
+      title={isEn ? 'Unable To Load' : 'لم يتم التحميل'}
+      description={isEn ? 'Please Refresh the page or try again later' : 'الرجاء اعاده تحميل الصفحه او حاول مره اخرى لاحقا'}
+    />
+  )
 
   if (type === 'orders_table') return (
     <div 
@@ -196,126 +212,130 @@ export default function Orders ({
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          <tr>
-            <td className="px-6 py-4 whitespace-nowrap">
-              <div className="flex items-center gap-2">
-                <div className="flex-shrink-0 h-12 w-12">
-                  <img className="w-full h-full object-cover object-center rounded-full" src={pfpImage} alt="" />
-                </div>
-                <div className="ml-4">
-                  <div className="text-base font-medium text-heading">
-                    {'Ahmed' + ' ' + 'El_Ghabra'}
+          {data?.map((order: Record<string, any>, i: number) =>
+            <tr
+              key={i}
+            >
+              <td className="px-6 py-4 whitespace-nowrap">
+                <div className="flex items-center gap-2">
+                  <div className="flex-shrink-0 h-12 w-12">
+                    <img className="w-full h-full object-cover object-center rounded-full" src={pfpImage} alt="" />
                   </div>
-                  <div className="text-sm text-body-light">bluewhalexweb@outlook.com</div>
+                  <div className="ml-4">
+                    <div className="text-base font-medium text-heading">
+                      {'Ahmed' + ' ' + 'El_Ghabra'}
+                    </div>
+                    <div className="text-sm text-body-light">bluewhalexweb@outlook.com</div>
+                  </div>
                 </div>
-              </div>
-            </td>
-            <td className="px-6 py-4 whitespace-nowrap">
-              <div className="flex flex-col gap-2">
-                <div>
-                  <span className="text-sm text-body-light">ID: </span>
-                  <span className="font-bold text-sm text-body underline">{orders.id}</span>
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                <div className="flex flex-col gap-2">
+                  <div>
+                    <span className="text-sm text-body-light">ID: </span>
+                    <span className="font-bold text-sm text-body underline">{orders.id}</span>
+                  </div>
+                  <div>
+                    <span className="text-sm text-body-light">Number of items: </span>
+                    <span className="font-bold text-sm text-body underline">{orders.products.length} </span>
+                    <span className="text-sm text-body-light ml-2">Ordered at: </span>
+                    <span className="font-bold text-sm text-body underline">{getTimeAgo(orders.created_at)}</span>
+                  </div>
                 </div>
-                <div>
-                  <span className="text-sm text-body-light">Number of items: </span>
-                  <span className="font-bold text-sm text-body underline">{orders.products.length} </span>
-                  <span className="text-sm text-body-light ml-2">Ordered at: </span>
-                  <span className="font-bold text-sm text-body underline">{getTimeAgo(orders.created_at)}</span>
-                </div>
-              </div>
-            </td>
-            <td className="px-6 py-4 whitespace-nowrap">
-              <span 
-                className="relative text-xs font-bold py-1 px-2"
-                style={{ color: statusColors[orders.status]}}
-              >
-                {orders.status.toLowerCase()}
-              <div
-                className="absolute top-0 left-0 w-full h-full opacity-20 rounded-full"
-                style={{ backgroundColor: statusColors[orders.status]}}
-              />
-              </span>
-            </td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
-              {formatDate(orders.created_at)}
-            </td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
-              {orders.total}
-            </td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
-              <div className="flex gap-2">
-                <LetsIconsOrderFill 
-                  className="
-                    w-7 h-7 p-1 text-heading rounded-md cursor-pointer
-                    bg-background-light hover:bg-background-deep-light
-                    active:opacity-60
-                    transition-all duration-200 ease-out
-                  "
-                  role="button"
-                  data-type="order_details_window_is_clicked"
-                  onClick={handleClick}
-                />
-                <MdiCardAccountDetails 
-                  className="
-                    w-7 h-7 p-[5px] text-heading rounded-md cursor-pointer
-                    bg-background-light hover:bg-background-deep-light
-                    active:opacity-60
-                    transition-all duration-200 ease-out
-                  "
-                  role="button"
-                  data-type="shipping_details_window_is_clicked"
-                  onClick={handleClick}
-                />
-                <label
-                  className="
-                    relative flex items-center 
-                    bg-background-light hover:bg-background-deep-light 
-                    rounded-lg cursor-pointer
-                    transition-all duration-200 ease-out
-                  "
-                  htmlFor={`${id}-status`}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                <span 
+                  className="relative text-xs font-bold py-1 px-2"
+                  style={{ color: statusColors[orders.status]}}
                 >
-                  <input 
+                  {orders.status.toLowerCase()}
+                <div
+                  className="absolute top-0 left-0 w-full h-full opacity-20 rounded-full"
+                  style={{ backgroundColor: statusColors[orders.status]}}
+                />
+                </span>
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
+                {formatDate(orders.created_at)}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
+                {orders.total}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
+                <div className="flex gap-2">
+                  <LetsIconsOrderFill 
                     className="
-                      peer absolute w-0 h-0 opacity-0
-                    "
-                    type="checkbox"
-                    name="statusInpt"
-                    id={`${id}-status`}
-                  />
-                  <div 
-                    className="
-                      w-[90px] text-center p-1 text-sm bg-transparent font-bold
-                      border-none outline-none cursor-pointer
-                    "
-                    style={{ color: statusColors[orders.status]}}
-                  >
-                    {orders.status.toLowerCase()}
-                  </div>
-                  <MdiArrowDownDrop />
-                  <ul
-                    className="
-                      absolute top-full left-0 w-full 
-                      flex flex-col p-2 z-[5]
-                      bg-white shadow-lg rounded-lg
-                      invisible peer-checked:visible opacity-0 peer-checked:opacity-100
+                      w-7 h-7 p-1 text-heading rounded-md cursor-pointer
+                      bg-background-light hover:bg-background-deep-light
+                      active:opacity-60
                       transition-all duration-200 ease-out
                     "
+                    role="button"
+                    data-type="order_details_window_is_clicked"
+                    onClick={handleClick}
+                  />
+                  <MdiCardAccountDetails 
+                    className="
+                      w-7 h-7 p-[5px] text-heading rounded-md cursor-pointer
+                      bg-background-light hover:bg-background-deep-light
+                      active:opacity-60
+                      transition-all duration-200 ease-out
+                    "
+                    role="button"
+                    data-type="shipping_details_window_is_clicked"
+                    onClick={handleClick}
+                  />
+                  <label
+                    className="
+                      relative flex items-center 
+                      bg-background-light hover:bg-background-deep-light 
+                      rounded-lg cursor-pointer
+                      transition-all duration-200 ease-out
+                    "
+                    htmlFor={`${id}-status`}
                   >
-                    {Object.entries(statusColors).map(([ name, color ]) => 
-                      <li
-                        className="
-                          p-2 rounded-lg hover:bg-background-light text-body text-sm font-bold
-                        "
-                      >
-                        {name}
-                      </li>
-                    )} 
-                  </ul>
-                </label>
-              </div>
-            </td>
-          </tr>
+                    <input 
+                      className="
+                        peer absolute w-0 h-0 opacity-0
+                      "
+                      type="checkbox"
+                      name="statusInpt"
+                      id={`${id}-status`}
+                    />
+                    <div 
+                      className="
+                        w-[90px] text-center p-1 text-sm bg-transparent font-bold
+                        border-none outline-none cursor-pointer
+                      "
+                      style={{ color: statusColors[orders.status]}}
+                    >
+                      {orders.status.toLowerCase()}
+                    </div>
+                    <MdiArrowDownDrop />
+                    <ul
+                      className="
+                        absolute top-full left-0 w-full 
+                        flex flex-col p-2 z-[5]
+                        bg-white shadow-lg rounded-lg
+                        invisible peer-checked:visible opacity-0 peer-checked:opacity-100
+                        transition-all duration-200 ease-out
+                      "
+                    >
+                      {Object.entries(statusColors).map(([ name, color ]) => 
+                        <li
+                          className="
+                            p-2 rounded-lg hover:bg-background-light text-body text-sm font-bold
+                          "
+                        >
+                          {name}
+                        </li>
+                      )} 
+                    </ul>
+                  </label>
+                </div>
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>

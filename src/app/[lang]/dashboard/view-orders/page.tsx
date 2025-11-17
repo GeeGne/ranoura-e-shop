@@ -2,6 +2,7 @@
 
 // HOOKS
 import { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 // COMPONENTS
 import Table from '@/app/[lang]/dashboard/view-orders/Table';
@@ -10,6 +11,9 @@ import Orders from '@/components/Orders';
 
 // STORES
 import { useLanguageStore, useTabNameStore } from '@/stores/index';
+
+// API
+import getAllOrders from '@/lib/api/orders/get';
 
 export default function page () {  
   
@@ -27,6 +31,11 @@ export default function page () {
     setTabName('view-orders');
   }, []);
 
+  const { data: ordersData, isLoading, isError } = useQuery({
+    queryKey: ['orders'],
+    queryFn: getAllOrders
+  })
+
   return (
     <div>
       <NavTile 
@@ -39,6 +48,9 @@ export default function page () {
         scroll={scrollTable}
         scrollTrigger={scrollTrigger}
         type="orders_table"
+        data={ordersData?.data}
+        isLoading={isLoading}
+        isError={isError}
       />
     </div>
   )
