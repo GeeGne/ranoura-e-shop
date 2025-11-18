@@ -69,6 +69,7 @@ model UserOrders {
   // ORDER INFORMATION
   status   OrderStatus @default(PENDING)
   products Json
+  total_items Int?
   total    Decimal
 
   // TIMES STAMPS
@@ -78,6 +79,7 @@ model UserOrders {
   cancelled_at DateTime?
 
   // SHIPPING INFORMATION
+  customer_pfp String?
   customer_full_name String
   email String
   shipping_address   Json?

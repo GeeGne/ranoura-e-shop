@@ -548,6 +548,30 @@ const useViewUsersNavTileStore = create<ViewUsersNavTileStoreProps>()(
   })
 );
 
+type ViewOrdersNavTileStoreProps = {
+  searchByNameTerm?: string;
+  setSearchByNameTerm: (value: string) => void;
+  searchByEmailTerm?: string;
+  setSearchByEmailTerm: (value: string) => void;
+  selectedSortByField?: Record<string, any>;
+  setSelectedSortByField: (value: Record<string, any>) => void;
+  selectedFilterTags?: any[];
+  setSelectedFilterTags: (value: any[]) => void;
+}
+
+const useViewOrdersNavTileStore = create<ViewOrdersNavTileStoreProps>()(
+  (set) => ({
+    searchByNameTerm: '',
+    setSearchByNameTerm: (searchByNameTerm) => set({ searchByNameTerm }),
+    searchByEmailTerm: '',
+    setSearchByEmailTerm: (searchByEmailTerm) => set({ searchByEmailTerm }),
+    selectedSortByField: { name: 'None', fieldName: '', value: 'none'},
+    setSelectedSortByField: (selectedSortByField) => set({ selectedSortByField }),
+    selectedFilterTags: [],
+    setSelectedFilterTags: (selectedFilterTags) => set({ selectedFilterTags })
+  })
+);
+
 export { 
   useCartStore, useNavbarStore, 
   useTabNameStore, useFilterWindowStore,
@@ -561,5 +585,6 @@ export {
   useAddSubCategoryWindowStore, useImageDisplayerWindow,
   useAddCategoryWindowStore, useEditImageUrlCategoryWindowStore,
   useVideoDisplayerWindowStore, useOrderDetailsWindowStore,
-  useShippingDetailsWindowStore, useViewUsersNavTileStore
+  useShippingDetailsWindowStore, useViewUsersNavTileStore,
+  useViewOrdersNavTileStore
 };

@@ -1,21 +1,25 @@
 "use client"
 
 // HOOKS
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useId } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 // STORES
 import { 
   useLanguageStore, useAlertMessageStore, 
   useEditProductWindowStore, useActivityWindowStore, 
-  useLayoutRefStore, useAddCategoryWindowStore
+  useLayoutRefStore, useAddCategoryWindowStore, useViewOrdersNavTileStore
 } from '@/stores/index';
 
 // COMPONENTS
 import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingResize';
 import LineMdChevronSmallRight from '@/components/svgs/LineMdChevronSmallRight';
 import LineMdChevronSmallDown from '@/components/svgs/LineMdChevronSmallDown';
+import FlowbiteSortOutline from '@/components/svgs/FlowbiteSortOutline';
+import BxFilter from '@/components/svgs/BxFilter';
+import CarbonCloseFilled from '@/components/svgs/CarbonCloseFilled';
 import EpList from '@/components/svgs/EpList';
+import IconamoonSearchLight from '@/components/svgs/IconamoonSearchLight';
 import LineMdPlus from '@/components/svgs/LineMdPlus';
 
 // API
@@ -26,11 +30,32 @@ import defaultProductData from '@/utils/defaultProductData';
 
 export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: any) {
   
+  const id = useId();
   const queryClient = useQueryClient();
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
 
+  const sortByArray = [ 
+    { name: { en: 'None', ar: 'لاشيء' }, fieldName: 'none', value: 'none' },
+    { name: { en: 'Created At', ar: 'تاريخ الانشاء' }, fieldName: 'created_at', value: 'created at' },
+    { name: { en: 'Updated At', ar: 'اخر ظهور' }, fieldName: 'last_login_at', value: 'last login' },
+    { name: { en: 'Canceled At', ar: 'اخر ظهور' }, fieldName: 'last_login_at', value: 'last login' }
+  ];
+
+  const filterArray = [ 
+    { name:{ en: 'None', ar: 'لاشيء' }, fieldName: 'none', value: 'none' },
+    { name:{ en: 'Pending', ar: 'قيد الانتظار' }, fieldName: 'status', value: 'PENDING' },
+    { name:{ en: 'Processing', ar: 'قيد المعالجه' }, fieldName: 'status', value: 'PROCESSING' },
+    { name:{ en: 'Confirmed', ar: 'مؤكد' }, fieldName: 'status', value: 'CONFIRMED' },
+    { name:{ en: 'On Delivery', ar: 'قيد التوصيل' }, fieldName: 'status', value: 'ONDELIVERY' },
+    { name:{ en: 'Shipped', ar: 'تم الشحن' }, fieldName: 'status', value: 'SHIPPED' },
+    { name:{ en: 'Delivered', ar: 'تم التسليم' }, fieldName: 'status', value: 'DELIVERED' },
+    { name:{ en: 'Canceled', ar: 'ملغي' }, fieldName: 'status', value: 'CANCELED' },
+    { name:{ en: 'Refunded', ar: 'لم الاسترجاع' }, fieldName: 'status', value: 'REFUNDED' },
+  ];
+
   const [ isMainRefStuck, setIsMainRefStuck ] = useState<boolean>(false);
+  const [ selectedSortBy, setSelectedSortBy ] = useState<string>("")
   const mainRef = useRef<HTMLDivElement>(null);
 
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
@@ -47,32 +72,14 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
 
   const setAddCategoryWindowToggle = useAddCategoryWindowStore(state => state.setToggle);
 
-  const addProductMutation = useMutation({
-    mutationFn: addProduct,
-    onSettled: () => {
-      setActivityWindowToggle(false);
-    },
-    onMutate: () => {
-      setActivityWindowToggle(true);
-      setActivityWindowMessage(isEn ? 'Creating new Product...' : 'جاري انشاء منتج جديد...')
-    },
-    onSuccess: (data: any) => {
-      const { data: productData } = data;
-      queryClient.invalidateQueries({ queryKey: ['products']});
-      setAlertToggle(Date.now());
-      setAlertType("success");
-      setAlertMessage(data?.message[isEn ? 'en' : 'ar']);
-      
-      setEditProductWindowToggle(true);
-      setEditProductWindowTrigger(Date.now());
-      setEditProductWindowProductData(productData);
-    },
-    onError: (error: any) => {
-      setAlertToggle(Date.now());
-      setAlertType("error");
-      setAlertMessage(isEn ? "Couldn't create new product, please try again." : "فشل في محاوله انشاء مجتمع جديد, الرجاء محاوله مره اخرى.")
-    }
-  });
+  const searchNameTerm = useViewOrdersNavTileStore(state => state.searchByNameTerm);
+  const setSearchNameTerm = useViewOrdersNavTileStore(state => state.setSearchByNameTerm);
+  const searchEmailTerm = useViewOrdersNavTileStore(state => state.searchByEmailTerm);
+  const setSearchEmailTerm = useViewOrdersNavTileStore(state => state.setSearchByEmailTerm);
+  const selectedSortByField = useViewOrdersNavTileStore(state => state.selectedSortByField);
+  const setSelectedSortByField = useViewOrdersNavTileStore(state => state.setSelectedSortByField);
+  const selectedFilterTags = useViewOrdersNavTileStore(state => state.selectedFilterTags);
+  const setSelectedFilterTags = useViewOrdersNavTileStore(state => state.setSelectedFilterTags);
 
   useEffect(() => {
     const observeSticky = (stickyRef: HTMLElement) => {
@@ -99,8 +106,23 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
     if (mainRef.current) observeSticky(mainRef.current)
   }, []);
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.currentTarget;
+
+    switch (name) {
+      case 'searchByNameInpt':
+        setSearchNameTerm(value);
+        break;
+      case 'searchByEmailInpt':
+        setSearchEmailTerm(value);
+        break;
+      default:
+        console.error('Unknown name: ', name);
+    }
+  }
+
   const handleClick = async (e: React.MouseEvent<HTMLElement | SVGElement>) => {
-    const { type, scrollDirection } = e.currentTarget.dataset;
+    const { type, scrollDirection, fieldName, sortName, filterName, value } = e.currentTarget.dataset;
 
     switch (type) {
       case 'right_arrow_button_is_clicked':
@@ -122,6 +144,26 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
       case 'add_category_button_is_clicked':
         setAddCategoryWindowToggle(true);
         break;
+      case 'sort_by_list_button_is_clicked':
+        if (sortName && fieldName) setSelectedSortByField({ name: sortName, fieldName, value })
+        break;
+      case 'filter_list_button_is_clicked':
+        // if (fieldName) setSelectedFilterTags(fieldName);
+        const isNoneTagSelected = filterName === 'None' || filterName === 'لاشيء';
+        if (isNoneTagSelected) return setSelectedFilterTags([]);
+
+        const hasFilterTag = selectedFilterTags?.some((tag: Record<string, any>) => tag.value === value );
+        if (hasFilterTag) return selectedFilterTags;
+
+        if (selectedFilterTags) setSelectedFilterTags([
+          ...selectedFilterTags, { name: filterName, fieldName, value } 
+        ]);
+        break;
+      case 'selected_filter_tag_button_is_clicked':
+        if (selectedFilterTags) setSelectedFilterTags(
+          selectedFilterTags.filter((tag: Record<string, any>) => tag.value !== value
+        ));
+        break;
       default:
         console.error('Unknown type: ', type);
     }
@@ -130,6 +172,8 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
   // UI & DEBUG
   // console.log("onLayoutScroll: ", onLayoutScroll.target.scrollTop);
   // console.log("isMainRefStuck: ", isMainRefStuck);
+  console.log("searchNameTerm: ", searchNameTerm);
+  console.log("searchEmailTerm: ", searchEmailTerm);
 
   return(
     <div
@@ -151,42 +195,245 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
           transition-all duration-200 ease-out
         `}
       />
-      <h3
-        className={`
-          ${isMainRefStuck ? 'text-heading-invert' : 'text-heading'}
-          transition-all duration-200 ease-out
-        `}
+      <div
+        className="flex flex-col gap-4"
       >
-        {isEn ? 'List' : 'القائمه'}
-      </h3>
+        <div
+          className="flex gap-4"
+        >
+          <label
+            className="relative cursor-text"
+            htmlFor={`${id}-searchByOrderIdInpt`}
+          >
+            <input 
+              className="peer bg-white text-body-light py-2 px-2 rounded-md border-none outline-none"
+              id={`${id}-searchByOrderIdInpt`}
+              placeholder=""
+              name="searchByOrderIdInpt"
+              onChange={handleChange}
+            />
+            <div
+              className={`
+                absolute ${isEn ? 'left-2' : 'right-2'} top-1/2 translate-y-[-50%]
+                invisible peer-focus:invisible peer-placeholder-shown:visible
+                opacity-100 peer-focus:opacity-0 peer-placeholder-shown:opacity-100
+                flex gap-1
+                transition-all duration-200 ease-out
+              `}
+            >
+              <IconamoonSearchLight 
+                className="
+                  text-body-light w-5 h-5 
+                "
+              />
+              <span className="text-body-light font-semibold">{isEn ? 'Search By Order ID...' : 'البحث برقم الطلب...'}</span>
+            </div>
+          </label>
+          <label
+            className="relative cursor-text"
+            htmlFor={`${id}-searchByNameInpt`}
+          >
+            <input 
+              className="peer bg-white text-body-light py-2 px-2 rounded-md border-none outline-none"
+              id={`${id}-searchByNameInpt`}
+              placeholder=""
+              name="searchByNameInpt"
+              onChange={handleChange}
+            />
+            <div
+              className={`
+                absolute ${isEn ? 'left-2' : 'right-2'} top-1/2 translate-y-[-50%]
+                invisible peer-focus:invisible peer-placeholder-shown:visible
+                opacity-100 peer-focus:opacity-0 peer-placeholder-shown:opacity-100
+                flex gap-1
+                transition-all duration-200 ease-out
+              `}
+            >
+              <IconamoonSearchLight 
+                className="
+                  text-body-light w-5 h-5 
+                "
+              />
+              <span className="text-body-light font-semibold">{isEn ? 'Search By Name...' : 'البحث بالاسم...'}</span>
+            </div>
+          </label>
+          <label
+            className="relative cursor-text"
+            htmlFor={`${id}-searchByEmailInpt`}
+          >
+            <input 
+              className="peer bg-white text-body-light py-2 px-2 rounded-md border-none outline-none"
+              id={`${id}-searchByEmailInpt`}
+              placeholder=""
+              name="searchByEmailInpt"
+              onChange={handleChange}
+            />
+            <div
+              className={`
+                absolute ${isEn ? 'left-2' : 'right-2'} top-1/2 translate-y-[-50%]
+                invisible peer-focus:invisible peer-placeholder-shown:visible
+                opacity-100 peer-focus:opacity-0 peer-placeholder-shown:opacity-100
+                flex gap-1
+                transition-all duration-200 ease-out
+              `}
+            >
+              <IconamoonSearchLight 
+                className="
+                  text-body-light w-5 h-5 
+                "
+              />
+              <span className="text-body-light font-semibold">{isEn ? 'Search By Email...' : 'البحث بالايميل...'}</span>
+            </div>
+          </label>
+        </div>
+        <div
+          className="flex gap-4"
+        >
+          <label
+            className="
+              relative flex items-center w-fit gap-2 p-2 
+              grow-0 rounded-md cursor-pointer
+              bg-white hover:bg-background-light active:bg-background-deep-light
+              translate-all duration-200 ease-in-out
+            "
+            htmlFor={`${id}-sortByInpt`}
+          >
+            <input
+              className="
+                peer absolute w-0 h-0 invisible opacity-0
+              "
+              id={`${id}-sortByInpt`}
+              type="checkbox"
+              name="sortByInpt"
+            />
+            <FlowbiteSortOutline className="w-4 h-4 text-body" />
+            <span className="text-sm text-body font-semibold">{isEn ? 'Sort By' : 'ترتيب حسب'}</span>
+            <span className="text-sm text-content font-semibold">
+              {selectedSortByField?.value === 'none'  
+                ? '' 
+                : selectedSortByField?.name
+              }
+            </span>
+            <ul
+              className="
+                absolute top-0 peer-checked:top-[calc(100%+0.5rem)] left-0 w-full
+                flex flex-col gap-1
+                invisible peer-checked:visible opacity-0 peer-checked:opacity-100
+                p-1 rounded-lg shadow-lg bg-white
+                translate-all duration-200 ease-in-out
+              "
+            >
+              {sortByArray.map((itm, i) => 
+                <li
+                  key={i}
+                  className="
+                    text-center hover:bg-background-light
+                    text-sm text-body hover:text-heading font-semibold p-1 rounded-lg
+                    translate-all duration-200 ease-in-out
+                  "
+                  role="button"
+                  data-type="sort_by_list_button_is_clicked"
+                  data-field-name={itm.fieldName}
+                  data-value={itm.value}
+                  data-sort-name={itm.name[lang]}
+                  onClick={handleClick}
+                >
+                  {itm.name[lang]}
+                </li>
+              )}
+            </ul>
+          </label>
+          <label
+            className="
+              relative flex items-center w-fit gap-2 p-2 
+              grow-0 rounded-md cursor-pointer
+              bg-white hover:bg-background-light active:bg-background-deep-light
+              translate-all duration-200 ease-in-out
+            "
+            htmlFor={`${id}-filterInpt`}
+          >
+            <input
+              className="
+                peer absolute w-0 h-0 invisible opacity-0
+              "
+              id={`${id}-filterInpt`}
+              type="checkbox"
+              name="filterInpt"
+            />
+            <BxFilter className="w-4 h-4 text-body" />
+            <span className="text-sm text-body font-semibold">{isEn ? 'Filter' : 'تصنيف'}</span>
+            <ul
+              className="
+                absolute top-0 peer-checked:top-[calc(100%+0.5rem)] left-1/2 min-w-full
+                translate-x-[-50%]
+                flex flex-col gap-1
+                invisible peer-checked:visible opacity-0 peer-checked:opacity-100
+                p-1 rounded-lg shadow-lg bg-white
+                translate-all duration-200 ease-in-out
+              "
+            >
+              {filterArray.map((itm, i) => 
+                <li
+                  key={i}
+                  className="
+                    text-center hover:bg-background-light whitespace-nowrap
+                    text-sm text-body hover:text-heading font-semibold p-1 rounded-lg
+                    translate-all duration-200 ease-in-out
+                  "
+                  role="button"
+                  data-type="filter_list_button_is_clicked"
+                  data-filter-name={itm.name[lang]}
+                  data-field-name={itm.fieldName}
+                  data-value={itm.value}
+                  onClick={handleClick}
+                >
+                  {itm.name[lang]}
+                </li>
+              )}
+            </ul>
+          </label>
+          <ul
+            className="flex gap-4"
+          >
+            {selectedFilterTags?.map((tag, i) =>
+              <li
+                key={i}
+                className="
+                  --zoom-in group relative p-2 
+                  rounded-lg text-sm text-center cursor-pointer
+                  active:opacity-70 bg-background
+                  border border-solid border-px border-heading
+                  transition-all duration-200 ease-in-out
+                "
+                role="button"
+                data-type="selected_filter_tag_button_is_clicked"
+                data-value={tag.value}
+                onClick={handleClick}
+              >
+                <span
+                  className="
+                    text-sm font-semibold text-heading
+                  "
+                >
+                  {tag.name}
+                </span>
+                <CarbonCloseFilled
+                  className="
+                    absolute top-0 right-0 
+                    translate-x-[50%] translate-y-[-50%]
+                    text-heading bg-background rounded-full w-5 h-5 p-px
+                    scale-0 group-hover:scale-100
+                    transition-all duration-200 ease-in-out
+                  "
+                />
+              </li>
+            )}
+          </ul>
+        </div>
+      </div>
       <div
         className="flex items-center gap-8"
       >
-        <button
-          className="
-            relative flex items-center justify-center gap-2
-            text-sm text-heading-invert font-bold 
-            bg-content p-2 rounded-lg hover:opacity-80
-            transition-all duration-300 ease-in-out
-          "
-          data-type="add_category_button_is_clicked"
-          onClick={handleClick}
-        >
-          <SvgSpinnersRingResize 
-            className={`
-              absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]
-              ${activityWindowToggle ? 'visible opacity-100' : 'invisible opacity-0'}  
-            `}
-          /> 
-          <EpList className="w-5 h-5"/>
-          <span
-            className={`
-              ${activityWindowToggle ? 'invisible opacity-0' : 'visible opacity-100'}  
-            `}
-          >
-            {isEn ? 'BANNED USERS LIST' : 'قائمه المحظورين'}
-          </span> 
-        </button>
         <div
           className="flex items-center"
         >

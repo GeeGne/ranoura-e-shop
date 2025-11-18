@@ -95,6 +95,8 @@ export default function Orders ({
 
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
+    if (isNaN(date.getTime())) return null;
+
     return date.toLocaleString((isEn ? 'en' : 'ar-EG'), {
       day: 'numeric',
       month: 'short',
@@ -189,6 +191,15 @@ export default function Orders ({
                 uppercase tracking-wider
               `}
             >
+              {isEn ? 'Total' : 'المجموع'}
+            </th>
+            <th 
+              scope="col" 
+              className={`
+                px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light 
+                uppercase tracking-wider
+              `}
+            >
               {isEn ? 'Order Date' : 'تاريخ الطلب'}
             </th>
             <th 
@@ -198,7 +209,25 @@ export default function Orders ({
                 uppercase tracking-wider
               `}
             >
-              {isEn ? 'Total' : 'المجموع'}
+              {isEn ? 'Updated At' : 'اخر تحديث'}
+            </th>
+            <th 
+              scope="col" 
+              className={`
+                px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light 
+                uppercase tracking-wider
+              `}
+            >
+              {isEn ? 'Canceled At' : 'تاريخ الالغاء'}
+            </th>
+            <th 
+              scope="col" 
+              className={`
+                px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light 
+                uppercase tracking-wider
+              `}
+            >
+              {isEn ? 'Order Date' : 'تاريخ الطلب'}
             </th>
             <th 
               scope="col" 
@@ -219,13 +248,13 @@ export default function Orders ({
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="flex items-center gap-2">
                   <div className="flex-shrink-0 h-12 w-12">
-                    <img className="w-full h-full object-cover object-center rounded-full" src={pfpImage} alt="" />
+                    <img className="w-full h-full object-cover object-center rounded-full" src={order.customer_pfp} alt="" />
                   </div>
                   <div className="ml-4">
                     <div className="text-base font-medium text-heading">
-                      {'Ahmed' + ' ' + 'El_Ghabra'}
+                      {order.customer_full_name}
                     </div>
-                    <div className="text-sm text-body-light">bluewhalexweb@outlook.com</div>
+                    <div className="text-sm text-body-light">{order.email}</div>
                   </div>
                 </div>
               </td>
@@ -233,33 +262,39 @@ export default function Orders ({
                 <div className="flex flex-col gap-2">
                   <div>
                     <span className="text-sm text-body-light">ID: </span>
-                    <span className="font-bold text-sm text-body underline">{orders.id}</span>
+                    <span className="font-bold text-sm text-body underline">{order.id}</span>
                   </div>
                   <div>
                     <span className="text-sm text-body-light">Number of items: </span>
-                    <span className="font-bold text-sm text-body underline">{orders.products.length} </span>
+                    <span className="font-bold text-sm text-body underline">{order.total_items} </span>
                     <span className="text-sm text-body-light ml-2">Ordered at: </span>
-                    <span className="font-bold text-sm text-body underline">{getTimeAgo(orders.created_at)}</span>
+                    <span className="font-bold text-sm text-body underline">{getTimeAgo(order.created_at)}</span>
                   </div>
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <span 
                   className="relative text-xs font-bold py-1 px-2"
-                  style={{ color: statusColors[orders.status]}}
+                  style={{ color: statusColors[order.status]}}
                 >
-                  {orders.status.toLowerCase()}
+                  {order.status.toLowerCase()}
                 <div
                   className="absolute top-0 left-0 w-full h-full opacity-20 rounded-full"
-                  style={{ backgroundColor: statusColors[orders.status]}}
+                  style={{ backgroundColor: statusColors[order.status]}}
                 />
                 </span>
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
-                {formatDate(orders.created_at)}
+                {order.total}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
-                {orders.total}
+                {formatDate(order.created_at)}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
+                {formatDate(order.updated_at) || 'No information available'}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
+                {formatDate(order.canceled_at) || 'No information available'}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
                 <div className="flex gap-2">
@@ -307,7 +342,7 @@ export default function Orders ({
                         w-[90px] text-center p-1 text-sm bg-transparent font-bold
                         border-none outline-none cursor-pointer
                       "
-                      style={{ color: statusColors[orders.status]}}
+                      style={{ color: statusColors[order.status]}}
                     >
                       {orders.status.toLowerCase()}
                     </div>
@@ -495,8 +530,117 @@ export default function Orders ({
                       transition-all duration-200 ease-out
                     "
                   >
-                    {Object.entries(statusColors).map(([ name, color ]) => 
+                    {Object.entries(statusColors).map(([ name, color ], i) => 
                       <li
+                        key={i}
+                        className="
+                          p-2 rounded-lg hover:bg-background-light text-body text-sm font-bold
+                        "
+                      >
+                        {name}
+                      </li>
+                    )} 
+                  </ul>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td className="px-6 py-4 whitespace-nowrap">
+              <div className="flex flex-col gap-2">
+                <div>
+                  <span className="text-sm text-body-light">ID: </span>
+                  <span className="font-bold text-sm text-body underline">{orders.id}</span>
+                </div>
+                <div>
+                  <span className="text-sm text-body-light">Number of items: </span>
+                  <span className="font-bold text-sm text-body underline">{orders.products.length} </span>
+                  <span className="text-sm text-body-light ml-2">Ordered at: </span>
+                  <span className="font-bold text-sm text-body underline">{getTimeAgo(orders.created_at)}</span>
+                </div>
+              </div>
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap">
+              <span 
+                className="relative text-xs font-bold py-1 px-2"
+                style={{ color: statusColors[orders.status]}}
+              >
+                {orders.status.toLowerCase()}
+              <div
+                className="absolute top-0 left-0 w-full h-full opacity-20 rounded-full"
+                style={{ backgroundColor: statusColors[orders.status]}}
+              />
+              </span>
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
+              {formatDate(orders.created_at)}
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
+              {orders.total}
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
+              <div className="flex gap-2">
+                <LetsIconsOrderFill 
+                  className="
+                    w-7 h-7 p-1 text-heading rounded-md cursor-pointer
+                    bg-background-light hover:bg-background-deep-light
+                    active:opacity-60
+                    transition-all duration-200 ease-out
+                  "
+                  role="button"
+                  data-type="order_details_window_is_clicked"
+                  onClick={handleClick}
+                />
+                <MdiCardAccountDetails 
+                  className="
+                    w-7 h-7 p-[5px] text-heading rounded-md cursor-pointer
+                    bg-background-light hover:bg-background-deep-light
+                    active:opacity-60
+                    transition-all duration-200 ease-out
+                  "
+                  role="button"
+                  data-type="shipping_details_window_is_clicked"
+                  onClick={handleClick}
+                />
+                <label
+                  className="
+                    relative flex items-center 
+                    bg-background-light hover:bg-background-deep-light active:opacity-60 
+                    rounded-lg cursor-pointer
+                    transition-all duration-200 ease-out
+                  "
+                  htmlFor={`${id}-status`}
+                >
+                  <input 
+                    className="
+                      peer absolute w-0 h-0 opacity-0
+                    "
+                    type="checkbox"
+                    name="statusInpt"
+                    id={`${id}-status`}
+                  />
+                  <div 
+                    className="
+                      w-[90px] text-center p-1 text-sm bg-transparent font-bold
+                      border-none outline-none cursor-pointer
+                    "
+                    style={{ color: statusColors[orders.status]}}
+                  >
+                    {orders.status.toLowerCase()}
+                  </div>
+                  <MdiArrowDownDrop />
+                  <ul
+                    className="
+                      absolute top-full left-0 w-full 
+                      flex flex-col p-2
+                      bg-white shadow-lg rounded-lg
+                      invisible peer-checked:visible opacity-0 peer-checked:opacity-100
+                      transition-all duration-200 ease-out
+                    "
+                  >
+                    {Object.entries(statusColors).map(([ name, color ], i) => 
+                      <li
+                        key={i}
                         className="
                           p-2 rounded-lg hover:bg-background-light text-body text-sm font-bold
                         "
@@ -709,115 +853,9 @@ export default function Orders ({
                       transition-all duration-200 ease-out
                     "
                   >
-                    {Object.entries(statusColors).map(([ name, color ]) => 
+                    {Object.entries(statusColors).map(([ name, color ], i) => 
                       <li
-                        className="
-                          p-2 rounded-lg hover:bg-background-light text-body text-sm font-bold
-                        "
-                      >
-                        {name}
-                      </li>
-                    )} 
-                  </ul>
-                </label>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td className="px-6 py-4 whitespace-nowrap">
-              <div className="flex flex-col gap-2">
-                <div>
-                  <span className="text-sm text-body-light">ID: </span>
-                  <span className="font-bold text-sm text-body underline">{orders.id}</span>
-                </div>
-                <div>
-                  <span className="text-sm text-body-light">Number of items: </span>
-                  <span className="font-bold text-sm text-body underline">{orders.products.length} </span>
-                  <span className="text-sm text-body-light ml-2">Ordered at: </span>
-                  <span className="font-bold text-sm text-body underline">{getTimeAgo(orders.created_at)}</span>
-                </div>
-              </div>
-            </td>
-            <td className="px-6 py-4 whitespace-nowrap">
-              <span 
-                className="relative text-xs font-bold py-1 px-2"
-                style={{ color: statusColors[orders.status]}}
-              >
-                {orders.status.toLowerCase()}
-              <div
-                className="absolute top-0 left-0 w-full h-full opacity-20 rounded-full"
-                style={{ backgroundColor: statusColors[orders.status]}}
-              />
-              </span>
-            </td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
-              {formatDate(orders.created_at)}
-            </td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
-              {orders.total}
-            </td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
-              <div className="flex gap-2">
-                <LetsIconsOrderFill 
-                  className="
-                    w-7 h-7 p-1 text-heading rounded-md cursor-pointer
-                    bg-background-light hover:bg-background-deep-light
-                    active:opacity-60
-                    transition-all duration-200 ease-out
-                  "
-                  role="button"
-                  data-type="order_details_window_is_clicked"
-                  onClick={handleClick}
-                />
-                <MdiCardAccountDetails 
-                  className="
-                    w-7 h-7 p-[5px] text-heading rounded-md cursor-pointer
-                    bg-background-light hover:bg-background-deep-light
-                    active:opacity-60
-                    transition-all duration-200 ease-out
-                  "
-                  role="button"
-                  data-type="shipping_details_window_is_clicked"
-                  onClick={handleClick}
-                />
-                <label
-                  className="
-                    relative flex items-center 
-                    bg-background-light hover:bg-background-deep-light active:opacity-60 
-                    rounded-lg cursor-pointer
-                    transition-all duration-200 ease-out
-                  "
-                  htmlFor={`${id}-status`}
-                >
-                  <input 
-                    className="
-                      peer absolute w-0 h-0 opacity-0
-                    "
-                    type="checkbox"
-                    name="statusInpt"
-                    id={`${id}-status`}
-                  />
-                  <div 
-                    className="
-                      w-[90px] text-center p-1 text-sm bg-transparent font-bold
-                      border-none outline-none cursor-pointer
-                    "
-                    style={{ color: statusColors[orders.status]}}
-                  >
-                    {orders.status.toLowerCase()}
-                  </div>
-                  <MdiArrowDownDrop />
-                  <ul
-                    className="
-                      absolute top-full left-0 w-full 
-                      flex flex-col p-2
-                      bg-white shadow-lg rounded-lg
-                      invisible peer-checked:visible opacity-0 peer-checked:opacity-100
-                      transition-all duration-200 ease-out
-                    "
-                  >
-                    {Object.entries(statusColors).map(([ name, color ]) => 
-                      <li
+                        key={i}
                         className="
                           p-2 rounded-lg hover:bg-background-light text-body text-sm font-bold
                         "
