@@ -59,7 +59,7 @@ export default function Orders ({
   const layoutRef = useLayoutRefStore(state => state.layoutRef);
   const mainRef = useRef<HTMLDivElement>(null);
 
-  const searchOrderIDTerm = useViewOrdersNavTileStore(state => state.searchByNameTerm);
+  const searchOrderIDTerm = useViewOrdersNavTileStore(state => state.searchByOrderIDTerm);
   const searchNameTerm = useViewOrdersNavTileStore(state => state.searchByNameTerm);
   const searchEmailTerm = useViewOrdersNavTileStore(state => state.searchByEmailTerm);
   const selectedSortByField = useViewOrdersNavTileStore(state => state.selectedSortByField);
@@ -108,6 +108,7 @@ export default function Orders ({
   
     const orders: any = data;
     if (!orders) return [];
+    console.log('searchOrderIDTerm: ', searchOrderIDTerm);
 
     const orderIDFilteredOrders = filterByQuery(
       orders, 
@@ -119,6 +120,7 @@ export default function Orders ({
         specificSearch: false
       }
     );
+    console.log('searchNameTerm: ', searchNameTerm);
     const nameFilteredOrders = filterByQuery(
       orderIDFilteredOrders, 
       { 
@@ -432,8 +434,9 @@ export default function Orders ({
                           transition-all duration-200 ease-out
                         "
                       >
-                        {Object.entries(statusColors).map(([ name, color ]) => 
+                        {Object.entries(statusColors).map(([ name, color ], i) => 
                           <li
+                            key={i}
                             className="
                               p-2 rounded-lg hover:bg-background-light text-body text-sm font-bold
                             "
@@ -823,8 +826,9 @@ export default function Orders ({
                       transition-all duration-200 ease-out
                     "
                   >
-                    {Object.entries(statusColors).map(([ name, color ]) => 
+                    {Object.entries(statusColors).map(([ name, color ], i) => 
                       <li
+                        key={i}
                         className="
                           p-2 rounded-lg hover:bg-background-light text-body text-sm font-bold
                         "

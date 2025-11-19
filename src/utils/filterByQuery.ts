@@ -6,7 +6,7 @@ export default function filterByQuery(
 ) {
 
   const { 
-    searchTerms, 
+    searchTerms = [], 
     searchFields = [],
     filteringType = 'contains',
     specificSearch = false,
@@ -34,8 +34,8 @@ export default function filterByQuery(
   return items.filter((itm: Record<any, string>) => {
 
     if (!hasSearchFields && typeof itm === 'string' ) {
-      const isValueExist = itm;
-      if (!isValueExist) return false;
+      const isValueExist = itm !== '';
+      if (!isValueExist) return true;
 
       const value = normilizeTerm(itm);
       return searchTerms.some((searchTerm: string) => 
@@ -45,9 +45,10 @@ export default function filterByQuery(
 
     if (hasSearchFields) {    
       return searchFields[filteringMethod]((field: string) => {
-        const isValueExist = itm[field];
+        const isValueExist = itm[field] ? true : false;
         const isFieldEmpty = field === '';
-        if (isFieldEmpty || !isValueExist) return false;
+        if (isFieldEmpty) return false;
+        if (!isValueExist) return true;
 
         const value = normilizeTerm(itm[field]);
         return searchTerms.some((searchTerm: string) => 

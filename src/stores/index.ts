@@ -564,7 +564,7 @@ type ViewOrdersNavTileStoreProps = {
 const useViewOrdersNavTileStore = create<ViewOrdersNavTileStoreProps>()(
   (set) => ({
     searchByOrderIDTerm: '',
-    setSearchByOrderIDTerm: (searchByNameTerm) => set({ searchByNameTerm }),
+    setSearchByOrderIDTerm: (searchByOrderIDTerm) => set({ searchByOrderIDTerm }),
     searchByNameTerm: '',
     setSearchByNameTerm: (searchByNameTerm) => set({ searchByNameTerm }),
     searchByEmailTerm: '',
