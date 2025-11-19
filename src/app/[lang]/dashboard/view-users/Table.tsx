@@ -123,9 +123,7 @@ export default function Table({
   const searchNameTerm = useViewUsersNavTileStore(state => state.searchByNameTerm);
   const searchEmailTerm = useViewUsersNavTileStore(state => state.searchByEmailTerm);
   const selectedSortByField = useViewUsersNavTileStore(state => state.selectedSortByField);
-
   const selectedFilterTags = useViewUsersNavTileStore(state => state.selectedFilterTags);
-  const setSelectedFilterTags = useViewUsersNavTileStore(state => state.setSelectedFilterTags);
 
   const [ userOrder, setUserOrder ] = useState<Record<string, any>>({
     toggle: false,
@@ -444,6 +442,7 @@ export default function Table({
   // DEBUG & UI
   // console.log('addFullNameField(users): ', addFullNameField(users));
   console.log('selectedSortByField: ', selectedSortByField);
+  
   return (
     <div className="overflow-x-auto" ref={mainRef}>
       <table className="min-w-full divide-y divide-gray-200 rounded-lg overflow-hidden">
@@ -481,207 +480,205 @@ export default function Table({
             </th>
           </tr>
         </thead>
-        {isUsersFilteredArrayEmpty &&
-          <tbody className="bg-white divide-y divide-gray-200">
-            <tr className="px-6 py-4 whitespace-nowrap">
-              <td
-                className="p-4"
-                colSpan={10}
-              >
-                <div
-                  className="w-full justify-center flex gap-2 "
-                >
-                  <IconamoonSearchLight className="text-body" />
-                  <span
-                    className="text-body font-semibold text-lg"
-                  >
-                    {isEn ? 'No Results Found.' : 'لا توجد اي نتائج.'}
-                  </span>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        }
         <tbody className="bg-white divide-y divide-gray-200">
-          {processedUsers?.map((user: Record<string, any>, i: number) => (
-            [
-              <tr key={`user-${i}`}>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="flex items-center gap-2">
-                    <div className="flex-shrink-0 h-12 w-12">
-                      <img className="w-full h-full object-cover object-center rounded-full" src={user.profile_img_url || pfpImage} alt="" />
-                    </div>
-                    <div className="ml-4">
-                      <div className="text-base font-medium text-heading">
-                        {user.full_name}
-                      </div>
-                      <div className="text-sm text-body-light">{user.email}</div>
-                    </div>
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
-                  {user.phone_number}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <ul className="list-disc">
-                    <li className="text-body text-sm text-gray-900"><span className="text-body font-bold">{isEn ? 'main:' : ':رئيسي'} </span>{user.address.address_details}</li>
-                    <li className="text-body text-sm text-gray-900"><span className="text-body font-bold">{isEn ? 'second:' : ':ثانوي'} </span>{user.address.second_address}</li>
-                    <li className="text-body text-sm text-gray-900"><span className="text-body font-bold">{isEn ? 'notes:' : ':ملاحظات'} </span>{user.address.notes}</li>
-                  </ul>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
-                  {translateRole(user.role)}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span 
-                    className="relative text-xs font-bold py-1 px-2"
-                    style={{ color: getUserStatus(user.is_banned, user.last_login_at).textColor}}
-                  >
-                    {getUserStatus(user.is_banned, user.last_login_at).title[lang].toLowerCase()}
-                  <div
-                    className="absolute top-0 left-0 w-full h-full opacity-20 rounded-full"
-                    style={{ backgroundColor: getUserStatus(user.is_banned, user.last_login_at).textColor}}
-                  />
-                  </span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
-                  {displayDate(user.last_login_at)}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
-                  {user.date_of_birth ? displayDate(user.date_of_birth) : messages.noData[lang]}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
-                  {displayDate(user.created_at)}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
-                  0
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
-                  <div className="flex gap-2">
-                    <button 
-                      data-type="user_orders_button_is_clicked"
-                      data-user-id={user.id}
-                      onClick={handleClick}
-                    >
-                      <SolarCart4Bold 
-                        className={`
-                          w-7 h-7 p-1 text-heading rounded-md cursor-pointer
-                          active:opacity-60
-                          transition-all duration-200 ease-out
-                          ${(userOrder.toggle && userOrder.userId === user.id) 
-                            ? 'bg-content-invert hover:opacity-80' 
-                            : 'bg-background-light hover:bg-background-deep-light'
-                          }
-                        `}
-                      />
-                    </button>
-                    {user.is_banned 
-                      ? <GgUnblock 
-                        className="
-                          w-7 h-7 p-1 text-heading rounded-md cursor-pointer
-                          active:opacity-60
-                          transition-all duration-200 ease-out
-                          bg-background-light hover:bg-background-deep-light
-                        "
-                        role="button"
-                        data-type="unBan_user_button_is_clicked"
-                        data-user-id={user.id}
-                        data-user-name={user.first_name + ' ' + user.last_name}
-                        onClick={handleClick}
-                      />
-                      : <MdiBan 
-                        className="
-                          w-7 h-7 p-1 text-heading rounded-md cursor-pointer
-                          active:opacity-60
-                          transition-all duration-200 ease-out
-                          bg-background-light hover:bg-background-deep-light
-                        "
-                        role="button"
-                        data-type="ban_user_button_is_clicked"
-                        data-user-id={user.id}
-                        data-user-name={user.first_name + ' ' + user.last_name}
-                        onClick={handleClick}
-                      />
-                    }
-                    <label
-                      className="
-                        relative flex gap-2 items-center 
-                        bg-background-light hover:bg-background-deep-light 
-                        px-2 cursor-pointer rounded-md cursor-pointers
-                        transition-all duration-200 ease-out
-                      "
-                      htmlFor={`${id}-${i}-selectRoleInpt`}
-                    >
-                      <input 
-                        className="
-                          peer absolute top-0 left-0 w-0 h-0
-                        "
-                        type="checkbox"
-                        name="selectRoleInpt"
-                        id={`${id}-${i}-selectRoleInpt`}
-                      />
-                      <span className="font-semibold text-heading">{translateRole(user.role)}</span>
-                      <MdiArrowDownDrop className="text-heading"/>
-                      <ul
-                        className="
-                          absolute top-0 peer-checked:top-[calc(100%+0.5rem)] left-0
-                          w-full flex flex-col p-2 gap-2 z-[5]  
-                          bg-white shadow-lg rounded-lg
-                          invisible peer-checked:visible
-                          opacity-0 peer-checked:opacity-100
-                          transition-all duration-200 ease-out
-                        "
-                      >
-                        {roles.map((role: Record<any, string>) => 
-                          <li
-                            className="
-                              p-2 rounded-lg text-body 
-                              hover:bg-background-light hover:text-heading font-semibold
-                              transition-all duration-200 ease-out
-                            "
-                            role="button"
-                            data-type="role_type_button_is_clicked"
-                            data-selected-role={role.name}
-                            data-user-id={user.id}
-                            onClick={handleClick}
-                          >
-                            {translateRole(role.name)}
-                          </li>
-                        )}
-                      </ul>
-                    </label>
-                  </div>
-                </td>
-              </tr>,
-              <tr key={`order-${i}`}>
+          {isUsersFilteredArrayEmpty 
+            ? <tr className="px-6 py-4 whitespace-nowrap">
                 <td
-                  className={`w-full bg-background-light`}
+                  className="p-4"
                   colSpan={10}
                 >
                   <div
-                    className={`
-                      flex w-full transition-all duration-300 ease-in-out
-                    `}
+                    className="w-full justify-center flex gap-2 "
                   >
-                    <Orders 
-                      className="w-full transition-all duration-300 ease-in-out"
-                      lang={lang}
-                      isEn={isEn}
-                      type="user_orders_table"
-                      ref={(el: any) => (orderContainerRef.current[i] = el)}
-                      data-user-id={user.id}
-                      style={{
-                        maxHeight: (userOrder.toggle && (userOrder.userId === user.id))
-                          ? userOrder.layoutHeight
-                          : 0
-                          + 'px'
-                      }}
-                    />
+                    <IconamoonSearchLight className="text-body" />
+                    <span
+                      className="text-body font-semibold text-lg"
+                    >
+                      {isEn ? 'No Results Found.' : 'لا توجد اي نتائج.'}
+                    </span>
                   </div>
                 </td>
               </tr>
-            ]
-          ))}
+            : processedUsers?.map((user: Record<string, any>, i: number) => (
+              [
+                <tr key={`user-${i}`}>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex items-center gap-2">
+                      <div className="flex-shrink-0 h-12 w-12">
+                        <img className="w-full h-full object-cover object-center rounded-full" src={user.profile_img_url || pfpImage} alt="" />
+                      </div>
+                      <div className="ml-4">
+                        <div className="text-base font-medium text-heading">
+                          {user.full_name}
+                        </div>
+                        <div className="text-sm text-body-light">{user.email}</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
+                    {user.phone_number}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <ul className="list-disc">
+                      <li className="text-body text-sm text-gray-900"><span className="text-body font-bold">{isEn ? 'main:' : ':رئيسي'} </span>{user.address.address_details}</li>
+                      <li className="text-body text-sm text-gray-900"><span className="text-body font-bold">{isEn ? 'second:' : ':ثانوي'} </span>{user.address.second_address}</li>
+                      <li className="text-body text-sm text-gray-900"><span className="text-body font-bold">{isEn ? 'notes:' : ':ملاحظات'} </span>{user.address.notes}</li>
+                    </ul>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
+                    {translateRole(user.role)}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span 
+                      className="relative text-xs font-bold py-1 px-2"
+                      style={{ color: getUserStatus(user.is_banned, user.last_login_at).textColor}}
+                    >
+                      {getUserStatus(user.is_banned, user.last_login_at).title[lang].toLowerCase()}
+                    <div
+                      className="absolute top-0 left-0 w-full h-full opacity-20 rounded-full"
+                      style={{ backgroundColor: getUserStatus(user.is_banned, user.last_login_at).textColor}}
+                    />
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
+                    {displayDate(user.last_login_at)}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
+                    {user.date_of_birth ? displayDate(user.date_of_birth) : messages.noData[lang]}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
+                    {displayDate(user.created_at)}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
+                    0
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
+                    <div className="flex gap-2">
+                      <button 
+                        data-type="user_orders_button_is_clicked"
+                        data-user-id={user.id}
+                        onClick={handleClick}
+                      >
+                        <SolarCart4Bold 
+                          className={`
+                            w-7 h-7 p-1 text-heading rounded-md cursor-pointer
+                            active:opacity-60
+                            transition-all duration-200 ease-out
+                            ${(userOrder.toggle && userOrder.userId === user.id) 
+                              ? 'bg-content-invert hover:opacity-80' 
+                              : 'bg-background-light hover:bg-background-deep-light'
+                            }
+                          `}
+                        />
+                      </button>
+                      {user.is_banned 
+                        ? <GgUnblock 
+                          className="
+                            w-7 h-7 p-1 text-heading rounded-md cursor-pointer
+                            active:opacity-60
+                            transition-all duration-200 ease-out
+                            bg-background-light hover:bg-background-deep-light
+                          "
+                          role="button"
+                          data-type="unBan_user_button_is_clicked"
+                          data-user-id={user.id}
+                          data-user-name={user.first_name + ' ' + user.last_name}
+                          onClick={handleClick}
+                        />
+                        : <MdiBan 
+                          className="
+                            w-7 h-7 p-1 text-heading rounded-md cursor-pointer
+                            active:opacity-60
+                            transition-all duration-200 ease-out
+                            bg-background-light hover:bg-background-deep-light
+                          "
+                          role="button"
+                          data-type="ban_user_button_is_clicked"
+                          data-user-id={user.id}
+                          data-user-name={user.first_name + ' ' + user.last_name}
+                          onClick={handleClick}
+                        />
+                      }
+                      <label
+                        className="
+                          relative flex gap-2 items-center 
+                          bg-background-light hover:bg-background-deep-light 
+                          px-2 cursor-pointer rounded-md cursor-pointers
+                          transition-all duration-200 ease-out
+                        "
+                        htmlFor={`${id}-${i}-selectRoleInpt`}
+                      >
+                        <input 
+                          className="
+                            peer absolute top-0 left-0 w-0 h-0
+                          "
+                          type="checkbox"
+                          name="selectRoleInpt"
+                          id={`${id}-${i}-selectRoleInpt`}
+                        />
+                        <span className="font-semibold text-heading">{translateRole(user.role)}</span>
+                        <MdiArrowDownDrop className="text-heading"/>
+                        <ul
+                          className="
+                            absolute top-0 peer-checked:top-[calc(100%+0.5rem)] left-0
+                            w-full flex flex-col p-2 gap-2 z-[5]  
+                            bg-white shadow-lg rounded-lg
+                            invisible peer-checked:visible
+                            opacity-0 peer-checked:opacity-100
+                            transition-all duration-200 ease-out
+                          "
+                        >
+                          {roles.map((role: Record<any, string>) => 
+                            <li
+                              className="
+                                p-2 rounded-lg text-body 
+                                hover:bg-background-light hover:text-heading font-semibold
+                                transition-all duration-200 ease-out
+                              "
+                              role="button"
+                              data-type="role_type_button_is_clicked"
+                              data-selected-role={role.name}
+                              data-user-id={user.id}
+                              onClick={handleClick}
+                            >
+                              {translateRole(role.name)}
+                            </li>
+                          )}
+                        </ul>
+                      </label>
+                    </div>
+                  </td>
+                </tr>,
+                <tr key={`order-${i}`}>
+                  <td
+                    className={`w-full bg-background-light`}
+                    colSpan={10}
+                  >
+                    <div
+                      className={`
+                        flex w-full transition-all duration-300 ease-in-out
+                      `}
+                    >
+                      <Orders 
+                        className="w-full transition-all duration-300 ease-in-out"
+                        lang={lang}
+                        isEn={isEn}
+                        type="user_orders_table"
+                        ref={(el: any) => (orderContainerRef.current[i] = el)}
+                        data-user-id={user.id}
+                        style={{
+                          maxHeight: (userOrder.toggle && (userOrder.userId === user.id))
+                            ? userOrder.layoutHeight
+                            : 0
+                            + 'px'
+                        }}
+                      />
+                    </div>
+                  </td>
+                </tr>
+              ]
+            ))
+          }
         </tbody>
       </table>
     </div>

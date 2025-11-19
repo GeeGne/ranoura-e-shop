@@ -18,7 +18,7 @@ export default function filterByQuery(
     : term.trim().toLowerCase();
   ;
 
-  const filterFunctions = {
+  const filterFunctions: any = {
     contains: (value: string, term: string) => value.includes(term),
     prefix: (value: string, term: string) => value.startsWith(term),
     exact_match: (value: string, term: string) => value === term,
@@ -34,18 +34,22 @@ export default function filterByQuery(
   return items.filter((itm: Record<any, string>) => {
 
     if (!hasSearchFields && typeof itm === 'string' ) {
+      const isValueExist = itm;
+      if (!isValueExist) return false;
+
       const value = normilizeTerm(itm);
       return searchTerms.some((searchTerm: string) => 
         filterFn(value, normilizeTerm(searchTerm))
       );
     }
 
-
     if (hasSearchFields) {    
       return searchFields[filteringMethod]((field: string) => {
-        const value = normilizeTerm(itm[field]);
+        const isValueExist = itm[field];
         const isFieldEmpty = field === '';
-        if (isFieldEmpty) return false;
+        if (isFieldEmpty || !isValueExist) return false;
+
+        const value = normilizeTerm(itm[field]);
         return searchTerms.some((searchTerm: string) => 
           filterFn(value, normilizeTerm(searchTerm))
         );
@@ -54,7 +58,6 @@ export default function filterByQuery(
 
     return false;
   });
-
 }
 
 // TEST & DEBUG

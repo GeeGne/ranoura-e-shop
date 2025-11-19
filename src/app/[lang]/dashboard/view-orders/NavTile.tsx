@@ -72,6 +72,8 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
 
   const setAddCategoryWindowToggle = useAddCategoryWindowStore(state => state.setToggle);
 
+  const searchOrderIDTerm = useViewOrdersNavTileStore(state => state.searchByNameTerm);
+  const setSearchOrderIDTerm = useViewOrdersNavTileStore(state => state.setSearchByNameTerm);
   const searchNameTerm = useViewOrdersNavTileStore(state => state.searchByNameTerm);
   const setSearchNameTerm = useViewOrdersNavTileStore(state => state.setSearchByNameTerm);
   const searchEmailTerm = useViewOrdersNavTileStore(state => state.searchByEmailTerm);
@@ -115,6 +117,9 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
         break;
       case 'searchByEmailInpt':
         setSearchEmailTerm(value);
+        break;
+      case 'searchByOrderIdInpt':
+        setSearchOrderIDTerm(value);
         break;
       default:
         console.error('Unknown name: ', name);
