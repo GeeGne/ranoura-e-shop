@@ -108,7 +108,6 @@ export default function Orders ({
   
     const orders: any = data;
     if (!orders) return [];
-    console.log('searchOrderIDTerm: ', searchOrderIDTerm);
 
     const orderIDFilteredOrders = filterByQuery(
       orders, 
@@ -120,7 +119,6 @@ export default function Orders ({
         specificSearch: false
       }
     );
-    console.log('searchNameTerm: ', searchNameTerm);
     const nameFilteredOrders = filterByQuery(
       orderIDFilteredOrders, 
       { 

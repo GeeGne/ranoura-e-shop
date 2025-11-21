@@ -38,8 +38,8 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
   const sortByArray = [ 
     { name: { en: 'None', ar: 'لاشيء' }, fieldName: 'none', value: 'none' },
     { name: { en: 'Created At', ar: 'تاريخ الانشاء' }, fieldName: 'created_at', value: 'created at' },
-    { name: { en: 'Updated At', ar: 'اخر ظهور' }, fieldName: 'last_login_at', value: 'last login' },
-    { name: { en: 'Canceled At', ar: 'اخر ظهور' }, fieldName: 'last_login_at', value: 'last login' }
+    { name: { en: 'Updated At', ar: 'اخر ظهور' }, fieldName: 'updated_at', value: 'updated at' },
+    { name: { en: 'Canceled At', ar: 'اخر ظهور' }, fieldName: 'canceled_at', value: 'canceled at' }
   ];
 
   const filterArray = [ 

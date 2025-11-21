@@ -210,7 +210,7 @@ export default function Table({
     const differentInMs = now - userLastlogin;
     const differentInDays = differentInMs / (1000 * 60 * 60 * 24)
     const isUserInactive = differentInDays >= 90;
-    console.log('differentInDays', differentInDays);
+    // console.log('differentInDays', differentInDays);
 
     if (is_banned) return { title: { en: 'Banned', ar: 'محظور' }, name:'banned', textColor: 'oklch(50.5% 0.213 27.518)'};
     if (isUserInactive) return { title: { en: 'Inactive', ar: 'غير نشط' }, name:'inactive', textColor: 'oklch(55.4% 0.135 66.442)' };
@@ -258,11 +258,15 @@ export default function Table({
       }
     );
     const sortUsers = [...emailFilteredUsers].sort((a, b) => {
-      const isSortEmpty = selectedSortByField?.value === 'none';
+      const { value, fieldName, sortType }: any = selectedSortByField;
+      const isSortEmpty = value === 'none';
       if (isSortEmpty) return 0;
 
-      const dateA = new Date(a[selectedSortByField?.fieldName]).getTime();
-      const dateB = new Date(b[selectedSortByField?.fieldName]).getTime();
+      const dateA = new Date(a[fieldName]).getTime();
+      const dateB = new Date(b[fieldName]).getTime();
+
+      if (sortType === 'ascending') return dateA - dateB;
+      if (sortType === 'descending') return dateB - dateA;
       return dateA - dateB;
     });
     const tagFilteredUsers = sortUsers.filter(user => {
@@ -420,8 +424,8 @@ export default function Table({
   });
 
   // DEBUG
-  console.log('users: ', usersData?.data);
-  console.log('user roles: ', userRoles?.data);
+  // console.log('users: ', usersData?.data);
+  // console.log('user roles: ', userRoles?.data);
   // console.log('userOrder: ', userOrder);
 
   if (isLoading) return (
@@ -628,8 +632,9 @@ export default function Table({
                             transition-all duration-200 ease-out
                           "
                         >
-                          {roles.map((role: Record<any, string>) => 
+                          {roles.map((role: Record<any, string>, i) => 
                             <li
+                              key={i}
                               className="
                                 p-2 rounded-lg text-body 
                                 hover:bg-background-light hover:text-heading font-semibold
