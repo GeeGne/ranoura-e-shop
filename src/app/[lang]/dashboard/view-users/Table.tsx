@@ -625,18 +625,18 @@ export default function Table({
                         <ul
                           className="
                             absolute top-0 peer-checked:top-[calc(100%+0.5rem)] left-0
-                            w-full flex flex-col p-2 gap-2 z-[5]  
+                            w-full flex flex-col p-1 gap-1 z-[5]  
                             bg-white shadow-lg rounded-lg
                             invisible peer-checked:visible
                             opacity-0 peer-checked:opacity-100
                             transition-all duration-200 ease-out
                           "
                         >
-                          {roles.map((role: Record<any, string>, i) => 
+                          {roles.map((role: Record<any, string>, i: number) => 
                             <li
                               key={i}
                               className="
-                                p-2 rounded-lg text-body 
+                                p-1 rounded-lg text-body 
                                 hover:bg-background-light hover:text-heading font-semibold
                                 transition-all duration-200 ease-out
                               "

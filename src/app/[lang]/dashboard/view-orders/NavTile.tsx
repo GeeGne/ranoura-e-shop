@@ -57,6 +57,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
   const [ isMainRefStuck, setIsMainRefStuck ] = useState<boolean>(false);
   const [ sortByType, setSortByType ] = useState<string>('descending');
   const mainRef = useRef<HTMLDivElement>(null);
+  const sortByInptRef = useRef<HTMLInputElement>(null);
 
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
@@ -127,6 +128,8 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
   };
 
   const handleClick = async (e: React.MouseEvent<HTMLElement | SVGElement>) => {
+    e.stopPropagation();
+    
     const { 
       type, scrollDirection, fieldName, 
       sortName, filterName, value, sortType
@@ -151,6 +154,13 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
         break;
       case 'add_category_button_is_clicked':
         setAddCategoryWindowToggle(true);
+        break;
+      case 'sort_by_button_is_clicked':
+        console.log('sort button clicked');
+        if (sortByInptRef.current) {
+          const isChecked = sortByInptRef.current.checked;
+          sortByInptRef.current.checked = !isChecked;
+        };
         break;
       case 'sort_by_list_button_is_clicked':
         if (sortName && fieldName) setSelectedSortByField({ 
@@ -316,6 +326,9 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
               bg-white hover:bg-background-light active:bg-background-deep-light
               translate-all duration-200 ease-in-out
             "
+            role="button"
+            data-type="sort_by_button_is_clicked"
+            onClick={handleClick}
           >
             <div
               className={`
@@ -356,6 +369,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
                 id={`${id}-sortByInpt`}
                 type="checkbox"
                 name="sortByInpt"
+                ref={sortByInptRef}
               />
               <span className="text-sm text-body font-semibold">{isEn ? 'Sort By' : 'ترتيب حسب'}</span>
               {selectedSortByField?.value === 'none'

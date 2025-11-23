@@ -408,7 +408,7 @@ export default function Orders ({
                         rounded-lg cursor-pointer
                         transition-all duration-200 ease-out
                       "
-                      htmlFor={`${id}-status`}
+                      htmlFor={`${id}-${i}-status`}
                     >
                       <input 
                         className="
@@ -416,7 +416,7 @@ export default function Orders ({
                         "
                         type="checkbox"
                         name="statusInpt"
-                        id={`${id}-status`}
+                        id={`${id}-${i}-status`}
                       />
                       <div 
                         className="
@@ -430,8 +430,8 @@ export default function Orders ({
                       <MdiArrowDownDrop />
                       <ul
                         className="
-                          absolute top-full left-0 w-full 
-                          flex flex-col p-2 z-[5]
+                          absolute top-0 peer-checked:top-[calc(100%+0.5rem)] left-0 w-full 
+                          flex flex-col p-1 z-[5]
                           bg-white shadow-lg rounded-lg
                           invisible peer-checked:visible opacity-0 peer-checked:opacity-100
                           transition-all duration-200 ease-out
@@ -441,7 +441,9 @@ export default function Orders ({
                           <li
                             key={i}
                             className="
-                              p-2 rounded-lg hover:bg-background-light text-body text-sm font-bold
+                              p-2 rounded-lg hover:bg-background-light 
+                              text-body hover:text-heading text-sm font-semibold
+                              transition-all duration-200 ease-out
                             "
                           >
                             {getTranslation(STATUS_TRANSLATIONS, name, lang)}
