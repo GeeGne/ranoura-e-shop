@@ -43,8 +43,8 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
 
   const filterArray = [ 
     { name:{ en: 'None', ar: 'لاشيء' }, fieldName: 'none', value: 'none' },
-    { name:{ en: 'Active', ar: 'فعال' }, fieldName: 'status', value: 'active' },
-    { name:{ en: 'Inactive', ar: 'غير فعال' }, fieldName: 'status', value: 'inactive' },
+    { name:{ en: 'Active', ar: 'نشط' }, fieldName: 'status', value: 'active' },
+    { name:{ en: 'Inactive', ar: 'غير نشط' }, fieldName: 'status', value: 'inactive' },
     { name:{ en: 'Banned', ar: 'محظور' }, fieldName: 'status', value: 'banned' },
     { name:{ en: 'Owner', ar: 'مالك' }, fieldName: 'role', value: 'owner' },
     { name:{ en: 'Admin', ar: 'ادمن' }, fieldName: 'role', value: 'admin' },
@@ -121,7 +121,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
 
   const handleClick = async (e: React.MouseEvent<HTMLElement | SVGElement>) => {
     e.stopPropagation();
-    
+
     const { 
       type, scrollDirection, fieldName, 
       sortName, filterName, value, sortType 
@@ -221,7 +221,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
         className="flex flex-col gap-4"
       >
         <div
-          className="flex gap-4"
+          className="flex gap-4 flex-wrap"
         >
           <label
             className="relative cursor-text"
@@ -248,7 +248,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
                   text-body-light w-5 h-5 
                 "
               />
-              <span className="text-body-light font-semibold">{isEn ? 'Search By Name...' : 'البحث بالاسم...'}</span>
+              <span className="text-body-light font-semibold whitespace-nowrap">{isEn ? 'Search By Name...' : 'البحث بالاسم...'}</span>
             </div>
           </label>
           <label
@@ -276,12 +276,12 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
                   text-body-light w-5 h-5 
                 "
               />
-              <span className="text-body-light font-semibold">{isEn ? 'Search By Email...' : 'البحث بالايميل...'}</span>
+              <span className="text-body-light font-semibold whitespace-nowrap">{isEn ? 'Search By Email...' : 'البحث بالايميل...'}</span>
             </div>
           </label>
         </div>
         <div
-          className="flex gap-4"
+          className="flex gap-4 flex-wrap whitespace-nowrap"
         >
           <div
             className="
@@ -344,7 +344,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
               <ul
                 className={`
                   absolute top-0 peer-checked:top-[calc(100%+0.5rem)] left-0
-                  w-full flex flex-col gap-1
+                  w-full flex flex-col gap-1 z-[5]
                   invisible peer-checked:visible opacity-0 peer-checked:opacity-100
                   p-1 rounded-lg shadow-lg bg-white
                   translate-all duration-200 ease-in-out
@@ -395,7 +395,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
               className="
                 absolute top-0 peer-checked:top-[calc(100%+0.5rem)] left-1/2 min-w-full
                 translate-x-[-50%]
-                flex flex-col gap-1
+                flex flex-col gap-1 z-[5]
                 invisible peer-checked:visible opacity-0 peer-checked:opacity-100
                 p-1 rounded-lg shadow-lg bg-white
                 translate-all duration-200 ease-in-out
@@ -422,7 +422,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
             </ul>
           </label>
           <ul
-            className="flex gap-4"
+            className="flex gap-4 flex-wrap whitespace-nowrap"
           >
             {selectedFilterTags?.map((tag, i) =>
               <li
@@ -461,7 +461,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
         </div>
       </div>
       <div
-        className="flex items-center gap-8"
+        className="flex flex-col items-center gap-8 shrink-0"
       >
         <div
           className="flex items-center"

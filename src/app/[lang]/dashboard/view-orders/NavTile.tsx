@@ -38,8 +38,8 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
   const sortByArray = [ 
     { name: { en: 'None', ar: 'لاشيء' }, fieldName: 'none', value: 'none' },
     { name: { en: 'Created At', ar: 'تاريخ الانشاء' }, fieldName: 'created_at', value: 'created at' },
-    { name: { en: 'Updated At', ar: 'اخر ظهور' }, fieldName: 'updated_at', value: 'updated at' },
-    { name: { en: 'Canceled At', ar: 'اخر ظهور' }, fieldName: 'canceled_at', value: 'canceled at' }
+    { name: { en: 'Updated At', ar: 'تاريخ التحديث' }, fieldName: 'updated_at', value: 'updated at' },
+    { name: { en: 'Canceled At', ar: 'تاريخ الالغاء' }, fieldName: 'canceled_at', value: 'canceled at' }
   ];
 
   const filterArray = [ 
@@ -129,7 +129,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
 
   const handleClick = async (e: React.MouseEvent<HTMLElement | SVGElement>) => {
     e.stopPropagation();
-    
+
     const { 
       type, scrollDirection, fieldName, 
       sortName, filterName, value, sortType
@@ -201,9 +201,9 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
   // UI & DEBUG
   // console.log("onLayoutScroll: ", onLayoutScroll.target.scrollTop);
   // console.log("isMainRefStuck: ", isMainRefStuck);
-  console.log("searchNameTerm: ", searchNameTerm);
-  console.log("searchEmailTerm: ", searchEmailTerm);
-  console.log("searchOrderIDTerm: ", searchOrderIDTerm);
+  // console.log("searchNameTerm: ", searchNameTerm);
+  // console.log("searchEmailTerm: ", searchEmailTerm);
+  // console.log("searchOrderIDTerm: ", searchOrderIDTerm);
 
   return(
     <div
@@ -229,7 +229,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
         className="flex flex-col gap-4"
       >
         <div
-          className="flex gap-4"
+          className="flex gap-4 flex-wrap"
         >
           <label
             className="relative cursor-text"
@@ -256,7 +256,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
                   text-body-light w-5 h-5 
                 "
               />
-              <span className="text-body-light font-semibold">{isEn ? 'Search By Order ID...' : 'البحث برقم الطلب...'}</span>
+              <span className="text-body-light font-semibold whitespace-nowrap">{isEn ? 'Search By Order ID...' : 'البحث برقم الطلب...'}</span>
             </div>
           </label>
           <label
@@ -284,7 +284,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
                   text-body-light w-5 h-5 
                 "
               />
-              <span className="text-body-light font-semibold">{isEn ? 'Search By Name...' : 'البحث بالاسم...'}</span>
+              <span className="text-body-light font-semibold whitespace-nowrap">{isEn ? 'Search By Name...' : 'البحث بالاسم...'}</span>
             </div>
           </label>
           <label
@@ -312,12 +312,12 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
                   text-body-light w-5 h-5 
                 "
               />
-              <span className="text-body-light font-semibold">{isEn ? 'Search By Email...' : 'البحث بالايميل...'}</span>
+              <span className="text-body-light font-semibold whitespace-nowrap">{isEn ? 'Search By Email...' : 'البحث بالايميل...'}</span>
             </div>
           </label>
         </div>
         <div
-          className="flex gap-4"
+          className="flex gap-4 flex-wrap whitespace-nowrap"
         >
           <div
             className="
@@ -380,7 +380,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
               <ul
                 className="
                   absolute top-0 peer-checked:top-[calc(100%+0.5rem)] left-0 w-full
-                  flex flex-col gap-1
+                  flex flex-col gap-1 z-[5]
                   invisible peer-checked:visible opacity-0 peer-checked:opacity-100
                   p-1 rounded-lg shadow-lg bg-white
                   translate-all duration-200 ease-in-out
@@ -431,7 +431,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
               className="
                 absolute top-0 peer-checked:top-[calc(100%+0.5rem)] left-1/2 min-w-full
                 translate-x-[-50%]
-                flex flex-col gap-1
+                flex flex-col gap-1 z-[5]
                 invisible peer-checked:visible opacity-0 peer-checked:opacity-100
                 p-1 rounded-lg shadow-lg bg-white
                 translate-all duration-200 ease-in-out
@@ -458,7 +458,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
             </ul>
           </label>
           <ul
-            className="flex gap-4"
+            className="flex gap-4 flex-wrap whitespace-nowrap"
           >
             {selectedFilterTags?.map((tag, i) =>
               <li
@@ -497,7 +497,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
         </div>
       </div>
       <div
-        className="flex items-center gap-8"
+        className="flex flex-col items-center gap-8 shrink-0"
       >
         <div
           className="flex items-center"

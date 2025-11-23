@@ -119,7 +119,7 @@ export default function Add ({ isEn = true }: Props) {
     className="flex flex-col gap-4"
     >
       <h2
-        className="text-heading text-lg font-bold"
+        className="text-heading text-lg font-semibold"
       >
         {isEn ? 'Add' : 'اضف'}
       </h2>
@@ -152,9 +152,9 @@ export default function Add ({ isEn = true }: Props) {
             />
             <ul
               className="
-                absolute top-[calc(100%+0.5rem)] left-0
-                w-full max-h-[224px]
-                flex flex-col items-center py-1 rounded-lg bg-background-light
+                absolute top-0 peer-checked:top-[calc(100%+0.5rem)] left-0
+                w-full max-h-[224px] shadow-md
+                flex flex-col items-center py-1 rounded-lg bg-white
                 overflow-y-scroll overflow-x-hidden
                 invisible peer-checked:visible opacity-0 peer-checked:opacity-100 
                 transition-all duration-200 ease-in-out
@@ -167,7 +167,7 @@ export default function Add ({ isEn = true }: Props) {
                   <SocialIcon
                     className="
                       w-[38px] h-[38px] p-1 rounded-lg
-                      text-body hover:bg-background-deep-light
+                      text-body hover:bg-background
                       transition-all duration-200 ease-in-out
                     " 
                     style={{color: itm.color}}

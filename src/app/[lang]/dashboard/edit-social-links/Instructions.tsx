@@ -12,12 +12,12 @@ export default function Instructions ({ isEn = true }: Props) {
       className="flex flex-col gap-4"
     >
       <h2
-        className="text-heading text-lg font-bold"
+        className="text-heading text-lg font-semibold"
       >
         Instructions
       </h2>
       <h3
-        className="text-heading font-bold"
+        className="text-heading font-semibold"
       >
         Manage Your Soical links
       </h3>
@@ -28,19 +28,19 @@ export default function Instructions ({ isEn = true }: Props) {
       </p>
       <ul className="text-body list-disc px-4 leading-6">
         <li>
-          <span className="text-heading font-bold">Add: </span>
+          <span className="text-heading font-semibold">Add: </span>
           Click "Add New Link", selsect a platform, and enter your full profile URL.
         </li>
         <li>
-          <span className="text-heading font-bold">Edit: </span>
+          <span className="text-heading font-semibold">Edit: </span>
           Links can't be edited once it's created. Please delete the existing link and create a new one.
         </li>
         <li>
-          <span className="text-heading font-bold">Remove: </span>
+          <span className="text-heading font-semibold">Remove: </span>
           Click the delete icon to remove a link. This action is immediate.
         </li>
       </ul>
-      <p className="text-body"><span className="text-content font-bold">Tip: </span>Always use the full URL (e.g., https://www.instagram.com/yourusername) to esnure the links work correctly.</p>
+      <p className="text-body"><span className="text-content font-semibold">Tip: </span>Always use the full URL (e.g., https://www.instagram.com/yourusername) to esnure the links work correctly.</p>
       <div
         className="flex w-full justify-center"
       >
@@ -57,12 +57,12 @@ export default function Instructions ({ isEn = true }: Props) {
       className="flex flex-col gap-4"
     >
       <h2
-        className="text-heading text-lg font-bold"
+        className="text-heading text-lg font-semibold"
       >
         التعليمات
       </h2>
       <h3
-        className="text-heading font-bold"
+        className="text-heading font-semibold"
       >
         إدارة روابطك الاجتماعية
       </h3>
@@ -73,19 +73,19 @@ export default function Instructions ({ isEn = true }: Props) {
       </p>
       <ul className="text-body list-disc px-4 leading-6" style={{direction: 'rtl', textAlign: 'right'}}>
         <li>
-          <span className="text-heading font-bold">إضافة: </span>
+          <span className="text-heading font-semibold">إضافة: </span>
           انقر على "إضافة رابط جديد"، اختر المنصة، وأدخل رابط حسابك الكامل.
         </li>
         <li>
-          <span className="text-heading font-bold">تعديل: </span>
+          <span className="text-heading font-semibold">تعديل: </span>
           لا يمكن تعديل الروابط بعد إنشائها. يرجى حذف الرابط الحالي وإنشاء رابط جديد.
         </li>
         <li>
-          <span className="text-heading font-bold">حذف: </span>
+          <span className="text-heading font-semibold">حذف: </span>
           انقر على أيقونة الحذف لإزالة الرابط. هذا الإجراء فوري.
         </li>
       </ul>
-      <p className="text-body" style={{direction: 'rtl', textAlign: 'right'}}><span className="text-content font-bold">نصيحة: </span>استخدم دائمًا الرابط الكامل (مثال: https://www.instagram.com/اسم المستخدم) لضمان عمل الروابط بشكل صحيح.</p>
+      <p className="text-body" style={{direction: 'rtl', textAlign: 'right'}}><span className="text-content font-semibold">نصيحة: </span>استخدم دائمًا الرابط الكامل (مثال: https://www.instagram.com/اسم المستخدم) لضمان عمل الروابط بشكل صحيح.</p>
       <div
         className="flex w-full justify-center"
       >

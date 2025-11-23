@@ -134,7 +134,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
       />
       <h3
         className={`
-          ${isLayoutScrolled ? 'text-heading-invert' : 'text-heading'}
+          ${isLayoutScrolled ? 'text-heading-invert' : 'text-heading'} font-semibold
           transition-all duration-200 ease-out
         `}
       >

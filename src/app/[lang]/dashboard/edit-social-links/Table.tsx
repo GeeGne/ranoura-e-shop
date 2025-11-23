@@ -72,11 +72,11 @@ export default function Table({ data, isLoading, isEn = true, lang = 'en' }:Prop
 
   if (isLoading) return (
     <LoadingTable />
-  )
+  );
 
   return (
     <section className="flex flex-col gap-4">
-      <h2 className="text-heading text-lg font-bold">List</h2>
+      <h2 className="text-heading text-lg font-semibold">{isEn ? 'List' : 'القائمه'}</h2>
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200 rounded-lg overflow-hidden">
           <thead className="bg-gray-50">
