@@ -323,20 +323,20 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
                 name="sortByInpt"
               />
               <span className="text-sm text-body font-semibold">{isEn ? 'Sort By' : 'ترتيب حسب'}</span>
-              <span className="text-sm text-content font-semibold">
-                {selectedSortByField?.value === 'none'  
-                  ? '' 
-                  : selectedSortByField?.name
-                }
-              </span>
+              {selectedSortByField?.value === 'none'
+                ||<span className="text-sm text-content font-semibold">
+                    {selectedSortByField?.name}
+                </span>
+              }
               <ul
-                className="
-                  absolute top-0 peer-checked:top-[calc(100%+0.5rem)] left-0 w-full
+                className={`
+                  absolute top-0 peer-checked:top-[calc(100%+0.5rem)] 
+                  ${isEn ? 'left-0': 'right-0'} w-full
                   flex flex-col gap-1
                   invisible peer-checked:visible opacity-0 peer-checked:opacity-100
                   p-1 rounded-lg shadow-lg bg-white
                   translate-all duration-200 ease-in-out
-                "
+                `}
               >
                 {sortByArray.map((itm, i) => 
                   <li

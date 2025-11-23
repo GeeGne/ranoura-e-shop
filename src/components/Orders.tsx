@@ -20,9 +20,11 @@ import {
 // JSON
 import orders from '@/json/userOrders.json';
 import statusColors from '@/json/orderStatus.json';
+import STATUS_TRANSLATIONS from '@/json/statusTranslations.json';
 
 // UTILS
 import filterByQuery from '@/utils/filterByQuery';
+import getTranslation from '@/utils/getTranslation';
 
 // ASSETS
 const pfpImage = '/assets/img/pfp.avif';
@@ -140,11 +142,14 @@ export default function Orders ({
       }
     );
     const sortUsers = [...emailFilteredOrders].sort((a, b) => {
-      const isSortEmpty = selectedSortByField?.value === 'none';
+      const { value, fieldName, sortType }: any = selectedSortByField;
+      const isSortEmpty = value === 'none';
       if (isSortEmpty) return 0;
 
-      const dateA = new Date(a[selectedSortByField?.fieldName]).getTime();
-      const dateB = new Date(b[selectedSortByField?.fieldName]).getTime();
+      const dateA = new Date(a[fieldName]).getTime();
+      const dateB = new Date(b[fieldName]).getTime();
+      if (sortType === 'ascending') return dateA - dateB;
+      if (sortType === 'descending') return dateB - dateA;
       return dateA - dateB;
     });
     const tagFilteredUsers = sortUsers.filter(user => {
@@ -324,7 +329,7 @@ export default function Orders ({
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center gap-2">
                     <div className="flex-shrink-0 h-12 w-12">
-                      <img className="w-full h-full object-cover object-center rounded-full" src={order.customer_pfp} alt="" />
+                      <img className="w-full h-full object-cover object-center rounded-full" src={order.customer_pfp || pfpImage} alt="" />
                     </div>
                     <div className="ml-4">
                       <div className="text-base font-medium text-heading">
@@ -353,7 +358,7 @@ export default function Orders ({
                     className="relative text-xs font-bold py-1 px-2"
                     style={{ color: statusColors[order.status]}}
                   >
-                    {order.status.toLowerCase()}
+                    {getTranslation(STATUS_TRANSLATIONS, order.status, lang)}
                   <div
                     className="absolute top-0 left-0 w-full h-full opacity-20 rounded-full"
                     style={{ backgroundColor: statusColors[order.status]}}
@@ -420,7 +425,7 @@ export default function Orders ({
                         "
                         style={{ color: statusColors[order.status]}}
                       >
-                        {order.status.toLowerCase()}
+                        {getTranslation(STATUS_TRANSLATIONS, order.status, lang)}
                       </div>
                       <MdiArrowDownDrop />
                       <ul
@@ -439,7 +444,7 @@ export default function Orders ({
                               p-2 rounded-lg hover:bg-background-light text-body text-sm font-bold
                             "
                           >
-                            {name}
+                            {getTranslation(STATUS_TRANSLATIONS, name, lang)}
                           </li>
                         )} 
                       </ul>

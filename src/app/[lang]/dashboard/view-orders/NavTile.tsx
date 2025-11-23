@@ -55,7 +55,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
   ];
 
   const [ isMainRefStuck, setIsMainRefStuck ] = useState<boolean>(false);
-  const [ selectedSortBy, setSelectedSortBy ] = useState<string>("")
+  const [ sortByType, setSortByType ] = useState<string>('descending');
   const mainRef = useRef<HTMLDivElement>(null);
 
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
@@ -124,10 +124,13 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
       default:
         console.error('Unknown name: ', name);
     }
-  }
+  };
 
   const handleClick = async (e: React.MouseEvent<HTMLElement | SVGElement>) => {
-    const { type, scrollDirection, fieldName, sortName, filterName, value } = e.currentTarget.dataset;
+    const { 
+      type, scrollDirection, fieldName, 
+      sortName, filterName, value, sortType
+    } = e.currentTarget.dataset;
 
     switch (type) {
       case 'right_arrow_button_is_clicked':
@@ -150,7 +153,18 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
         setAddCategoryWindowToggle(true);
         break;
       case 'sort_by_list_button_is_clicked':
-        if (sortName && fieldName) setSelectedSortByField({ name: sortName, fieldName, value })
+        if (sortName && fieldName) setSelectedSortByField({ 
+          name: sortName, fieldName, value, sortType 
+        });
+        break;
+      case 'sort_type_button_is_clicked':
+        const isASortFieldSelected = selectedSortByField?.value !== 'none';
+        if (!isASortFieldSelected) return;
+
+        const newSortType = sortType === 'descending' ? 'ascending' : 'descending'
+        setSortByType(newSortType);
+
+        setSelectedSortByField({ ...selectedSortByField, sortType: newSortType})
         break;
       case 'filter_list_button_is_clicked':
         // if (fieldName) setSelectedFilterTags(fieldName);
@@ -295,60 +309,91 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
         <div
           className="flex gap-4"
         >
-          <label
+          <div
             className="
               relative flex items-center w-fit gap-2 p-2 
               grow-0 rounded-md cursor-pointer
               bg-white hover:bg-background-light active:bg-background-deep-light
               translate-all duration-200 ease-in-out
             "
-            htmlFor={`${id}-sortByInpt`}
           >
-            <input
-              className="
-                peer absolute w-0 h-0 invisible opacity-0
-              "
-              id={`${id}-sortByInpt`}
-              type="checkbox"
-              name="sortByInpt"
-            />
-            <FlowbiteSortOutline className="w-4 h-4 text-body" />
-            <span className="text-sm text-body font-semibold">{isEn ? 'Sort By' : 'ترتيب حسب'}</span>
-            <span className="text-sm text-content font-semibold">
-              {selectedSortByField?.value === 'none'  
-                ? '' 
-                : selectedSortByField?.name
-              }
-            </span>
-            <ul
-              className="
-                absolute top-0 peer-checked:top-[calc(100%+0.5rem)] left-0 w-full
-                flex flex-col gap-1
-                invisible peer-checked:visible opacity-0 peer-checked:opacity-100
-                p-1 rounded-lg shadow-lg bg-white
+            <div
+              className={`
+                flex gap-1 items-center p-1 rounded-md
+                ${selectedSortByField?.value === 'none'  
+                  ? 'hover:bg-transparent active:bg-transparent' 
+                  : 'hover:bg-white active:bg-background'
+                }
                 translate-all duration-200 ease-in-out
-              "
+              `}
+              role="button"
+              data-type="sort_type_button_is_clicked"
+              data-sort-type={sortByType}
+              onClick={handleClick}
             >
-              {sortByArray.map((itm, i) => 
-                <li
-                  key={i}
-                  className="
-                    text-center hover:bg-background-light
-                    text-sm text-body hover:text-heading font-semibold p-1 rounded-lg
-                    translate-all duration-200 ease-in-out
-                  "
-                  role="button"
-                  data-type="sort_by_list_button_is_clicked"
-                  data-field-name={itm.fieldName}
-                  data-value={itm.value}
-                  data-sort-name={itm.name[lang]}
-                  onClick={handleClick}
+              {selectedSortByField?.value === 'none'  ||
+                <span
+                  className="text-content text-xs font-semibold"
                 >
-                  {itm.name[lang]}
-                </li>
-              )}
-            </ul>
-          </label>
+                  {sortByType === 'descending' ? 'A - Z' : 'Z - A'}
+                </span>
+              }
+              <FlowbiteSortOutline 
+                className={`
+                  w-4 h-4
+                  ${selectedSortByField?.value === 'none'  ? 'text-body' :  'text-content'}
+                `} 
+              />
+            </div>
+            <label
+              className="flex gap-2"
+              htmlFor={`${id}-sortByInpt`}
+            >
+              <input
+                className="
+                  peer absolute w-0 h-0 invisible opacity-0
+                "
+                id={`${id}-sortByInpt`}
+                type="checkbox"
+                name="sortByInpt"
+              />
+              <span className="text-sm text-body font-semibold">{isEn ? 'Sort By' : 'ترتيب حسب'}</span>
+              {selectedSortByField?.value === 'none'
+                ||<span className="text-sm text-content font-semibold">
+                    {selectedSortByField?.name}
+                </span>
+              }
+              <ul
+                className="
+                  absolute top-0 peer-checked:top-[calc(100%+0.5rem)] left-0 w-full
+                  flex flex-col gap-1
+                  invisible peer-checked:visible opacity-0 peer-checked:opacity-100
+                  p-1 rounded-lg shadow-lg bg-white
+                  translate-all duration-200 ease-in-out
+                "
+              >
+                {sortByArray.map((itm, i) => 
+                  <li
+                    key={i}
+                    className="
+                      text-center hover:bg-background-light
+                      text-sm text-body hover:text-heading font-semibold p-1 rounded-lg
+                      translate-all duration-200 ease-in-out
+                    "
+                    role="button"
+                    data-type="sort_by_list_button_is_clicked"
+                    data-field-name={itm.fieldName}
+                    data-value={itm.value}
+                    data-sort-name={itm.name[lang]}
+                    data-sort-type={sortByType}
+                    onClick={handleClick}
+                  >
+                    {itm.name[lang]}
+                  </li>
+                )}
+              </ul>
+            </label>
+          </div>
           <label
             className="
               relative flex items-center w-fit gap-2 p-2 

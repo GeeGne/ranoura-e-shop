@@ -1,0 +1,10 @@
+{
+  "pending": { "en": "pending", "ar": "قيد الانتظار" },
+  "confirmed": { "en": "confirmed", "ar": "مؤكد" },
+  "processing": { "en": "processing", "ar": "جاري التجهيز" },
+  "ondelivery": { "en": "ondelivery", "ar": "قيد التوصيل" },
+  "shipped": { "en": "shipped", "ar": "تم الشحن" },
+  "delivered": { "en": "delivered", "ar": "تم التسليم" },
+  "canceled": { "en": "canceled", "ar": "ملغي" },
+  "refunded": { "en": "refunded", "ar": "تم الاسترداد" }
+}
