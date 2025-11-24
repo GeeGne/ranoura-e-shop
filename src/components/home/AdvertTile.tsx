@@ -14,6 +14,7 @@ import EpArrowLeft from '@/components/svgs/EpArrowLeft';
 import LineMdHeart from '@/components/svgs/LineMdHeart';
 import LineMdHeartFilled from '@/components/svgs/LineMdHeartFilled';
 import SquareLines from '@/components/svgs/SquareLines';
+import FlowbiteExpandOutline from '@/components/svgs/FlowbiteExpandOutline';
 import CircleLines from '@/components/svgs/CircleLines';
 import FlowerLines from '@/components/svgs/FlowerLines';
 import FoundationBurstSale from '@/components/svgs/FoundationBurstSale';
@@ -38,7 +39,8 @@ import strSpaceToHyphen from '@/utils/strSpaceToHyphen';
 // STORES
 import { 
   useLayoutRefStore, useFavouritesStore, 
-  useFavouriteConfettiToggle, useAlertMessageStore, useLanguageStore
+  useFavouriteConfettiToggle, useAlertMessageStore, 
+  useLanguageStore, useImageDisplayerWindow
 } from '@/stores/index';
 
 // CONFETTI 
@@ -55,7 +57,6 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
   
   const router = useRouter();
   const array = [1, 2, 3, 4];
-  const selectedColor = "green";
   const filterProductsBasedOnSlug = () => products.filter(product => 
     product.categories.some(prodCat => prodCat === slug)
   );
@@ -75,12 +76,18 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
 
+  const setImageDisplayerToggle = useImageDisplayerWindow(state => state.setToggle);
+  const setImageDisplayerUrl = useImageDisplayerWindow(state => state.setUrl);
+
+  const [ clickedColor, setClickedColor] = useState<string>('');
+
   const [ scrollWidth, setScrollWidth ] = useState<number>(0);
   const [ imgScaleToggle, setImgScaleToggle ] = useState<boolean | number>(false);
   const [ heartActiveId, setHeartActiveId ] = useState<number | null>(null);
 
   const [ leftArrowInactive, setLeftArrowInactive ] = useState<boolean>(false);
   const [ rightArrowInactive, setRightArrowInactive ] = useState<boolean>(true);
+  
   useEffect(() => {
     setLeftArrowInactive(isEn ? true : false);
     setRightArrowInactive(isEn ? false : true);
@@ -94,7 +101,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
   const aBtnRefs = useRef<(HTMLElement | null)[]>([]);
   const bBtnRefs = useRef<(HTMLElement | null)[]>([]);
   
-  const getImgUrl = (imgArray: any) => imgArray.find((itm: any) => itm.color === selectedColor);
+  const getImgUrl = (imgArray: any, selectedColor = "green") => imgArray.find((itm: any) => itm.color === selectedColor);
 
   const displayPrideConfetti = () => {
     setTimeout(() => {
@@ -109,6 +116,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
   };
 
   const onColorChange = (color: string, clickedColor: string, productId: number) => {
+    setClickedColor(clickedColor)
     const getProduct = () => products.find(product => product.id === productId);
     const getEL = (refs: ReactNode[] | any[]) => refs.find((el) => Number(el.dataset.productId) === productId);
     
@@ -138,7 +146,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
   const handleClick = (e: React.MouseEvent<HTMLElement | any>) => {
     e.stopPropagation();
   
-    const { type, index, productUri, productId, productName } = e.currentTarget.dataset;
+    const { type, index, productUri, productId, productName, imgUrl } = e.currentTarget.dataset;
     const ulRefWidth = ulRef.current.offsetWidth
     const ulRefScrollWidth = ulRef.current.scrollWidth
     const liRefWidth = liRefs?.current[0]?.scrollWidth || 0;
@@ -200,6 +208,11 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
             setRightArrowInactive(false);
             return val - liRefWidth - gap
           });
+        break;
+      case 'scale_window_button_is_clicked':
+        console.log('imgUrl: ', imgUrl);
+        setImageDisplayerToggle(true);
+        setImageDisplayerUrl(imgUrl);
         break;
       case 'scale_button_is_clicked':
         setImgScaleToggle(val => val === Number(index) ? false : Number(index))
@@ -493,19 +506,37 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
                     flex flex-row w-full justify-between items-end
                   `}
                 >
-                  <LineMdArrowsDiagonalRotated 
-                    className={`
-                      order-2 w-8 h-8 transform-style-3d transform group-hover:transform-style-3d 
-                      cursor-pointer rounded-full p-1 
-                      transition-all ease-in-out duration-200
-                      ${imgScaleToggle === i ? 'text-heading-invert bg-heading' : 'text-body hover:text-heading'}
-                      ${isEn ? 'ml-auto' : 'mr-auto'}
-                    `}
-                    role="button"
-                    data-type="scale_button_is_clicked"
-                    data-index={i}
-                    onClick={handleClick}
-                  />
+                  <div
+                    className="flex order-2 gap-2"
+                  >
+                    <FlowbiteExpandOutline 
+                      className={`
+                        w-8 h-8 transform-style-3d transform group-hover:transform-style-3d 
+                        cursor-pointer rounded-full p-1 
+                        transition-all ease-in-out duration-200
+                        ${imgScaleToggle === i ? 'text-heading-invert bg-heading' : 'text-body hover:text-heading'}
+                        ${isEn ? 'ml-auto' : 'mr-auto'}
+                      `}
+                      role="button"
+                      data-index={i}
+                      data-type="scale_window_button_is_clicked"
+                      data-img-url={getImgUrl(product.images, clickedColor)?.main}
+                      onClick={handleClick}
+                    />
+                    <LineMdArrowsDiagonalRotated 
+                      className={`
+                        w-8 h-8 transform-style-3d transform group-hover:transform-style-3d 
+                        cursor-pointer rounded-full p-1 
+                        transition-all ease-in-out duration-200
+                        ${imgScaleToggle === i ? 'text-heading-invert bg-heading' : 'text-body hover:text-heading'}
+                        ${isEn ? 'ml-auto' : 'mr-auto'}
+                      `}
+                      role="button"
+                      data-type="scale_button_is_clicked"
+                      data-index={i}
+                      onClick={handleClick}
+                    />
+                  </div>
                   <div
                     className="
                       order-1 flex flex-row items-center gap-2 

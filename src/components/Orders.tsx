@@ -179,15 +179,14 @@ export default function Orders ({
   const getTimeAgo = (dateStr: string) => {
     const date: any = new Date(dateStr);
     const now: any = new Date();
-    // const diffTime = Math.abs(now - date);
-    const diffTime = 800000000;
+    const diffTime = Math.abs(now - date);
     const diffDays = diffTime / (1000 * 60 * 60 * 24);
     const diffHours = diffDays * 24;
     const diffMinutes = diffHours * 60;
 
-    console.log('diffDays: ', diffDays);
-    console.log('diffHours: ', diffHours);
-    console.log('diffMinutes: ', diffMinutes);
+    // console.log('diffDays: ', diffDays);
+    // console.log('diffHours: ', diffHours);
+    // console.log('diffMinutes: ', diffMinutes);
 
     const areTimeAgoMoreThanADay = diffDays >= 1;
     const areTmeAgoMoreThanHours = diffHours >= 1;
@@ -219,7 +218,7 @@ export default function Orders ({
           }
       `
     ;
-  }
+  };
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement | SVGSVGElement>) => {
     const { type } = e.currentTarget.dataset;
