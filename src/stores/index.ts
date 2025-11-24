@@ -456,7 +456,7 @@ const useAddSubCategoryWindowStore = create<AddSubCategoryWindowProps>()(
 type ImageDisplayerWindowProps = {
   toggle: boolean;
   setToggle: (value: boolean) => void;
-  url: string | null;
+  url: string | null | undefined;
   setUrl: (value: string | null) => void;
 }
 

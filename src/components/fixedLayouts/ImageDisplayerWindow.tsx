@@ -26,6 +26,7 @@ export default function ImageDisplayerWindow () {
 
     switch (type) {
       case 'fixed_window_is_clicked':
+      case 'fixed_box_is_clicked':
         setToggle(false);
         break;
       default:
@@ -49,9 +50,9 @@ export default function ImageDisplayerWindow () {
       <div
         className={`
           absolute top-1/2 left-1/2 
-          translate-x-[-50%] translate-y-[-50%]
-          w-[80%] rounded-lg overflow-y-scroll
-          bg-background overflow-hidden
+          translate-x-[-50%] translate-y-[-50%] flex items-center
+          w-full h-full justify-center
+          
           transition-all delay-100 duration-200 ease-[cubic-bezier(0.68, -0.6, 0.32, 1.6)]
           ${toggle ? 'scale-100 opacity-100' : 'scale-[80%] opacity-0'}
         `}
@@ -60,7 +61,7 @@ export default function ImageDisplayerWindow () {
       >
         <img 
           src={url}
-          className="w-full h-auto object-cover object-center"
+          className="rounded-lg max-w-[calc(100%-4rem)] max-h-[calc(100%-4rem)] object-cover object-center"
         />
       </div>
     </div>

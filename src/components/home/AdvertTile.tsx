@@ -79,8 +79,6 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
   const setImageDisplayerToggle = useImageDisplayerWindow(state => state.setToggle);
   const setImageDisplayerUrl = useImageDisplayerWindow(state => state.setUrl);
 
-  const [ clickedColor, setClickedColor] = useState<string>('');
-
   const [ scrollWidth, setScrollWidth ] = useState<number>(0);
   const [ imgScaleToggle, setImgScaleToggle ] = useState<boolean | number>(false);
   const [ heartActiveId, setHeartActiveId ] = useState<number | null>(null);
@@ -98,9 +96,10 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
   const mainImgRefs = useRef<(HTMLElement | null)[]>([]);
   const secondImgRefs = useRef<(HTMLElement | null)[]>([]);
   const imgAorBRefs = useRef<(HTMLElement | null)[]>([]);
+  const expandImgWindowBtnRefs = useRef<(HTMLElement | null)[]>([]);
   const aBtnRefs = useRef<(HTMLElement | null)[]>([]);
   const bBtnRefs = useRef<(HTMLElement | null)[]>([]);
-  
+  console.log('expandImgWindowBtnRefs: ', expandImgWindowBtnRefs);
   const getImgUrl = (imgArray: any, selectedColor = "green") => imgArray.find((itm: any) => itm.color === selectedColor);
 
   const displayPrideConfetti = () => {
@@ -116,15 +115,20 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
   };
 
   const onColorChange = (color: string, clickedColor: string, productId: number) => {
-    setClickedColor(clickedColor)
     const getProduct = () => products.find(product => product.id === productId);
     const getEL = (refs: ReactNode[] | any[]) => refs.find((el) => Number(el.dataset.productId) === productId);
     
-    if (getEL(mainImgRefs.current))
+    if (getEL(mainImgRefs.current)) {
       getEL(mainImgRefs.current).src = getProduct()?.images.find(itm => itm.color === color)?.main;
+    }
+
+    if (getEL(expandImgWindowBtnRefs.current)) {
+      getEL(expandImgWindowBtnRefs.current).dataset.imgUrl = getProduct()?.images.find(itm => itm.color === color)?.main;
+    }
 
     if (getEL(secondImgRefs.current)) {
       const isSecondImgExist = !!getProduct()?.images.find(itm => itm.color === color)?.second;
+
       if (!isSecondImgExist) { 
         getEL(secondImgRefs.current).style.display = 'none'
         getEL(imgAorBRefs.current).style.display = 'none'
@@ -519,9 +523,10 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
                       `}
                       role="button"
                       data-index={i}
+                      data-product-id={product.id}
                       data-type="scale_window_button_is_clicked"
-                      data-img-url={getImgUrl(product.images, clickedColor)?.main}
                       onClick={handleClick}
+                      ref={ (el: any) => { if (expandImgWindowBtnRefs.current) {expandImgWindowBtnRefs.current[i] = el}} }
                     />
                     <LineMdArrowsDiagonalRotated 
                       className={`
