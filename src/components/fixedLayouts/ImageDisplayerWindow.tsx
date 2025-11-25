@@ -10,6 +10,7 @@ import createSlug from '@/utils/createSlug';
 // ASSETS
 const NavBarLgImg = '/assets/img/NavBarImg-example.avif';
 const NavBarCompactImg = '/assets/img/NavBarCompactImg-example.avif';
+const emptyImg = '/assets/img/Empty Image.avif';
 
 export default function ImageDisplayerWindow () {
   const lang = useLanguageStore(state => state.lang);
@@ -60,7 +61,7 @@ export default function ImageDisplayerWindow () {
         onClick={handleClick}
       >
         <img 
-          src={url}
+          src={url || emptyImg}
           className="rounded-lg max-w-[calc(100%-4rem)] max-h-[calc(100%-4rem)] object-cover object-center"
         />
       </div>
