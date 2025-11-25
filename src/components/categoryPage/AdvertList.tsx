@@ -10,6 +10,7 @@ import PriceTag from '@/components/PriceTag';
 import ColorPallete from '@/components/ColorPallete';
 import LineMdHeart from '@/components/svgs/LineMdHeart';
 import LineMdHeartFilled from '@/components/svgs/LineMdHeartFilled';
+import FlowbiteExpandOutline from '@/components/svgs/FlowbiteExpandOutline';
 import LineMdArrowsDiagonalRotated from '@/components/svgs/LineMdArrowsDiagonalRotated';
 import SquareLines from '@/components/svgs/SquareLines';
 import FlowerLines from '@/components/svgs/FlowerLines';
@@ -24,7 +25,8 @@ import strSpaceToHyphen from '@/utils/strSpaceToHyphen';
 // STORES
 import { 
   useFavouritesStore, useFavouriteConfettiToggle,
-  useAlertMessageStore, useLanguageStore
+  useAlertMessageStore, useLanguageStore,
+  useImageDisplayerWindow
 } from '@/stores/index';
 
 // CONFETTI 
@@ -52,6 +54,9 @@ export default function AdvertList ({ products = [] }: Props) {
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
 
+  const setImageDisplayerToggle = useImageDisplayerWindow(state => state.setToggle);
+  const setImageDisplayerUrl = useImageDisplayerWindow(state => state.setUrl);
+
   const setConfettiToggle = useFavouriteConfettiToggle(state => state.setToggle);
   const confettiToggle = useFavouriteConfettiToggle(state => state.toggle);
   const confettiTimerId = useRef<any>(0);
@@ -61,6 +66,7 @@ export default function AdvertList ({ products = [] }: Props) {
   const mainImgRefs = useRef<(HTMLElement | null)[]>([]);
   const secondImgRefs = useRef<(HTMLElement | null)[]>([]);
   const imgAorBRefs = useRef<(HTMLElement | null)[]>([]);
+  const expandImgWindowBtnRefs = useRef<(HTMLElement | null)[]>([]);
   const aBtnRefs = useRef<(HTMLElement | null)[]>([]);
   const bBtnRefs = useRef<(HTMLElement | null)[]>([]);
 
@@ -83,8 +89,13 @@ export default function AdvertList ({ products = [] }: Props) {
     const getProduct = () => products.find(product => product.id === productId);
     const getEL = (refs: ReactNode[] | any[]) => refs.find((el) => Number(el.dataset.productId) === productId);
     
-    if (getEL(mainImgRefs.current))
+    if (getEL(mainImgRefs.current)) {
       getEL(mainImgRefs.current).src = getProduct()?.images.find((itm: any) => itm.color === color)?.main;
+    }
+
+    if (getEL(expandImgWindowBtnRefs.current)) {
+      getEL(expandImgWindowBtnRefs.current).dataset.imgUrl = getProduct()?.images.find((itm: Record<string, any>) => itm.color === color)?.main;
+    }
 
     if (getEL(secondImgRefs.current)) {
       const isSecondImgExist = !!getProduct()?.images.find((itm: any) => itm.color === color)?.second;
@@ -110,7 +121,7 @@ export default function AdvertList ({ products = [] }: Props) {
   const handleClick = (e: React.MouseEvent<HTMLElement> | any) => {
     e.stopPropagation();
 
-    const { type, index, productUri, productId, productName } = e.currentTarget.dataset;
+    const { type, index, productUri, productId, productName, imgUrl } = e.currentTarget.dataset;
     const ulRefWidth = ulRef.current.offsetWidth
     const ulRefScrollWidth = ulRef.current.scrollWidth
     const liRefWidth = liRefs?.current[0]?.scrollWidth || 0;
@@ -149,6 +160,11 @@ export default function AdvertList ({ products = [] }: Props) {
           setRightArrowInactive(false);
           return val - liRefWidth - gap
         });
+        break;
+      case 'scale_window_button_is_clicked':
+        console.log('imgUrl: ', imgUrl);
+        setImageDisplayerToggle(true);
+        setImageDisplayerUrl(imgUrl);
         break;
       case 'scale_button_is_clicked':
         setImgScaleToggle(val => val === Number(index) ? false : Number(index))
@@ -356,61 +372,80 @@ export default function AdvertList ({ products = [] }: Props) {
                   flex flex-row w-full justify-between items-end
                 `}
               >
-                <LineMdArrowsDiagonalRotated 
-                  className={`
-                    order-2 w-8 h-8 transform-style-3d transform group-hover:transform-style-3d 
-                    cursor-pointer rounded-full p-1
-                    transition-all ease-in-out duration-200
-                    ${imgScaleToggle === i ? 'text-heading-invert bg-heading' : 'text-body hover:text-heading'}
-                    ${isEn ? 'ml-auto' : 'mr-auto'}
-                  `}
-                  role="button"
-                  data-type="scale_button_is_clicked"
-                  data-index={i}
-                  onClick={handleClick}
-                />
-                  <div
-                    className="
-                      order-1 flex flex-row items-center gap-2 
-                      rounded-lg border-solid border-heading-invert border-[2px] p-1 backdrop-brightness-[70%]
-                    "
+                <div
+                  className="flex order-2 gap-2"
+                >
+                  <FlowbiteExpandOutline 
+                    className={`
+                      w-8 h-8 transform-style-3d transform group-hover:transform-style-3d 
+                      cursor-pointer rounded-full p-1 
+                      transition-all ease-in-out duration-200
+                      text-body hover:text-heading
+                      ${isEn ? 'ml-auto' : 'mr-auto'}
+                    `}
+                    role="button"
+                    data-index={i}
                     data-product-id={product.id}
-                    ref={ (el: any) => {if (imgAorBRefs.current) {imgAorBRefs.current[i] = el} }}
+                    data-type="scale_window_button_is_clicked"
+                    onClick={handleClick}
+                    ref={ (el: any) => { if (expandImgWindowBtnRefs.current) {expandImgWindowBtnRefs.current[i] = el}} }
+                  />
+                  <LineMdArrowsDiagonalRotated 
+                    className={`
+                      w-8 h-8 transform-style-3d transform group-hover:transform-style-3d 
+                      cursor-pointer rounded-full p-1 
+                      transition-all ease-in-out duration-200
+                      ${imgScaleToggle === i ? 'text-heading-invert bg-heading' : 'text-body hover:text-heading'}
+                      ${isEn ? 'ml-auto' : 'mr-auto'}
+                    `}
+                    role="button"
+                    data-type="scale_button_is_clicked"
+                    data-index={i}
+                    onClick={handleClick}
+                  />
+                </div>
+                <div
+                  className="
+                    order-1 flex flex-row items-center gap-2 
+                    rounded-lg border-solid border-heading-invert border-[2px] p-1 backdrop-brightness-[70%]
+                  "
+                  data-product-id={product.id}
+                  ref={ (el: any) => {if (imgAorBRefs.current) {imgAorBRefs.current[i] = el} }}
+                >
+                  <LineMdImageTwotone 
+                    className="
+                      w-5 h-5 text-heading-invert 
+                    "
+                  />
+                  <button
+                    className="
+                      advert-picked-image text-xs font-bold px-[4px] rounded-full 
+                      text-heading-invert hover:bg-heading 
+                      border-solid border-heading-invert border-[2px]
+                      transition-all ease-in-out duration-200
+                    "
+                    data-type="a_button_is_clicked"
+                    data-product-id={product.id}
+                    onClick={handleClick}
+                    ref={ (el: any) => {if (aBtnRefs.current) {aBtnRefs.current[i] = el} }}
                   >
-                    <LineMdImageTwotone 
-                      className="
-                        w-5 h-5 text-heading-invert 
-                      "
-                    />
-                    <button
-                      className="
-                        advert-picked-image text-xs font-bold px-[4px] rounded-full 
-                        text-heading-invert hover:bg-heading 
-                        border-solid border-heading-invert border-[2px]
-                        transition-all ease-in-out duration-200
-                      "
-                      data-type="a_button_is_clicked"
-                      data-product-id={product.id}
-                      onClick={handleClick}
-                      ref={ (el: any) => {if (aBtnRefs.current) {aBtnRefs.current[i] = el} }}
-                    >
-                      A                     
-                    </button>
-                    <button
-                      className="
-                        text-xs font-bold px-[4px] rounded-full 
-                        text-heading-invert hover:bg-heading 
-                        border-solid border-heading-invert border-[2px]
-                        transition-all ease-in-out duration-200
-                      "
-                      data-type="b_button_is_clicked"
-                      data-product-id={product.id}
-                      onClick={handleClick}
-                      ref={ (el: any) => {if (bBtnRefs.current) {bBtnRefs.current[i] = el} }}
-                    >
-                      B                     
-                    </button>
-                  </div>
+                    A                     
+                  </button>
+                  <button
+                    className="
+                      text-xs font-bold px-[4px] rounded-full 
+                      text-heading-invert hover:bg-heading 
+                      border-solid border-heading-invert border-[2px]
+                      transition-all ease-in-out duration-200
+                    "
+                    data-type="b_button_is_clicked"
+                    data-product-id={product.id}
+                    onClick={handleClick}
+                    ref={ (el: any) => {if (bBtnRefs.current) {bBtnRefs.current[i] = el} }}
+                  >
+                    B                     
+                  </button>
+                </div>
               </nav>
             </div>
             <Link

@@ -99,7 +99,6 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
   const expandImgWindowBtnRefs = useRef<(HTMLElement | null)[]>([]);
   const aBtnRefs = useRef<(HTMLElement | null)[]>([]);
   const bBtnRefs = useRef<(HTMLElement | null)[]>([]);
-  console.log('expandImgWindowBtnRefs: ', expandImgWindowBtnRefs);
   const getImgUrl = (imgArray: any, selectedColor = "green") => imgArray.find((itm: any) => itm.color === selectedColor);
 
   const displayPrideConfetti = () => {
@@ -272,6 +271,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
   // console.log('favourites: ', favourites);
   // console.log('layoutRef: ', layoutRef);
   // console.log('getImgUrls(product.images)?.second: ', getImgUrls(products[1].images)?.second);
+  // console.log('expandImgWindowBtnRefs: ', expandImgWindowBtnRefs);
   
   return (
     <section
@@ -518,7 +518,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
                         w-8 h-8 transform-style-3d transform group-hover:transform-style-3d 
                         cursor-pointer rounded-full p-1 
                         transition-all ease-in-out duration-200
-                        stext-body hover:text-heading
+                        text-body hover:text-heading
                         ${isEn ? 'ml-auto' : 'mr-auto'}
                       `}
                       role="button"
