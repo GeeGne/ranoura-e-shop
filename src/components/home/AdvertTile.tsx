@@ -51,14 +51,25 @@ type Props = {
   category?: string;
   type?: string;
   slug?: string;
+  products?: Record<string, any>[];
+  isLoading?: boolean;
+  isError?: boolean
 }
 
-export default function AdvertTile ({ title = 'COLLECTION', category = 'collection', type = "collection", slug = 'collection' }: Props) {
+export default function AdvertTile ({ 
+  title = 'COLLECTION', 
+  category = 'collection', 
+  type = "collection", 
+  slug = 'collection',
+  products = [],
+  isLoading = false,
+  isError = false
+}: Props) {
   
   const router = useRouter();
   const array = [1, 2, 3, 4];
   const filterProductsBasedOnSlug = () => products.filter(product => 
-    product.categories.some(prodCat => prodCat === slug)
+    product.categories.some((prodCat: string) => prodCat.includes(slug))
   );
 
   const lang = useLanguageStore(state => state.lang);
@@ -118,15 +129,15 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
     const getEL = (refs: ReactNode[] | any[]) => refs.find((el) => Number(el.dataset.productId) === productId);
     
     if (getEL(mainImgRefs.current)) {
-      getEL(mainImgRefs.current).src = getProduct()?.images.find(itm => itm.color === color)?.main;
+      getEL(mainImgRefs.current).src = getProduct()?.images.find((itm: Record<string, any>) => itm.color === color)?.main;
     }
 
     if (getEL(expandImgWindowBtnRefs.current)) {
-      getEL(expandImgWindowBtnRefs.current).dataset.imgUrl = getProduct()?.images.find(itm => itm.color === color)?.main;
+      getEL(expandImgWindowBtnRefs.current).dataset.imgUrl = getProduct()?.images.find((itm: Record<string, any>) => itm.color === color)?.main;
     }
 
     if (getEL(secondImgRefs.current)) {
-      const isSecondImgExist = !!getProduct()?.images.find(itm => itm.color === color)?.second;
+      const isSecondImgExist = !!getProduct()?.images.find((itm: Record<string, any>) => itm.color === color)?.second;
 
       if (!isSecondImgExist) { 
         getEL(secondImgRefs.current).style.display = 'none'
@@ -142,7 +153,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
 
       // Add the Second Image if exists
       getEL(secondImgRefs.current).style.display = 'inline';
-      getEL(secondImgRefs.current).src = getProduct()?.images.find(itm => itm.color === color)?.second
+      getEL(secondImgRefs.current).src = getProduct()?.images.find((itm: Record<string, any>) => itm.color === color)?.second
       getEL(imgAorBRefs.current).style.display = 'flex'
     };
   }
@@ -263,7 +274,8 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
   }
 
   // DEBUG
-  // console.log('products: ', products);
+  console.log('products: ', products);
+  console.log('filterProductsBasedOnSlug: ', filterProductsBasedOnSlug());
   // console.log('liRefs: ', liRefs.current);
   // console.log('liRefWidth: ', liRefWidth);
   // console.log('ulRefWidth', ulRefWidth)
@@ -383,8 +395,8 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
                       transition-all ease-in-out duration-200
                       ${imgScaleToggle === i? 'scale-[130%]' : 'scale-[100%]'}  
                     `}
-                    src={getImgUrl(product.images)?.main}
-                    alt={product.name[isEn ? 'en' : 'ar']}
+                    src={getImgUrl(product.images)?.views.filter((view: Record<string, any>) => view.tag === 'a').url}
+                    alt={product.name[lang]}
                     loading={i <= 1 ? "eager" :"lazy"}
                     fetchPriority={i <= 1 ? "high" :"low"}
                     data-product-id={product.id}
@@ -471,7 +483,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
                   data-index={i}
                   data-type="heart_button_is_clicked"
                   data-product-id={product.id}
-                  data-product-name={product.name[isEn ? 'en' : 'ar']}
+                  data-product-name={product.name[lang]}
                   onClick={handleClick}
                 >
                   <LineMdHeart
@@ -589,7 +601,7 @@ export default function AdvertTile ({ title = 'COLLECTION', category = 'collecti
                 data-product-id={product.id}
                 onClick={handleClick}
               >
-                {product.name[isEn ? 'en' : 'ar']}
+                {product.name[lang]}
               </Link>
               <PriceTag 
                 price={product.price} 

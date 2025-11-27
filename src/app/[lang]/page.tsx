@@ -18,6 +18,9 @@ import AdvertTile from '@/components/home/AdvertTile';
 // STORES
 import { useTabNameStore, useLanguageStore } from '@/stores/index';
 
+// API
+import getAllProducts from '@/lib/api/products/get';
+
 export default function Home() {
 
   const setTabName = useTabNameStore((state: any) => state.setTabName);
@@ -37,6 +40,11 @@ export default function Home() {
     setDefaultLanguage();
   }, [ lang ]);
 
+  const { data: productsData, isLoading: areProductsLoading, isError: isProductsDataError } = useQuery({
+    queryKey: [ 'products' ],
+    queryFn: getAllProducts
+  })
+
   return (
     <div
       className="flex flex-col"
@@ -49,10 +57,13 @@ export default function Home() {
         category="hot-deals"
         type="sale"
         slug="hot-deals"
+        products={productsData?.data}
+        isLoading={areProductsLoading}
+        isError={isProductsDataError}
       />
       <CategoryPickerV2 />
       <MainLayout />
-      <AdvertTile 
+      {/* <AdvertTile 
         title={isEn ? "WHAT'S NEW?" : "احدث الكوليكشات"}
         category="what's-new"
         type="new"
@@ -63,7 +74,7 @@ export default function Home() {
         category="latest-arriavls"
         type="sale"
         slug="latest-arrivals"
-      />
+      /> */}
     </div>
   );
 }
