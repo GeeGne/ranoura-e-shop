@@ -5,9 +5,71 @@ type Props = {
   discount?: number;
   hidePercent?: boolean;
   textSize?: string;
+  isLoading?: boolean;
 } & React.ComponentPropsWithRef<"div">;
 
-export default function PriceTag ({ price = 0, discount = 0, hidePercent = false, textSize = "lg", ...props }: Props) {
+export default function PriceTag ({
+  price = 0, 
+  discount = 0, 
+  hidePercent = false, 
+  textSize = "lg", 
+  isLoading = false,
+  ...props 
+}: Props) {
+
+  if (isLoading) {
+  return (
+      <div>
+        <div
+           className="flex flex-col gap-2"
+         >
+          <div
+            className="flex items-center gap-2"
+          >
+            <span
+              className={`
+                --opacity-blink text-transparent bg-background-light rounded-lg font-bold
+                ${textSize === 'lg' 
+                  ? 'text-lg' 
+                  : textSize === 'base' 
+                  ? 'text-base' : 'text-sm'
+                }
+              `}
+            >
+              /////////
+            </span>
+            <s
+              className={`
+                --opacity-blink text-transparent bg-background-light font-bold rounded-lg
+                ${textSize === 'lg' 
+                  ? 'text-base' 
+                  : textSize === 'base' 
+                  ? 'text-sm' : 'text-xs'
+                }
+              `}
+            >
+              ////////
+            </s>
+          </div> 
+            {hidePercent ||
+                <span
+                className={`
+                  --opacity-blink text-transparent bg-background-light rounded-lg w-fit font-bold
+                  ${textSize === 'lg' 
+                    ? 'text-sm' 
+                    : textSize === 'base' 
+                    ? 'text-xs': 'text-xs'
+                  }
+                `}
+              >
+                ///////////
+              </span>
+            }
+        </div>
+      </div>
+    )
+  }
+  
   return (
     <div
       { ...props }

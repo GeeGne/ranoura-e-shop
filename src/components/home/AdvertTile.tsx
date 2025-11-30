@@ -65,7 +65,7 @@ export default function AdvertTile ({
   isLoading = false,
   isError = false
 }: Props) {
-  
+  isLoading = true;  
   const router = useRouter();
   const array = [1, 2, 3, 4];
   const filterProductsBasedOnSlug = () => products.filter(product => 
@@ -124,26 +124,37 @@ export default function AdvertTile ({
     }, 1000)
   };
 
-  const onColorChange = (color: string, clickedColor: string, productId: number) => {
+  const onColorChange = (color: string, clickedColor: string, productId: string) => {
     const getProduct = () => products.find(product => product.id === productId);
-    const getEL = (refs: ReactNode[] | any[]) => refs.find((el) => Number(el.dataset.productId) === productId);
+    const getEL = (refs: ReactNode[] | any[]) => refs.find((el) => el.dataset.productId === productId);
     
     if (getEL(mainImgRefs.current)) {
-      getEL(mainImgRefs.current).src = getProduct()?.images.find((itm: Record<string, any>) => itm.color === color)?.main;
-    }
+      getEL(mainImgRefs.current).src = getProduct()
+        ?.images.find((itm: Record<string, any>) => itm.color === color)?.views
+        .find((view: Record<string, string>) => view.tag === 'a').url
+      ;
+      console.log('test1');
+    };
 
     if (getEL(expandImgWindowBtnRefs.current)) {
-      getEL(expandImgWindowBtnRefs.current).dataset.imgUrl = getProduct()?.images.find((itm: Record<string, any>) => itm.color === color)?.main;
+      getEL(expandImgWindowBtnRefs.current).dataset.imgUrl = getProduct()
+        ?.images.find((itm: Record<string, any>) => itm.color === color)?.views
+        .find((view: Record<string, string>) => view.tag === 'a').url
+      ;
+      console.log('test2');
     }
 
     if (getEL(secondImgRefs.current)) {
-      const isSecondImgExist = !!getProduct()?.images.find((itm: Record<string, any>) => itm.color === color)?.second;
+      const isSecondImgExist = !!getProduct()
+        ?.images.find((itm: Record<string, any>) => itm.color === color)?.views
+        .find((view: Record<string, string>) => view.tag === 'b')?.url;
 
       if (!isSecondImgExist) { 
         getEL(secondImgRefs.current).style.display = 'none'
         getEL(imgAorBRefs.current).style.display = 'none'
         return;
       };
+      console.log('test3');
 
       // Reset the A & B Button back to A along with main image
       getEL(aBtnRefs.current).classList.add('advert-picked-image');
@@ -153,10 +164,13 @@ export default function AdvertTile ({
 
       // Add the Second Image if exists
       getEL(secondImgRefs.current).style.display = 'inline';
-      getEL(secondImgRefs.current).src = getProduct()?.images.find((itm: Record<string, any>) => itm.color === color)?.second
+      getEL(secondImgRefs.current).src = getProduct()
+        ?.images.find((itm: Record<string, any>) => itm.color === color)?.views
+        .find((view: Record<string, string>) => view.tag === 'b').url;
       getEL(imgAorBRefs.current).style.display = 'flex'
     };
   }
+
   const handleClick = (e: React.MouseEvent<HTMLElement | any>) => {
     e.stopPropagation();
   
@@ -285,6 +299,88 @@ export default function AdvertTile ({
   // console.log('getImgUrls(product.images)?.second: ', getImgUrls(products[1].images)?.second);
   // console.log('expandImgWindowBtnRefs: ', expandImgWindowBtnRefs);
   
+  if (isLoading) return (
+    <section className="flex flex-col gap-4 px-4 py-8">
+      <div className="flex items-center justify-between">
+        <div className="--opacity-blink bg-background-light rounded-lg relative flex items-center text-3xl font-bold transform">
+          <span className="text-transparent">//////////////////</span>
+        </div>
+        <div className="flex items-center gap-4">
+          {[1, 2, 3].map(itm => 
+            <div
+              className="--opacity-blink w-8 h-8 bg-background-light rounded-full my-auto text-transparent"
+            />        
+          )}
+        </div>
+      </div>
+      <div className="w-full">
+        <ul
+          className="flex flex-row gap-4 transition-all duration-200 ease-in-out"
+          style={{transform: `translateX(${scrollWidth}px)`}}
+        >
+          {[1, 2, 3, 4, 5].map((product, i) => 
+            <li
+              className="flex flex-col shrink-0 gap-2 w-[250px] md:w-[350px] lg:w-[400px]"
+              key={i}
+            >
+              <div
+                className="relative transition-all duration-200 ease-in-out"
+              >
+                <div 
+                  className="--opacity-blink bg-background-light relative w-full h-full aspect-[2/3] rounded-lg overflow-hidden"
+                />
+                <div
+                  className={`
+                    absolute top-0 flex flex-col gap-4 p-2 z-[10] drop-shadow-md
+                    ${isEn ? 'left-0' : 'right-0'}
+                  `}
+                />
+                <nav
+                  className="absolute bottom-0 right-0 p-2 z-[10] flex flex-row w-full justify-between items-end"
+                >
+                  <div className="flex order-2 gap-2">
+                    {[1, 2].map(itm => 
+                      <FlowbiteExpandOutline 
+                        className={`
+                          text-transparent bg-background-deep-light w-8 h-8 transform-style-3d transform group-hover:transform-style-3d 
+                          rounded-full p-1 
+                          transition-all ease-in-out duration-200
+                          ${isEn ? 'ml-auto' : 'mr-auto'}
+                        `}
+                      />
+                    )}
+                  </div>
+                  <div
+                    className="--opacity-blink bg-background-deep-light order-1 flex flex-row items-center gap-2 rounded-lg border-solid border-heading-invert border-[2px] p-1 backdrop-brightness-[70%]"
+                  >
+                    {[1, 2, 3].map(itm => 
+                      <div
+                        className="w-5 h-5 font-bold px-[4px] rounded-full text-transparent transition-all ease-in-out duration-200"
+                      >
+                        A                     
+                      </div>  
+                    )}
+                  </div>
+                </nav>
+              </div>
+              <span className="--opacity-blink text-transparent bg-background-light w-fit rounded-lg text-base mb-auto">
+                ////////////////////////////////
+              </span>
+              <PriceTag 
+                price={1000} 
+                discount={10}
+                isLoading={true}
+              />
+              <ColorPallete 
+                isLoading={true}
+              />
+            </li>
+          )}         
+        </ul>
+      </div>
+    </section>
+  )
+
   return (
     <section
       className="flex flex-col gap-4 px-4 py-8"
@@ -395,7 +491,7 @@ export default function AdvertTile ({
                       transition-all ease-in-out duration-200
                       ${imgScaleToggle === i? 'scale-[130%]' : 'scale-[100%]'}  
                     `}
-                    src={getImgUrl(product.images)?.views.filter((view: Record<string, any>) => view.tag === 'a').url}
+                    src={undefined}
                     alt={product.name[lang]}
                     loading={i <= 1 ? "eager" :"lazy"}
                     fetchPriority={i <= 1 ? "high" :"low"}
@@ -411,7 +507,7 @@ export default function AdvertTile ({
                       transition-all ease-in-out duration-200
                       ${imgScaleToggle === i? 'scale-[130%]' : 'scale-[100%]'}  
                     `}
-                    src={getImgUrl(product.images)?.second}
+                    src={undefined}
                     alt="Image"
                     loading={i <= 1 ? "eager" :"lazy"}
                     fetchPriority={i <= 1 ? "high" :"low"}
