@@ -4,6 +4,7 @@
 import { ReactNode, useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from "next/navigation";
+import { UseQueryResult } from '@tanstack/react-query';
 
 // COMPONENTS
 import DisplayImg from '@/components/DisplayImg';
@@ -21,6 +22,7 @@ import FoundationBurstSale from '@/components/svgs/FoundationBurstSale';
 import PepiconsPencilOpenCircleFilled from '@/components/svgs/PepiconsPencilOpenCircleFilled';
 import LineMdArrowsDiagonalRotated from '@/components/svgs/LineMdArrowsDiagonalRotated';
 import LineMdImageTwotone from '@/components/svgs/LineMdImageTwotone';
+import MdiReload from '@/components/svgs/MdiReload';
 import New from '@/components/svgs/New';
 
 // ASSETS
@@ -53,7 +55,8 @@ type Props = {
   slug?: string;
   products?: Record<string, any>[];
   isLoading?: boolean;
-  isError?: boolean
+  isError?: boolean;
+  refetchProducts?: () => Promise<UseQueryResult>;
 }
 
 export default function AdvertTile ({ 
@@ -63,9 +66,9 @@ export default function AdvertTile ({
   slug = 'collection',
   products = [],
   isLoading = false,
-  isError = false
+  isError = false,
+  refetchProducts
 }: Props) {
-  isLoading = true;  
   const router = useRouter();
   const array = [1, 2, 3, 4];
   const filterProductsBasedOnSlug = () => products.filter(product => 
@@ -133,7 +136,6 @@ export default function AdvertTile ({
         ?.images.find((itm: Record<string, any>) => itm.color === color)?.views
         .find((view: Record<string, string>) => view.tag === 'a').url
       ;
-      console.log('test1');
     };
 
     if (getEL(expandImgWindowBtnRefs.current)) {
@@ -141,7 +143,6 @@ export default function AdvertTile ({
         ?.images.find((itm: Record<string, any>) => itm.color === color)?.views
         .find((view: Record<string, string>) => view.tag === 'a').url
       ;
-      console.log('test2');
     }
 
     if (getEL(secondImgRefs.current)) {
@@ -154,7 +155,6 @@ export default function AdvertTile ({
         getEL(imgAorBRefs.current).style.display = 'none'
         return;
       };
-      console.log('test3');
 
       // Reset the A & B Button back to A along with main image
       getEL(aBtnRefs.current).classList.add('advert-picked-image');
@@ -175,13 +175,24 @@ export default function AdvertTile ({
     e.stopPropagation();
   
     const { type, index, productUri, productId, productName, imgUrl } = e.currentTarget.dataset;
-    const ulRefWidth = ulRef.current.offsetWidth
-    const ulRefScrollWidth = ulRef.current.scrollWidth
-    const liRefWidth = liRefs?.current[0]?.scrollWidth || 0;
-    const gap = parseFloat(getComputedStyle(ulRef.current).gap);
-    const totalTiles = array.length - 1
-    const scrollTotalWidth = ulRefWidth / (totalTiles) + gap;
-    const getEL = (refs: ReactNode[] | any[]) => refs.find((el) => Number(el.dataset.productId) === Number(productId));
+
+    let ulRefWidth: any;
+    let ulRefScrollWidth: any; 
+    let liRefWidth: any; 
+    let gap: any; 
+    let totalTiles: any; 
+    let scrollTotalWidth: any; 
+    let getEL: any; 
+
+    if (ulRef.current) {
+      ulRefWidth = ulRef.current?.offsetWidth;
+      ulRefScrollWidth = ulRef.current?.scrollWidth
+      liRefWidth = liRefs?.current[0]?.scrollWidth || 0;
+      gap = parseFloat(getComputedStyle(ulRef.current || 0).gap);
+      totalTiles = array.length - 1
+      scrollTotalWidth = ulRefWidth / (totalTiles) + gap;
+      getEL = (refs: ReactNode[] | any[]) => refs.find((el) => Number(el.dataset.productId) === Number(productId));
+    }
 
     switch (type) {
       case 'navigate_to_category':
@@ -282,6 +293,9 @@ export default function AdvertTile ({
           if (getEL(secondImgRefs.current)) getEL(secondImgRefs.current).style.opacity = '1'
           if (getEL(secondImgRefs.current)) getEL(secondImgRefs.current).style.filter = 'blur(0px)'
           break;
+        case 'reload_products_button_is_clicked':
+          if (refetchProducts) refetchProducts();
+          break;
       default:
         console.error('Unknown type: ', type);
     }
@@ -299,8 +313,42 @@ export default function AdvertTile ({
   // console.log('getImgUrls(product.images)?.second: ', getImgUrls(products[1].images)?.second);
   // console.log('expandImgWindowBtnRefs: ', expandImgWindowBtnRefs);
   
-  if (isLoading) return (
-    <section className="flex flex-col gap-4 px-4 py-8">
+  if (isLoading || isError) return (
+    <section className="relative flex flex-col gap-4 px-4 py-8">
+      {isError &&
+        <div
+          className="
+            absolute top-0 left-0 w-full h-full 
+            bg-[rgba(0%,0%,0%,0.5)] z-10 backdrop-blur-[5px] opacity-50
+            flex flex-col items-center justify-center gap-4
+          "
+        >
+          <h2 className="text-heading-invert font-semibold text-xl">FAILED TO LOAD PRODUCTS</h2>
+          <button
+            className="
+              group flex gap-2 border-solid border-px border-heading-invert 
+              p-2 rounded-md hover:bg-heading-invert
+              transition-all duraiton-200 ease-in-out
+            "
+            data-type="reload_products_button_is_clicked"
+            onClick={handleClick}
+          >
+            <span 
+              className="
+                text-heading-invert group-hover:text-heading font-semibold
+                transition-all duraiton-200 ease-in-out
+              ">
+                RELOAD
+              </span>
+            <MdiReload 
+              className="
+                text-heading-invert group-hover:text-heading
+                transition-all duraiton-200 ease-in-out
+              " 
+            />
+          </button>
+        </div>
+      }
       <div className="flex items-center justify-between">
         <div className="--opacity-blink bg-background-light rounded-lg relative flex items-center text-3xl font-bold transform">
           <span className="text-transparent">//////////////////</span>

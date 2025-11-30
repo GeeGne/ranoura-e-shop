@@ -40,7 +40,13 @@ export default function Home() {
     setDefaultLanguage();
   }, [ lang ]);
 
-  const { data: productsData, isLoading: areProductsLoading, isError: isProductsDataError } = useQuery({
+  const { 
+    data: productsData, 
+    isLoading: 
+    areProductsLoading, 
+    isError: isProductsDataError,
+    refetch: refetchProducts
+  } = useQuery({
     queryKey: [ 'products' ],
     queryFn: getAllProducts
   })
@@ -60,6 +66,7 @@ export default function Home() {
         products={productsData?.data}
         isLoading={areProductsLoading}
         isError={isProductsDataError}
+        refetchProducts={refetchProducts}
       />
       <CategoryPickerV2 />
       <MainLayout />
