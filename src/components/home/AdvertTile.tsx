@@ -306,9 +306,10 @@ export default function AdvertTile ({
           <span className="text-transparent">//////////////////</span>
         </div>
         <div className="flex items-center gap-4">
-          {[1, 2, 3].map(itm => 
+          {[1, 2, 3].map((itm, i) => 
             <div
               className="--opacity-blink w-8 h-8 bg-background-light rounded-full my-auto text-transparent"
+              key={i}
             />        
           )}
         </div>
@@ -339,7 +340,7 @@ export default function AdvertTile ({
                   className="absolute bottom-0 right-0 p-2 z-[10] flex flex-row w-full justify-between items-end"
                 >
                   <div className="flex order-2 gap-2">
-                    {[1, 2].map(itm => 
+                    {[1, 2].map((itm, i) => 
                       <FlowbiteExpandOutline 
                         className={`
                           text-transparent bg-background-deep-light w-8 h-8 transform-style-3d transform group-hover:transform-style-3d 
@@ -347,15 +348,17 @@ export default function AdvertTile ({
                           transition-all ease-in-out duration-200
                           ${isEn ? 'ml-auto' : 'mr-auto'}
                         `}
+                        key={i}
                       />
                     )}
                   </div>
                   <div
                     className="--opacity-blink bg-background-deep-light order-1 flex flex-row items-center gap-2 rounded-lg border-solid border-heading-invert border-[2px] p-1 backdrop-brightness-[70%]"
                   >
-                    {[1, 2, 3].map(itm => 
+                    {[1, 2, 3].map((itm, i) => 
                       <div
                         className="w-5 h-5 font-bold px-[4px] rounded-full text-transparent transition-all ease-in-out duration-200"
+                        key={i}
                       >
                         A                     
                       </div>  

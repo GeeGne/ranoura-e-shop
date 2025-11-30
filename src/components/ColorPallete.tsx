@@ -61,40 +61,16 @@ export default function ColorPallete ({
     setClickedColor(setColor);
   }, [setColor, setColorTrigger]);
 
-  if (isLoading) (
+  if (isLoading) return (
     <ul className="flex gap-2">
-      {colorsArray.map((color, i) => 
+      {[1, 2, 3, 4, 5].map((color, i) => 
         <li
           className={`
             relative ${width} ${height} p-1 border-solid
-            rounded-full cursor-pointer drop-shadow-md
-            
-            before:content-[''] before:absolute before:top-1/2 before:left-1/2
-            before:translate-x-[-50%] before:translate-y-[-50%]
-            before:w-[calc(100%+8px)] before:h-[calc(100%+8px)]
-            before:border-solid
-            before:border-[1px] before:rounded-full 
-
-            after:content-[''] after:absolute after:top-1/2 after:left-1/2
-            after:translate-x-[-50%] after:translate-y-[-50%]
-            after:w-[calc(100%+8px)] after:h-[calc(100%+8px)]
-            after:bg-transparent after:rounded-full after:z-[-1]
-            
+            rounded-full bg-background-light
             ${className}
-            ${clickedColor === color 
-              ? `before:border-heading`
-              : selectedColor === color 
-                ? `before:border-body-extra-light`
-                : `before:border-transparent`
             }
           `}
-          style={{backgroundColor: getHex(color)}}
-          onMouseEnter={() => setSelectedColor(color)}
-          onMouseLeave={() => setSelectedColor(clickedColor)}
-          onClick={() => {
-            setSelectedColor(color);
-            setClickedColor(color)
-          }}
           key={i}
         />
       )}
