@@ -745,7 +745,7 @@ export default function AdvertTile ({
               </div>
               <Link
                 className="text-heading text-base mb-auto"
-                href={`/shop/${product.id}/${product.slug}`}
+                href={`/shop/${product.slug}`}
                 data-type="navigate_to_product"
                 data-product-id={product.id}
                 onClick={handleClick}

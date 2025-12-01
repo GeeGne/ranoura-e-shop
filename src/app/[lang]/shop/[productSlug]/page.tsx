@@ -3,6 +3,7 @@
 // HOOKS
 import { useParams, useSearchParams } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 // COMPONENT
 import NotFound from '@/components/NotFound';
@@ -31,6 +32,9 @@ import useSetSearchParams from '@/utils/useSetSearchParams';
 import useDeleteAllSearchParams from '@/utils/useDeleteAllSearchParams';
 import getProduct from '@/utils/getProduct';
 
+// API
+import getProductBasedOnSlug from '@/lib/api/products/slug/get';
+
 // ASSETS
 const ramdanBanner = "/assets/img/ramadan-nights.webp";
 const ramdanBanner2 = "/assets/img/ramadan-nights-2.avif";
@@ -46,12 +50,15 @@ export default function page () {
 
   const lang = useLanguageStore(state => state.lang) || 'en';
   const isEn = lang === 'en';
+
   const [ pickedColor, setPickedColor ] = useState<any>(null)
   const [ setColorTrigger, setSetColorTrigger ] = useState<any>(null)
+  
   const quantitiyInptRef = useRef<any>(null);
   const cart = useCartStore(state => state.cart);
   const setCart = useCartStore(state => state.setCart);
-  const { productId } = useParams();
+
+  const { productSlug } = useParams();
   const product = products.find(product => product.id === Number(productId));
   const isProductExist = products.some(product => product.id === Number(productId));
   // const productName = slugArray[0];
@@ -81,6 +88,11 @@ export default function page () {
   useEffect(() => {
 
   }, [searchParams]);
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['products', slug],
+    queryFn: () => getProductBasedOnSlug(slug)
+  })
 
   const getImagesUrls = (array: any[] ) => 
     array?.reduce((acc: any[] , itm) => 
