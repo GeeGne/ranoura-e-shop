@@ -70,18 +70,26 @@ export default function Home() {
       />
       <CategoryPickerV2 />
       <MainLayout />
-      {/* <AdvertTile 
-        title={isEn ? "WHAT'S NEW?" : "احدث الكوليكشات"}
-        category="what's-new"
-        type="new"
-        slug="what's-new"
+      <AdvertTile 
+        title={isEn ? "HOT DEALS" : "عروض الحارقه"}
+        category="hot-deals"
+        type="sale"
+        slug="hot-deals"
+        products={productsData?.data}
+        isLoading={areProductsLoading}
+        isError={isProductsDataError}
+        refetchProducts={refetchProducts}
       />
       <AdvertTile 
-        title={isEn ? "LATEST ARRIVALS" : "اخر الدروب"}
-        category="latest-arriavls"
+        title={isEn ? "HOT DEALS" : "عروض الحارقه"}
+        category="hot-deals"
         type="sale"
-        slug="latest-arrivals"
-      /> */}
+        slug="hot-deals"
+        products={productsData?.data}
+        isLoading={areProductsLoading}
+        isError={isProductsDataError}
+        refetchProducts={refetchProducts}
+      />
     </div>
   );
 }

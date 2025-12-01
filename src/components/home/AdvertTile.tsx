@@ -323,7 +323,9 @@ export default function AdvertTile ({
             flex flex-col items-center justify-center gap-4
           "
         >
-          <h2 className="text-heading-invert font-semibold text-xl">FAILED TO LOAD PRODUCTS</h2>
+          <h2 className="text-heading-invert font-semibold text-xl">
+            {isEn ? 'FAILED TO LOAD PRODUCTS' : 'فشل في تحميل المنتجات'}
+          </h2>
           <button
             className="
               group flex gap-2 border-solid border-px border-heading-invert 
@@ -338,7 +340,7 @@ export default function AdvertTile ({
                 text-heading-invert group-hover:text-heading font-semibold
                 transition-all duraiton-200 ease-in-out
               ">
-                RELOAD
+                {isEn ? 'RELOAD' : 'اعاده المحاوله'}
               </span>
             <MdiReload 
               className="
