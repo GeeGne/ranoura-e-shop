@@ -6,7 +6,9 @@ import { useState, useRef, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 // COMPONENT
+import LoadingLayout from '@/app/[lang]/shop/[productSlug]/LoadingLayout';
 import NotFound from '@/components/NotFound';
+import ErrorLayout from '@/components/ErrorLayout';
 import ProductDisplay from '@/components/productPage/ProductDisplay';
 import ProductSize from '@/components/productPage/ProductSize';
 import ProductLists from '@/components/productPage/ProductLists';
@@ -51,6 +53,13 @@ export default function page () {
   const lang = useLanguageStore(state => state.lang) || 'en';
   const isEn = lang === 'en';
 
+  const { productSlug } = useParams();
+  const { data: productData, isLoading: tst, isError } = useQuery({
+    queryKey: ['products', productSlug],
+    queryFn: () => getProductBasedOnSlug(productSlug)
+  })
+  const product = productData?.data;
+  let isLoading = true;
   const [ pickedColor, setPickedColor ] = useState<any>(null)
   const [ setColorTrigger, setSetColorTrigger ] = useState<any>(null)
   
@@ -58,9 +67,8 @@ export default function page () {
   const cart = useCartStore(state => state.cart);
   const setCart = useCartStore(state => state.setCart);
 
-  const { productSlug } = useParams();
-  const product = products.find(product => product.id === Number(productId));
-  const isProductExist = products.some(product => product.id === Number(productId));
+  // const product = products.find(product => product.id === Number(productId));
+  // const isProductExist = products.some(product => product.id === Number(productId));
   // const productName = slugArray[0];
   // const productId = slugArray[1];
 
@@ -89,10 +97,6 @@ export default function page () {
 
   }, [searchParams]);
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ['products', slug],
-    queryFn: () => getProductBasedOnSlug(slug)
-  })
 
   const getImagesUrls = (array: any[] ) => 
     array?.reduce((acc: any[] , itm) => 
@@ -102,7 +106,7 @@ export default function page () {
   const onColorChange = (selectedColor: string, clickedColor: string) => {
     if (selectedColor === "" || clickedColor === "") return;
     setSearchParams("color", clickedColor);
-  }
+  };
 
   // const setSearchParams = (key: string, value: string) => {
     // const params = new URLSearchParams(searchParams.toString())
@@ -113,7 +117,9 @@ export default function page () {
   const handleClick = (e: any) => {
     e.stopPropagation();
 
-    const { type, productName, index, quantity: totalQuantity } = e.currentTarget.dataset;
+    const { 
+      type, productName, index, quantity: totalQuantity 
+    } = e.currentTarget.dataset;
 
     switch (type) {
       case 'add_to_bag_button_is_clicked':
@@ -128,17 +134,19 @@ export default function page () {
 
         if (color && size) {
           const cartArray = [ ...cart ];
-          const newProduct = { id: Number(productId), size, quantity: Number(quantity), color };
-          const isProductMatched = cart.some(product => 
-            product.id === Number(productId) && product.size === size && product.color === color
+          const newProduct = { 
+            id: product.id, size, quantity: Number(quantity), color 
+          };
+          const isProductMatched = cart.some(itm => 
+            itm.id === product.id && itm.size === size && itm.color === color
           );
 
           if (isProductMatched) setCart(
-            cart.map(product => {
-              if (product.id === Number(productId)) 
+            cart.map(itm => {
+              if (itm.id === product.id) 
                 return {
-                  ...product, 
-                  quantity: product.quantity + Number(quantity) < 9 ? product.quantity + Number(quantity) : 9
+                  ...itm, 
+                  quantity: itm.quantity + Number(quantity) < 9 ? itm.quantity + Number(quantity) : 9
                 }
             })
           );
@@ -148,7 +156,7 @@ export default function page () {
           setAlertType("product added");
           setAlertMessage(isEn ? `"${productName}" is Added.` : `اسم القطعه: "${productName}"`);  
           setProductDetails({ 
-            imgURL: getProduct(products, Number(productId)).images.find((img: any) => img.color === color).main,
+            imgURL: getProduct(products, product.id).images.find((img: any) => img.color === color).main,
             size,
             color,
             quantity
@@ -178,13 +186,24 @@ export default function page () {
   // console.log('product ID: ', product_id);
   // console.log('productName:', productName);
   // console.log('productId:', productId);
-  // console.log('product: ', product);
+  console.log('product: ', product);
   // console.log('images: ', 
   // [].reduce((acc: string[], itm) => [...acc, itm.main, itm.second], [])
   // );
   // console.log('cart: ', cart);
 
-  if (!isProductExist) return (
+  if (isLoading) return (
+    <LoadingLayout />
+  )
+
+  if (isError) return (
+    <ErrorLayout 
+      title={isEn ? 'Unable To Load' : 'لم يتم التحميل'}
+      description={isEn ? 'Please Refresh the page or try again later' : 'الرجاء اعاده تحميل الصفحه او حاول مره اخرى لاحقا'}
+    />
+  )
+
+  if (!product) return (
     <NotFound type='product' />
   )
 
