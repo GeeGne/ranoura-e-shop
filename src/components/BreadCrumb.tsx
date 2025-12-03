@@ -12,16 +12,35 @@ import { useLanguageStore } from '@/stores/index';
 type Props = {
   slugNameAndLinkArray?: any[];
   className?: string;
+  isLoading?: boolean;
 }
 
-export default function BreadCrumb ({ slugNameAndLinkArray, className, ...props }: Props) {
+export default function BreadCrumb ({ 
+  slugNameAndLinkArray,
+  className, 
+  isLoading = false,
+  ...props 
+}: Props) {
   
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
 
   const scrollToTop = () => 
     document.querySelector('.app-layout')
-    ?.scrollTo({ top:0, left:0, behavior: 'smooth'});
+    ?.scrollTo({ top:0, left:0, behavior: 'smooth'})
+  ;
+
+  if (isLoading) return (
+    <div
+      className={`
+        --blink-opacity bg-background-light flex items-center text-sm font-bold text-transparent
+        ${className}
+      `}
+      {...props}
+    >
+      //////////////////////////////
+    </div>    
+  )
 
   return (
     <ul

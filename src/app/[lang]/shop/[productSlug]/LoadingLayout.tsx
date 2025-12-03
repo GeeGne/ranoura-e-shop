@@ -1,8 +1,18 @@
 // COMPONENTS
 import BreadCrumb from '@/components/BreadCrumb';
 import ProductDisplay from '@/components/productPage/ProductDisplay';
+import ProductSize from '@/components/productPage/ProductSize';
+import ProductLists from '@/components/productPage/ProductLists';
+import PriceTag from '@/components/PriceTag';
+import ColorPallete from '@/components/ColorPallete';
+import BtnA from '@/components/BtnA';
 
-export default function LoadingLayout () {
+type Props = {
+  lang?: 'en' | 'ar';
+  isEn?: boolean;
+};
+
+export default function LoadingLayout ({ lang = 'en', isEn = true }: Props) {
   return (
     <div
       className="
@@ -11,55 +21,44 @@ export default function LoadingLayout () {
       "
     >
       <BreadCrumb
-        className="md:col-span-2"
-        slugNameAndLinkArray={slugNameAndLinkArray} 
+        isLoading={false}
       />
       <ProductDisplay 
         className="md:row-span-2 md:max-w-[600px] md:mx-auto"
-        imagesArray={getImagesUrls(product?.images || [])}
+        isLoading={true}
       />
       <section
         className="flex flex-col gap-4 md:row-span-2 md:py-8 lg:row-span-1"
       >
         <h2
-          className="text-lg font-bold text-heading"
+          className="--opacity-blink bg-background-light rounded-lg text-lg font-bold text-transparent"
         >
-          {product?.name[isEn ? 'en' : 'ar']}
+          /////////////////
         </h2>
         <h3
-          className="text-md text-body"
+          className="--opacity-blink bg-background-light text-md text-transparent"
         >
-          {product?.description[(isEn ? 'en' : 'ar')]}
+          /////////////////////////////////////////////
         </h3>
-        <PriceTag price={product?.price} discount={product?.discount_percent}/>
-        <ProductSize sizes={product?.sizes} />
+        <PriceTag isLoading={true} />
+        <ProductSize isLoading={true} />
         <ColorPallete 
           className="mb-4"
           width="w-6"
           height="h-6"
-          colorsArray={product?.colors}
-          productId={product?.id}
-          pickFirstIndexByDefault={false}
-          setColor={pickedColor}
-          setColorTrigger={setColorTrigger}
-          currentColor={onColorChange}
+          isLoading={true}
         />
         <section
           className="hidden lg:inline md:col-span-2 lg:col-span-2"
         >
-          {product?.lists.map(({ title, descriptionLists }, i) => 
+          {[1, 2, 3, 4].map(num => 
             <ProductLists
-              key={i}
-              title={title[isEn ? 'en' : 'ar']}
-              descArray={descriptionLists[isEn ? 'en' : 'ar']}
-              data-type="productList_is_clicked"
-              data-index={i}
-              toggle={productListsActiveIndex === i ? true : false}
-              onClick={handleClick}
+              key={num}
+              isLoading={true}
             />
           )}
         </section>
-        <div
+        {/* <div
           className="
             relative flex w-full mt-auto
           "
@@ -71,9 +70,6 @@ export default function LoadingLayout () {
               cool-bg-grad-m py-2
               ${isEn ? 'rounded-r-lg' : 'rounded-l-lg'}
             `}
-            data-type="add_to_bag_button_is_clicked"
-            data-product-name={product?.name[(isEn ? 'en' : 'ar')]}
-            onClick={handleClick}
           >
             <FamiconsBagAddOutlineBold 
               width={16} 
@@ -146,7 +142,7 @@ export default function LoadingLayout () {
             toggle={productListsActiveIndex === i ? true : false}
             onClick={handleClick}
           />
-        )}
+        )} */}
       </section>
     </div>
   )

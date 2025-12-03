@@ -17,58 +17,56 @@ export default function PriceTag ({
   ...props 
 }: Props) {
 
-  if (isLoading) {
-  return (
-      <div>
+  if (isLoading) return (
+    <div>
+      <div
+         className="flex flex-col gap-2"
+       >
         <div
-           className="flex flex-col gap-2"
-         >
-          <div
-            className="flex items-center gap-2"
+          className="flex items-center gap-2"
+        >
+          <span
+            className={`
+              --opacity-blink text-transparent bg-background-light rounded-lg font-bold
+              ${textSize === 'lg' 
+                ? 'text-lg' 
+                : textSize === 'base' 
+                ? 'text-base' : 'text-sm'
+              }
+            `}
           >
-            <span
+            /////////
+          </span>
+          <s
+            className={`
+              --opacity-blink text-transparent bg-background-light font-bold rounded-lg
+              ${textSize === 'lg' 
+                ? 'text-base' 
+                : textSize === 'base' 
+                ? 'text-sm' : 'text-xs'
+              }
+            `}
+          >
+            ////////
+          </s>
+        </div> 
+          {hidePercent ||
+              <span
               className={`
-                --opacity-blink text-transparent bg-background-light rounded-lg font-bold
+                --opacity-blink text-transparent bg-background-light rounded-lg w-fit font-bold
                 ${textSize === 'lg' 
-                  ? 'text-lg' 
+                  ? 'text-sm' 
                   : textSize === 'base' 
-                  ? 'text-base' : 'text-sm'
+                  ? 'text-xs': 'text-xs'
                 }
               `}
             >
-              /////////
+              ///////////
             </span>
-            <s
-              className={`
-                --opacity-blink text-transparent bg-background-light font-bold rounded-lg
-                ${textSize === 'lg' 
-                  ? 'text-base' 
-                  : textSize === 'base' 
-                  ? 'text-sm' : 'text-xs'
-                }
-              `}
-            >
-              ////////
-            </s>
-          </div> 
-            {hidePercent ||
-                <span
-                className={`
-                  --opacity-blink text-transparent bg-background-light rounded-lg w-fit font-bold
-                  ${textSize === 'lg' 
-                    ? 'text-sm' 
-                    : textSize === 'base' 
-                    ? 'text-xs': 'text-xs'
-                  }
-                `}
-              >
-                ///////////
-              </span>
-            }
-        </div>
+          }
       </div>
-    )
-  }
+    </div>
+  )
   
   return (
     <div

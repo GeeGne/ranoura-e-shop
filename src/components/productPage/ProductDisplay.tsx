@@ -19,9 +19,15 @@ const outfit5 = "/assets/img/outfit-5.avif";
 type Props = {
   className?: string;
   imagesArray?: any;
+  isLoading?: boolean;
 }
 
-export default function ProductDisplay ({ className, imagesArray = [], ...props }: Props) {
+export default function ProductDisplay ({ 
+  className, 
+  imagesArray = [], 
+  isLoading = false,
+  ...props 
+}: Props) {
   
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
@@ -54,6 +60,10 @@ export default function ProductDisplay ({ className, imagesArray = [], ...props 
   // imagesArray = [outfit1, outfit5, outfit3, outfit2, outfit1, outfit3];
   // const totalLenght = imagesArray.length;
   
+  if (isLoading) return (
+    <div>test</div>
+  )
+
   if (totalLenght === 1) return (
     <section
       className="w-full"

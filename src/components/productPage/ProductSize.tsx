@@ -7,9 +7,10 @@ import useSetSearchParams from '@/utils/useSetSearchParams';
 
 type Props = {
   sizes?: string[];
+  isLoading?: boolean;
 };
 
-export default function ProductSize ({ sizes }: Props) {
+export default function ProductSize ({ sizes, isLoading = false }: Props) {
 
   const searchParams = useSearchParams();
   const setSearchParams = useSetSearchParams();
@@ -31,6 +32,31 @@ export default function ProductSize ({ sizes }: Props) {
   // console.log('active: ', active);
   // console.log('sizes: ', sizes);
   // console.log('searchParams.get("size"): ', searchParams.get('size'));
+
+  if (isLoading) return (
+    <section>
+      <ul
+        className="flex flex-row flex-wrap gap-2"
+      >
+        {sizesArray.map((size, i) =>
+          <li
+            key={i}
+            className={`
+              --opacity-blink flex items-center justify-center 
+              font-bold text-lg 
+              w-12 h-12 rounded-md
+              transition-all duration-300 ease-out z-[5]
+              text-transparent bg-background-light hover:bg-[var(--background-deep-light-invert-color)] border-heading hover:border-heading cursor-pointer
+            `}
+          >
+            <span>
+              {size}
+            </span>
+          </li>
+        )}
+      </ul>
+    </section>
+  )
 
   return (
     <section>
