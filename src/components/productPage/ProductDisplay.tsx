@@ -61,7 +61,33 @@ export default function ProductDisplay ({
   // const totalLenght = imagesArray.length;
   
   if (isLoading) return (
-    <div>test</div>
+    <section
+      className="grid grid-cols-3 gap-4 w-full h-full items-center mb-auto"
+    >
+      <div
+        className="
+          --opacity-blink bg-background-light col-span-2 row-span-2 order-2 w-full h-full object-center object-cover
+          rounded-lg overflow-hidden
+        "
+      />
+      {[1, 2, 3, 4, 5].map((num, i) => 
+        <div
+          className={`
+            --opacity-blink bg-background-light
+            order-${(i === 1)? 3 : i + 1} aspect-[${(i === 0 || i === 1 )? '2/3' : '1/1'}] object-center object-cover
+            border-solid border-[2px] overflow-hidden 
+            cursor-pointer rounded-lg
+            transition-all duration-300 ease-in-out
+            ${selectedIndex === i 
+              ? 'border-primary' 
+              : 'border-body-extra-light hover:border-primary'
+            }
+          `}
+          key={i}
+          onClick={() => setSelectedIndex(i)}
+        />
+      )}
+    </section>
   )
 
   if (totalLenght === 1) return (

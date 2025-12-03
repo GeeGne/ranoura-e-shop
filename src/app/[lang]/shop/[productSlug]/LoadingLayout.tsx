@@ -21,7 +21,8 @@ export default function LoadingLayout ({ lang = 'en', isEn = true }: Props) {
       "
     >
       <BreadCrumb
-        isLoading={false}
+        className="w-fit md:col-span-2 "
+        isLoading={true}
       />
       <ProductDisplay 
         className="md:row-span-2 md:max-w-[600px] md:mx-auto"
