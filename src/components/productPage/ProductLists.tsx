@@ -52,7 +52,7 @@ export default function ProductLists ({
         `}
       >
         <h3
-          className="--opacity-blink bg-background-light text-transparent"
+          className="--opacity-blink bg-background-light text-transparent rounded-md"
         >
           ////////////
         </h3>
@@ -80,11 +80,11 @@ export default function ProductLists ({
         {[1, 2, 3].map((itm, i) => 
           <li
             className="
-              relative px-6 rounded-lg
+              relative px-6
             "
             key={i}
           >
-            <span className="--opacity-blink text-transparent">
+            <span className="--opacity-blink text-transparent bg-background-light rounded-lg">
               //////////////////////////////////////////////////////////////////////////
             </span>
             <LineMdStarPulsatingFilledLoop 

@@ -27,7 +27,7 @@ export default function PriceTag ({
         >
           <span
             className={`
-              --opacity-blink text-transparent bg-background-light rounded-lg font-bold
+              --opacity-blink text-transparent bg-background-light rounded-md font-bold
               ${textSize === 'lg' 
                 ? 'text-lg' 
                 : textSize === 'base' 
@@ -39,7 +39,7 @@ export default function PriceTag ({
           </span>
           <s
             className={`
-              --opacity-blink text-transparent bg-background-light font-bold rounded-lg
+              --opacity-blink text-transparent bg-background-light font-bold rounded-md
               ${textSize === 'lg' 
                 ? 'text-base' 
                 : textSize === 'base' 
@@ -53,7 +53,7 @@ export default function PriceTag ({
           {hidePercent ||
               <span
               className={`
-                --opacity-blink text-transparent bg-background-light rounded-lg w-fit font-bold
+                --opacity-blink text-transparent bg-background-light rounded-md w-fit font-bold
                 ${textSize === 'lg' 
                   ? 'text-sm' 
                   : textSize === 'base' 
