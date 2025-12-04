@@ -53,10 +53,12 @@ export default function LoadingLayout ({ lang = 'en', isEn = true }: Props) {
           className="hidden lg:inline md:col-span-2 lg:col-span-2"
         >
           {[1, 2, 3, 4].map(num => 
-            <ProductLists
-              key={num}
-              isLoading={true}
-            />
+            <div key={num}
+            >
+              <ProductLists
+                isLoading={true}
+              />
+            </div>
           )}
         </section>
         <div
@@ -93,9 +95,11 @@ export default function LoadingLayout ({ lang = 'en', isEn = true }: Props) {
         className="lg:hidden md:col-span-2 lg:col-span-1"
       >
         {[1, 2, 3, 4, 5].map(num => 
-          <ProductLists
-            isLoading={true}
-          />
+          <div key={num}>
+            <ProductLists
+              isLoading={true}
+            />
+          </div>
         )}
       </section>
     </div>

@@ -20,6 +20,7 @@ export default function ProductLists ({
   descArray = ['Text is Empty'], 
   toggle = false, 
   isLoading = false,
+  key,
   ...props 
 }: Props) {
   

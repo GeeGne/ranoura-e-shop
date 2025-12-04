@@ -54,12 +54,11 @@ export default function page () {
   const isEn = lang === 'en';
 
   const { productSlug } = useParams();
-  const { data: productData, isLoading: tst, isError } = useQuery({
+  const { data: productData, isLoading, isError } = useQuery({
     queryKey: ['products', productSlug],
     queryFn: () => getProductBasedOnSlug(productSlug)
-  })
+  });
   const product = productData?.data;
-  let isLoading = true;
   const [ pickedColor, setPickedColor ] = useState<any>(null)
   const [ setColorTrigger, setSetColorTrigger ] = useState<any>(null)
   
@@ -98,10 +97,14 @@ export default function page () {
   }, [searchParams]);
 
 
-  const getImagesUrls = (array: any[] ) => 
-    array?.reduce((acc: any[] , itm) => 
-      itm.second ? [...acc, itm.main, itm.second] : [...acc, itm.main], []
-    );
+  // const getImagesUrls = (array: any[] ) => 
+    // array?.reduce((acc: any[] , itm) => 
+      // itm.second ? [...acc, itm.main, itm.second] : [...acc, itm.main], []
+    // );
+
+  const getImagesUrls = (array: Record<string, any>[] ) => array?.flatMap(itm => 
+    itm.views.map((view: Record<string, string>) => view.url)
+  );
 
   const onColorChange = (selectedColor: string, clickedColor: string) => {
     if (selectedColor === "" || clickedColor === "") return;
@@ -123,6 +126,7 @@ export default function page () {
 
     switch (type) {
       case 'add_to_bag_button_is_clicked':
+        return;
         const size = searchParams.get("size");
         const quantity = Number(searchParams.get("quantity")) || 1;
         const color = searchParams.get("color");
@@ -191,16 +195,17 @@ export default function page () {
   // [].reduce((acc: string[], itm) => [...acc, itm.main, itm.second], [])
   // );
   // console.log('cart: ', cart);
-
-  if (isLoading) return (
-    <LoadingLayout />
-  )
+  console.log('getImagesUrls: ', getImagesUrls(product?.images || []));
 
   if (isError) return (
     <ErrorLayout 
       title={isEn ? 'Unable To Load' : 'لم يتم التحميل'}
       description={isEn ? 'Please Refresh the page or try again later' : 'الرجاء اعاده تحميل الصفحه او حاول مره اخرى لاحقا'}
     />
+  )
+
+  if (isLoading) return (
+    <LoadingLayout />
   )
 
   if (!product) return (
@@ -251,7 +256,7 @@ export default function page () {
         <section
           className="hidden lg:inline md:col-span-2 lg:col-span-2"
         >
-          {product?.lists.map(({ title, descriptionLists }, i) => 
+          {product?.lists.map(({ title, descriptionLists }: Record<string, any>, i: number) => 
             <ProductLists
               key={i}
               title={title[isEn ? 'en' : 'ar']}
@@ -340,7 +345,7 @@ export default function page () {
       <section
         className="lg:hidden md:col-span-2 lg:col-span-1"
       >
-        {product?.lists.map(({ title, descriptionLists }, i) => 
+        {product?.lists.map(({ title, descriptionLists }: Record<string, any>, i: number) => 
           <ProductLists
             key={i}
             title={title[isEn ? 'en' : 'ar']}

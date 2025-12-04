@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState, useRef } from "react";
+import { useQuery } from '@tanstack/react-query';
 
 // COMPONENTS
 import PriceTag from '@/components/PriceTag'
@@ -21,6 +22,9 @@ import CartEmpty from "@/components/svgs/CartEmpty";
 import EpArrowLeft from "@/components/svgs/EpArrowLeft";
 import IcOutlineClear from '@/components/svgs/IcOutlineClear';
 import IcOutlineCreate from "@/components/svgs/IcOutlineCreate";
+
+// API
+import getAllProducts from '@/lib/api/products/get';
 
 // JSON
 import products from '@/json/products.json';
@@ -47,10 +51,20 @@ export default function Cart () {
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
 
-  const toggle = useCartStore((status:any) => status.toggle);
-  const setToggle = useCartStore((status:any) => status.setToggle);
-  const cart = useCartStore((status:any) => status.cart);
-  const setCart = useCartStore((status:any) => status.setCart);
+  const { 
+    data: productsData, 
+    isLoading,
+    isError
+  } = useQuery({
+    queryKey: [ 'products' ],
+    queryFn: getAllProducts
+  });
+  const products = productsData?.data;
+
+  const toggle = useCartStore(status => status.toggle);
+  const setToggle = useCartStore(status => status.setToggle);
+  const cart = useCartStore(status => status.cart);
+  const setCart = useCartStore(status => status.setCart);
   const isCartEmpty = cart.length === 0;
 
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
@@ -129,7 +143,7 @@ export default function Cart () {
   }
 
   // DEBUG & UI
-  // console.log('cart: ', cart);
+  console.log('cart: ', cart);
   // console.log('img main url ', );
 
   if (isCartEmpty) return (
@@ -207,6 +221,9 @@ export default function Cart () {
     </div>
   )
   
+  if (isError) return (<></>)
+  if (isLoading) return (<></>)
+
   return (
     <div
       className={`
