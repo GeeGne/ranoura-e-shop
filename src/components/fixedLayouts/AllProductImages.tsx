@@ -5,9 +5,10 @@ import {useRef} from 'react';
 import FilterExpandWrapper from "@/components/categoryPage/FilterExpandWrapper";
 import ArrowUp from "@/components/svgs/ArrowUp";
 import LineMdArrowSmallUp from "@/components/svgs/LineMdArrowSmallUp";
+import FlowbiteExpandOutline from '@/components/svgs/FlowbiteExpandOutline';
 
 // STORES
-import { useAllProductImagesStore, useLanguageStore } from '@/stores/index';
+import { useAllProductImagesStore, useLanguageStore, useImageDisplayerWindow } from '@/stores/index';
 
 export default function AllProductImages () {
 
@@ -20,9 +21,12 @@ export default function AllProductImages () {
   const MainWrapperRef = useRef<any>(null);
   const imagesRefs = useRef<any>([]);
 
-  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+  const setImageDisplayerToggle = useImageDisplayerWindow(state => state.setToggle);
+  const setImageDisplayerUrl = useImageDisplayerWindow(state => state.setUrl);
 
-    const { type, sectionKey, index } = e.currentTarget.dataset;
+  const handleClick = (e: React.MouseEvent<HTMLElement | SVGSVGElement>) => {
+
+    const { type, sectionKey, index, url } = e.currentTarget.dataset;
 
     switch (type) {
       case 'close_button_is_clicked':
@@ -36,6 +40,11 @@ export default function AllProductImages () {
           .find((itm: string, i: number) => i === Number(index))
           .scrollIntoView({ block: 'center', behavior:'smooth' });
         break;
+      case 'scale_window_button_is_clicked':
+        if (url) {
+          setImageDisplayerToggle(true);
+          setImageDisplayerUrl(url);
+        }
       default:
         console.error('Unknown Type: ', type);
     }
@@ -134,10 +143,24 @@ export default function AllProductImages () {
           >
             {imagesArray.map((url, i) =>
               <li
-                className="w-full h-auto rounded-lg overflow-hidden"
+                className="relative w-full h-auto rounded-lg overflow-hidden"
                 key={i}
                 ref={(el: any) => imagesRefs.current[i] = el}
               >
+                <FlowbiteExpandOutline 
+                  className={`
+                    absolute bottom-2 right-2 
+                    w-8 h-8 transform-style-3d transform group-hover:transform-style-3d 
+                    cursor-pointer rounded-full p-1 
+                    transition-all ease-in-out duration-200
+                    text-body hover:text-heading
+                    ${isEn ? 'ml-auto' : 'mr-auto'}
+                  `}
+                  role="button"
+                  data-type="scale_window_button_is_clicked"
+                  data-url={url}
+                  onClick={handleClick}
+                />
                 <img 
                   className="w-full h-full object-fit object-cover"
                   alt="photo"

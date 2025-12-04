@@ -4,9 +4,10 @@ import { useState } from 'react';
 // COMPONENTS
 import BtnA from '@/components/BtnA';
 import EpArrowLeft from '@/components/svgs/EpArrowLeft';
+import FlowbiteExpandOutline from '@/components/svgs/FlowbiteExpandOutline';
 
 // STORE
-import { useAllProductImagesStore, useLanguageStore } from '@/stores/index';
+import { useAllProductImagesStore, useLanguageStore, useImageDisplayerWindow } from '@/stores/index';
 
 // ASSETS
 const ramdanBanner = "/assets/img/ramadan-nights.webp";
@@ -38,18 +39,26 @@ export default function ProductDisplay ({
   const totalLenght = imagesArray.length;
   const sliceArrayInto5 = (array: any[]) => array.slice(0, 5); 
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const { type } = e.currentTarget.dataset;
+  const setImageDisplayerToggle = useImageDisplayerWindow(state => state.setToggle);
+  const setImageDisplayerUrl = useImageDisplayerWindow(state => state.setUrl);
+
+  const handleClick = (e: React.MouseEvent<HTMLElement | SVGSVGElement>) => {
+    const { type, url } = e.currentTarget.dataset;
 
     switch (type) {
       case 'see_all_images_button_is_clicked':
         setToggle(true);
-        setImages(imagesArray)
-        break;
+        setImages(imagesArray);
+      case 'scale_window_button_is_clicked':
+        if (url) {
+          setImageDisplayerToggle(true);
+          setImageDisplayerUrl(url);
+        }
+      break;
       default:
         console.error('Unknown type: ', type);
     }
-  }
+  };
 
   // DEBUG & UI
   // imagesArray = [outfit2];
@@ -90,15 +99,30 @@ export default function ProductDisplay ({
     </section>
   )
 
-  if (totalLenght === 1) return (
+  // if (totalLenght === 1) return (
+  if (!totalLenght) return (
     <section
       className="w-full"
     >
       <div
         className="
-          w-full aspect-[2/3] rounded-lg overflow-hidden    
+          relative w-full aspect-[2/3] rounded-lg overflow-hidden    
         "
       >
+        <FlowbiteExpandOutline 
+          className={`
+            absolute bottom-2 right-2 
+            w-8 h-8 transform-style-3d transform group-hover:transform-style-3d 
+            cursor-pointer rounded-full p-1 
+            transition-all ease-in-out duration-200
+            text-body hover:text-heading
+            ${isEn ? 'ml-auto' : 'mr-auto'}
+          `}
+          role="button"
+          data-type="scale_window_button_is_clicked"
+          data-url={imagesArray[0]}
+          onClick={handleClick}
+        />
         <img 
           className="
             w-full h-full obejct-center object-cover
@@ -116,10 +140,24 @@ export default function ProductDisplay ({
     >
       <div
         className="
-          col-span-2 row-span-2 order-2 w-full h-full object-center object-cover
+          relative col-span-2 row-span-2 order-2 w-full h-full object-center object-cover
           rounded-lg overflow-hidden
         "
       >
+        <FlowbiteExpandOutline 
+          className={`
+            absolute bottom-2 right-2 
+            w-8 h-8 transform-style-3d transform group-hover:transform-style-3d 
+            cursor-pointer rounded-full p-1 
+            transition-all ease-in-out duration-200
+            text-body hover:text-heading
+            ${isEn ? 'ml-auto' : 'mr-auto'}
+          `}
+          role="button"
+          data-type="scale_window_button_is_clicked"
+          data-url={imagesArray[selectedIndex]}
+          onClick={handleClick}
+        />
         <img 
           className="
             w-full h-full obejct-center object-cover
@@ -161,10 +199,24 @@ export default function ProductDisplay ({
     >
       <div
         className="
-          col-span-2 row-span-3 order-2 w-full h-full object-center object-cover
+          relative col-span-2 row-span-3 order-2 w-full h-full object-center object-cover
           rounded-lg overflow-hidden
         "
       >
+        <FlowbiteExpandOutline 
+          className={`
+            absolute bottom-2 right-2 
+            w-8 h-8 transform-style-3d transform group-hover:transform-style-3d 
+            cursor-pointer rounded-full p-1 
+            transition-all ease-in-out duration-200
+            text-body hover:text-heading
+            ${isEn ? 'ml-auto' : 'mr-auto'}
+          `}
+          role="button"
+          data-type="scale_window_button_is_clicked"
+          data-url={imagesArray[selectedIndex]}
+          onClick={handleClick}
+        />
         <img 
           className="
             w-full h-full obejct-center object-cover
@@ -206,10 +258,24 @@ export default function ProductDisplay ({
     >
       <div
         className="
-        col-span-2 row-span-3 order-2 w-full h-full object-center object-cover
-        rounded-lg overflow-hidden
+          relative col-span-2 row-span-3 order-2 w-full h-full object-center object-cover
+          rounded-lg overflow-hidden
         "
       >
+        <FlowbiteExpandOutline 
+          className={`
+            absolute bottom-2 right-2 
+            w-8 h-8 transform-style-3d transform group-hover:transform-style-3d 
+            cursor-pointer rounded-full p-1 
+            transition-all ease-in-out duration-200
+            text-body hover:text-heading
+            ${isEn ? 'ml-auto' : 'mr-auto'}
+          `}
+          role="button"
+          data-type="scale_window_button_is_clicked"
+          data-url={imagesArray[selectedIndex]}
+          onClick={handleClick}
+        />
         <img 
           className="
             w-full h-full obejct-center object-cover
@@ -318,10 +384,24 @@ export default function ProductDisplay ({
     >
       <div
         className="
-        col-span-2 row-span-2 order-2 w-full h-full object-center object-cover
-        rounded-lg overflow-hidden
-      "
+          relative col-span-2 row-span-2 order-2 w-full h-full object-center object-cover
+          rounded-lg overflow-hidden
+        "
       >
+        <FlowbiteExpandOutline 
+          className={`
+            absolute bottom-2 right-2 
+            w-8 h-8 transform-style-3d transform group-hover:transform-style-3d 
+            cursor-pointer rounded-full p-1 
+            transition-all ease-in-out duration-200
+            text-body hover:text-heading
+            ${isEn ? 'ml-auto' : 'mr-auto'}
+          `}
+          role="button"
+          data-type="scale_window_button_is_clicked"
+          data-url={imagesArray[selectedIndex]}
+          onClick={handleClick}
+        />
         <img 
           className={`
             w-full h-full obejct-center object-cover
@@ -357,16 +437,30 @@ export default function ProductDisplay ({
     </section>
   )
 
-  return (
+  if (totalLenght === 6) return (
     <section
       className="grid grid-cols-3 gap-4 w-full h-full items-center mb-auto"
     >
       <div
         className="
-          col-span-2 row-span-3 order-2 w-full h-full object-center object-cover
+          relative col-span-2 row-span-3 order-2 w-full h-full object-center object-cover
           rounded-lg overflow-hidden
         "
       >
+        <FlowbiteExpandOutline 
+          className={`
+            absolute bottom-2 right-2 
+            w-8 h-8 transform-style-3d transform group-hover:transform-style-3d 
+            cursor-pointer rounded-full p-1 
+            transition-all ease-in-out duration-200
+            text-body hover:text-heading
+            ${isEn ? 'ml-auto' : 'mr-auto'}
+          `}
+          role="button"
+          data-type="scale_window_button_is_clicked"
+          data-url={imagesArray[selectedIndex]}
+          onClick={handleClick}
+        />
         <img 
           className={`
             w-full h-full obejct-center object-cover
@@ -399,62 +493,119 @@ export default function ProductDisplay ({
           />    
         </div>
       )}
-      {totalLenght === 6 ?
+      <div
+        className={`
+          order-7 aspect-[1/1] object-center object-cover
+          border-solid border-[2px] overflow-hidden
+          cursor-pointer rounded-lg
+          transition-all duration-300 ease-in-out
+          ${selectedIndex === 5 
+            ? 'border-primary' 
+            : 'border-body-extra-light hover:border-primary brightness-75'
+          }
+        `}
+        onClick={() => setSelectedIndex(5)}
+      >
+        <img 
+          className={`
+            w-full h-full obejct-center object-cover
+          `}
+          alt="Photo"
+          src={imagesArray[5]}
+        />
+      </div> 
+    </section>
+  )
+
+  return (
+    <section
+      className="grid grid-cols-3 gap-4 w-full h-full items-center mb-auto"
+    >
+      <div
+        className="
+          relative col-span-2 row-span-3 order-2 w-full h-full object-center object-cover
+          rounded-lg overflow-hidden
+        "
+      >
+        <FlowbiteExpandOutline 
+          className={`
+            absolute bottom-2 right-2 
+            w-8 h-8 transform-style-3d transform group-hover:transform-style-3d 
+            cursor-pointer rounded-full p-1 
+            transition-all ease-in-out duration-200
+            text-body hover:text-heading
+            ${isEn ? 'ml-auto' : 'mr-auto'}
+          `}
+          role="button"
+          data-type="scale_window_button_is_clicked"
+          data-url={imagesArray[selectedIndex]}
+          onClick={handleClick}
+        />
+        <img 
+          className={`
+            w-full h-full obejct-center object-cover
+          `}
+          alt="Photo"
+          src={imagesArray[selectedIndex]}
+        />
+      </div>
+      {sliceArrayInto5(imagesArray).map((url, i) => 
         <div
           className={`
-            order-7 aspect-[1/1] object-center object-cover
+            order-${i === 1 ? 3 : i + 1} aspect-[1/1] object-center object-cover
             border-solid border-[2px] overflow-hidden
             cursor-pointer rounded-lg
             transition-all duration-300 ease-in-out
-            ${selectedIndex === 5 
+            ${selectedIndex === i 
               ? 'border-primary' 
               : 'border-body-extra-light hover:border-primary brightness-75'
             }
           `}
-          onClick={() => setSelectedIndex(5)}
+          key={i}
+          onClick={() => setSelectedIndex(i)}
         >
           <img 
             className={`
               w-full h-full obejct-center object-cover
             `}
             alt="Photo"
-            src={imagesArray[5]}
-          />
-        </div> 
-        : <button
-            className={`
-              relative order-7 aspect-[1/1] object-center object-cover
-              border-solid border-[2px] overflow-hidden
-              border-body-extra-light hover:border-primary
-              cursor-pointer rounded-lg overflow-hidden
-              transition-all duration-300 ease-in-out
-            `}
-            data-type="see_all_images_button_is_clicked"
-            onClick={handleClick}
-          >
-            <img 
-              className={`
-                w-full h-full object-center object-cover brightness-[50%]
-              `}
-              alt="Photo"
-              src={imagesArray[5]}
-            />
-            <div
-              className="
-                absolute top-0 left-0 w-full h-full
-                flex flex-col items-center justify-center
-                text-xl text-heading-invert drop-shadow-md 
-              "
-            >
-              <span>
-              {!isEn || '+'}{totalLenght - 5}{isEn || '+'} {isEn ? 'more': 'اخر'}
-              </span>
-              <span className="font-bold underline">
-                {isEn ? 'SEE ALL' : 'عرض الكل'}
-              </span>
-            </div>  
-          </button>
-      }
+            src={url}
+          />    
+        </div>
+      )}
+      <button
+        className={`
+          relative order-7 aspect-[1/1] object-center object-cover
+          border-solid border-[2px] overflow-hidden
+          border-body-extra-light hover:border-primary
+          cursor-pointer rounded-lg overflow-hidden
+          transition-all duration-300 ease-in-out
+        `}
+        data-type="see_all_images_button_is_clicked"
+        onClick={handleClick}
+      >
+        <img 
+          className={`
+            w-full h-full object-center object-cover brightness-[50%]
+          `}
+          alt="Photo"
+          src={imagesArray[5]}
+        />
+        <div
+          className="
+            absolute top-0 left-0 w-full h-full
+            flex flex-col items-center justify-center
+            text-xl text-heading-invert drop-shadow-md 
+          "
+        >
+          <span>
+          {!isEn || '+'}{totalLenght - 5}{isEn || '+'} {isEn ? 'more': 'اخر'}
+          </span>
+          <span className="font-bold underline">
+            {isEn ? 'SEE ALL' : 'عرض الكل'}
+          </span>
+        </div>  
+      </button>
     </section>
   )
 

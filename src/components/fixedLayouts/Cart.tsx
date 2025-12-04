@@ -5,6 +5,7 @@ import { useState, useRef } from "react";
 import { useQuery } from '@tanstack/react-query';
 
 // COMPONENTS
+import ErrorLayout from '@/components/ErrorLayout';
 import PriceTag from '@/components/PriceTag'
 import SolarCart4Outline from "@/components/svgs/SolarCart4Outline";
 import ArrowUp from "@/components/svgs/ArrowUp";
@@ -54,12 +55,13 @@ export default function Cart () {
   const { 
     data: productsData, 
     isLoading,
-    isError
+    isError: tsdf
   } = useQuery({
     queryKey: [ 'products' ],
     queryFn: getAllProducts
   });
   const products = productsData?.data;
+  let isError = true;
 
   const toggle = useCartStore(status => status.toggle);
   const setToggle = useCartStore(status => status.setToggle);
@@ -220,8 +222,77 @@ export default function Cart () {
       </div>
     </div>
   )
+
+  if (isError) return (
+    <div
+      className={`
+        fixed top-0 left-0 
+        flex flex-col w-full h-screen bg-[var(--shade-v2-color)] z-[2000]
+        transition-all duration-300 ease-in-out
+        backdrop-blur-[2px]
+        ${toggle ? 'translate-y-[0%]' : 'translate-y-[-100%]'}
+      `}
+    >
+      <button
+        className="
+        relative flex items-center justify-end 
+        w-full max-w-[1400px] mx-auto px-4 py-8 opacity-100 cursor-pointer"
+        onClick={handleClick}
+        data-type="close_button_is_clicked"
+      >
+        <div
+          className="nav-active-effect z-10"
+        >
+          <SolarCart4Outline
+            className="
+              text-heading-invert cursor-pointer
+            "
+            width={24}
+            height={24}
+          />
+        </div>
+        <div
+          className="
+            absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]
+            w-screen h-full text-body text-4xl font-thin
+            flex items-center justify-center gap-2 bg-[hsla(0,0%,80%,0.6)]  
+          "
+        >
+          <ArrowUp 
+            className={`
+              ${isEn ? 'order-1' : 'order-2'}
+              w-8 h-8 text-between rounded-full 
+              border-solid border-body-light border-[1px] p-1
+            `}
+          />
+          <h2
+            className={`
+              ${isEn ? 'order-2' : 'order-1'}  
+            `}
+          >
+            {isEn ? 'CLOSE' : 'الغاء'}
+          </h2>
+        </div>
+      </button>
+      <hr className="border-inbetween"/>
+      <div
+        className="flex flex-col gap-8 w-full items-center max-w-[800px] p-8 m-auto translate-y-[0rem] overflow-y-scroll"
+      >
+        <ErrorLayout 
+          title={isEn ? 'Unable To Load' : 'لم يتم التحميل'}
+          description={isEn ? 'Please Refresh the page or try again later' : 'الرجاء اعاده تحميل الصفحه او حاول مره اخرى لاحقا'}
+        />
+      </div>
+    </div>
+  )
   
-  if (isError) return (<></>)
+  if (isError) return (
+    <ErrorLayout 
+      title={isEn ? 'Unable To Load' : 'لم يتم التحميل'}
+      description={isEn ? 'Please Refresh the page or try again later' : 'الرجاء اعاده تحميل الصفحه او حاول مره اخرى لاحقا'}
+    />
+  )
+
   if (isLoading) return (<></>)
 
   return (
