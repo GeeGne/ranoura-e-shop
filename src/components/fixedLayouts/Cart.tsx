@@ -54,14 +54,14 @@ export default function Cart () {
 
   const { 
     data: productsData, 
-    isLoading,
-    isError: tsdf
+    isLoading: fs,
+    isError
   } = useQuery({
     queryKey: [ 'products' ],
     queryFn: getAllProducts
   });
   const products = productsData?.data;
-  let isError = true;
+  let isLoading = true;
 
   const toggle = useCartStore(status => status.toggle);
   const setToggle = useCartStore(status => status.setToggle);
@@ -285,15 +285,209 @@ export default function Cart () {
       </div>
     </div>
   )
-  
-  if (isError) return (
-    <ErrorLayout 
-      title={isEn ? 'Unable To Load' : 'لم يتم التحميل'}
-      description={isEn ? 'Please Refresh the page or try again later' : 'الرجاء اعاده تحميل الصفحه او حاول مره اخرى لاحقا'}
-    />
-  )
 
-  if (isLoading) return (<></>)
+  if (isLoading) return (
+    <div
+      className={`
+        fixed top-0 left-0 
+        flex flex-col w-full h-screen bg-[var(--shade-v2-color)] z-[2000]
+        transition-all duration-300 ease-in-out
+        backdrop-blur-[2px]
+        ${toggle ? 'translate-y-[0%]' : 'translate-y-[-100%]'}
+      `}
+    >
+      <button
+        className="
+        relative flex items-center justify-end 
+        w-full max-w-[1400px] mx-auto px-4 py-8 opacity-100 cursor-pointer"
+        onClick={handleClick}
+        data-type="close_button_is_clicked"
+      >
+        <div
+          className="nav-active-effect z-10"
+        >
+          <SolarCart4Outline
+            className="
+              text-heading-invert cursor-pointer
+            "
+            width={24}
+            height={24}
+          />
+        </div>
+        <div
+          className="
+            absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]
+            w-screen h-full text-body text-4xl font-thin
+            flex items-center justify-center gap-2 bg-[hsla(0,0%,80%,0.6)]  
+          "
+        >
+          <ArrowUp 
+            className={`
+              ${isEn ? 'order-1' : 'order-2'}
+              w-8 h-8 between rounded-full 
+              border-solid border-body-light border-[1px] p-1
+            `}
+          />
+          <h2 
+            className={`
+              ${isEn ? 'order-2' : 'order-1'}
+            `}
+          >
+            {isEn ? 'CLOSE' : 'الغاء'}
+          </h2>
+        </div>
+      </button>
+      <hr className="border-inbetween"/>
+      <section
+        className="flex flex-1 flex-col bg-transparent w-full max-w-[600px] mx-auto overflow-hidden"
+      >
+        <div
+          className="flex items-center justify-between p-4"
+        >
+          <span
+            className="--opacity-blink bg-background-light text-2xl text-transparent rounded-md"
+          >
+            {isEn ? 'Cart' : 'السله'}
+          </span>
+          <span
+            className="--opacity-blink bg-background-light text-2xl text-transparent rounded-full px-2"
+          >
+            6
+          </span>
+        </div>
+        <hr className="--opacity-blink border-background-light"/>
+        <ul className="flex flex-col flex-1 py-4 px-2 gap-8 overflow-y-scroll">
+          {[1, 2].map((product: any, i: number) => 
+            <li className="flex" key={i}>
+              <div
+                className="--opacity-blink bg-background-light w-[100px] md:w-[200px] aspect-[2/3] object-cover rounded-lg"
+              />
+              <div className="flex flex-col gap-2 flex-1 px-4">
+                <div className="--opacity-blink bg-background-light flex text-transparent w-fit rounded-md text-lg justify-between">
+                  <h3>
+                    ///////////////////////////
+                  </h3>
+                  <span
+                    className="--opacity-blink bg-backgorund-light font-bold text-lg text-transparent roudned-md"
+                  >
+                    {calculatePriceAfterDiscount({ 
+                      price: 2999999, 
+                      discount: 15
+                    })} SYP
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 font-bold py-4">
+                  <span className="--opacity-blink bg-background-light text-transparent rounded-md">
+                    ///
+                  </span>
+                  <span className="--opacity-blink bg-background-light text-transparent rounded-md">|</span>
+                  <span 
+                    className="--opacity-blink bg-background-light h-4 w-4 rounded-full"
+                  />
+                  <span className="--opacity-blink bg-background-light text-transparent rounded-md">
+                    ///////
+                  </span>
+                </div>
+                  <div className="flex gap-2 items-center w-full">
+                    <span className="--opacity-blink bg-background-light text-transparent rounded-md">
+                      {isEn ? 'Price:' : 'السعر'} 
+                    </span>
+                      {/* {calculatePriceAfterDiscount({ 
+                          price: getProduct(products, product.id).price, 
+                          discount: getProduct(products, product.id).discount 
+                        }) * product.quantity} SYP */}
+                      <PriceTag 
+                        className="" 
+                        hidePercent={true}
+                        textSize="base"
+                        isLoading={true}
+                      />
+                  </div>       
+                  <div 
+                    className="flex gap-2 items-center w-[150px]"
+                  >
+                    <span className="--opacity-blink bg-background-light text-transparent rounded-md">
+                      {isEn ? 'Quanitity' : 'الكميه'}:
+                    </span>
+                    <div
+                      className="relative"
+                    >
+                      <input
+                        className="peer w-12 bg-transparent text-center text-sm outline-none border-none"
+                        readOnly
+                        id={`cartQuantity_${i}`}
+                        name={`cartQuantity_${i}`}
+                        value={product.quantity}
+                        data-index={i}
+                        ref={(el: any) => amountInptRefs.current[i] = el}
+                        // onFocus={handleFocus}
+                        // onBlur={handleBlur}
+                      />
+                      <div 
+                        className="
+                          absolute top-0 left-0 w-full h-full
+                          flex items-center justify-end
+                          border-solid border-b-[2px] border-body
+                        "
+                      >
+                        <EpArrowLeft className="w-3 h-3 rotate-[265deg]" />
+                      </div>
+                    </div>
+                  </div>
+                  <div 
+                    className="
+                      flex flex-col gap-2 text-sm md:text-base mt-auto pt-8
+                      translate-all duration-300 ease-in-out
+                    "
+                  >
+                  <div
+                    className="
+                      flex items-center justify-center gap-1 
+                      border-solid border-body border-[2px] rounded-md
+                      translate-all duration-300 ease-in-out
+                      hover:bg-body hover:text-heading-invert
+                    "
+                  >
+                    <div
+                      className="--opacity-blink bg-background-light w-4 h-4"
+                    />
+                    <span className="--opacity-blink bg-backgorund-light text-transparent">{isEn ? 'EDIT' : 'تعديل'}</span>
+                  </div>
+                  <button
+                    className="
+                      flex items-center justify-center gap-1 
+                      border-solid border-body border-[2px] rounded-md
+                      translate-all duration-300 ease-in-out
+                      hover:bg-body hover:text-heading-invert
+                    "
+                  >
+                    <div
+                      className="--opacity-blink bg-background-light w-4 h-4"
+                    />
+                    <span className="--opacity-blink bg-background-light text-transparent">{isEn ? 'DELETE' : 'مسح'}</span>
+                  </button>
+                </div>
+              </div>
+            </li>
+          )}
+        </ul>
+        <hr className="border-inbetween"/>
+        <section
+          className="flex flex-col items-center gap-4 p-4"
+        >
+          <div className="flex flex-row justify-between w-full font-bold text-lg">
+            <h3 className="--opacity-blink bg-background-light text-transparent">{isEn ? 'Total Price: ': 'مجمل السعر: '}</h3>
+            <h3 className="--opacity-blink bg-background-light text-transparent">16000 SYP</h3>
+          </div>
+          <BtnA
+            className="--opacity-blink w-full text-base text-transparent font-bold py-2 px-2 bg-background-light rounded-md"
+          >
+            {isEn ? 'Head to Checkout' : 'توجه الى الدفع'}
+          </BtnA>
+        </section>
+      </section>
+    </div>
+  )
 
   return (
     <div
