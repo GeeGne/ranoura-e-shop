@@ -425,13 +425,11 @@ export default function Cart () {
                       />
                       <div 
                         className="
-                          absolute top-0 left-0 w-full h-full
-                          flex items-center justify-end
+                          --opacity-blink bg-background-light absolute top-0 left-0 w-full h-full
+                          flex items-center justify-end rounded-md
                           border-solid border-b-[2px] border-body
                         "
-                      >
-                        <EpArrowLeft className="w-3 h-3 rotate-[265deg]" />
-                      </div>
+                      />
                     </div>
                   </div>
                   <div 
@@ -442,21 +440,19 @@ export default function Cart () {
                   >
                   <div
                     className="
+                      --opacity-blink bg-background-light 
                       flex items-center justify-center gap-1 
-                      border-solid border-body border-[2px] rounded-md
+                      border-solid border-backgorund-light border-[2px] rounded-md
                       translate-all duration-300 ease-in-out
                       hover:bg-body hover:text-heading-invert
                     "
                   >
-                    <div
-                      className="--opacity-blink bg-background-light w-4 h-4"
-                    />
                     <span className="--opacity-blink bg-backgorund-light text-transparent">{isEn ? 'EDIT' : 'تعديل'}</span>
                   </div>
                   <button
                     className="
-                      flex items-center justify-center gap-1 
-                      border-solid border-body border-[2px] rounded-md
+                      --opacity-blink bg-background-light flex items-center justify-center gap-1 
+                      border-solid border-background-light border-[2px] rounded-md
                       translate-all duration-300 ease-in-out
                       hover:bg-body hover:text-heading-invert
                     "
@@ -464,7 +460,7 @@ export default function Cart () {
                     <div
                       className="--opacity-blink bg-background-light w-4 h-4"
                     />
-                    <span className="--opacity-blink bg-background-light text-transparent">{isEn ? 'DELETE' : 'مسح'}</span>
+                    <span className="--opacity-blink bg-background-light text-transparent rounded-md">{isEn ? 'DELETE' : 'مسح'}</span>
                   </button>
                 </div>
               </div>
@@ -476,8 +472,8 @@ export default function Cart () {
           className="flex flex-col items-center gap-4 p-4"
         >
           <div className="flex flex-row justify-between w-full font-bold text-lg">
-            <h3 className="--opacity-blink bg-background-light text-transparent">{isEn ? 'Total Price: ': 'مجمل السعر: '}</h3>
-            <h3 className="--opacity-blink bg-background-light text-transparent">16000 SYP</h3>
+            <h3 className="--opacity-blink bg-background-light text-transparent rounded-md">{isEn ? 'Total Price: ': 'مجمل السعر: '}</h3>
+            <h3 className="--opacity-blink bg-background-light text-transparent rounded-md">16000 SYP</h3>
           </div>
           <BtnA
             className="--opacity-blink w-full text-base text-transparent font-bold py-2 px-2 bg-background-light rounded-md"
