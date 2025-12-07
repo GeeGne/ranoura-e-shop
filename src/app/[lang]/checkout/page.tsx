@@ -2,6 +2,7 @@
 
 // HOOKS
 import { useEffect }from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 // COMPONENTS
 import ShowOrderSummary from '@/app/[lang]/checkout/ShowOrderSummary';
@@ -13,6 +14,9 @@ import SignupForm from '@/app/[lang]/signup/SignupForm';
 
 // STORES
 import { useTabNameStore, useLanguageStore } from '@/stores/index';
+
+// API
+import getAllProducts from '@/lib/api/products/get';
 
 export default function page () {
   
@@ -31,6 +35,15 @@ export default function page () {
     setTabName('checkout');
   }, []);
   
+  const { data: productsData, isLoading, isError } = useQuery({
+    queryKey: [ 'products' ],
+    queryFn: getAllProducts
+  });
+  const products = productsData?.data;
+
+  if (isError) return (<></>)
+  if (isLoading) return (<></>)
+
   return (
     <div
       className="
@@ -52,11 +65,12 @@ export default function page () {
           lg:before:bg-inbetween lg:before:z-[5]
           ${isEn ? 'lg:before:right-[calc(100%+1rem)]' : 'lg:before:left-[calc(100%+1rem)]'}
         `}
+        products={products}
       />
       <CheckoutForm 
         className="
           lg:order-2 lg:col-span-1
-        "
+        " 
       />
     </div>
   )

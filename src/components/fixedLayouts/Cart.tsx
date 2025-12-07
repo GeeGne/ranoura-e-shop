@@ -94,14 +94,21 @@ export default function Cart () {
         setAlertToggle(Date.now());
         setAlertType('product removed');
         setAlertMessage(`"${productName}" has been removed from your cart`);
-        setCart(cart.filter((itm: any) => !(itm.id === Number(index) && itm.color === color && itm.size === size) ));
+        setAlertMessage(`${isEn 
+          ? `"${productName}" has been removed from your cart`
+          : `تمت إزالة "${productName}" من سلة التسوق الخاصة بك.`
+        }`);
+        setCart(cart.filter((itm: any) => !(itm.id === index && itm.color === color && itm.size === size) ));
         break;
       case 'edit_button_is_clicked':
         setToggle(false);
         setAlertToggle(Date.now());
         setAlertType('warning');
-        setAlertMessage(`"${productName}" is removed! Re-select your options and add it back to the cart`);
-        setCart(cart.filter((itm: any) => !(itm.id === Number(index) && itm.color === color && itm.size === size) ));
+        setAlertMessage(`${isEn 
+          ? `"${productName}" is removed! Re-select your options and add it back to the cart`
+          : `تمت إزالة "${productName}"! يُرجى إعادة اختيار خياراتك وإضافته مرة أخرى إلى سلة التسوق`
+        }`);
+        setCart(cart.filter((itm: any) => !(itm.id === index && itm.color === color && itm.size === size) ));
         setTimeout(() => 
           layoutRef.scrollTo({top: 0, behavior: "instant"})
         ,200);
@@ -679,7 +686,7 @@ export default function Cart () {
                       translate-all duration-300 ease-in-out
                       hover:bg-body hover:text-heading-invert
                     "
-                    href={`/shop/${getProduct(products, product.id).id}/${getProduct(products, product.id).slug}`}
+                    href={`/shop/${getProduct(products, product.id).slug}`}
                     data-type="edit_button_is_clicked"
                     data-product-name={getProduct(products, product.id).name[lang]}
                     data-size={product.size}

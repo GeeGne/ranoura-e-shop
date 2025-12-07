@@ -1,12 +1,12 @@
 // COMPONENTS
 import Image from 'next/image';
-import PriceTag from '@/components/PriceTag'
+import PriceTag from '@/components/PriceTag';
 
 // STORES
-import { useCartStore, useLanguageStore } from "@/stores/index"
+import { useCartStore, useLanguageStore } from "@/stores/index";
 
 // JSON
-import products from '@/json/products.json';
+// import products from '@/json/products.json';
 import colors from '@/json/colors.json';
 
 // UTILS
@@ -25,11 +25,18 @@ const outfit3 = "assets/img/outfit-3.avif"
 
 type Props = {
   className?: string;
+  products?: Record<string, any>[];
   hideProductsSection?: boolean;
   hideTotalSection?: boolean;
 } & React.ComponentPropsWithRef<"section">;
 
-export default function OrderSummary ({ hideProductsSection = false, hideTotalSection = false, className, ...props }: Props) {
+export default function OrderSummary ({ 
+  className, 
+  products = [],
+  hideProductsSection = false, 
+  hideTotalSection = false, 
+  ...props 
+}: Props) {
   
   // const cart = [1, 2, 3, 4, 5, 6];
 
@@ -91,7 +98,7 @@ export default function OrderSummary ({ hideProductsSection = false, hideTotalSe
               >
                 <img
                   alt={getProduct(products, product.id).name}
-                  src={getImgUrl(getProduct(products, product.id).images, product.color)?.main}
+                  src={getImgUrl(getProduct(products, product.id).images, product.color)}
   
                   className="rounded-lg shrink-0 w-[100px] min-w-[100px] h-auto md:w-[200px] ratio-[2/3] object-cover object-center drop-shadow-md"
                 />

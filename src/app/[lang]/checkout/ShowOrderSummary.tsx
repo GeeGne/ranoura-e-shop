@@ -17,13 +17,18 @@ import calculatePriceAfterDiscount from "@/utils/calculatePriceAfterDiscount";
 import getProduct from "@/utils/getProduct";
 
 // JSON
-import products from "@/json/products.json";
+// import products from "@/json/products.json";
 
 type Props = {
   className?: string;
+  products?: Record<string, any>;
 } & React.ComponentPropsWithRef<"div">;
 
-export default function ShowOrderSummary({ className, ...props }: Props) {
+export default function ShowOrderSummary({ 
+  className,
+  products = [],
+  ...props
+}: Props) {
 
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
@@ -67,7 +72,10 @@ export default function ShowOrderSummary({ className, ...props }: Props) {
             ${toggle ? "font-bold" : "font-medium"}
           `}
         >
-          {toggle ? (isEn ? "Hide Order Summary" : "اخفاء ملخص الطلب") : (isEn ? "Show Order Summary" : "عرض ملخص الطلب")}
+          {toggle 
+            ? (isEn ? "Hide Order Summary" : "اخفاء ملخص الطلب") 
+            : (isEn ? "Show Order Summary" : "عرض ملخص الطلب")
+          }
         </span>
         {toggle ? (
           <div className="relative">
@@ -113,6 +121,7 @@ export default function ShowOrderSummary({ className, ...props }: Props) {
           lg:hidden overflow-hidden
           transition-all duration-300 ease-in-out
         `}
+        products={products}
         style={{
           maxHeight: toggle
             ? getRefTotalHeight(orderSummaryRef) + 8 + "px"
@@ -132,12 +141,14 @@ export default function ShowOrderSummary({ className, ...props }: Props) {
             hidden lg:flex max-h-[486px] overflow-y-scroll
           `}
           hideTotalSection={true}
+          products={products}
         />
         <OrderSummary
           className={`
             hidden lg:flex 
           `}
           hideProductsSection={true}
+          products={products}
         />
       </div>
     </div>
