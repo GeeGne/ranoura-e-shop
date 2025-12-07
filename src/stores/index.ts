@@ -135,7 +135,7 @@ type AlertMessageProps = {
   setType: (value: string) => void;
   message: string;
   setMessage: (value: string) => void;
-  productDetails: any;
+  productDetails: Record<string, string>;
   setProductDetails: (value: any) => void;
 }
 

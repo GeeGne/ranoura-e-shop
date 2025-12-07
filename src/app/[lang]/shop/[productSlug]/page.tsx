@@ -27,12 +27,13 @@ import {
 } from '@/stores/index';
 
 // JSON
-import products from '@/json/products.json';
+// import products from '@/json/products.json';
 
 // UTILS
 import useSetSearchParams from '@/utils/useSetSearchParams';
 import useDeleteAllSearchParams from '@/utils/useDeleteAllSearchParams';
 import getProduct from '@/utils/getProduct';
+import getImgUrl from '@/utils/getImgUrl';
 
 // API
 import getProductBasedOnSlug from '@/lib/api/products/slug/get';
@@ -126,7 +127,7 @@ export default function page () {
 
     switch (type) {
       case 'add_to_bag_button_is_clicked':
-        return;
+
         const size = searchParams.get("size");
         const quantity = Number(searchParams.get("quantity")) || 1;
         const color = searchParams.get("color");
@@ -138,7 +139,7 @@ export default function page () {
 
         if (color && size) {
           const cartArray = [ ...cart ];
-          const newProduct = { 
+          const newProduct = {
             id: product.id, size, quantity: Number(quantity), color 
           };
           const isProductMatched = cart.some(itm => 
@@ -160,7 +161,7 @@ export default function page () {
           setAlertType("product added");
           setAlertMessage(isEn ? `"${productName}" is Added.` : `اسم القطعه: "${productName}"`);  
           setProductDetails({ 
-            imgURL: getProduct(products, product.id).images.find((img: any) => img.color === color).main,
+            imgURL: getImgUrl(product.images, color),
             size,
             color,
             quantity

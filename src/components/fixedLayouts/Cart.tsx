@@ -54,14 +54,13 @@ export default function Cart () {
 
   const { 
     data: productsData, 
-    isLoading: fs,
+    isLoading,
     isError
   } = useQuery({
     queryKey: [ 'products' ],
     queryFn: getAllProducts
   });
   const products = productsData?.data;
-  let isLoading = true;
 
   const toggle = useCartStore(status => status.toggle);
   const setToggle = useCartStore(status => status.setToggle);
@@ -561,7 +560,7 @@ export default function Cart () {
               <DisplayImg
                 className="w-[100px] md:w-[200px] aspect-[2/3] object-cover rounded-lg"
                 alt={getProduct(products, product.id).name[lang]}
-                src={getImgUrl(getProduct(products, product.id).images, product.color)?.main}
+                src={getImgUrl(getProduct(products, product.id).images, product.color)}
                 loading="lazy"
                 fetchPriority="low"
               />

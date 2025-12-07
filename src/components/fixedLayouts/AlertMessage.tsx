@@ -34,6 +34,7 @@ export default function AlertMessage () {
   const type = useAlertMessageStore(state => state.type);
   const message = useAlertMessageStore(state => state.message);
   const productDetails = useAlertMessageStore(state => state.productDetails);
+  console.log('productDetails: ', productDetails);
   const wrapperRef = useRef<any>(null)
   const timeoutId = useRef<any>(null);
   const timeoutId2 = useRef<any>(null);
@@ -271,6 +272,8 @@ export default function AlertMessage () {
     </div>
   )
 
+  console.log({imgUrl: productDetails.imgUrl, size: productDetails.size, color: productDetails.color, quantity: productDetails.quantity });
+
   if (type ===  "product added") return (
     <div
       className="
@@ -419,7 +422,7 @@ export default function AlertMessage () {
     </div>
   )
 
-  if (type ===  "product removed") return (
+  if (type === "product removed") return (
     <div
       className="
         --alert-messge-ani
