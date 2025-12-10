@@ -3,7 +3,7 @@ import { useRef, useState } from 'react';
 
 // COMPONENTS
 import Title from '@/app/[lang]/checkout/checkoutform/Title';
-import OrderSummary from '@/components/OrderSummary';
+import OrderSummary from '@/components/orderSummary/OrderSummary';
 import LineMdDownloadOutlineLoop from '@/components/svgs/activity/LineMdDownloadOutlineLoop';
 import LineMdDownloadTwotoneLoop from '@/components/svgs/activity/LineMdDownloadTwotoneLoop';
 import LineMdUploadOutlineLoop from '@/components/svgs/activity/LineMdUploadOutlineLoop';

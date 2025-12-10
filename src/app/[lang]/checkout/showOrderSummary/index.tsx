@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 
 // COMPONENTS
-import OrderSummary from "@/components/OrderSummary";
+import OrderSummary from "@/components/orderSummary/index";
 import LoadingLayout from "@/app/[lang]/checkout/showOrderSummary/LoadingLayout";
 import LineMdDownloadOutlineLoop from "@/components/svgs/activity/LineMdDownloadOutlineLoop";
 import LineMdDownloadTwotoneLoop from "@/components/svgs/activity/LineMdDownloadTwotoneLoop";

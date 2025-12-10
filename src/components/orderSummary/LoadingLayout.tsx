@@ -30,35 +30,22 @@ type Props = {
   hideTotalSection?: boolean;
 } & React.ComponentPropsWithRef<"section">;
 
-export default function OrderSummary ({ 
+export default function LoadingLayout ({ 
   className,
-  products = [],
   hideProductsSection = false, 
   hideTotalSection = false, 
   ...props 
 }: Props) {
   
-  // const cart = [1, 2, 3, 4, 5, 6];
-
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
-  const cart = useCartStore(state => state.cart)
-
-  const pricesArray = () => 
-    cart.map(product => 
-      calculatePriceAfterDiscount({
-        price: getProduct(products, product.id).price, 
-        discount: getProduct(products, product.id).discount_percent
-      }) * product.quantity
-    )
-  ;
 
   // console.log('getProduct OrderSummary: ', getProduct(products, '3b3dccc8-75ac-4567-9a24-7d84dfae4970')?.name);
 
-  if (products.length > 0) return (
+  return (
     <section
       className={`
-        flex flex-col gap-2
+        --opacity-blink flex flex-col gap-2
         ${className}
       `}
       { ...props }
@@ -72,23 +59,23 @@ export default function OrderSummary ({
           "
         >
           <span
-            className="lg:z-[10]"
+            className="text-transparent bg-background-light lg:z-[10]"
           >
-            {isEn ? 'PRODUCT' : 'الغرض'}
+            //////////
           </span>
           <span
-            className="lg:z-[10]"
+            className="text-transparent bg-background-light lg:z-[10]"
           >
-            {isEn ? 'PRICE' : 'السعر'}
+            ///////
           </span>
         </div>
-        <hr className="lg:sticky lg:top-7 border-inbetween border-[2px] lg:z-[10]" />
+        <hr className="lg:sticky lg:top-7 border-background-light border-[2px] lg:z-[10]" />
         <ul
           className={`
             flex flex-col gap-4
           `}
         >
-          {cart.map((product, i) =>
+          {[1, 2 ,3 , 4].map((itm, i) =>
             <li
               key={i}
               className="flex gap-4"
@@ -96,26 +83,18 @@ export default function OrderSummary ({
               <section
                 className="relative"
               >
-                <img
-                  alt={getProduct(products, product.id)?.name[lang] || ''}
-                  src={getImgUrl(getProduct(products, product.id).images, product.color)}
-  
-                  className="rounded-lg shrink-0 w-[100px] min-w-[100px] h-auto md:w-[200px] ratio-[2/3] object-cover object-center drop-shadow-md"
-                />
-                <span
+                <div
                   className="
-                    hidden absolute top-0 right-0 
-                    text-heading-invert font-bold
-                    px-2 py-1 z-[5]
+                    bg-background-light
+                    rounded-lg shrink-0 w-[100px] min-w-[100px] h-auto md:w-[200px] 
+                    ratio-[2/3] object-cover object-center drop-shadow-md
                   "
-                >
-                  4
-                </span>
+                />
                 <div
                   className="
                     hidden absolute top-0 left-full 
                     translate-x-[-50%] translate-y-[-50%]
-                    w-16 h-16 bg-primary rounded-full bg-
+                    w-16 h-16 bg-background-light rounded-full bg-
                   "
                 />                
               </section>
@@ -125,98 +104,94 @@ export default function OrderSummary ({
                 <div
                   className="flex justify-between"
                 >
-                  <h3 className="text-base md:text-lg text-heading">
-                    {getProduct(products, product.id)?.name[lang] || ''}
+                  <h3 className="text-base md:text-lg text-transparent bg-background-light rounded-md">
+                    ////////////////
                   </h3>
                   <h3
-                    className="text-base md:text-lg text-content font-bold"
+                    className="text-base md:text-lg text-transparent font-bold bg-background-light rounded-md"
                   >
-                    {calculatePriceAfterDiscount({ 
-                        price: getProduct(products, product.id).price, 
-                        discount: getProduct(products, product.id).discount_percent
-                      }) * product.quantity} SYP
+                    //////////////
                   </h3>
                 </div>
-                <div className="flex gap-2 items-center text-sm md:text-base text-heading font-bold">
-                  <span>
-                    {product.size}
+                <div className="flex gap-2 items-center text-sm md:text-base text-transparent font-bold">
+                  <span className="text-transparent bg-background-light rounded-md">
+                    //////////////////////
                   </span> {' | '}
                   <div 
-                    className="w-3 md:w-4 h-3 md:h-4 bg-primary rounded-full drop-shadow-md"
-                    style={{backgroundColor: getColor(colors, product.color).hex}}
+                    className="w-3 md:w-4 h-3 md:h-4 bg-background-light rounded-full drop-shadow-md"
                   />
                 </div>
                 <div className="flex gap-2 items-center text-heading">
-                  <span className="text-sm md:text-base text-body">
-                    {isEn ? 'Price:' : 'السعر:'}
+                  <span className="text-sm md:text-base text-transparent bg-background-light rounded-md">
+                    ///////
                   </span>
                     <PriceTag 
                         className="md:hidden whitespace-nowrap" 
                         hidePercent={true}
                         textSize='sm'
-                        price={getProduct(products, product.id).price} 
-                        discount={getProduct(products, product.id).discount_percent}
+                        isLoading={true}
                     />
                     <PriceTag 
                         className="hidden md:inline whitespace-nowrap" 
                         hidePercent={true}
                         textSize='base'
-                        price={getProduct(products, product.id).price} 
-                        discount={getProduct(products, product.id).discount_percent}
+                        isLoading={true}
                     />
-                  <span className="text-sm md:text-base font-bold">
+                  <span className="text-sm md:text-base font-bold text-transparent bg-background-light rounded-md">
+                    //////
                   </span>
                 </div>
-                <div className="flex gap-2 items-center text-heading">
-                  <span className="text-sm md:text-base text-body">
-                    {isEn ? 'Quantity:' : 'الكميه'}
+                <div className="flex gap-2 items-center">
+                  <span className="text-sm md:text-base text-transparent bg-background-light rounded-md">
+                    //////////////
                   </span>
-                  <span className="text-sm md:text-base font-bold">
-                    {product.quantity}
+                  <span className="text-sm md:text-base font-bold text-transparent bg-background-light rounded-md">
+                    ///
                   </span>
                 </div>
               </section>
             </li>
           )}
         </ul>
-        <hr className="lg:sticky lg:bottom-0 border-inbetween border-[2px]" /></>
+        <hr className="lg:sticky lg:bottom-0 border-background-light border-[2px]" /></>
       }
 
       {hideTotalSection ||
         <><div
           className="flex justify-between text-base"
         >
-          <span className="text-body">
+          <span className="text-transparent bg-background-light rounded-md">
             {isEn ? 'Sub Total' : 'المجموع الفرعي'}
+            //////////////////////////////
           </span>
-          <span className="text-heading">
-            {calculateTotalPrice(pricesArray())} SYP
+          <span className="text-transparent bg-background-light rounded-md">
+            //////
           </span>
         </div>
 
         <div
           className="flex justify-between text-base"
         >
-          <span className="text-body">
+          <span className="text-transparent bg-background-light rounded-md">
             {isEn ? 'Shipping fee' : 'رسوم الشحن'}
+            /////////////
           </span>
-          <span className="text-heading">
-            200 SYP
+          <span className="text-transparent bg-background-light rounded-md">
+            ///////
           </span>
         </div>
 
         <div
           className="flex justify-between text-lg font-bold "
         >
-          <span className="text-body">
-            {isEn ? 'TOTAL' : 'المجموع'}
+          <span className="text-transparent bg-background-light rounded-md">
+            ////////
           </span>
-          <span className="text-heading">
-            500 SYP
+          <span className="text-transparent bg-background-light rounded-md">
+            //////
           </span>
         </div></>
       }
     </section>    
-
   )
 }

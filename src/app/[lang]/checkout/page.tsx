@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 
 // COMPONENTS
 import ShowOrderSummary from '@/app/[lang]/checkout/showOrderSummary/index';
-import OrderSummary from '@/components/OrderSummary';
+import OrderSummary from '@/components/orderSummary/index';
 import CheckoutForm from '@/app/[lang]/checkout/checkoutform/index';
 import AccountBenefitsSection from '@/components/AccountBenefitsSection/index';
 import BreadCrumb from '@/components/BreadCrumb';

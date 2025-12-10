@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 
 // COMPONENTS
 import Title from '@/app/[lang]/checkout/checkoutform/Title';
-import OrderSummary from '@/components/OrderSummary';
+import OrderSummary from '@/components/orderSummary/OrderSummary';
 import BtnA from '@/components/BtnA';
 import LineMdChevronSmallDown from '@/components/svgs/LineMdChevronSmallDown';
 import LineMdConfirmCircleTwotone from '@/components/svgs/LineMdConfirmCircleTwotone';
