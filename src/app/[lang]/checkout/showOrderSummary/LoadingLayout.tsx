@@ -1,5 +1,5 @@
 // HOOKS
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // COMPONENTS
 import OrderSummary from "@/components/OrderSummary";
@@ -21,38 +21,18 @@ import getProduct from "@/utils/getProduct";
 
 type Props = {
   className?: string;
-  products?: Record<string, any>;
+  isLoading?: boolean;
 } & React.ComponentPropsWithRef<"div">;
 
-export default function ShowOrderSummary({ 
+export default function LoadingLayout({ 
   className,
-  products = [],
+  isLoading = false,
   ...props
 }: Props) {
 
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
-  const [toggle, setToggle] = useState<boolean>(false);
-  const orderSummaryRef = useRef<HTMLUListElement>(null);
-  const cart = useCartStore((state) => state.cart);
 
-  const getRefTotalHeight = (ref: any) => ref.current?.scrollHeight;
-
-  const pricesArray = () =>
-    cart.map(
-      (product) =>
-        calculatePriceAfterDiscount({
-          price: getProduct(products, product.id).price,
-          discount: getProduct(products, product.id).discount_percent,
-        }) * product.quantity
-    );
-
-  // DEBUG & UI
-  // console.log('orderSummaryRef: ', orderSummaryRef.current);
-  // console.log('orderSummary total height: ', orderSummaryRef.current?.scrollHeight);
-  // console.log('calucalteTotalPrice', calculateTotalPrice(pricesArray()));
-  // console.log('pricesArray', pricesArray());
-  
   return (
     <div
       className={`
@@ -63,52 +43,35 @@ export default function ShowOrderSummary({
     >
       <button
         className="lg:hidden group flex gap-2"
-        onClick={() => setToggle((val) => !val)}
       >
         <span
           className={`
             text-content text-base
             transition-all duration-300 ease-in-out
-            ${toggle ? "font-bold" : "font-medium"}
+            font-medium
           `}
         >
-          {toggle 
-            ? (isEn ? "Hide Order Summary" : "اخفاء ملخص الطلب") 
-            : (isEn ? "Show Order Summary" : "عرض ملخص الطلب")
-          }
+          ///////////////////
         </span>
-        {toggle ? (
-          <div className="relative">
-            <LineMdUploadOutlineLoop className="text-content" />
-            <LineMdUploadTwotoneLoop
-              className="
-                  absolute top-0 left-0 text-content
-                  opacity-0 group-hover:opacity-100
-                  transition-all duration-300 ease-in-out
-                "
-            />
-          </div>
-        ) : (
-          <div className="relative">
-            <LineMdDownloadOutlineLoop className="text-content" />
-            <LineMdDownloadTwotoneLoop
-              className="
-                  absolute top-0 left-0 text-content
-                  opacity-0 group-hover:opacity-100
-                  transition-all duration-300 ease-in-out
-                "
-            />
-          </div>
-        )}
+        <div className="relative">
+          <LineMdDownloadOutlineLoop className="text-content" />
+          <LineMdDownloadTwotoneLoop
+            className="
+                absolute top-0 left-0 text-content
+                opacity-0 group-hover:opacity-100
+                transition-all duration-300 ease-in-out
+              "
+          />
+        </div>
         <span 
           className={`
             text-lg text-heading font-bold ${isEn ? 'ml-auto' : 'mr-auto'}
           `}
         >
-          {calculateTotalPrice(pricesArray())} SYP
+          ////////////////
         </span>
       </button>
-      <section className="hidden lg:flex lg:items-center lg:justify-between">
+      {/* <section className="hidden lg:flex lg:items-center lg:justify-between">
         <h2 className="text-5xl text-content font-light">
           {isEn ? 'ORDER SUMMARY' : 'ملخص الطلب'}
         </h2>
@@ -150,7 +113,7 @@ export default function ShowOrderSummary({
           hideProductsSection={true}
           products={products}
         />
-      </div>
+      </div> */}
     </div>
   );
 }

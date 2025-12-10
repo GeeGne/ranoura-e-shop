@@ -22,9 +22,14 @@ import { useLanguageStore } from '@/stores/index';
 
 type Props = {
   className?: string;
+  products?: Record<string, any>;
 } & React.ComponentPropsWithRef<"form">;
 
-export default function CheckoutForm ({ className, ...props }: Props) {
+export default function CheckoutForm ({ 
+  className,
+  products = [],
+  ...props
+}: Props) {
 
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
@@ -446,9 +451,11 @@ export default function CheckoutForm ({ className, ...props }: Props) {
               opacity: toggleOrderSummary ? `1` : '0'
             }}
             ref={orderSummaryRef}
+            products={products}
           />
           <OrderSummary
             hideProductsSection={true}
+            products={products}
           />      
         </div>
       </section>

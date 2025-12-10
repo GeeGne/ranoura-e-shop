@@ -25,13 +25,13 @@ const outfit3 = "assets/img/outfit-3.avif"
 
 type Props = {
   className?: string;
-  products?: Record<string, any>[];
+  products?: any[];
   hideProductsSection?: boolean;
   hideTotalSection?: boolean;
 } & React.ComponentPropsWithRef<"section">;
 
 export default function OrderSummary ({ 
-  className, 
+  className,
   products = [],
   hideProductsSection = false, 
   hideTotalSection = false, 
@@ -53,7 +53,9 @@ export default function OrderSummary ({
     )
   ;
 
-  return (
+  // console.log('getProduct OrderSummary: ', getProduct(products, '3b3dccc8-75ac-4567-9a24-7d84dfae4970')?.name);
+
+  if (products.length > 0) return (
     <section
       className={`
         flex flex-col gap-2
@@ -80,9 +82,7 @@ export default function OrderSummary ({
             {isEn ? 'PRICE' : 'السعر'}
           </span>
         </div>
-        
         <hr className="lg:sticky lg:top-7 border-inbetween border-[2px] lg:z-[10]" />
-
         <ul
           className={`
             flex flex-col gap-4
@@ -97,7 +97,7 @@ export default function OrderSummary ({
                 className="relative"
               >
                 <img
-                  alt={getProduct(products, product.id).name}
+                  alt={getProduct(products, product.id)?.name[lang] || ''}
                   src={getImgUrl(getProduct(products, product.id).images, product.color)}
   
                   className="rounded-lg shrink-0 w-[100px] min-w-[100px] h-auto md:w-[200px] ratio-[2/3] object-cover object-center drop-shadow-md"
@@ -126,7 +126,7 @@ export default function OrderSummary ({
                   className="flex justify-between"
                 >
                   <h3 className="text-base md:text-lg text-heading">
-                    {getProduct(products, product.id)?.name[lang]}
+                    {getProduct(products, product.id)?.name[lang] || ''}
                   </h3>
                   <h3
                     className="text-base md:text-lg text-content font-bold"
@@ -179,7 +179,6 @@ export default function OrderSummary ({
             </li>
           )}
         </ul>
-
         <hr className="lg:sticky lg:bottom-0 border-inbetween border-[2px]" /></>
       }
 

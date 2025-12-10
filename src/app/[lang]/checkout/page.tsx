@@ -5,7 +5,7 @@ import { useEffect }from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 // COMPONENTS
-import ShowOrderSummary from '@/app/[lang]/checkout/ShowOrderSummary';
+import ShowOrderSummary from '@/app/[lang]/checkout/showOrderSummary/index';
 import OrderSummary from '@/components/OrderSummary';
 import CheckoutForm from '@/app/[lang]/checkout/checkoutform/index';
 import AccountBenefitsSection from '@/components/AccountBenefitsSection/index';
@@ -35,14 +35,15 @@ export default function page () {
     setTabName('checkout');
   }, []);
   
-  const { data: productsData, isLoading, isError } = useQuery({
+  const { data: productsData, isLoading: fs, isError } = useQuery({
     queryKey: [ 'products' ],
     queryFn: getAllProducts
   });
   const products = productsData?.data;
-
+  let isLoading = true;
   if (isError) return (<></>)
-  if (isLoading) return (<></>)
+
+  console.log('checkout page: ', products);
 
   return (
     <div
@@ -53,8 +54,9 @@ export default function page () {
       "
     >
       <BreadCrumb 
-        className="py-4 lg:py-0 lg:col-span-2"
-        slugNameAndLinkArray={slugNameAndLinkArray}     
+        className="w-fit py-4 lg:py-0 lg:col-span-2"
+        slugNameAndLinkArray={slugNameAndLinkArray}
+        isLoading={isLoading}
       />
       <ShowOrderSummary 
         className={`
@@ -65,13 +67,15 @@ export default function page () {
           lg:before:bg-inbetween lg:before:z-[5]
           ${isEn ? 'lg:before:right-[calc(100%+1rem)]' : 'lg:before:left-[calc(100%+1rem)]'}
         `}
+        isLoading={isLoading}
         products={products}
       />
-      <CheckoutForm 
+      {/*<CheckoutForm
         className="
           lg:order-2 lg:col-span-1
         " 
-      />
+        products={products}
+      /> */}
     </div>
   )
 }
