@@ -59,12 +59,12 @@ export default function LoadingLayout ({
           "
         >
           <span
-            className="text-transparent bg-background-light lg:z-[10]"
+            className="text-transparent bg-background-light lg:z-[10] rounded-md"
           >
             //////////
           </span>
           <span
-            className="text-transparent bg-background-light lg:z-[10]"
+            className="text-transparent bg-background-light lg:z-[10] rounded-md"
           >
             ///////
           </span>

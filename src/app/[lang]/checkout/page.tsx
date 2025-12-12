@@ -70,12 +70,13 @@ export default function page () {
         isLoading={isLoading}
         products={products}
       />
-      {/*<CheckoutForm
+      <CheckoutForm
         className="
           lg:order-2 lg:col-span-1
         " 
         products={products}
-      /> */}
+        isLoading={isLoading}
+      />
     </div>
   )
 }

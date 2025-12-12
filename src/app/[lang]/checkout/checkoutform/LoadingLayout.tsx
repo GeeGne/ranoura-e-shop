@@ -4,7 +4,6 @@ import { useState, useRef, useEffect } from 'react';
 // COMPONENTS
 import Title from '@/app/[lang]/checkout/checkoutform/Title';
 import OrderSummary from '@/components/orderSummary/index';
-import LoadingLayout from '@/app/[lang]/checkout/checkoutform/LoadingLayout';
 import BtnA from '@/components/BtnA';
 import LineMdChevronSmallDown from '@/components/svgs/LineMdChevronSmallDown';
 import LineMdConfirmCircleTwotone from '@/components/svgs/LineMdConfirmCircleTwotone';
@@ -23,134 +22,25 @@ import { useLanguageStore } from '@/stores/index';
 
 type Props = {
   className?: string;
-  isLoading?: boolean;
   products?: Record<string, any>;
 } & React.ComponentPropsWithRef<"form">;
 
-export default function CheckoutForm ({ 
+export default function LoadingLayout ({ 
   className,
   products = [],
-  isLoading = false,
   ...props
 }: Props) {
 
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
 
-  const [ isAddressDetailsFocus, setIsAddressDetailsFocus ] = useState<boolean>(false);
-  const [ isSecondAddressFocus, setIsSecondAddressFocus ] = useState<boolean>(false);
-  const [ isNotesFocus, setIsNotesFocus ] = useState<boolean>(false);
-  const [ selectedPhoneNumberRadio, setSelectedPhoneNumberRadio ] = useState<string>('existedPhoneNumber');
-  const [ toggleOrderSummary, setToggleOrderSummary ] = useState<boolean>(false);
-  const [ selectedDeliverToCity, setSelectedDeliverToCity ] = useState<{
-     city?: string; shippingFee?: string | number 
-    }>({
-    city: isEn ? 'Pick Your City' : 'اختر محافظتك',
-    shippingFee: '--'
-  });
-  
-  const orderSummaryRef = useRef<HTMLElement>(null);
-  const deliverToRef = useRef<HTMLElement | any>(null);
-  const getRefTotalHeight = (ref: any) => ref.current?.scrollHeight;
-
-  useEffect(() => {
-    setSelectedDeliverToCity({city: isEn ? 'Pick Your City' : 'اختر محافظتك', shippingFee: '--'});
-  }, [lang]);
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  }
-
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement | HTMLLIElement>) => {
-    const { type, city, shippingFee } = e.currentTarget.dataset;
-
-    switch (type) {
-      case 'toggle_orderSummary_button_is_clicked':
-        setToggleOrderSummary(val => !val);
-
-        break;
-      case 'deliverTo_list_is_clicked':
-        setSelectedDeliverToCity({
-          city,
-          shippingFee      
-        });
-        setTimeout(() => deliverToRef.current?.blur(), 100);
-        // deliverToRef.current?.blur();
-        break;
-      default:
-        console.error('Unknown Type: ', type);
-    }
-  }
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, checked, value, id } = e.currentTarget;
-    
-    switch (name) {
-      case 'phoneNumber':
-        if (checked) setSelectedPhoneNumberRadio(id);
-        break;
-      default:
-        console.error('Unknown name: ', name);
-    }
-  };
-
-  const handleFocus = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name } = e.currentTarget;
-
-    e.currentTarget.scrollIntoView({ block: 'center', behavior: 'smooth' });
-
-    switch (name) {
-      case 'deliverTo':
-        break;
-      case 'addressDetails':
-        setIsAddressDetailsFocus(true);
-        break;
-      case 'secondAddress':
-        setIsSecondAddressFocus(true);
-        break;
-      case 'notes':
-        setIsNotesFocus(true);
-        break;
-      default:
-        console.error('Unknown name: ', name);
-    }
-  };
-
-  const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.currentTarget;
-
-    if (value !== "" ) return;
-
-    switch (name) {
-      case 'addressDetails':
-        setIsAddressDetailsFocus(false);
-        break;
-      case 'secondAddress':
-        setIsSecondAddressFocus(false);
-        break;
-      case 'notes':
-        setIsNotesFocus(false);
-        break;
-      default:
-        console.error('Unknown name: ', name);
-    }
-  };
-
-  // DEBUG & UI
-  // console.log('selectedDeliverToCity: ', selectedDeliverToCity);
-  // console.log('isDeliverToFocus: ', isDeliverToFocus);
-
-  if (isLoading) return (
-    <LoadingLayout />
-  )
-
+  return(<div>Loadingjjjjjjjjjj</div>)
   return (
     <form 
       className={`
         flex flex-col divide-solid divide-inbetween divide-y-[1px]
         ${className}
       `}
-      onSubmit={handleSubmit}
       { ...props }
     >
       <section
