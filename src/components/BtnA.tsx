@@ -6,9 +6,15 @@ type Props = {
   display?: string;
   effect?: boolean;
   onClick?: (e: React.MouseEvent<HTMLElement | HTMLButtonElement> | any) => void;
-} & React.HTMLAttributes<HTMLElement>;
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-export default function BtnA ({ className = '', display = 'relative', effect = true, children, ...props}: Props) {
+export default function BtnA ({ 
+  className = '',
+  display = 'relative',
+  effect = true,
+  children,
+  ...props
+}: Props) {
   return (
     <button
       className={`
