@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 
 // COMPONENTS
 import ShowOrderSummary from '@/app/[lang]/checkout/showOrderSummary/index';
+import ErrorLayout from '@/components/ErrorLayout';
 import OrderSummary from '@/components/orderSummary/index';
 import CheckoutForm from '@/app/[lang]/checkout/checkoutform/index';
 import AccountBenefitsSection from '@/components/AccountBenefitsSection/index';
@@ -35,15 +36,21 @@ export default function page () {
     setTabName('checkout');
   }, []);
   
-  const { data: productsData, isLoading: fs, isError } = useQuery({
+  const { data: productsData, isLoading, isError } = useQuery({
     queryKey: [ 'products' ],
     queryFn: getAllProducts
   });
   const products = productsData?.data;
-  let isLoading = true;
-  if (isError) return (<></>)
+  
+  if (isError) return (
+    <ErrorLayout 
+      title={isEn ? 'Unable To Load' : 'لم يتم التحميل'}
+      description={isEn ? 'Please Refresh the page or try again later' : 'الرجاء اعاده تحميل الصفحه او حاول مره اخرى لاحقا'}
+    />
+  )
 
-  console.log('checkout page: ', products);
+  // DEBUG & UI
+  // console.log('checkout page: ', products);
 
   return (
     <div

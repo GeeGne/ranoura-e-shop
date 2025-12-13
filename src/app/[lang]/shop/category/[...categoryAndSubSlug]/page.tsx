@@ -3,6 +3,7 @@
 // HOOKS
 import { useEffect, useRef } from 'react';
 import { useParams } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
 
 // COMPONENTS
 import NotFound from '@/components/NotFound';
@@ -17,7 +18,10 @@ import { useTabNameStore, useLanguageStore } from '@/stores/index';
 // JSON
 import categories from "@/json/categories.json";
 import subCategories from "@/json/subCategories.json";
-import products from "@/json/products.json";
+// import products from "@/json/products.json";
+
+// API
+import getAllProducts from '@/lib/api/products/get';
 
 export default function page () {
 
@@ -26,9 +30,17 @@ export default function page () {
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
 
+  const { data: productsData, isLoading, isError } = useQuery({
+    queryKey: [ 'products' ],
+    queryFn: getAllProducts
+  });
+  const products = productsData?.data;
+
+
   const mainSlug = () => {
     if (isCategory) return categoryAndSubSlug[0];
     if (categoryAndSubSlug?.length === 2) return categoryAndSubSlug[1];
+    return '';
   };
 
   const setTabName = useTabNameStore((state: any) => state.setTabName);
@@ -62,14 +74,14 @@ export default function page () {
   };
 
   const filterProductsBasedOnSlug = () => 
-    products.filter(product => 
-      product.categories.some(prodCat => prodCat === mainSlug())
+    products?.filter((product: Record<string, any>) => 
+      product.categories.some((prodCat: string) => prodCat.includes(mainSlug()))
     )
   ;
 
   const isProductsExist = () => 
-    products.filter(product => 
-      product.categories.some(prodCat => prodCat === mainSlug())
+    products?.filter((product: Record<string, any>) => 
+      product.categories.some((prodCat: string) => prodCat.includes(mainSlug()))
     ).length !== 0
   ;
 
@@ -77,8 +89,21 @@ export default function page () {
     setTabName('product');
   }, []);
 
+
+  // DEBUG & UI
+  console.log('Category Products: ', filterProductsBasedOnSlug());
   // console.log('params: ', categoryAndSubSlug)
   // console.log('isCategory: ', isCategory)
+
+  return (<></>)
+
+  if (isError) return (
+    <>Error</>
+  )
+
+  if (isLoading) return (
+    <>Loading</>
+  )
 
   if (!isProductsExist()) return (
     <div
