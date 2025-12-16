@@ -4,7 +4,7 @@
 import { useEffect, useRef } from 'react';
 
 // COMPONENTS
-import AdvertList from '@/components/categoryPage/AdvertList';
+import AdvertList from '@/components/categoryPage/advertList/AdvertList';
 import CategoryTitle from '@/components/categoryPage/CategoryTitle';
 import FilterTile from '@/components/categoryPage/FilterTile';
 import BreadCrumb from '@/components/BreadCrumb';

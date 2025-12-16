@@ -8,9 +8,13 @@ import { useFilterWindowStore, useLanguageStore } from '@/stores/index';
 
 type Props = {
   className?: string;
+  isLoading?: boolean;
 }
 
-export default function FilterTile ({ className = '' }: Props) {
+export default function FilterTile ({ 
+  className = '',
+  isLoading = false
+}: Props) {
   
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
@@ -39,6 +43,37 @@ export default function FilterTile ({ className = '' }: Props) {
   };
 
   const removeCategory = (array: any[], key: any) =>  array.filter(itm => itm.key !== key);
+
+  if (isLoading) return (
+    <section
+      className={`
+        --opacity-blink flex flex-col gap-2 items-center
+        ${className}
+      `}
+    >
+      <ul
+        className="flex flex-row gap-4 text-sm text-body"
+      >
+        {['/////////////', '////////////////', '////////', '//////////'].map(itm =>
+          <li
+            className="flex flex-row items-center gap-1 cursor-pointer"
+            data-category-name="sort"
+            data-type="sort_button_is_clicked"
+            onClick={handleClick}
+          >
+            <span
+              className="text-transparent bg-background-light rounded-md underline"
+            >
+              {itm}
+            </span>
+            <div 
+              className="text-transparent rounded-full bg-background-light w-4 h-4"
+            />
+          </li>
+        )}
+      </ul>
+    </section>
+  )
 
   return (
     <section

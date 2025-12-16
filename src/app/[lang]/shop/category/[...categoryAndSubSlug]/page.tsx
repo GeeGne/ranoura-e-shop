@@ -6,8 +6,9 @@ import { useParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 
 // COMPONENTS
+import ErrorLayout from '@/components/ErrorLayout';
 import NotFound from '@/components/NotFound';
-import AdvertList from '@/components/categoryPage/AdvertList';
+import AdvertList from '@/components/categoryPage/advertList/AdvertList';
 import CategoryTitle from '@/components/categoryPage/CategoryTitle';
 import FilterTile from '@/components/categoryPage/FilterTile';
 import BreadCrumb from '@/components/BreadCrumb';
@@ -30,12 +31,12 @@ export default function page () {
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
 
-  const { data: productsData, isLoading, isError } = useQuery({
+  const { data: productsData, isLoading: tss, isError } = useQuery({
     queryKey: [ 'products' ],
     queryFn: getAllProducts
   });
   const products = productsData?.data;
-
+  const isLoading = true;
 
   const mainSlug = () => {
     if (isCategory) return categoryAndSubSlug[0];
@@ -95,14 +96,36 @@ export default function page () {
   // console.log('params: ', categoryAndSubSlug)
   // console.log('isCategory: ', isCategory)
 
-  return (<></>)
 
   if (isError) return (
-    <>Error</>
+    <ErrorLayout 
+      title={isEn ? 'Unable To Load' : 'لم يتم التحميل'}
+      description={isEn ? 'Please Refresh the page or try again later' : 'الرجاء اعاده تحميل الصفحه او حاول مره اخرى لاحقا'}
+    />
   )
 
   if (isLoading) return (
-    <>Loading</>
+    <div
+      className="
+        flex flex-col gap-4 py-4 px-4
+      "
+    >
+      <BreadCrumb
+        className={`w-fit ${isEn ? 'mr-auto' : 'ml-auto'}`}
+        isLoading={true}
+      />
+      <CategoryTitle 
+        className="px-4 py-8 w-auto max-w-[auto] mx-auto"
+        isLoading={true}
+      />
+      <FilterTile 
+        className="px-4 w-auto max-w-[auto] mx-auto"
+        isLoading={true}
+      />
+      <AdvertList 
+        isLoading={true}
+      />
+    </div>
   )
 
   if (!isProductsExist()) return (

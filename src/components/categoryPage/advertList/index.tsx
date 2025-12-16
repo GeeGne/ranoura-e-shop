@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useRouter } from "next/navigation";
 
 // COMPONENTS
+import LoadingLayout from '@/components/categoryPage/advertList/LoadingLayout';
 import PriceTag from '@/components/PriceTag';
 import ColorPallete from '@/components/ColorPallete';
 import LineMdHeart from '@/components/svgs/LineMdHeart';
@@ -34,9 +35,13 @@ import Confetti from "react-canvas-confetti/dist/presets/explosion";
 
 type Props = {
   products?: any[];
+  isLoading?: boolean;
 }
 
-export default function AdvertList ({ products = [] }: Props) {
+export default function AdvertList ({
+  products = [],
+  isLoading = false
+}: Props) {
   
   const array = [1, 2, 3, 4];
   const selectedColor = "green";
@@ -217,6 +222,10 @@ export default function AdvertList ({ products = [] }: Props) {
   // console.log('liRefWidth: ', liRefWidth);
   // console.log('ulRefWidth', ulRefWidth)
   // console.log('ulRefScrollWidth', ulRefScrollWidth)
+
+  if (isLoading) return (
+    <LoadingLayout />
+  )
 
   return (
     <section
