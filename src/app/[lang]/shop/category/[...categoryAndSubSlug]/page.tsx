@@ -8,7 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 // COMPONENTS
 import ErrorLayout from '@/components/ErrorLayout';
 import NotFound from '@/components/NotFound';
-import AdvertList from '@/components/categoryPage/advertList/AdvertList';
+import AdvertList from '@/components/categoryPage/advertList/index';
 import CategoryTitle from '@/components/categoryPage/CategoryTitle';
 import FilterTile from '@/components/categoryPage/FilterTile';
 import BreadCrumb from '@/components/BreadCrumb';
@@ -31,12 +31,11 @@ export default function page () {
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
 
-  const { data: productsData, isLoading: tss, isError } = useQuery({
+  const { data: productsData, isLoading, isError } = useQuery({
     queryKey: [ 'products' ],
     queryFn: getAllProducts
   });
   const products = productsData?.data;
-  const isLoading = true;
 
   const mainSlug = () => {
     if (isCategory) return categoryAndSubSlug[0];
