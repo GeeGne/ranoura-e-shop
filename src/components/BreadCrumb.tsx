@@ -33,12 +33,16 @@ export default function BreadCrumb ({
   if (isLoading) return (
     <div
       className={`
-        --blink-opacity bg-background-light flex items-center text-sm font-bold text-transparent rounded-md
+        --blink-opacity flex items-center text-sm font-bold
         ${className}
       `}
       {...props}
     >
-      ///////////////////////////////////////////////////
+      <span
+        className="text-transparent bg-background-light rounded-md"
+      >
+        ///////////////////////////////////////////////////
+      </span>
     </div>    
   )
 

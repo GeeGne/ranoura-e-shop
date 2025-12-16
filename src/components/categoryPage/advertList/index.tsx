@@ -90,20 +90,29 @@ export default function AdvertList ({
     }, 1000)
   };
 
-  const onColorChange = (color: string, clickedColor: string, productId: number) => {
+  const onColorChange = (color: string, clickedColor: string, productId: string) => {
     const getProduct = () => products.find(product => product.id === productId);
-    const getEL = (refs: ReactNode[] | any[]) => refs.find((el) => Number(el.dataset.productId) === productId);
+    const getEL = (refs: ReactNode[] | any[]) => refs.find((el) => el.dataset.productId === productId);
     
     if (getEL(mainImgRefs.current)) {
-      getEL(mainImgRefs.current).src = getProduct()?.images.find((itm: any) => itm.color === color)?.main;
-    }
+      getEL(mainImgRefs.current).src = getProduct()
+        ?.images.find((itm: Record<string, any>) => itm.color === color)?.views
+        .find((view: Record<string, string>) => view.tag === 'a').url
+      ;
+    };
 
     if (getEL(expandImgWindowBtnRefs.current)) {
-      getEL(expandImgWindowBtnRefs.current).dataset.imgUrl = getProduct()?.images.find((itm: Record<string, any>) => itm.color === color)?.main;
+      getEL(expandImgWindowBtnRefs.current).dataset.imgUrl = getProduct()
+        ?.images.find((itm: Record<string, any>) => itm.color === color)?.views
+        .find((view: Record<string, string>) => view.tag === 'a').url
+      ;
     }
 
     if (getEL(secondImgRefs.current)) {
-      const isSecondImgExist = !!getProduct()?.images.find((itm: any) => itm.color === color)?.second;
+      const isSecondImgExist = !!getProduct()
+        ?.images.find((itm: Record<string, any>) => itm.color === color)?.views
+        .find((view: Record<string, string>) => view.tag === 'b')?.url;
+
       if (!isSecondImgExist) { 
         getEL(secondImgRefs.current).style.display = 'none'
         getEL(imgAorBRefs.current).style.display = 'none'
@@ -118,10 +127,45 @@ export default function AdvertList ({
 
       // Add the Second Image if exists
       getEL(secondImgRefs.current).style.display = 'inline';
-      getEL(secondImgRefs.current).src = getProduct()?.images.find((itm: any) => itm.color === color)?.second
+      getEL(secondImgRefs.current).src = getProduct()
+        ?.images.find((itm: Record<string, any>) => itm.color === color)?.views
+        .find((view: Record<string, string>) => view.tag === 'b').url;
       getEL(imgAorBRefs.current).style.display = 'flex'
     };
   }
+
+  // const onColorChange = (color: string, clickedColor: string, productId: number) => {
+    // const getProduct = () => products.find(product => product.id === productId);
+    // const getEL = (refs: ReactNode[] | any[]) => refs.find((el) => Number(el.dataset.productId) === productId);
+    // 
+    // if (getEL(mainImgRefs.current)) {
+      // getEL(mainImgRefs.current).src = getProduct()?.images.find((itm: any) => itm.color === color)?.main;
+    // }
+// 
+    // if (getEL(expandImgWindowBtnRefs.current)) {
+      // getEL(expandImgWindowBtnRefs.current).dataset.imgUrl = getProduct()?.images.find((itm: Record<string, any>) => itm.color === color)?.main;
+    // }
+// 
+    // if (getEL(secondImgRefs.current)) {
+      // const isSecondImgExist = !!getProduct()?.images.find((itm: any) => itm.color === color)?.second;
+      // if (!isSecondImgExist) { 
+        // getEL(secondImgRefs.current).style.display = 'none'
+        // getEL(imgAorBRefs.current).style.display = 'none'
+        // return;
+      // };
+// 
+      // Reset the A & B Button back to A along with main image
+      // getEL(aBtnRefs.current).classList.add('advert-picked-image');
+      // getEL(bBtnRefs.current).classList.remove('advert-picked-image');
+      // if (getEL(secondImgRefs.current)) getEL(secondImgRefs.current).style.opacity = '0'
+      // if (getEL(secondImgRefs.current)) getEL(secondImgRefs.current).style.filter = 'blur(20px)'
+// 
+      // Add the Second Image if exists
+      // getEL(secondImgRefs.current).style.display = 'inline';
+      // getEL(secondImgRefs.current).src = getProduct()?.images.find((itm: any) => itm.color === color)?.second
+      // getEL(imgAorBRefs.current).style.display = 'flex'
+    // };
+  // }
 
   const handleClick = (e: React.MouseEvent<HTMLElement> | any) => {
     e.stopPropagation();
@@ -133,7 +177,7 @@ export default function AdvertList ({
     const gap = parseFloat(getComputedStyle(ulRef.current).gap);
     const totalTiles = array.length - 1
     const scrollTotalWidth = ulRefWidth / (totalTiles) + gap;
-    const getEL = (refs: ReactNode[] | any[]) => refs.find((el) => Number(el.dataset.productId) === Number(productId));
+    const getEL = (refs: ReactNode[] | any[]) => refs.find((el) => el.dataset.productId === productId);
 
     switch (type) {
       case 'navigate_to_product':
@@ -175,7 +219,7 @@ export default function AdvertList ({
         setImgScaleToggle(val => val === Number(index) ? false : Number(index))
         break;
       case 'heart_button_is_clicked':
-        const isProductInFavourites = favourites.some(productID => productID === Number(productId));
+        const isProductInFavourites = favourites.some(productID => productID === productId);
         
         if (!isProductInFavourites) {
           displayPrideConfetti();
@@ -204,6 +248,7 @@ export default function AdvertList ({
         if (getEL(secondImgRefs.current)) getEL(secondImgRefs.current).style.filter = 'blur(20px)'
         break;
       case'b_button_is_clicked':
+        console.log('B button is clicked!');
         // if (getEL(secondImgRefs.current)) getEL(secondImgRefs.current).style.display = 'initial'
         if (getEL(aBtnRefs.current)) getEL(aBtnRefs.current).classList.remove('advert-picked-image');
         if (getEL(bBtnRefs.current)) getEL(bBtnRefs.current).classList.add('advert-picked-image');
@@ -259,7 +304,7 @@ export default function AdvertList ({
                     transition-all ease-in-out duration-200
                     ${imgScaleToggle === i? 'scale-[130%]' : 'scale-[100%]'}  
                   `}
-                  src={getImgUrl(product.images)?.main}
+                  src={undefined}
                   alt={product.name[lang]}
                   loading="eager"
                   data-product-id={product.id}
@@ -275,7 +320,7 @@ export default function AdvertList ({
                     transition-all ease-in-out duration-200
                     ${imgScaleToggle === i? 'scale-[130%]' : 'scale-[100%]'}  
                   `}
-                  src={getImgUrl(product.images)?.second}
+                  src={undefined}
                   alt="Image"
                   loading="eager"
                   data-product-id={product.id}
@@ -415,7 +460,7 @@ export default function AdvertList ({
                 </div>
                 <div
                   className="
-                    order-1 flex flex-row items-center gap-2 
+                    text-center order-1 flex flex-row items-center gap-2 
                     rounded-lg border-solid border-heading-invert border-[2px] p-1 backdrop-brightness-[70%]
                   "
                   data-product-id={product.id}
@@ -452,7 +497,7 @@ export default function AdvertList ({
                     onClick={handleClick}
                     ref={ (el: any) => {if (bBtnRefs.current) {bBtnRefs.current[i] = el} }}
                   >
-                    B                     
+                    B                    
                   </button>
                 </div>
               </nav>

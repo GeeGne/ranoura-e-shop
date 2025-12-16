@@ -103,30 +103,6 @@ export default function page () {
     />
   )
 
-  if (isLoading) return (
-    <div
-      className="
-        flex flex-col gap-4 py-4 px-4
-      "
-    >
-      <BreadCrumb
-        className={`w-fit ${isEn ? 'mr-auto' : 'ml-auto'}`}
-        isLoading={true}
-      />
-      <CategoryTitle 
-        className="px-4 py-8 w-auto max-w-[auto] mx-auto"
-        isLoading={true}
-      />
-      <FilterTile 
-        className="px-4 w-auto max-w-[auto] mx-auto"
-        isLoading={true}
-      />
-      <AdvertList 
-        isLoading={true}
-      />
-    </div>
-  )
-
   if (!isProductsExist()) return (
     <div
       className="
@@ -157,6 +133,7 @@ export default function page () {
       <BreadCrumb
         className="px-4 w-full max-w-[1400px] mx-auto"
         slugNameAndLinkArray={slugNameAndLinkArray()} 
+        isLoading={isLoading}
       />
       <CategoryTitle 
         className="px-4 py-8 w-auto max-w-[auto] mx-auto"
@@ -164,12 +141,15 @@ export default function page () {
           ? getName(categories, mainSlug()) 
           : getName(subCategories, mainSlug())
         }
+        isLoading={isLoading}
       />
       <FilterTile 
         className="px-4 w-auto max-w-[auto] mx-auto"
+        isLoading={isLoading}
       />
       <AdvertList 
         products={filterProductsBasedOnSlug()}
+        isLoading={isLoading}
       />
     </div>
   )
