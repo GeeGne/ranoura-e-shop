@@ -45,6 +45,7 @@ export default function AdvertList ({
   
   const array = [1, 2, 3, 4];
   const selectedColor = "green";
+  const router = useRouter();
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
   const [ scrollWidth, setScrollWidth ] = useState<number>(0);
@@ -170,7 +171,7 @@ export default function AdvertList ({
   const handleClick = (e: React.MouseEvent<HTMLElement> | any) => {
     e.stopPropagation();
 
-    const { type, index, productUri, productId, productName, imgUrl } = e.currentTarget.dataset;
+    const { type, index, productUri, productId, productName, imgUrl, href } = e.currentTarget.dataset;
     const ulRefWidth = ulRef.current.offsetWidth
     const ulRefScrollWidth = ulRef.current.scrollWidth
     const liRefWidth = liRefs?.current[0]?.scrollWidth || 0;
@@ -181,7 +182,7 @@ export default function AdvertList ({
 
     switch (type) {
       case 'navigate_to_product':
-        // setImgScaleToggle(val => val === Number(index) ? false : Number(index))
+        if (href) router.push(href);
         break;
       case 'scroll_left_button_is_clicked':
         setScrollWidth((val: number) => {
@@ -294,6 +295,7 @@ export default function AdvertList ({
                 transition-all duraiton-200 ease-in-out
               `}
               data-type="navigate_to_product"
+              data-href={`/shop/${product.slug}`}
               data-index={i}
               onClick={handleClick}
             >
@@ -504,7 +506,7 @@ export default function AdvertList ({
             </div>
             <Link
               className="text-heading text-base mb-auto"
-              href={`/shop/${product.id}/${(product.slug)}`}
+              href={`/shop/${(product.slug)}`}
             >
               {product.name[lang]}
             </Link>
