@@ -68,7 +68,7 @@ export default function LoadingLayout ({
               <div className="relative w-full h-full rounded-lg overflow-hidden">
                 <div 
                   className={`
-                    bg-background-deep-light w-full peer aspect-[2/3] object-cover object-center
+                    bg-background-light w-full peer aspect-[2/3] object-cover object-center
                     transition-all ease-in-out duration-200
                   `}
                 />
@@ -79,7 +79,7 @@ export default function LoadingLayout ({
               
                 <div
                   className="
-                    bg-background-light rounded-full relative drop-shadow-md 
+                    bg-background-deep-light rounded-full relative drop-shadow-md 
                   "
                 >
                   <div 
@@ -90,7 +90,7 @@ export default function LoadingLayout ({
                 </div>  
                 <div
                   className="
-                    bg-background-light rounded-full relative drop-shadow-md 
+                    bg-background-deep-light rounded-full relative drop-shadow-md 
                   "
                 >
                   <div 
@@ -102,7 +102,7 @@ export default function LoadingLayout ({
               </div>
               <div
                 className={`
-                  bg-background-light rounded-full absolute top-2 right-2 w-6 h-6 text-pink-500 cursor-pointer z-[10]
+                  bg-background-deep-light rounded-full absolute top-2 right-2 w-6 h-6 text-pink-500 cursor-pointer z-[10]
                   }
                 `}
               />
@@ -117,7 +117,7 @@ export default function LoadingLayout ({
                 >
                   <div 
                     className={`
-                      text-transparent bg-background-light w-8 h-8 transform-style-3d transform group-hover:transform-style-3d 
+                      text-transparent bg-background-deep-light w-8 h-8 transform-style-3d transform group-hover:transform-style-3d 
                       cursor-pointer rounded-full p-1 
                       transition-all ease-in-out duration-200
                       ${isEn ? 'ml-auto' : 'mr-auto'}
@@ -128,7 +128,7 @@ export default function LoadingLayout ({
                   />
                   <div 
                     className={`
-                      text-transparent bg-background-light w-8 h-8 transform-style-3d transform group-hover:transform-style-3d 
+                      text-transparent bg-background-deep-light w-8 h-8 transform-style-3d transform group-hover:transform-style-3d 
                       cursor-pointer rounded-full p-1 
                       transition-all ease-in-out duration-200
                       ${isEn ? 'ml-auto' : 'mr-auto'}
@@ -139,8 +139,8 @@ export default function LoadingLayout ({
                 </div>
                 <div
                   className="
-                    bg-background-light order-1 flex flex-row items-center gap-2 
-                    rounded-lg border-solid border-heading-invert border-[2px] p-1 backdrop-brightness-[70%]
+                    bg-background-deep-light order-1 flex flex-row items-center gap-2 
+                    rounded-lg border-solid border-background-deep-light border-[2px] p-1 backdrop-brightness-[70%]
                   "
                 >
                   <div 
@@ -152,7 +152,7 @@ export default function LoadingLayout ({
                     className="
                       text-xs font-bold px-[4px] rounded-full 
                       text-transparent
-                      border-solid border-heading-invert border-[2px]
+                      border-solid border-background-deep-light border-[2px]
                       transition-all ease-in-out duration-200
                     "
                   >
@@ -162,7 +162,7 @@ export default function LoadingLayout ({
                     className="
                       text-xs font-bold px-[4px] rounded-full 
                       text-transparent hover:bg-heading 
-                      border-solid border-heading-invert border-[2px]
+                      border-solid border-background-deep-light border-[2px]
                       transition-all ease-in-out duration-200
                     "
                     data-type="b_button_is_clicked"

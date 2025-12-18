@@ -460,7 +460,7 @@ export default function AdvertList ({
                 </div>
                 <div
                   className="
-                    text-center order-1 flex flex-row items-center gap-2 
+                    order-1 flex flex-row items-center gap-2 
                     rounded-lg border-solid border-heading-invert border-[2px] p-1 backdrop-brightness-[70%]
                   "
                   data-product-id={product.id}
