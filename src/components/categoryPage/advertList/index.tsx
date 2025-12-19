@@ -135,39 +135,6 @@ export default function AdvertList ({
     };
   }
 
-  // const onColorChange = (color: string, clickedColor: string, productId: number) => {
-    // const getProduct = () => products.find(product => product.id === productId);
-    // const getEL = (refs: ReactNode[] | any[]) => refs.find((el) => Number(el.dataset.productId) === productId);
-    // 
-    // if (getEL(mainImgRefs.current)) {
-      // getEL(mainImgRefs.current).src = getProduct()?.images.find((itm: any) => itm.color === color)?.main;
-    // }
-// 
-    // if (getEL(expandImgWindowBtnRefs.current)) {
-      // getEL(expandImgWindowBtnRefs.current).dataset.imgUrl = getProduct()?.images.find((itm: Record<string, any>) => itm.color === color)?.main;
-    // }
-// 
-    // if (getEL(secondImgRefs.current)) {
-      // const isSecondImgExist = !!getProduct()?.images.find((itm: any) => itm.color === color)?.second;
-      // if (!isSecondImgExist) { 
-        // getEL(secondImgRefs.current).style.display = 'none'
-        // getEL(imgAorBRefs.current).style.display = 'none'
-        // return;
-      // };
-// 
-      // Reset the A & B Button back to A along with main image
-      // getEL(aBtnRefs.current).classList.add('advert-picked-image');
-      // getEL(bBtnRefs.current).classList.remove('advert-picked-image');
-      // if (getEL(secondImgRefs.current)) getEL(secondImgRefs.current).style.opacity = '0'
-      // if (getEL(secondImgRefs.current)) getEL(secondImgRefs.current).style.filter = 'blur(20px)'
-// 
-      // Add the Second Image if exists
-      // getEL(secondImgRefs.current).style.display = 'inline';
-      // getEL(secondImgRefs.current).src = getProduct()?.images.find((itm: any) => itm.color === color)?.second
-      // getEL(imgAorBRefs.current).style.display = 'flex'
-    // };
-  // }
-
   const handleClick = (e: React.MouseEvent<HTMLElement> | any) => {
     e.stopPropagation();
 
@@ -312,7 +279,6 @@ export default function AdvertList ({
                   data-product-id={product.id}
                   ref={ (el: any) => {if (mainImgRefs.current) {mainImgRefs.current[i] = el}} }
                 />
-
                 <img 
                   className={`
                     absolute top-0 left-0 w-full h-full
@@ -425,11 +391,11 @@ export default function AdvertList ({
               <nav
                 className={`
                   absolute bottom-0 right-0 p-2 z-[10]
-                  flex flex-row w-full justify-between items-end
+                  flex flex-row w-full
                 `}
               >
                 <div
-                  className="flex order-2 gap-2"
+                  className={`flex order-2 gap-2 ${isEn ? 'ml-auto' : 'mr-auto'}`}
                 >
                   <FlowbiteExpandOutline 
                     className={`

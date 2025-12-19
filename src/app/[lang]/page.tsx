@@ -13,7 +13,7 @@ import MainSlider from '@/components/home/MainSlider';
 import CategoryPicker from '@/components/home/CategoryPicker';
 import CategoryPickerV2 from '@/components/home/CategoryPickerV2';
 import MainLayout from '@/components/home/MainLayout';
-import AdvertTile from '@/components/home/AdvertTile';
+import AdvertTile from '@/components/home/advertTile/index';
 
 // STORES
 import { useTabNameStore, useLanguageStore } from '@/stores/index';
@@ -23,10 +23,10 @@ import getAllProducts from '@/lib/api/products/get';
 
 export default function Home() {
 
-  const setTabName = useTabNameStore((state: any) => state.setTabName);
-  const setLang = useLanguageStore((state: any) => state.setLang);
   const { lang } = useParams();
   const isEn = lang === 'en';
+  const setTabName = useTabNameStore((state: any) => state.setTabName);
+  const setLang = useLanguageStore((state: any) => state.setLang);
   const setDefaultLanguage = () => {
     setLang(lang);
     document.cookie = `preferredLang=${lang}; path=/; max-age=31536000`
@@ -43,14 +43,13 @@ export default function Home() {
   const { 
     data: productsData, 
     isLoading: 
-    areProductsLoading, 
+    areProductsLoadings, 
     isError: isProductsDataError,
-    refetch: refetchProducts
   } = useQuery({
     queryKey: [ 'products' ],
     queryFn: getAllProducts
-  })
-
+  });
+  let areProductsLoading = true;
   return (
     <div
       className="flex flex-col"
@@ -66,7 +65,6 @@ export default function Home() {
         products={productsData?.data}
         isLoading={areProductsLoading}
         isError={isProductsDataError}
-        refetchProducts={refetchProducts}
       />
       <CategoryPickerV2 />
       <MainLayout />
@@ -78,7 +76,6 @@ export default function Home() {
         products={productsData?.data}
         isLoading={areProductsLoading}
         isError={isProductsDataError}
-        refetchProducts={refetchProducts}
       />
       <AdvertTile 
         title={isEn ? "HOT DEALS" : "عروض الحارقه"}
@@ -88,7 +85,6 @@ export default function Home() {
         products={productsData?.data}
         isLoading={areProductsLoading}
         isError={isProductsDataError}
-        refetchProducts={refetchProducts}
       />
     </div>
   );
