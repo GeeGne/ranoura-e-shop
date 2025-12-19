@@ -57,7 +57,6 @@ type Props = {
   products?: Record<string, any>[];
   isLoading?: boolean;
   isError?: boolean;
-  refetchProducts?: () => Promise<UseQueryResult>;
 }
 
 export default function AdvertTile ({ 
@@ -68,8 +67,8 @@ export default function AdvertTile ({
   products = [],
   isLoading = false,
   isError = false,
-  refetchProducts
 }: Props) {
+  
   const router = useRouter();
   const array = [1, 2, 3, 4];
   const filterProductsBasedOnSlug = () => products.filter(product => 
@@ -293,9 +292,6 @@ export default function AdvertTile ({
 
           if (getEL(secondImgRefs.current)) getEL(secondImgRefs.current).style.opacity = '1'
           if (getEL(secondImgRefs.current)) getEL(secondImgRefs.current).style.filter = 'blur(0px)'
-          break;
-        case 'reload_products_button_is_clicked':
-          if (refetchProducts) refetchProducts();
           break;
       default:
         console.error('Unknown type: ', type);
@@ -552,11 +548,11 @@ export default function AdvertTile ({
                 <nav
                   className={`
                     absolute bottom-0 right-0 p-2 z-[10]
-                    flex flex-row w-full justify-between items-end
+                    flex flex-row w-full
                   `}
                 >
                   <div
-                    className="flex order-2 gap-2"
+                    className={`flex order-2 gap-2 ${isEn ? 'ml-auto' : 'mr-auto'}`}
                   >
                     <FlowbiteExpandOutline 
                       className={`

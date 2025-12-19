@@ -28,9 +28,6 @@ export default function LoadingLayout ({
   const isEn = lang === 'en';
 
   const { 
-    data: productsData, 
-    isLoading: areProductsLoading, 
-    isError: isProductsDataError,
     refetch: refetchProducts
   } = useQuery({
     queryKey: [ 'products' ],
@@ -40,7 +37,7 @@ export default function LoadingLayout ({
   const handleClick = (e: React.MouseEvent<HTMLElement | any>) => {
     e.stopPropagation();
   
-    const { type, index, productUri, productId, productName, imgUrl } = e.currentTarget.dataset;
+    const { type } = e.currentTarget.dataset;
 
     switch (type) {
       case 'reload_products_button_is_clicked':
@@ -58,7 +55,7 @@ export default function LoadingLayout ({
           className="
             absolute top-0 left-0 w-full h-full 
             bg-[rgba(0%,0%,0%,0.5)] z-10 backdrop-blur-[5px] opacity-50
-            flex flex-col items-center justify-center gap-4
+            flex flex-col items-center justify-center gap-4 z-[15]
           "
         >
           <h2 className="text-heading-invert font-semibold text-xl">
@@ -170,5 +167,4 @@ export default function LoadingLayout ({
       </div>
     </section>
   )
-
 }

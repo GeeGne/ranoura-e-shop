@@ -43,13 +43,13 @@ export default function Home() {
   const { 
     data: productsData, 
     isLoading: 
-    areProductsLoadings, 
+    areProductsLoading, 
     isError: isProductsDataError,
   } = useQuery({
     queryKey: [ 'products' ],
     queryFn: getAllProducts
   });
-  let areProductsLoading = true;
+
   return (
     <div
       className="flex flex-col"
