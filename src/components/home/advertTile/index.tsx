@@ -38,6 +38,7 @@ import products from "@/json/products.json";
 
 // UTILS
 import strSpaceToHyphen from '@/utils/strSpaceToHyphen';
+import getImgUrl from '@/utils/getImgUrl';
 
 // STORES
 import { 
@@ -99,7 +100,7 @@ export default function AdvertTile ({
 
   const [ leftArrowInactive, setLeftArrowInactive ] = useState<boolean>(false);
   const [ rightArrowInactive, setRightArrowInactive ] = useState<boolean>(true);
-  
+
   useEffect(() => {
     setLeftArrowInactive(isEn ? true : false);
     setRightArrowInactive(isEn ? false : true);
@@ -113,7 +114,6 @@ export default function AdvertTile ({
   const expandImgWindowBtnRefs = useRef<(HTMLElement | null)[]>([]);
   const aBtnRefs = useRef<(HTMLElement | null)[]>([]);
   const bBtnRefs = useRef<(HTMLElement | null)[]>([]);
-  const getImgUrl = (imgArray: any, selectedColor = "green") => imgArray.find((itm: any) => itm.color === selectedColor);
 
   const displayPrideConfetti = () => {
     setTimeout(() => {
@@ -128,27 +128,20 @@ export default function AdvertTile ({
   };
 
   const onColorChange = (color: string, clickedColor: string, productId: string) => {
+
     const getProduct = () => products.find(product => product.id === productId);
     const getEL = (refs: ReactNode[] | any[]) => refs.find((el) => el.dataset.productId === productId);
     
     if (getEL(mainImgRefs.current)) {
-      getEL(mainImgRefs.current).src = getProduct()
-        ?.images.find((itm: Record<string, any>) => itm.color === color)?.views
-        .find((view: Record<string, string>) => view.tag === 'a').url
-      ;
+      getEL(mainImgRefs.current).src = getImgUrl(getProduct()?.images, color);
     };
 
     if (getEL(expandImgWindowBtnRefs.current)) {
-      getEL(expandImgWindowBtnRefs.current).dataset.imgUrl = getProduct()
-        ?.images.find((itm: Record<string, any>) => itm.color === color)?.views
-        .find((view: Record<string, string>) => view.tag === 'a').url
-      ;
+      getEL(expandImgWindowBtnRefs.current).dataset.imgUrl = getImgUrl(getProduct()?.images, color);
     }
 
     if (getEL(secondImgRefs.current)) {
-      const isSecondImgExist = !!getProduct()
-        ?.images.find((itm: Record<string, any>) => itm.color === color)?.views
-        .find((view: Record<string, string>) => view.tag === 'b')?.url;
+      const isSecondImgExist = !!getImgUrl(getProduct()?.images, color, 'b');
 
       if (!isSecondImgExist) { 
         getEL(secondImgRefs.current).style.display = 'none'
@@ -164,9 +157,7 @@ export default function AdvertTile ({
 
       // Add the Second Image if exists
       getEL(secondImgRefs.current).style.display = 'inline';
-      getEL(secondImgRefs.current).src = getProduct()
-        ?.images.find((itm: Record<string, any>) => itm.color === color)?.views
-        .find((view: Record<string, string>) => view.tag === 'b').url;
+      getEL(secondImgRefs.current).src = getImgUrl(getProduct()?.images, color, 'b');
       getEL(imgAorBRefs.current).style.display = 'flex'
     };
   }
@@ -174,7 +165,7 @@ export default function AdvertTile ({
   const handleClick = (e: React.MouseEvent<HTMLElement | any>) => {
     e.stopPropagation();
   
-    const { type, index, productUri, productId, productName, imgUrl } = e.currentTarget.dataset;
+    const { type, index, productUri, productId, productName, imgUrl, href } = e.currentTarget.dataset;
 
     let ulRefWidth: any;
     let ulRefScrollWidth: any; 
@@ -182,7 +173,7 @@ export default function AdvertTile ({
     let gap: any; 
     let totalTiles: any; 
     let scrollTotalWidth: any; 
-    let getEL: any; 
+    const getEL = (refs: ReactNode[] | any[]) => refs.find((el) => el.dataset.productId === productId);
 
     if (ulRef.current) {
       ulRefWidth = ulRef.current?.offsetWidth;
@@ -191,7 +182,7 @@ export default function AdvertTile ({
       gap = parseFloat(getComputedStyle(ulRef.current || 0).gap);
       totalTiles = array.length - 1
       scrollTotalWidth = ulRefWidth / (totalTiles) + gap;
-      getEL = (refs: ReactNode[] | any[]) => refs.find((el) => Number(el.dataset.productId) === Number(productId));
+      // getEL = (refs: ReactNode[] | any[]) => refs.find((el) => Number(el.dataset.productId) === Number(productId));
     }
 
     switch (type) {
@@ -202,7 +193,7 @@ export default function AdvertTile ({
         , 200);
         break;
       case 'product_img_wrapper_is_clicked':
-        // setImgScaleToggle(val => val === Number(index) ? false : Number(index));
+        if (href) router.push(href);
         break;
       case 'scroll_left_button_is_clicked':
           setScrollWidth((val: number) => {
@@ -414,6 +405,7 @@ export default function AdvertTile ({
                   transition-all duraiton-200 ease-in-out
                 `}
                 data-type="product_img_wrapper_is_clicked"
+                data-href={`/shop/${product.slug}`}
                 data-index={i}
                 onClick={handleClick}
               >

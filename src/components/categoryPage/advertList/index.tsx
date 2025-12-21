@@ -22,6 +22,7 @@ import LineMdImageTwotone from '@/components/svgs/LineMdImageTwotone';
 
 // UTILS
 import strSpaceToHyphen from '@/utils/strSpaceToHyphen';
+import getImgUrl from '@/utils/getImgUrl';
 
 // STORES
 import { 
@@ -76,9 +77,6 @@ export default function AdvertList ({
   const aBtnRefs = useRef<(HTMLElement | null)[]>([]);
   const bBtnRefs = useRef<(HTMLElement | null)[]>([]);
 
-
-  const getImgUrl = (imgArray: any) => imgArray.find((itm: any) => itm.color === selectedColor);
-
   const displayPrideConfetti = () => {
     setTimeout(() => {
       setConfettiToggle(true);
@@ -96,23 +94,15 @@ export default function AdvertList ({
     const getEL = (refs: ReactNode[] | any[]) => refs.find((el) => el.dataset.productId === productId);
     
     if (getEL(mainImgRefs.current)) {
-      getEL(mainImgRefs.current).src = getProduct()
-        ?.images.find((itm: Record<string, any>) => itm.color === color)?.views
-        .find((view: Record<string, string>) => view.tag === 'a').url
-      ;
+      getEL(mainImgRefs.current).src = getImgUrl(getProduct()?.images, color);
     };
 
     if (getEL(expandImgWindowBtnRefs.current)) {
-      getEL(expandImgWindowBtnRefs.current).dataset.imgUrl = getProduct()
-        ?.images.find((itm: Record<string, any>) => itm.color === color)?.views
-        .find((view: Record<string, string>) => view.tag === 'a').url
-      ;
+      getEL(expandImgWindowBtnRefs.current).dataset.imgUrl = getImgUrl(getProduct()?.images, color);
     }
 
     if (getEL(secondImgRefs.current)) {
-      const isSecondImgExist = !!getProduct()
-        ?.images.find((itm: Record<string, any>) => itm.color === color)?.views
-        .find((view: Record<string, string>) => view.tag === 'b')?.url;
+      const isSecondImgExist = !!getImgUrl(getProduct()?.images, color, 'b');
 
       if (!isSecondImgExist) { 
         getEL(secondImgRefs.current).style.display = 'none'
@@ -128,9 +118,7 @@ export default function AdvertList ({
 
       // Add the Second Image if exists
       getEL(secondImgRefs.current).style.display = 'inline';
-      getEL(secondImgRefs.current).src = getProduct()
-        ?.images.find((itm: Record<string, any>) => itm.color === color)?.views
-        .find((view: Record<string, string>) => view.tag === 'b').url;
+      getEL(secondImgRefs.current).src = getImgUrl(getProduct()?.images, color, 'b');
       getEL(imgAorBRefs.current).style.display = 'flex'
     };
   }
