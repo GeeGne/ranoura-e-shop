@@ -43,10 +43,10 @@ export default function CheckoutForm ({
   const [ selectedPhoneNumberRadio, setSelectedPhoneNumberRadio ] = useState<string>('existedPhoneNumber');
   const [ toggleOrderSummary, setToggleOrderSummary ] = useState<boolean>(false);
   const [ selectedDeliverToCity, setSelectedDeliverToCity ] = useState<{
-     city?: string; shippingFee?: string | number 
+     shipping_address?: string; shipping_cost?: string | number 
     }>({
-    city: isEn ? 'Pick Your City' : 'اختر محافظتك',
-    shippingFee: '--'
+    shipping_address: isEn ? 'Pick Your City' : 'اختر محافظتك',
+    shipping_cost: '--'
   });
   
   const orderSummaryRef = useRef<HTMLElement>(null);
@@ -54,7 +54,10 @@ export default function CheckoutForm ({
   const getRefTotalHeight = (ref: any) => ref.current?.scrollHeight;
 
   useEffect(() => {
-    setSelectedDeliverToCity({city: isEn ? 'Pick Your City' : 'اختر محافظتك', shippingFee: '--'});
+    setSelectedDeliverToCity({
+      shipping_address: isEn ? 'Pick Your City' : 'اختر محافظتك', 
+      shipping_cost: '--'
+    });
   }, [lang]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -62,7 +65,9 @@ export default function CheckoutForm ({
   }
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement | HTMLLIElement>) => {
-    const { type, city, shippingFee } = e.currentTarget.dataset;
+    const { 
+      type, shippingAddress: shipping_address, shippingCost: shipping_cost 
+    } = e.currentTarget.dataset;
 
     switch (type) {
       case 'toggle_orderSummary_button_is_clicked':
@@ -71,8 +76,8 @@ export default function CheckoutForm ({
         break;
       case 'deliverTo_list_is_clicked':
         setSelectedDeliverToCity({
-          city,
-          shippingFee      
+          shipping_address,
+          shipping_cost
         });
         setTimeout(() => deliverToRef.current?.blur(), 100);
         // deliverToRef.current?.blur();
@@ -173,7 +178,7 @@ export default function CheckoutForm ({
             name="deliverTo"
             id="deliverTo"
             readOnly
-            value={selectedDeliverToCity.city}
+            value={selectedDeliverToCity.shipping_address}
             className="
               peer w-full py-3 px-4 bg-transparent rounded-lg
               border-solid border-inbetween focus:border-primary border-[2px] focus:border-[2px]
@@ -209,20 +214,20 @@ export default function CheckoutForm ({
                   transition-all duration-200 ease-in-out
                 "
                 role="button"
-                data-city={itm.city}
-                data-shipping-fee={itm.shippingFee}
+                data-shipping-address={itm.shipping_address}
+                data-shipping-cost={itm.shipping_cost}
                 data-type="deliverTo_list_is_clicked"
                 key={itm.id}
                 onClick={handleClick}
               >
-                {itm.city}
+                {itm.shipping_address}
               </li>
             )}
           </ul>
         </label>
         <div className="flex justify-between">
           <h4 className="text-body">{isEn ? 'Shipping Fee:' : 'رسوم الشحن:'}</h4>
-          <span className="text-heading font-bold">{selectedDeliverToCity.shippingFee}</span>
+          <span className="text-heading font-bold">{selectedDeliverToCity.shipping_cost}</span>
         </div>
       </section>
       <section

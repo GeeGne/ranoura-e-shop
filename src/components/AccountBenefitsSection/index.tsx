@@ -43,7 +43,7 @@ export default function AccountBenefitsSection ({ className, ...props }: Props) 
         className="
           relative grid grid-cols-1 md:col-span-2 lg:col-span-1 gap-8
           before:content-[''] before:absolute before:bottom-0 before:left-1/2
-          before:translate-x-[-50%] before:w-[0.5px] before:h-full before:bg-body-extra-light
+          before:translate-x-[-50%] before:w-px before:h-full before:bg-body-extra-light
           after:content-[''] after:absolute after:md:hidden after:top-[-56px] after:left-1/2
           after:translate-x-[-50%] after:w-4 after:h-4 after:bg-body-extra-light after:rounded-full
         "
@@ -57,7 +57,7 @@ export default function AccountBenefitsSection ({ className, ...props }: Props) 
         <div
           className="
             absolute md:hidden bottom-full left-1/2
-            translate-x-[-50%] w-[0.5px] h-12 bg-body-extra-light
+            translate-x-[-50%] w-px h-12 bg-body-extra-light
           "      
         />
         <Card 
@@ -75,7 +75,7 @@ export default function AccountBenefitsSection ({ className, ...props }: Props) 
           <div
             className={`
               absolute invisible md:visible top-1/2
-              translate-y-[-50%] w-12 h-[0.5px] bg-body-extra-light
+              translate-y-[-50%] w-12 h-px bg-body-extra-light
               ${isEn ? 'right-full' : 'left-full'}
             `}
           />

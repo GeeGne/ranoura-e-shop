@@ -1,63 +1,63 @@
 [
   {
     "id": 0,
-    "city": "Damascus",
-    "shippingFee": 200
+    "shipping_address": "Damascus",
+    "shipping_cost": 200
   },{
     "id": 1,
-    "city": "Aleppo",
-    "shippingFee": 400
+    "shipping_address": "Aleppo",
+    "shipping_cost": 400
   },{
     "id": 2,
-    "city": "Homs",
-    "shippingFee": 360
+    "shipping_address": "Homs",
+    "shipping_cost": 360
   },{
     "id": 3,
-    "city": "Hama",
-    "shippingFee": 700
+    "shipping_address": "Hama",
+    "shipping_cost": 700
   },{
     "id": 4,
-    "city": "Latakia",
-    "shippingFee": 1200
+    "shipping_address": "Latakia",
+    "shipping_cost": 1200
   },{
     "id": 5,
-    "city": "Deir ez-Zor",
-    "shippingFee": 2000
+    "shipping_address": "Deir ez-Zor",
+    "shipping_cost": 2000
   },{
     "id": 6,
-    "city": "Daraa",
-    "shippingFee": 900
+    "shipping_address": "Daraa",
+    "shipping_cost": 900
   },{
     "id": 7,
-    "city": "Raqqa",
-    "shippingFee": 100
+    "shipping_address": "Raqqa",
+    "shipping_cost": 100
   },{
     "id": 8,
-    "city": "Qamishli",
-    "shippingFee": 600
+    "shipping_address": "Qamishli",
+    "shipping_cost": 600
   },{
     "id": 9,
-    "city": "Tartus",
-    "shippingFee": 4000
+    "shipping_address": "Tartus",
+    "shipping_cost": 4000
   },{
     "id": 10,
-    "city": "As-Suwayda",
-    "shippingFee": 470
+    "shipping_address": "As-Suwayda",
+    "shipping_cost": 470
   },{
     "id": 11,
-    "city": "Palmyra",
-    "shippingFee": 1200
+    "shipping_address": "Palmyra",
+    "shipping_cost": 1200
   },{
     "id": 12,
-    "city": "Al-Hasakah",
-    "shippingFee": 2500
+    "shipping_address": "Al-Hasakah",
+    "shipping_cost": 2500
   },{
     "id": 13,
-    "city": "Manbij",
-    "shippingFee": 700
+    "shipping_address": "Manbij",
+    "shipping_cost": 700
   },{
     "id": 14,
-    "city": "Idlib",
-    "shippingFee": 850
+    "shipping_address": "Idlib",
+    "shipping_cost": 850
   }
 ]

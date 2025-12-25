@@ -10,11 +10,11 @@ type Props = {
   fetchpriority?: string; 
   darkMode?: string; 
   lan?: string;
-}
+} & React.ComponentPropsWithRef<'img'>;
 
 function DisplayImg ({
   ...props
-}) {
+}:Props) {
   const [isLoading, setIsLoading] = useState(false);
   const handleLoad = () => setIsLoading(false);
 
