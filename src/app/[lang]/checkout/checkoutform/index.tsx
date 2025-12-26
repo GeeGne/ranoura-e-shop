@@ -24,7 +24,7 @@ import { useLanguageStore } from '@/stores/index';
 type Props = {
   className?: string;
   isLoading?: boolean;
-  products?: Record<string, any>;
+  products?: Record<string, any>[];
 } & React.ComponentPropsWithRef<"form">;
 
 export default function CheckoutForm ({ 
@@ -36,6 +36,21 @@ export default function CheckoutForm ({
 
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
+
+  const [ shippingDetails, setShippingDetails ] = useState<Record<string, any>>({
+    user_id: '',
+    status: '',
+    products: '',
+    total_items: 0,
+    total: 0,
+    customer_pfp: '',
+    customer_full_name: '',
+    email: '',
+    shipping_address: '',
+    shipping_cost: '',
+    currency: 'SYP',
+    payment_method: 'cash',
+  });
 
   const [ isAddressDetailsFocus, setIsAddressDetailsFocus ] = useState<boolean>(false);
   const [ isSecondAddressFocus, setIsSecondAddressFocus ] = useState<boolean>(false);
@@ -79,6 +94,9 @@ export default function CheckoutForm ({
           shipping_address,
           shipping_cost
         });
+        setShippingDetails(val =>({ 
+          ...val, shipping_address, shipping_cost: Number(shipping_cost)
+        }));
         setTimeout(() => deliverToRef.current?.blur(), 100);
         // deliverToRef.current?.blur();
         break;
@@ -143,6 +161,7 @@ export default function CheckoutForm ({
 
   // DEBUG & UI
   // console.log('selectedDeliverToCity: ', selectedDeliverToCity);
+  console.log('shippingDetails: ', shippingDetails);
   // console.log('isDeliverToFocus: ', isDeliverToFocus);
 
   if (isLoading) return (
@@ -208,6 +227,7 @@ export default function CheckoutForm ({
           >
             {deliverTo.map(itm =>
               <li
+                key={itm.id}
                 className="
                   py-2 px-3 hover:bg-content-invert hover:text-content hover:font-bold
                   rounded-md
@@ -217,7 +237,6 @@ export default function CheckoutForm ({
                 data-shipping-address={itm.shipping_address}
                 data-shipping-cost={itm.shipping_cost}
                 data-type="deliverTo_list_is_clicked"
-                key={itm.id}
                 onClick={handleClick}
               >
                 {itm.shipping_address}
@@ -281,44 +300,78 @@ export default function CheckoutForm ({
             {isEn ? 'Add Your personal account Number' : 'أضف رقم حسابك الشخصي'}
           </span>
         </label>
-        <label
-          className="relative flex items-center gap-4 group cursor-pointer"
-          htmlFor="newPhoneNumber"
+        <div
+          className="flex flex-col gap-4"
         >
-          <input 
-            className="invisible peer"
-            type="radio"
-            id="newPhoneNumber"
-            name="phoneNumber"
-            data-title="none"
-            onChange={handleChange}
-          />
-          {selectedPhoneNumberRadio === 'newPhoneNumber'
-            ? <LineMdSquareToConfirmSquareTransition
-                className={`
-                  absolute top-1/2
-                  translate-y-[-50%] w-6 h-6 text-heading
-                  ${isEn ? 'left-0' : 'right-0'}
-                `}
-              />
-            : <LineMdConfirmSquareToSquareTransition
-                className={`
-                  absolute top-1/2
-                  translate-y-[-50%] w-6 h-6 text-body
-                  ${isEn ? 'left-0' : 'right-0'}
-                `}
-              />
-          }
+          <label
+            className="relative flex items-center gap-4 group cursor-pointer"
+            htmlFor="newPhoneNumber"
+          >
+            <input 
+              className="invisible peer"
+              type="radio"
+              id="newPhoneNumber"
+              name="phoneNumber"
+              data-title="none"
+              onChange={handleChange}
+            />
+            {selectedPhoneNumberRadio === 'newPhoneNumber'
+              ? <LineMdSquareToConfirmSquareTransition
+                  className={`
+                    absolute top-1/2
+                    translate-y-[-50%] w-6 h-6 text-heading
+                    ${isEn ? 'left-0' : 'right-0'}
+                  `}
+                />
+              : <LineMdConfirmSquareToSquareTransition
+                  className={`
+                    absolute top-1/2
+                    translate-y-[-50%] w-6 h-6 text-body
+                    ${isEn ? 'left-0' : 'right-0'}
+                  `}
+                />
+            }
+            <span
+              className={`
+                transition-all duration-300 ease-in-out
+                text-body peer-checked:text-heading peer-checked:font-bold
+                transition-all duration-200 ease-in-out
+              `}
+            >
+              {isEn ? 'Add another Phone Number' : 'أضف رقم هاتف آخر'}
+            </span>
+          </label>
+          <label
+            className="relative flex w-full"
+            htmlFor="addressDetails"
+          >
           <span
             className={`
+              absolute left-3 translate-y-[-50%]
+              px-1 bg-background peer-autofill:top-0
               transition-all duration-300 ease-in-out
-              text-body peer-checked:text-heading peer-checked:font-bold
-              transition-all duration-200 ease-in-out
+              ${isAddressDetailsFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
             `}
           >
-            {isEn ? 'Add another Phone Number' : 'أضف رقم هاتف آخر'}
+            {isEn ? 'Address Details' : 'تفاصيل العنوان'}
           </span>
+          <input
+            className={`
+              bg-transparent border-solid
+              outline-none text-heading
+              transition-all duration-300 ease-in-out
+              w-full py-2 px-4 rounded-md
+              ${isAddressDetailsFocus ? 'border-body border-[2px]' : 'border-[1px] border-inbetween'}
+            `}
+            id="addressDetails"
+            name="addressDetails"
+            type="text"
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+          />
         </label>
+
+        </div>
       </section>
       <section
         className="flex flex-col gap-4 py-4"
