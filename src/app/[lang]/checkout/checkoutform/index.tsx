@@ -204,8 +204,6 @@ export default function CheckoutForm ({
               text-heading text-lg font-bold
               transition-all duration-200 ease-in-out
             "
-            onFocus={handleFocus}
-            ref={deliverToRef}
           />
           <LineMdChevronSmallDown
             className={`
@@ -343,34 +341,35 @@ export default function CheckoutForm ({
           </label>
           <label
             className="relative flex w-full"
-            htmlFor="addressDetails"
+            htmlFor="anotherPhoneNumber"
           >
-          <span
-            className={`
-              absolute left-3 translate-y-[-50%]
-              px-1 bg-background peer-autofill:top-0
-              transition-all duration-300 ease-in-out
-              ${isAddressDetailsFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
-            `}
-          >
-            {isEn ? 'Address Details' : 'تفاصيل العنوان'}
-          </span>
-          <input
-            className={`
-              bg-transparent border-solid
-              outline-none text-heading
-              transition-all duration-300 ease-in-out
-              w-full py-2 px-4 rounded-md
-              ${isAddressDetailsFocus ? 'border-body border-[2px]' : 'border-[1px] border-inbetween'}
-            `}
-            id="addressDetails"
-            name="addressDetails"
-            type="text"
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-          />
-        </label>
-
+            <input
+              className={`
+                peer bg-transparent
+                outline outline-solid border-none text-heading
+                transition-all duration-300 ease-in-out
+                w-full py-2 px-4 rounded-md
+                outline-[1px] outline-inbetween
+                focus:outline-body focus:outline-[2px]
+              `}
+              id="anotherPhoneNumber"
+              name="anotherPhoneNumber"
+              placeholder=""
+              type="text"
+            />
+            <span
+              className={`
+                absolute left-3 translate-y-[-50%]
+                px-1 bg-background peer-autofill:top-0
+                transition-all duration-300 ease-in-out
+                text-body text-xs font-bold
+                peer-placeholder-shown:top-1/2 peer-placeholder-shown:font-normal peer-placeholder-shown:text-base peer-placeholder-shown:text-body-light
+                peer-focus:top-0 peer-focus:text-xs peer-focus:text-heading peer-focus:font-bold
+              `}
+            >
+              {isEn ? 'Another Phone Number' : 'تفاصيل العنوان'}
+            </span>
+          </label>
         </div>
       </section>
       <section
@@ -388,88 +387,94 @@ export default function CheckoutForm ({
           className="relative flex w-full"
           htmlFor="addressDetails"
         >
-        <span
-          className={`
-            absolute left-3 translate-y-[-50%]
-            px-1 bg-background peer-autofill:top-0
-            transition-all duration-300 ease-in-out
-            ${isAddressDetailsFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
-          `}
-        >
-          {isEn ? 'Address Details' : 'تفاصيل العنوان'}
-        </span>
-        <input
-          className={`
-            bg-transparent border-solid
-            outline-none text-heading
-            transition-all duration-300 ease-in-out
-            w-full py-2 px-4 rounded-md
-            ${isAddressDetailsFocus ? 'border-body border-[2px]' : 'border-[1px] border-inbetween'}
-          `}
-          id="addressDetails"
-          name="addressDetails"
-          type="text"
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-        />
-      </label>
-        <label
-          className="relative flex w-full"
-          htmlFor="secondAddress"
-        >
-        <span
-          className={`
-            absolute left-3 translate-y-[-50%]
-            px-1 bg-background peer-autofill:top-0
-            transition-all duration-300 ease-in-out
-            ${isSecondAddressFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
-          `}
-        >
-          {isEn ? 'Second Address (optional)' : 'العنوان الثاني (اختياري)'}
-        </span>
-        <input
-          className={`
-            bg-transparent border-solid
-            outline-none text-heading autofill:bg-red-500
-            transition-all duration-300 ease-in-out
-            w-full py-2 px-4 rounded-md
-            ${isSecondAddressFocus ? 'border-body border-[2px]' : 'border-[1px] border-inbetween'}
-          `}
-          id="secondAddress"
-          name="secondAddress"
-          type="secondAddress"
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-        />
-        </label>
-        <label
-          className="relative flex w-full"
-          htmlFor="notes"
-        >
+          <input
+            className={`
+              peer bg-transparent
+              outline outline-solid border-none text-heading
+              transition-all duration-300 ease-in-out
+              w-full py-2 px-4 rounded-md
+              outline-[1px] outline-inbetween
+              focus:outline-body focus:outline-[2px]
+            `}
+            placeholder=""
+            id="addressDetails"
+            name="addressDetails"
+            type="text"
+          />
           <span
             className={`
               absolute left-3 translate-y-[-50%]
               px-1 bg-background peer-autofill:top-0
               transition-all duration-300 ease-in-out
-              ${isNotesFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
+              text-body text-xs font-bold
+              peer-placeholder-shown:top-1/2 peer-placeholder-shown:font-normal peer-placeholder-shown:text-base peer-placeholder-shown:text-body-light
+              peer-focus:top-0 peer-focus:text-xs peer-focus:text-heading peer-focus:font-bold
+            `}
+          >
+            {isEn ? 'Address Details' : 'تفاصيل العنوان'}
+          </span>
+        </label>
+        <label
+          className="relative flex w-full"
+          htmlFor="secondAddress"
+        >
+          <input
+            className={`
+              peer bg-transparent
+              outline outline-solid border-none text-heading
+              transition-all duration-300 ease-in-out
+              w-full py-2 px-4 rounded-md
+              outline-[1px] outline-inbetween
+              focus:outline-body focus:outline-[2px]
+            `}
+            placeholder=""
+            id="secondAddress"
+            name="secondAddress"
+            type="secondAddress"
+          />
+          <span
+            className={`
+              absolute left-3 translate-y-[-50%]
+              px-1 bg-background peer-autofill:top-0
+              transition-all duration-300 ease-in-out
+              text-body text-xs font-bold
+              peer-placeholder-shown:top-1/2 peer-placeholder-shown:font-normal peer-placeholder-shown:text-base peer-placeholder-shown:text-body-light
+              peer-focus:top-0 peer-focus:text-xs peer-focus:text-heading peer-focus:font-bold
+            `}
+          >
+            {isEn ? 'Second Address (optional)' : 'العنوان الثاني (اختياري)'}
+          </span>
+        </label>
+        <label
+          className="relative flex w-full"
+          htmlFor="notes"
+        >
+          <input
+            className={`
+              peer bg-transparent
+              outline outline-solid border-none text-heading
+              transition-all duration-300 ease-in-out
+              w-full py-2 px-4 rounded-md
+              outline-[1px] outline-inbetween
+              focus:outline-body focus:outline-[2px]
+            `}
+            placeholder=""
+            id="notes"
+            name="notes"
+            type="notes"
+          />
+          <span
+            className={`
+              absolute left-3 translate-y-[-50%]
+              px-1 bg-background peer-autofill:top-0
+              transition-all duration-300 ease-in-out
+              text-body text-xs font-bold
+              peer-placeholder-shown:top-1/2 peer-placeholder-shown:font-normal peer-placeholder-shown:text-base peer-placeholder-shown:text-body-light
+              peer-focus:top-0 peer-focus:text-xs peer-focus:text-heading peer-focus:font-bold
             `}
           >
             {isEn ? 'Notes (optional)' : 'ملاحظات (اختياري)'}
           </span>
-          <input
-            className={`
-              bg-transparent border-solid
-              outline-none text-heading autofill:bg-red-500
-              transition-all duration-300 ease-in-out
-              w-full py-2 px-4 rounded-md
-              ${isNotesFocus ? 'border-body border-[2px]' : 'border-[1px] border-inbetween'}
-            `}
-            id="notes"
-            name="notes"
-            type="notes"
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-          />
         </label>
       </section>
       <section
