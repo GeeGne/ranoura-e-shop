@@ -117,47 +117,47 @@ export default function CheckoutForm ({
     }
   };
 
-  const handleFocus = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name } = e.currentTarget;
+  // const handleFocus = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { name } = e.currentTarget;
 
-    e.currentTarget.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  //   e.currentTarget.scrollIntoView({ block: 'center', behavior: 'smooth' });
 
-    switch (name) {
-      case 'deliverTo':
-        break;
-      case 'addressDetails':
-        setIsAddressDetailsFocus(true);
-        break;
-      case 'secondAddress':
-        setIsSecondAddressFocus(true);
-        break;
-      case 'notes':
-        setIsNotesFocus(true);
-        break;
-      default:
-        console.error('Unknown name: ', name);
-    }
-  };
+  //   switch (name) {
+  //     case 'deliverTo':
+  //       break;
+  //     case 'addressDetails':
+  //       setIsAddressDetailsFocus(true);
+  //       break;
+  //     case 'secondAddress':
+  //       setIsSecondAddressFocus(true);
+  //       break;
+  //     case 'notes':
+  //       setIsNotesFocus(true);
+  //       break;
+  //     default:
+  //       console.error('Unknown name: ', name);
+  //   }
+  // };
 
-  const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.currentTarget;
+  // const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { name, value } = e.currentTarget;
 
-    if (value !== "" ) return;
+  //   if (value !== "" ) return;
 
-    switch (name) {
-      case 'addressDetails':
-        setIsAddressDetailsFocus(false);
-        break;
-      case 'secondAddress':
-        setIsSecondAddressFocus(false);
-        break;
-      case 'notes':
-        setIsNotesFocus(false);
-        break;
-      default:
-        console.error('Unknown name: ', name);
-    }
-  };
+  //   switch (name) {
+  //     case 'addressDetails':
+  //       setIsAddressDetailsFocus(false);
+  //       break;
+  //     case 'secondAddress':
+  //       setIsSecondAddressFocus(false);
+  //       break;
+  //     case 'notes':
+  //       setIsNotesFocus(false);
+  //       break;
+  //     default:
+  //       console.error('Unknown name: ', name);
+  //   }
+  // };
 
   // DEBUG & UI
   // console.log('selectedDeliverToCity: ', selectedDeliverToCity);
@@ -250,70 +250,30 @@ export default function CheckoutForm ({
       <section
         className="flex flex-col gap-4 py-4"
       >
-        <Title 
-          className="pb-4" 
-          text={isEn ? "Contact Phone Number" : "رقم هاتف الاتصال"}
-          info={
-            isEn 
-            ? "Please share a phone number where we can contact you about your order. This ensures we can reach you quickly for delivery updates or questions!" 
-            : `يرجى مشاركة رقم هاتف يمكننا من خلاله التواصل معك بشأن طلبك. هذا يضمن أن نتمكن من الوصول إليك بسرعة لتحديثات التسليم أو الأسئلة!`
-          }
-        />
-        <label
-          className="group relative flex items-center gap-4 group cursor-pointer"
-          htmlFor="existedPhoneNumber"
-        >
-          <input 
-            className="invisible peer"
-            type="radio"
-            defaultChecked
-            id="existedPhoneNumber"
-            name="phoneNumber"
-            data-title="none"
-            onChange={handleChange}
+        <fieldset>
+          <Title 
+            className="pb-4" 
+            text={isEn ? "Contact Phone Number" : "رقم هاتف الاتصال"}
+            info={
+              isEn 
+              ? "Please share a phone number where we can contact you about your order. This ensures we can reach you quickly for delivery updates or questions!" 
+              : `يرجى مشاركة رقم هاتف يمكننا من خلاله التواصل معك بشأن طلبك. هذا يضمن أن نتمكن من الوصول إليك بسرعة لتحديثات التسليم أو الأسئلة!`
+            }
           />
-          {selectedPhoneNumberRadio === 'existedPhoneNumber'
-            ? <LineMdSquareToConfirmSquareTransition
-                className={`
-                  absolute top-1/2
-                  translate-y-[-50%] w-6 h-6 text-heading
-                  ${isEn ? 'left-0' : 'right-0'}
-                `}
-              />
-            : <LineMdConfirmSquareToSquareTransition
-                className={`
-                  absolute top-1/2
-                  translate-y-[-50%] w-6 h-6 text-body
-                  ${isEn ? 'left-0' : 'right-0'}
-                `}
-              />
-          }
-          <span
-            className={`
-              transition-all duration-300 ease-in-out
-              text-body peer-checked:text-heading peer-checked:font-bold
-              transition-all duration-200 ease-in-out
-            `}
-          >
-            {isEn ? 'Add Your personal account Number' : 'أضف رقم حسابك الشخصي'}
-          </span>
-        </label>
-        <div
-          className="flex flex-col gap-4"
-        >
           <label
-            className="relative flex items-center gap-4 group cursor-pointer"
-            htmlFor="newPhoneNumber"
+            className="group relative flex items-center gap-4 group cursor-pointer"
+            htmlFor="existedPhoneNumber"
           >
             <input 
               className="invisible peer"
               type="radio"
-              id="newPhoneNumber"
+              defaultChecked
+              id="existedPhoneNumber"
               name="phoneNumber"
               data-title="none"
               onChange={handleChange}
             />
-            {selectedPhoneNumberRadio === 'newPhoneNumber'
+            {selectedPhoneNumberRadio === 'existedPhoneNumber'
               ? <LineMdSquareToConfirmSquareTransition
                   className={`
                     absolute top-1/2
@@ -336,41 +296,82 @@ export default function CheckoutForm ({
                 transition-all duration-200 ease-in-out
               `}
             >
-              {isEn ? 'Add another Phone Number' : 'أضف رقم هاتف آخر'}
+              {isEn ? 'Add Your personal account Number' : 'أضف رقم حسابك الشخصي'}
             </span>
           </label>
-          <label
-            className="relative flex w-full"
-            htmlFor="anotherPhoneNumber"
+          <div
+            className="flex flex-col gap-4"
           >
-            <input
-              className={`
-                peer bg-transparent
-                outline outline-solid border-none text-heading
-                transition-all duration-300 ease-in-out
-                w-full py-2 px-4 rounded-md
-                outline-[1px] outline-inbetween
-                focus:outline-body focus:outline-[2px]
-              `}
-              id="anotherPhoneNumber"
-              name="anotherPhoneNumber"
-              placeholder=""
-              type="text"
-            />
-            <span
-              className={`
-                absolute left-3 translate-y-[-50%]
-                px-1 bg-background peer-autofill:top-0
-                transition-all duration-300 ease-in-out
-                text-body text-xs font-bold
-                peer-placeholder-shown:top-1/2 peer-placeholder-shown:font-normal peer-placeholder-shown:text-base peer-placeholder-shown:text-body-light
-                peer-focus:top-0 peer-focus:text-xs peer-focus:text-heading peer-focus:font-bold
-              `}
+            <label
+              className="relative flex items-center gap-4 peer/newNumber cursor-pointer"
+              htmlFor="newPhoneNumber"
             >
-              {isEn ? 'Another Phone Number' : 'تفاصيل العنوان'}
-            </span>
-          </label>
-        </div>
+              <input 
+                className="invisible peer"
+                type="radio"
+                id="newPhoneNumber"
+                name="phoneNumber"
+                data-title="none"
+              />
+              {selectedPhoneNumberRadio === 'newPhoneNumber'
+                ? <LineMdSquareToConfirmSquareTransition
+                    className={`
+                      absolute top-1/2
+                      translate-y-[-50%] w-6 h-6 text-heading
+                      ${isEn ? 'left-0' : 'right-0'}
+                    `}
+                  />
+                : <LineMdConfirmSquareToSquareTransition
+                    className={`
+                      absolute top-1/2
+                      translate-y-[-50%] w-6 h-6 text-body
+                      ${isEn ? 'left-0' : 'right-0'}
+                    `}
+                  />
+              }
+              <span
+                className={`
+                  transition-all duration-300 ease-in-out
+                  text-body peer-checked:text-heading peer-checked:font-bold
+                  transition-all duration-200 ease-in-out
+                `}
+              >
+                {isEn ? 'Add another Phone Number' : 'أضف رقم هاتف آخر'}
+              </span>
+            </label>
+            <label
+              className="flex peer-has-[:checked]/newNumber:bg-red-500 relative w-full"
+              htmlFor="anotherPhoneNumber"
+            >
+              <input
+                className={`
+                  peer bg-transparent
+                  outline outline-solid border-none text-heading
+                  transition-all duration-300 ease-in-out
+                  w-full py-2 px-4 rounded-md
+                  outline-[1px] outline-inbetween
+                  focus:outline-body focus:outline-[2px]
+                `}
+                id="anotherPhoneNumber"
+                name="anotherPhoneNumber"
+                placeholder=""
+                type="text"
+              />
+              <span
+                className={`
+                  absolute left-3 translate-y-[-50%]
+                  px-1 bg-background peer-autofill:top-0
+                  transition-all duration-300 ease-in-out
+                  text-body text-xs font-bold
+                  peer-placeholder-shown:top-1/2 peer-placeholder-shown:font-normal peer-placeholder-shown:text-base peer-placeholder-shown:text-body-light
+                  peer-focus:top-0 peer-focus:text-xs peer-focus:text-heading peer-focus:font-bold
+                `}
+              >
+                {isEn ? 'Another Phone Number' : 'تفاصيل العنوان'}
+              </span>
+            </label>
+          </div>
+        </fieldset>
       </section>
       <section
         className="flex flex-col gap-4 py-4"
