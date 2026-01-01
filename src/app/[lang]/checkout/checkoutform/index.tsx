@@ -163,6 +163,7 @@ export default function CheckoutForm ({
   // console.log('selectedDeliverToCity: ', selectedDeliverToCity);
   console.log('shippingDetails: ', shippingDetails);
   // console.log('isDeliverToFocus: ', isDeliverToFocus);
+  console.log('selectedPhoneNumberRadio: ', selectedPhoneNumberRadio);
 
   if (isLoading) return (
     <LoadingLayout />
@@ -247,10 +248,10 @@ export default function CheckoutForm ({
           <span className="text-heading font-bold">{selectedDeliverToCity.shipping_cost}</span>
         </div>
       </section>
-      <section
-        className="flex flex-col gap-4 py-4"
-      >
-        <fieldset>
+      <section>
+        <fieldset
+          className="flex flex-col py-4"
+        >
           <Title 
             className="pb-4" 
             text={isEn ? "Contact Phone Number" : "رقم هاتف الاتصال"}
@@ -261,7 +262,7 @@ export default function CheckoutForm ({
             }
           />
           <label
-            className="group relative flex items-center gap-4 group cursor-pointer"
+            className="group relative flex items-center gap-4 mb-2 group cursor-pointer"
             htmlFor="existedPhoneNumber"
           >
             <input 
@@ -300,7 +301,7 @@ export default function CheckoutForm ({
             </span>
           </label>
           <div
-            className="flex flex-col gap-4"
+            className="flex flex-col"
           >
             <label
               className="relative flex items-center gap-4 peer/newNumber cursor-pointer"
@@ -312,23 +313,25 @@ export default function CheckoutForm ({
                 id="newPhoneNumber"
                 name="phoneNumber"
                 data-title="none"
+                onChange={handleChange}
               />
-              {selectedPhoneNumberRadio === 'newPhoneNumber'
-                ? <LineMdSquareToConfirmSquareTransition
-                    className={`
-                      absolute top-1/2
-                      translate-y-[-50%] w-6 h-6 text-heading
-                      ${isEn ? 'left-0' : 'right-0'}
-                    `}
-                  />
-                : <LineMdConfirmSquareToSquareTransition
-                    className={`
-                      absolute top-1/2
-                      translate-y-[-50%] w-6 h-6 text-body
-                      ${isEn ? 'left-0' : 'right-0'}
-                    `}
-                  />
-              }
+                {
+                  selectedPhoneNumberRadio === 'newPhoneNumber' 
+                  ? <LineMdSquareToConfirmSquareTransition
+                      className={`
+                        absolute top-1/2 opacity-0 peer-checked:opacity-100
+                        translate-y-[-50%] w-6 h-6 text-heading
+                        ${isEn ? 'left-0' : 'right-0'}
+                      `}
+                    /> 
+                  : <LineMdConfirmSquareToSquareTransition
+                      className={`
+                        absolute top-1/2 opacity-100 peer-checked:opacity-0
+                        translate-y-[-50%] w-6 h-6 text-body
+                        ${isEn ? 'left-0' : 'right-0'}
+                      `}
+                    /> 
+                }
               <span
                 className={`
                   transition-all duration-300 ease-in-out
@@ -340,7 +343,10 @@ export default function CheckoutForm ({
               </span>
             </label>
             <label
-              className="flex peer-has-[:checked]/newNumber:bg-red-500 relative w-full"
+              className={`
+                group flex relative
+                ${selectedPhoneNumberRadio === 'newPhoneNumber' ? '--expand-checkout-label' : '--close-checkout-label'}
+              `}
               htmlFor="anotherPhoneNumber"
             >
               <input

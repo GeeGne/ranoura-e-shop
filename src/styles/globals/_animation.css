@@ -18,6 +18,8 @@
 .duration--5s { animation-duration: 5s !important }
 .duration--10s { animation-duration: 10s !important }
 
+.animation-direction-normal { animation-direction: normal }
+.animation-direction-reverse { animation-direction: reverse }
 
 @keyframes opacity-blink {
   0% {
@@ -172,6 +174,54 @@
   }
 }
 
+@keyframes expand-checkout-label {
+  0% {
+    margin-top: 0rem;
+    opacity: 0;
+    visibility: hidden;
+    max-height: 0px;
+    top: 10px;
+  }
+  40% {
+    margin-top: 1rem;
+    opacity: 0;
+    visibility: hidden;
+    max-height: 40px;
+    top: 10px;
+  }
+  100% {
+    margin-top: 1rem;
+    visibility: visible;
+    opacity: 1;
+    max-height: 40px;
+    top: 0;
+  }
+}
+
+@keyframes close-checkout-label {
+  0% {
+    margin-top: 1rem;
+    visibility: visible;
+    opacity: 1;
+    max-height: 40px;
+    top: 0;
+  }
+  60% {
+    margin-top: 1rem;
+    opacity: 0;
+    visibility: hidden;
+    max-height: 40px;
+    top: 10px;
+  }
+  100% {
+    margin-top: 0rem;
+    opacity: 0;
+    visibility: hidden;
+    max-height: 0px;
+    top: 10px;
+  }
+}
+
 .--opacity-blink {
   animation-name: opacity-blink;
   animation-duration: 3s;
@@ -259,4 +309,19 @@
   animation-duration: 0.2s;
   animation-fill-mode: both;
   animation-timing-function: ease-out;
+}
+
+.--expand-checkout-label,
+.--close-checkout-label {
+  animation-name: expand-checkout-label;
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out;
+}
+
+.--expand-checkout-label {
+  animation-name: expand-checkout-label;
+}
+.--close-checkout-label {
+  animation-name: close-checkout-label;
 }
