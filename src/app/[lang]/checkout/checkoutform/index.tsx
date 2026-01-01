@@ -24,11 +24,13 @@ import { useLanguageStore } from '@/stores/index';
 type Props = {
   className?: string;
   isLoading?: boolean;
+  user: Record<string, any>;
   products?: Record<string, any>[];
 } & React.ComponentPropsWithRef<"form">;
 
 export default function CheckoutForm ({ 
   className,
+  user = {},
   products = [],
   isLoading = false,
   ...props
@@ -45,6 +47,7 @@ export default function CheckoutForm ({
     total: 0,
     customer_pfp: '',
     customer_full_name: '',
+    customer_phone_number: '',
     email: '',
     shipping_address: '',
     shipping_cost: '',
@@ -111,6 +114,14 @@ export default function CheckoutForm ({
     switch (name) {
       case 'phoneNumber':
         if (checked) setSelectedPhoneNumberRadio(id);
+        break;
+        case 'existedPhoneNumber':
+          setShippingDetails(val => ({ ...val, customer_phone_number: value}))
+          break;
+      case 'anotherPhoneNumber':
+        if (selectedPhoneNumberRadio === 'newPhoneNumber') setShippingDetails(val => ({
+          ...val, customer_phone_number: value
+        }));
         break;
       default:
         console.error('Unknown name: ', name);
@@ -272,6 +283,7 @@ export default function CheckoutForm ({
               id="existedPhoneNumber"
               name="phoneNumber"
               data-title="none"
+              value={user.phone_number}
               onChange={handleChange}
             />
             {selectedPhoneNumberRadio === 'existedPhoneNumber'
@@ -319,14 +331,14 @@ export default function CheckoutForm ({
                   selectedPhoneNumberRadio === 'newPhoneNumber' 
                   ? <LineMdSquareToConfirmSquareTransition
                       className={`
-                        absolute top-1/2 opacity-0 peer-checked:opacity-100
+                        absolute top-1/2
                         translate-y-[-50%] w-6 h-6 text-heading
                         ${isEn ? 'left-0' : 'right-0'}
                       `}
                     /> 
                   : <LineMdConfirmSquareToSquareTransition
                       className={`
-                        absolute top-1/2 opacity-100 peer-checked:opacity-0
+                        absolute top-1/2
                         translate-y-[-50%] w-6 h-6 text-body
                         ${isEn ? 'left-0' : 'right-0'}
                       `}
@@ -362,6 +374,7 @@ export default function CheckoutForm ({
                 name="anotherPhoneNumber"
                 placeholder=""
                 type="text"
+                onChange={handleChange}
               />
               <span
                 className={`

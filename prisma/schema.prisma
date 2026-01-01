@@ -82,6 +82,7 @@ model UserOrders {
   customer_pfp String?
   customer_full_name String
   email String
+  customer_phone_number String @default("0")
   shipping_address   Json?
   shipping_cost      Decimal? @default(0)
 

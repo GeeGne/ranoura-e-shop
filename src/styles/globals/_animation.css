@@ -316,12 +316,13 @@
   animation-name: expand-checkout-label;
   animation-duration: 0.5s;
   animation-fill-mode: both;
-  animation-timing-function: ease-in-out;
 }
 
 .--expand-checkout-label {
   animation-name: expand-checkout-label;
+  animation-timing-function: ease-out;
 }
 .--close-checkout-label {
   animation-name: close-checkout-label;
+  animation-timing-function: ease-in;
 }

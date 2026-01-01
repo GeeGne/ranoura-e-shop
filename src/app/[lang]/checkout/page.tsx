@@ -18,6 +18,7 @@ import { useTabNameStore, useLanguageStore } from '@/stores/index';
 
 // API
 import getAllProducts from '@/lib/api/products/get';
+import getUserData from '@/lib/api/auth/me/get';
 
 export default function page () {
   
@@ -36,13 +37,18 @@ export default function page () {
     setTabName('checkout');
   }, []);
   
-  const { data: productsData, isLoading, isError } = useQuery({
+  const { data: productsData, isLoading: isProductsLoading, isError: isProductsError } = useQuery({
     queryKey: [ 'products' ],
     queryFn: getAllProducts
   });
   const products = productsData?.data;
+  const { data: userData, isLoading: isUserLoading, isError: isUserError } = useQuery({
+    queryKey: [ 'user' ],
+    queryFn: getUserData
+  });
+  const user = userData?.data;
   
-  if (isError) return (
+  if (isProductsError && isUserError) return (
     <ErrorLayout 
       title={isEn ? 'Unable To Load' : 'لم يتم التحميل'}
       description={isEn ? 'Please Refresh the page or try again later' : 'الرجاء اعاده تحميل الصفحه او حاول مره اخرى لاحقا'}
@@ -63,7 +69,7 @@ export default function page () {
       <BreadCrumb 
         className="w-fit py-4 lg:py-0 lg:col-span-2"
         slugNameAndLinkArray={slugNameAndLinkArray}
-        isLoading={isLoading}
+        isLoading={isProductsLoading && isUserLoading}
       />
       <ShowOrderSummary 
         className={`
@@ -74,7 +80,7 @@ export default function page () {
           lg:before:bg-inbetween lg:before:z-[5]
           ${isEn ? 'lg:before:right-[calc(100%+1rem)]' : 'lg:before:left-[calc(100%+1rem)]'}
         `}
-        isLoading={isLoading}
+        isLoading={isProductsLoading && isUserLoading}
         products={products}
       />
       <CheckoutForm
@@ -82,7 +88,8 @@ export default function page () {
           lg:order-2 lg:col-span-1
         " 
         products={products}
-        isLoading={isLoading}
+        user={user}
+        isLoading={isProductsLoading && isUserLoading}
       />
     </div>
   )
