@@ -3,7 +3,7 @@ import { useRef, useState } from 'react';
 
 // COMPONENTS
 import Title from '@/app/[lang]/checkout/checkoutform/Title';
-import OrderSummary from '@/components/orderSummary/OrderSummary';
+import OrderSummary from '@/components/orderSummary/index';
 import LineMdDownloadOutlineLoop from '@/components/svgs/activity/LineMdDownloadOutlineLoop';
 import LineMdDownloadTwotoneLoop from '@/components/svgs/activity/LineMdDownloadTwotoneLoop';
 import LineMdUploadOutlineLoop from '@/components/svgs/activity/LineMdUploadOutlineLoop';
@@ -12,7 +12,6 @@ import LineMdUploadTwotoneLoop from '@/components/svgs/activity/LineMdUploadTwot
 
 type Props = {
   className?: string;
-
 }
 
 export default function ShowOrderSummaryNoTotal ({className, ...props}: Props) {

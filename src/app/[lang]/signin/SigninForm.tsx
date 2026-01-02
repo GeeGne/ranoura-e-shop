@@ -296,20 +296,9 @@ export default function SigninForm ({ className, ...props }: Props) {
         data-type="label_element_is_clicked"
         onClick={handleClick}
       >
-        <span
-          className={`
-            absolute translate-y-[-50%]
-            px-1 bg-background
-            transition-all duration-300 ease-in-out
-            ${isEn ? 'left-3' : 'right-3'}
-            ${isPasswordFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
-          `}
-        >
-          {isEn ? 'PASSWORD' : 'كلمه السر'}
-        </span>
         <input
           className={`
-            bg-transparent border-solid
+            peer bg-transparent border-solid
             outline-none text-heading border-[1px]
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
@@ -324,10 +313,22 @@ export default function SigninForm ({ className, ...props }: Props) {
           id="password"
           name="password"
           type={isPassEyeActive ? "text" : "password"}
+          placeholder=""
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={handleChange}
         />
+        <span
+          className={`
+            absolute translate-y-[-50%]
+            bg-red-500 peer-placeholder-shown:bg-background px-1 
+            transition-all duration-300 ease-in-out
+            ${isEn ? 'left-3' : 'right-3'}
+            ${isPasswordFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
+          `}
+        >
+          {isEn ? 'PASSWORD' : 'كلمه السر'}
+        </span>
         <div
           className={`
             absolute top-1/2 left-1/2

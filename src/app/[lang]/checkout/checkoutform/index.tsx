@@ -24,6 +24,7 @@ import { useLanguageStore } from '@/stores/index';
 type Props = {
   className?: string;
   isLoading?: boolean;
+  isError?: boolean;
   user: Record<string, any>;
   products?: Record<string, any>[];
 } & React.ComponentPropsWithRef<"form">;
@@ -33,6 +34,7 @@ export default function CheckoutForm ({
   user = {},
   products = [],
   isLoading = false,
+  isError = false,
   ...props
 }: Props) {
 
@@ -41,7 +43,7 @@ export default function CheckoutForm ({
 
   const [ shippingDetails, setShippingDetails ] = useState<Record<string, any>>({
     user_id: '',
-    status: '',
+    status:  'PENDING',
     products: '',
     total_items: 0,
     total: 0,
@@ -54,6 +56,20 @@ export default function CheckoutForm ({
     currency: 'SYP',
     payment_method: 'cash',
   });
+
+  useEffect(() => {
+    return;
+    if (isLoading || isError || !user) return;
+    const { id, first_name, last_name, email, phone_number, profile_img_url } = user;
+    setShippingDetails(val => ({
+      ...val,
+      user_id: id,
+      customer_full_name: first_name + ' ' + last_name,
+      email,
+      customer_phone_number: phone_number,
+      customer_pfp: profile_img_url
+    }))
+  }, [user]);
 
   const [ isAddressDetailsFocus, setIsAddressDetailsFocus ] = useState<boolean>(false);
   const [ isSecondAddressFocus, setIsSecondAddressFocus ] = useState<boolean>(false);
@@ -115,9 +131,9 @@ export default function CheckoutForm ({
       case 'phoneNumber':
         if (checked) setSelectedPhoneNumberRadio(id);
         break;
-        case 'existedPhoneNumber':
-          setShippingDetails(val => ({ ...val, customer_phone_number: value}))
-          break;
+      case 'existedPhoneNumber':
+        setShippingDetails(val => ({ ...val, customer_phone_number: value }));
+        break;
       case 'anotherPhoneNumber':
         if (selectedPhoneNumberRadio === 'newPhoneNumber') setShippingDetails(val => ({
           ...val, customer_phone_number: value
@@ -175,6 +191,7 @@ export default function CheckoutForm ({
   console.log('shippingDetails: ', shippingDetails);
   // console.log('isDeliverToFocus: ', isDeliverToFocus);
   console.log('selectedPhoneNumberRadio: ', selectedPhoneNumberRadio);
+  console.log('user Refresh test: ', user);
 
   if (isLoading) return (
     <LoadingLayout />

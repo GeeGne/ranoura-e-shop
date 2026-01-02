@@ -42,11 +42,12 @@ export default function page () {
     queryFn: getAllProducts
   });
   const products = productsData?.data;
+  
   const { data: userData, isLoading: isUserLoading, isError: isUserError } = useQuery({
     queryKey: [ 'user' ],
     queryFn: getUserData
   });
-  const user = userData?.data;
+  const user = userData;
   
   if (isProductsError && isUserError) return (
     <ErrorLayout 
@@ -57,6 +58,7 @@ export default function page () {
 
   // DEBUG & UI
   // console.log('checkout page: ', products);
+  console.log('checkout page, user: ', user);
 
   return (
     <div
@@ -90,6 +92,7 @@ export default function page () {
         products={products}
         user={user}
         isLoading={isProductsLoading && isUserLoading}
+        isError={isProductsLoading && isUserError}
       />
     </div>
   )
