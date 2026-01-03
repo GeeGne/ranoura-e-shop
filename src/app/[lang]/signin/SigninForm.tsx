@@ -58,11 +58,14 @@ export default function SigninForm ({ className, ...props }: Props) {
   const [ isEmailFocus, setIsEmailFocus ] = useState<boolean>(false);
   const [ isPasswordFocus, setIsPasswordFocus ] = useState<boolean>(false);
   const [ isPassEyeActive, setIsPassEyeActive ] = useState<boolean>(false);
+
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
+
   const layoutRef = useLayoutRefStore((state: any) => state.layoutRef);
   const formRef = useRef<HTMLFormElement>(null);
+  const passInptRef = useRef<HTMLInputElement>(null);
 
   const signinMutation = useMutation({
     mutationFn: signinRequest,
@@ -124,6 +127,7 @@ export default function SigninForm ({ className, ...props }: Props) {
       case 'pass_eye_icon_is_clicked':
         e.preventDefault();
         setIsPassEyeActive(val => !val);
+        passInptRef.current?.focus();
         break;  
       case 'label_element_is_clicked':
         setIncorrectField(val => ({
@@ -244,37 +248,40 @@ export default function SigninForm ({ className, ...props }: Props) {
         data-type="label_element_is_clicked"
         onClick={handleClick}
       >
-        <span
-          className={`
-            absolute translate-y-[-50%]
-            px-1 bg-background peer-autofill:top-0
-            transition-all duration-300 ease-in-out
-            ${isEn ? 'left-3' : 'right-3'}
-            ${isEmailFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
-          `}
-        >
-          {isEn ? 'EMAIL' : 'ايميل'}
-        </span>
         <input
           className={`
-            bg-transparent border-solid
+            peer bg-transparent border-solid
             outline-none text-heading border-[1px]
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
             ${incorrectField.email.isValid 
-              ? isEmailFocus 
-              ? 'border-body'
-              : 'border-inbetween'
+              ? 'focus:border-body border-inbetween'
               : 'border-red-500'
             }
           `}
           id="email"
           name="email"
           type="email"
+          placeholder=""
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={handleChange}
         />
+        <span
+          className={`
+            absolute translate-y-[-50%]
+            top-0 text-xs text-body font-semibold
+            peer-focus:top-0 peer-focus:text-xs
+            peer-focus:text-heading peer-focus:font-bold
+            peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base 
+            peer-placeholder-shown:text-body-light
+            bg-background px-1 
+            transition-all duration-300 ease-in-out
+            ${isEn ? 'left-3' : 'right-3'}
+          `}
+        >
+          {isEn ? 'EMAIL' : 'ايميل'}
+        </span>
         <div
           className={`
             absolute top-1/2 left-1/2
@@ -303,10 +310,8 @@ export default function SigninForm ({ className, ...props }: Props) {
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
             ${isPassEyeActive ? "font-regular" : "font-bold"}
-            ${incorrectField.email.isValid 
-              ? isPasswordFocus 
-              ? 'border-body'
-              : 'border-inbetween'
+            ${incorrectField.password.isValid 
+              ? 'focus:border-body border-inbetween'
               : 'border-red-500'
             }
           `}
@@ -317,14 +322,19 @@ export default function SigninForm ({ className, ...props }: Props) {
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={handleChange}
+          ref={passInptRef}
         />
         <span
           className={`
             absolute translate-y-[-50%]
-            bg-red-500 peer-placeholder-shown:bg-background px-1 
+            top-0 text-xs text-body font-semibold
+            peer-focus:top-0 peer-focus:text-xs
+            peer-focus:text-heading peer-focus:font-bold
+            peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base 
+            peer-placeholder-shown:text-body-light
+            bg-background px-1 
             transition-all duration-300 ease-in-out
             ${isEn ? 'left-3' : 'right-3'}
-            ${isPasswordFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
           `}
         >
           {isEn ? 'PASSWORD' : 'كلمه السر'}
@@ -346,7 +356,7 @@ export default function SigninForm ({ className, ...props }: Props) {
         { isPassEyeActive 
           ? <button
               className={`
-                group absolute top-1/2
+                peer/showPass group absolute top-1/2
                 translate-y-[-50%] text-heading cursor-pointer
                 ${isEn ? 'right-4' : 'left-8'}
               `}
@@ -439,7 +449,7 @@ export default function SigninForm ({ className, ...props }: Props) {
           {isEn ? 'New here?' : 'جديد هنا؟'}
         </span>{' '}
         <span
-          className="font-bold"
+          className="font-semibold"
         >
           {isEn ? 'Create an account' : 'انشاء حساب جديد'}
         </span>
@@ -454,7 +464,7 @@ export default function SigninForm ({ className, ...props }: Props) {
           {isEn ? 'Forgot password?' : 'نسيت كلمه السر؟'}
         </span>{' '}
         <span
-          className="font-bold"
+          className="font-semibold"
         >
           {isEn ? 'Reset it here' : 'استعيدها هنا'}
         </span>

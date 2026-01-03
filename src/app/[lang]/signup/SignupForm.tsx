@@ -85,8 +85,11 @@ export default function SignupForm ({ className, ...props }: Props) {
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
+
   const layoutRef = useLayoutRefStore((state: any) => state.layoutRef);
   const formRef = useRef<HTMLFormElement>(null);
+  const passInptRef = useRef<HTMLInputElement>(null);    
+  const cPassInptRef = useRef<HTMLInputElement>(null);
 
   const createNewUserMutation = useMutation({
     mutationFn: createNewUser,
@@ -149,10 +152,12 @@ export default function SignupForm ({ className, ...props }: Props) {
       case 'pass_eye_icon_is_clicked':
         e.preventDefault();
         setIsPassEyeActive(val => !val);
+        passInptRef.current?.focus();
         break;  
       case 'cPass_eye_icon_is_clicked':
         e.preventDefault();
         setIsCPassEyeActive(val => !val);
+        cPassInptRef.current?.focus();
         break;
       case 'label_element_is_clicked':
         setIncorrectField(val => ({
@@ -322,37 +327,40 @@ export default function SignupForm ({ className, ...props }: Props) {
         data-type="label_element_is_clicked"
         onClick={handleClick}
       >
-        <span
-          className={`
-            absolute translate-y-[-50%]
-            bg-background px-1
-            transition-all duration-300 ease-in-out
-            ${isEn ? 'left-3' : 'right-3'}
-            ${isFNameFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
-          `}
-        >
-          {isEn ? 'FIRST NAME' : 'الاسم الاول'}
-        </span>
         <input
           className={`
-            bg-transparent border-solid
+            peer bg-transparent border-solid
             outline-none text-heading border-[1px]
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
             ${incorrectField.first_name.isValid 
-              ? isFNameFocus 
-              ? 'border-body'
-              : 'border-inbetween'
+              ? 'focus:border-body border-inbetween'
               : 'border-red-500'
             }
           `}
           id="first_name"
           name="first_name"
           type="text"
+          placeholder=""
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={handleChange}
         />
+        <span
+          className={`
+            absolute translate-y-[-50%]
+            top-0 text-xs text-body font-semibold
+            peer-focus:top-0 peer-focus:text-xs
+            peer-focus:text-heading peer-focus:font-bold
+            peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base 
+            peer-placeholder-shown:text-body-light
+            bg-background px-1 
+            transition-all duration-300 ease-in-out
+            ${isEn ? 'left-3' : 'right-3'}
+          `}
+        >
+          {isEn ? 'FIRST NAME' : 'الاسم الاول'}
+        </span>
         <div
           className={`
             absolute top-1/2 left-1/2
@@ -374,37 +382,40 @@ export default function SignupForm ({ className, ...props }: Props) {
         data-type="label_element_is_clicked"
         onClick={handleClick}
       >
-        <span
-          className={`
-            absolute translate-y-[-50%]
-            bg-background px-1
-            transition-all duration-300 ease-in-out
-            ${isEn ? 'left-3' : 'right-3'}
-            ${isLNameFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
-          `}
-        >
-          {isEn ? 'LAST NAME' : 'الاسم الاخير'}
-        </span>
         <input
           className={`
-            bg-transparent border-solid
+            peer bg-transparent border-solid
             outline-none text-heading border-[1px]
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
             ${incorrectField.last_name.isValid 
-              ? isLNameFocus 
-              ? 'border-body'
-              : 'border-inbetween'
+              ? 'focus:border-body border-inbetween'
               : 'border-red-500'
             }
           `}
           id="last_name"
           name="last_name"
           type="text"
+          placeholder=""
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={handleChange}
         />
+        <span
+          className={`
+            absolute translate-y-[-50%]
+            top-0 text-xs text-body font-semibold
+            peer-focus:top-0 peer-focus:text-xs
+            peer-focus:text-heading peer-focus:font-bold
+            peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base 
+            peer-placeholder-shown:text-body-light
+            bg-background px-1 
+            transition-all duration-300 ease-in-out
+            ${isEn ? 'left-3' : 'right-3'}
+          `}
+        >
+          {isEn ? 'LAST NAME' : 'الاسم الاخير'}
+        </span>
         <div
           className={`
             absolute top-1/2 left-1/2
@@ -426,37 +437,40 @@ export default function SignupForm ({ className, ...props }: Props) {
         data-type="label_element_is_clicked"
         onClick={handleClick}
       >
-        <span
-          className={`
-            absolute translate-y-[-50%]
-            bg-background px-1
-            transition-all duration-300 ease-in-out
-            ${isEn ? 'left-3' : 'right-3'}
-            ${isEmailFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
-          `}
-        >
-          {isEn ? 'EMAIL' : 'الايميل'}
-        </span>
         <input
           className={`
-            bg-transparent border-solid
+            peer bg-transparent border-solid
             outline-none text-heading border-[1px]
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
             ${incorrectField.email.isValid 
-              ? isEmailFocus 
-              ? 'border-body'
-              : 'border-inbetween'
+              ? 'focus:border-body border-inbetween'
               : 'border-red-500'
             }
           `}
           id="email"
           name="email"
           type="email"
+          placeholder=""
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={handleChange}
         />
+        <span
+          className={`
+            absolute translate-y-[-50%]
+            top-0 text-xs text-body font-bold
+            peer-focus:top-0 peer-focus:text-xs
+            peer-focus:text-heading peer-focus:font-bold
+            peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base 
+            peer-placeholder-shown:text-body-light
+            bg-background px-1 
+            transition-all duration-300 ease-in-out
+            ${isEn ? 'left-3' : 'right-3'}
+          `}
+        >
+          {isEn ? 'EMAIL' : 'الايميل'}
+        </span>
         <div
           className={`
             absolute top-1/2 left-1/2
@@ -487,28 +501,41 @@ export default function SignupForm ({ className, ...props }: Props) {
             ${isPhoneNumberFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
           `}
         >
-          {isEn ? 'Phone Number' : 'رقم الهاتف'}
         </span>
         <input
           className={`
-            bg-transparent border-solid
+            peer bg-transparent border-solid
             outline-none text-heading border-[1px]
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
-            ${incorrectField.email.isValid 
-              ? isPhoneNumberFocus 
-              ? 'border-body'
-              : 'border-inbetween'
+            ${incorrectField.phone_number.isValid 
+              ? 'focus:border-body border-inbetween'
               : 'border-red-500'
             }
           `}
           id="phone_number"
           name="phone_number"
           type="phone_number"
+          placeholder=""
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={handleChange}
         />
+        <span
+          className={`
+            absolute translate-y-[-50%]
+            top-0 text-xs text-body font-semibold
+            peer-focus:top-0 peer-focus:text-xs
+            peer-focus:text-heading peer-focus:font-bold
+            peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base 
+            peer-placeholder-shown:text-body-light
+            bg-background px-1 
+            transition-all duration-300 ease-in-out
+            ${isEn ? 'left-3' : 'right-3'}
+          `}
+        >
+          {isEn ? 'Phone Number' : 'رقم الهاتف'}
+        </span>
         <div
           className={`
             absolute top-1/2 left-1/2
@@ -530,38 +557,42 @@ export default function SignupForm ({ className, ...props }: Props) {
         data-type="label_element_is_clicked"
         onClick={handleClick}
       >
-        <span
-          className={`
-            absolute translate-y-[-50%]
-            bg-background px-1
-            transition-all duration-300 ease-in-out
-            ${isEn ? 'left-3' : 'right-3'}
-            ${isPasswordFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
-          `}
-        >
-          {isEn ? 'PASSWORD' : 'كلمه السر'}
-        </span>
         <input
           className={`
-            bg-transparent border-solid
+            peer bg-transparent border-solid
             outline-none text-heading border-[1px]
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
             ${isPassEyeActive ? "font-regular" : "font-bold"}
-            ${incorrectField.email.isValid 
-              ? isPasswordFocus 
-              ? 'border-body'
-              : 'border-inbetween'
+            ${incorrectField.password.isValid 
+              ? 'focus:border-body border-inbetween'
               : 'border-red-500'
             }
           `}
           id="password"
           name="password"
           type={isPassEyeActive ? "text" : "password"}
+          placeholder=""
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={handleChange}
+          ref={passInptRef}
         />
+        <span
+          className={`
+            absolute translate-y-[-50%]
+            top-0 text-xs text-body font-semibold
+            peer-focus:top-0 peer-focus:text-xs
+            peer-focus:text-heading peer-focus:font-bold
+            peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base 
+            peer-placeholder-shown:text-body-light
+            bg-background px-1 
+            transition-all duration-300 ease-in-out
+            ${isEn ? 'left-3' : 'right-3'}
+          `}
+        >
+          {isEn ? 'PASSWORD' : 'كلمه السر'}
+        </span>
         <div
           className={`
             absolute top-1/2 left-1/2
@@ -641,38 +672,42 @@ export default function SignupForm ({ className, ...props }: Props) {
         data-type="label_element_is_clicked"
         onClick={handleClick}
       >
-        <span
-          className={`
-            absolute translate-y-[-50%]
-            bg-background px-1
-            transition-all duration-300 ease-in-out
-            ${isCPasswordFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
-            ${isEn ? 'left-3' : 'right-3'}
-          `}
-        >
-          {isEn ? 'CONFIRM PASSWORD' : 'تاكيد كلمه السر'}
-        </span>
         <input
           className={`
-            bg-transparent border-solid
+            peer bg-transparent border-solid
             outline-none text-heading border-[1px]
             transition-all duration-300 ease-in-out
             w-full py-2 px-4 rounded-md
             ${isCPassEyeActive ? "font-regular" : "font-bold"}
-            ${incorrectField.email.isValid 
-              ? isCPasswordFocus 
-              ? 'border-body'
-              : 'border-inbetween'
+            ${incorrectField.cPassword.isValid 
+              ? 'focus:border-body border-inbetween'
               : 'border-red-500'
             }
           `}
           id="cPassword"
           name="cPassword"
           type={isCPassEyeActive ? "text" : "password"}
+          placeholder=""
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={handleChange}
+          ref={cPassInptRef}
         />
+        <span
+          className={`
+            absolute translate-y-[-50%]
+            top-0 text-xs text-body font-bold
+            peer-focus:top-0 peer-focus:text-xs
+            peer-focus:text-heading peer-focus:font-bold
+            peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base 
+            peer-placeholder-shown:text-body-light
+            bg-background px-1 
+            transition-all duration-300 ease-in-out
+            ${isEn ? 'left-3' : 'right-3'}
+          `}
+        >
+          {isEn ? 'CONFIRM PASSWORD' : 'تاكيد كلمه السر'}
+        </span>
         <div
           className={`
             absolute top-1/2 left-1/2
