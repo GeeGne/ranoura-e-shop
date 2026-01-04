@@ -76,6 +76,7 @@ export default function CheckoutForm ({
   const [ isNotesFocus, setIsNotesFocus ] = useState<boolean>(false);
   const [ selectedPhoneNumberRadio, setSelectedPhoneNumberRadio ] = useState<string>('existedPhoneNumber');
   const [ toggleOrderSummary, setToggleOrderSummary ] = useState<boolean>(false);
+  let newNumberLabelOnStartUp = useRef<boolean>(true);
   const [ selectedDeliverToCity, setSelectedDeliverToCity ] = useState<{
      shipping_address?: string; shipping_cost?: string | number 
     }>({
@@ -93,6 +94,13 @@ export default function CheckoutForm ({
       shipping_cost: '--'
     });
   }, [lang]);
+
+  const handleLabelStartUp = () => {
+    setTimeout(() => {
+      newNumberLabelOnStartUp.current = false;
+    }, 100)
+    return '0s'
+  }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -192,6 +200,7 @@ export default function CheckoutForm ({
   // console.log('isDeliverToFocus: ', isDeliverToFocus);
   console.log('selectedPhoneNumberRadio: ', selectedPhoneNumberRadio);
   console.log('user Refresh test: ', user);
+  console.log('newNumberLabelOnStartUp.current: ', newNumberLabelOnStartUp.current);
 
   if (isLoading) return (
     <LoadingLayout />
@@ -373,10 +382,11 @@ export default function CheckoutForm ({
             </label>
             <label
               className={`
-                group flex relative
+                group relative
                 ${selectedPhoneNumberRadio === 'newPhoneNumber' ? '--expand-checkout-label' : '--close-checkout-label'}
               `}
               htmlFor="anotherPhoneNumber"
+              style={{ animationDuration: newNumberLabelOnStartUp.current ? handleLabelStartUp() : '0.3s'}}
             >
               <input
                 className={`

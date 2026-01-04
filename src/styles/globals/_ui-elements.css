@@ -223,3 +223,8 @@
 .border-style-md {
   clip-path: polygon(100% 0, 90% 50%, 100% 100%, 0% 100%, 10% 50%, 0% 0%);
 }
+
+.test {
+  background-color: yellow !important;
+  height: 10000px;
+}

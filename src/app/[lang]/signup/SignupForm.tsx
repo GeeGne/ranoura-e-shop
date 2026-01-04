@@ -72,10 +72,6 @@ export default function SignupForm ({ className, ...props }: Props) {
     cPassword: { message: '', isValid: true },
   });
   const [ isProcessing, setIsProcessing ] = useState<boolean>(false);
-  const [ isFNameFocus, setIsFNameFocus ] = useState<boolean>(false);
-  const [ isLNameFocus, setIsLNameFocus ] = useState<boolean>(false);
-  const [ isEmailFocus, setIsEmailFocus ] = useState<boolean>(false);
-  const [ isPhoneNumberFocus, setIsPhoneNumberFocus ] = useState<boolean>(false);
   const [ isPasswordFocus, setIsPasswordFocus ] = useState<boolean>(false);
   const [ isCPasswordFocus, setIsCPasswordFocus ] = useState<boolean>(false);
 
@@ -180,18 +176,6 @@ export default function SignupForm ({ className, ...props }: Props) {
     e.currentTarget.scrollIntoView({ block: 'center', behavior: 'smooth' });
 
     switch (name) {
-      case 'first_name':
-        setIsFNameFocus(true);
-        break;
-      case 'last_name':
-        setIsLNameFocus(true);
-        break;
-      case 'email':
-        setIsEmailFocus(true);
-        break;
-      case 'phone_number':
-        setIsPhoneNumberFocus(true);
-        break;
       case 'password':
         setIsPasswordFocus(true);
         break;
@@ -208,18 +192,6 @@ export default function SignupForm ({ className, ...props }: Props) {
 
     if (value !== "") return;
     switch (name) {
-      case 'first_name':
-        setIsFNameFocus(false);
-        break;
-      case 'last_name':
-        setIsLNameFocus(false);
-        break;
-      case 'email':
-        setIsEmailFocus(false);
-        break;
-      case 'phone_number':
-        setIsPhoneNumberFocus(false);
-        break;
       case 'password':
         setIsPasswordFocus(false);
         break;
@@ -492,16 +464,6 @@ export default function SignupForm ({ className, ...props }: Props) {
         data-type="label_element_is_clicked"
         onClick={handleClick}
       >
-        <span
-          className={`
-            absolute translate-y-[-50%]
-            bg-background px-1
-            transition-all duration-300 ease-in-out
-            ${isEn ? 'left-3' : 'right-3'}
-            ${isPhoneNumberFocus ? 'top-0 text-xs text-heading font-bold' : 'top-1/2 text-base text-body-light'}
-          `}
-        >
-        </span>
         <input
           className={`
             peer bg-transparent border-solid

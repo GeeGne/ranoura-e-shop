@@ -1,3 +1,4 @@
+.delay--0s { animation-delay: 0s !important }
 .delay--01s { animation-delay: 0.1s !important }
 .delay--015s { animation-delay: 0.15s !important }
 .delay--02s { animation-delay: 0.2s !important }
@@ -7,6 +8,7 @@
 .delay--1s { animation-delay: 1s !important }
 .delay--1s-05s { animation-delay: 1.5s !important }
 
+.duration--0s { animation-duration: 0s !important }
 .duration--01s { animation-duration: 0.1s !important }
 .duration--015s { animation-duration: 0.15s !important }
 .duration--02s { animation-duration: 0.2s !important }
@@ -20,6 +22,10 @@
 
 .animation-direction-normal { animation-direction: normal }
 .animation-direction-reverse { animation-direction: reverse }
+
+.animation-fill-mode-both { animation-fill-mode: both }
+.animation-fill-mode-forwards { animation-fill-mode: forwards }
+.animation-fill-mode-backwards { animation-fill-mode: backwards }
 
 @keyframes opacity-blink {
   0% {
@@ -176,6 +182,7 @@
 
 @keyframes expand-checkout-label {
   0% {
+    display: flex;
     margin-top: 0rem;
     opacity: 0;
     visibility: hidden;
@@ -314,7 +321,6 @@
 .--expand-checkout-label,
 .--close-checkout-label {
   animation-name: expand-checkout-label;
-  animation-duration: 0.5s;
   animation-fill-mode: both;
 }
 
@@ -324,5 +330,5 @@
 }
 .--close-checkout-label {
   animation-name: close-checkout-label;
-  animation-timing-function: ease-in;
+  animation-timing-function: ease-out;
 }
