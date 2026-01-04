@@ -132,6 +132,27 @@ export default function CheckoutForm ({
     }
   }
 
+  const handleOnMouseUp = (e: React.MouseEvent<HTMLElement>) => {
+
+    const { type, shippingAddress: shipping_address, shippingCost: shipping_cost  } = e.currentTarget.dataset;
+    console.log('mouse up!');
+    switch (type) {
+      case 'deliverTo_list_is_clicked':
+        setSelectedDeliverToCity({
+          shipping_address,
+          shipping_cost
+        });
+        setShippingDetails(val =>({ 
+          ...val, shipping_address, shipping_cost: Number(shipping_cost)
+        }));
+        setTimeout(() => deliverToRef.current?.blur(), 100);
+        deliverToRef.current?.blur()
+        break;
+      default:
+        console.error('Unknown type: ', type);
+    }
+  }
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked, value, id } = e.currentTarget;
     
@@ -231,17 +252,19 @@ export default function CheckoutForm ({
           htmlFor="deliverTo"
         >
           <input 
+            className="
+              peer w-full py-3 px-4 bg-transparent rounded-lg
+              outline-none
+              border-solid border-inbetween focus:border-primary border-[2px] focus:border-[2px]
+              text-body focus:text-heading text-lg font-semibold
+              transition-all duration-200 ease-in-out
+            "
             type="text"
             name="deliverTo"
             id="deliverTo"
             readOnly
             value={selectedDeliverToCity.shipping_address}
-            className="
-              peer w-full py-3 px-4 bg-transparent rounded-lg
-              border-solid border-inbetween focus:border-primary border-[2px] focus:border-[2px]
-              text-heading text-lg font-bold
-              transition-all duration-200 ease-in-out
-            "
+            ref={deliverToRef}
           />
           <LineMdChevronSmallDown
             className={`
@@ -256,9 +279,9 @@ export default function CheckoutForm ({
               absolute flex flex-col 
               top-full left-0 w-full max-h-[250px] px-1 py-1 overflow-y-scroll
               bg-background text-body drop-shadow-md rounded-lg z-[5]
-              transition-all delay-100 duration-200 ease-in-out origin-top
               scale-y-0 peer-focus:scale-y-[100%]
               opacity-0 peer-focus:opacity-100
+              transition-all delay-100 duration-200 ease-in-out origin-top
             `}
           >
             {deliverTo.map(itm =>
@@ -273,7 +296,8 @@ export default function CheckoutForm ({
                 data-shipping-address={itm.shipping_address}
                 data-shipping-cost={itm.shipping_cost}
                 data-type="deliverTo_list_is_clicked"
-                onClick={handleClick}
+                // onClick={handleClick}
+                // onMouseUp={handleOnMouseUp}
               >
                 {itm.shipping_address}
               </li>
