@@ -1,62 +1,77 @@
 [
   {
     "id": 0,
+    "value": { "en": "Damascus", "ar": "دمشق" },
     "shipping_address": "Damascus",
     "shipping_cost": 200
   },{
     "id": 1,
+    "value": { "en": "Aleppo", "ar": "حلب" },
     "shipping_address": "Aleppo",
     "shipping_cost": 400
   },{
     "id": 2,
+    "value": { "en": "Homs", "ar": "حمص" },
     "shipping_address": "Homs",
     "shipping_cost": 360
   },{
     "id": 3,
+    "value": { "en": "Hama", "ar": "حماه" },
     "shipping_address": "Hama",
     "shipping_cost": 700
   },{
     "id": 4,
+    "value": { "en": "Latakia", "ar": "الاذقيه" },
     "shipping_address": "Latakia",
     "shipping_cost": 1200
   },{
     "id": 5,
-    "shipping_address": "Deir ez-Zor",
+    "value": { "en": "Deir", "ar": "دير الزور" },
+    "shipping_address": "Deir El-Zor",
     "shipping_cost": 2000
   },{
     "id": 6,
+    "value": { "en": "Daraa", "ar": "درعا" },
     "shipping_address": "Daraa",
     "shipping_cost": 900
   },{
     "id": 7,
+    "value": { "en": "Raqqa", "ar": "درعا" },
     "shipping_address": "Raqqa",
     "shipping_cost": 100
   },{
     "id": 8,
+    "value": { "en": "Qamishli", "ar": "قامشلي" },
     "shipping_address": "Qamishli",
     "shipping_cost": 600
   },{
     "id": 9,
+    "value": { "en": "Tartus", "ar": "طرطوس" },
     "shipping_address": "Tartus",
     "shipping_cost": 4000
   },{
     "id": 10,
+    "value": { "en": "As Suwayda", "ar": "السويداء" },
     "shipping_address": "As-Suwayda",
     "shipping_cost": 470
   },{
     "id": 11,
+    "value": { "en": "Palmyra", "ar": "تدمر" },
     "shipping_address": "Palmyra",
     "shipping_cost": 1200
   },{
     "id": 12,
+    "value": { "en": "Al Hasakah", "ar": "الحسكه" },
     "shipping_address": "Al-Hasakah",
     "shipping_cost": 2500
   },{
     "id": 13,
+    "value": { "en": "Manbij", "ar": "منجب" },
     "shipping_address": "Manbij",
     "shipping_cost": 700
   },{
     "id": 14,
+    "value": { "en": "Idlib", "ar": "ادلب" },
     "shipping_address": "Idlib",
     "shipping_cost": 850
   }

@@ -58,7 +58,6 @@ export default function CheckoutForm ({
   });
 
   useEffect(() => {
-    return;
     if (isLoading || isError || !user) return;
     const { id, first_name, last_name, email, phone_number, profile_img_url } = user;
     setShippingDetails(val => ({
@@ -71,29 +70,20 @@ export default function CheckoutForm ({
     }))
   }, [user]);
 
-  const [ isAddressDetailsFocus, setIsAddressDetailsFocus ] = useState<boolean>(false);
-  const [ isSecondAddressFocus, setIsSecondAddressFocus ] = useState<boolean>(false);
-  const [ isNotesFocus, setIsNotesFocus ] = useState<boolean>(false);
   const [ selectedPhoneNumberRadio, setSelectedPhoneNumberRadio ] = useState<string>('existedPhoneNumber');
   const [ toggleOrderSummary, setToggleOrderSummary ] = useState<boolean>(false);
   let newNumberLabelOnStartUp = useRef<boolean>(true);
   const [ selectedDeliverToCity, setSelectedDeliverToCity ] = useState<{
-     shipping_address?: string; shipping_cost?: string | number 
+     shipping_address?: string; shipping_cost?: string | number, value?: string
     }>({
-    shipping_address: isEn ? 'Pick Your City' : 'اختر محافظتك',
-    shipping_cost: '--'
+    shipping_address: 'Pick Your City',
+    shipping_cost: '--',
+    value: isEn ? 'Pick Your City' : 'اختر محافظتك' 
   });
   
   const orderSummaryRef = useRef<HTMLElement>(null);
   const deliverToRef = useRef<HTMLElement | any>(null);
   const getRefTotalHeight = (ref: any) => ref.current?.scrollHeight;
-
-  useEffect(() => {
-    setSelectedDeliverToCity({
-      shipping_address: isEn ? 'Pick Your City' : 'اختر محافظتك', 
-      shipping_cost: '--'
-    });
-  }, [lang]);
 
   const handleLabelStartUp = () => {
     setTimeout(() => {
@@ -108,7 +98,7 @@ export default function CheckoutForm ({
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement | HTMLLIElement>) => {
     const { 
-      type, shippingAddress: shipping_address, shippingCost: shipping_cost 
+      type, shippingAddress: shipping_address, shippingCost: shipping_cost, shippingValue: value
     } = e.currentTarget.dataset;
 
     switch (type) {
@@ -119,7 +109,8 @@ export default function CheckoutForm ({
       case 'deliverTo_list_is_clicked':
         setSelectedDeliverToCity({
           shipping_address,
-          shipping_cost
+          shipping_cost,
+          value
         });
         setShippingDetails(val =>({ 
           ...val, shipping_address, shipping_cost: Number(shipping_cost)
@@ -129,27 +120,6 @@ export default function CheckoutForm ({
         break;
       default:
         console.error('Unknown Type: ', type);
-    }
-  }
-
-  const handleOnMouseUp = (e: React.MouseEvent<HTMLElement>) => {
-
-    const { type, shippingAddress: shipping_address, shippingCost: shipping_cost  } = e.currentTarget.dataset;
-    console.log('mouse up!');
-    switch (type) {
-      case 'deliverTo_list_is_clicked':
-        setSelectedDeliverToCity({
-          shipping_address,
-          shipping_cost
-        });
-        setShippingDetails(val =>({ 
-          ...val, shipping_address, shipping_cost: Number(shipping_cost)
-        }));
-        setTimeout(() => deliverToRef.current?.blur(), 100);
-        deliverToRef.current?.blur()
-        break;
-      default:
-        console.error('Unknown type: ', type);
     }
   }
 
@@ -219,9 +189,9 @@ export default function CheckoutForm ({
   // console.log('selectedDeliverToCity: ', selectedDeliverToCity);
   console.log('shippingDetails: ', shippingDetails);
   // console.log('isDeliverToFocus: ', isDeliverToFocus);
-  console.log('selectedPhoneNumberRadio: ', selectedPhoneNumberRadio);
+  // console.log('selectedPhoneNumberRadio: ', selectedPhoneNumberRadio);
   console.log('user Refresh test: ', user);
-  console.log('newNumberLabelOnStartUp.current: ', newNumberLabelOnStartUp.current);
+  // console.log('newNumberLabelOnStartUp.current: ', newNumberLabelOnStartUp.current);
 
   if (isLoading) return (
     <LoadingLayout />
@@ -237,10 +207,10 @@ export default function CheckoutForm ({
       { ...props }
     >
       <section
-        className="py-4 flex flex-col gap-4"
+        className="py-4 flex flex-col"
       >
         <Title 
-          className="pb-4" 
+          className="pb-2" 
           text={isEn ? "Deliver To" : "توصيل الى"} 
           info={isEn 
             ? "Enter the address where you’d like your order to be delivered. Double-check the details to ensure everything is accurate and up-to-date for a smooth delivery experience!" 
@@ -248,28 +218,34 @@ export default function CheckoutForm ({
           }
         />
         <label
-          className="relative"
+          className="relative py-4"
           htmlFor="deliverTo"
         >
+
           <input 
             className="
-              peer w-full py-3 px-4 bg-transparent rounded-lg
-              outline-none
-              border-solid border-inbetween focus:border-primary border-[2px] focus:border-[2px]
-              text-body focus:text-heading text-lg font-semibold
-              transition-all duration-200 ease-in-out
+              peer absolute top-0 left-0 w-0 h-0 invisible opacity-0
             "
-            type="text"
+            type="checkbox"
             name="deliverTo"
             id="deliverTo"
-            readOnly
-            value={selectedDeliverToCity.shipping_address}
             ref={deliverToRef}
           />
+          <div 
+            className="
+              peer w-full py-3 px-4 bg-transparent rounded-lg
+              outline-none border-solid border-inbetween 
+              peer-checked:border-primary border-[2px] peer-checked:border-[2px]
+              text-body peer-checked:text-heading text-lg font-semibold
+              transition-all duration-200 ease-in-out
+            "
+          >
+            {selectedDeliverToCity.value}
+          </div>
           <LineMdChevronSmallDown
             className={`
               absolute top-1/2 translate-y-[-50%]
-              text-body peer-focus:text-heading 
+              text-body peer-checked:text-heading 
               transition-all duration-200 ease-in-out
               ${isEn ? 'right-4' : 'left-4'}
             `}
@@ -279,8 +255,8 @@ export default function CheckoutForm ({
               absolute flex flex-col 
               top-full left-0 w-full max-h-[250px] px-1 py-1 overflow-y-scroll
               bg-background text-body drop-shadow-md rounded-lg z-[5]
-              scale-y-0 peer-focus:scale-y-[100%]
-              opacity-0 peer-focus:opacity-100
+              scale-y-0 peer-checked:scale-y-[100%]
+              opacity-0 peer-checked:opacity-100
               transition-all delay-100 duration-200 ease-in-out origin-top
             `}
           >
@@ -295,11 +271,11 @@ export default function CheckoutForm ({
                 role="button"
                 data-shipping-address={itm.shipping_address}
                 data-shipping-cost={itm.shipping_cost}
+                data-shipping-value={itm.value[lang]}
                 data-type="deliverTo_list_is_clicked"
-                // onClick={handleClick}
-                // onMouseUp={handleOnMouseUp}
+                onClick={handleClick}
               >
-                {itm.shipping_address}
+                {itm.value[lang]}
               </li>
             )}
           </ul>
@@ -429,15 +405,16 @@ export default function CheckoutForm ({
               />
               <span
                 className={`
-                  absolute left-3 translate-y-[-50%]
+                  absolute translate-y-[-50%]
                   px-1 bg-background peer-autofill:top-0
                   transition-all duration-300 ease-in-out
                   text-body text-xs font-bold
-                  peer-placeholder-shown:top-1/2 peer-placeholder-shown:font-normal peer-placeholder-shown:text-base peer-placeholder-shown:text-body-light
+                  peer-placeholder-shown:top-1/2 peer-placeholder-shown:font-semibold peer-placeholder-shown:text-base peer-placeholder-shown:text-body-light
                   peer-focus:top-0 peer-focus:text-xs peer-focus:text-heading peer-focus:font-bold
+                  ${isEn ? 'left-3' : 'right-3'}
                 `}
               >
-                {isEn ? 'Another Phone Number' : 'تفاصيل العنوان'}
+                {isEn ? 'Another Phone Number' : 'رقم هاتف اخر'}
               </span>
             </label>
           </div>
@@ -474,12 +451,13 @@ export default function CheckoutForm ({
           />
           <span
             className={`
-              absolute left-3 translate-y-[-50%]
+              absolute translate-y-[-50%]
               px-1 bg-background peer-autofill:top-0
               transition-all duration-300 ease-in-out
               text-body text-xs font-bold
-              peer-placeholder-shown:top-1/2 peer-placeholder-shown:font-normal peer-placeholder-shown:text-base peer-placeholder-shown:text-body-light
+              peer-placeholder-shown:top-1/2 peer-placeholder-shown:font-semibold peer-placeholder-shown:text-base peer-placeholder-shown:text-body-light
               peer-focus:top-0 peer-focus:text-xs peer-focus:text-heading peer-focus:font-bold
+              ${isEn ? 'left-3' : 'right-3'}
             `}
           >
             {isEn ? 'Address Details' : 'تفاصيل العنوان'}
@@ -505,12 +483,13 @@ export default function CheckoutForm ({
           />
           <span
             className={`
-              absolute left-3 translate-y-[-50%]
+              absolute translate-y-[-50%]
               px-1 bg-background peer-autofill:top-0
               transition-all duration-300 ease-in-out
               text-body text-xs font-bold
-              peer-placeholder-shown:top-1/2 peer-placeholder-shown:font-normal peer-placeholder-shown:text-base peer-placeholder-shown:text-body-light
+              peer-placeholder-shown:top-1/2 peer-placeholder-shown:font-semibold peer-placeholder-shown:text-base peer-placeholder-shown:text-body-light
               peer-focus:top-0 peer-focus:text-xs peer-focus:text-heading peer-focus:font-bold
+              ${isEn ? 'left-3' : 'right-3'}
             `}
           >
             {isEn ? 'Second Address (optional)' : 'العنوان الثاني (اختياري)'}
@@ -536,12 +515,13 @@ export default function CheckoutForm ({
           />
           <span
             className={`
-              absolute left-3 translate-y-[-50%]
+              absolute translate-y-[-50%]
               px-1 bg-background peer-autofill:top-0
               transition-all duration-300 ease-in-out
               text-body text-xs font-bold
-              peer-placeholder-shown:top-1/2 peer-placeholder-shown:font-normal peer-placeholder-shown:text-base peer-placeholder-shown:text-body-light
+              peer-placeholder-shown:top-1/2 peer-placeholder-shown:font-semibold peer-placeholder-shown:text-base peer-placeholder-shown:text-body-light
               peer-focus:top-0 peer-focus:text-xs peer-focus:text-heading peer-focus:font-bold
+              ${isEn ? 'left-3' : 'right-3'}
             `}
           >
             {isEn ? 'Notes (optional)' : 'ملاحظات (اختياري)'}

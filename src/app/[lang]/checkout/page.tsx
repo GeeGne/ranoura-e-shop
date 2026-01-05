@@ -47,7 +47,7 @@ export default function page () {
     queryKey: [ 'user' ],
     queryFn: getUserData
   });
-  const user = userData;
+  const user = userData?.data;
   
   if (isProductsError && isUserError) return (
     <ErrorLayout 
@@ -58,7 +58,7 @@ export default function page () {
 
   // DEBUG & UI
   // console.log('checkout page: ', products);
-  console.log('checkout page, user: ', user);
+  // console.log('checkout page, user: ', user);
 
   return (
     <div
