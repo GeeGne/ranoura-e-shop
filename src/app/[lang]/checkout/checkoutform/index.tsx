@@ -83,6 +83,7 @@ export default function CheckoutForm ({
   
   const orderSummaryRef = useRef<HTMLElement>(null);
   const deliverToRef = useRef<HTMLElement | any>(null);
+  const anotherNumberInptRef = useRef<HTMLElement | any>(null);
   const getRefTotalHeight = (ref: any) => ref.current?.scrollHeight;
 
   const handleLabelStartUp = () => {
@@ -124,14 +125,18 @@ export default function CheckoutForm ({
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, checked, value, id } = e.currentTarget;
+    const { name, checked, value, id, } = e.currentTarget;
+    const { phoneNumber: customer_phone_number } = e.currentTarget.dataset;
     
     switch (name) {
-      case 'phoneNumber':
-        if (checked) setSelectedPhoneNumberRadio(id);
-        break;
-      case 'existedPhoneNumber':
-        setShippingDetails(val => ({ ...val, customer_phone_number: value }));
+      case 'phoneNumberRadio':        
+        setSelectedPhoneNumberRadio(id);
+
+        const newNumberInptValue = anotherNumberInptRef.current.value;
+        setShippingDetails(val => ({ 
+          ...val, 
+          customer_phone_number: id === "existedPhoneNumber" ? value : newNumberInptValue 
+        }));
         break;
       case 'anotherPhoneNumber':
         if (selectedPhoneNumberRadio === 'newPhoneNumber') setShippingDetails(val => ({
@@ -307,7 +312,7 @@ export default function CheckoutForm ({
               type="radio"
               defaultChecked
               id="existedPhoneNumber"
-              name="phoneNumber"
+              name="phoneNumberRadio"
               data-title="none"
               value={user.phone_number}
               onChange={handleChange}
@@ -349,8 +354,7 @@ export default function CheckoutForm ({
                 className="invisible peer"
                 type="radio"
                 id="newPhoneNumber"
-                name="phoneNumber"
-                data-title="none"
+                name="phoneNumberRadio"
                 onChange={handleChange}
               />
                 {
@@ -391,17 +395,19 @@ export default function CheckoutForm ({
               <input
                 className={`
                   peer bg-transparent
-                  outline outline-solid border-none text-heading
+                  border border-solid outline-none text-heading
                   transition-all duration-300 ease-in-out
                   w-full py-2 px-4 rounded-md
-                  outline-[1px] outline-inbetween
-                  focus:outline-body focus:outline-[2px]
+                  border-[2px] border-inbetween focus:border-body
+                  transition-all duration-200 ease-in-out
                 `}
                 id="anotherPhoneNumber"
                 name="anotherPhoneNumber"
                 placeholder=""
                 type="text"
+                data-phone-number={user.phone_number}
                 onChange={handleChange}
+                ref={anotherNumberInptRef}
               />
               <span
                 className={`
@@ -438,11 +444,11 @@ export default function CheckoutForm ({
           <input
             className={`
               peer bg-transparent
-              outline outline-solid border-none text-heading
+              border border-solid outline-none text-heading
               transition-all duration-300 ease-in-out
               w-full py-2 px-4 rounded-md
-              outline-[1px] outline-inbetween
-              focus:outline-body focus:outline-[2px]
+              border-[2px] border-inbetween focus:border-body
+              transition-all duration-200 ease-in-out
             `}
             placeholder=""
             id="addressDetails"
@@ -470,11 +476,11 @@ export default function CheckoutForm ({
           <input
             className={`
               peer bg-transparent
-              outline outline-solid border-none text-heading
+              border border-solid outline-none text-heading
               transition-all duration-300 ease-in-out
               w-full py-2 px-4 rounded-md
-              outline-[1px] outline-inbetween
-              focus:outline-body focus:outline-[2px]
+              border-[2px] border-inbetween focus:border-body
+              transition-all duration-200 ease-in-out
             `}
             placeholder=""
             id="secondAddress"
@@ -502,11 +508,11 @@ export default function CheckoutForm ({
           <input
             className={`
               peer bg-transparent
-              outline outline-solid border-none text-heading
+              border border-solid outline-none text-heading
               transition-all duration-300 ease-in-out
               w-full py-2 px-4 rounded-md
-              outline-[1px] outline-inbetween
-              focus:outline-body focus:outline-[2px]
+              border-[2px] border-inbetween focus:border-body
+              transition-all duration-200 ease-in-out
             `}
             placeholder=""
             id="notes"
