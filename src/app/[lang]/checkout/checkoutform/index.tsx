@@ -51,7 +51,11 @@ export default function CheckoutForm ({
     customer_full_name: '',
     customer_phone_number: '',
     email: '',
-    shipping_address: '',
+    shipping_address: {
+      address_details: 'sdf',
+      second_address: 'second address',
+      notes: 'notes'
+    },
     shipping_cost: '',
     currency: 'SYP',
     payment_method: 'cash',
@@ -126,7 +130,6 @@ export default function CheckoutForm ({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked, value, id, } = e.currentTarget;
-    const { phoneNumber: customer_phone_number } = e.currentTarget.dataset;
     
     switch (name) {
       case 'phoneNumberRadio':        
@@ -141,6 +144,17 @@ export default function CheckoutForm ({
       case 'anotherPhoneNumber':
         if (selectedPhoneNumberRadio === 'newPhoneNumber') setShippingDetails(val => ({
           ...val, customer_phone_number: value
+        }));
+        break;
+      case 'address_details':
+      case 'second_address':
+      case 'notes':
+        setShippingDetails(val => ({ 
+          ...val, 
+          shipping_address: {
+            ...val.shipping_address,
+            [name]: value 
+          }
         }));
         break;
       default:
@@ -452,8 +466,10 @@ export default function CheckoutForm ({
             `}
             placeholder=""
             id="addressDetails"
-            name="addressDetails"
+            name="address_details"
             type="text"
+            value={shippingDetails.shipping_address.address_details}
+            onChange={handleChange}
           />
           <span
             className={`
@@ -484,8 +500,10 @@ export default function CheckoutForm ({
             `}
             placeholder=""
             id="secondAddress"
-            name="secondAddress"
-            type="secondAddress"
+            name="second_address"
+            type="text"
+            value={shippingDetails.shipping_address.second_address}
+            onChange={handleChange}
           />
           <span
             className={`
@@ -518,6 +536,8 @@ export default function CheckoutForm ({
             id="notes"
             name="notes"
             type="notes"
+            value={shippingDetails.shipping_address.notes}
+            onChange={handleChange}
           />
           <span
             className={`
