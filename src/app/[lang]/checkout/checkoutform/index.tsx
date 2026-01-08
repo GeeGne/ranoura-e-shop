@@ -52,6 +52,7 @@ export default function CheckoutForm ({
     customer_phone_number: '',
     email: '',
     shipping_address: {
+      city: '',
       address_details: 'sdf',
       second_address: 'second address',
       notes: 'notes'
@@ -77,18 +78,18 @@ export default function CheckoutForm ({
   const [ selectedPhoneNumberRadio, setSelectedPhoneNumberRadio ] = useState<string>('existedPhoneNumber');
   const [ toggleOrderSummary, setToggleOrderSummary ] = useState<boolean>(false);
   let newNumberLabelOnStartUp = useRef<boolean>(true);
-  const [ selectedDeliverToCity, setSelectedDeliverToCity ] = useState<{
-     shipping_address?: string; shipping_cost?: string | number, value?: string
-    }>({
-    shipping_address: 'Pick Your City',
-    shipping_cost: '--',
-    value: isEn ? 'Pick Your City' : 'اختر محافظتك' 
-  });
   
   const orderSummaryRef = useRef<HTMLElement>(null);
   const deliverToRef = useRef<HTMLElement | any>(null);
   const anotherNumberInptRef = useRef<HTMLElement | any>(null);
   const getRefTotalHeight = (ref: any) => ref.current?.scrollHeight;
+
+  const getShippingCity = () => {
+    const shippingInfo = deliverTo.find(itm => itm.shipping_address === shippingDetails.shipping_address.city)
+    const cityTranslated = shippingInfo?.value[lang];
+    if (!cityTranslated) return isEn ? 'Pick your city' : 'اختر محافظتك';
+    return cityTranslated;
+  }
 
   const handleLabelStartUp = () => {
     setTimeout(() => {
@@ -103,7 +104,7 @@ export default function CheckoutForm ({
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement | HTMLLIElement>) => {
     const { 
-      type, shippingAddress: shipping_address, shippingCost: shipping_cost, shippingValue: value
+      type, city, shippingCost: shipping_cost, shippingValue: value
     } = e.currentTarget.dataset;
 
     switch (type) {
@@ -112,13 +113,13 @@ export default function CheckoutForm ({
 
         break;
       case 'deliverTo_list_is_clicked':
-        setSelectedDeliverToCity({
-          shipping_address,
-          shipping_cost,
-          value
-        });
         setShippingDetails(val =>({ 
-          ...val, shipping_address, shipping_cost: Number(shipping_cost)
+          ...val, 
+          shipping_address: {
+            ...val.shipping_address,
+            city 
+          }, 
+          shipping_cost: Number(shipping_cost)
         }));
         setTimeout(() => deliverToRef.current?.blur(), 100);
         // deliverToRef.current?.blur();
@@ -259,7 +260,7 @@ export default function CheckoutForm ({
               transition-all duration-200 ease-in-out
             "
           >
-            {selectedDeliverToCity.value}
+            {getShippingCity()}
           </div>
           <LineMdChevronSmallDown
             className={`
@@ -288,7 +289,7 @@ export default function CheckoutForm ({
                   transition-all duration-200 ease-in-out
                 "
                 role="button"
-                data-shipping-address={itm.shipping_address}
+                data-city={itm.shipping_address}
                 data-shipping-cost={itm.shipping_cost}
                 data-shipping-value={itm.value[lang]}
                 data-type="deliverTo_list_is_clicked"
@@ -300,8 +301,8 @@ export default function CheckoutForm ({
           </ul>
         </label>
         <div className="flex justify-between">
-          <h4 className="text-body">{isEn ? 'Shipping Fee:' : 'رسوم الشحن:'}</h4>
-          <span className="text-heading font-bold">{selectedDeliverToCity.shipping_cost}</span>
+          <h4 className="text-heading font-semibold">{isEn ? 'Shipping Fee:' : 'رسوم الشحن:'}</h4>
+          <span className="text-heading font-semibold">{shippingDetails.shipping_cost || '--'}</span>
         </div>
       </section>
       <section>
@@ -350,7 +351,7 @@ export default function CheckoutForm ({
             <span
               className={`
                 transition-all duration-300 ease-in-out
-                text-body peer-checked:text-heading peer-checked:font-bold
+                text-body peer-checked:text-heading peer-checked:font-semibold
                 transition-all duration-200 ease-in-out
               `}
             >
@@ -391,7 +392,7 @@ export default function CheckoutForm ({
               <span
                 className={`
                   transition-all duration-300 ease-in-out
-                  text-body peer-checked:text-heading peer-checked:font-bold
+                  text-body peer-checked:text-heading peer-checked:font-semibold
                   transition-all duration-200 ease-in-out
                 `}
               >
