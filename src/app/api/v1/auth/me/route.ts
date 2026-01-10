@@ -67,6 +67,7 @@ export async function GET(req: NextResponse) {
         profile_img_url: true,
         address: {
           select: {
+            city: true,
             address_details: true,
             second_address: true,
             notes: true

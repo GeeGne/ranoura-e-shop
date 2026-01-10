@@ -39,7 +39,8 @@ model User {
 model UserAddress {
   id              Int       @id @default(autoincrement())
   user_id         String    @unique
-  address_details String
+  city String? 
+  address_details String?
   second_address  String?
   notes           String?
   created_at      DateTime  @default(now())
