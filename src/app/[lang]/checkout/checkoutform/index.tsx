@@ -23,16 +23,18 @@ import { useLanguageStore } from '@/stores/index';
 
 type Props = {
   className?: string;
+  products?: Record<string, any>[];
+  user?: Record<string, any> | null;
+  cart?: Record<string,any>[];
   isLoading?: boolean;
   isError?: boolean;
-  user: Record<string, any>;
-  products?: Record<string, any>[];
 } & React.ComponentPropsWithRef<"form">;
 
 export default function CheckoutForm ({ 
   className,
-  user = {},
+  user = null,
   products = [],
+  cart = [],
   isLoading = false,
   isError = false,
   ...props
@@ -53,9 +55,9 @@ export default function CheckoutForm ({
     email: '',
     shipping_address: {
       city: '',
-      address_details: 'sdf',
-      second_address: 'second address',
-      notes: 'notes'
+      address_details: '',
+      second_address: '',
+      notes: ''
     },
     shipping_cost: '',
     currency: 'SYP',
@@ -64,14 +66,26 @@ export default function CheckoutForm ({
 
   useEffect(() => {
     if (isLoading || isError || !user) return;
-    const { id, first_name, last_name, email, phone_number, profile_img_url } = user;
+    const {
+      id, first_name, last_name, email, 
+      phone_number, profile_img_url, address
+    } = user;
+
+    const { city, address_details, second_address, notes } = address;
+
     setShippingDetails(val => ({
       ...val,
       user_id: id,
       customer_full_name: first_name + ' ' + last_name,
       email,
       customer_phone_number: phone_number,
-      customer_pfp: profile_img_url
+      customer_pfp: profile_img_url,
+      shipping_address: {
+        city,
+        address_details,
+        second_address,
+        notes
+      }
     }))
   }, [user]);
 
@@ -100,17 +114,17 @@ export default function CheckoutForm ({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log("submit button is clicked");
   }
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement | HTMLLIElement>) => {
     const { 
-      type, city, shippingCost: shipping_cost, shippingValue: value
+      type, city, shippingCost: shipping_cost
     } = e.currentTarget.dataset;
 
     switch (type) {
       case 'toggle_orderSummary_button_is_clicked':
         setToggleOrderSummary(val => !val);
-
         break;
       case 'deliverTo_list_is_clicked':
         setShippingDetails(val =>({ 
@@ -329,7 +343,7 @@ export default function CheckoutForm ({
               id="existedPhoneNumber"
               name="phoneNumberRadio"
               data-title="none"
-              value={user.phone_number}
+              value={user?.phone_number}
               onChange={handleChange}
             />
             {selectedPhoneNumberRadio === 'existedPhoneNumber'
@@ -420,7 +434,6 @@ export default function CheckoutForm ({
                 name="anotherPhoneNumber"
                 placeholder=""
                 type="text"
-                data-phone-number={user.phone_number}
                 onChange={handleChange}
                 ref={anotherNumberInptRef}
               />
@@ -612,6 +625,7 @@ export default function CheckoutForm ({
       >
         <BtnA
           className="cool-bg-grad-m text-heading-invert font-bold rounded-lg p-2"
+          type="submit"
         >
           {isEn ? 'PLACE ORDER' : 'تقديم الطلب'}
         </BtnA>

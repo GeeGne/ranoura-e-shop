@@ -50,9 +50,11 @@ export async function GET(req: NextResponse) {
         email
       },
       select: {
+        id: true,
         first_name: true,
         last_name: true,
         slug: true,
+        email: true,
         phone_number: true,
         role: {
           select: {
