@@ -7,6 +7,7 @@ import OrderSummary from '@/components/orderSummary/index';
 import LoadingLayout from '@/app/[lang]/checkout/checkoutform/LoadingLayout';
 import BtnA from '@/components/BtnA';
 import LineMdChevronSmallDown from '@/components/svgs/LineMdChevronSmallDown';
+import LineMdAlertCircleLoop from '@/components/svgs/activity/LineMdAlertCircleLoop';
 import LineMdConfirmCircleTwotone from '@/components/svgs/LineMdConfirmCircleTwotone';
 import LineMdConfirmCircleTwotoneToCircleTwotoneTransition from '@/components/svgs/LineMdConfirmCircleTwotoneToCircleTwotoneTransition';
 import LineMdSquareTwotoneToConfirmSquareTransition from '@/components/svgs/LineMdSquareTwotoneToConfirmSquareTransition';
@@ -64,6 +65,8 @@ export default function CheckoutForm ({
     payment_method: 'cash',
   });
 
+  const [ inputErrorByName, setInputErrorByName ] = useState<string>("");
+
   useEffect(() => {
     if (isLoading || isError || !user) return;
     const {
@@ -94,8 +97,11 @@ export default function CheckoutForm ({
   let newNumberLabelOnStartUp = useRef<boolean>(true);
   
   const orderSummaryRef = useRef<HTMLElement>(null);
-  const deliverToRef = useRef<HTMLElement | any>(null);
+  const deliverToInptRef = useRef<HTMLElement | any>(null);
   const anotherNumberInptRef = useRef<HTMLElement | any>(null);
+  const addressDetailsInptRef = useRef<HTMLInputElement>(null);
+  const secondAddressInptRef = useRef<HTMLInputElement>(null);
+  const notesInptRef = useRef<HTMLInputElement>(null);
   const getRefTotalHeight = (ref: any) => ref.current?.scrollHeight;
 
   const getShippingCity = () => {
@@ -103,18 +109,31 @@ export default function CheckoutForm ({
     const cityTranslated = shippingInfo?.value[lang];
     if (!cityTranslated) return isEn ? 'Pick your city' : 'اختر محافظتك';
     return cityTranslated;
-  }
+  };
 
   const handleLabelStartUp = () => {
     setTimeout(() => {
       newNumberLabelOnStartUp.current = false;
     }, 100)
     return '0s'
-  }
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("submit button is clicked");
+    const state = secondAddressInptRef.current?.validity;
+    deliverToInptRef.current?.setCustomValidity('sd');
+    deliverToInptRef.current?.reportValidity();
+    anotherNumberInptRef.current?.setCustomValidity('sd');
+    anotherNumberInptRef.current?.reportValidity();
+    addressDetailsInptRef.current?.setCustomValidity('sd');
+    addressDetailsInptRef.current?.reportValidity();
+    secondAddressInptRef.current?.setCustomValidity('sd');
+    secondAddressInptRef.current?.reportValidity();
+    notesInptRef.current?.setCustomValidity('sd');
+    notesInptRef.current?.reportValidity();
+    if (!shippingDetails.city) {
+
+    }
   }
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement | HTMLLIElement>) => {
@@ -135,8 +154,8 @@ export default function CheckoutForm ({
           }, 
           shipping_cost: Number(shipping_cost)
         }));
-        setTimeout(() => deliverToRef.current?.blur(), 100);
-        // deliverToRef.current?.blur();
+        setTimeout(() => deliverToInptRef.current?.blur(), 100);
+        // deliverToInptRef.current?.blur();
         break;
       default:
         console.error('Unknown Type: ', type);
@@ -263,7 +282,7 @@ export default function CheckoutForm ({
             type="checkbox"
             name="deliverTo"
             id="deliverTo"
-            ref={deliverToRef}
+            ref={deliverToInptRef}
           />
           <div 
             className="
@@ -271,6 +290,8 @@ export default function CheckoutForm ({
               outline-none border-solid border-inbetween 
               peer-checked:border-primary border-[2px] peer-checked:border-[2px]
               text-body peer-checked:text-heading text-lg font-semibold
+              peer-invalid:text-red-400 peer-invalid:checked:text-red-500
+              peer-invalid:border-red-400 peer-invalid:checked:border-red-500
               transition-all duration-200 ease-in-out
             "
           >
@@ -280,6 +301,7 @@ export default function CheckoutForm ({
             className={`
               absolute top-1/2 translate-y-[-50%]
               text-body peer-checked:text-heading 
+              peer-invalid:text-red-400 peer-invalid:checked:text-red-500
               transition-all duration-200 ease-in-out
               ${isEn ? 'right-4' : 'left-4'}
             `}
@@ -428,6 +450,8 @@ export default function CheckoutForm ({
                   transition-all duration-300 ease-in-out
                   w-full py-2 px-4 rounded-md
                   border-[2px] border-inbetween focus:border-body
+                  peer-invalid:text-red-400 peer-focus:peer-invalid:text-red-500
+                  invalid:border-red-400 focus:border-body invalid:focus:border-red-600
                   transition-all duration-200 ease-in-out
                 `}
                 id="anotherPhoneNumber"
@@ -441,15 +465,28 @@ export default function CheckoutForm ({
                 className={`
                   absolute translate-y-[-50%]
                   px-1 bg-background peer-autofill:top-0
-                  transition-all duration-300 ease-in-out
                   text-body text-xs font-bold
                   peer-placeholder-shown:top-1/2 peer-placeholder-shown:font-semibold peer-placeholder-shown:text-base peer-placeholder-shown:text-body-light
                   peer-focus:top-0 peer-focus:text-xs peer-focus:text-heading peer-focus:font-bold
+                  peer-invalid:text-red-400 peer-focus:peer-invalid:text-red-500
+                  transition-all duration-300 ease-in-out
                   ${isEn ? 'left-3' : 'right-3'}
                 `}
               >
                 {isEn ? 'Another Phone Number' : 'رقم هاتف اخر'}
               </span>
+              <div
+                className="
+                  hidden peer-invalid:flex
+                  items-center gap-2 p-2
+                  text-red-400 peer-focus:text-red-500 text-sm font-semibold
+                  rounded-lg z-[5]
+                  transition-all duration-200 ease-in-out
+                "
+              >
+                <span>This is a warning</span>
+                <LineMdAlertCircleLoop className="w-4 h-4"/>
+              </div>
             </label>
           </div>
         </fieldset>
@@ -466,7 +503,7 @@ export default function CheckoutForm ({
           }
         />
         <label
-          className="relative flex w-full"
+          className="relative flex w-full flex-col"
           htmlFor="addressDetails"
         >
           <input
@@ -476,6 +513,7 @@ export default function CheckoutForm ({
               transition-all duration-300 ease-in-out
               w-full py-2 px-4 rounded-md
               border-[2px] border-inbetween focus:border-body
+              invalid:border-red-400 focus:border-body invalid:focus:border-red-600
               transition-all duration-200 ease-in-out
             `}
             placeholder=""
@@ -484,23 +522,37 @@ export default function CheckoutForm ({
             type="text"
             value={shippingDetails.shipping_address.address_details}
             onChange={handleChange}
+            ref={addressDetailsInptRef}
           />
           <span
             className={`
               absolute translate-y-[-50%]
               px-1 bg-background peer-autofill:top-0
-              transition-all duration-300 ease-in-out
               text-body text-xs font-bold
               peer-placeholder-shown:top-1/2 peer-placeholder-shown:font-semibold peer-placeholder-shown:text-base peer-placeholder-shown:text-body-light
               peer-focus:top-0 peer-focus:text-xs peer-focus:text-heading peer-focus:font-bold
+              peer-invalid:text-red-400 peer-focus:peer-invalid:text-red-500
+              transition-all duration-300 ease-in-out
               ${isEn ? 'left-3' : 'right-3'}
             `}
           >
             {isEn ? 'Address Details' : 'تفاصيل العنوان'}
           </span>
+          <div
+            className="
+              hidden peer-invalid:flex
+              items-center gap-2 p-2
+              text-red-400 peer-focus:text-red-500 text-sm font-semibold
+              rounded-lg z-[5]
+              transition-all duration-200 ease-in-out
+            "
+          >
+            <span>This is a warning</span>
+            <LineMdAlertCircleLoop className="w-4 h-4"/>
+          </div>
         </label>
         <label
-          className="relative flex w-full"
+          className="relative flex w-full flex-col"
           htmlFor="secondAddress"
         >
           <input
@@ -509,7 +561,8 @@ export default function CheckoutForm ({
               border border-solid outline-none text-heading
               transition-all duration-300 ease-in-out
               w-full py-2 px-4 rounded-md
-              border-[2px] border-inbetween focus:border-body
+              border-[2px] border-inbetween 
+              invalid:border-red-400 focus:border-body invalid:focus:border-red-600
               transition-all duration-200 ease-in-out
             `}
             placeholder=""
@@ -518,23 +571,37 @@ export default function CheckoutForm ({
             type="text"
             value={shippingDetails.shipping_address.second_address}
             onChange={handleChange}
+            ref={secondAddressInptRef}
           />
           <span
             className={`
               absolute translate-y-[-50%]
               px-1 bg-background peer-autofill:top-0
-              transition-all duration-300 ease-in-out
-              text-body text-xs font-bold
+              text-body text-xs font-bold peer-focus:invalid:z-[10]
               peer-placeholder-shown:top-1/2 peer-placeholder-shown:font-semibold peer-placeholder-shown:text-base peer-placeholder-shown:text-body-light
               peer-focus:top-0 peer-focus:text-xs peer-focus:text-heading peer-focus:font-bold
+              peer-invalid:text-red-400 peer-focus:peer-invalid:text-red-500
+              transition-all duration-300 ease-in-out
               ${isEn ? 'left-3' : 'right-3'}
             `}
           >
             {isEn ? 'Second Address (optional)' : 'العنوان الثاني (اختياري)'}
           </span>
+          <div
+            className="
+              hidden peer-invalid:flex
+              items-center gap-2 p-2
+              text-red-400 peer-focus:text-red-500 text-sm font-semibold
+              rounded-lg z-[5]
+              transition-all duration-200 ease-in-out
+            "
+          >
+            <span>This is a warning</span>
+            <LineMdAlertCircleLoop className="w-4 h-4"/>
+          </div>
         </label>
         <label
-          className="relative flex w-full"
+          className="relative flex w-full flex-col"
           htmlFor="notes"
         >
           <input
@@ -544,6 +611,7 @@ export default function CheckoutForm ({
               transition-all duration-300 ease-in-out
               w-full py-2 px-4 rounded-md
               border-[2px] border-inbetween focus:border-body
+              invalid:border-red-400 focus:border-body invalid:focus:border-red-600
               transition-all duration-200 ease-in-out
             `}
             placeholder=""
@@ -552,20 +620,34 @@ export default function CheckoutForm ({
             type="notes"
             value={shippingDetails.shipping_address.notes}
             onChange={handleChange}
+            ref={notesInptRef}
           />
           <span
             className={`
               absolute translate-y-[-50%]
               px-1 bg-background peer-autofill:top-0
-              transition-all duration-300 ease-in-out
               text-body text-xs font-bold
               peer-placeholder-shown:top-1/2 peer-placeholder-shown:font-semibold peer-placeholder-shown:text-base peer-placeholder-shown:text-body-light
               peer-focus:top-0 peer-focus:text-xs peer-focus:text-heading peer-focus:font-bold
+              peer-invalid:text-red-400 peer-focus:peer-invalid:text-red-500
+              transition-all duration-300 ease-in-out
               ${isEn ? 'left-3' : 'right-3'}
             `}
           >
             {isEn ? 'Notes (optional)' : 'ملاحظات (اختياري)'}
           </span>
+          <div
+            className="
+              hidden peer-invalid:flex
+              items-center gap-2 p-2
+              text-red-400 peer-focus:text-red-500 text-sm font-semibold
+              rounded-lg z-[5]
+              transition-all duration-200 ease-in-out
+            "
+          >
+            <span>This is a warning</span>
+            <LineMdAlertCircleLoop className="w-4 h-4"/>
+          </div>
         </label>
       </section>
       <section

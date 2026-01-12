@@ -193,14 +193,14 @@
     margin-top: 1rem;
     opacity: 0;
     visibility: hidden;
-    max-height: 40px;
+    max-height: 55px;
     top: 10px;
   }
   100% {
     margin-top: 1rem;
     visibility: visible;
     opacity: 1;
-    max-height: 40px;
+    max-height: 60px;
     top: 0;
   }
 }
@@ -210,14 +210,14 @@
     margin-top: 1rem;
     visibility: visible;
     opacity: 1;
-    max-height: 40px;
+    max-height: 60px;
     top: 0;
   }
   40% {
     margin-top: 1rem;
     opacity: 0;
     visibility: hidden;
-    max-height: 40px;
+    max-height: 55px;
     top: 10px;
   }
   100% {
@@ -320,7 +320,6 @@
 
 .--expand-checkout-label,
 .--close-checkout-label {
-  animation-name: expand-checkout-label;
   animation-fill-mode: both;
 }
 
@@ -330,5 +329,5 @@
 }
 .--close-checkout-label {
   animation-name: close-checkout-label;
-  animation-timing-function: ease-out;
+  animation-timing-function: ease-in;
 }
