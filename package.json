@@ -25,6 +25,7 @@
     "dotenv": "^16.5.0",
     "jose": "^6.0.11",
     "jsonwebtoken": "^9.0.2",
+    "libphonenumber-js": "^1.12.34",
     "next": "^15.4.0-canary.8",
     "prisma": "^6.9.0",
     "react": "^19.0.0",

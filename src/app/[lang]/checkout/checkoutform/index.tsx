@@ -24,6 +24,7 @@ import { useLanguageStore } from '@/stores/index';
 
 // UTILS
 import isInputValid from '@/utils/validation/isInputValid';
+import formatPhoneNumber from '@/utils/formatPhoneNumber';
 
 type Props = {
   className?: string;
@@ -208,9 +209,11 @@ export default function CheckoutForm ({
         }));
         break;
       case 'anotherPhoneNumber':
+        const phone = formatPhoneNumber(value);
         if (selectedPhoneNumberRadio === 'newPhoneNumber') setShippingDetails(val => ({
-          ...val, customer_phone_number: `+963${value}`
+          ...val, customer_phone_number: phone
         }));
+        e.currentTarget.value = phone;
         break;
       case 'address_details':
       case 'second_address':

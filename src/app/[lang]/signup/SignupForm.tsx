@@ -19,6 +19,7 @@ import { validate } from '@/lib/validators/SignUpFormClient';
 
 // UTILS
 import createSlug from '@/utils/createSlug';
+import formatPhoneNumber from '@/utils/formatPhoneNumber';
 
 // API
 import createNewUser from '@/lib/api/users/post';
@@ -213,6 +214,10 @@ export default function SignupForm ({ className, ...props }: Props) {
       case 'phone_number':
       case 'password':
       case 'cPassword':
+        if (name === 'phone_number') {
+          const phone = formatPhoneNumber(value);
+          e.currentTarget.value = phone;
+        };
         setSignInForm(val => ({ ...val, [name]: value }));
         break;
       default:
