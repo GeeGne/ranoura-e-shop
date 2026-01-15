@@ -22,6 +22,9 @@ import deliverTo from '@/json/deliverTo.json';
 // STORE
 import { useLanguageStore } from '@/stores/index';
 
+// UTILS
+import isInputValid from '@/utils/validation/isInputValid';
+
 type Props = {
   className?: string;
   products?: Record<string, any>[];
@@ -127,6 +130,8 @@ export default function CheckoutForm ({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const state = secondAddressInptRef.current?.validity;
+
+    // check city
     const isCityPicked = shippingDetails.shipping_address.city;
     if (!isCityPicked) {
       const errorMessage = isEn 
@@ -137,6 +142,17 @@ export default function CheckoutForm ({
       deliverToInptRef.current?.reportValidity();
       setErrorMessages(val => ({ ...val, deliverTo: errorMessage }));
     }
+
+    // check phone number
+    const phoneNumber = shippingDetails.shipping_address.phoneNumber;
+    const isPhoneNumberValid = isInputValid.checkout.phoneNumber(phoneNumber, isEn).result;
+    const isAnotherPhoneNumberRadioSelected = selectedPhoneNumberRadio === 'anotherPhoneNumber';
+    if (isPhoneNumberValid && isAnotherPhoneNumberRadioSelected) {
+      const errorMessage = isInputValid.checkout.phoneNumber(phoneNumber, isEn).message;
+      anotherNumberInptRef.current?.setCustomValidity(errorMessage);
+      anotherNumberInptRef.current?.reportValidity();
+    }
+
     anotherNumberInptRef.current?.setCustomValidity('sd');
     anotherNumberInptRef.current?.reportValidity();
     addressDetailsInptRef.current?.setCustomValidity('sd');
@@ -193,7 +209,7 @@ export default function CheckoutForm ({
         break;
       case 'anotherPhoneNumber':
         if (selectedPhoneNumberRadio === 'newPhoneNumber') setShippingDetails(val => ({
-          ...val, customer_phone_number: value
+          ...val, customer_phone_number: `+963${value}`
         }));
         break;
       case 'address_details':
