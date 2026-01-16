@@ -73,8 +73,6 @@ export default function CheckoutForm ({
     deliverTo: '',
     anotherPhoneNumber: '',
     address_details: '',
-    second_address: '',
-    notes: '',
   });
 
   useEffect(() => {
@@ -128,10 +126,6 @@ export default function CheckoutForm ({
     anotherNumberInptRef.current?.reportValidity();
     addressDetailsInptRef.current?.setCustomValidity('');
     addressDetailsInptRef.current?.reportValidity();
-    secondAddressInptRef.current?.setCustomValidity('');
-    secondAddressInptRef.current?.reportValidity();
-    notesInptRef.current?.setCustomValidity('');
-    notesInptRef.current?.reportValidity();
   };
 
   const handleLabelStartUp = () => {
@@ -622,12 +616,9 @@ export default function CheckoutForm ({
           </div>
         </label>
         <label
-          className="flex w-full flex-col"
+          className="relative flex w-full flex-col"
           htmlFor="secondAddress"
         >
-          <div
-            className="peer relative"
-          >
             <input
               className={`
                 peer bg-transparent
@@ -642,10 +633,8 @@ export default function CheckoutForm ({
               id="secondAddress"
               name="second_address"
               type="text"
-              required
               value={shippingDetails.shipping_address.second_address}
               onChange={handleChange}
-              ref={secondAddressInptRef}
             />
             <span
               className={`
@@ -661,70 +650,42 @@ export default function CheckoutForm ({
             >
               {isEn ? 'Second Address (optional)' : 'العنوان الثاني (اختياري)'}
             </span>
-          </div> 
-          <div
-            className="
-              hidden peer-has-[:invalid]:flex
-              items-center gap-2 p-2
-              text-red-400 peer-focus:text-red-500 text-sm font-semibold
-              rounded-lg z-[5]
-              transition-all duration-200 ease-in-out
-            "
-          >
-            <span>{errorMessages.second_address}</span>
-            <LineMdAlertCircleLoop className="w-4 h-4"/>
-          </div>
         </label>
         <label
-          className="flex w-full flex-col"
+          className="relative flex w-full flex-col"
           htmlFor="notes"
         >
-          <div className="peer relative">
-            <input
-              className={`
-                peer bg-transparent
-                border border-solid outline-none text-heading
-                transition-all duration-300 ease-in-out
-                w-full py-2 px-4 rounded-md
-                border-[2px] border-inbetween focus:border-body
-                invalid:border-red-400 focus:border-body invalid:focus:border-red-600
-                transition-all duration-200 ease-in-out
-              `}
-              placeholder=""
-              id="notes"
-              name="notes"
-              type="notes"
-              value={shippingDetails.shipping_address.notes}
-              onChange={handleChange}
-              ref={notesInptRef}
-            />
-            <span
-              className={`
-                absolute translate-y-[-50%]
-                px-1 bg-background peer-autofill:top-0
-                text-body text-xs font-bold
-                peer-placeholder-shown:top-1/2 peer-placeholder-shown:font-semibold peer-placeholder-shown:text-base peer-placeholder-shown:text-body-light
-                peer-focus:top-0 peer-focus:text-xs peer-focus:text-heading peer-focus:font-bold
-                peer-invalid:text-red-400 peer-focus:peer-invalid:text-red-500
-                transition-all duration-300 ease-in-out
-                ${isEn ? 'left-3' : 'right-3'}
-              `}
-            >
-              {isEn ? 'Notes (optional)' : 'ملاحظات (اختياري)'}
-            </span>
-          </div>
-          <div
-            className="
-              hidden peer-has-[:invalid]:flex
-              items-center gap-2 p-2
-              text-red-400 peer-focus:text-red-500 text-sm font-semibold
-              rounded-lg z-[5]
+          <input
+            className={`
+              peer bg-transparent
+              border border-solid outline-none text-heading
+              transition-all duration-300 ease-in-out
+              w-full py-2 px-4 rounded-md
+              border-[2px] border-inbetween focus:border-body
+              invalid:border-red-400 focus:border-body invalid:focus:border-red-600
               transition-all duration-200 ease-in-out
-            "
+            `}
+            placeholder=""
+            id="notes"
+            name="notes"
+            type="notes"
+            value={shippingDetails.shipping_address.notes}
+            onChange={handleChange}
+          />
+          <span
+            className={`
+              absolute translate-y-[-50%]
+              px-1 bg-background peer-autofill:top-0
+              text-body text-xs font-bold
+              peer-placeholder-shown:top-1/2 peer-placeholder-shown:font-semibold peer-placeholder-shown:text-base peer-placeholder-shown:text-body-light
+              peer-focus:top-0 peer-focus:text-xs peer-focus:text-heading peer-focus:font-bold
+              peer-invalid:text-red-400 peer-focus:peer-invalid:text-red-500
+              transition-all duration-300 ease-in-out
+              ${isEn ? 'left-3' : 'right-3'}
+            `}
           >
-            <span>{errorMessages.notes}</span>
-            <LineMdAlertCircleLoop className="w-4 h-4"/>
-          </div>
+            {isEn ? 'Notes (optional)' : 'ملاحظات (اختياري)'}
+          </span>
         </label>
       </section>
       <section
