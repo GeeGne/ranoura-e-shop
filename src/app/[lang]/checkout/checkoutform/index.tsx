@@ -121,11 +121,8 @@ export default function CheckoutForm ({
 
   const clearPreviousValidity = () => {
     deliverToInptRef.current?.setCustomValidity('');
-    deliverToInptRef.current?.reportValidity();
     anotherNumberInptRef.current?.setCustomValidity('');
-    anotherNumberInptRef.current?.reportValidity();
     addressDetailsInptRef.current?.setCustomValidity('');
-    addressDetailsInptRef.current?.reportValidity();
   };
 
   const handleLabelStartUp = () => {
@@ -137,8 +134,10 @@ export default function CheckoutForm ({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log('test0');
     clearPreviousValidity();
-    const state = secondAddressInptRef.current?.validity;
+    e.stopPropagation();
+
     console.log('test1');
     // check city.
     const isCityPicked = shippingDetails.shipping_address.city;
@@ -326,7 +325,7 @@ export default function CheckoutForm ({
         >
           <input 
             className="
-              peer absolute top-0 left-0 w-0 h-0 opacity-0
+              peer absolute bottom-0 left-0 w-0 h-0 opacity-0
             "
             type="checkbox"
             name="deliverTo"
@@ -746,6 +745,7 @@ export default function CheckoutForm ({
         <BtnA
           className="cool-bg-grad-m text-heading-invert font-bold rounded-lg p-2"
           type="submit"
+          formNoValidate
         >
           {isEn ? 'PLACE ORDER' : 'تقديم الطلب'}
         </BtnA>

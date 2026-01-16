@@ -38,9 +38,9 @@ export default function VideoDisplayerWindow () {
   }
 
   // DEBUG & UI
-  console.log('toggle: ', toggle);
-  console.log('url: ', url);
-  console.log('type: ', type);
+  // console.log('toggle: ', toggle);
+  // console.log('url: ', url);
+  // console.log('type: ', type);
 
   return (
     <div

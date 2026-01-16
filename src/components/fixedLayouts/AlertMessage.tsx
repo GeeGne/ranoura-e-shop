@@ -272,7 +272,8 @@ export default function AlertMessage () {
     </div>
   )
 
-  console.log({imgUrl: productDetails.imgUrl, size: productDetails.size, color: productDetails.color, quantity: productDetails.quantity });
+  // DEBUG
+  // console.log({imgUrl: productDetails.imgUrl, size: productDetails.size, color: productDetails.color, quantity: productDetails.quantity });
 
   if (type ===  "product added") return (
     <div
