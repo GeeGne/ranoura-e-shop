@@ -332,7 +332,7 @@ export default function CheckoutForm ({
         >
           <input 
             className="
-              peer absolute top-0 left-0 w-0 h-0 invisible opacity-0
+              peer absolute top-0 left-0 w-0 h-0 opacity-0
             "
             type="checkbox"
             name="deliverTo"
@@ -503,7 +503,7 @@ export default function CheckoutForm ({
             </label>
             <label
               className={`
-                group relative
+                group
                 ${selectedPhoneNumberRadio === 'newPhoneNumber' ? '--expand-checkout-label' : '--close-checkout-label'}
               `}
               htmlFor="anotherPhoneNumber"
@@ -622,44 +622,49 @@ export default function CheckoutForm ({
           </div>
         </label>
         <label
-          className="relative flex w-full flex-col"
+          className="flex w-full flex-col"
           htmlFor="secondAddress"
         >
-          <input
-            className={`
-              peer bg-transparent
-              border border-solid outline-none text-heading
-              transition-all duration-300 ease-in-out
-              w-full py-2 px-4 rounded-md
-              border-[2px] border-inbetween 
-              invalid:border-red-400 focus:border-body invalid:focus:border-red-600
-              transition-all duration-200 ease-in-out
-            `}
-            placeholder=""
-            id="secondAddress"
-            name="second_address"
-            type="text"
-            value={shippingDetails.shipping_address.second_address}
-            onChange={handleChange}
-            ref={secondAddressInptRef}
-          />
-          <span
-            className={`
-              absolute translate-y-[-50%]
-              px-1 bg-background peer-autofill:top-0
-              text-body text-xs font-bold peer-focus:invalid:z-[10]
-              peer-placeholder-shown:top-1/2 peer-placeholder-shown:font-semibold peer-placeholder-shown:text-base peer-placeholder-shown:text-body-light
-              peer-focus:top-0 peer-focus:text-xs peer-focus:text-heading peer-focus:font-bold
-              peer-invalid:text-red-400 peer-focus:peer-invalid:text-red-500
-              transition-all duration-300 ease-in-out
-              ${isEn ? 'left-3' : 'right-3'}
-            `}
+          <div
+            className="peer relative"
           >
-            {isEn ? 'Second Address (optional)' : 'العنوان الثاني (اختياري)'}
-          </span>
+            <input
+              className={`
+                peer bg-transparent
+                border border-solid outline-none text-heading
+                transition-all duration-300 ease-in-out
+                w-full py-2 px-4 rounded-md
+                border-[2px] border-inbetween 
+                invalid:border-red-400 focus:border-body invalid:focus:border-red-600
+                transition-all duration-200 ease-in-out
+              `}
+              placeholder=""
+              id="secondAddress"
+              name="second_address"
+              type="text"
+              required
+              value={shippingDetails.shipping_address.second_address}
+              onChange={handleChange}
+              ref={secondAddressInptRef}
+            />
+            <span
+              className={`
+                absolute translate-y-[-50%]
+                px-1 bg-background peer-autofill:top-0
+                text-body text-xs font-bold peer-focus:invalid:z-[10]
+                peer-placeholder-shown:top-1/2 peer-placeholder-shown:font-semibold peer-placeholder-shown:text-base peer-placeholder-shown:text-body-light
+                peer-focus:top-0 peer-focus:text-xs peer-focus:text-heading peer-focus:font-bold
+                peer-invalid:text-red-400 peer-focus:peer-invalid:text-red-500
+                transition-all duration-300 ease-in-out
+                ${isEn ? 'left-3' : 'right-3'}
+              `}
+            >
+              {isEn ? 'Second Address (optional)' : 'العنوان الثاني (اختياري)'}
+            </span>
+          </div> 
           <div
             className="
-              hidden peer-invalid:flex
+              hidden peer-has-[:invalid]:flex
               items-center gap-2 p-2
               text-red-400 peer-focus:text-red-500 text-sm font-semibold
               rounded-lg z-[5]
