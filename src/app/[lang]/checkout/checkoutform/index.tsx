@@ -104,7 +104,7 @@ export default function CheckoutForm ({
 
   const [ selectedPhoneNumberRadio, setSelectedPhoneNumberRadio ] = useState<string>('existedPhoneNumber');
   const [ toggleOrderSummary, setToggleOrderSummary ] = useState<boolean>(false);
-  let newNumberLabelOnStartUp = useRef<boolean>(true);
+  const newNumberLabelOnStartUp = useRef<boolean>(true);
   
   const orderSummaryRef = useRef<HTMLElement>(null);
   const deliverToInptRef = useRef<HTMLElement | any>(null);
@@ -121,6 +121,19 @@ export default function CheckoutForm ({
     return cityTranslated;
   };
 
+  const clearPreviousValidity = () => {
+    deliverToInptRef.current?.setCustomValidity('');
+    deliverToInptRef.current?.reportValidity();
+    anotherNumberInptRef.current?.setCustomValidity('');
+    anotherNumberInptRef.current?.reportValidity();
+    addressDetailsInptRef.current?.setCustomValidity('');
+    addressDetailsInptRef.current?.reportValidity();
+    secondAddressInptRef.current?.setCustomValidity('');
+    secondAddressInptRef.current?.reportValidity();
+    notesInptRef.current?.setCustomValidity('');
+    notesInptRef.current?.reportValidity();
+  };
+
   const handleLabelStartUp = () => {
     setTimeout(() => {
       newNumberLabelOnStartUp.current = false;
@@ -130,9 +143,10 @@ export default function CheckoutForm ({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    clearPreviousValidity();
     const state = secondAddressInptRef.current?.validity;
-
-    // check city
+    console.log('test1');
+    // check city.
     const isCityPicked = shippingDetails.shipping_address.city;
     if (!isCityPicked) {
       const errorMessage = isEn 
@@ -143,25 +157,28 @@ export default function CheckoutForm ({
       deliverToInptRef.current?.reportValidity();
       setErrorMessages(val => ({ ...val, deliverTo: errorMessage }));
     }
+    console.log('test2');
 
     // check phone number
-    const phoneNumber = shippingDetails.shipping_address.phoneNumber;
-    const isPhoneNumberValid = isInputValid.checkout.phoneNumber(phoneNumber, isEn).result;
-    const isAnotherPhoneNumberRadioSelected = selectedPhoneNumberRadio === 'anotherPhoneNumber';
-    if (isPhoneNumberValid && isAnotherPhoneNumberRadioSelected) {
-      const errorMessage = isInputValid.checkout.phoneNumber(phoneNumber, isEn).message;
+    const phoneNumber = shippingDetails.customer_phone_number;
+    const isPhoneNumberValid = isInputValid.checkout.phoneNumber(phoneNumber).result;
+    const isAnotherPhoneNumberRadioSelected = selectedPhoneNumberRadio === 'newPhoneNumber';
+    console.log({phoneNumber, isPhoneNumberValid, isAnotherPhoneNumberRadioSelected});
+    if (!isPhoneNumberValid && isAnotherPhoneNumberRadioSelected) {
+      const errorMessage = isInputValid.checkout.phoneNumber(phoneNumber).message[lang];
+      setErrorMessages((val: Record<string, string>) => ({ ...val, anotherPhoneNumber: errorMessage }))
       anotherNumberInptRef.current?.setCustomValidity(errorMessage);
       anotherNumberInptRef.current?.reportValidity();
     }
 
-    anotherNumberInptRef.current?.setCustomValidity('sd');
-    anotherNumberInptRef.current?.reportValidity();
-    addressDetailsInptRef.current?.setCustomValidity('sd');
-    addressDetailsInptRef.current?.reportValidity();
-    secondAddressInptRef.current?.setCustomValidity('sd');
-    secondAddressInptRef.current?.reportValidity();
-    notesInptRef.current?.setCustomValidity('sd');
-    notesInptRef.current?.reportValidity();
+    // anotherNumberInptRef.current?.setCustomValidity('sd');
+    // anotherNumberInptRef.current?.reportValidity();
+    // addressDetailsInptRef.current?.setCustomValidity('sd');
+    // addressDetailsInptRef.current?.reportValidity();
+    // secondAddressInptRef.current?.setCustomValidity('sd');
+    // secondAddressInptRef.current?.reportValidity();
+    // notesInptRef.current?.setCustomValidity('sd');
+    // notesInptRef.current?.reportValidity();
     if (!shippingDetails.city) {
 
     }
@@ -214,6 +231,10 @@ export default function CheckoutForm ({
           ...val, customer_phone_number: phone
         }));
         e.currentTarget.value = phone;
+
+        const isPhoneNumberValid = isInputValid.checkout.phoneNumber(phone).result;
+        if (isPhoneNumberValid) e.currentTarget.setCustomValidity('');
+        e.currentTarget.reportValidity();
         break;
       case 'address_details':
       case 'second_address':
