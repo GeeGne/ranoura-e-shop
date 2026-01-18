@@ -108,8 +108,6 @@ export default function CheckoutForm ({
   const deliverToInptRef = useRef<HTMLElement | any>(null);
   const anotherNumberInptRef = useRef<HTMLElement | any>(null);
   const addressDetailsInptRef = useRef<HTMLInputElement>(null);
-  const secondAddressInptRef = useRef<HTMLInputElement>(null);
-  const notesInptRef = useRef<HTMLInputElement>(null);
   const getRefTotalHeight = (ref: any) => ref.current?.scrollHeight;
 
   const getShippingCity = () => {
@@ -134,12 +132,10 @@ export default function CheckoutForm ({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('test0');
     clearPreviousValidity();
-    e.stopPropagation();
+    let areInptVerified = true;
 
-    console.log('test1');
-    // check city.
+    // check city
     const isCityPicked = shippingDetails.shipping_address.city;
     if (!isCityPicked) {
       const errorMessage = isEn 
@@ -149,31 +145,30 @@ export default function CheckoutForm ({
       deliverToInptRef.current?.setCustomValidity(errorMessage);
       deliverToInptRef.current?.reportValidity();
       setErrorMessages(val => ({ ...val, deliverTo: errorMessage }));
+      areInptVerified = false;
     }
-    console.log('test2');
 
     // check phone number
     const phoneNumber = shippingDetails.customer_phone_number;
-    const isPhoneNumberValid = isInputValid.checkout.phoneNumber(phoneNumber).result;
+    const { result: isPhoneNumberValid, message: phoneMessage } = isInputValid.checkout.phoneNumber(phoneNumber);
     const isAnotherPhoneNumberRadioSelected = selectedPhoneNumberRadio === 'newPhoneNumber';
-    console.log({phoneNumber, isPhoneNumberValid, isAnotherPhoneNumberRadioSelected});
+    
     if (!isPhoneNumberValid && isAnotherPhoneNumberRadioSelected) {
-      const errorMessage = isInputValid.checkout.phoneNumber(phoneNumber).message[lang];
-      setErrorMessages((val: Record<string, string>) => ({ ...val, anotherPhoneNumber: errorMessage }))
-      anotherNumberInptRef.current?.setCustomValidity(errorMessage);
+      setErrorMessages((val: Record<string, string>) => ({ ...val, anotherPhoneNumber: phoneMessage[lang] }))
+      anotherNumberInptRef.current?.setCustomValidity(phoneMessage[lang]);
       anotherNumberInptRef.current?.reportValidity();
+      areInptVerified = false;
     }
 
-    // anotherNumberInptRef.current?.setCustomValidity('sd');
-    // anotherNumberInptRef.current?.reportValidity();
-    // addressDetailsInptRef.current?.setCustomValidity('sd');
-    // addressDetailsInptRef.current?.reportValidity();
-    // secondAddressInptRef.current?.setCustomValidity('sd');
-    // secondAddressInptRef.current?.reportValidity();
-    // notesInptRef.current?.setCustomValidity('sd');
-    // notesInptRef.current?.reportValidity();
-    if (!shippingDetails.city) {
+    // check address details
+    const addressDetails = shippingDetails.shipping_address.address_details;
+    const { result: isAddressDetailsValid, message: addressMessage } = isInputValid.checkout.addressDetails(addressDetails);
 
+    if (!isAddressDetailsValid) {
+      setErrorMessages((val: Record<string, string>) => ({ ...val, address_details: addressMessage[lang] }));
+      addressDetailsInptRef.current?.setCustomValidity(addressMessage[lang]);
+      addressDetailsInptRef.current?.reportValidity();
+      areInptVerified = false;
     }
   }
 
@@ -230,6 +225,17 @@ export default function CheckoutForm ({
         e.currentTarget.reportValidity();
         break;
       case 'address_details':
+        setShippingDetails(val => ({ 
+          ...val, 
+          shipping_address: {
+            ...val.shipping_address,
+            [name]: value 
+          }
+        }));
+        const isAddressDetailsValid = isInputValid.checkout.addressDetails(value).result;
+        if (isAddressDetailsValid) e.currentTarget.setCustomValidity('');
+        e.currentTarget.reportValidity();
+        break;
       case 'second_address':
       case 'notes':
         setShippingDetails(val => ({ 
