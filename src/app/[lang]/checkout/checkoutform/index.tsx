@@ -20,7 +20,7 @@ import LineMdArrowsVerticalAlt from '@/components/svgs/LineMdArrowsVerticalAlt';
 import deliverTo from '@/json/deliverTo.json';
 
 // STORE
-import { useLanguageStore } from '@/stores/index';
+import { useLanguageStore, useAlertMessageStore } from '@/stores/index';
 
 // UTILS
 import isInputValid from '@/utils/validation/isInputValid';
@@ -47,6 +47,9 @@ export default function CheckoutForm ({
 
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
+  const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
+  const setAlertType = useAlertMessageStore((state) => state.setType);
+  const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
 
   const [ shippingDetails, setShippingDetails ] = useState<Record<string, any>>({
     user_id: '',
@@ -133,7 +136,7 @@ export default function CheckoutForm ({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     clearPreviousValidity();
-    let areInptVerified = true;
+    let areInptsVerified = true;
 
     // check city
     const isCityPicked = shippingDetails.shipping_address.city;
@@ -145,7 +148,7 @@ export default function CheckoutForm ({
       deliverToInptRef.current?.setCustomValidity(errorMessage);
       deliverToInptRef.current?.reportValidity();
       setErrorMessages(val => ({ ...val, deliverTo: errorMessage }));
-      areInptVerified = false;
+      areInptsVerified = false;
     }
 
     // check phone number
@@ -157,7 +160,7 @@ export default function CheckoutForm ({
       setErrorMessages((val: Record<string, string>) => ({ ...val, anotherPhoneNumber: phoneMessage[lang] }))
       anotherNumberInptRef.current?.setCustomValidity(phoneMessage[lang]);
       anotherNumberInptRef.current?.reportValidity();
-      areInptVerified = false;
+      areInptsVerified = false;
     }
 
     // check address details
@@ -168,8 +171,17 @@ export default function CheckoutForm ({
       setErrorMessages((val: Record<string, string>) => ({ ...val, address_details: addressMessage[lang] }));
       addressDetailsInptRef.current?.setCustomValidity(addressMessage[lang]);
       addressDetailsInptRef.current?.reportValidity();
-      areInptVerified = false;
+      areInptsVerified = false;
     }
+
+    if (!areInptsVerified) {
+      setAlertToggle(Date.now());
+      setAlertType("error");
+      setAlertMessage(isEn ? 'Some inputs are incorrect' : 'بعض المدخلات غير صحيحه');
+      return;
+    };
+
+    console.log('passed ? ', areInptsVerified);
   }
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement | HTMLLIElement>) => {
