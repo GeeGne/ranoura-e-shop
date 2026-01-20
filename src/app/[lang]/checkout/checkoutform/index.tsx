@@ -1,5 +1,6 @@
 // HOOKS
 import { useState, useRef, useEffect } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 // COMPONENTS
 import Title from '@/app/[lang]/checkout/checkoutform/Title';
@@ -26,6 +27,9 @@ import { useLanguageStore, useAlertMessageStore } from '@/stores/index';
 import isInputValid from '@/utils/validation/isInputValid';
 import formatPhoneNumber from '@/utils/formatPhoneNumber';
 
+// API
+import createNewOrder from '@/lib/api/orders/post';
+
 type Props = {
   className?: string;
   products?: Record<string, any>[];
@@ -47,6 +51,7 @@ export default function CheckoutForm ({
 
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
+  const [ isProcessing, setIsProcessing ] = useState(true);
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
@@ -112,6 +117,26 @@ export default function CheckoutForm ({
   const anotherNumberInptRef = useRef<HTMLElement | any>(null);
   const addressDetailsInptRef = useRef<HTMLInputElement>(null);
   const getRefTotalHeight = (ref: any) => ref.current?.scrollHeight;
+
+  const createNewOrderMutation = useMutation({
+    mutationFn: createNewOrder,
+    onSettled: () => {
+      setIsProcessing(false);
+    },
+    onMutate: () => {
+      setIsProcessing(true)
+    },
+    onSuccess: (data) => {
+      setAlertToggle(Date.now());
+      setAlertType("success");
+      setAlertMessage(data.message[lang])
+    },
+    onError: (error) => {
+      setAlertToggle(Date.now());
+      setAlertType("error");
+      setAlertMessage(error.message)
+    }
+  })
 
   const getShippingCity = () => {
     const shippingInfo = deliverTo.find(itm => itm.shipping_address === shippingDetails.shipping_address.city)
@@ -764,6 +789,7 @@ export default function CheckoutForm ({
           className="cool-bg-grad-m text-heading-invert font-bold rounded-lg p-2"
           type="submit"
           formNoValidate
+          isLoading={isProcessing}
         >
           {isEn ? 'PLACE ORDER' : 'تقديم الطلب'}
         </BtnA>

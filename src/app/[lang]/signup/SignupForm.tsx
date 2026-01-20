@@ -100,7 +100,7 @@ export default function SignupForm ({ className, ...props }: Props) {
       queryClient.invalidateQueries({ queryKey: ['user'] });
       setAlertToggle(Date.now());
       setAlertType("success");
-      setAlertMessage(data.message[isEn ? 'en' : 'ar']);
+      setAlertMessage(data.message[lang]);
       window.location.reload();
     },
     onError: (error) => {

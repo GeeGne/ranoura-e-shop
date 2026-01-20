@@ -1,10 +1,14 @@
 import type { ReactNode } from 'react'
 
+// COMPONENTS
+import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingResize';
+
 type Props = {
   children: ReactNode;
   className?: ReactNode;
   display?: string;
   effect?: boolean;
+  isLoading?: boolean;
   onClick?: (e: React.MouseEvent<HTMLElement | HTMLButtonElement> | any) => void;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
@@ -13,8 +17,22 @@ export default function BtnA ({
   display = 'relative',
   effect = true,
   children,
+  isLoading = false,
   ...props
 }: Props) {
+
+  if (isLoading) return (
+    <button
+      className={`
+        group overflow-hidden
+        ${className} ${display}
+      `}
+      {...props}
+    >
+      <SvgSpinnersRingResize />
+    </button>
+  )
+
   return (
     <button
       className={`
