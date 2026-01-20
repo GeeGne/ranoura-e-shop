@@ -21,7 +21,11 @@ export async function GET(
   req: NextRequest,
 ) {
   try {
-    const data = await prisma.userOrders.findMany();
+    const data = await prisma.userOrders.findMany({
+      orderBy: {
+        created_at: 'desc'
+      }
+    });
     if (!data) return nextError(
       'ORDERS_FETCH_FAIL',
       'orders doesn\'t exists or wronge id',
@@ -91,7 +95,7 @@ export async function POST(
       ar: "تم انشاء الطلب بنجاح!"
     }
 
-    return NextResponse.json({ data, message }, { satus: 201 });
+    return NextResponse.json({ data, message }, { status: 201 });
   } catch (err) {
     const error = err as Error;
     console.error('Error While creating new order: ', error.message);
