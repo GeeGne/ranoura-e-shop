@@ -51,7 +51,7 @@ export default function CheckoutForm ({
 
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
-  const [ isProcessing, setIsProcessing ] = useState(true);
+  const [ isProcessing, setIsProcessing ] = useState(false);
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
@@ -59,9 +59,9 @@ export default function CheckoutForm ({
   const [ shippingDetails, setShippingDetails ] = useState<Record<string, any>>({
     user_id: '',
     status:  'PENDING',
-    products: '',
-    total_items: 0,
-    total: 0,
+    products: [],
+    total_items: 1,
+    total: 2,
     customer_pfp: '',
     customer_full_name: '',
     customer_phone_number: '',
@@ -74,7 +74,7 @@ export default function CheckoutForm ({
     },
     shipping_cost: '',
     currency: 'SYP',
-    payment_method: 'cash',
+    payment_method: 'CASH',
   });
 
   const [ errorMessages, setErrorMessages ] = useState<Record<string, string>>({
@@ -124,17 +124,17 @@ export default function CheckoutForm ({
       setIsProcessing(false);
     },
     onMutate: () => {
-      setIsProcessing(true)
+      setIsProcessing(true);
     },
     onSuccess: (data) => {
       setAlertToggle(Date.now());
       setAlertType("success");
-      setAlertMessage(data.message[lang])
+      setAlertMessage(data.message[lang]);
     },
     onError: (error) => {
       setAlertToggle(Date.now());
       setAlertType("error");
-      setAlertMessage(error.message)
+      setAlertMessage(error.message);
     }
   })
 
@@ -205,6 +205,8 @@ export default function CheckoutForm ({
       setAlertMessage(isEn ? 'Some inputs are incorrect' : 'بعض المدخلات غير صحيحه');
       return;
     };
+
+    createNewOrderMutation.mutate(shippingDetails);
 
     console.log('passed ? ', areInptsVerified);
   }

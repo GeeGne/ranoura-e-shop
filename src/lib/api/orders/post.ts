@@ -7,13 +7,12 @@ export default async function post (data: Record<string, any>) {
     const url = `${getServerUrl()}/api/v1/orders`
     const response = await fetch(url, {
       method: 'POST',
-      headers: { 'Content-type': 'application/json' },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     })
-
     if (!response.ok) {
-      const errorMessage = await response.json();
-      throw new Error(errorMessage);
+      const error = await response.json();
+      throw new Error(error.message);
     }
 
     const result = await response.json();

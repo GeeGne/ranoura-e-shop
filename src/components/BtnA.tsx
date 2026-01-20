@@ -29,7 +29,12 @@ export default function BtnA ({
       `}
       {...props}
     >
-      <SvgSpinnersRingResize />
+      <div className="opacity-0">
+        {children}
+      </div>
+      <SvgSpinnersRingResize 
+        className="absolute top-1/2 left-1/2 transalte-x-[-50%] translate-y-[-50%]"
+      />
     </button>
   )
 
