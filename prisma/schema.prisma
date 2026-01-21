@@ -63,45 +63,29 @@ model UserRole {
   user    User   @relation(fields: [user_id], references: [id])
 }
 
+// updated userOrders model
 model UserOrders {
-  id      String @id @default(uuid())
+  id String @id @default(uuid())
   user_id String
-
-  // ORDER INFORMATION
-  status   OrderStatus @default(PENDING)
-  products Json
-  total_items Int?
-  total    Decimal
-
-  // TIMES STAMPS
-  created_at   DateTime  @default(now())
-  updated_at   DateTime? @updatedAt
-  completed_at DateTime?
-  cancelled_at DateTime?
-
-  // SHIPPING INFORMATION
-  customer_pfp String?
-  customer_full_name String
-  email String
-  customer_phone_number String @default("0")
-  shipping_address   Json?
-  shipping_cost      Decimal? @default(0)
-
-  // PAYMENT INFORMATION
-  currency       OrderCurrency      @default(SYP)
-  payment_method OrderPaymentMethod @default(CASH)
+  status OrderStatus @default(PENDING)
+  currency OrderCurrency @default(SYP)
+  status_history Json?
+  timestamps Json?
+  customer_snapshot Json?
+  items Json?
+  pricing Json?
+  discount Json?
+  shipping Json?
+  payment Json?
 
   user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
-
   @@index([user_id])
-  @@index([created_at])
   @@index([status])
 }
-
 enum OrderStatus {
   PENDING
   CONFIRMED
-  PROCESSSING
+  PROCESSING
   ONDELIVERY
   SHIPPED
   DELIVERED

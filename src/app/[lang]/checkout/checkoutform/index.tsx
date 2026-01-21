@@ -59,20 +59,31 @@ export default function CheckoutForm ({
   const [ shippingDetails, setShippingDetails ] = useState<Record<string, any>>({
     user_id: '',
     status:  'PENDING',
-    products: [],
-    total_items: 1,
-    total: 2,
-    customer_pfp: '',
-    customer_full_name: '',
-    customer_phone_number: '',
-    email: '',
+    customer: {
+      pfp: '',
+      full_name: '',
+      phone_number: '',
+      email: '',
+    },
     shipping_address: {
+      full_name: '',
+      phone: '',
       city: '',
       address_details: '',
       second_address: '',
       notes: ''
     },
+    pricing: {
+      sub_total: 0,
+      tax: 0,
+      shipping: 0,
+      discount: 0,
+      total: 0,
+    },
+    products: [],
+    total_items: 1,
     shipping_cost: '',
+    total: 2,
     currency: 'SYP',
     payment_method: 'CASH',
   });
