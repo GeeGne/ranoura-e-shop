@@ -2,9 +2,10 @@
 
 // HOOKS
 import { useEffect, useRef } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 // COMPONENTS
-import AdvertList from '@/components/categoryPage/advertList/AdvertList';
+import AdvertList from '@/components/categoryPage/advertList/index';
 import CategoryTitle from '@/components/categoryPage/CategoryTitle';
 import FilterTile from '@/components/categoryPage/FilterTile';
 import BreadCrumb from '@/components/BreadCrumb';
@@ -14,6 +15,9 @@ import { useTabNameStore, useLanguageStore } from '@/stores/index';
 
 // JSON
 import products from "@/json/products.json";
+
+// API
+import getAllProducts from '@/lib/api/products/get';
 
 export default function page () {
 
@@ -32,6 +36,11 @@ export default function page () {
     setTabName('product');
   }, []);
 
+  const { data: productsData, isLoading, isError } = useQuery({
+    queryKey: [ 'products' ],
+    queryFn: getAllProducts
+  });
+  const products = productsData?.data;
   return (
     <div
       className="
@@ -49,8 +58,9 @@ export default function page () {
       <FilterTile 
         className="px-4 w-auto max-w-[auto] mx-auto"
       />
-      <AdvertList 
-        products={products}
+      <AdvertList
+        isLoading={isLoading}
+        products={productsData}
       />
     </div>
   )
