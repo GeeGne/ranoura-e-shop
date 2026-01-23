@@ -59,8 +59,9 @@ export default function page () {
         className="px-4 w-auto max-w-[auto] mx-auto"
       />
       <AdvertList
+        products={products}
         isLoading={isLoading}
-        products={productsData}
+        isError={isError}
       />
     </div>
   )

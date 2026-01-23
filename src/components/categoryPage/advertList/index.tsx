@@ -37,11 +37,13 @@ import Confetti from "react-canvas-confetti/dist/presets/explosion";
 type Props = {
   products?: any[];
   isLoading?: boolean;
+  isError?: boolean;
 }
 
 export default function AdvertList ({
   products = [],
-  isLoading = false
+  isLoading = false,
+  isError = false
 }: Props) {
   
   const array = [1, 2, 3, 4];
