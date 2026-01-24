@@ -56,6 +56,7 @@ export async function GET(
 // @infoRequired (
 //    products, shipping city, discount, address_details, second_address, notes, phone
 // )
+// products = [ { id: productId1, quantity, color, size }]
 export async function POST(
   req: NextRequest,
 ) {
@@ -63,16 +64,15 @@ export async function POST(
     // Get request data
     const requestedData = await req.json();
     const { 
-      products, shipping_city, phone, address_details, second_address, notes 
+      products: productsRequestedData, shipping_city, phone, address_details, second_address, notes 
     } = requestedData;
     if (
-      !products || !shipping_city || !phone || !address_details || !second_address || !notes
+      !productsRequestedData || !shipping_city || !phone || !address_details || !second_address || !notes
     ) return nextError(
       'MISSING_INFO',
       'not all data is included',
       400
     );
-
 
     // Check if user is authorized then get user information
     const cookieStore = await cookies();
@@ -93,48 +93,72 @@ export async function POST(
       id, first_name, last_name, phone_number, profile_img_url
     } = await prisma.user.findUnique({ where: { email } });
 
-
-    const orderSummar = {
-      user_id: id,
-      timesStamps: {
-        created_at: Date.now(),
-        updated_at: Date.now(),
-        completed_at: null,
-        cancelled_at: null,
-      },
-      customer_snapshot: {
-        avatar: profile_img_url,
-        name: first_name + ' ' + last_name,
-        email,
-        phone: phone_number
-      },
-      items: {
-        products,
-        total_products: 1,
-        total_units: 2,
-        items_total: 233
-      },
-      shipping: {
-        full_name: first_name + ' ' + last_name,
-        phone: phone_number,
-        city: shipping_city,
-        address_details,
-        second_address,
-        notes
-      },
-      pricing: {
-        sub_total: 0,
-        tax: 0,
-        shipping: 0,
-        discount: 0,
-        total: 0
-      },
-      payment: {
-        method: "CASH",
-        status: "NOT PAID",
-        paid_at: null
-      }
-    }
+    // Get products data from product id
+    const productIds = productsRequestedData.map((product: Record<string, any>) => product.id);
+    const productsData = await prisma.products.findMany({ where: {id: { in: productIds } } })
+    return NextResponse.json({ data: { productsData, productIds, requestedData }, message: 'productsData results'})
+    
+    // Check if product size, quanitiy avalibility along with stock
+    const findValue = (array: any[], row: string, value: string) => 
+      array.find((itm: Record<string, any>) => itm[row] === value);
+    // const doesExist = (array: any[], value: string) => array.some(itm => itm === value)
+    // const isProductSizesVersified = productsData.map(
+      // (product: Record<string, any>) => product.sizes.some(
+        // (size: string) => size === findValue(productsRequestedData, 'id', product.id).size
+      // )
+    // )
+    // const isProductSizesVerified = productsData.some((product: Record<string, any>) => 
+      // doesExist(productsData, findValue(productsRequestedData, 'id', product.id).size)
+    // );
+    // const isProductColorsVerified = productsData.some((product: Record<string, any>) => 
+      // doesExist(productsData, findValue(productsRequestedData, 'id', product.id).color)
+    // );
+    // productsData.map(
+      // (product: Record<string, any>) => product.sizes.some(
+        // (size: string) => size === findValue(productsRequestedData, 'id', product.id).size
+      // )
+    // )
+    // const orderSummar = {
+      // user_id: id,
+      // timesStamps: {
+        // created_at: Date.now(),
+        // updated_at: Date.now(),
+        // completed_at: null,
+        // cancelled_at: null,
+      // },
+      // customer_snapshot: {
+        // avatar: profile_img_url,
+        // name: first_name + ' ' + last_name,
+        // email,
+        // phone: phone_number
+      // },
+      // items: {
+        // products,
+        // total_products: 1,
+        // total_units: 2,
+        // items_total: 233
+      // },
+      // shipping: {
+        // full_name: first_name + ' ' + last_name,
+        // phone: phone_number,
+        // city: shipping_city,
+        // address_details,
+        // second_address,
+        // notes
+      // },
+      // pricing: {
+        // sub_total: 0,
+        // tax: 0,
+        // shipping: 0,
+        // discount: 0,
+        // total: 0
+      // },
+      // payment: {
+        // method: "CASH",
+        // status: "NOT PAID",
+        // paid_at: null
+      // }
+    // }
 
     // return NextResponse.json(
       // { data: userData, message: 'user data is extracted successfuly'},
