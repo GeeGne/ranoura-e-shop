@@ -96,69 +96,75 @@ export async function POST(
     // Get products data from product id
     const productIds = productsRequestedData.map((product: Record<string, any>) => product.id);
     const productsData = await prisma.products.findMany({ where: {id: { in: productIds } } })
-    return NextResponse.json({ data: { productsData, productIds, requestedData }, message: 'productsData results'})
+    // return NextResponse.json({ data: { productsData, productIds, requestedData }, message: 'productsData results'})
     
     // Check if product size, quanitiy avalibility along with stock
     const findValue = (array: any[], row: string, value: string) => 
       array.find((itm: Record<string, any>) => itm[row] === value);
-    // const doesExist = (array: any[], value: string) => array.some(itm => itm === value)
-    // const isProductSizesVersified = productsData.map(
-      // (product: Record<string, any>) => product.sizes.some(
-        // (size: string) => size === findValue(productsRequestedData, 'id', product.id).size
-      // )
-    // )
-    // const isProductSizesVerified = productsData.some((product: Record<string, any>) => 
-      // doesExist(productsData, findValue(productsRequestedData, 'id', product.id).size)
-    // );
-    // const isProductColorsVerified = productsData.some((product: Record<string, any>) => 
-      // doesExist(productsData, findValue(productsRequestedData, 'id', product.id).color)
-    // );
-    // productsData.map(
-      // (product: Record<string, any>) => product.sizes.some(
-        // (size: string) => size === findValue(productsRequestedData, 'id', product.id).size
-      // )
-    // )
-    // const orderSummar = {
-      // user_id: id,
-      // timesStamps: {
-        // created_at: Date.now(),
-        // updated_at: Date.now(),
-        // completed_at: null,
-        // cancelled_at: null,
-      // },
-      // customer_snapshot: {
-        // avatar: profile_img_url,
-        // name: first_name + ' ' + last_name,
-        // email,
-        // phone: phone_number
-      // },
-      // items: {
-        // products,
-        // total_products: 1,
-        // total_units: 2,
-        // items_total: 233
-      // },
-      // shipping: {
-        // full_name: first_name + ' ' + last_name,
-        // phone: phone_number,
-        // city: shipping_city,
-        // address_details,
-        // second_address,
-        // notes
-      // },
-      // pricing: {
-        // sub_total: 0,
-        // tax: 0,
-        // shipping: 0,
-        // discount: 0,
-        // total: 0
-      // },
-      // payment: {
-        // method: "CASH",
-        // status: "NOT PAID",
-        // paid_at: null
-      // }
-    // }
+    const doesExist = (array: any[], value: string) => array.some(itm => itm === value);
+
+    const isProductSizesVerified = productsData.every((product: Record<string, any>) => 
+      doesExist(productsData, findValue(productsRequestedData, 'id', product.id).size)
+    );
+    const isProductColorsVerified = productsData.every((product: Record<string, any>) => 
+      doesExist(productsData, findValue(productsRequestedData, 'id', product.id).color)
+    );
+    if (!isProductColorsVerified || !isProductSizesVerified) nextError(
+      'PRODUCT_COLOR_SIZE_UNAVAILABLE',
+      'product color or size found unavailbale',
+      401
+    )
+
+    // calculate the cost
+    const pricesArray = productsData.map(({ price }: any) => price);
+    const discountsArray = productsData.map(({ discount_percent }: any) => discount_percent);
+    const calculateTotalCost = pricesArray.reduce((accumulator: number, price: any, i: number) => 
+      accumulator + (price - (price * (discountsArray[i] / 100)))
+    , 0);
+
+    const orderSummar = {
+      user_id: id,
+      timesStamps: {
+        created_at: Date.now(),
+        updated_at: Date.now(),
+        completed_at: null,
+        cancelled_at: null,
+      },
+      customer_snapshot: {
+        avatar: profile_img_url,
+        name: first_name + ' ' + last_name,
+        email,
+        phone: phone_number
+      },
+      items: {
+        products: {
+
+        },
+        total_products: 1,
+        total_units: 2,
+        items_total: 233
+      },
+      shipping: {
+        full_name: first_name + ' ' + last_name,
+        phone: phone_number,
+        city: shipping_city,
+        address_details,
+        second_address,
+        notes
+      },
+      pricing: {
+        sub_total: 0,
+        tax: 0,
+        shipping: 0,
+        discount: 0,
+        total: calculateTotalCost
+      },
+      payment: {
+        method: "CASH",
+        status: "NOT PAID",
+        paid_at: null
+      }
+    }
 
     // return NextResponse.json(
       // { data: userData, message: 'user data is extracted successfuly'},
