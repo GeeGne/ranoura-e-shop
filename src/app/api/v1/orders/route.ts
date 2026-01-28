@@ -4,7 +4,7 @@ import prisma from '@/lib/prisma';
 import { verifyToken } from '@/utils/jwt';
 
 // JSON
-import deliverTo from '@/json/deliverTo.json';'
+import deliverTo from '@/json/deliverTo.json';
 
 async function nextError (code: string, message: string, status = 404) {
   return NextResponse.json(
@@ -141,7 +141,7 @@ export async function POST(
         quantity,
         color,
         size,
-        image_url: findValue(productsData, 'id', id,).images[0].views.url,
+        image_url: findValue(productsData, 'id', id,).images[0].views[0].url,
         price: findValue(productsData, 'id', id,).price,
         discount_percent: findValue(productsData, 'id', id,).discount_percent,
         type: findValue(productsData, 'id', id,).type
@@ -149,7 +149,7 @@ export async function POST(
     });
     const orderSummary = {
       user_id: id,
-      timesStamps: {
+      timestamps: {
         created_at: Date.now(),
         updated_at: Date.now(),
         completed_at: null,
@@ -162,7 +162,7 @@ export async function POST(
         phone: phone_number
       },
       items: {
-        products: productsData,
+        products,
         total_products: totalProductsQuanitity,
         total_units: totalProductsUnits,
         items_total: calculateTotalCost
@@ -188,7 +188,12 @@ export async function POST(
         paid_at: null
       }
     }
-    const data = await prisma.userData.create({ data: { orderSummary } });
+
+    // return NextResponse.json(
+      // { data: orderSummary, message: 'order summary results: ' },
+      // { status: 200 }
+    // );
+    const data = await prisma.userOrders.create({ data: { ...orderSummary } });
     const message = {
       en: 'Order has been created successfuly!',
       ar: 'تم'
