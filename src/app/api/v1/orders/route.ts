@@ -3,6 +3,9 @@ import { cookies } from 'next/headers';
 import prisma from '@/lib/prisma';
 import { verifyToken } from '@/utils/jwt';
 
+// JSON
+import deliverTo from '@/json/deliverTo.json';'
+
 async function nextError (code: string, message: string, status = 404) {
   return NextResponse.json(
     {
@@ -56,14 +59,14 @@ export async function GET(
 // @infoRequired (
 //    products, shipping city, discount, address_details, second_address, notes, phone
 // )
-// products = [ { id: productId1, quantity, color, size }]
+// products = [ { id: productId1, quantity, color, size } ]
 export async function POST(
-  req: NextRequest,
+  req: NextRequest
 ) {
   try {
     // Get request data
     const requestedData = await req.json();
-    const { 
+    const {
       products: productsRequestedData, shipping_city, phone, address_details, second_address, notes 
     } = requestedData;
     if (
@@ -80,14 +83,14 @@ export async function POST(
     if (!authToken) return NextResponse.json(
       { message: 'No token to signin' },
       { status: 401 }
-    )
+    );
 
     const { email }: any = await verifyToken(authToken);
     if (!email) nextError(
       'UNAUTHORIZED_ERROR',
       'unable to get authentication info',
       401
-    )
+    );
 
     const {
       id, first_name, last_name, phone_number, profile_img_url
@@ -122,7 +125,29 @@ export async function POST(
       accumulator + (price - (price * (discountsArray[i] / 100)))
     , 0);
 
-    const orderSummar = {
+    // items details
+    const totalProductsUnits = productsRequestedData.length;
+    
+    const productsQuantityArray = productsRequestedData.map(({ quantity }: Record<string, any>) => quantity);
+    const totalProductsQuanitity = productsQuantityArray.reduce((accumulator: number, quantity: number) =>
+      accumulator + quantity
+    , 0);
+
+    const shippingCost = deliverTo.find(({ shipping_address }) => shipping_address === shipping_city )?.shipping_cost;
+    const products = productsRequestedData.map(({ id, quantity, color, size }: Record<string, any>) => {
+      return {
+        id,
+        name:findValue(productsData, 'id', id,).name,
+        quantity,
+        color,
+        size,
+        image_url: findValue(productsData, 'id', id,).images[0].views.url,
+        price: findValue(productsData, 'id', id,).price,
+        discount_percent: findValue(productsData, 'id', id,).discount_percent,
+        type: findValue(productsData, 'id', id,).type
+      }
+    });
+    const orderSummary = {
       user_id: id,
       timesStamps: {
         created_at: Date.now(),
@@ -137,12 +162,10 @@ export async function POST(
         phone: phone_number
       },
       items: {
-        products: {
-
-        },
-        total_products: 1,
-        total_units: 2,
-        items_total: 233
+        products: productsData,
+        total_products: totalProductsQuanitity,
+        total_units: totalProductsUnits,
+        items_total: calculateTotalCost
       },
       shipping: {
         full_name: first_name + ' ' + last_name,
@@ -153,11 +176,11 @@ export async function POST(
         notes
       },
       pricing: {
-        sub_total: 0,
+        sub_total: calculateTotalCost,
         tax: 0,
-        shipping: 0,
+        shipping: shippingCost,
         discount: 0,
-        total: calculateTotalCost
+        total: calculateTotalCost + shippingCost
       },
       payment: {
         method: "CASH",
@@ -165,7 +188,15 @@ export async function POST(
         paid_at: null
       }
     }
-
+    const data = await prisma.userData.create({ data: { orderSummary } });
+    const message = {
+      en: 'Order has been created successfuly!',
+      ar: 'تم'
+    }
+    return NextResponse.json(
+      { data, message },
+      { status: 200 }
+    );
     // return NextResponse.json(
       // { data: userData, message: 'user data is extracted successfuly'},
       // { status: 200 }
