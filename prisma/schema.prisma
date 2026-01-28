@@ -50,9 +50,16 @@ model UserAddress {
 
 model Role {
   id          Int        @id @default(autoincrement())
-  name        String     @unique
+  name        roleNames @default(customer)
   description String?
   userRole    UserRole[]
+}
+
+enum roleNames {
+  owner
+  admin
+  support
+  customer
 }
 
 model UserRole {
@@ -79,8 +86,8 @@ model UserOrders {
   payment Json?
 
   created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  
+  updated_at DateTime @updatedAt @default(now())
+
   user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
   @@index([user_id])
   @@index([status])

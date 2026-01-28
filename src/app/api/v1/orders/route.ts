@@ -25,6 +25,32 @@ export async function GET(
   req: NextRequest,
 ) {
   try {
+    const cookiesStore = await cookies();
+    const { value: authToken }: any = cookiesStore.get('accessToken');
+    if (!authToken) return nextError(
+      'TOKEN_DETAILS_NOT_FOUND',
+      'No auth token details found',
+      401
+    );
+
+    const { email }: any = await verifyToken(authToken);
+    if (!email) nextError(
+      'TOKEN_DETAILS_NOT_FOUND',
+      'No auth token details found',
+      401
+    );
+
+    const { role } = await prisma.user.findUnique({
+      where: {
+        email
+      }
+    });
+
+    return NextResponse.json(
+      { data: role, message: 'user role: ' },
+      { status: 200 }
+    );
+
     const data = await prisma.userOrders.findMany({
       orderBy: {
         created_at: 'desc'
@@ -196,7 +222,7 @@ export async function POST(
     const data = await prisma.userOrders.create({ data: { ...orderSummary } });
     const message = {
       en: 'Order has been created successfuly!',
-      ar: 'تم'
+      ar: 'تم انشاء الطلب بنجاح!'
     }
     return NextResponse.json(
       { data, message },
