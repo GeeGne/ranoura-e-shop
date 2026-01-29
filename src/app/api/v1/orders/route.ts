@@ -36,7 +36,7 @@ export async function GET(
     );
 
     const { email }: any = await verifyToken(authToken);
-    if (!email) nextError(
+    if (!email) return nextError(
       'TOKEN_DETAILS_NOT_FOUND',
       'No auth token details found',
       401
@@ -64,7 +64,7 @@ export async function GET(
       'ACCESS_FORBIDDEN',
       'request is forbidden',
       403
-    )
+    );
 
     // access data
     const data = await prisma.userOrders.findMany({
@@ -128,7 +128,7 @@ export async function POST(
     );
 
     const { email }: any = await verifyToken(authToken);
-    if (!email) nextError(
+    if (!email) return nextError(
       'UNAUTHORIZED_ERROR',
       'unable to get authentication info',
       401
@@ -154,11 +154,11 @@ export async function POST(
     const isProductColorsVerified = productsData.every((product: Record<string, any>) => 
       doesExist(productsData, findValue(productsRequestedData, 'id', product.id).color)
     );
-    if (!isProductColorsVerified || !isProductSizesVerified) nextError(
+    if (!isProductColorsVerified || !isProductSizesVerified) return nextError(
       'PRODUCT_COLOR_SIZE_UNAVAILABLE',
       'product color or size found unavailbale',
       401
-    )
+    );
 
     // calculate the cost
     const pricesArray = productsData.map(({ price }: any) => price);
@@ -175,7 +175,13 @@ export async function POST(
       accumulator + quantity
     , 0);
 
+    // find shipping cost
     const shippingCost = deliverTo.find(({ shipping_address }) => shipping_address === shipping_city )?.shipping_cost;
+    if (!shippingCost) return nextError(
+      'SHIPPING_CITY_NOT_FOUND',
+      'unable to find shipping city',
+      404
+    );
     const products = productsRequestedData.map(({ id, quantity, color, size }: Record<string, any>) => {
       return {
         id,
@@ -189,11 +195,12 @@ export async function POST(
         type: findValue(productsData, 'id', id,).type
       }
     });
+    const isoFromTimestamp = new Date(Date.now()).toISOString();
     const orderSummary = {
       user_id: id,
       timestamps: {
-        created_at: Date.now(),
-        updated_at: Date.now(),
+        created_at: isoFromTimestamp,
+        updated_at: isoFromTimestamp,
         completed_at: null,
         cancelled_at: null,
       },
@@ -236,57 +243,21 @@ export async function POST(
       // { status: 200 }
     // );
     const data = await prisma.userOrders.create({ data: { ...orderSummary } });
+    if (!data) return nextError(
+      'ORDER_CREATE_FAIL',
+      'An error accured during creating new order',
+      404
+    );
+
     const message = {
       en: 'Order has been created successfuly!',
       ar: 'تم انشاء الطلب بنجاح!'
     }
+
     return NextResponse.json(
       { data, message },
       { status: 200 }
     );
-    // return NextResponse.json(
-      // { data: userData, message: 'user data is extracted successfuly'},
-      // { status: 200 }
-    // )
-    // const orderData = await req.json();
-    // const {
-      // user_id, products, total_items, total, customer_pfp,
-      // customer_full_name, email, customer_phone_number, 
-      // shipping_address, shipping_cost, currency, payment_method
-    // } = orderData;
-    // console.log('order data: ', orderData);
-    // if (!user_id || !products || !total_items || !total || !customer_pfp ||
-      // !customer_full_name || !email || !customer_phone_number || 
-      // !shipping_address || !shipping_cost
-    // ) return nextError(
-      // 'REQUEST_FAILED',
-      // 'Error while getting order data',
-      // 401
-    // );
-// 
-    // const data = await prisma.userOrders.create({
-      // data: {
-        // user_id,
-        // products,
-        // total_items,
-        // total,
-        // customer_pfp,
-        // customer_full_name,
-        // customer_phone_number,
-        // email,
-        // shipping_address,
-        // shipping_cost,
-        // currency,
-        // payment_method
-      // }
-    // })
-// 
-    // const message = {
-      // en: "New order has been created successfully!",
-      // ar: "تم انشاء الطلب بنجاح!"
-    // }
-// 
-    // return NextResponse.json({ data, message }, { status: 201 });
   } catch (err) {
     const error = err as Error;
     console.error('Error While creating new order: ', error?.message);
