@@ -25,6 +25,8 @@ export async function GET(
   req: NextRequest,
 ) {
   try {
+
+    // check if user is admin or owner
     const cookiesStore = await cookies();
     const { value: authToken }: any = cookiesStore.get('accessToken');
     if (!authToken) return nextError(
@@ -43,14 +45,28 @@ export async function GET(
     const { role } = await prisma.user.findUnique({
       where: {
         email
+      },
+      select: {
+        role: {
+          select: {
+            role: {
+              select: {
+                name: true
+              }
+            }
+          }
+        }
       }
     });
 
-    return NextResponse.json(
-      { data: role, message: 'user role: ' },
-      { status: 200 }
-    );
+    const isAdminOrOwner = role.role.name === 'admin' || role.role.name === 'owner'
+    if (!isAdminOrOwner) return nextError(
+      'ACCESS_FORBIDDEN',
+      'request is forbidden',
+      403
+    )
 
+    // access data
     const data = await prisma.userOrders.findMany({
       orderBy: {
         created_at: 'desc'
