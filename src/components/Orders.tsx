@@ -298,6 +298,24 @@ export default function Orders ({
                 uppercase tracking-wider whitespace-nowrap
               `}
             >
+              {isEn ? 'Shipping City' : 'مدينة الشحن'}
+            </th>
+            <th 
+              scope="col" 
+              className={`
+                px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light 
+                uppercase tracking-wider whitespace-nowrap
+              `}
+            >
+              {isEn ? 'Items Total' : 'اجمالي السلع'}
+            </th>
+            <th 
+              scope="col" 
+              className={`
+                px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light 
+                uppercase tracking-wider whitespace-nowrap
+              `}
+            >
               {isEn ? 'Total' : 'المجموع'}
             </th>
             <th 
@@ -364,13 +382,13 @@ export default function Orders ({
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center gap-2">
                     <div className="flex-shrink-0 h-12 w-12">
-                      <img className="w-full h-full object-cover object-center rounded-full" src={order.customer_pfp || pfpImage} alt="" />
+                      <img className="w-full h-full object-cover object-center rounded-full" src={order.customer_snapshot.avatar || pfpImage} alt="" />
                     </div>
                     <div className="ml-4">
                       <div className="text-base font-medium text-heading">
-                        {order.customer_full_name}
+                        {order.customer_snapshot.name}
                       </div>
-                      <div className="text-sm text-body-light">{order.email}</div>
+                      <div className="text-sm text-body-light">{order.customer_snapshot.email}</div>
                     </div>
                   </div>
                 </td>
@@ -382,7 +400,7 @@ export default function Orders ({
                     </div>
                     <div>
                       <span className="text-sm text-body-light">{isEn ? 'Number of items:' : 'عدد العناصر:'}</span>{<>&ensp;</>}
-                      <span className="font-bold text-sm text-body underline">{order.total_items}</span>
+                      <span className="font-bold text-sm text-body underline">{order.items.total_products}</span>{<>&ensp;</>}{<>&ensp;</>}
                       <span className="text-sm text-body-light">{isEn ? 'Ordered at:' : 'تم الطلب:'}</span>{<>&ensp;</>}
                       <span className="font-bold text-sm text-body underline">{getTimeAgo(order.created_at)}</span>
                     </div>
@@ -400,8 +418,18 @@ export default function Orders ({
                   />
                   </span>
                 </td>
+                <td className="gap-4 px-6 py-4 whitespace-nowrap text-sm text-body-light">
+                  <div className="flex items-center gap-4">
+                    <span>{order.shipping.city.toUpperCase()}</span>
+                    <span>|</span>
+                    <span>{order.pricing.shipping}</span>
+                  </div>
+                </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
-                  {order.total}
+                  {order.pricing.sub_total}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
+                  {order.pricing.total}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
                   {formatDate(order.created_at)}
@@ -410,7 +438,7 @@ export default function Orders ({
                   {formatDate(order.updated_at) || 'No information available'}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
-                  {formatDate(order.canceled_at) || 'No information available'}
+                  {formatDate(order.timestamps.canceled_at) || 'No information available'}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
                   <div className="flex gap-2">
