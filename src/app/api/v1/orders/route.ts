@@ -198,6 +198,10 @@ export async function POST(
     const isoFromTimestamp = new Date(Date.now()).toISOString();
     const orderSummary = {
       user_id: id,
+      status: "PENDING",
+      status_history: [
+        { status: "PENDING", timestamp: "isoFromTimestamp"}
+      ],
       timestamps: {
         created_at: isoFromTimestamp,
         updated_at: isoFromTimestamp,

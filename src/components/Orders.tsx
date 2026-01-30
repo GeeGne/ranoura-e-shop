@@ -21,6 +21,7 @@ import {
 import orders from '@/json/userOrders.json';
 import statusColorsData from '@/json/orderStatus.json';
 import STATUS_TRANSLATIONS from '@/json/statusTranslations.json';
+import deliverTo from '@/json/deliverTo.json';
 
 // UTILS
 import filterByQuery from '@/utils/filterByQuery';
@@ -420,7 +421,7 @@ export default function Orders ({
                 </td>
                 <td className="gap-4 px-6 py-4 whitespace-nowrap text-sm text-body-light">
                   <div className="flex items-center gap-4">
-                    <span>{order.shipping.city.toUpperCase()}</span>
+                    <span>{deliverTo.find(itm => itm.shipping_address === order.shipping.city)?.value[lang].toUpperCase()}</span>
                     <span>|</span>
                     <span>{order.pricing.shipping}</span>
                   </div>
