@@ -586,7 +586,7 @@ export default function Orders ({
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {[1, 2, 3, 4].map((itm, i) =>
+          {[1, 2, 3, 4, 5, 6].map((itm, i) =>
             <tr key={i}>
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="flex flex-col gap-2">

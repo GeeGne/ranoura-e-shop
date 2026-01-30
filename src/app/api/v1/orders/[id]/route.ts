@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
-
+import { cookies } from 'next/headers';
+import { verifyToken } from '@/utils/jwt';
 
 async function nextError (code: string, message: string, status = 404) {
   return NextResponse.json(
@@ -55,25 +56,83 @@ export async function GET(
 
 // @desc update selected order
 // @route /api/v1/orders/id:
-// @access private (owner, admin)
+// @access private (owner, admin, same user)
 export async function PUT(
   req: NextRequest,
   { params }: { params: { id: string} }
 ) {
   try {
-    const orderId = (await params).id;
-    const requestedData = await req.json();
 
+    const orderId = (await params).id;
+    const { status } = await req.json();
+    const order = await prisma.userOrders.findUnique({
+      where: {
+        id: orderId
+      },
+      select: {
+        user_id: true,
+        status_history: true
+      }
+    })
+
+    // check if user authorized and is admin or owner or same user
+    const cookiesStore = await cookies();
+    const { value: authToken }: any = cookiesStore.get('accessToken');
+    if (!authToken) return nextError(
+      'TOKEN_DETAILS_NOT_FOUND',
+      'No auth token details found',
+      401
+    );
+
+    const { email }: any = await verifyToken(authToken);
+    if (!email) return nextError(
+      'UNAUTHORIZED_ERROR',
+      ' Unable to get authentication info',
+      401
+    );
+
+    const user = await prisma.user.findUnique({
+      where: {
+        email
+      },
+      select: {
+        role: {
+          select: {
+            role: {
+              select: {
+                name: true
+              }
+            }
+          }
+        }
+      }
+    });
+
+    const isAdminOrOwnerOrSameUser = user.role.role.name === 'admin' || user.role.role.name === 'owner' || order.user_id === user.id
+    if (!isAdminOrOwnerOrSameUser) return nextError(
+      'REQUEST_FORBIDDEN',
+      'request is forbidden',
+      403
+    )
+
+    const isoFromTimestamp = new Date(Date.now()).toISOString();
+    // return NextResponse.json(
+      // { data: order.status_history, message: 'status history: '},
+      // { status: 200 }
+    // );
     const data = await prisma.userOrders.update({
       where: { id: orderId },
-      data: requestedData
+      data: {
+        status,
+        status_history: [ ...order.status_history, { status, timestamp: isoFromTimestamp }]
+      }
     });
 
     if (!data) return nextError(
       'ORDER_UPDATE_FAIL',
       'order doesn\'t exists or wronge id',
       501
-    )
+    );
 
     const message = {
       en: 'Order is updated successfully!',
@@ -92,6 +151,6 @@ export async function PUT(
       'FAIL',
       'Error message',
       404
-    )
+    );
   }
 }
