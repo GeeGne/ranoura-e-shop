@@ -1,5 +1,6 @@
 // HOOKS
 import { useEffect, useRef, useId } from 'react';
+import { useQuery, useMutation } from '@tanstack/react-query';
 
 // COMPONENTS
 import LoadingTable from '@/components/LoadingTable';
@@ -26,6 +27,9 @@ import deliverTo from '@/json/deliverTo.json';
 // UTILS
 import filterByQuery from '@/utils/filterByQuery';
 import getTranslation from '@/utils/getTranslation';
+
+// API
+import updateOrder from '@/lib/api/orders/id/put';
 
 // ASSETS
 const pfpImage = '/assets/img/pfp.avif';
@@ -222,7 +226,7 @@ export default function Orders ({
   };
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement | SVGSVGElement>) => {
-    const { type } = e.currentTarget.dataset;
+    const { type, status } = e.currentTarget.dataset;
 
     switch (type) {
       case 'order_details_window_is_clicked':
@@ -230,6 +234,9 @@ export default function Orders ({
         break;
       case 'shipping_details_window_is_clicked':
         setShippingDetailsWindowToggle(true);
+        break;
+      case 'status_list_button_is_clicked': 
+
         break;
       default:
         console.error('Unknown Type: ', type);
@@ -509,6 +516,8 @@ export default function Orders ({
                               text-body hover:text-heading text-sm font-semibold
                               transition-all duration-200 ease-out
                             "
+                            data-type="status_list_button_is_clicked"
+                            data-status={name}
                           >
                             {getTranslation(STATUS_TRANSLATIONS, name, lang)}
                           </li>
