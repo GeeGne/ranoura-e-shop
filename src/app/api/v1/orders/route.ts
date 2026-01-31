@@ -98,10 +98,117 @@ export async function GET(
 // @desc create new order
 // @route /api/v1/orders
 // @access private(requested user)
-// @infoRequired (
-//    products, shipping city, discount, address_details, second_address, notes, phone
-// )
+// @body {
+    // "products": [
+        // {
+            // "id": "3b3dccc8-75ac-4567-9a24-7d84dfae4970",
+            // "quantity": 3,
+            // "color": "Biege",
+            // "size": "S"
+        // },
+        // {
+            // "id": "e937bc08-fbee-44e9-8a0b-08c8b6ffcfd5",
+            // "quantity": 1,
+            // "color": "Black",
+            // "size": "M"
+        // },
+        // {
+            // "id": "0c354051-7d79-47f2-a18d-6c6b22cb6f77",
+            // "quantity": 6,
+            // "color": "Newspaper",
+            // "size": "M"
+        // }
+    // ],
+    // "shipping_city": "Damascus",
+    // "address_details": "next near gas station",
+    // "second_address": "upright left corner",
+    // "notes": "second adderss betwen 05:00 PM and 9:00 PM",
+    // "phone": "0952683942"
+// }
 // products = [ { id: productId1, quantity, color, size } ]
+// @example {
+//   "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+//   "user_id": "user-12345-67890-abcdef",  
+//   "status": "PROCESSING",
+//   "currency": "SYP",
+//   "status_history": [
+//     { 
+//       "status": "PENDING", "timestamp": "2024-01-15T10:30:00.000Z" 
+//     },{ 
+//       "status": "PROCESSING", "timestamp": "2024-03-5T10:30:00.000Z" 
+//     }
+//   ],
+//   "timestamps": {
+//     "created_at": "2024-01-15T10:30:00.000Z",
+//     "updated_at": "2024-01-15T11:45:00.000Z",
+//     "completed_at": null,
+//     "cancelled_at": null
+//   },
+//   "customer_snapshot": {
+//     "avatar": "https://some-link.com",
+//     "name": "geegne",
+//     "email": "geegne@gmail.com",
+//     "phone": "094293953"
+//   },
+//   "items": {
+//     "products": [
+//       {
+//         "id": "prod-001",
+//         "name": "Wireless Bluetooth Headphones",
+//         "description": "Noise-cancelling over-ear headphones",
+//         "price": 149.99,
+//         "currency": "SYP",
+//         "quantity": 1,
+//         "color": "pink",
+//         "size": "M",
+//         "image_url": "/assets/img/cloth-a-orange.avif",
+//         "sku": "AUDIO-HP-BLK-PROX"
+//       },{
+//         "productId": "prod-002",
+//         "name": "Phone Case",
+//         "description": "Protective silicone case",
+//         "price": 25.50,
+//         "currency": "SYP",
+//         "quantity": 2,
+//         "variant": {
+//           "color": "Transparent",
+//           "phoneModel": "iPhone 15"
+//         },
+//         "imageUrl": "/assets/img/cloth-b-blue.avif",
+//         "sku": "ACC-CASE-TP-IP15"
+//       }
+//     ],
+//     "total_products": 2,
+//     "total_units": 2,
+//     "items_total": 234
+//   },
+//   "pricing": {
+//     "sub_total": 0,
+//     "tax": 0,
+//     "shipping": 0,
+//     "discount": 0,
+//     "total": 0
+//   },
+//   "discount": {
+//     "applied": false,
+//     "amount": 20.00,
+//     "type": "PROMO_CODE",
+//     "code": "SAVE50"
+//   },
+//   "shipping": {
+//     "full_name": "محمد أحمد",
+//     "phone": "+963123456789",
+//     "city": "دمشق",
+//     "address_details": "Street 322, near Gas station, building 32, floor 12",
+//     "second_address": "Street 135, near Daily food restaurant, building 32, floor 4",
+//     "notes": "يرجى الاتصال قبل التوصيل"
+//   },
+//   "payment": {
+//     "method": "CASH",
+//     "status": "NOT PAID",
+//     "paid_at": null
+//   }
+// }
 export async function POST(
   req: NextRequest
 ) {
@@ -122,9 +229,10 @@ export async function POST(
     // Check if user is authorized then get user information
     const cookieStore = await cookies();
     const { value: authToken }: any = cookieStore.get('accessToken');
-    if (!authToken) return NextResponse.json(
-      { message: 'No token to signin' },
-      { status: 401 }
+    if (!authToken) return nextError(
+      'TOKEN_DETAILS_NOT_FOUND',
+      'No auth token details found',
+      401
     );
 
     const { email }: any = await verifyToken(authToken);
@@ -200,7 +308,7 @@ export async function POST(
       user_id: id,
       status: "PENDING",
       status_history: [
-        { status: "PENDING", timestamp: "isoFromTimestamp"}
+        { status: "PENDING", timestamp: isoFromTimestamp}
       ],
       timestamps: {
         created_at: isoFromTimestamp,

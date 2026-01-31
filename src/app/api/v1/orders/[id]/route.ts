@@ -120,11 +120,15 @@ export async function PUT(
       // { data: order.status_history, message: 'status history: '},
       // { status: 200 }
     // );
+    const statusHistoryWithoutNull = () => {
+      if (order.status_history === null) return [];
+      return order.status_history.filter((itm: Record<string, any> | null) => itm !== null);
+    };
     const data = await prisma.userOrders.update({
       where: { id: orderId },
       data: {
         status,
-        status_history: [ ...order.status_history, { status, timestamp: isoFromTimestamp }]
+        status_history: [ ...statusHistoryWithoutNull(), { status, timestamp: isoFromTimestamp }]
       }
     });
 

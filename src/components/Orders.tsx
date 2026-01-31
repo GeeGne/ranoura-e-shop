@@ -1,6 +1,6 @@
 // HOOKS
 import { useEffect, useRef, useId } from 'react';
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 
 // COMPONENTS
 import LoadingTable from '@/components/LoadingTable';
@@ -12,10 +12,12 @@ import IconamoonSearchLight from '@/components/svgs/IconamoonSearchLight';
 
 // STORES
 import { 
+  useAlertMessageStore,
   useOrderDetailsWindowStore, 
   useShippingDetailsWindowStore,
   useLayoutRefStore,
-  useViewOrdersNavTileStore
+  useViewOrdersNavTileStore,
+  useActivityWindowStore
 } from '@/stores/index';
 
 // JSON
@@ -60,12 +62,25 @@ export default function Orders ({
 }: Props) {
 
   const id = useId();
+  const queryClient = useQueryClient();
   const statusColors: Record<string, string> = statusColorsData;
   const setOrderDetailsWindowToggle = useOrderDetailsWindowStore(state => state.setToggle);
   const setShippingDetailsWindowToggle = useShippingDetailsWindowStore(state => state.setToggle);
 
   const layoutRef = useLayoutRefStore(state => state.layoutRef);
   const mainRef = useRef<HTMLDivElement>(null);
+
+  const setActivityWindowToggle = useActivityWindowStore(state => state.setToggle);
+  const setActivityWindowMessage = useActivityWindowStore(state => state.setMessage);
+
+  const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
+  const setAlertType = useAlertMessageStore((state) => state.setType);
+  const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
+  const handleAlert = (type: string, message: string) => {
+    setAlertToggle(Date.now());
+    setAlertType(type);
+    setAlertMessage(message);
+  };
 
   const searchOrderIDTerm = useViewOrdersNavTileStore(state => state.searchByOrderIDTerm);
   const searchNameTerm = useViewOrdersNavTileStore(state => state.searchByNameTerm);
@@ -111,6 +126,24 @@ export default function Orders ({
         console.error("Unknown scroll type: ", scroll);
     }
   }, [ scroll, scrollTrigger ]);
+
+  const updateOrderMutation = useMutation({
+    mutationFn: updateOrder,
+    onSettled: () => {
+      setActivityWindowToggle(false);
+    },
+    onMutate: () => {
+      setActivityWindowToggle(true);
+      setActivityWindowMessage(isEn ? 'Updating selected order...' : 'جار تحديث الطلب...');
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: [ 'orders' ] });
+      handleAlert('success', data.message[lang]);
+    },
+    onError: () => {
+      handleAlert('error', isEn ? 'Error while updating order, please try again' : 'حصل خطأ خلال تعديل المنتج, الرجاء المحاوله مره اخرى');
+    }
+  })
 
   const getProcessedOrders = () => {
   
@@ -225,8 +258,8 @@ export default function Orders ({
     ;
   };
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement | SVGSVGElement>) => {
-    const { type, status } = e.currentTarget.dataset;
+  const handleClick = (e: React.MouseEvent<HTMLElement | SVGSVGElement>) => {
+    const { type, status, orderId } = e.currentTarget.dataset;
 
     switch (type) {
       case 'order_details_window_is_clicked':
@@ -236,7 +269,7 @@ export default function Orders ({
         setShippingDetailsWindowToggle(true);
         break;
       case 'status_list_button_is_clicked': 
-
+        if (orderId && status) updateOrderMutation.mutate({ id: orderId, data: { status } });
         break;
       default:
         console.error('Unknown Type: ', type);
@@ -517,7 +550,9 @@ export default function Orders ({
                               transition-all duration-200 ease-out
                             "
                             data-type="status_list_button_is_clicked"
+                            data-order-id={order.id}
                             data-status={name}
+                            onClick={handleClick}
                           >
                             {getTranslation(STATUS_TRANSLATIONS, name, lang)}
                           </li>
