@@ -65,6 +65,7 @@ export default function Orders ({
   const queryClient = useQueryClient();
   const statusColors: Record<string, string> = statusColorsData;
   const setOrderDetailsWindowToggle = useOrderDetailsWindowStore(state => state.setToggle);
+  const setOrderDetailsWindowId = useOrderDetailsWindowStore(state => state.setOrderId);
   const setShippingDetailsWindowToggle = useShippingDetailsWindowStore(state => state.setToggle);
 
   const layoutRef = useLayoutRefStore(state => state.layoutRef);
@@ -137,7 +138,9 @@ export default function Orders ({
       setActivityWindowMessage(isEn ? 'Updating selected order...' : 'جار تحديث الطلب...');
     },
     onSuccess: (data) => {
+      console.log('order id: ', data.data.id);
       queryClient.invalidateQueries({ queryKey: [ 'orders' ] });
+      queryClient.invalidateQueries({ queryKey: [ 'order', data.data.id ] });
       handleAlert('success', data.message[lang]);
     },
     onError: () => {
@@ -264,6 +267,7 @@ export default function Orders ({
     switch (type) {
       case 'order_details_window_is_clicked':
         setOrderDetailsWindowToggle(true);
+        if (orderId) setOrderDetailsWindowId(orderId);
         break;
       case 'shipping_details_window_is_clicked':
         setShippingDetailsWindowToggle(true);
@@ -492,6 +496,7 @@ export default function Orders ({
                       "
                       role="button"
                       data-type="order_details_window_is_clicked"
+                      data-order-id={order.id}
                       onClick={handleClick}
                     />
                     <MdiCardAccountDetails 

@@ -340,12 +340,16 @@ const useAddProductImgWindowStore = create<AddProductImgWindowProps>()(
 type OrderDetailsWindowProps = {
   toggle: boolean;
   setToggle: (value: boolean) => void;
+  orderId: string;
+  setOrderId: (value: string) => void;
 };
 
 const useOrderDetailsWindowStore = create<OrderDetailsWindowProps>()(
   (set) => ({
     toggle: false,
     setToggle: (toggle) => set({ toggle }),
+    orderId: '',
+    setOrderId: (orderId) => set({ orderId })
   })
 );
 

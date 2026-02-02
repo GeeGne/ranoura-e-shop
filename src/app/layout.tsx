@@ -29,7 +29,7 @@ import AddCategoryWindow from '@/components/fixedLayouts/AddCategoryWindow';
 import EditImageUrlCategoryWindow from '@/components/fixedLayouts/EditImageUrlCategoryWindow';
 import AddSubCategoryWindow from '@/components/fixedLayouts/AddSubCategoryWindow';
 import SelectImgColorWindow from '@/components/fixedLayouts/SelectImgColorWindow';
-import UserOrderDetailsWindow from '@/components/fixedLayouts/UserOrderDetailsWindow';
+import UserOrderDetailsWindow from '@/components/fixedLayouts/userOrderDetailsWindow/index';
 import ShippingDetailsWindow from '@/components/fixedLayouts/ShippingDetailsWindow';
 import BottomBorder from '@/components/svgs/BottomBorder';
 
