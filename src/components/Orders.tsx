@@ -138,7 +138,6 @@ export default function Orders ({
       setActivityWindowMessage(isEn ? 'Updating selected order...' : 'جار تحديث الطلب...');
     },
     onSuccess: (data) => {
-      console.log('order id: ', data.data.id);
       queryClient.invalidateQueries({ queryKey: [ 'orders' ] });
       queryClient.invalidateQueries({ queryKey: [ 'order', data.data.id ] });
       handleAlert('success', data.message[lang]);
@@ -153,8 +152,17 @@ export default function Orders ({
     const orders: any = data;
     if (!orders) return [];
 
+    const simplifiedVersion = [...orders].map(({ id, status, customer_snapshot, timestamps }: Record<string ,any>) => ({
+      id,
+      status,
+      name: customer_snapshot.name,
+      email: customer_snapshot.email,
+      created_at: timestamps.created_at,
+      updated_at: timestamps.updated_at,
+      canceled_at: timestamps.canceled_at,
+    }))
     const orderIDFilteredOrders = filterByQuery(
-      orders, 
+      simplifiedVersion, 
       { 
         searchTerms: [searchOrderIDTerm],
         searchFields: [ 'id' ],
@@ -167,7 +175,7 @@ export default function Orders ({
       orderIDFilteredOrders, 
       { 
         searchTerms: [searchNameTerm],
-        searchFields: [ 'customer_full_name' ],
+        searchFields: [ 'name' ],
         filteringType: 'contains',
         caseSensitive: false,
         specificSearch: false
@@ -183,7 +191,7 @@ export default function Orders ({
         specificSearch: false
       }
     );
-    const sortUsers = [...emailFilteredOrders].sort((a, b) => {
+    const sortOrders = [...emailFilteredOrders].sort((a, b) => {
       const { value, fieldName, sortType }: any = selectedSortByField;
       const isSortEmpty = value === 'none';
       if (isSortEmpty) return 0;
@@ -194,13 +202,16 @@ export default function Orders ({
       if (sortType === 'descending') return dateB - dateA;
       return dateA - dateB;
     });
-    const tagFilteredUsers = sortUsers.filter(user => {
+    const tagFilteredOrders = sortOrders.filter(order => {
       const areFiltersEmpty = selectedFilterTags?.length === 0;
       if (areFiltersEmpty) return true;
-      return selectedFilterTags?.some(tag => user[tag.fieldName] === tag.value);
+      return selectedFilterTags?.some(tag => order[tag.fieldName] === tag.value);
     });
     
-    return tagFilteredUsers;
+    const finalOrderResults = tagFilteredOrders.map(order => 
+      orders.find((itm: Record<string, any>) => itm.id === order.id)
+    );
+    return finalOrderResults;
   };
 
   const formatDate = (dateStr: string) => {
@@ -282,6 +293,7 @@ export default function Orders ({
 
   // DEBUG & UI
   console.log('orders: ', data);
+  console.log('selectedFilterTags: ', selectedFilterTags);
 
   if (isLoading) return (
     <LoadingTable />
@@ -427,13 +439,13 @@ export default function Orders ({
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center gap-2">
                     <div className="flex-shrink-0 h-12 w-12">
-                      <img className="w-full h-full object-cover object-center rounded-full" src={order.customer_snapshot.avatar || pfpImage} alt="" />
+                      <img className="w-full h-full object-cover object-center rounded-full" src={order?.customer_snapshot?.avatar || pfpImage} alt="" />
                     </div>
                     <div className="ml-4">
                       <div className="text-base font-medium text-heading">
-                        {order.customer_snapshot.name}
+                        {order?.customer_snapshot?.name}
                       </div>
-                      <div className="text-sm text-body-light">{order.customer_snapshot.email}</div>
+                      <div className="text-sm text-body-light">{order?.customer_snapshot?.email}</div>
                     </div>
                   </div>
                 </td>
@@ -445,21 +457,21 @@ export default function Orders ({
                     </div>
                     <div>
                       <span className="text-sm text-body-light">{isEn ? 'Number of items:' : 'عدد العناصر:'}</span>{<>&ensp;</>}
-                      <span className="font-bold text-sm text-body underline">{order.items.total_products}</span>{<>&ensp;</>}{<>&ensp;</>}
+                      <span className="font-bold text-sm text-body underline">{order?.items?.total_products}</span>{<>&ensp;</>}{<>&ensp;</>}
                       <span className="text-sm text-body-light">{isEn ? 'Ordered at:' : 'تم الطلب:'}</span>{<>&ensp;</>}
-                      <span className="font-bold text-sm text-body underline">{getTimeAgo(order.created_at)}</span>
+                      <span className="font-bold text-sm text-body underline">{getTimeAgo(order?.created_at)}</span>
                     </div>
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span 
                     className="relative text-xs font-bold py-1 px-2"
-                    style={{ color: statusColors[order.status]}}
+                    style={{ color: statusColors[order?.status]}}
                   >
-                    {getTranslation(STATUS_TRANSLATIONS, order.status, lang)}
+                    {getTranslation(STATUS_TRANSLATIONS, order?.status, lang)}
                   <div
                     className="absolute top-0 left-0 w-full h-full opacity-20 rounded-full"
-                    style={{ backgroundColor: statusColors[order.status]}}
+                    style={{ backgroundColor: statusColors[order?.status]}}
                   />
                   </span>
                 </td>

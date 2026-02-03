@@ -262,11 +262,11 @@ export async function POST(
     const isProductColorsVerified = productsData.every((product: Record<string, any>) => 
       doesExist(productsData, findValue(productsRequestedData, 'id', product.id).color)
     );
-    if (!isProductColorsVerified || !isProductSizesVerified) return nextError(
-      'PRODUCT_COLOR_SIZE_UNAVAILABLE',
-      'product color or size found unavailbale',
-      401
-    );
+    // if (!isProductColorsVerified || !isProductSizesVerified) return nextError(
+      // 'PRODUCT_COLOR_SIZE_UNAVAILABLE',
+      // 'product color or size found unavailbale',
+      // 401
+    // );
 
     // calculate the cost
     const pricesArray = productsData.map(({ price }: any) => price);
