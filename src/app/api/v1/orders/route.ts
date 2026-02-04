@@ -254,19 +254,21 @@ export async function POST(
     // Check if product size, quanitiy avalibility along with stock
     const findValue = (array: any[], row: string, value: string) => 
       array.find((itm: Record<string, any>) => itm[row] === value);
+
     const doesExist = (array: any[], value: string) => array.some(itm => itm === value);
 
-    const isProductSizesVerified = productsData.every((product: Record<string, any>) => 
-      doesExist(productsData, findValue(productsRequestedData, 'id', product.id).size)
+    const isProductSizesVerified = productsRequestedData.every((product: Record<string, any>) => 
+      doesExist(findValue(productsData, 'id', product.id).sizes, product.size)
     );
-    const isProductColorsVerified = productsData.every((product: Record<string, any>) => 
-      doesExist(productsData, findValue(productsRequestedData, 'id', product.id).color)
+    const isProductColorsVerified = productsRequestedData.every((product: Record<string, any>) => 
+      doesExist(findValue(productsData, 'id', product.id).colors, product.color)
     );
-    // if (!isProductColorsVerified || !isProductSizesVerified) return nextError(
-      // 'PRODUCT_COLOR_SIZE_UNAVAILABLE',
-      // 'product color or size found unavailbale',
-      // 401
-    // );
+    
+    if (!isProductColorsVerified || !isProductSizesVerified) return nextError(
+      'PRODUCT_COLOR_SIZE_UNAVAILABLE',
+      'product color or size found unavailbale',
+      401
+    );
 
     // calculate the cost
     const pricesArray = productsData.map(({ price }: any) => price);
