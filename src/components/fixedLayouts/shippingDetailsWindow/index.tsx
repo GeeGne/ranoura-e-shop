@@ -1,3 +1,6 @@
+// HOOKS
+import { useQuery } from '@tanstack/react-query';
+
 // COMPONENTS
 import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingResize';
 import GrommetIconsCheckboxSelected from '@/components/svgs/GrommetIconsCheckboxSelected';
@@ -14,6 +17,9 @@ import { useLanguageStore, useShippingDetailsWindowStore } from '@/stores/index'
 // UTILS
 import createSlug from '@/utils/createSlug';
 
+// API
+import getSpecificOrder from '@/lib/api/orders/id/get';
+
 // ASSETS
 const NavBarLgImg = '/assets/img/NavBarImg-example.avif';
 const NavBarCompactImg = '/assets/img/NavBarCompactImg-example.avif';
@@ -28,7 +34,13 @@ export default function ShippingDetailsWindow () {
 
   const toggle = useShippingDetailsWindowStore(state => state.toggle);
   const setToggle = useShippingDetailsWindowStore(state => state.setToggle);
+  const orderId = useShippingDetailsWindowStore(state => state.orderId);
   
+  const { data: orderData, isLoading, isError } = useQuery({
+    queryKey: [ 'order', orderId ],
+    queryFn: () => getSpecificOrder(orderId)
+  });
+  const order = orderData?.data;
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
@@ -45,7 +57,10 @@ export default function ShippingDetailsWindow () {
         console.error('Unknown type: ', type);
     }
   }
+  
   // DEBUG & UI
+  // console.log('order data: ', order);
+  // console.log('order id: ', orderId);
 
   return (
     <div
@@ -105,7 +120,7 @@ export default function ShippingDetailsWindow () {
           </div>
           <div>
             <span className="text-body">Order ID:&nbsp;</span>
-            <span className="text-heading">ywMTrndU-7K1</span>
+          <span className="text-heading">{order?.id}</span>
           </div>
           <div>
             <span className="text-body">Order Date:&nbsp;</span>

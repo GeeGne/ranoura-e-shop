@@ -66,7 +66,9 @@ export default function Orders ({
   const statusColors: Record<string, string> = statusColorsData;
   const setOrderDetailsWindowToggle = useOrderDetailsWindowStore(state => state.setToggle);
   const setOrderDetailsWindowId = useOrderDetailsWindowStore(state => state.setOrderId);
+
   const setShippingDetailsWindowToggle = useShippingDetailsWindowStore(state => state.setToggle);
+  const setShippingDetailsWindowId = useShippingDetailsWindowStore(state => state.setOrderId);
 
   const layoutRef = useLayoutRefStore(state => state.layoutRef);
   const mainRef = useRef<HTMLDivElement>(null);
@@ -282,6 +284,7 @@ export default function Orders ({
         break;
       case 'shipping_details_window_is_clicked':
         setShippingDetailsWindowToggle(true);
+        if (orderId) setShippingDetailsWindowId(orderId);
         break;
       case 'status_list_button_is_clicked': 
         if (orderId && status) updateOrderMutation.mutate({ id: orderId, data: { status } });
@@ -520,6 +523,7 @@ export default function Orders ({
                       "
                       role="button"
                       data-type="shipping_details_window_is_clicked"
+                      data-order-id={order.id}
                       onClick={handleClick}
                     />
                     <label

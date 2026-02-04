@@ -30,7 +30,7 @@ import EditImageUrlCategoryWindow from '@/components/fixedLayouts/EditImageUrlCa
 import AddSubCategoryWindow from '@/components/fixedLayouts/AddSubCategoryWindow';
 import SelectImgColorWindow from '@/components/fixedLayouts/SelectImgColorWindow';
 import UserOrderDetailsWindow from '@/components/fixedLayouts/userOrderDetailsWindow/index';
-import ShippingDetailsWindow from '@/components/fixedLayouts/ShippingDetailsWindow';
+import ShippingDetailsWindow from '@/components/fixedLayouts/shippingDetailsWindow/index';
 import BottomBorder from '@/components/svgs/BottomBorder';
 
 // STORES
@@ -62,6 +62,7 @@ export default function RootLayout({
   // const handleScroll = (e: any) => console.log('wrokign');
   // console.log(layoutRef);
   // console.log(pathNameIncludesDashboard());
+
 
   return (
     <html lang={lang} dir={lang === 'en' ? 'ltr' : 'rtl'}>

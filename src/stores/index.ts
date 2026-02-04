@@ -356,12 +356,16 @@ const useOrderDetailsWindowStore = create<OrderDetailsWindowProps>()(
 type ShippingDetailsWindowProps = {
   toggle: boolean;
   setToggle: (value: boolean) => void;
+  orderId: string;
+  setOrderId: (value: string) => void;
 };
 
 const useShippingDetailsWindowStore = create<ShippingDetailsWindowProps>()(
   (set) => ({
     toggle: false,
     setToggle: (toggle) => set({ toggle }),
+    orderId: '',
+    setOrderId: (orderId) => set({ orderId })
   })
 );
 
