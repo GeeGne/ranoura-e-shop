@@ -10,6 +10,7 @@ import { useLanguageStore, useOrderDetailsWindowStore } from '@/stores/index';
 export default function LoadingTable () {
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
+
   const toggle = useOrderDetailsWindowStore(state => state.toggle);
   const setToggle = useOrderDetailsWindowStore(state => state.setToggle);
 

@@ -56,7 +56,8 @@ export default function LoadingLayout () {
       default:
         console.error('Unknown type: ', type);
     }
-  }
+  };
+  
   // DEBUG & UI
 
   return (
@@ -105,7 +106,7 @@ export default function LoadingLayout () {
               transition-all duration-200 ease-in-out
               "
           >
-            Print
+            {isEn ? 'Print' : 'طباعه'}
           </span>
         </button>
         <section
@@ -113,15 +114,15 @@ export default function LoadingLayout () {
         >
           <div className="flex items-center gap-2">
             <LetsIconsOrder className="w-6 h-6 text-body"/>
-            <span className="text-lg font-bold text-body">ORDER INFORMATION</span>
+            <span className="text-lg font-bold text-body">{isEn ? 'ORDER INFORMATION' : 'معلومات عن الاوردر'}&nbsp;</span>
           </div>
           <div>
-            <span className="text-body">Order ID:&nbsp;</span>
-            <span className="text-heading">ywMTrndU-7K1</span>
+            <span className="text-body">{isEn ? 'Order ID:' : 'رمز الاوردر:'}&nbsp;</span>
+            <span className="--opacity-blink text-transparent bg-background-deep-light rounded-md">///////////////////////////////////</span>
           </div>
           <div>
-            <span className="text-body">Order Date:&nbsp;</span>
-            <span className="text-heading">2024-09-194T10:22:45</span>
+            <span className="text-body">{isEn ? 'Order Date:' : 'تاريخ الطلب:'}&nbsp;</span>
+            <span className="--opacity-blink text-transparent bg-background-deep-light rounded-md">///////////////////</span>
           </div>
         </section>
         <section
@@ -129,19 +130,19 @@ export default function LoadingLayout () {
         >
           <div className="flex items-center gap-2">
             <PhAddressBook className="w-6 h-6 text-body"/>
-            <span className="text-lg font-bold text-body">Customer Information</span>
+            <span className="text-lg font-bold text-body">{isEn ? 'Customer Information' : 'معلمومات العميل'}&nbsp;</span>
           </div>
           <div>
-            <span className="text-body">Name:&nbsp;</span>
-            <span className="text-heading">Jon Ros</span>
+            <span className="text-body">{isEn ? 'Name:' : 'الاسم:'}&nbsp;</span>
+            <span className="--opacity-blink text-transparent bg-background-deep-light rounded-md">///////////////</span>
           </div>
           <div>
-            <span className="text-body">Email:&nbsp;</span>
-            <span className="text-heading">geegnebab@gmail.com</span>
+            <span className="text-body">{isEn ? 'Email:' : 'ايميل'}&nbsp;</span>
+            <span className="--opacity-blink text-transparent bg-background-deep-light rounded-md">///////////////////////</span>
           </div>
           <div>
-            <span className="text-body">Phone:&nbsp;</span>
-            <span className="text-heading">+943 942 485 356</span>
+            <span className="text-body">{isEn ? 'Phone:' : 'الهاتف'}&nbsp;</span>
+            <span className="--opacity-blink text-transparent bg-background-deep-light rounded-md">/////////////</span>
           </div>
         </section>
         <section
@@ -149,23 +150,23 @@ export default function LoadingLayout () {
         >
           <div className="flex items-center gap-2">
             <LaShippingFast className="w-6 h-6 text-body"/>
-            <span className="text-lg font-bold text-body">SHIPPING ADDRESS</span>
+            <span className="text-lg font-bold text-body">{isEn ? 'SHIPPING ADDRESS' : 'عنوان الشحن'}&nbsp;</span>
           </div>
           <div>
-            <span className="text-body">City:&nbsp;</span>
-            <span className="text-heading">Damascus</span>
+            <span className="text-body">{isEn ? 'City:' : 'المحافظه'}&nbsp;</span>
+            <span className="--opacity-blink text-transparent bg-background-deep-light rounded-md">///////////</span>
           </div>
           <div>
-            <span className="text-body">Address:&nbsp;</span>
-            <span className="text-heading">Near Tolaytola Restaurant</span>
+            <span className="text-body">{isEn ? 'Address:' : 'العنوان'}&nbsp;</span>
+            <span className="--opacity-blink text-transparent bg-background-deep-light rounded-md">////////////////////////////////////////////////////</span>
           </div>
           <div>
-            <span className="text-body">Second Address:&nbsp;</span>
-            <span className="text-heading">Near White House</span>
+            <span className="text-body">{isEn ? 'Second Address:' : 'العنوان الثاني'}&nbsp;</span>
+            <span className="--opacity-blink text-transparent bg-background-deep-light rounded-md">////////////////////////////////////</span>
           </div>
           <div>
-            <span className="text-body">Notes:&nbsp;</span>
-            <span className="text-heading">Between 10Am on a Tuesday</span>
+            <span className="text-body">{isEn ? 'Notes:' : 'ملاحظات'}&nbsp;</span>
+            <span className="--opacity-blink text-transparent bg-background-deep-light rounded-md">//////////////////////////////////////</span>
           </div>
         </section>
         <section
@@ -173,24 +174,24 @@ export default function LoadingLayout () {
         >
           <div className="flex items-center gap-2">
             <AkarIconsShippingBox01 className="w-6 h-6 text-body"/>
-            <span className="text-lg font-bold text-body">ORDER DETAILS</span>
+            <span className="text-lg font-bold text-body">{isEn ? 'ORDER DETAILS' : 'معلموات الطلب'}</span>
           </div>
-          <span className="text-body">ID | PRODUCT NAME | QUANTITY | COLOR | SIZE | TOTAL</span>
+          <span className="--opacity-blink text-transparent bg-background-deep-light rounded-md">ID | PRODUCT NAME | QUANTITY | COLOR | SIZE | TOTAL</span>
           <div>
-            <span className="text-body">Shipping Cost:</span>
-            <span className="text-heading">20 SYP</span>
+            <span className="text-body">{isEn ? 'Shipping Cost:' : 'تكاليف الشحن:'}&nbsp;</span>
+            <span className="--opacity-blink text-transparent bg-background-deep-light rounded-md">////////////</span>
           </div>          
           <div>
-            <span className="text-body">Order Cost:</span>
-            <span className="text-heading">20 SYP</span>
+            <span className="text-body">{isEn ? 'Order Cost:' : 'تكاليف الطلب'}&nbsp;</span>
+            <span className="--opacity-blink text-transparent bg-background-deep-light rounded-md">//////////</span>
           </div>          
         </section>
         <hr className="border-background-deep-light"/>
         <section
           className="flex justify-between py-4 gap-4"
         >
-          <span className="text-body font-bold">TOTAL</span>
-          <span className="text-content font-bold">600 SYP</span>
+          <span className="text-body font-bold">{isEn ? 'TOTAL' : 'الاجمالي'}&nbsp;</span>
+          <span className="--opacity-blink text-transparent bg-background-deep-light rounded-md text-content font-bold">////////////</span>
         </section>
       </div>
     </div>

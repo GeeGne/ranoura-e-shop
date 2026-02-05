@@ -30,7 +30,6 @@ const img_url = '/assets/img/pfp_img.png';
 const pfpImage = '/assets/img/pfp.avif';
 const productImg = '/assets/img/cloth-7-sky.avif';
 
-
 export default function UserOrderDetailsWindow () {
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
