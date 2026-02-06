@@ -4,30 +4,17 @@ import { useQuery } from '@tanstack/react-query';
 // COMPONENTS
 import ErrorLayout from '@/components/fixedLayouts/shippingDetailsWindow/ErrorLayout';
 import LoadingLayout from '@/components/fixedLayouts/shippingDetailsWindow/LoadingLayout';
-import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingResize';
-import GrommetIconsCheckboxSelected from '@/components/svgs/GrommetIconsCheckboxSelected';
 import MaterialSymbolsPrintOutlineRounded from '@/components/svgs/MaterialSymbolsPrintOutlineRounded';
 import LetsIconsOrder from '@/components/svgs/LetsIconsOrder';
 import AkarIconsShippingBox01 from '@/components/svgs/AkarIconsShippingBox01';
-import IcRoundUpdate from '@/components/svgs/IcRoundUpdate';
 import LaShippingFast from '@/components/svgs/LaShippingFast';
 import PhAddressBook from '@/components/svgs/PhAddressBook';
 
 // STORES
 import { useLanguageStore, useShippingDetailsWindowStore } from '@/stores/index';
 
-// UTILS
-import createSlug from '@/utils/createSlug';
-
 // API
 import getSpecificOrder from '@/lib/api/orders/id/get';
-
-// ASSETS
-const NavBarLgImg = '/assets/img/NavBarImg-example.avif';
-const NavBarCompactImg = '/assets/img/NavBarCompactImg-example.avif';
-const img_url = '/assets/img/pfp_img.png';
-const pfpImage = '/assets/img/pfp.avif';
-const productImg = '/assets/img/cloth-7-sky.avif';
 
 export default function ShippingDetailsWindow () {
 
@@ -80,7 +67,7 @@ export default function ShippingDetailsWindow () {
   // console.log('order data: ', order);
   // console.log('order id: ', orderId);
 
-  if (false) return(
+  if (isError) return(
     <ErrorLayout />
   )
 
