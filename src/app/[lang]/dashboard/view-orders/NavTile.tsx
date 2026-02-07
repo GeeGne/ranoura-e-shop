@@ -28,6 +28,9 @@ import addProduct from '@/lib/api/products/post';
 // UTILS
 import defaultProductData from '@/utils/defaultProductData';
 
+// JSON
+import filterArray from '@/json/OrderStatusInfo.json';
+
 export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: any) {
   
   const id = useId();
@@ -40,18 +43,6 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
     { name: { en: 'Created At', ar: 'تاريخ الانشاء' }, fieldName: 'created_at', value: 'created at' },
     { name: { en: 'Updated At', ar: 'تاريخ التحديث' }, fieldName: 'updated_at', value: 'updated at' },
     { name: { en: 'Canceled At', ar: 'تاريخ الالغاء' }, fieldName: 'canceled_at', value: 'canceled at' }
-  ];
-
-  const filterArray = [ 
-    { name:{ en: 'None', ar: 'لاشيء' }, fieldName: 'none', value: 'none' },
-    { name:{ en: 'Pending', ar: 'قيد الانتظار' }, fieldName: 'status', value: 'PENDING' },
-    { name:{ en: 'Processing', ar: 'قيد المعالجه' }, fieldName: 'status', value: 'PROCESSING' },
-    { name:{ en: 'Confirmed', ar: 'مؤكد' }, fieldName: 'status', value: 'CONFIRMED' },
-    { name:{ en: 'On Delivery', ar: 'قيد التوصيل' }, fieldName: 'status', value: 'ONDELIVERY' },
-    { name:{ en: 'Shipped', ar: 'تم الشحن' }, fieldName: 'status', value: 'SHIPPED' },
-    { name:{ en: 'Delivered', ar: 'تم التسليم' }, fieldName: 'status', value: 'DELIVERED' },
-    { name:{ en: 'Canceled', ar: 'ملغي' }, fieldName: 'status', value: 'CANCELED' },
-    { name:{ en: 'Refunded', ar: 'لم الاسترجاع' }, fieldName: 'status', value: 'REFUNDED' },
   ];
 
   const [ isMainRefStuck, setIsMainRefStuck ] = useState<boolean>(false);
@@ -427,35 +418,75 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
             />
             <BxFilter className="w-4 h-4 text-body" />
             <span className="text-sm text-body font-semibold">{isEn ? 'Filter' : 'تصنيف'}</span>
-            <ul
+            <div
               className="
                 absolute top-0 peer-checked:top-[calc(100%+0.5rem)] left-1/2 min-w-full
                 translate-x-[-50%]
-                flex flex-col gap-1 z-[5]
+                flex flex-row gap-4
                 invisible peer-checked:visible opacity-0 peer-checked:opacity-100
-                p-1 rounded-lg shadow-lg bg-white
+                p-2 rounded-lg shadow-lg bg-white z-[5]
                 translate-all duration-200 ease-in-out
               "
             >
-              {filterArray.map((itm, i) => 
-                <li
-                  key={i}
-                  className="
-                    text-center hover:bg-background-light whitespace-nowrap
-                    text-sm text-body hover:text-heading font-semibold p-1 rounded-lg
-                    translate-all duration-200 ease-in-out
-                  "
-                  role="button"
-                  data-type="filter_list_button_is_clicked"
-                  data-filter-name={itm.name[lang]}
-                  data-field-name={itm.fieldName}
-                  data-value={itm.value}
-                  onClick={handleClick}
-                >
-                  {itm.name[lang]}
-                </li>
-              )}
-            </ul>
+              <div
+                className="
+                  absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]
+                  h-[calc(100%-24px)] w-[2px] bg-background-deep-light rounded-full
+                "
+              />
+              <ul
+                className="
+                  flex flex-col gap-1
+                  before:content-['status'] before:text-sm before:text-inbetween before:text-center before:font-semibold
+                  translate-all duration-200 ease-in-out
+                "
+              >
+                {filterArray.filter((itm: Record<string, any>) => itm.fieldName === 'status').map((itm, i) => 
+                  <li
+                    key={i}
+                    className="
+                      text-center hover:bg-background-light whitespace-nowrap
+                      text-sm text-body hover:text-heading font-semibold p-1 rounded-lg
+                      translate-all duration-200 ease-in-out
+                    "
+                    role="button"
+                    data-type="filter_list_button_is_clicked"
+                    data-filter-name={itm.name[lang]}
+                    data-field-name={itm.fieldName}
+                    data-value={itm.value}
+                    onClick={handleClick}
+                  >
+                    {itm.name[lang]}
+                  </li>
+                )}
+              </ul>              
+              <ul
+                className="
+                  flex flex-col gap-1 
+                  before:content-['city'] before:text-sm before:text-inbetween before:text-center before:font-semibold
+                  translate-all duration-200 ease-in-out
+                "
+              >
+                {filterArray.filter((itm: Record<string, any>) => itm.fieldName === 'city').map((itm, i) => 
+                  <li
+                    key={i}
+                    className="
+                      text-center hover:bg-background-light whitespace-nowrap
+                      text-sm text-body hover:text-heading font-semibold p-1 rounded-lg
+                      translate-all duration-200 ease-in-out
+                    "
+                    role="button"
+                    data-type="filter_list_button_is_clicked"
+                    data-filter-name={itm.name[lang]}
+                    data-field-name={itm.fieldName}
+                    data-value={itm.value}
+                    onClick={handleClick}
+                  >
+                    {itm.name[lang]}
+                  </li>
+                )}
+              </ul>              
+            </div>
           </label>
           <ul
             className="flex gap-4 flex-wrap whitespace-nowrap"

@@ -154,11 +154,12 @@ export default function Orders ({
     const orders: any = data;
     if (!orders) return [];
 
-    const simplifiedVersion = [...orders].map(({ id, status, customer_snapshot, timestamps }: Record<string ,any>) => ({
+    const simplifiedVersion = [...orders].map(({ id, status, customer_snapshot, shipping, timestamps }: Record<string ,any>) => ({
       id,
       status,
       name: customer_snapshot.name,
       email: customer_snapshot.email,
+      city: shipping.city,
       created_at: timestamps.created_at,
       updated_at: timestamps.updated_at,
       canceled_at: timestamps.canceled_at,

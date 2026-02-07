@@ -446,7 +446,8 @@ export default function Table({
   // DEBUG & UI
   // console.log('addFullNameField(users): ', addFullNameField(users));
   console.log('selectedSortByField: ', selectedSortByField);
-  
+  console.log('users: ', processedUsers);
+
   return (
     <div className="overflow-x-auto" ref={mainRef}>
       <table className="min-w-full divide-y divide-gray-200 rounded-lg overflow-hidden">

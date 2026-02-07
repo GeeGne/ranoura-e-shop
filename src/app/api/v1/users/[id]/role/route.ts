@@ -29,8 +29,9 @@ export async function PUT(
     const roleName = await req.json();
     const role = await prisma.role.findUnique({
       where: { name: roleName }
-    })
-
+    });
+    return NextResponse.json({ data: role, message: 'current role:' }, { status: 201 });
+    
     if (!role) nextError(
       'GET_ROLE_BY_ID_FAILED',
       'couldn\'t get role id: given role might not exist',

@@ -1,0 +1,117 @@
+[
+  {
+    "name": { "en": "None", "ar": "لاشيء" }, 
+    "fieldName": "none", 
+    "value": "none" 
+  },
+  {
+    "name": { "en": "Pending", "ar": "قيد الانتظار" }, 
+    "fieldName": "status", 
+    "value": "PENDING" 
+  },
+  {
+    "name": { "en": "Processing", "ar": "قيد المعالجه" }, 
+    "fieldName": "status", 
+    "value": "PROCESSING" 
+  },
+  {
+    "name": { "en": "Confirmed", "ar": "مؤكد" }, 
+    "fieldName": "status", 
+    "value": "CONFIRMED" 
+  },
+  {
+    "name": { "en": "On Delivery", "ar": "قيد التوصيل" }, 
+    "fieldName": "status", 
+    "value": "ONDELIVERY" 
+  },
+  {
+    "name": { "en": "Shipped", "ar": "تم الشحن" }, 
+    "fieldName": "status", 
+    "value": "SHIPPED" 
+  },
+  {
+    "name": { "en": "Delivered", "ar": "تم التسليم" }, 
+    "fieldName": "status", 
+    "value": "DELIVERED" 
+  },
+  {
+    "name": { "en": "Canceled", "ar": "ملغي" }, 
+    "fieldName": "status", 
+    "value": "CANCELED" 
+  },
+  {
+    "name": { "en": "Refunded", "ar": "لم الاسترجاع" }, 
+    "fieldName": "status", 
+    "value": "REFUNDED" 
+  },
+  {
+    "name": { "en": "Damascus", "ar": "دمشق" }, 
+    "fieldName": "city", 
+    "value": "Damascus" 
+  },
+  {
+    "name": { "en": "Aleppo", "ar": "حلب" }, 
+    "fieldName": "city", 
+    "value": "Aleppo" 
+  },
+  {
+    "name": { "en": "Homs", "ar": "حمص" }, 
+    "fieldName": "city", 
+    "value": "Homs" 
+  },
+  {
+    "name": { "en": "Hama", "ar": "حماه" }, 
+    "fieldName": "city", 
+    "value": "Hama" 
+  },
+  {
+    "name": { "en": "Latakia", "ar": "الاذقيه" }, 
+    "fieldName": "city", 
+    "value": "Latakia" 
+  },
+  {
+    "name": { "en": "Daraa", "ar": "درعا" }, 
+    "fieldName": "city", 
+    "value": "Daraa" 
+  },
+  {
+    "name": { "en": "Raqqa", "ar": "الرقه" }, 
+    "fieldName": "city", 
+    "value": "Raqqa" 
+  },
+  {
+    "name": { "en": "Qamishli", "ar": "القامشلي" }, 
+    "fieldName": "city", 
+    "value": "Qamishli" 
+  },
+  {
+    "name": { "en": "Tartus", "ar": "طرطوس" }, 
+    "fieldName": "city", 
+    "value": "Tartus" 
+  },
+  {
+    "name": { "en": "As Suwayda", "ar": "السويداء" }, 
+    "fieldName": "city", 
+    "value": "As Suwayda" 
+  },
+  {
+    "name": { "en": "Palmyra", "ar": "تدمر" }, 
+    "fieldName": "city", 
+    "value": "Palmyra" 
+  },
+  {
+    "name": { "en": "Al Hasakah", "ar": "الحسكه" }, 
+    "fieldName": "city", 
+    "value": "Al Hasakah" 
+  },
+  {
+    "name": { "en": "Manbij", "ar": "منجب" }, 
+    "fieldName": "city", 
+    "value": "Manbij" 
+  },
+  {
+    "name": { "en": "Idlib", "ar": "ادلب" }, 
+    "fieldName": "city", 
+    "value": "Idlib" 
+  }
+]
