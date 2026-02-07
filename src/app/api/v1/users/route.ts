@@ -38,7 +38,8 @@ export async function GET(req: NextRequest) {
           include: {
             role: true
           }
-        }
+        },
+        userOrders: true
       },
       orderBy: {
         created_at: 'desc'

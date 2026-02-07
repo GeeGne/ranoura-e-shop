@@ -608,7 +608,7 @@ export default function Orders ({
               scope="col" 
               className={`
                 px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light 
-                uppercase tracking-wider
+                uppercase tracking-wider whitespace-nowrap
               `}
             >
               {isEn ? 'Order Details' : 'معلوامات الطلب'}
@@ -617,7 +617,7 @@ export default function Orders ({
               scope="col" 
               className={`
                 px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light 
-                uppercase tracking-wider
+                uppercase tracking-wider whitespace-nowrap
               `}
             >
               {isEn ? 'Status' : 'الحال'}
@@ -626,16 +626,25 @@ export default function Orders ({
               scope="col" 
               className={`
                 px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light 
-                uppercase tracking-wider
+                uppercase tracking-wider whitespace-nowrap
               `}
             >
-              {isEn ? 'Order Date' : 'تاريخ الطلب'}
+              {isEn ? 'Shipping City' : 'مدينة الشحن'}
             </th>
             <th 
               scope="col" 
               className={`
                 px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light 
-                uppercase tracking-wider
+                uppercase tracking-wider whitespace-nowrap
+              `}
+            >
+              {isEn ? 'Items Total' : 'اجمالي السلع'}
+            </th>
+            <th 
+              scope="col" 
+              className={`
+                px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light 
+                uppercase tracking-wider whitespace-nowrap
               `}
             >
               {isEn ? 'Total' : 'المجموع'}
@@ -644,7 +653,34 @@ export default function Orders ({
               scope="col" 
               className={`
                 px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light 
-                uppercase tracking-wider
+                uppercase tracking-wider whitespace-nowrap
+              `}
+            >
+              {isEn ? 'Order Date' : 'تاريخ الطلب'}
+            </th>
+            <th 
+              scope="col" 
+              className={`
+                px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light 
+                uppercase tracking-wider whitespace-nowrap
+              `}
+            >
+              {isEn ? 'Updated At' : 'اخر تحديث'}
+            </th>
+            <th 
+              scope="col" 
+              className={`
+                px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light 
+                uppercase tracking-wider whitespace-nowrap
+              `}
+            >
+              {isEn ? 'Canceled At' : 'تاريخ الالغاء'}
+            </th>
+            <th 
+              scope="col" 
+              className={`
+                px-6 py-3 ${isEn ? 'text-left' : 'text-right'} text-xs font-medium text-body-light 
+                uppercase tracking-wider whitespace-nowrap
               `}
             >
               {isEn ? 'Options' : 'الخيارات'}
@@ -652,116 +688,161 @@ export default function Orders ({
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {[1, 2, 3, 4, 5, 6].map((itm, i) =>
-            <tr key={i}>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="flex flex-col gap-2">
-                  <div>
-                    <span className="text-sm text-body-light">{isEn ? 'ID:' : 'الرمز:'}</span>{<>&ensp;</>}
-                    <span className="font-bold text-sm text-body underline">{orders.id}</span>
-                  </div>
-                  <div>
-                    <span className="text-sm text-body-light">{isEn ? 'Number of items:' : 'عدد العناصر:'}</span>{<>&ensp;</>}
-                    <span className="font-bold text-sm text-body underline">{orders.products.length}</span>{<>&ensp;&ensp;</>}
-                    <span className="text-sm text-body-light">{isEn ? 'Ordered at:' : 'تم الطلب:'}</span>{<>&ensp;</>}
-                    <span className="font-bold text-sm text-body underline">{getTimeAgo(orders.created_at)}</span>
-                  </div>
-                </div>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <span 
-                  className="relative text-xs font-bold py-1 px-2"
-                  style={{ color: statusColors[orders.status]}}
+          {data?.length === 0
+            ? <tr className="px-6 py-4 whitespace-nowrap">
+                <td
+                  className="p-4"
+                  colSpan={10}
                 >
-                  {orders.status.toLowerCase()}
-                <div
-                  className="absolute top-0 left-0 w-full h-full opacity-20 rounded-full"
-                  style={{ backgroundColor: statusColors[orders.status]}}
-                />
-                </span>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
-                {formatDate(orders.created_at)}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
-                {orders.total}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
-                <div className="flex gap-2">
-                  <LetsIconsOrderFill 
-                    className="
-                      w-7 h-7 p-1 text-heading rounded-md cursor-pointer
-                      bg-background-light hover:bg-background-deep-light
-                      active:opacity-60
-                      transition-all duration-200 ease-out
-                    "
-                    role="button"
-                    data-type="order_details_window_is_clicked"
-                    onClick={handleClick}
-                  />
-                  <MdiCardAccountDetails 
-                    className="
-                      w-7 h-7 p-[5px] text-heading rounded-md cursor-pointer
-                      bg-background-light hover:bg-background-deep-light
-                      active:opacity-60
-                      transition-all duration-200 ease-out
-                    "
-                    role="button"
-                    data-type="shipping_details_window_is_clicked"
-                    onClick={handleClick}
-                  />
-                  <label
-                    className="
-                      relative flex items-center 
-                      bg-background-light hover:bg-background-deep-light 
-                      rounded-lg cursor-pointer
-                      transition-all duration-200 ease-out
-                    "
-                    htmlFor={`${id}-status`}
+                  <div
+                    className="w-full justify-center flex gap-2 "
                   >
-                    <input 
-                      className="
-                        peer absolute w-0 h-0 opacity-0
-                      "
-                      type="checkbox"
-                      name="statusInpt"
-                      id={`${id}-status`}
-                    />
-                    <div 
-                      className="
-                        w-[90px] text-center p-1 text-sm bg-transparent font-bold
-                        border-none outline-none cursor-pointer
-                      "
-                      style={{ color: statusColors[orders.status]}}
+                    <IconamoonSearchLight className="text-body" />
+                    <span
+                      className="text-body font-semibold text-lg"
                     >
-                      {orders.status.toLowerCase()}
+                      {isEn ? 'No Results Found.' : 'لا توجد اي نتائج.'}
+                    </span>
+                  </div>
+                </td>
+              </tr>  
+            : data?.map((order, i) =>
+                <tr
+                  key={i}
+                >
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex flex-col gap-2">
+                      <div>
+                        <span className="text-sm text-body-light">{isEn ? 'ID:' : 'الرمز:'}</span>{<>&ensp;</>}
+                        <span className="font-bold text-sm text-body underline">{order.id}</span>
+                      </div>
+                      <div>
+                        <span className="text-sm text-body-light">{isEn ? 'Number of items:' : 'عدد العناصر:'}</span>{<>&ensp;</>}
+                        <span className="font-bold text-sm text-body underline">{order?.items?.total_products}</span>{<>&ensp;</>}{<>&ensp;</>}
+                        <span className="text-sm text-body-light">{isEn ? 'Ordered at:' : 'تم الطلب:'}</span>{<>&ensp;</>}
+                        <span className="font-bold text-sm text-body underline">{getTimeAgo(order?.created_at)}</span>
+                      </div>
                     </div>
-                    <MdiArrowDownDrop />
-                    <ul
-                      className="
-                        absolute top-full left-0 w-full 
-                        flex flex-col p-2 z-[5]
-                        bg-white shadow-lg rounded-lg
-                        invisible peer-checked:visible opacity-0 peer-checked:opacity-100
-                        transition-all duration-200 ease-out
-                      "
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span 
+                      className="relative text-xs font-bold py-1 px-2"
+                      style={{ color: statusColors[order?.status]}}
                     >
-                      {Object.entries(statusColors).map(([ name, color ], i) => 
-                        <li
-                          key={i}
+                      {getTranslation(STATUS_TRANSLATIONS, order?.status, lang)}
+                    <div
+                      className="absolute top-0 left-0 w-full h-full opacity-20 rounded-full"
+                      style={{ backgroundColor: statusColors[order?.status]}}
+                    />
+                    </span>
+                  </td>
+                  <td className="gap-4 px-6 py-4 whitespace-nowrap text-sm text-body-light">
+                    <div className="flex items-center gap-4">
+                      <span>{deliverTo.find(itm => itm.shipping_address === order.shipping.city)?.value[lang].toUpperCase()}</span>
+                      <span>|</span>
+                      <span>{order.pricing.shipping}</span>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
+                    {order.pricing.sub_total}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
+                    {order.pricing.total}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
+                    {formatDate(order.created_at)}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
+                    {formatDate(order.updated_at) || 'No information available'}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
+                    {formatDate(order.timestamps.canceled_at) || 'No information available'}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
+                    <div className="flex gap-2">
+                      <LetsIconsOrderFill 
+                        className="
+                          w-7 h-7 p-1 text-heading rounded-md cursor-pointer
+                          bg-background-light hover:bg-background-deep-light
+                          active:opacity-60
+                          transition-all duration-200 ease-out
+                        "
+                        role="button"
+                        data-type="order_details_window_is_clicked"
+                        data-order-id={order.id}
+                        onClick={handleClick}
+                      />
+                      <MdiCardAccountDetails 
+                        className="
+                          w-7 h-7 p-[5px] text-heading rounded-md cursor-pointer
+                          bg-background-light hover:bg-background-deep-light
+                          active:opacity-60
+                          transition-all duration-200 ease-out
+                        "
+                        role="button"
+                        data-type="shipping_details_window_is_clicked"
+                        data-order-id={order.id}
+                        onClick={handleClick}
+                      />
+                      <label
+                        className="
+                          relative flex items-center 
+                          bg-background-light hover:bg-background-deep-light 
+                          rounded-lg cursor-pointer
+                          transition-all duration-200 ease-out
+                        "
+                        htmlFor={`${id}-${i}-status`}
+                      >
+                        <input 
                           className="
-                            p-2 rounded-lg hover:bg-background-light text-body text-sm font-bold
+                            peer absolute w-0 h-0 opacity-0
+                          "
+                          type="checkbox"
+                          name="statusInpt"
+                          id={`${id}-${i}-status`}
+                        />
+                        <div 
+                          className="
+                            w-[90px] text-center p-1 text-sm bg-transparent font-bold
+                            border-none outline-none cursor-pointer
+                          "
+                          style={{ color: statusColors[order.status]}}
+                        >
+                          {getTranslation(STATUS_TRANSLATIONS, order.status, lang)}
+                        </div>
+                        <MdiArrowDownDrop />
+                        <ul
+                          className="
+                            absolute top-0 peer-checked:top-[calc(100%+0.5rem)] left-0 w-full 
+                            flex flex-col p-1 z-[5]
+                            bg-white shadow-lg rounded-lg
+                            invisible peer-checked:visible opacity-0 peer-checked:opacity-100
+                            transition-all duration-200 ease-out
                           "
                         >
-                          {name}
-                        </li>
-                      )} 
-                    </ul>
-                  </label>
-                </div>
-              </td>
-            </tr>
-          )}
+                          {Object.entries(statusColors).map(([ name, color ], i) => 
+                            <li
+                              key={i}
+                              className="
+                                p-2 rounded-lg hover:bg-background-light 
+                                text-body hover:text-heading text-sm font-semibold
+                                transition-all duration-200 ease-out
+                              "
+                              data-type="status_list_button_is_clicked"
+                              data-order-id={order.id}
+                              data-status={name}
+                              onClick={handleClick}
+                            >
+                              {getTranslation(STATUS_TRANSLATIONS, name, lang)}
+                            </li>
+                          )} 
+                        </ul>
+                      </label>
+                    </div>
+                  </td>
+                </tr>
+              )
+          }
         </tbody>
       </table>
     </div>

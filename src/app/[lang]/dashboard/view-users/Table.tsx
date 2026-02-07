@@ -424,7 +424,7 @@ export default function Table({
   });
 
   // DEBUG
-  // console.log('users: ', usersData?.data);
+  console.log('users: ', usersData?.data);
   // console.log('user roles: ', userRoles?.data);
   // console.log('userOrder: ', userOrder);
 
@@ -445,8 +445,7 @@ export default function Table({
 
   // DEBUG & UI
   // console.log('addFullNameField(users): ', addFullNameField(users));
-  console.log('selectedSortByField: ', selectedSortByField);
-  console.log('users: ', processedUsers);
+  // console.log('selectedSortByField: ', selectedSortByField);
 
   return (
     <div className="overflow-x-auto" ref={mainRef}>
@@ -672,6 +671,7 @@ export default function Table({
                         type="user_orders_table"
                         ref={(el: any) => (orderContainerRef.current[i] = el)}
                         data-user-id={user.id}
+                        data={user.userOrders}
                         style={{
                           maxHeight: (userOrder.toggle && (userOrder.userId === user.id))
                             ? userOrder.layoutHeight

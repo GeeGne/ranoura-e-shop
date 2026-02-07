@@ -32,8 +32,8 @@ model User {
   updated_at      DateTime?      @updatedAt
   address         UserAddress?
   role            UserRole?
+  userOrders        UserOrders[]
   RefreshToken    RefreshToken[]
-  UserOrders      UserOrders[]
 }
 
 model UserAddress {
@@ -50,7 +50,7 @@ model UserAddress {
 
 model Role {
   id          Int        @id @default(autoincrement())
-  name        roleNames @default(customer)
+  name        roleNames @unique @default(customer)
   description String?
   userRole    UserRole[]
   @@index ([name])

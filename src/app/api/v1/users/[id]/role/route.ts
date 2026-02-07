@@ -21,6 +21,7 @@ async function nextError (code: string, message: string, status = 404) {
 // @desc update user role
 // @route /api/v1/users/:id/role
 // @access privat (owner, admin)
+// @body (string): 'admin', 'customer', 'owner', 'support'
 export async function PUT(
   req: NextRequest,
   { params }: { params: { id: string } }
@@ -30,7 +31,6 @@ export async function PUT(
     const role = await prisma.role.findUnique({
       where: { name: roleName }
     });
-    return NextResponse.json({ data: role, message: 'current role:' }, { status: 201 });
     
     if (!role) nextError(
       'GET_ROLE_BY_ID_FAILED',
