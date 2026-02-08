@@ -16,6 +16,9 @@ import { useLanguageStore, useShippingDetailsWindowStore } from '@/stores/index'
 // API
 import getSpecificOrder from '@/lib/api/orders/id/get';
 
+// JSON
+import colors from '@/json/colors.json';
+
 export default function ShippingDetailsWindow () {
 
   const lang = useLanguageStore(state => state.lang);
@@ -46,6 +49,11 @@ export default function ShippingDetailsWindow () {
       hour12: true
     });
   };
+
+  const getColorName = (colorName: string) => 
+    colors.find(color => color.name === colorName)?.title[lang] || 'Not found'
+
+  const getLastSixDigitsFromID = (id: string) => id[id.length - 1] + id[id.length - 2] + id[id.length - 3] + id[id.length - 4] + id[id.length - 5] + id[id.length - 6];
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
@@ -146,18 +154,18 @@ export default function ShippingDetailsWindow () {
         >
           <div className="flex items-center gap-2">
             <PhAddressBook className="w-6 h-6 text-body"/>
-            <span className="text-lg font-bold text-body">{isEn ? 'Customer Information' : 'معلمومات العميل'}</span>
+            <span className="text-lg font-bold text-body">{isEn ? 'Customer Information' : 'معلمومات العميل'}&nbsp;</span>
           </div>
           <div>
             <span className="text-body">{isEn ? 'Name:' : 'الاسم:'}&nbsp;</span>
             <span className="text-heading">{order?.customer_snapshot?.name}</span>
           </div>
           <div>
-            <span className="text-body">{isEn ? 'Email:' : 'ايميل'}&nbsp;</span>
+            <span className="text-body">{isEn ? 'Email:' : 'ايميل:'}&nbsp;</span>
             <span className="text-heading">{order?.customer_snapshot?.email}</span>
           </div>
           <div>
-            <span className="text-body">{isEn ? 'Phone:' : 'الهاتف'}&nbsp;</span>
+            <span className="text-body">{isEn ? 'Phone:' : 'الهاتف:'}&nbsp;</span>
             <span className="text-heading">{order?.customer_snapshot?.phone}</span>
           </div>
         </section>
@@ -166,22 +174,22 @@ export default function ShippingDetailsWindow () {
         >
           <div className="flex items-center gap-2">
             <LaShippingFast className="w-6 h-6 text-body"/>
-            <span className="text-lg font-bold text-body">{isEn ? 'SHIPPING ADDRESS' : 'عنوان الشحن'}</span>
+            <span className="text-lg font-bold text-body">{isEn ? 'SHIPPING ADDRESS' : 'عنوان الشحن'}&nbsp;</span>
           </div>
           <div>
-            <span className="text-body">{isEn ? 'City:' : 'المحافظه'}&nbsp;</span>
+            <span className="text-body">{isEn ? 'City:' : 'المحافظه:'}&nbsp;</span>
             <span className="text-heading">{order?.shipping?.city}</span>
           </div>
           <div>
-            <span className="text-body">{isEn ? 'Address:' : 'العنوان'}&nbsp;</span>
+            <span className="text-body">{isEn ? 'Address:' : 'العنوان:'}&nbsp;</span>
             <span className="text-heading">{order?.shipping?.address_details}</span>
           </div>
           <div>
-            <span className="text-body">{isEn ? 'Second Address:' : 'العنوان الثاني'}&nbsp;</span>
+            <span className="text-body">{isEn ? 'Second Address:' : 'العنوان الثاني:'}&nbsp;</span>
             <span className="text-heading">{order?.shipping?.adderess_details || displayNotFoundMessage()}</span>
           </div>
           <div>
-            <span className="text-body">{isEn ? 'Notes:' : 'ملاحظات'}&nbsp;</span>
+            <span className="text-body">{isEn ? 'Notes:' : 'ملاحظات:'}&nbsp;</span>
             <span className="text-heading">{order?.shipping?.notes || displayNotFoundMessage()}</span>
           </div>
         </section>
@@ -192,13 +200,77 @@ export default function ShippingDetailsWindow () {
             <AkarIconsShippingBox01 className="w-6 h-6 text-body"/>
             <span className="text-lg font-bold text-body">{isEn ? 'ORDER DETAILS' : 'معلموات الطلب'}</span>
           </div>
-          <span className="text-body">ID | PRODUCT NAME | QUANTITY | COLOR | SIZE | TOTAL</span>
+          <table className="border border-solid border-[2px] border-background-deep-light">
+            <thead>
+              <tr className="text-sm text-body-light">
+                <th className="border border-solid border-[2px] border-background-deep-light p-2">
+                  {isEn ? 'ID' : 'الرمز'}
+                </th>
+                <th className="border border-solid border-[2px] border-background-deep-light p-2">
+                  {isEn ? 'NAME' : 'الاسم'}
+                </th>
+                <th className="border border-solid border-[2px] border-background-deep-light p-2">
+                  {isEn ? 'QUANTITY' : 'الكميه'}
+                </th>
+                <th className="border border-solid border-[2px] border-background-deep-light p-2">
+                  {isEn ? 'COLOR' : 'اللون'}
+                </th>
+                <th className="border border-solid border-[2px] border-background-deep-light p-2">
+                  {isEn ? 'SIZE' : 'المقاس'}
+                </th>
+                <th className="border border-solid border-[2px] border-background-deep-light p-2">
+                  {isEn ? 'DISCOUNT' : 'تخفيض'}
+                </th>
+                <th className="border border-solid border-[2px] border-background-deep-light p-2">
+                  {isEn ? 'PRICE' : 'السعر'}
+                </th>
+                <th className="border border-solid border-[2px] border-background-deep-light p-2">
+                  {isEn ? 'TOTAL' : 'الاجمالي'}
+                </th>
+              </tr>
+            </thead>
+            <tbody
+              className="shippingTableStyle"
+            >
+              {order?.items?.products?.map(({ id, name, quantity, size, color, discount_percent, price }: Record<string, any>, i: number) => 
+                <tr
+                  key={i}
+                  className="text-xs body-heading"
+                >
+                  <td className="border border-solid border-[2px] border-background-deep-light p-2">
+                    {'...' + getLastSixDigitsFromID(id)}
+                  </td>
+                  <td className="border border-solid border-[2px] border-background-deep-light p-2">
+                    {name[lang]}
+                  </td>
+                  <td className="border border-solid border-[2px] border-background-deep-light p-2">
+                    {quantity}
+                  </td>
+                  <td className="border border-solid border-[2px] border-background-deep-light p-2">
+                    {getColorName(color)}
+                  </td>
+                  <td className="border border-solid border-[2px] border-background-deep-light p-2">
+                    {size}
+                  </td>
+                  <td className="border border-solid border-[2px] border-background-deep-light p-2">
+                    {discount_percent}
+                  </td>
+                  <td className="border border-solid border-[2px] border-background-deep-light p-2">
+                    {price}
+                  </td>
+                  <td className="border border-solid border-[2px] border-background-deep-light p-2">
+                    {(price - (price * (discount_percent / 100))) * quantity}
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
           <div>
-            <span className="text-body">{isEn ? 'Shipping Cost:' : 'تكاليف الشحن:'}</span>
+            <span className="text-body">{isEn ? 'Shipping Cost:' : 'تكاليف الشحن:'}&nbsp;</span>
             <span className="text-heading">{order?.pricing?.shipping}</span>
           </div>          
           <div>
-            <span className="text-body">{isEn ? 'Order Cost:' : 'تكاليف الطلب'}</span>
+            <span className="text-body">{isEn ? 'Order Cost:' : 'تكاليف الطلب:'}&nbsp;</span>
             <span className="text-heading">{order?.pricing?.sub_total}</span>
           </div>          
         </section>

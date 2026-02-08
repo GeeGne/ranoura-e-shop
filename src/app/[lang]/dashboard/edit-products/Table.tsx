@@ -264,7 +264,6 @@ export default function Table({
                 bg-transparent hover:bg-yellow-50
               `}
             >
-              {/* <td className="px-6 py-4 text-heading">{itm.name[isEn ? 'en' : 'ar']}</td> */}
               <td 
                 className={`
                   h-[250px] px-6 py-4 text-heading font-normal
