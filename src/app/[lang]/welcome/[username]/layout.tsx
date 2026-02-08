@@ -40,7 +40,7 @@ export default function layout ({ children }: Readonly<{children: React.ReactNod
     queryKey: ['user'],
     queryFn: getUserData,
   });
-  const isAdmin = userData?.data?.role.role?.name === 'admin';
+  const isAdminOrOwner = userData?.data?.role.role?.name === 'admin' || userData?.data?.role.role?.name === 'owner';
 
   // DEBUG
   console.log('userData: ', userData);
@@ -57,7 +57,7 @@ export default function layout ({ children }: Readonly<{children: React.ReactNod
         className="relative"
       >
         <Banner isLoading={isLoading}/>
-        {isAdmin 
+        {isAdminOrOwner 
           && <Link
             href="/dashboard"
             className="

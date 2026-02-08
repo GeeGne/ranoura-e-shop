@@ -4,7 +4,6 @@ import prisma from '@/lib/prisma';
 import bcrypt from 'bcrypt';
 import { verifyToken } from '@/utils/jwt';
 
-
 // Types
 type CookieProps = {
   name: string;
@@ -32,9 +31,10 @@ export async function GET(req: NextResponse) {
     const cookieStore = await cookies();
     const { value: authToken }: any = cookieStore.get('accessToken');
     if (!authToken) 
-      return NextResponse.json(
-        { message: 'No token to signin'},
-        { status: 401 }
+      return nextError(
+        'AUTH_TOKEN_NOTFOUND',
+        'No token to signin',
+        403
       )
 
     const { email }: any = await verifyToken(authToken);
@@ -104,9 +104,10 @@ export async function PUT(req: NextResponse) {
     const cookieStore = await cookies();
     const { value: authToken }: any = cookieStore.get('accessToken');
     if (!authToken) 
-      return NextResponse.json(
-        { message: 'No token to signin'},
-        { status: 401 }
+      return nextError(
+        'TOKEN_DETAILS_NOT_FOUND',
+        'No auth token details found',
+        401
       )
 
     const { email }: any = await verifyToken(authToken);

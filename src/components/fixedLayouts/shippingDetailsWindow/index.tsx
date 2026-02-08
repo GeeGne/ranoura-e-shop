@@ -100,12 +100,13 @@ export default function ShippingDetailsWindow () {
         onClick={handleClick}
       >
         <button
-          className="
-            group absolute top-4 right-4 
+          className={`
+            group absolute top-4 
             flex gap-2 p-2 rounded-lg
             border border-solid border-[2px] border-body-extra-light hover:border-body-light active:border-body
             transition-all duration-200 ease-in-out
-          "
+            ${isEn ? 'right-4' : 'left-4'}
+          `}
           data-type="print_button_is_clicked"
           onClick={handleClick}
         >

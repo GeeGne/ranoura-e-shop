@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt';
 import { cookies } from 'next/headers';
 import { generateTokens } from '@/utils/jwt';
 import { v4 as uuidv4 } from 'uuid';
+import { verifyToken } from '@/utils/jwt';
 
 async function nextError (code: string, message: string, status = 404) {
   return NextResponse.json(
@@ -20,13 +21,52 @@ async function nextError (code: string, message: string, status = 404) {
 
 // @desc update user role
 // @route /api/v1/users/:id/role
-// @access privat (owner, admin)
+// @access privat (owner)
 // @body (string): 'admin', 'customer', 'owner', 'support'
 export async function PUT(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
+    // check if user is admin or owner
+    const cookieStore = await cookies();
+    const { value: authToken }: any = cookieStore.get('accessToken');
+    if (!authToken)
+      return nextError(
+        'AUTH_TOKEN_NOTFOUND',
+        'No token to signin',
+        403
+      )
+
+    const { email }: any = await verifyToken(authToken);
+    if (!email) nextError(
+      'FORBIDDEN_ACTION',
+      'auth token info isn\'t correct',
+      403
+    );
+
+    const user = await prisma.user.findUnique({
+      where: { email },
+      select: {
+        role: {
+          select: {
+            role: {
+              select: {
+                name: true
+              }
+            }
+          }
+        }
+      }
+    })
+    const isUserOwner = user.role.role.name === 'owner'
+    if (!isUserOwner) nextError(
+      'ACTION_FORBIDDEN',
+      'User doesn\'t have permission to this kind of request',
+      403
+    )
+
+    // update role
     const roleName = await req.json();
     const role = await prisma.role.findUnique({
       where: { name: roleName }

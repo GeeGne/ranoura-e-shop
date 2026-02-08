@@ -59,7 +59,6 @@ export default function Table({
   const setDescription = useActionConfirmWindowStore(state => state.setDescription);
   const setBtnTitle = useActionConfirmWindowStore(state => state.setBtnTitle);
   
-
   const setEditProductWindowToggle = useEditProductWindowStore(state => state.setToggle);
   const setEditProductWindowTrigger = useEditProductWindowStore(state => state.setTrigger);
   const setEditProductWindowProductData = useEditProductWindowStore(state => state.setProductData);
@@ -67,6 +66,7 @@ export default function Table({
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
+
 
   const mainRef = useRef<HTMLDivElement>(null);
   const imgUlRefs = useRef<(HTMLUListElement | null)[]>([]);
@@ -498,7 +498,7 @@ export default function Table({
               >
                 <ul
                   className="
-                    flex items-center h-[150px] gap-2 
+                    flex items-center flex-wrap w-[300px] h-[150px] gap-2 
                   "
                 >
                   {itm.categories.map((category: string, i: number) =>

@@ -142,6 +142,7 @@ export default function Orders ({
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: [ 'orders' ] });
       queryClient.invalidateQueries({ queryKey: [ 'order', data.data.id ] });
+      queryClient.invalidateQueries({ queryKey: [ 'users' ] });
       handleAlert('success', data.message[lang]);
     },
     onError: () => {
@@ -216,6 +217,8 @@ export default function Orders ({
     );
     return finalOrderResults;
   };
+
+  const displayNoInfoMessage = () => isEn ? 'No information available' : 'لم يتم العثور على معلومات';
 
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
@@ -496,10 +499,10 @@ export default function Orders ({
                   {formatDate(order.created_at)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
-                  {formatDate(order.updated_at) || 'No information available'}
+                  {formatDate(order.updated_at) || displayNoInfoMessage()}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
-                  {formatDate(order.timestamps.canceled_at) || 'No information available'}
+                  {formatDate(order.timestamps.canceled_at) || displayNoInfoMessage()}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
                   <div className="flex gap-2">
@@ -753,10 +756,10 @@ export default function Orders ({
                     {formatDate(order.created_at)}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
-                    {formatDate(order.updated_at) || 'No information available'}
+                    {formatDate(order.updated_at) || displayNoInfoMessage()}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
-                    {formatDate(order.timestamps.canceled_at) || 'No information available'}
+                    {formatDate(order.timestamps.canceled_at) || displayNoInfoMessage()}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-body-light">
                     <div className="flex gap-2">
