@@ -14,7 +14,7 @@ import BreadCrumb from '@/components/BreadCrumb';
 import SignupForm from '@/app/[lang]/signup/SignupForm';
 
 // STORES
-import { useTabNameStore, useLanguageStore } from '@/stores/index';
+import { useTabNameStore, useLanguageStore, useCartStore } from '@/stores/index';
 
 // API
 import getAllProducts from '@/lib/api/products/get';
@@ -25,6 +25,8 @@ export default function page () {
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
   const setTabName = useTabNameStore((state: any) => state.setTabName);
+  const cart = useCartStore(state => state.cart);
+  const setCart = useCartStore(state => state.setCart);
 
   const slugNameAndLinkArray = [
     {
@@ -49,7 +51,7 @@ export default function page () {
   });
   const user = userData?.data;
   
-  if (isProductsError && isUserError) return (
+  if (isProductsError || isUserError) return (
     <ErrorLayout 
       title={isEn ? 'Unable To Load' : 'لم يتم التحميل'}
       description={isEn ? 'Please Refresh the page or try again later' : 'الرجاء اعاده تحميل الصفحه او حاول مره اخرى لاحقا'}
@@ -59,6 +61,7 @@ export default function page () {
   // DEBUG & UI
   // console.log('checkout page: ', products);
   // console.log('checkout page, user: ', user);
+  console.log('checkout page, cart: ', cart);
 
   return (
     <div
@@ -91,6 +94,7 @@ export default function page () {
         " 
         products={products}
         user={user}
+        cart={cart}
         isLoading={isProductsLoading && isUserLoading}
         isError={isProductsLoading && isUserError}
       />

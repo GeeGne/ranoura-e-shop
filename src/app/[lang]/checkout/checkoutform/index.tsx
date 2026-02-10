@@ -57,35 +57,12 @@ export default function CheckoutForm ({
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
 
   const [ shippingDetails, setShippingDetails ] = useState<Record<string, any>>({
-    user_id: '',
-    status:  'PENDING',
-    customer: {
-      pfp: '',
-      full_name: '',
-      phone_number: '',
-      email: '',
-    },
-    shipping_address: {
-      full_name: '',
-      phone: '',
-      city: '',
-      address_details: '',
-      second_address: '',
-      notes: ''
-    },
-    pricing: {
-      sub_total: 0,
-      tax: 0,
-      shipping: 0,
-      discount: 0,
-      total: 0,
-    },
-    products: [],
-    total_items: 1,
-    shipping_cost: '',
-    total: 2,
-    currency: 'SYP',
-    payment_method: 'CASH',
+    products: cart,
+    shipping_city: "",
+    address_details: "",
+    second_address: "",
+    notes: "",
+    phone: "",
   });
 
   const [ errorMessages, setErrorMessages ] = useState<Record<string, string>>({
@@ -101,22 +78,17 @@ export default function CheckoutForm ({
       phone_number, profile_img_url, address
     } = user;
 
-    const { city, address_details, second_address, notes } = address;
+    const { city: shipping_city, address_details, second_address, notes } = address;
 
     setShippingDetails(val => ({
       ...val,
-      user_id: id,
-      customer_full_name: first_name + ' ' + last_name,
-      email,
-      customer_phone_number: phone_number,
-      customer_pfp: profile_img_url,
-      shipping_address: {
-        city,
-        address_details,
-        second_address,
-        notes
-      }
-    }))
+      products: cart,
+      phone: phone_number,
+      address_details,
+      second_address,
+      notes,
+      shipping_city
+    }));
   }, [user]);
 
   const [ selectedPhoneNumberRadio, setSelectedPhoneNumberRadio ] = useState<string>('existedPhoneNumber');
@@ -150,10 +122,16 @@ export default function CheckoutForm ({
   })
 
   const getShippingCity = () => {
-    const shippingInfo = deliverTo.find(itm => itm.shipping_address === shippingDetails.shipping_address.city)
+    const shippingInfo = deliverTo.find(itm => itm.shipping_address === shippingDetails.shipping_city)
     const cityTranslated = shippingInfo?.value[lang];
     if (!cityTranslated) return isEn ? 'Pick your city' : 'اختر محافظتك';
     return cityTranslated;
+  };
+
+  const getShippingCost = () => {
+    const shippingInfo = deliverTo.find(itm => itm.shipping_address === shippingDetails.shipping_city)
+    if (!shippingInfo) return '--'
+    return shippingInfo.shipping_cost;
   };
 
   const clearPreviousValidity = () => {
@@ -175,7 +153,7 @@ export default function CheckoutForm ({
     let areInptsVerified = true;
 
     // check city
-    const isCityPicked = shippingDetails.shipping_address.city;
+    const isCityPicked = shippingDetails.shipping_city;
     if (!isCityPicked) {
       const errorMessage = isEn 
         ? 'Choose your city to estimate delivery time and costs'
@@ -188,7 +166,7 @@ export default function CheckoutForm ({
     }
 
     // check phone number
-    const phoneNumber = shippingDetails.customer_phone_number;
+    const phoneNumber = shippingDetails.phone;
     const { result: isPhoneNumberValid, message: phoneMessage } = isInputValid.checkout.phoneNumber(phoneNumber);
     const isAnotherPhoneNumberRadioSelected = selectedPhoneNumberRadio === 'newPhoneNumber';
     
@@ -200,7 +178,7 @@ export default function CheckoutForm ({
     }
 
     // check address details
-    const addressDetails = shippingDetails.shipping_address.address_details;
+    const addressDetails = shippingDetails.address_details;
     const { result: isAddressDetailsValid, message: addressMessage } = isInputValid.checkout.addressDetails(addressDetails);
 
     if (!isAddressDetailsValid) {
@@ -217,14 +195,15 @@ export default function CheckoutForm ({
       return;
     };
 
-    createNewOrderMutation.mutate(shippingDetails);
+    console.log('shippingDetails', shippingDetails);
+    createNewOrderMutation.mutate({...shippingDetails, products: cart});
 
     console.log('passed ? ', areInptsVerified);
   }
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement | HTMLLIElement>) => {
     const { 
-      type, city, shippingCost: shipping_cost
+      type, city: shipping_city, shippingCost: shipping_cost
     } = e.currentTarget.dataset;
 
     switch (type) {
@@ -236,11 +215,7 @@ export default function CheckoutForm ({
         deliverToInptRef.current?.reportValidity();
         setShippingDetails(val =>({ 
           ...val, 
-          shipping_address: {
-            ...val.shipping_address,
-            city 
-          }, 
-          shipping_cost: Number(shipping_cost)
+          shipping_city
         }));
         setTimeout(() => deliverToInptRef.current?.blur(), 100);
         // deliverToInptRef.current?.blur();
@@ -260,13 +235,13 @@ export default function CheckoutForm ({
         const newNumberInptValue = anotherNumberInptRef.current.value;
         setShippingDetails(val => ({ 
           ...val, 
-          customer_phone_number: id === "existedPhoneNumber" ? value : newNumberInptValue 
+          phone: id === "existedPhoneNumber" ? value : newNumberInptValue 
         }));
         break;
       case 'anotherPhoneNumber':
         const phone = formatPhoneNumber(value);
         if (selectedPhoneNumberRadio === 'newPhoneNumber') setShippingDetails(val => ({
-          ...val, customer_phone_number: phone
+          ...val, phone
         }));
         e.currentTarget.value = phone;
 
@@ -277,10 +252,7 @@ export default function CheckoutForm ({
       case 'address_details':
         setShippingDetails(val => ({ 
           ...val, 
-          shipping_address: {
-            ...val.shipping_address,
-            [name]: value 
-          }
+          [name]: value 
         }));
         const isAddressDetailsValid = isInputValid.checkout.addressDetails(value).result;
         if (isAddressDetailsValid) e.currentTarget.setCustomValidity('');
@@ -290,10 +262,7 @@ export default function CheckoutForm ({
       case 'notes':
         setShippingDetails(val => ({ 
           ...val, 
-          shipping_address: {
-            ...val.shipping_address,
-            [name]: value 
-          }
+          [name]: value 
         }));
         break;
       default:
@@ -349,6 +318,7 @@ export default function CheckoutForm ({
   // console.log('isDeliverToFocus: ', isDeliverToFocus);
   // console.log('selectedPhoneNumberRadio: ', selectedPhoneNumberRadio);
   console.log('user Refresh test: ', user);
+  console.log('checkout cart: ', cart);
   // console.log('newNumberLabelOnStartUp.current: ', newNumberLabelOnStartUp.current);
 
   if (isLoading) return (
@@ -453,7 +423,7 @@ export default function CheckoutForm ({
         </div>
         <div className="flex justify-between">
           <h4 className="text-heading font-semibold">{isEn ? 'Shipping Fee:' : 'رسوم الشحن:'}</h4>
-          <span className="text-heading font-semibold">{shippingDetails.shipping_cost || '--'}</span>
+          <span className="text-heading font-semibold">{getShippingCost()}</span>
         </div>
       </section>
       <section>
@@ -638,7 +608,7 @@ export default function CheckoutForm ({
               id="addressDetails"
               name="address_details"
               type="text"
-              value={shippingDetails.shipping_address.address_details}
+              value={shippingDetails.address_details}
               onChange={handleChange}
               ref={addressDetailsInptRef}
             />
@@ -688,7 +658,7 @@ export default function CheckoutForm ({
               id="secondAddress"
               name="second_address"
               type="text"
-              value={shippingDetails.shipping_address.second_address}
+              value={shippingDetails.second_address}
               onChange={handleChange}
             />
             <span
@@ -724,7 +694,7 @@ export default function CheckoutForm ({
             id="notes"
             name="notes"
             type="notes"
-            value={shippingDetails.shipping_address.notes}
+            value={shippingDetails.notes}
             onChange={handleChange}
           />
           <span

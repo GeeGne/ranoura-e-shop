@@ -435,11 +435,12 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
                 "
               />
               <ul
-                className="
-                  flex flex-col gap-1
+                className={`
+                  flex flex-col gap-1 w-[90px]
                   before:content-['status'] before:text-sm before:text-inbetween before:text-center before:font-semibold
                   translate-all duration-200 ease-in-out
-                "
+                  ${isEn ? `before:content-['status']` : `before:content-['الحاله']`}
+                `}
               >
                 {filterArray.filter((itm: Record<string, any>) => itm.fieldName === 'status').map((itm, i) => 
                   <li
@@ -461,11 +462,12 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
                 )}
               </ul>              
               <ul
-                className="
-                  flex flex-col gap-1 
-                  before:content-['city'] before:text-sm before:text-inbetween before:text-center before:font-semibold
+                className={`
+                  flex flex-col gap-1 w-[90px]
+                  before:text-sm before:text-inbetween before:text-center before:font-semibold
                   translate-all duration-200 ease-in-out
-                "
+                  ${isEn ? `before:content-['city']` : `before:content-['المحافطه']`}
+                `}
               >
                 {filterArray.filter((itm: Record<string, any>) => itm.fieldName === 'city').map((itm, i) => 
                   <li
