@@ -413,6 +413,18 @@ const useActivityWindowStore = create<ActivityProps>()(
   })
 )
 
+type CheckoutSuccessWindowProps = {
+  toggle: boolean,
+  setToggle: (value: boolean) => void,
+}
+
+const useCheckoutSuccessWindow = create<CheckoutSuccessWindowProps>()(
+  (set) => ({
+    toggle: false,
+    setToggle: (toggle) => set({ toggle })
+  })
+)
+
 type ActionConfirmWindowProps = {
   toggle: boolean;
   setToggle: (value: boolean) => void;
@@ -595,8 +607,8 @@ export {
   useStorageStore, useProductDataStore,
   useActivityWindowStore, useActionConfirmWindowStore,
   useAddSubCategoryWindowStore, useImageDisplayerWindow,
-  useAddCategoryWindowStore, useEditImageUrlCategoryWindowStore,
-  useVideoDisplayerWindowStore, useOrderDetailsWindowStore,
-  useShippingDetailsWindowStore, useViewUsersNavTileStore,
-  useViewOrdersNavTileStore
+  useAddCategoryWindowStore, useCheckoutSuccessWindow,
+  useEditImageUrlCategoryWindowStore, useVideoDisplayerWindowStore, 
+  useOrderDetailsWindowStore, useShippingDetailsWindowStore, 
+  useViewUsersNavTileStore, useViewOrdersNavTileStore
 };
