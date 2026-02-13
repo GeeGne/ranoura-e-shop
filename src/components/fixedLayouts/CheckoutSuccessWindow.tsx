@@ -1,11 +1,14 @@
 // HOOKS
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { useQuery } from '@tanstack/react-query';
 
 // COMPONENTS
 import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingResize';
+import ThreeDBox from '@/components/svgs/ThreeDBox';
 
 // STORES
-import { useLanguageStore, useActionConfirmWindowStore, useAlertMessageStore } from '@/stores/index';
+import { useLanguageStore, useCheckoutSuccessWindow, useAlertMessageStore } from '@/stores/index';
 
 // SVGS
 import UndrawCertification from '@/components/svgs/UndrawCertification';
@@ -13,22 +16,33 @@ import UndrawCertification from '@/components/svgs/UndrawCertification';
 // CONFETTI 
 import Confetti from "react-canvas-confetti/dist/presets/explosion";
 
+// API
+import getUserData from "@/lib/api/auth/me/get";
+
 export default function CheckoutSuccessWindow () {
 
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
 
-  // const toggle = useActionConfirmWindowStore(state => state.toggle);
-  const setToggle = useActionConfirmWindowStore(state => state.setToggle);
-  const isLoading = useActionConfirmWindowStore(state => state.isLoading);
-  const setIsLoading = useActionConfirmWindowStore(state => state.setIsLoading);
-  const title = useActionConfirmWindowStore(state => state.title);
-  const setTitle = useActionConfirmWindowStore(state => state.setTitle);
-  const description = useActionConfirmWindowStore(state => state.description);
-  const setDescription = useActionConfirmWindowStore(state => state.setDescription);
-  const action = useActionConfirmWindowStore(state => state.action);
-  const setAction = useActionConfirmWindowStore(state => state.setAction);
-  const btnTitle = useActionConfirmWindowStore(state => state.btnTitle);
+  const [ confettiToggle, setConfettiToggle ] = useState<boolean>(false);
+
+  const { data: userData, isLoading, isError } = useQuery({
+    queryKey: ['user'],
+    queryFn: getUserData
+  })
+  const user = userData?.data;
+
+  // const toggle = useCheckoutSuccessWindow(state => state.toggle);
+  const setToggle = useCheckoutSuccessWindow(state => state.setToggle);
+  // const isLoading = useCheckoutSuccessWindow(state => state.isLoading);
+  // const setIsLoading = useCheckoutSuccessWindow(state => state.setIsLoading);
+  // const title = useCheckoutSuccessWindow(state => state.title);
+  // const setTitle = useCheckoutSuccessWindow(state => state.setTitle);
+  // const description = useCheckoutSuccessWindow(state => state.description);
+  // const setDescription = useCheckoutSuccessWindow(state => state.setDescription);
+  // const action = useCheckoutSuccessWindow(state => state.action);
+  // const setAction = useCheckoutSuccessWindow(state => state.setAction);
+  // const btnTitle = useCheckoutSuccessWindow(state => state.btnTitle);
 
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
@@ -78,9 +92,10 @@ export default function CheckoutSuccessWindow () {
         transition-all duration-200 ease-out
         ${toggle ? 'visible opacity-100 backdrop-blur-[3px]' : 'invisible opacity-0 backdrop-blur-[0px]'}
       `}
-      data-type="fixed_window_is_clicked"
-      onClick={handleClick}
     >
+      {confettiToggle &&
+        <Confetti autorun={{ speed: 1 }} />
+      }
       <div
         className={`
           absolute top-1/2 left-1/2 
@@ -91,9 +106,7 @@ export default function CheckoutSuccessWindow () {
           ${toggle ? 'scale-100 opacity-100' : 'scale-[80%] opacity-0'}
         `}
         data-type="fixed_box_is_clicked"
-        onClick={handleClick}
       >
-        <Confetti />
         <UndrawCertification 
           className="
             absolute top-0 left-1/2 translate-x-[-50%] translate-y-[-50%]  
@@ -108,16 +121,41 @@ export default function CheckoutSuccessWindow () {
           <ul
             className="text-body"
           >
-            <li>
+            <li
+              className=""
+            >
+              <ThreeDBox className="inline w-5 h-5"/>&nbsp;
               We'll process your order within <b>24 hours</b>.
             </li>
-            <li>
-              You can track your order inside <b>user orders section</b>.
+            <li
+              className=""
+            >
+              <ThreeDBox className="inline w-5 h-5"/>&nbsp;
+              You can track your order inside <Link href={`/${lang}/welcome/${user?.first_name + '-' + user?.last_name}/orders`} className="underline text-content"><b>user orders section</b></Link>.
             </li>
-            <li>
+            <li
+              className=""
+            >
+              <ThreeDBox className="inline w-5 h-5"/>&nbsp;
               Expected delivery within <b>7 days</b>.
             </li>
           </ul>
+          <div
+            className="flex gap-8 w-full justify-evenly"
+          >
+            <Link
+              href="/"
+              className="p-2 text-heading-invert font-bold rounded-md bg-primary cursor-pointer"
+            >
+              Back to home
+            </Link>
+            <Link
+              href={`/${lang}/welcome/${user?.first_name + '-' + user?.last_name}/orders`}
+              className="p-2 text-heading-invert font-bold rounded-md bg-primary cursor-pointer"
+            >
+              Go to orders
+            </Link>
+          </div>
         </section>
       </div>
     </div>
