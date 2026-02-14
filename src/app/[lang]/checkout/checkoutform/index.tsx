@@ -21,7 +21,7 @@ import LineMdArrowsVerticalAlt from '@/components/svgs/LineMdArrowsVerticalAlt';
 import deliverTo from '@/json/deliverTo.json';
 
 // STORE
-import { useLanguageStore, useAlertMessageStore, useCartStore } from '@/stores/index';
+import { useLanguageStore, useAlertMessageStore, useCartStore, useCheckoutSuccessWindow } from '@/stores/index';
 
 // UTILS
 import isInputValid from '@/utils/validation/isInputValid';
@@ -52,6 +52,8 @@ export default function CheckoutForm ({
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
   const [ isProcessing, setIsProcessing ] = useState(false);
+  const setCheckoutWindowToggle = useCheckoutSuccessWindow(state => state.setToggle);
+
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
   const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
@@ -115,6 +117,7 @@ export default function CheckoutForm ({
       setAlertType("success");
       setAlertMessage(data.message[lang]);
       setCart([]);
+      setCheckoutWindowToggle(true);
     },
     onError: (error) => {
       setAlertToggle(Date.now());
