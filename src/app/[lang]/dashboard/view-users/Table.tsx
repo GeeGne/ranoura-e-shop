@@ -139,7 +139,7 @@ export default function Table({
     const mainRefFullWidth: number = mainRef.current?.scrollWidth || 0;
     const mainRefHeight: number = mainRef.current?.scrollHeight || 0;
     const fullHeight: number = layoutRef?.scrollHeight || 0;
-    const extraHeight = 120;
+    const extraHeight = 220;
 
     switch (scroll) {
       case 'right':

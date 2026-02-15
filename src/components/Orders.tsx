@@ -206,15 +206,29 @@ export default function Orders ({
       if (sortType === 'descending') return dateB - dateA;
       return dateA - dateB;
     });
+
+    // New filter tag tactic
+    const fieldNames = [ ...new Set(selectedFilterTags?.map(tag => tag.fieldName)) ];
     const tagFilteredOrders = sortOrders.filter(order => {
       const areFiltersEmpty = selectedFilterTags?.length === 0;
       if (areFiltersEmpty) return true;
-      return selectedFilterTags?.some(tag => order[tag.fieldName] === tag.value);
+      return fieldNames?.every(field => {
+        const filterArray = selectedFilterTags?.filter(itm => itm.fieldName === field)
+        return filterArray?.some(tag => order[tag.fieldName] === tag.value)
+      })
     });
     
     const finalOrderResults = tagFilteredOrders.map(order => 
       orders.find((itm: Record<string, any>) => itm.id === order.id)
-    );
+    );    
+
+    // Old filter tag
+    // const tagFilteredOrders = sortOrders.filter(order => {
+      // const areFiltersEmpty = selectedFilterTags?.length === 0;
+      // if (areFiltersEmpty) return true;
+      // return selectedFilterTags?.some(tag => order[tag.fieldName] === tag.value);
+    // });
+
     return finalOrderResults;
   };
 
