@@ -19,7 +19,7 @@ async function nextError (code: string, message: string, status = 404) {
 // @access private(admin, owner)
 export async function GET(
   req: NextRequest,
-  { params }: { params: { slug: string}}
+  { params }: { params: Promise<{ slug: string}>}
 ) {
   try {
     const productSlug = (await params).slug;
@@ -58,7 +58,7 @@ export async function GET(
 // @access private(owner, admin)
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { slug: string}}
+  { params }: { params: Promise<{ slug: string}>}
 ) {
   try {
     const productSlug = (await params).slug;

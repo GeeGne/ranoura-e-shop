@@ -19,7 +19,7 @@ async function nextError (code: string, message: string, status = 404) {
 // @access public
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string}}
+  { params }: { params: Promise<{ id: string}>}
 ) {
   try {
     const userId = (await params).id;
@@ -61,7 +61,7 @@ export async function GET(
 // @access public
 export async function POST(
   req: NextRequest,
-  { params }: { params: { id: string} }
+  { params }: { params: Promise<{ id: string}> }
 ) {
   try {
     const userId = (await params).id;

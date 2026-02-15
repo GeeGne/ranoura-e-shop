@@ -21,7 +21,7 @@ async function nextError(code: string, message: string, status = 404) {
 // access private (host-server to host-server req)
 export async function GET (
   req: NextRequest,
-  { params }: { params: { role: string } }
+  { params }: { params: Promise<{ role: string }> }
 ) {
   try {
     const requestedRole = (await params).role.toLowerCase();

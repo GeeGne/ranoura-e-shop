@@ -20,7 +20,7 @@ async function nextError (code: string, message: string, status = 404) {
 // @access private(owner, admin)
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string}}
+  { params }: { params: Promise<{ id: string}>}
 ) {
   try {
     const orderId = (await params).id;
@@ -59,7 +59,7 @@ export async function GET(
 // @access private (owner, admin, same user)
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string} }
+  { params }: { params: Promise<{ id: string}> }
 ) {
   try {
 

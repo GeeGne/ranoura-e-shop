@@ -79,7 +79,7 @@ export default function Add ({ isEn = true }: Props) {
     }
   }
 
-  const handleClick = async (e: React.MouseEvent<SVGElement | HTMLButtonElement>) => {
+  const handleClick = async (e: React.MouseEvent<SVGElement | HTMLElement>) => {
     const { type, iconName, iconColor, iconPlatformEn, iconPlatformAr } = e.currentTarget.dataset;
 
     switch (type) {

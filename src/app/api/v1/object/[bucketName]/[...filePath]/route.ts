@@ -20,7 +20,7 @@ async function nextError (code: string, message: string, status = 404) {
 // @access public
 export async function GET (
   req: NextRequest,
-  { params }: { params: { bucketName: string, filePath: any } }
+  { params }: { params: Promise<{ bucketName: string, filePath: any }> }
 ) {
   try {
   } catch (err) {
@@ -39,7 +39,7 @@ export async function GET (
 // @access private (admin, owner)
 export async function POST (
   req: NextRequest,
-  { params }: { params: { bucketName: string, filePath: any } }
+  { params }: { params: Promise<{ bucketName: string, filePath: any }> }
 ) {
   try {
     const formData = await req.formData();
@@ -100,7 +100,7 @@ export async function POST (
 // @access private (admin, owner)
 export async function DELETE (
   req: NextRequest,
-  { params }: { params: { bucketName: string, filePath: any } }
+  { params }: { params: Promise<{ bucketName: string, filePath: any }> }
 ) {
   try {
     const bucketName = (await params).bucketName;

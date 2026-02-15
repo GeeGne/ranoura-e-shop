@@ -26,7 +26,7 @@ async function nextError (code: string, message: string, status = 404) {
 // @desc auto-authenticate if jwt token exists
 // @route /api/v1/auth/me
 // @access private
-export async function GET(req: NextResponse) {
+export async function GET(req: NextRequest) {
   try {
     const cookieStore = await cookies();
     const { value: authToken }: any = cookieStore.get('accessToken');
@@ -38,8 +38,12 @@ export async function GET(req: NextResponse) {
       )
 
     const { email }: any = await verifyToken(authToken);
-    if (!email) throw null;
-    
+    if (!email) nextError(
+      'FORBIDDEN_ACTION',
+      'auth token info isn\'t correct',
+      403
+    );
+
     const updateUserLastLogin = await prisma.user.update({
       where: { email },
       data: { last_login_at: new Date() }
@@ -99,7 +103,7 @@ export async function GET(req: NextResponse) {
 // @desc update user personal data
 // @route /api/v1/auth/me
 // @access private
-export async function PUT(req: NextResponse) {
+export async function PUT(req: NextRequest) {
   try {
     const cookieStore = await cookies();
     const { value: authToken }: any = cookieStore.get('accessToken');

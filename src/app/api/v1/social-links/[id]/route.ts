@@ -15,7 +15,7 @@ async function nextError (code: string, message: string, status = 404) {
 
 export async function DELETE (
   req: NextRequest,
-  { params }: { params: { id: string } } 
+  { params }: { params: Promise<{ id: string }> } 
 ) {
   try {
     const { id } = await params;

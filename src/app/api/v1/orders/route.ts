@@ -22,7 +22,7 @@ async function nextError (code: string, message: string, status = 404) {
 // @route /api/v1/orders
 // @access private(owner, admin)
 export async function GET(
-  req: NextRequest,
+  req: NextRequest
 ) {
   try {
 

@@ -209,8 +209,8 @@ export default function Orders ({
 
     // New filter tag tactic
     const fieldNames = [ ...new Set(selectedFilterTags?.map(tag => tag.fieldName)) ];
-    const tagFilteredOrders = sortOrders.filter(order => {
       const areFiltersEmpty = selectedFilterTags?.length === 0;
+    const tagFilteredOrders = sortOrders.filter(order => {
       if (areFiltersEmpty) return true;
       return fieldNames?.every(field => {
         const filterArray = selectedFilterTags?.filter(itm => itm.fieldName === field)
@@ -314,7 +314,7 @@ export default function Orders ({
 
   // DEBUG & UI
   console.log('orders: ', data);
-  console.log('selectedFilterTags: ', selectedFilterTags);
+  // console.log('selectedFilterTags: ', selectedFilterTags);
 
   if (isLoading) return (
     <LoadingTable />

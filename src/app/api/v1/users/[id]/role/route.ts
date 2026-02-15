@@ -25,7 +25,7 @@ async function nextError (code: string, message: string, status = 404) {
 // @body (string): 'admin', 'customer', 'owner', 'support'
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // check if user is admin or owner
@@ -59,7 +59,7 @@ export async function PUT(
         }
       }
     })
-    const isUserOwner = user.role.role.name === 'owner'
+    const isUserOwner = user.role.role.name === 'owner'                                                         
     if (!isUserOwner) nextError(
       'ACTION_FORBIDDEN',
       'User doesn\'t have permission to this kind of request',

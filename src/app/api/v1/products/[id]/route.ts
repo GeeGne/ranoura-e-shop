@@ -19,7 +19,7 @@ async function nextError (code: string, message: string, status = 404) {
 // @access private(admin, owner)
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string}}
+  { params }: { params: Promise<{ id: string}>}
 ) {
   try {
     const productId = (await params).id;
@@ -58,7 +58,7 @@ export async function GET(
 // @access private(owner, admin)
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string} }
+  { params }: { params: Promise<{ id: string}> }
 ) {
   try {
     const productId = (await params).id;
@@ -103,7 +103,7 @@ export async function PUT(
 // @access private(owner, admin)
 export async function DELETE (
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const productId = (await params).id;

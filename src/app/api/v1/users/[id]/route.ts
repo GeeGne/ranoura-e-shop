@@ -23,7 +23,7 @@ async function nextError (code: string, message: string, status = 404) {
 // @access public
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id } = await params;
@@ -33,7 +33,7 @@ export async function PUT(
         id
       },
       data
-    });
+    });                                                              
 
     const message = {
       en: "User information is being updated successfully!",

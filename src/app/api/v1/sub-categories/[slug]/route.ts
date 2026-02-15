@@ -19,7 +19,7 @@ async function nextError (code: string, message: string, status = 404) {
 // @access private(owner, admin)
 export async function DELETE (
   req: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
     const { slug } = await params;

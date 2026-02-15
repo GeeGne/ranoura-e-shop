@@ -48,7 +48,7 @@
     "name": {"en": "PANTS", "ar": "بناطيل"},
     "slug": "pants",
     "type": "clothing",
-    "image": "/assets/img/cat_pants.avif"
+    "image": "/assets/img/cloth-14-green.avif"
   },{
     "name": {"en": "OUTFIT PAIRS", "ar": "اوتفيت كامل"},
     "slug": "outfit-pairs",
