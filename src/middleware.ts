@@ -30,11 +30,13 @@ export async function middleware(req: NextRequest) {
         console.log('A products api request!');
 
         const authToken: any = req.cookies.get('accessToken')?.value;
-        console.log('authToken', authToken);
         
-        const { role }: { role?: string | null | undefined | any; } = await verifyToken(authToken);
-        console.log('role', role);
+        const tokenData = await verifyToken(authToken);
+        if (!tokenData) return NextResponse.json({ 
+          success: false , message: 'Forbidden: Admin access required' 
+        }, { status: 403});
 
+        const { role } = tokenData;
         const isAdmin = role === 'admin';
         const isOwner = role === 'owner';
 

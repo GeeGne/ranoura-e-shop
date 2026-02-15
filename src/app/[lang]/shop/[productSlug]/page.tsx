@@ -54,7 +54,7 @@ export default function page () {
   const lang = useLanguageStore(state => state.lang) || 'en';
   const isEn = lang === 'en';
 
-  const { productSlug } = useParams();
+  const { productSlug }: { productSlug: string } = useParams();
   const { data: productData, isLoading, isError } = useQuery({
     queryKey: ['products', productSlug],
     queryFn: () => getProductBasedOnSlug(productSlug)
@@ -132,7 +132,6 @@ export default function page () {
         const quantity = Number(searchParams.get("quantity")) || 1;
         const color = searchParams.get("color");
         setAlertToggle(Date.now());
-
         setSetColorTrigger(Date.now());
         setPickedColor("");
         deleteAllSearchParams();
