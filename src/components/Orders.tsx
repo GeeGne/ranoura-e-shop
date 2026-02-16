@@ -164,6 +164,8 @@ export default function Orders ({
       created_at: timestamps.created_at,
       updated_at: timestamps.updated_at,
       canceled_at: timestamps.canceled_at,
+      // is_new: checkIfOrderIsNew(timestamps.created_at)
+      is_new: true
     }))
     const orderIDFilteredOrders = filterByQuery(
       simplifiedVersion, 
@@ -218,9 +220,10 @@ export default function Orders ({
       })
     });
     
-    const finalOrderResults = tagFilteredOrders.map(order => 
-      orders.find((itm: Record<string, any>) => itm.id === order.id)
-    );    
+    const finalOrderResults = tagFilteredOrders.map(order => ({ 
+      ...orders.find((itm: Record<string, any>) => itm.id === order.id), 
+      is_new: checkIfOrderIsNew(order.created_at, order.status) 
+    }));    
 
     // Old filter tag
     // const tagFilteredOrders = sortOrders.filter(order => {
@@ -291,6 +294,15 @@ export default function Orders ({
       `
     ;
   };
+
+  const checkIfOrderIsNew = (orderDate: string, status: string) => {
+    const orderCreated: any = new Date(orderDate);
+    const now: any = new Date();
+    const diffTime = Math.abs(now - orderCreated);
+    const dayTime = 1000 * 60 * 60 * 24;
+    const isOrderWithinAday =  diffTime <= dayTime;
+    return isOrderWithinAday && status === "PENDING";
+  }
 
   const handleClick = (e: React.MouseEvent<HTMLElement | SVGSVGElement>) => {
     const { type, status, orderId } = e.currentTarget.dataset;
@@ -455,7 +467,7 @@ export default function Orders ({
               </tr>
             : processedOrders?.map((order: Record<string, any>, i: number) =>
               <tr
-                key={i}
+                key={i} className={`${order.is_new && 'bg-green-100/40'}`}
               >
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center gap-2">
@@ -463,8 +475,15 @@ export default function Orders ({
                       <img className="w-full h-full object-cover object-center rounded-full" src={order?.customer_snapshot?.avatar || pfpImage} alt="" />
                     </div>
                     <div className="ml-4">
-                      <div className="text-base font-medium text-heading">
-                        {order?.customer_snapshot?.name}
+                      <div className="flex items-center gap-2">
+                        <span className="text-base font-medium text-heading">
+                          {order?.customer_snapshot?.name}
+                        </span>
+                        {order.is_new &&
+                          <span className="text-xs text-emerald-600 bg-green-200 font-bold rounded-full py-1 px-[6px]">
+                            {isEn ? 'new' : 'جديد'}
+                          </span>
+                        }
                       </div>
                       <div className="text-sm text-body-light">{order?.customer_snapshot?.email}</div>
                     </div>
@@ -725,13 +744,18 @@ export default function Orders ({
               </tr>  
             : data?.map((order, i) =>
                 <tr
-                  key={i}
+                  key={i} className={`${checkIfOrderIsNew(order.created_at, order.status) && 'bg-green-100/40'}`}
                 >
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex flex-col gap-2">
-                      <div>
+                      <div className="flex items-center">
                         <span className="text-sm text-body-light">{isEn ? 'ID:' : 'الرمز:'}</span>{<>&ensp;</>}
-                        <span className="font-bold text-sm text-body underline">{order.id}</span>
+                        <span className="font-bold text-sm text-body underline">{order.id}</span>&nbsp;&nbsp;
+                        {checkIfOrderIsNew(order.created_at, order.status) &&
+                          <span className="text-xs text-emerald-600 bg-green-200 font-bold rounded-full py-1 px-[6px]">
+                            {isEn ? 'new' : 'جديد'}
+                          </span>
+                        }
                       </div>
                       <div>
                         <span className="text-sm text-body-light">{isEn ? 'Number of items:' : 'عدد العناصر:'}</span>{<>&ensp;</>}
