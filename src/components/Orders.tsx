@@ -90,6 +90,7 @@ export default function Orders ({
   const searchEmailTerm = useViewOrdersNavTileStore(state => state.searchByEmailTerm);
   const selectedSortByField = useViewOrdersNavTileStore(state => state.selectedSortByField);
   const selectedFilterTags = useViewOrdersNavTileStore(state => state.selectedFilterTags);
+  const showNewTag = useViewOrdersNavTileStore(state => state.showNewTag);
 
   useEffect(() => {
     if (!scroll) return;
@@ -197,6 +198,7 @@ export default function Orders ({
         specificSearch: false
       }
     );
+
     const sortOrders = [...emailFilteredOrders].sort((a, b) => {
       const { value, fieldName, sortType }: any = selectedSortByField;
       const isSortEmpty = value === 'none';
@@ -220,10 +222,14 @@ export default function Orders ({
       })
     });
     
-    const finalOrderResults = tagFilteredOrders.map(order => ({ 
+    const reAddOrderDetailsWithNewTag = tagFilteredOrders.map(order => ({ 
       ...orders.find((itm: Record<string, any>) => itm.id === order.id), 
       is_new: checkIfOrderIsNew(order.created_at, order.status) 
     }));    
+
+      const finalOrderResults = showNewTag 
+      ? [...reAddOrderDetailsWithNewTag].filter(order => order.is_new)
+      : [...reAddOrderDetailsWithNewTag];
 
     // Old filter tag
     // const tagFilteredOrders = sortOrders.filter(order => {

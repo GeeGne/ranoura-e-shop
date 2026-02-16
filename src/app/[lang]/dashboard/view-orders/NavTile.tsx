@@ -21,6 +21,8 @@ import CarbonCloseFilled from '@/components/svgs/CarbonCloseFilled';
 import EpList from '@/components/svgs/EpList';
 import IconamoonSearchLight from '@/components/svgs/IconamoonSearchLight';
 import LineMdPlus from '@/components/svgs/LineMdPlus';
+import LineMdCircle from '@/components/svgs/LineMdCircle';
+import LineMdCircleToConfirmCircleTransition from '@/components/svgs/LineMdCircleToConfirmCircleTransition';
 
 // API
 import addProduct from '@/lib/api/products/post';
@@ -49,6 +51,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
   const [ sortByType, setSortByType ] = useState<string>('descending');
   const mainRef = useRef<HTMLDivElement>(null);
   const sortByInptRef = useRef<HTMLInputElement>(null);
+  const showNewInptRef = useRef<HTMLInputElement>(null);
 
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
@@ -74,6 +77,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
   const setSelectedSortByField = useViewOrdersNavTileStore(state => state.setSelectedSortByField);
   const selectedFilterTags = useViewOrdersNavTileStore(state => state.selectedFilterTags);
   const setSelectedFilterTags = useViewOrdersNavTileStore(state => state.setSelectedFilterTags);
+  const setShowNewTag = useViewOrdersNavTileStore(state => state.setShowNewTag);
 
   useEffect(() => {
     const observeSticky = (stickyRef: HTMLElement) => {
@@ -101,7 +105,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.currentTarget;
+    const { name, value, checked } = e.currentTarget;
 
     switch (name) {
       case 'searchByNameInpt':
@@ -112,6 +116,9 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
         break;
       case 'searchByOrderIdInpt':
         setSearchOrderIDTerm(value);
+        break;
+      case 'showNew':
+        setShowNewTag(checked);
         break;
       default:
         console.error('Unknown name: ', name);
@@ -310,6 +317,39 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
         <div
           className="flex gap-4 flex-wrap whitespace-nowrap"
         >
+          <label
+            className="
+              flex items-center gap-2
+              w-fit p-2 grow-0 rounded-md cursor-pointer
+              bg-white hover:bg-background-light has-[:checked]:bg-green-200
+              translate-all duration-200 ease-in-out
+            "
+            htmlFor={`${id}-showNew`}
+          >
+            <input
+              className="
+                peer absolute w-0 h-0 invisible opacity-0
+              "
+              id={`${id}-showNew`}
+              type="checkbox"
+              name="showNew"
+              ref={showNewInptRef}
+              onChange={handleChange}
+            />
+            <LineMdCircle className="w-4 h-4 text-body peer-checked:hidden"/>
+            <LineMdCircleToConfirmCircleTransition 
+              className="
+                hidden w-4 h-4 text-body peer-checked:inline peer-checked:text-emerald-600
+                translate-all duration-200 ease-in-out
+              "
+            />
+            <span className="
+              text-sm text-body font-semibold peer-checked:text-emerald-600
+              translate-all duration-200 ease-in-out
+            ">
+              {isEn ? 'Show New' : 'عرض الجديد'}
+            </span>
+          </label>
           <div
             className="
               relative flex items-center w-fit gap-2 p-2 

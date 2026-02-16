@@ -579,6 +579,8 @@ type ViewOrdersNavTileStoreProps = {
   setSelectedSortByField: (value: Record<string, any>) => void;
   selectedFilterTags?: any[];
   setSelectedFilterTags: (value: any[]) => void;
+  showNewTag?: boolean;
+  setShowNewTag: (value: boolean) => void;
 }
 
 const useViewOrdersNavTileStore = create<ViewOrdersNavTileStoreProps>()(
@@ -592,7 +594,9 @@ const useViewOrdersNavTileStore = create<ViewOrdersNavTileStoreProps>()(
     selectedSortByField: { name: 'None', fieldName: '', value: 'none'},
     setSelectedSortByField: (selectedSortByField) => set({ selectedSortByField }),
     selectedFilterTags: [],
-    setSelectedFilterTags: (selectedFilterTags) => set({ selectedFilterTags })
+    setSelectedFilterTags: (selectedFilterTags) => set({ selectedFilterTags }),
+    showNewTag: false,
+    setShowNewTag: (showNewTag) => set({ showNewTag }),
   })
 );
 
