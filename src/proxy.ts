@@ -26,26 +26,26 @@ export async function proxy(req: NextRequest) {
   switch(true) {
     case isAnApiRoute(pathname):
       console.log('starts with api!');
-      if (pathname.startsWith('/api/v1/products') && method === 'POST') {
-        console.log('A products api request!');
+      // if (pathname.startsWith('/api/v1/products') && method === 'POST') {
+      //   console.log('A products api request!');
 
-        const authToken: any = req.cookies.get('accessToken')?.value;
+      //   const authToken: any = req.cookies.get('accessToken')?.value;
         
-        const tokenData = await verifyToken(authToken);
-        if (!tokenData) return NextResponse.json({ 
-          success: false , message: 'Forbidden: Admin access required' 
-        }, { status: 403});
+      //   const tokenData = await verifyToken(authToken);
+      //   if (!tokenData) return NextResponse.json({ 
+      //     success: false , message: 'Forbidden: Admin access required' 
+      //   }, { status: 403});
 
-        const { role } = tokenData;
-        const isAdmin = role === 'admin';
-        const isOwner = role === 'owner';
+      //   const { role } = tokenData;
+      //   const isAdmin = role === 'admin';
+      //   const isOwner = role === 'owner';
 
-        if (isAdmin || isOwner) return NextResponse.next();
+      //   if (isAdmin || isOwner) return NextResponse.next();
 
-        return NextResponse.json({ 
-          success: false , message: 'Forbidden: Admin access required' 
-        }, { status: 403});
-      }
+      //   return NextResponse.json({ 
+      //     success: false , message: 'Forbidden: Admin access required' 
+      //   }, { status: 403});
+      // }
       return NextResponse.next();
     default:
       const preferredLocale = req.cookies.get('preferredLang')?.value;

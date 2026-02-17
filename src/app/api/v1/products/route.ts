@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import prisma from '@/lib/prisma';
+import { verifyToken } from '@/utils/jwt';
 import bcrypt from 'bcrypt';
 import { generateTokens } from '@/utils/jwt';
 
@@ -61,6 +62,43 @@ export async function POST (req: NextRequest) {
       colors, images, stock, lists
     } = productData;
 
+    // Check if user is authorzed then get user information
+    const cookiesStore = await cookies();
+    const { value: authToken }: any = cookiesStore.get('accessToken');
+    if (!authToken) return nextError(
+      'TOKEN_DETAILS_NOT_FOUND',
+      'No auth Token details found',
+      401
+    );
+
+    const { email }: any = await verifyToken(authToken);
+    if (!email) return nextError(
+      'UNAUTHORIZED_ERROR',
+      'unable to get autenticaiton',
+      401
+    );
+
+    const { role } = await prisma.user.findUnique({
+      where: {email},
+      select: {
+        role: {
+          select: {
+            role: {
+              select: {
+                name: true
+              }
+            }
+          }
+        }
+      }
+    })
+    const userRole = role.role.name;
+    if (userRole !== 'admin' && userRole !== 'owner') return nextError(
+      'REQUEST_FORBIDDEN',
+      'request is forbidden',
+      403
+    );
+  
     // if (
     //   !name || !slug || !description ||
     //   !price || !type ||
@@ -93,7 +131,7 @@ export async function POST (req: NextRequest) {
 
     const message = {
       en: "New product has been created successfully!",
-      ar: "تم حفظ المتنج الجديد بنجاح!"
+      ar: "تم انشاء المتنج الجديد بنجاح!"
     };
 
     return NextResponse.json({ data, message }, { status: 201 });
