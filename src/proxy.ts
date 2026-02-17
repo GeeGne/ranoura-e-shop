@@ -18,7 +18,7 @@ function hasLocalePrefix(pathname: string): boolean {
 
 const isAnApiRoute = (pathname: string) => pathname.startsWith('/api');
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const { method } = req;
   console.log('middleware pahtname: ', pathname);
