@@ -5,6 +5,7 @@
   "ONDELIVERY": "#F39C12",  
   "SHIPPED": "#2980B9",     
   "DELIVERED": "#27AE60",   
-  "CANCELED": "#E74C3C",    
-  "REFUNDED": "#95A5A6"  
+  "CANCELED": "oklch(44.6% 0.043 257.281)",    
+  "REFUNDED": "#95A5A6",
+  "ONHOLD": "#FFA500"
 }

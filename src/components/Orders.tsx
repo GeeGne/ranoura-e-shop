@@ -22,8 +22,8 @@ import {
 
 // JSON
 import orders from '@/json/userOrders.json';
-import statusColorsData from '@/json/orderStatus.json';
-import STATUS_TRANSLATIONS from '@/json/statusTranslations.json';
+import statusColorsData from '@/json/orderStatusSimplified.json';
+import STATUS_TRANSLATIONS from '@/json/translate/STATUS_TRANSLATIONS.json';
 import deliverTo from '@/json/deliverTo.json';
 
 // UTILS
@@ -63,7 +63,7 @@ export default function Orders ({
 
   const id = useId();
   const queryClient = useQueryClient();
-  const statusColors: Record<string, string> = statusColorsData;
+  const statusColors: Record<string, Record<string, any>> = statusColorsData;
   const setOrderDetailsWindowToggle = useOrderDetailsWindowStore(state => state.setToggle);
   const setOrderDetailsWindowId = useOrderDetailsWindowStore(state => state.setOrderId);
 
@@ -150,6 +150,19 @@ export default function Orders ({
       handleAlert('error', isEn ? 'Error while updating order, please try again' : 'حصل خطأ خلال تعديل المنتج, الرجاء المحاوله مره اخرى');
     }
   })
+
+  const manageOrderStatus = (status: string | null) => {
+    const isStatusExist = status === "PENDING" 
+      || status === "CONFIRMED" 
+      || status === "SHIPPED" 
+      || status === "DELIVERED" 
+      || status === "CANCELED" 
+      || status === "ONHOLD" 
+      || status === "REFUNDED";
+
+    if (isStatusExist) return status;
+    return "PENDING";
+  };
 
   const getProcessedOrders = () => {
   
@@ -512,12 +525,12 @@ export default function Orders ({
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span 
                     className="relative text-xs font-bold py-1 px-2"
-                    style={{ color: statusColors[order?.status]}}
+                    style={{ color: statusColors[manageOrderStatus(order?.status)].color}}
                   >
                     {getTranslation(STATUS_TRANSLATIONS, order?.status, lang)}
                   <div
                     className="absolute top-0 left-0 w-full h-full opacity-20 rounded-full"
-                    style={{ backgroundColor: statusColors[order?.status]}}
+                    style={{ backgroundColor: statusColors[manageOrderStatus(order?.status)].color}}
                   />
                   </span>
                 </td>
@@ -591,7 +604,7 @@ export default function Orders ({
                           w-[90px] text-center p-1 text-sm bg-transparent font-bold
                           border-none outline-none cursor-pointer
                         "
-                        style={{ color: statusColors[order.status]}}
+                        style={{ color: statusColors[manageOrderStatus(order?.status)].color}}
                       >
                         {getTranslation(STATUS_TRANSLATIONS, order.status, lang)}
                       </div>
@@ -605,7 +618,7 @@ export default function Orders ({
                           transition-all duration-200 ease-out
                         "
                       >
-                        {Object.entries(statusColors).map(([ name, color ], i) => 
+                        {Object.entries(statusColors).map(([ name, details ], i) => 
                           <li
                             key={i}
                             className="
@@ -774,12 +787,12 @@ export default function Orders ({
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span 
                       className="relative text-xs font-bold py-1 px-2"
-                      style={{ color: statusColors[order?.status]}}
+                      style={{ color: statusColors[manageOrderStatus(order?.status)].color}}
                     >
                       {getTranslation(STATUS_TRANSLATIONS, order?.status, lang)}
                     <div
                       className="absolute top-0 left-0 w-full h-full opacity-20 rounded-full"
-                      style={{ backgroundColor: statusColors[order?.status]}}
+                      style={{ backgroundColor: statusColors[manageOrderStatus(order?.status)].color}}
                     />
                     </span>
                   </td>
@@ -853,9 +866,9 @@ export default function Orders ({
                             w-[90px] text-center p-1 text-sm bg-transparent font-bold
                             border-none outline-none cursor-pointer
                           "
-                          style={{ color: statusColors[order.status]}}
+                          style={{ color: statusColors[manageOrderStatus(order?.status)].color}}
                         >
-                          {getTranslation(STATUS_TRANSLATIONS, order.status, lang)}
+                          {getTranslation(STATUS_TRANSLATIONS, order?.status, lang)}
                         </div>
                         <MdiArrowDownDrop />
                         <ul
@@ -867,7 +880,7 @@ export default function Orders ({
                             transition-all duration-200 ease-out
                           "
                         >
-                          {Object.entries(statusColors).map(([ name, color ], i) => 
+                          {Object.entries(statusColors).map(([ name, details ], i) => 
                             <li
                               key={i}
                               className="

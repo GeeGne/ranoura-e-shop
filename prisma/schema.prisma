@@ -102,6 +102,7 @@ enum OrderStatus {
   DELIVERED
   CANCELED
   REFUNDED
+  ONHOLD
 }
 
 enum OrderPaymentMethod {

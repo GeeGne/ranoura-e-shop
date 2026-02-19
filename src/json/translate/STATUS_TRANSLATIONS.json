@@ -6,5 +6,6 @@
   "shipped": { "en": "shipped", "ar": "تم الشحن" },
   "delivered": { "en": "delivered", "ar": "تم التسليم" },
   "canceled": { "en": "canceled", "ar": "ملغي" },
-  "refunded": { "en": "refunded", "ar": "تم الاسترداد" }
+  "refunded": { "en": "refunded", "ar": "تم الاسترداد" },
+  "onhold": { "en": "onhold", "ar": "معلق" }
 }
