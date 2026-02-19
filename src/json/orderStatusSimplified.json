@@ -1,20 +1,20 @@
 {
   "PENDING": {
-    "color": "#FFA500",
+    "color": "oklch(79.5% 0.184 86.047)",
     "description": { 
       "en": "Your order is received - awaiting approval", 
       "ar": "تم التقدم بطلب حضرتك - بانتظار المعيانه"
     }
   },     
   "CONFIRMED": {
-    "color": "#3498DB",
+    "color": "oklch(68.5% 0.169 237.323)",
     "description": {
       "en": "We're perparing your order", 
       "ar": "نعد تجهيز طلبك"
     }
   },   
   "SHIPPED": {
-    "color": "#2980B9",
+    "color": "oklch(70.4% 0.14 182.503)",
     "description": {
       "en": "Your order has shipped! - out for delivery",
       "ar": "تم شحن طلبك! - الطلب جاهز للتوصيل"
@@ -28,7 +28,7 @@
     }
   },   
   "CANCELED": {
-    "color": "oklch(37.2% 0.044 257.287)",
+    "color": "#95A5A6",
     "description": {
       "en": "Your order is canceled",
       "ar": "تم الغاء الطلب"
@@ -42,7 +42,7 @@
     }
   },
   "ONHOLD": {
-    "color": "#FFA500",
+    "color": "oklch(70.5% 0.213 47.604)",
     "description": {
       "en": "Your order is on hold due of un-expected error - we'll inform you about it as soon as possible",
       "ar": "تم تعليق الطلب بسبب ظروف غير متوقعه - سوف يتم اعلامك عن الحاله باقرب وقا ممكن"

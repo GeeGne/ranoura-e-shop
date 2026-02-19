@@ -1,4 +1,5 @@
 // COMPONENTS
+import StatusMap from '@/app/[lang]/welcome/[username]/orders/StatusMap';
 import ProductsLists from '@/app/[lang]/welcome/[username]/orders/ProductsLists';
 import LineMdTextBoxToTextBoxMultipleTransition from '@/components/svgs/LineMdTextBoxToTextBoxMultipleTransition';
 import LineMdMapMarkerLoop from '@/components/svgs/LineMdMapMarkerLoop';
@@ -17,6 +18,7 @@ export default function OrdersLi ({ order, ...props }: Props) {
       className="flex flex-col gap-4 w-full p-4 max-w-[1400px] mx-auto bg-background rounded-lg"
       { ...props }
     >
+      <StatusMap />
       <div
         className="flex text-lg justify-between"
       >
