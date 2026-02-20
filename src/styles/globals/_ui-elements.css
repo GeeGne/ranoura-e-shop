@@ -232,3 +232,7 @@
 .shippingTableStyle > :nth-child(even) {
   background-color: var(--background-light-color)
 }
+
+.status-map-mask {
+  clip-path: inset( 0% 50% 0% 0%);
+}

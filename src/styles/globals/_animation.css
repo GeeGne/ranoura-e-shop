@@ -229,6 +229,23 @@
   }
 }
 
+@keyframes status-mask-ani {
+  0% {
+    clip-path: inset( 0% 100% 0% 0%);
+    opacity: 1;
+  }
+
+  75% {
+    clip-path: inset( 0% 0% 0% 0%);
+    opacity: 1;
+  }
+
+  100% {
+    clip-path: inset( 0% 0% 0% 0%);
+    opacity: 0;
+  }
+}
+
 .--opacity-blink {
   animation-name: opacity-blink;
   animation-duration: 3s;
@@ -327,7 +344,16 @@
   animation-name: expand-checkout-label;
   animation-timing-function: ease-out;
 }
+
 .--close-checkout-label {
   animation-name: close-checkout-label;
   animation-timing-function: ease-in;
+}
+
+.--status-mask-ani {
+  animation-name: status-mask-ani;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
 }
