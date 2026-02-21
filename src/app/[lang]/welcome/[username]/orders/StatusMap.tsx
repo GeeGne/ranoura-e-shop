@@ -55,7 +55,7 @@ export default function StatusMap () {
       <div 
         className="
           --status-mask-ani absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]
-          w-full text-transparent h-[50px] brightness-[150%]
+          w-full text-transparent h-[50px] brightness-[125%]
         "
       >
         <div 
@@ -133,7 +133,7 @@ export default function StatusMap () {
         <ul 
           className="
             w-full h-full
-            flex justify-between items-center z-[10]
+            flex justify-between items-center z-[15]
           "
         >
           <li className="relative w-[50px] h-[50px] rounded-full bg-[oklch(70.4%0.14182.503)]">
@@ -163,23 +163,29 @@ export default function StatusMap () {
         </ul>
         <div 
           className="
-            absolute top-1/2 translate-y-[-50%] right-0 w-[33.33%] h-2 bg-inbetween z-[5]
+            absolute top-1/2 translate-y-[-50%] right-[50px] w-[calc(33.33%-67px)] h-2 bg-inbetween z-[25]
+          "
+        />
+        <div 
+          className="
+            --status-mask-ani-progressing absolute top-1/2 translate-y-[-50%] right-[50px]
+            w-[calc(33.33%-67px)] h-2 bg-inbetween z-[10] brightness-[120%] z-[30]
           "
         />
         <div 
           className="
             --status-mask-ani absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]
-            w-full text-transparent h-[50px] brightness-[150%]
+            w-full text-transparent h-[50px] brightness-[125%] z-[20]
           "
         >
           <div 
             className="
-              absolute top-1/2 translate-y-[-50%] left-0 w-[calc(100%-1rem)] h-2 bg-[oklch(70.4%0.14182.503)]
+              absolute top-1/2 translate-y-[-50%] left-0 w-[calc(68%-1rem)] h-2 bg-[oklch(70.4%0.14182.503)]
             "
           />
           <ul className="
               absolute top-0 left-0 w-full h-full
-              flex justify-between items-center z-[20]
+              flex justify-between items-center z-[5]
             "
           >
             <li className="relative w-[50px] h-[50px] rounded-full bg-[oklch(70.4%0.14182.503)]">
@@ -200,7 +206,7 @@ export default function StatusMap () {
                 className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] w-12 h-12 text-background" 
               />
             </li>
-            <li className="relative w-[50px] h-[50px] rounded-full bg-[oklch(70.4%0.14182.503)]">
+            <li className="invisible relative w-[50px] h-[50px] rounded-full bg-[oklch(70.4%0.14182.503)]">
               4
               <LineMdCircleFilled 
                 className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] w-12 h-12 text-background" 

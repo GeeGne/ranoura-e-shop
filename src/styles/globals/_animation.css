@@ -232,6 +232,11 @@
 @keyframes status-mask-ani {
   0% {
     clip-path: inset( 0% 100% 0% 0%);
+    opacity: 0;
+  }
+
+  15% {
+    clip-path: inset( 0% 100% 0% 0%);
     opacity: 1;
   }
 
@@ -357,3 +362,13 @@
   animation-fill-mode: both;
   animation-iteration-count: infinite;
 }
+
+.--status-mask-ani-progressing {
+  animation-name: status-mask-ani;
+  animation-duration: 1s;
+  animation-delay: 0.5s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
+}
+
