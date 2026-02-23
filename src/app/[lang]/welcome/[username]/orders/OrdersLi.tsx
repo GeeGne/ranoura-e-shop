@@ -9,16 +9,21 @@ const outfit1 = "/assets/img/outfit-2.avif";
 
 type Props = {
   order?: any;
+  lang?: 'en' | 'ar';
+  isEn?: boolean
 } & React.ComponentPropsWithRef<"li">;
 
-export default function OrdersLi ({ order, ...props }: Props) {
+export default function OrdersLi ({ lang = 'en', isEn = true, order, ...props }: Props) {
 
   return (
     <li
       className="flex flex-col gap-4 w-full p-4 max-w-[1400px] mx-auto bg-background rounded-lg"
       { ...props }
     >
-      <StatusMap />
+      <StatusMap 
+        lang={lang} 
+        isEn={isEn}
+      />
       <div
         className="flex text-lg justify-between"
       >

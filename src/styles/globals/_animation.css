@@ -236,17 +236,39 @@
   }
 
   15% {
-    clip-path: inset( 0% 100% 0% 0%);
+    clip-path: inset(0% 100% 0% 0%);
     opacity: 1;
   }
 
   75% {
-    clip-path: inset( 0% 0% 0% 0%);
+    clip-path: inset(0% 0% 0% 0%);
     opacity: 1;
   }
 
   100% {
-    clip-path: inset( 0% 0% 0% 0%);
+    clip-path: inset(0% 0% 0% 0%);
+    opacity: 0;
+  }
+}
+
+@keyframes status-mask-ar-ani {
+  0% {
+    clip-path: inset(0% 0% 0% 100%);
+    opacity: 0;
+  }
+
+  15% {
+    clip-path: inset(0% 0% 0% 100%);
+    opacity: 1;
+  }
+
+  75% {
+    clip-path: inset(0% 0% 0% 0%);
+    opacity: 1;
+  }
+
+  100% {
+    clip-path: inset(0% 0% 0% 0%);
     opacity: 0;
   }
 }
@@ -365,6 +387,23 @@
 
 .--status-mask-ani-progressing {
   animation-name: status-mask-ani;
+  animation-duration: 1s;
+  animation-delay: 0.5s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
+}
+
+.--status-mask-ar-ani {
+  animation-name: status-mask-ar-ani;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
+}
+
+.--status-mask-ar-ani-progressing {
+  animation-name: status-mask-ar-ani;
   animation-duration: 1s;
   animation-delay: 0.5s;
   animation-timing-function: ease-in-out;

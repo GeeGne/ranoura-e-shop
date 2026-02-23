@@ -8,13 +8,15 @@ import OrdersLi from '@/app/[lang]/welcome/[username]/orders/OrdersLi';
 import LineMdTextBoxToTextBoxMultipleTransition from '@/components/svgs/LineMdTextBoxToTextBoxMultipleTransition';
 
 // STORES
-import { useTabNameStore } from '@/stores/index';
+import { useTabNameStore, useLanguageStore } from '@/stores/index';
 
 // JSON
 import orders from '@/json/orders.json';
 
 export default function page () {
-  
+
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
   const setTabName = useTabNameStore((state: any) => state.setTabName);
   // const categoryArray = [ ...new Set(user.map(itm => itm.category))];
   
@@ -36,6 +38,8 @@ export default function page () {
       {orders.map((order, i) => 
         <OrdersLi 
           key={i}
+          lang={lang}
+          isEn={isEn}
           order={order}
         />
       )}
