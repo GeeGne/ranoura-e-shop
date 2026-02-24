@@ -4,11 +4,20 @@ type Props = {
   className?: string;
   tabName?: string;
   lang?: string;
+  userNameSlug?: string;
   isLoading?: boolean;
 } & React.ComponentPropsWithRef<"nav">;
 
-export default function NavTile ({ className, tabName, lang, isLoading = false, ...props }: Props) {
+export default function NavTile ({ 
+  className, 
+  tabName, 
+  lang, 
+  userNameSlug = 'name',
+  isLoading = false,
+  ...props 
+}: Props) {
   const isEn = lang === 'en';
+
   if (isLoading) return (
     <nav
       className={`
@@ -72,7 +81,7 @@ export default function NavTile ({ className, tabName, lang, isLoading = false, 
         `}
       />
       <Link
-        href="/welcome/sdf"
+        href={`/welcome/${userNameSlug}`}
         scroll={true}
         className={`
           group flex flex-1 justify-center 
@@ -91,7 +100,7 @@ export default function NavTile ({ className, tabName, lang, isLoading = false, 
         </span>
       </Link>
       <Link
-        href="/welcome/fsadf/orders"
+        href={`/welcome/${userNameSlug}/orders`}
         className={`
           group flex flex-1 justify-center 
           text-md text-body hover:text-heading font-bold

@@ -566,8 +566,8 @@ export default function Cart () {
             <li className="flex" key={i}>
               <DisplayImg
                 className="w-[100px] md:w-[200px] aspect-[2/3] object-cover rounded-lg"
-                alt={getProduct(products, product.id).name[lang]}
-                src={getImgUrl(getProduct(products, product.id).images, product.color)}
+                alt={getProduct(products, product.id)?.name[lang]}
+                src={getImgUrl(getProduct(products, product.id)?.images, product?.color)}
                 loading="lazy"
                 fetchPriority="low"
               />
@@ -580,8 +580,8 @@ export default function Cart () {
                     className="font-bold text-lg text-content"
                   >
                     {calculatePriceAfterDiscount({ 
-                      price: getProduct(products, product.id).price, 
-                      discount: getProduct(products, product.id).discount_percent
+                      price: getProduct(products, product.id)?.price, 
+                      discount: getProduct(products, product.id)?.discount_percent
                     }) * product.quantity} SYP
                   </span>
                 </div>
@@ -595,7 +595,7 @@ export default function Cart () {
                     style={{backgroundColor: getColor(colors, product.color)?.hex}}
                   />
                   <span>
-                    {getColor(colors, product.color).title[lang]}
+                    {getColor(colors, product.color)?.title[lang]}
                   </span>
                 </div>
                   <div className="flex gap-2 items-center w-full">
@@ -610,8 +610,8 @@ export default function Cart () {
                         className="" 
                         hidePercent={true}
                         textSize="base"
-                        price={getProduct(products, product.id).price} 
-                        discount={getProduct(products, product.id).discount_percent}
+                        price={getProduct(products, product.id)?.price} 
+                        discount={getProduct(products, product.id)?.discount_percent}
                       />
                   </div>       
                   <label 
@@ -686,9 +686,9 @@ export default function Cart () {
                       translate-all duration-300 ease-in-out
                       hover:bg-body hover:text-heading-invert
                     "
-                    href={`/shop/${getProduct(products, product.id).slug}`}
+                    href={`/shop/${getProduct(products, product.id)?.slug}`}
                     data-type="edit_button_is_clicked"
-                    data-product-name={getProduct(products, product.id).name[lang]}
+                    data-product-name={getProduct(products, product.id)?.name[lang]}
                     data-size={product.size}
                     data-color={product.color}
                     data-index={product.id}
@@ -707,7 +707,7 @@ export default function Cart () {
                       hover:bg-body hover:text-heading-invert
                     "
                     data-type="delete_button_is_clicked"
-                    data-product-name={getProduct(products, product.id).name[lang]}
+                    data-product-name={getProduct(products, product.id)?.name[lang]}
                     data-size={product.size}
                     data-color={product.color}
                     data-index={product.id}

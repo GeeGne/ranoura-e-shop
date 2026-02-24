@@ -21,6 +21,9 @@ import { useTabNameStore, useLanguageStore } from '@/stores/index';
 // API
 import getUserData from '@/lib/api/auth/me/get';
 
+// UTILS
+import createSlug from '@/utils/createSlug';
+
 export default function layout ({ children }: Readonly<{children: React.ReactNode}>) {
 
   const lang = useLanguageStore(state => state.lang);
@@ -41,6 +44,7 @@ export default function layout ({ children }: Readonly<{children: React.ReactNod
     queryFn: getUserData,
   });
   const isAdminOrOwner = userData?.data?.role.role?.name === 'admin' || userData?.data?.role.role?.name === 'owner';
+  const user = userData?.data;
 
   // DEBUG
   console.log('userData: ', userData);
@@ -87,6 +91,7 @@ export default function layout ({ children }: Readonly<{children: React.ReactNod
       <NavTile 
         className="sticky top-[5.4rem] z-[5]" 
         tabName={tabName}
+        userNameSlug={createSlug(user?.first_name + '-' + user?.last_name)}
         lang={lang}
         isLoading={isLoading}
       />
