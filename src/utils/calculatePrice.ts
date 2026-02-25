@@ -4,9 +4,9 @@ type Props = {
   quantity?: number;
 }
 
-function calculatePriceAfterDiscount({ price = 0, discount = 0, quantity = 1 }: Props) {
+function calculatePrice(price: number = 0, discount: number = 0, quantity: number = 1) {
   const total = price * quantity;
   return Math.trunc(total - (total * discount / 100));
 }
 
-export default calculatePriceAfterDiscount;
+export default calculatePrice;

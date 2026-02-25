@@ -1,3 +1,6 @@
+// UTILS
+import calculatePrice from '@/utils/calculatePrice';
+
 // JSON
 import colors from '@/json/colors.json';
 
@@ -14,8 +17,8 @@ export default function ItemsList ({
     <ul
       className="flex flex-col gap-4 py-4"
     >
-      {items.map((product: Record<string, any>) => 
-        <li className="flex gap-4 " key={product.id}>
+      {items.map((product: Record<string, any>, i: number) => 
+        <li className="flex gap-4 " key={i}>
           <img
             className="flex w-[150px] aspect-[2/3] object-center object-cover grow-0 rounded-lg"
             src={product.image_url}
@@ -59,14 +62,19 @@ export default function ItemsList ({
                     text-heading font-semibold mt-auto
                   "
                 > 
-                  <s className="text-sm text-body">{product.quantity * product.price}</s><>&ensp;</><span>{(product.quantity * product.price) - ((product.price - (product.price * product.discount_percent / 100) * product.quantity))} SYP</span>
+                  <s className="text-sm text-body">
+                    {calculatePrice(product.price, 0, product.quantity)}
+                  </s>&ensp;
+                  <span>
+                    {calculatePrice(product.price, product.discount_percent, product.quantity)} SYP
+                  </span>
                 </div> 
               : <span
                   className="
                     text-heading font-semibold mt-auto
                   "
                 >
-                  {(product.quantity * product.price) - (product.price - (product.price * product.discount_percent / 100))} SYP
+                  {calculatePrice(product.price, product.discount_percent, product.quantity)} SYP 
                 </span>
             }
           </div>

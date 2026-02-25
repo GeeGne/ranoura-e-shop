@@ -147,11 +147,11 @@ export default function page () {
 
           if (isProductMatched) setCart(
             cart.map(itm => {
-              if (itm.id === product.id) 
-                return {
-                  ...itm, 
-                  quantity: itm.quantity + Number(quantity) < 9 ? itm.quantity + Number(quantity) : 9
-                }
+              if (itm.id === product.id) return {
+                ...itm,
+                quantity: itm.quantity + Number(quantity) < 9 ? itm.quantity + Number(quantity) : 9
+              }
+              return itm;
             })
           );
 

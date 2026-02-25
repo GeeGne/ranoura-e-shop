@@ -17,12 +17,12 @@ import formatDate from '@/utils/date/formatDate';
 type OrderStatus = keyof typeof orderStatusSimplified;
 
 type Props = {
-  order?: Record<string, any>;
+  orders?: Record<string, any>;
   lang?: 'en' | 'ar';
-  isEn?: boolean
-} & React.ComponentPropsWithRef<"li">;
+  isEn?: boolean;
+} & React.ComponentPropsWithRef<"ul">;
 
-export default function OrdersLi ({ lang = 'en', isEn = true, order, ...props }: Props) {
+export default function OrdersLi ({ lang = 'en', isEn = true, orders, ...props }: Props) {
 
   const getOrderStatusColor = (status: string) => {
     if (!status)  return 'red';
@@ -34,78 +34,87 @@ export default function OrdersLi ({ lang = 'en', isEn = true, order, ...props }:
   };
 
   return (
-    <li
-      className="flex flex-col gap-4 w-full p-4 max-w-[1400px] mx-auto bg-background rounded-lg"
+    <ul
+      className="flex flex-col gap-4 w-full p-4 mt-[-1rem] max-w-[1400px] lg:mx-auto bg-[var(--background-light-color)]"
       { ...props }
     >
-      <StatusMap 
-        lang={lang} 
-        isEn={isEn}
-        status={order?.status}
-      />
-      <div
-        className="flex text-lg justify-between"
-      >
-        <h3 className="text-body-light font-bold">
-          #{order?.id}
-        </h3>
-        <h3 
-          className="font-bold"
-          style={{ color: getOrderStatusColor(order?.status) }}
+      {orders?.map((order: Record<string, any>, i: number) => 
+        <li
+          key={i}
+          className="flex flex-col gap-4 w-full p-4 max-w-[1400px] mx-auto bg-background rounded-lg"
         >
-          {order?.status}
-        </h3>
-      </div>
-      <div
-        className="flex justify-between"
-      >
-        <h3 className="text-body">
-          {isEn ? 'Requested Date' : 'تاريخ الطلب'}
-        </h3>
-        <h3 className="text-heading font-bold">
-          {formatDate(order?.created_at)}
-        </h3>
-      </div>
-      <hr className="border-inbetween" />
-      <h2 className="text-body font-semibold text-lg">{isEn ? 'Ordered Items (3)' : '(3)عدد القطع'}</h2>
-      <ItemsList 
-        items={order?.items?.products}
-        lang={lang}
-      />
-      <div
-        className="flex justify-between"
-      >
-        <h3 className="text-body">
-          {isEn ? 'Shipping Fee' : 'تكاليف الطلب'}
-        </h3>
-        <h3 className="text-heading font-bold">
-          {order?.shipping_fee}
-        </h3>
-      </div>
-      <div
-        className="flex justify-between"
-      >
-        <h3 className="text-body">
-          {isEn ? 'Products Total' : 'اجمالي القطع'}
-        </h3>
-        <h3 className="text-heading font-bold">
-          {order?.products_total}
-        </h3>
-      </div>
-      <div
-        className="flex text-lg justify-between"
-      >
-        <h3 className="text-heading font-bold">
-          {isEn ? 'Total' : 'الاجمالي'}
-        </h3>
-        <h3 className="text-content font-bold">
-          {order?.total}
-        </h3>
-      </div>
-      <hr className="border-inbetween" />
-      <ProductsLists 
-        productsArray={order?.products}
-      />
-    </li>     
+          <StatusMap 
+            lang={lang} 
+            isEn={isEn}
+            status={order?.status}
+          />
+          <div
+            className="flex text-lg justify-between"
+          >
+            <h3 className="text-body-light font-semibold">
+              #{order?.id}
+            </h3>
+            <h3 
+              className="font-bold"
+              style={{ color: getOrderStatusColor(order?.status) }}
+            >
+              {order?.status}
+            </h3>
+          </div>
+          <div
+            className="flex justify-between"
+          >
+            <h3 className="text-body">
+              {isEn ? 'Requested Date' : 'تاريخ الطلب'}
+            </h3>
+            <h3 className="text-heading font-semibold">
+              {formatDate(order?.created_at)}
+            </h3>
+          </div>
+          <hr className="border-inbetween" />
+          <h2 className="text-body font-semibold text-lg">
+            {isEn 
+              ? `Ordered Items (${order?.items.total_products})` 
+              : `(${order?.items.total_products})عدد القطع`
+            }
+          </h2>
+          <ItemsList 
+            items={order?.items?.products}
+            lang={lang}
+          />
+          <div
+            className="flex text-lg justify-between"
+          >
+            <h3 className="text-body font-semibold">
+              {isEn ? 'Total' : 'الاجمالي'}
+            </h3>
+            <h3 className="text-heading font-semibold">
+              {order?.pricing.sub_total}
+            </h3>
+          </div>
+          <hr className="border-inbetween" />
+          <div
+            className="flex justify-between"
+          >
+            <h3 className="text-body">
+              {isEn ? 'Shipping Fee' : 'تكاليف الطلب'}
+            </h3>
+            <h3 className="text-heading font-semibold">
+              {order?.pricing.shipping}
+            </h3>
+          </div>
+          <div
+            className="flex text-lg justify-between"
+          >
+            <h3 className="text-heading font-bold">
+              {isEn ? 'Total' : 'الاجمالي'}
+            </h3>
+            <h3 className="text-content font-bold">
+              {order?.pricing.total}
+            </h3>
+          </div>
+        </li>     
+      )}
+    </ul>
   )
 }

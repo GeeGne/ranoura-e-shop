@@ -14,7 +14,7 @@ export default function ProductsLists ({productsArray, className, ...props}: Pro
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
 
-  return(<div>his</div>)
+  // return(<div>his</div>)
   return (
     <ul
       className={`flex flex-col gap-8`}
@@ -26,7 +26,7 @@ export default function ProductsLists ({productsArray, className, ...props}: Pro
         >
           <img 
             alt="Photo"
-            src={product.image}
+            src={product.image_url}
             className="my-auto row-span-5 w-[100px] aspect-[2/3] rounded-md drop-shadow-md"
           />
           <h3 className="flex text-heading justify-end">

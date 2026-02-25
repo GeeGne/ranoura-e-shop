@@ -43,17 +43,10 @@ export default function page () {
   // console.log(categoryArray);
   console.log('orders: ', orders);
   return (
-    <ul
-      className="flex flex-col gap-4 w-full p-4 mt-[-1rem] max-w-[1400px] lg:mx-auto bg-[var(--background-light-color)]"
-    > 
-      {orders?.map((order: Record<string, any>, i: number) => 
-        <OrdersLi 
-          key={i}
-          lang={lang}
-          isEn={isEn}
-          order={order}
-        />
-      )}
-    </ul>
+    <OrdersLi 
+      lang={lang}
+      isEn={isEn}
+      orders={orders}
+    />
   )
 }
