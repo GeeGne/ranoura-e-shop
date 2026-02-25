@@ -11,13 +11,14 @@ import getTranslation from '@/utils/getTranslation';
 type Props = {
   lang?: 'en' | 'ar';
   isEn?: boolean;
+  status?: string;
 }
 
 export default function StatusMap ({
   lang = 'en',
-  isEn = true
+  isEn = true,
+  status = 'PENDING'
 }: Props) {
-  const status: string = "DELIVERED";
 
   if (isEn) {
     if (status === "DELIVERED") return (

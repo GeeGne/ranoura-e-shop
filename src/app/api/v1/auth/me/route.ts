@@ -78,7 +78,8 @@ export async function GET(req: NextRequest) {
             second_address: true,
             notes: true
           }
-        }
+        },
+        userOrders: true
       }
     });
 

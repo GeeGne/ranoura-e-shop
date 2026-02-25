@@ -1,4 +1,5 @@
 // COMPONENTS
+import ItemsList from '@/components/ItemsList';
 import StatusMap from '@/app/[lang]/welcome/[username]/orders/StatusMap';
 import ProductsLists from '@/app/[lang]/welcome/[username]/orders/ProductsLists';
 import LineMdTextBoxToTextBoxMultipleTransition from '@/components/svgs/LineMdTextBoxToTextBoxMultipleTransition';
@@ -7,13 +8,30 @@ import LineMdMapMarkerLoop from '@/components/svgs/LineMdMapMarkerLoop';
 // ASSETS
 const outfit1 = "/assets/img/outfit-2.avif";
 
+// JSON
+import orderStatusSimplified from '@/json/orderStatusSimplified.json';
+
+// UTILS
+import formatDate from '@/utils/date/formatDate';
+
+type OrderStatus = keyof typeof orderStatusSimplified;
+
 type Props = {
-  order?: any;
+  order?: Record<string, any>;
   lang?: 'en' | 'ar';
   isEn?: boolean
 } & React.ComponentPropsWithRef<"li">;
 
 export default function OrdersLi ({ lang = 'en', isEn = true, order, ...props }: Props) {
+
+  const getOrderStatusColor = (status: string) => {
+    if (!status)  return 'red';
+    if (status in orderStatusSimplified) {
+      return orderStatusSimplified[status as OrderStatus]?.color;
+    }
+    return 'red';
+
+  };
 
   return (
     <li
@@ -23,6 +41,7 @@ export default function OrdersLi ({ lang = 'en', isEn = true, order, ...props }:
       <StatusMap 
         lang={lang} 
         isEn={isEn}
+        status={order?.status}
       />
       <div
         className="flex text-lg justify-between"
@@ -30,7 +49,10 @@ export default function OrdersLi ({ lang = 'en', isEn = true, order, ...props }:
         <h3 className="text-body-light font-bold">
           #{order?.id}
         </h3>
-        <h3 className="text-green-600 font-bold">
+        <h3 
+          className="font-bold"
+          style={{ color: getOrderStatusColor(order?.status) }}
+        >
           {order?.status}
         </h3>
       </div>
@@ -38,17 +60,23 @@ export default function OrdersLi ({ lang = 'en', isEn = true, order, ...props }:
         className="flex justify-between"
       >
         <h3 className="text-body">
-          Requested Date
+          {isEn ? 'Requested Date' : 'تاريخ الطلب'}
         </h3>
         <h3 className="text-heading font-bold">
-          {order?.date}
+          {formatDate(order?.created_at)}
         </h3>
       </div>
+      <hr className="border-inbetween" />
+      <h2 className="text-body font-semibold text-lg">{isEn ? 'Ordered Items (3)' : '(3)عدد القطع'}</h2>
+      <ItemsList 
+        items={order?.items?.products}
+        lang={lang}
+      />
       <div
         className="flex justify-between"
       >
         <h3 className="text-body">
-          Shipping Fee
+          {isEn ? 'Shipping Fee' : 'تكاليف الطلب'}
         </h3>
         <h3 className="text-heading font-bold">
           {order?.shipping_fee}
@@ -58,7 +86,7 @@ export default function OrdersLi ({ lang = 'en', isEn = true, order, ...props }:
         className="flex justify-between"
       >
         <h3 className="text-body">
-          Products Total
+          {isEn ? 'Products Total' : 'اجمالي القطع'}
         </h3>
         <h3 className="text-heading font-bold">
           {order?.products_total}
@@ -68,7 +96,7 @@ export default function OrdersLi ({ lang = 'en', isEn = true, order, ...props }:
         className="flex text-lg justify-between"
       >
         <h3 className="text-heading font-bold">
-          Total
+          {isEn ? 'Total' : 'الاجمالي'}
         </h3>
         <h3 className="text-content font-bold">
           {order?.total}

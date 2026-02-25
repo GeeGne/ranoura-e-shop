@@ -2,6 +2,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 // COMPONENTS
+import ItemsList from '@/components/ItemsList';
 import ErrorLayout from '@/components/fixedLayouts/userOrderDetailsWindow/ErrorLayout';
 import LoadingLayout from '@/components/fixedLayouts/userOrderDetailsWindow/LoadingLayout';
 import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingResize';
@@ -164,68 +165,10 @@ export default function UserOrderDetailsWindow () {
             <GrommetIconsCheckboxSelected className="w-6 h-6 text-body"/>
             <span className="text-lg font-bold text-body">{isEn ? 'ORDERED ITEMS' : 'الاغراض المطلوبه'}</span>
           </div>
-          <ul
-            className="flex flex-col gap-4 py-4"
-          >
-            {order?.items?.products.map((product: Record<string, any>) => 
-              <li className="flex gap-4 " key={product.id}>
-                <img
-                  className="flex w-[150px] aspect-[2/3] object-center object-cover grow-0 rounded-lg"
-                  src={product.image_url}
-                />
-                <div className="flex flex-col flex-1 gap-2">
-                  <span className="text-body">{product.type}</span>
-                  <span className="text-heading">{product.name[lang]}</span>
-                  <div className="flex items-center mt-auto gap-2">
-                    <div 
-                      className="
-                        flex gap-2 py-1 px-2
-                        rounded-full bg-background-light w-fit
-                      "
-                    >
-                      <div 
-                        className="w-5 h-5 rounded-full" 
-                        style={{ backgroundColor: colors.find((color: Record<string, any>) => color.name === product.color)?.hex}}
-                      />
-                      <span className="text-sm text-body-light font-bold">{product.color}</span>
-                    </div>
-                    <div className="h-fit text-sm text-heading-invert bg-heading rounded-md font-bold px-1 py-0">{product.size}</div>
-                    {!product.discount_percent ||
-                      <span className="text-sm text-body border font-bold border-[2px] border-body-light px-1  rounded-md">
-                      {product.discount_percent} %
-                      </span>
-                    }
-                  </div>
-                </div>
-                <div className="flex flex-col flex-1 items-end">
-                  <span 
-                    className="
-                      text-body font-bold border border-px border-background-deep-light 
-                      px-3 py-1 rounded-full my-auto
-                    "
-                    >
-                      {product.quantity + ' x ' + product.price} SYP
-                  </span>
-                  {product.discount_percent 
-                    ? <div
-                        className="
-                          text-heading font-semibold mt-auto
-                        "
-                      > 
-                        <s className="text-sm text-body">{product.quantity * product.price}</s><>&ensp;</><span>{(product.quantity * product.price) - ((product.price - (product.price * product.discount_percent / 100) * product.quantity))} SYP</span>
-                      </div> 
-                    : <span
-                        className="
-                          text-heading font-semibold mt-auto
-                        "
-                      >
-                        {(product.quantity * product.price) - (product.price - (product.price * product.discount_percent / 100))} SYP
-                      </span>
-                  }
-                </div>
-              </li>
-            )}
-          </ul>
+          <ItemsList 
+            items={order?.items?.products}
+            lang={lang}
+          />
           <div className="flex w-full justify-between">
             <span className="font-bold text-body">{isEn ? 'SUB UNTIS' : 'عدد الوحدات'}</span>
             <span className="font-bold text-heading">{order?.items?.total_units}</span>
