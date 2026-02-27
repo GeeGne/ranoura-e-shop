@@ -97,7 +97,11 @@ export default function layout ({ children }: Readonly<{children: React.ReactNod
       />
         {children}
       <SignOutBtn 
-        className="sticky bottom-4 flex items-center justify-center drop-shadow-md"
+        className="
+          sticky bottom-4 flex items-center justify-center drop-shadow-md z-[100]
+          hover:opacity-90 active:scale-95
+          transition-all duraiton-200 ease-in-out
+        "
         isLoading={isLoading}
       />
     </div>

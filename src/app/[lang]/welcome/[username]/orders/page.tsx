@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 // COMPONENTS
-import OrdersLi from '@/app/[lang]/welcome/[username]/orders/OrdersLi';
+import OrdersLi from '@/app/[lang]/welcome/[username]/orders/orderLi/index';
 import LineMdTextBoxToTextBoxMultipleTransition from '@/components/svgs/LineMdTextBoxToTextBoxMultipleTransition';
 
 // STORES
