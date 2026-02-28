@@ -46,6 +46,7 @@ export default function page () {
     <OrdersLi 
       lang={lang}
       isEn={isEn}
+      isLoading={isLoading}
       orders={orders}
     />
   )

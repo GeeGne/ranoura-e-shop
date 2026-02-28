@@ -12,13 +12,70 @@ type Props = {
   lang?: 'en' | 'ar';
   isEn?: boolean;
   status?: string;
+  isLoading?: boolean;
 }
 
 export default function StatusMap ({
   lang = 'en',
   isEn = true,
-  status = 'PENDING'
+  status = 'PENDING',
+  isLoading = false
 }: Props) {
+
+  if (isLoading) return (
+    <div className="flex flex-col w-full text-transparent items-center gap-2">
+      <section 
+        className="--opacity-blink relative flex w-[calc(100%-1rem)]"
+      >
+        <div 
+          className="
+            absolute top-1/2 translate-y-[-50%] left-0 w-[calc(100%-1rem)] h-2 bg-background-deep-light
+          "
+        />
+        <ul 
+          className="
+            w-full h-full
+            flex justify-between items-center
+          "
+        >
+          <li className="relative w-[50px] h-[50px] rounded-full bg-background-deep-light">
+            1
+          </li>
+          <li className="relative w-[50px] h-[50px] rounded-full bg-background-deep-light">
+            2
+          </li>
+          <li className="relative w-[50px] h-[50px] rounded-full bg-background-deep-light">
+            3
+          </li>
+          <li className="relative w-[50px] h-[50px] rounded-full bg-background-deep-light">
+            4
+          </li>
+        </ul>
+      </section>
+      <ul className="flex justify-between w-full">
+        <span 
+          className="--opacity-blink text-transparent bg-background-deep-light rounded-md font-bold" 
+        >
+          {getTranslation(STATUS_TRANSLATIONS, 'PENDING', lang).toUpperCase()}
+        </span>
+        <span 
+          className="--opacity-blink text-transparent bg-background-deep-light rounded-md font-bold" 
+        >
+          {getTranslation(STATUS_TRANSLATIONS, 'CONFIRMED', lang).toUpperCase()}
+        </span>
+        <span 
+          className="--opacity-blink text-transparent bg-background-deep-light rounded-md font-bold" 
+        >
+          {getTranslation(STATUS_TRANSLATIONS, 'SHIPPED', lang).toUpperCase()}
+        </span>
+        <span 
+          className="--opacity-blink text-transparent bg-background-deep-light rounded-md font-bold" 
+        >
+          {getTranslation(STATUS_TRANSLATIONS, 'DELIVERED', lang).toUpperCase()}
+        </span>
+      </ul>
+    </div>
+  )
 
   if (isEn) {
     if (status === "DELIVERED") return (

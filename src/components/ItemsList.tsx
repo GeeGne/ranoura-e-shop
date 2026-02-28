@@ -7,12 +7,76 @@ import colors from '@/json/colors.json';
 type Props = {
   items?: Record<string, any>;
   lang?: 'en' | 'ar';
+  isLoading?: boolean;
 }
 
 export default function ItemsList ({
   items = [],
-  lang = 'en'
+  lang = 'en',
+  isLoading = false
 }: Props) {
+
+  if (isLoading) return (
+    <ul
+      className="flex flex-col gap-4 py-4"
+    >
+      {[1, 2, 3].map((num: number, i: number) => 
+        <li className="flex gap-4 " key={i}>
+          <div
+            className="--opacity-blink bg-background-deep-light flex w-[150px] aspect-[2/3] object-center object-cover grow-0 rounded-lg"
+          />
+          <div className="flex flex-col flex-1 gap-2">
+            <span className="--opacity-blink rounded-md bg-background-deep-light text-transparent">//////////</span>
+            <span className="--opacity-blink rounded-md bg-background-deep-light text-transparent">//////////////</span>
+            <div className="flex items-center mt-auto gap-2">
+              <div 
+                className="
+                  flex gap-2 py-1 px-2
+                  rounded-full bg-background-light w-fit
+                "
+              >
+                <div 
+                  className="--opacity-blink w-5 h-5 rounded-full bg-background-deep-light" 
+                />
+                <span 
+                  className="
+                    --opacity-blink rounded-md bg-background-deep-light text-sm text-transparent font-bold
+                  "
+                >
+                  ///////
+                </span>
+              </div>
+              <div 
+                className="
+                  --opacity-blink bg-background-deep-light h-fit text-sm text-transparent rounded-md font-bold px-1 py-0
+                "
+              >
+                //
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col flex-1 items-end">
+            <span 
+              className="
+                --opacity-blink text-transparent rounded-md bg-background-deep-light font-bold border border-px border-background-deep-light 
+                px-3 py-1 rounded-full my-auto
+              "
+              >
+                /////////////
+            </span>
+            <span
+              className="
+                --opacity-blink rounded-md bg-background-deep-light text-transparent font-semibold mt-auto
+              "
+            >
+              ////////
+            </span>
+          </div>
+        </li>
+      )}
+    </ul>
+  )
+
   return (
     <ul
       className="flex flex-col gap-4 py-4"
