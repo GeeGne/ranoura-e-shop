@@ -53,8 +53,14 @@ export default function OrdersLi ({
           gap-4 p-4 w-full max-w-[1400px] mx-auto bg-background rounded-lg
         "
       >
-        <div className="relative flex flex-col items-center justify-center w-full h-full bg-content-invert pb-[30px] rounded-lg">
-          <div className="custom-shape-divider-bottom-1772168163">
+        <div 
+          className="
+            relative flex flex-col items-center justify-center 
+            w-full h-full md:w-auto md:h-auto
+            bg-content-invert md:bg-transparent pb-[30px] rounded-lg
+          "
+        >
+          <div className="custom-shape-divider-bottom-1772168163 md:hidden">
           <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
               <path d="M600,112.77C268.63,112.77,0,65.52,0,7.23V120H1200V7.23C1200,65.52,931.37,112.77,600,112.77Z" className="fill-background"></path>
             </svg>
@@ -62,12 +68,12 @@ export default function OrdersLi ({
           <EmptyBox 
             className="row-span-2 w-[250px] h-[250px] md:w-[300px] md:h-[300px] text-content"
           />
-          <span className="text-body font-bold text-lg">
+          <span className="md:hidden text-body font-bold text-lg">
             {isEn ? 'NO ORDER FOUND' : 'لم تقم باي طلب بعد'}
           </span>
         </div>
-        <div className="flex flex-col">
-          <span className="hidden text-body font-bold text-lg">
+        <div className="flex flex-col whitespace-nowrap">
+          <span className="hidden md:inline text-body font-bold text-lg">
             {isEn ? 'NO ORDER FOUND.' : 'لم تقم باي طلب بعد.'}
           </span>
           <div>
