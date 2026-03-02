@@ -31,6 +31,8 @@ export default function page () {
   const { data: userData, isLoading, isError } = useQuery({
     queryKey: ['user'],
     queryFn: getUserData,
+    refetchInterval: 120000,
+    refetchOnWindowFocus: true
   });
   const user = userData?.data;
   const orders = user?.userOrders;

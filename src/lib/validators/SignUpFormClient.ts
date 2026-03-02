@@ -8,11 +8,11 @@ export const validate = {
           message: isEn ? 'can\'t be blank' : 'لا يمكن ان يكون فارغا', 
           isValid: false
         }
-      case inpt.includes(' '):
-        return { 
-          message: isEn ? 'must not contain Spaces' : 'يجب ان لا يحتوي على مسافات', 
-          isValid: false
-        }
+      // case inpt.includes(' '):
+      //   return { 
+      //     message: isEn ? 'must not contain Spaces' : 'يجب ان لا يحتوي على مسافات', 
+      //     isValid: false
+      //   }
       case !re.test(inpt):
         return { 
           message: isEn ? 'must not contain Special Characters \'@#%$..\' or Numbers' : 'جب أن لا يحتوي على أحرف خاصة مثل \'$%@..\' أو أرقام',

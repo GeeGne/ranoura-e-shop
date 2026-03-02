@@ -436,7 +436,7 @@ export default function SignupForm ({ className, ...props }: Props) {
         <span
           className={`
             absolute translate-y-[-50%]
-            top-0 text-xs text-body font-bold
+            top-0 text-xs text-body font-semibold
             peer-focus:top-0 peer-focus:text-xs
             peer-focus:text-heading peer-focus:font-bold
             peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base 
@@ -663,7 +663,7 @@ export default function SignupForm ({ className, ...props }: Props) {
         <span
           className={`
             absolute translate-y-[-50%]
-            top-0 text-xs text-body font-bold
+            top-0 text-xs text-body font-semibold
             peer-focus:top-0 peer-focus:text-xs
             peer-focus:text-heading peer-focus:font-bold
             peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base 
