@@ -8,11 +8,11 @@ export const validate = {
           message: isEn ? 'can\'t be blank' : 'لا يمكن ان يكون فارغا', 
           isValid: false
         }
-      // case inpt.includes(' '):
-      //   return { 
-      //     message: isEn ? 'must not contain Spaces' : 'يجب ان لا يحتوي على مسافات', 
-      //     isValid: false
-      //   }
+      case inpt.includes(' '):
+        return { 
+          message: isEn ? 'must not contain Spaces' : 'يجب ان لا يحتوي على مسافات', 
+          isValid: false
+        }
       case !re.test(inpt):
         return { 
           message: isEn ? 'must not contain Special Characters \'@#%$..\' or Numbers' : 'جب أن لا يحتوي على أحرف خاصة مثل \'$%@..\' أو أرقام',
@@ -98,7 +98,9 @@ export const validate = {
     }
   },
   phoneNumber: (inpt: string, isEn: boolean) => {
-    const re= /^\+?\d{1,4}(\s\d{3}){2}\s\d{3}$/;;
+    const numberWithoutSpaces = inpt.replace(/\s+/g,  '');
+    // const re = /^\+?\d{1,4}(\s\d{3}){2}\s\d{3}$/;
+    const re2 = /^\+963 \d{3} \d{3} \d{3}$/;
      
     switch (true) {
       case inpt === '':
@@ -106,12 +108,12 @@ export const validate = {
           message: isEn ? 'can\'t be blank' : 'لا يمكن ان يكون فارغا', 
           isValid: false
         }
-      case inpt.includes(' '):
-        return { 
-          message: isEn ? 'must not contain Spaces' : 'يجب ان لا يحتوي على مسافات', 
-          isValid: false
-        }
-      case re.test(inpt):
+      // case inpt.includes(' '):
+        // return { 
+          // message: isEn ? 'must not contain Spaces' : 'يجب ان لا يحتوي على مسافات', 
+          // isValid: false
+        // }
+      case re2.test(numberWithoutSpaces):
         return { 
           message: isEn ? 'wrong phone number ex: +963 936 534 080' : 'رقم هاتف خاطئ مثال: +963 936 534 080',
           isValid: false

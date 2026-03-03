@@ -229,7 +229,7 @@ export default function Table({
     );
     const usersWithAdjustedRoleTag = usersWithFullName.map(
       (user: Record<any, any>) => (
-        { ...user, role: user.role.role.name }
+        { ...user, role: user?.role?.role.name }
       )
     );
     const usersWithAdjustedStatus = usersWithAdjustedRoleTag.map(

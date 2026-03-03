@@ -56,7 +56,7 @@ export default function SignupForm ({ className, ...props }: Props) {
   const queryClient = useQueryClient();
   const lang = useLanguageStore(state => state.lang);
   const isEn = lang === 'en';
-  const [ signInForm, setSignInForm ] = useState<FormProps>({
+  const [ signUpForm, setSignUpForm ] = useState<FormProps>({
     first_name: '',
     last_name: '',
     email: '',
@@ -214,11 +214,11 @@ export default function SignupForm ({ className, ...props }: Props) {
       case 'phone_number':
       case 'password':
       case 'cPassword':
+        let clipValue = value.trim();
         if (name === 'phone_number') {
-          const phone = formatPhoneNumber(value);
-          e.currentTarget.value = phone;
+          clipValue = formatPhoneNumber(clipValue);
         };
-        setSignInForm(val => ({ ...val, [name]: value }));
+        setSignUpForm(val => ({ ...val, [name]: clipValue }));
         break;
       default:
         console.error('Unknown name: ', name);
@@ -230,7 +230,7 @@ export default function SignupForm ({ className, ...props }: Props) {
 
     if (isProcessing) return addIsProcessingNote();
 
-    const { first_name, last_name, email, phone_number, password, cPassword } = signInForm;
+    const { first_name, last_name, email, phone_number, password, cPassword } = signUpForm;
     const { firstName, lastName, email: userEmail, phoneNumber, password: userPassword, cPassword: userCPassword } = validate;
     const inptsResults = {
       first_name: {
@@ -280,7 +280,7 @@ export default function SignupForm ({ className, ...props }: Props) {
   };
 
   // DEBUG
-  // console.log('signInForm: ', signInForm);
+  console.log('signInForm: ', signUpForm);
 
   return (
     <form
@@ -319,6 +319,7 @@ export default function SignupForm ({ className, ...props }: Props) {
           name="first_name"
           type="text"
           placeholder=""
+          value={signUpForm.first_name}
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={handleChange}
@@ -374,6 +375,7 @@ export default function SignupForm ({ className, ...props }: Props) {
           name="last_name"
           type="text"
           placeholder=""
+          value={signUpForm.last_name}
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={handleChange}
@@ -429,6 +431,7 @@ export default function SignupForm ({ className, ...props }: Props) {
           name="email"
           type="email"
           placeholder=""
+          value={signUpForm.email}
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={handleChange}
@@ -484,6 +487,7 @@ export default function SignupForm ({ className, ...props }: Props) {
           name="phone_number"
           type="phone_number"
           placeholder=""
+          value={signUpForm.phone_number}
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={handleChange}
@@ -540,6 +544,7 @@ export default function SignupForm ({ className, ...props }: Props) {
           name="password"
           type={isPassEyeActive ? "text" : "password"}
           placeholder=""
+          value={signUpForm.password}
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={handleChange}
@@ -655,6 +660,7 @@ export default function SignupForm ({ className, ...props }: Props) {
           name="cPassword"
           type={isCPassEyeActive ? "text" : "password"}
           placeholder=""
+          value={signUpForm.cPassword}
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={handleChange}
