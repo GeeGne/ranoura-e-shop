@@ -91,9 +91,10 @@ export async function POST(req: NextRequest) {
         password_hash,
         address: {
           create: {
-            address_details: "test",
-            second_address: "second",
-            notes: "notes",
+            city: "",
+            address_details: "",
+            second_address: "",
+            notes: "",
           }
         },
         role: {

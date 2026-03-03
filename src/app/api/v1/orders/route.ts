@@ -368,6 +368,31 @@ export async function POST(
       ar: 'تم انشاء الطلب بنجاح!'
     }
 
+    // Save user address, second address and notes
+    const userData = await prisma.user.update({
+      where: {
+        id
+      },
+      data: {
+        address: {
+          upsert: {
+            create: {
+              city: shipping_city,
+              address_details,
+              second_address,
+              notes
+            },
+            update: {
+              city: shipping_city,
+              address_details,
+              second_address,
+              notes
+            }
+          }
+        }
+      }     
+    })
+
     return NextResponse.json(
       { data, message },
       { status: 200 }

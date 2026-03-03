@@ -101,7 +101,9 @@ export default function ItemsList ({
                   className="w-5 h-5 rounded-full" 
                   style={{ backgroundColor: colors.find((color: Record<string, any>) => color.name === product.color)?.hex}}
                 />
-                <span className="text-sm text-body-light font-bold">{product.color}</span>
+                <span className="text-sm text-body-light font-bold">
+                  {colors.find(color => color.name === product.color)?.title[lang] || product.color}\
+                </span>
               </div>
               <div className="h-fit text-sm text-heading-invert bg-heading rounded-md font-bold px-1 py-0">{product.size}</div>
               {!product.discount_percent ||
