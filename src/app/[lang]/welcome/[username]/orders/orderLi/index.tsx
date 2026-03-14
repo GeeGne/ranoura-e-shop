@@ -22,7 +22,7 @@ import getTranslation from '@/utils/getTranslation';
 type OrderStatus = keyof typeof orderStatusSimplified;
 
 type Props = {
-  orders?: Record<string, any>;
+  orders?: any[];
   lang?: 'en' | 'ar';
   isEn?: boolean;
   isLoading?: boolean;
@@ -43,8 +43,25 @@ export default function OrdersLi ({
       return orderStatusSimplified[status as OrderStatus]?.color;
     }
     return 'red';
-
   };
+
+  const organizeOrdersByDate = (orders: any[]) => {
+    if (areOrdersEmpty) return [];
+    orders?.sort((a: Record<string, any> , b: Record<string, any>) => {
+      const dateA = a?.created_at;
+      const dateB = b?.created_at;
+
+      if (!dateA || !dateB) return 0;
+      if (!dateA) return 1; // or -1 depending on your sorting preference
+      if (!dateB) return -1;
+      console.log('orders: ', orders);
+      console.log('dateA: ', dateA);
+      console.log('dateB: ', dateB);
+      const timestampA: any = Number(dateA?.getTime());
+      const timestampB: any = Number(dateB?.getTime());
+      return timestampA - timestampB
+    })
+  }
 
   if (isLoading) return (
     <LoadingLayout 
@@ -65,7 +82,7 @@ export default function OrdersLi ({
       className="flex flex-col gap-4 w-full p-4 mt-[-1rem] max-w-[1400px] lg:mx-auto bg-[var(--background-light-color)]"
       { ...props }
     >
-      {orders?.map((order: Record<string, any>, i: number) => 
+      {organizeOrdersByDate(orders)?.map((order: Record<string, any>, i: number) => 
         <li
           key={i}
           className="flex flex-col gap-4 w-full p-4 max-w-[1400px] mx-auto bg-background rounded-lg"

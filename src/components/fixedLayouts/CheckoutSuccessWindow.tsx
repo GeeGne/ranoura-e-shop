@@ -53,8 +53,8 @@ export default function CheckoutSuccessWindow () {
     const { type } = e.currentTarget.dataset;
 
     switch (type) {
-      case 'view_order_anchor_is_clicked':
-      case 'continue_shopping_anchor_is_clicked':
+      case 'coninute_shopping_anchor_is_clicked':
+      case 'show_order_anchor_is_clicked':
         setToggle(false);
         setConfettiToggle(true);
       default:
@@ -129,14 +129,18 @@ export default function CheckoutSuccessWindow () {
             <Link
               href="/"
               className="p-2 text-heading-invert font-bold rounded-md bg-primary cursor-pointer"
+              data-type="coninute_shopping_anchor_is_clicked"
+              onClick={handleClick}
             >
-              متابعه التسوق
+              {isEn ? 'CONTINUE SHOPPING' : 'متابعه التسوق'}
             </Link>
             <Link
               href={`/${lang}/welcome/${user?.first_name + '-' + user?.last_name}/orders`}
               className="p-2 text-heading-invert font-bold rounded-md bg-primary cursor-pointer"
+              data-type="show_order_anchor_is_clicked"
+              onClick={handleClick}
             >
-              عرض الطلب
+              {isEn ? 'SHOW ORDER' : 'عرض الطلب'}
             </Link>
           </div>
         </section>

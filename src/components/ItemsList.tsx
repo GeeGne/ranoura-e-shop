@@ -102,7 +102,7 @@ export default function ItemsList ({
                   style={{ backgroundColor: colors.find((color: Record<string, any>) => color.name === product.color)?.hex}}
                 />
                 <span className="text-sm text-body-light font-bold">
-                  {colors.find(color => color.name === product.color)?.title[lang] || product.color}\
+                  {colors.find(color => color.name === product.color)?.title[lang] || product.color}
                 </span>
               </div>
               <div className="h-fit text-sm text-heading-invert bg-heading rounded-md font-bold px-1 py-0">{product.size}</div>
