@@ -126,6 +126,12 @@ export default function CheckoutForm ({
     }
   })
 
+  const addIsProcessingNote = () => {
+    setAlertToggle(Date.now());
+    setAlertType("warning");
+    setAlertMessage(isEn ? 'Please wait until the operation is finished' : 'الرجاء الانتظار حتى انتهاء من العمليه');
+  };
+
   const getShippingCity = () => {
     const shippingInfo = deliverTo.find(itm => itm.shipping_address === shippingDetails.shipping_city)
     const cityTranslated = shippingInfo?.value[lang];
@@ -149,12 +155,13 @@ export default function CheckoutForm ({
     setTimeout(() => {
       newNumberLabelOnStartUp.current = false;
     }, 100)
-    return '0s'
+    return '0s';
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     clearPreviousValidity();
+    if (isProcessing) return addIsProcessingNote();
     let areInptsVerified = true;
 
     // check city

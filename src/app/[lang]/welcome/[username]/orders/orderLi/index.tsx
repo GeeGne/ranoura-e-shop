@@ -46,10 +46,9 @@ export default function OrdersLi ({
   };
 
   const organizeOrdersByDate = (orders: any[]) => {
-    if (areOrdersEmpty) return [];
-    orders?.sort((a: Record<string, any> , b: Record<string, any>) => {
-      const dateA = a?.created_at;
-      const dateB = b?.created_at;
+    return orders?.sort((a: Record<string, any> , b: Record<string, any>) => {
+      const dateA = new Date(a?.created_at);
+      const dateB = new Date(b?.created_at);
 
       if (!dateA || !dateB) return 0;
       if (!dateA) return 1; // or -1 depending on your sorting preference
@@ -57,9 +56,11 @@ export default function OrdersLi ({
       console.log('orders: ', orders);
       console.log('dateA: ', dateA);
       console.log('dateB: ', dateB);
-      const timestampA: any = Number(dateA?.getTime());
-      const timestampB: any = Number(dateB?.getTime());
-      return timestampA - timestampB
+      const timestampA: any = dateA?.getTime();
+      const timestampB: any = dateB?.getTime();
+      console.log('timestampA: ', timestampA);
+      console.log('timestampB: ', timestampB);
+      return timestampB - timestampA;
     })
   }
 
@@ -76,6 +77,8 @@ export default function OrdersLi ({
       isEn={isEn}
     />
   )
+
+  console.log('organizeOrdersByDate(orders): ', organizeOrdersByDate(orders));
 
   return (
     <ul
