@@ -1,6 +1,6 @@
 export default function getTranslation (
   transitionLib: Record<string, Record<string, string>>, 
-  term: string, 
+  term: string | null | undefined, 
   language: 'en' | 'ar' = 'en'
 ) {
   if (!transitionLib) {

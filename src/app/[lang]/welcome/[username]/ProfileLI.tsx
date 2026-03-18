@@ -9,6 +9,12 @@ import WarningSvg from '@/components/svgs/WarningSvg';
 //  STORES
 import { useLanguageStore } from '@/stores/index';
 
+// JSON
+import CITY_TRANSLATIONS from '@/json/translate/CITY_TRNASLATIONS.json';
+
+// UTILS
+import getTranslation from '@/utils/getTranslation';
+
 type Props = {
   category?: string;
   user: UserProps;
@@ -26,6 +32,7 @@ type UserProps = {
 };
 
 type addressProps = {
+  city?: string;
   address_details?: string;
   second_address?: string;
   notes?: string;
@@ -191,7 +198,7 @@ export default function ProfileLI ({ user, isLoading = false, isError = false, .
   const { first_name, last_name, email, phone_number, address }: UserProps = user;
 
   // DEBUG & UI
-  // console.log('user: ', user);
+  console.log('user: ', user);
 
   return (
     <>
@@ -206,7 +213,7 @@ export default function ProfileLI ({ user, isLoading = false, isError = false, .
           <h3
             className="text-lg text-heading font-bold"
           >
-            PERSONAL
+            {isEn ? 'PERSONAL' : 'شخصي'}
           </h3>
         </div>
         <ul
@@ -249,12 +256,18 @@ export default function ProfileLI ({ user, isLoading = false, isError = false, .
           <h3
             className="text-lg text-heading font-bold"
           >
-            LOCATION
+            {isEn ? 'LOCATION' : 'الموقع'}
           </h3>
         </div>
         <ul
           className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full"
         >
+          <li
+            className="flex flex-col"
+          >
+            <span className="text-md text-body font-bold">{isEn ? 'City' : 'المحافظه'}</span>
+            <span className="text-md text-heading">{getTranslation(CITY_TRANSLATIONS, address?.city, lang)}</span>
+          </li>
           <li
             className="flex flex-col"
           >

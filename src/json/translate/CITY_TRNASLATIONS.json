@@ -1,0 +1,17 @@
+{
+  "damascus": { "en": "Damascus", "ar": "دمشق" },
+  "aleppo": { "en": "Aleppo", "ar": "حلب" },
+  "homs": { "en": "Homs", "ar": "حمص" },
+  "hama": { "en": "Hama", "ar": "حماه" },
+  "latakia": { "en": "Latakia", "ar": "الاذقيه" },
+  "deir": { "en": "Deir", "ar": "دير الزور" },
+  "daraa": { "en": "Daraa", "ar": "درعا" },
+  "raqqa": { "en": "Raqqa", "ar": "درعا" },
+  "qamishli": { "en": "Qamishli", "ar": "قامشلي" },
+  "tartus": { "en": "Tartus", "ar": "طرطوس" },
+  "as Suwayda": { "en": "As Suwayda", "ar": "السويداء" },
+  "palmyra": { "en": "Palmyra", "ar": "تدمر" },
+  "al Hasakah": { "en": "Al Hasakah", "ar": "الحسكه" },
+  "manbij": { "en": "Manbij", "ar": "منجب" },
+  "idlib": { "en": "Idlib", "ar": "ادلب" }
+}
