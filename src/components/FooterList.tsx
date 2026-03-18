@@ -58,7 +58,7 @@ export default function FooterList ({ title, content, index, ...props}: Props) {
     <div
       className="
         flex flex-col lg:gap-4 w-full max-w-[600px] mx-auto py-4 lg:py-0
-        border-solid border-heading-invert border-y-[5px] mb-[-5px] lg:border-none
+        //border-solid //border-heading-invert //border-y-[5px] mb-[-5px] lg:border-none
       "
       {...props}
     >
@@ -100,7 +100,7 @@ export default function FooterList ({ title, content, index, ...props}: Props) {
             onClick={handleClick}
           >
             <span
-              className="group relative inline-block"
+              className="group relative inline-block h-[30px] overflow-visible"
             >
               {itm}
               <UnderlineStyle />

@@ -153,28 +153,32 @@ export default function Footer ({ className, ...props }: Props) {
             </BtnA>
           </div>
         </div>
-        <FooterList 
-          index={0}
-          title={isEn ? 'COSTUMER SERVICE' : 'خدمة العملاء'} 
-          content={
-            isEn 
-            ? ['Privacy Policy', 'Returns & Refunds', 'Delivery and Shipment'] 
-            : ['سياسة الخصوصية', 'إرجاع واسترداد الأموال', 'التوصيل والشحن']
-          } 
-        />
-        <FooterList 
-          index={1}
-          title={isEn ? 'ABOUT US' : 'من نحن'} 
-          content={isEn ? ['About Us', 'FAQs'] : ['حولنا', 'الأسئلة الشائعة']} 
-        />
-        <FooterList 
-          index={2}
-          title={isEn ? 'CONTACT US' : 'تواصل معنا'} 
-          content={[
-            <div key="1" className="flex gap-2"><Phone />+9639302942</div>, 
-            <div key="2" className="flex gap-2"><Email />support@ranoura.com</div> 
-          ]} 
-        />
+        <section
+          className="divide-y-[5px] divide-heading-invert border-y-[5px] border-heading-invert max-w-[600px] mx-auto w-full"
+        >
+          <FooterList 
+            index={0}
+            title={isEn ? 'COSTUMER SERVICE' : 'خدمة العملاء'} 
+            content={
+              isEn 
+              ? ['Privacy Policy', 'Returns & Refunds', 'Delivery and Shipment'] 
+              : ['سياسة الخصوصية', 'إرجاع واسترداد الأموال', 'التوصيل والشحن']
+            } 
+          />
+          <FooterList 
+            index={1}
+            title={isEn ? 'ABOUT US' : 'من نحن'} 
+            content={isEn ? ['About Us', 'FAQs'] : ['حولنا', 'الأسئلة الشائعة']} 
+          />
+          <FooterList 
+            index={2}
+            title={isEn ? 'CONTACT US' : 'تواصل معنا'} 
+            content={[
+              <div key="1" className="flex gap-2"><Phone />+9639302942</div>, 
+              <div key="2" className="flex gap-2"><Email />support@ranoura.com</div> 
+            ]} 
+          />
+        </section>
       </section>
       <section
         className="flex flex-col items-center gap-4"
