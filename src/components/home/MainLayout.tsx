@@ -13,7 +13,7 @@ const ramdanBanner = "/assets/img/ramadan-nights.webp";
 const ramdanBanner2 = "/assets/img/ramadan-nights-2.avif";
 const outfit1 = "assets/img/outfit.webp";
 const outfit2 = "assets/img/outfit-2.avif";
-const outfit3 = "assets/img/outfit-3.avif";
+const outfit3 = "assets/img/outfit-5.avif";
 
 export default function MainLayout () {
 
