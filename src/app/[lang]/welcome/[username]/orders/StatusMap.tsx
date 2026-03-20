@@ -56,22 +56,22 @@ export default function StatusMap ({
         <span 
           className="--opacity-blink text-transparent bg-background-deep-light rounded-md font-bold" 
         >
-          {getTranslation(STATUS_TRANSLATIONS, 'PENDING', lang).toUpperCase()}
+          {getTranslation(STATUS_TRANSLATIONS, 'PENDING', lang)?.toUpperCase()}
         </span>
         <span 
           className="--opacity-blink text-transparent bg-background-deep-light rounded-md font-bold" 
         >
-          {getTranslation(STATUS_TRANSLATIONS, 'CONFIRMED', lang).toUpperCase()}
+          {getTranslation(STATUS_TRANSLATIONS, 'CONFIRMED', lang)?.toUpperCase()}
         </span>
         <span 
           className="--opacity-blink text-transparent bg-background-deep-light rounded-md font-bold" 
         >
-          {getTranslation(STATUS_TRANSLATIONS, 'SHIPPED', lang).toUpperCase()}
+          {getTranslation(STATUS_TRANSLATIONS, 'SHIPPED', lang)?.toUpperCase()}
         </span>
         <span 
           className="--opacity-blink text-transparent bg-background-deep-light rounded-md font-bold" 
         >
-          {getTranslation(STATUS_TRANSLATIONS, 'DELIVERED', lang).toUpperCase()}
+          {getTranslation(STATUS_TRANSLATIONS, 'DELIVERED', lang)?.toUpperCase()}
         </span>
       </ul>
     </div>
@@ -166,22 +166,22 @@ export default function StatusMap ({
           <span 
             className="text-inbetween font-bold" 
           >
-            {getTranslation(STATUS_TRANSLATIONS, 'PENDING', lang).toUpperCase()}
+            {getTranslation(STATUS_TRANSLATIONS, 'PENDING', lang)?.toUpperCase()}
           </span>
           <span 
             className="text-inbetween font-bold" 
           >
-            {getTranslation(STATUS_TRANSLATIONS, 'CONFIRMED', lang).toUpperCase()}
+            {getTranslation(STATUS_TRANSLATIONS, 'CONFIRMED', lang)?.toUpperCase()}
           </span>
           <span 
             className="text-inbetween font-bold" 
           >
-            {getTranslation(STATUS_TRANSLATIONS, 'SHIPPED', lang).toUpperCase()}
+            {getTranslation(STATUS_TRANSLATIONS, 'SHIPPED', lang)?.toUpperCase()}
           </span>
           <span 
             className="text-heading font-bold" 
           >
-            {getTranslation(STATUS_TRANSLATIONS, 'DELIVERED', lang).toUpperCase()}
+            {getTranslation(STATUS_TRANSLATIONS, 'DELIVERED', lang)?.toUpperCase()}
           </span>
         </ul>
       </div>
@@ -286,22 +286,22 @@ export default function StatusMap ({
           <span 
             className="text-inbetween font-bold" 
           >
-            {getTranslation(STATUS_TRANSLATIONS, 'PENDING', lang).toUpperCase()}
+            {getTranslation(STATUS_TRANSLATIONS, 'PENDING', lang)?.toUpperCase()}
           </span>
           <span 
             className="text-inbetween font-bold" 
           >
-            {getTranslation(STATUS_TRANSLATIONS, 'CONFIRMED', lang).toUpperCase()}
+            {getTranslation(STATUS_TRANSLATIONS, 'CONFIRMED', lang)?.toUpperCase()}
           </span>
           <span 
             className="text-heading font-bold" 
           >
-            {getTranslation(STATUS_TRANSLATIONS, 'SHIPPED', lang).toUpperCase()}
+            {getTranslation(STATUS_TRANSLATIONS, 'SHIPPED', lang)?.toUpperCase()}
           </span>
           <span 
             className="text-inbetween font-bold" 
           >
-            {getTranslation(STATUS_TRANSLATIONS, 'DELIVERED', lang).toUpperCase()}
+            {getTranslation(STATUS_TRANSLATIONS, 'DELIVERED', lang)?.toUpperCase()}
           </span>
         </ul>
       </div>
@@ -413,22 +413,22 @@ export default function StatusMap ({
           <span 
             className="text-inbetween font-bold" 
           >
-            {getTranslation(STATUS_TRANSLATIONS, 'PENDING', lang).toUpperCase()}
+            {getTranslation(STATUS_TRANSLATIONS, 'PENDING', lang)?.toUpperCase()}
           </span>
           <span 
             className="text-heading font-bold" 
           >
-            {getTranslation(STATUS_TRANSLATIONS, 'CONFIRMED', lang).toUpperCase()}
+            {getTranslation(STATUS_TRANSLATIONS, 'CONFIRMED', lang)?.toUpperCase()}
           </span>
           <span 
             className="text-inbetween font-bold" 
           >
-            {getTranslation(STATUS_TRANSLATIONS, 'SHIPPED', lang).toUpperCase()}
+            {getTranslation(STATUS_TRANSLATIONS, 'SHIPPED', lang)?.toUpperCase()}
           </span>
           <span 
             className="text-inbetween font-bold" 
           >
-            {getTranslation(STATUS_TRANSLATIONS, 'DELIVERED', lang).toUpperCase()}
+            {getTranslation(STATUS_TRANSLATIONS, 'DELIVERED', lang)?.toUpperCase()}
           </span>
         </ul>
       </div>
@@ -536,22 +536,22 @@ export default function StatusMap ({
           <span 
             className="text-heading font-bold" 
           >
-            {getTranslation(STATUS_TRANSLATIONS, 'PENDING', lang).toUpperCase()}
+            {getTranslation(STATUS_TRANSLATIONS, 'PENDING', lang)?.toUpperCase()}
           </span>
           <span 
             className="text-inbetween font-bold" 
           >
-            {getTranslation(STATUS_TRANSLATIONS, 'CONFIRMED', lang).toUpperCase()}
+            {getTranslation(STATUS_TRANSLATIONS, 'CONFIRMED', lang)?.toUpperCase()}
           </span>
           <span 
             className="text-inbetween font-bold" 
           >
-            {getTranslation(STATUS_TRANSLATIONS, 'SHIPPED', lang).toUpperCase()}
+            {getTranslation(STATUS_TRANSLATIONS, 'SHIPPED', lang)?.toUpperCase()}
           </span>
           <span 
             className="text-inbetween font-bold" 
           >
-            {getTranslation(STATUS_TRANSLATIONS, 'DELIVERED', lang).toUpperCase()}
+            {getTranslation(STATUS_TRANSLATIONS, 'DELIVERED', lang)?.toUpperCase()}
           </span>
         </ul>
       </div>
@@ -647,22 +647,22 @@ export default function StatusMap ({
           <span 
             className="text-inbetween font-bold" 
           >
-            {getTranslation(STATUS_TRANSLATIONS, 'PENDING', lang).toUpperCase()}
+            {getTranslation(STATUS_TRANSLATIONS, 'PENDING', lang)?.toUpperCase()}
           </span>
           <span 
             className="text-inbetween font-bold" 
           >
-            {getTranslation(STATUS_TRANSLATIONS, 'CONFIRMED', lang).toUpperCase()}
+            {getTranslation(STATUS_TRANSLATIONS, 'CONFIRMED', lang)?.toUpperCase()}
           </span>
           <span 
             className="text-inbetween font-bold" 
           >
-            {getTranslation(STATUS_TRANSLATIONS, 'SHIPPED', lang).toUpperCase()}
+            {getTranslation(STATUS_TRANSLATIONS, 'SHIPPED', lang)?.toUpperCase()}
           </span>
           <span 
             className="text-heading font-bold" 
           >
-            {getTranslation(STATUS_TRANSLATIONS, 'DELIVERED', lang).toUpperCase()}
+            {getTranslation(STATUS_TRANSLATIONS, 'DELIVERED', lang)?.toUpperCase()}
           </span>
         </ul>
       </div>
@@ -767,22 +767,22 @@ export default function StatusMap ({
           <span 
             className="text-inbetween font-bold" 
           >
-            {getTranslation(STATUS_TRANSLATIONS, 'PENDING', lang).toUpperCase()}
+            {getTranslation(STATUS_TRANSLATIONS, 'PENDING', lang)?.toUpperCase()}
           </span>
           <span 
             className="text-inbetween font-bold" 
           >
-            {getTranslation(STATUS_TRANSLATIONS, 'CONFIRMED', lang).toUpperCase()}
+            {getTranslation(STATUS_TRANSLATIONS, 'CONFIRMED', lang)?.toUpperCase()}
           </span>
           <span 
             className="text-heading font-bold" 
           >
-            {getTranslation(STATUS_TRANSLATIONS, 'SHIPPED', lang).toUpperCase()}
+            {getTranslation(STATUS_TRANSLATIONS, 'SHIPPED', lang)?.toUpperCase()}
           </span>
           <span 
             className="text-inbetween font-bold" 
           >
-            {getTranslation(STATUS_TRANSLATIONS, 'DELIVERED', lang).toUpperCase()}
+            {getTranslation(STATUS_TRANSLATIONS, 'DELIVERED', lang)?.toUpperCase()}
           </span>
         </ul>
       </div>
@@ -894,22 +894,22 @@ export default function StatusMap ({
           <span 
             className="text-inbetween font-bold" 
           >
-            {getTranslation(STATUS_TRANSLATIONS, 'PENDING', lang).toUpperCase()}
+            {getTranslation(STATUS_TRANSLATIONS, 'PENDING', lang)?.toUpperCase()}
           </span>
           <span 
             className="text-heading font-bold" 
           >
-            {getTranslation(STATUS_TRANSLATIONS, 'CONFIRMED', lang).toUpperCase()}
+            {getTranslation(STATUS_TRANSLATIONS, 'CONFIRMED', lang)?.toUpperCase()}
           </span>
           <span 
             className="text-inbetween font-bold" 
           >
-            {getTranslation(STATUS_TRANSLATIONS, 'SHIPPED', lang).toUpperCase()}
+            {getTranslation(STATUS_TRANSLATIONS, 'SHIPPED', lang)?.toUpperCase()}
           </span>
           <span 
             className="text-inbetween font-bold" 
           >
-            {getTranslation(STATUS_TRANSLATIONS, 'DELIVERED', lang).toUpperCase()}
+            {getTranslation(STATUS_TRANSLATIONS, 'DELIVERED', lang)?.toUpperCase()}
           </span>
         </ul>
       </div>
@@ -1017,22 +1017,22 @@ export default function StatusMap ({
           <span 
             className="text-heading font-bold" 
           >
-            {getTranslation(STATUS_TRANSLATIONS, 'PENDING', lang).toUpperCase()}
+            {getTranslation(STATUS_TRANSLATIONS, 'PENDING', lang)?.toUpperCase()}
           </span>
           <span 
             className="text-inbetween font-bold" 
           >
-            {getTranslation(STATUS_TRANSLATIONS, 'CONFIRMED', lang).toUpperCase()}
+            {getTranslation(STATUS_TRANSLATIONS, 'CONFIRMED', lang)?.toUpperCase()}
           </span>
           <span 
             className="text-inbetween font-bold" 
           >
-            {getTranslation(STATUS_TRANSLATIONS, 'SHIPPED', lang).toUpperCase()}
+            {getTranslation(STATUS_TRANSLATIONS, 'SHIPPED', lang)?.toUpperCase()}
           </span>
           <span 
             className="text-inbetween font-bold" 
           >
-            {getTranslation(STATUS_TRANSLATIONS, 'DELIVERED', lang).toUpperCase()}
+            {getTranslation(STATUS_TRANSLATIONS, 'DELIVERED', lang)?.toUpperCase()}
           </span>
         </ul>
       </div>

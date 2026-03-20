@@ -105,7 +105,7 @@ export default function OrdersLi ({
               className="font-bold"
               style={{ color: getOrderStatusColor(order?.status) }}
             >
-              {getTranslation(STATUS_TRANSLATIONS, order?.status, lang).toUpperCase()}
+              {getTranslation(STATUS_TRANSLATIONS, order?.status, lang)?.toUpperCase()}
             </h3>
           </div>
           <div
