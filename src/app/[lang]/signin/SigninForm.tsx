@@ -146,9 +146,6 @@ export default function SigninForm ({ className, ...props }: Props) {
     e.currentTarget.scrollIntoView({ block: 'center', behavior: 'smooth' });
 
     switch (name) {
-      case 'email':
-        setIsEmailFocus(true);
-        break;
       case 'password':
         setIsPasswordFocus(true);
         break;
