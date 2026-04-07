@@ -23,32 +23,28 @@ export default function ErrorLayout ({
   refreshBtn = true 
 }: Props) {
   const router = useRouter();
-    const lang = useLanguageStore(state => state.lang);
-    const isEn = lang === 'en';
-    const setTabName = useTabNameStore((state: any) => state.setTabName);
-    const layoutRef = useLayoutRefStore((state: any) => state.layoutRef);
-    
-    useEffect(() => {
-      setTabName('notFound');
-    }, []);
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
+  const setTabName = useTabNameStore((state: any) => state.setTabName);
+  const layoutRef = useLayoutRefStore((state: any) => state.layoutRef);
   
-    const handleClick = (e: React.MouseEvent<HTMLElement | any>) => {
-      const { type } = e.currentTarget.dataset;
-      
-      switch (type) {
-        case 'refresh_button_is_clicked':
-          window.location.reload();
-          break;
-        case 'navigate_to_home':
-          router.push('/');
-          setTimeout(() => 
-            layoutRef.scrollTo({top: 0, behavior: "instant"})
-          ,200);
-          break;
-        default:
-          console.error('Unknown type: ', type);
-      }
+  const handleClick = (e: React.MouseEvent<HTMLElement | any>) => {
+    const { type } = e.currentTarget.dataset;
+    
+    switch (type) {
+      case 'refresh_button_is_clicked':
+        window.location.reload();
+        break;
+      case 'navigate_to_home':
+        router.push('/');
+        setTimeout(() => 
+          layoutRef.scrollTo({top: 0, behavior: "instant"})
+        , 200);
+        break;
+      default:
+        console.error('Unknown type: ', type);
     }
+  };
   
   return (
     <section

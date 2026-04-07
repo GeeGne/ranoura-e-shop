@@ -100,6 +100,9 @@ export default function Header({ className, onScroll, layoutRef, ...props }: Pro
   }
 
   // DEBUG
+  console.log('tabName: ', tabName);
+  console.log('isWindowScrolled: ', isWindowScrolled);
+
   return (
     <header
       className={`

@@ -34,6 +34,7 @@ export default function Home() {
 
   useEffect(() => {
     setTabName('home');
+    // console.log('tab name refresh test');
   }, []);
 
   useEffect(() => {

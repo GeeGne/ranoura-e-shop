@@ -38,6 +38,9 @@ export default function notFound () {
     }
   }
 
+  // DEBUG
+  console.log('window.location: ', window.location);
+
   return (
     <section
       className="grid grid-cols-2 lg:items-center gap-8 py-4 md:py-8 px-4 max-w-[1400px] mx-auto"
