@@ -39,7 +39,7 @@ export default function notFound () {
   }
 
   // DEBUG
-  console.log('window.location: ', window.location);
+  // console.log('window.location: ', window.location);
 
   return (
     <section
