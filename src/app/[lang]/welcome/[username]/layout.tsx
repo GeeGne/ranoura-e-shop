@@ -48,7 +48,11 @@ export default function layout ({ children }: Readonly<{children: React.ReactNod
 
   // DEBUG
   console.log('userData: ', userData);
-
+  console.log('user: ', user);
+  console.log('First name:', user?.first_name);
+  console.log('Last name: ', user?.last_name);
+  console.log('Username Slug: ', createSlug(user?.first_name + '-' + user?.last_name));
+  console.log('slug test: ', createSlug('This is a test'));
   return (
     <div
       className="flex flex-col gap-4 max-w-[1400px] mx-auto"
