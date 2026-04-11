@@ -41,7 +41,7 @@ export default function UserPfp ({
   ...props
 }: Props) {
 
-  const { profile_img_url } = data || {};
+  const { profile_img_url, id: userId } = data || {};
   const queryClient = useQueryClient();
   const id = useId();
   const setActivityWindowToggle = useActivityWindowStore(state => state.setToggle);
@@ -200,8 +200,8 @@ export default function UserPfp ({
               accept="image/*"
               name="editPfpImg"
               id={id}
-              data-store-path={`images/users/${data?.slug}/profile-picture`}
-              data-file-path={data?.profile_img_url}
+              data-store-path={`images/users/${userId}/profile-picture`}
+              data-file-path={profile_img_url}
               onChange={handleChange}
             />
             <LineMdEdit 
@@ -221,7 +221,7 @@ export default function UserPfp ({
             role="button"
             data-type="delete_pfp_img_button_is_clicked"
             data-row-name="profile_img_url"
-            data-file-path={data?.profile_img_url}
+            data-file-path={profile_img_url}
             onClick={handleClick}
           />
         </div>
@@ -251,8 +251,8 @@ export default function UserPfp ({
           name="pfpImg"
           id={id}
           data-row-name="profile_img_url"
-          data-store-path={`images/users/${data?.slug}/profile-picture`}
-          data-file-path={data?.profile_img_url}
+          data-store-path={`images/users/${userId}/profile-picture`}
+          data-file-path={profile_img_url}
           onChange={handleChange}
         />
         <EpUser 
