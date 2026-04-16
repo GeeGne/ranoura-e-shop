@@ -143,7 +143,7 @@ export default function UserOrderDetailsWindow () {
             className="flex flex-col gap-2 items-center"
           >
             <img
-              className="w-[150px] object-cover object-center rounded-full" 
+              className="w-[150px] h-[150px] object-cover object-center rounded-full" 
               src={order?.customer_snapshot?.avatar}
             />
             <span className="text-heading">{order?.customer_snapshot?.name}</span>
