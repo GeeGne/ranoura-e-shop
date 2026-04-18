@@ -177,7 +177,7 @@ export default function UserPfp ({
         <img
           className={`
             flex object-center object-cover 
-            w-[100px] h-[100px]
+            w-[128px] h-[128px] md:w-[170px] md:h-[170px]
           `}
           src={profile_img_url}
         />
@@ -240,7 +240,8 @@ export default function UserPfp ({
       <label
         className={`
           relative group flex items-center justify-center 
-          w-[100px] h-[100px] bg-background-light cursor-pointer rounded-full
+          w-[128px] h-[128px] md:w-[170px] md:h-[170px]
+          bg-background-light cursor-pointer rounded-full
         `}
         htmlFor={id}
       >
@@ -256,18 +257,20 @@ export default function UserPfp ({
           onChange={handleChange}
         />
         <EpUser 
-          className={`w-12 h-12 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
+          className={`w-12 h-12 md:w-[4rem] md:h-[4rem] ${isLoading ? 'opacity-0' : 'opacity-100'}`}
         />
         <div 
           className="
-            absolute top-[calc(100%-2rem)] right-0 
+            absolute 
+            top-[calc(100%-2rem)] left-[calc(100%-2rem)]
+            md:top-[calc(100%-3rem)] md:left-[calc(100%-3rem)]
             flex items-center justify-center
-            w-7 h-7 bg-heading group-active:bg-body opacity-70 group-hover:opacity-100 rounded-full
+            w-7 h-7 md:w-10 md:h-10 bg-heading group-active:bg-body opacity-70 group-hover:opacity-100 rounded-full
             transition-all duration-300 ease-in-out
           "
         >
           <LineMdPlus 
-            className="text-heading-invert "
+            className="text-heading-invert md:w-8 md:h-8"
           />
         </div>
         <div 

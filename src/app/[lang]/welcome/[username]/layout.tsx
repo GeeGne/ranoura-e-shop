@@ -84,7 +84,7 @@ export default function layout ({ children }: Readonly<{children: React.ReactNod
         
       </div>
       <UserPfp 
-        className="mt-[-60.5px] z-[5]" 
+        className="mt-[-40px] md:mt-[-60px] z-[5]" 
         lang={lang}
         isEn={isEn}
         data={userData?.data}

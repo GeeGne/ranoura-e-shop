@@ -10,7 +10,8 @@ export default function Banner ({ isLoading = false, ...props }: Props) {
   return (
     <section
       className={`
-        w-full h-[100px] md:h-[150px] 
+        w-full aspect-[320/50] md:aspect-[728/90] 
+        //h-[150px] //md:h-[200px] //lg:h-[250px]
         ${isLoading ? '--opacity-blink bg-background-deep-light' : 'bg-transparent'}
       `}
       { ...props }
