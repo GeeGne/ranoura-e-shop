@@ -57,8 +57,8 @@ export default function FooterList ({ title, content, index, ...props}: Props) {
   return (
     <div
       className="
-        flex flex-col lg:gap-4 w-full max-w-[600px] mx-auto py-4 lg:py-0
-        //border-solid //border-heading-invert //border-y-[5px] mb-[-5px] lg:border-none
+        flex flex-col lg:gap-4 w-full lg:w-fit mx-auto lg:mx-0 py-4 lg:py-0 
+        mb-[-5px]
       "
       {...props}
     >
@@ -78,7 +78,7 @@ export default function FooterList ({ title, content, index, ...props}: Props) {
       </button>
       <ul
         className={`
-          flex flex-col gap-2 text-body-invert overflow-hidden overflow-hidden
+          flex flex-col gap-2 text-body-invert overflow-hidden
           transition-all duration-300 ease-in-out lg:min-h-full lg:opacity-100
           ${toggleIndex === index ? 'opacity-100' : 'opacity-0'}
         `}

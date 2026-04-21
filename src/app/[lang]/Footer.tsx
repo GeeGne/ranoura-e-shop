@@ -68,7 +68,7 @@ export default function Footer ({ className, ...props }: Props) {
       className={`
         relative flex flex-col gap-4 p-4 bg-primary
         before:content-[''] before:absolute before:top-0 before:left-1/2
-        before:translate-x-[-50%] before:w-screen before:h-full before:bg-primary before:z-[-1]\
+        before:translate-x-[-50%] before:w-screen before:h-full before:bg-primary before:z-[-1]
         ${className}
       `}
       {...props}
@@ -154,7 +154,12 @@ export default function Footer ({ className, ...props }: Props) {
           </div>
         </div>
         <section
-          className="divide-y-[5px] divide-heading-invert border-y-[5px] border-heading-invert max-w-[600px] mx-auto w-full"
+          className="
+            flex flex-col lg:flex-row lg:justify-around lg:col-span-3
+            divide-y-[5px] divide-heading-invert lg:divide-y-[0px] lg:divide-transparent
+            border-y-[5px] border-heading-invert lg:border-y-[0px] lg:border-transparent
+            max-w-[600px] lg:max-w-full mx-auto w-full
+          "
         >
           <FooterList 
             index={0}
