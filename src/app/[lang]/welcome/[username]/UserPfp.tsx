@@ -2,6 +2,10 @@
 import { useEffect, useRef, useState, useId } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
+// LIBRARIES
+import Compressor from 'compressorjs';
+import iamgeCompression from 'browser-image-compression';
+
 // COMPONENTS
 import EpUser from "@/components/svgs/EpUser";
 import LineMdPlus from '@/components/svgs/LineMdPlus';
@@ -117,7 +121,7 @@ export default function UserPfp ({
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, files } = e.currentTarget;
     const { storePath, filePath } = e.currentTarget.dataset;
 
@@ -126,10 +130,19 @@ export default function UserPfp ({
       case 'editPfpImg':
         if (!files || !storePath) return;
         const file = files[0];
+        const options = {
+          maxSizeMB: 1,
+          maxWidthOrHeight: 1024,
+          useWebWorker: true
+        };
+
+        const compressedFile = await iamgeCompression(file, options);
+        
+
         uploadFileMutation.mutate({
           bucketName: 'assets',
           filePath: `${storePath}/${Date.now()}`,
-          file
+          file: compressedFile
         });
 
         if (filePath)  deleteFileMutation.mutate({
