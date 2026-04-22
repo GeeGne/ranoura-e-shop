@@ -3,7 +3,6 @@ import { useEffect, useRef, useState, useId } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 // LIBRARIES
-import Compressor from 'compressorjs';
 import iamgeCompression from 'browser-image-compression';
 
 // COMPONENTS
@@ -67,7 +66,7 @@ export default function UserPfp ({
     },
     onMutate: () => {
       setActivityWindowToggle(true);
-      setActivityWindowMessage(isEn ? 'Uploading the file...' : 'جاري رفع الملف...');
+      setActivityWindowMessage(isEn ? 'Uploading file...' : 'جاري رفع الملف...');
     },
     onSuccess: (results) => {
       const { publicUrl } = results.data;
@@ -135,6 +134,9 @@ export default function UserPfp ({
           maxWidthOrHeight: 1024,
           useWebWorker: true
         };
+
+        setActivityWindowToggle(true);
+        setActivityWindowMessage(isEn ? 'Compressing file...' : 'جاري ضغط الملف...');
 
         const compressedFile = await iamgeCompression(file, options);
         
