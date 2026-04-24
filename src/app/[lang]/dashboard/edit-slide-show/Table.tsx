@@ -1,0 +1,687 @@
+// HOOKS
+import { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+
+// COMPONENTS
+import LoadingTable from '@/components/LoadingTable'
+import ErrorLayout from '@/components/ErrorLayout';
+import LineMdEdit from '@/components/svgs/LineMdEdit';
+import LineMdTrash from '@/components/svgs/LineMdTrash';
+import MdiImageEditOutline from '@/components/svgs/MdiImageEditOutline';
+import EvaArrowUpFill from '@/components/svgs/EvaArrowUpFill';
+import LineMdPlus from '@/components/svgs/LineMdPlus';
+import MdiLinkEdit from '@/components/svgs/MdiLinkEdit';
+import LineMdMinus from '@/components/svgs/LineMdMinus';
+import LineMdArrowsDiagonal from '@/components/svgs/LineMdArrowsDiagonal';
+import FluentZoomFit24Regular from '@/components/svgs/FluentZoomFit24Regular';
+import GardenFileImage26 from '@/components/svgs/GardenFileImage26';
+import MingcuteAspectRatioFill from '@/components/svgs/MingcuteAspectRatioFill';
+import LineMdMenuToCloseAltTransition from '@/components/svgs/LineMdMenuToCloseAltTransition';
+import SolarGalleryBold from '@/components/svgs/SolarGalleryBold';
+import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingResize';
+import SolarGalleryCheckBold from '@/components/svgs/SolarGalleryCheckBold';
+
+// STORES
+import { 
+  useLanguageStore, useAlertMessageStore, 
+  useLayoutRefStore, useAddSubCategoryWindowStore, 
+  useActivityWindowStore, useImageDisplayerWindow,
+  useEditImageUrlCategoryWindowStore, useActionConfirmWindowStore
+} from '@/stores/index';
+
+// API
+import updateCategory from '@/lib/api/categories/slug/put';
+import deleteCategory from '@/lib/api/categories/slug/delete';
+import deleteSubCategory from '@/lib/api/sub-categories/slug/delete';
+import uploadStorageFile from '@/lib/api/object/bucketName/filePath/post';
+
+// LIB
+import getMessage from '@/lib/messages/index';
+
+// ASSETS
+const navBarImg = "/assets/img/background(5).webp";
+const navBarLgImg = "/assets/img/background(7).webp";
+
+type Props = {
+  scroll?: string;
+  scrollTrigger?: number;
+  album?: Record<string, any>[];
+  isLoading?: boolean,
+  isError?: boolean
+}
+
+export default function Table({
+  scroll,
+  scrollTrigger,
+  album = [],
+  isLoading = false,
+  isError = false,
+}: Props ) {
+
+  const queryClient = useQueryClient();
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
+  
+  const mainRef = useRef<any>(null);
+  const layoutRef = useLayoutRefStore(state => state.layoutRef);
+  const targetedCategorySlug = useRef<string | null>(null);
+  const targetedCategoryImageType = useRef<string | null>(null);
+
+  const setEditImageUrlWindowToggle = useEditImageUrlCategoryWindowStore(state => state.setToggle);
+  const setEditImageUrlWindowImageUrl = useEditImageUrlCategoryWindowStore(state => state.setImageUrl);
+  const setNewSubCategorySetSlug = useEditImageUrlCategoryWindowStore(state => state.setSlug);
+
+  const setNewSubCategoryToggle = useAddSubCategoryWindowStore(state => state.setToggle);
+  const setNewSubCategoryType = useAddSubCategoryWindowStore(state => state.setCategorySlug);
+
+  const setActivityWindowToggle = useActivityWindowStore(state => state.setToggle);
+  const setActivityWindowMessage = useActivityWindowStore(state => state.setMessage);
+
+  const setImageDisplayerToggle = useImageDisplayerWindow(state => state.setToggle);
+  const setImageDisplayerUrl = useImageDisplayerWindow(state => state.setUrl);
+
+  const action = useActionConfirmWindowStore(state => state.action);
+  const setAction = useActionConfirmWindowStore(state => state.setAction);
+  const setActionWindowToggle = useActionConfirmWindowStore(state => state.setToggle);
+  const setActionWindowIsLoading = useActionConfirmWindowStore(state => state.setIsLoading);
+  const setTitle = useActionConfirmWindowStore(state => state.setTitle);
+  const setDescription = useActionConfirmWindowStore(state => state.setDescription);
+  const setBtnTitle = useActionConfirmWindowStore(state => state.setBtnTitle);
+
+  const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
+  const setAlertType = useAlertMessageStore((state) => state.setType);
+  const setAlertMessage = useAlertMessageStore((state) => state.setMessage);
+
+  useEffect(() => {
+    const mainRefFullWidth: number = mainRef.current?.scrollWidth || 0;
+    const mainRefHeight: number = mainRef.current?.scrollHeight || 0;
+    const fullHeight: number = layoutRef?.scrollHeight || 0;
+    const extraHeight = 120;
+
+    switch (scroll) {
+      case 'right':
+        mainRef.current?.scrollTo({
+          left: isEn ? mainRefFullWidth : 0,
+          behavior:'smooth'
+        })
+        break;
+      case 'left':
+        mainRef.current?.scrollTo({
+          left: isEn ? 0 : -1 * mainRefFullWidth,
+          behavior:'smooth'
+        })
+        break;
+      case 'up':
+        layoutRef.scrollTo({
+          top: fullHeight - mainRefHeight - extraHeight,
+          behavior: 'smooth'
+        });
+        break;
+      case 'down':
+        layoutRef.scrollTo({
+          top: fullHeight,
+          behavior:'smooth'
+        })
+        break;
+      case 'none':
+        break;
+      default:
+        console.error("Unknown scroll type: ", scroll);
+    }
+  }, [ scroll, scrollTrigger ]);
+
+  useEffect(() => {
+    const { name, categorySlug, isConfirmed } = action;
+    if (name !== "remove category" || !isConfirmed) return;
+    if (categorySlug) deleteCategoryMutation.mutate(categorySlug.toString());
+  }, [action])
+
+  const updateCategoryMutation = useMutation({
+    mutationFn: updateCategory,
+    onSettled: () => {
+      setActivityWindowToggle(false);
+    },
+    onMutate: () => {
+      setActivityWindowToggle(true);
+      setActivityWindowMessage(isEn ? 'Updating the Category...' : 'جاري تحديث القسم...')
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['categories']});
+      displayAlert(data.message[isEn ? 'en' : 'ar'], "success");
+    },
+    onError: () => {
+      displayAlert(
+        isEn 
+          ? "Couldn't update Category, please try again." 
+          : "فشل في محاوله تحديث القسم, الرجاء محاوله مره اخرى."
+      , "error");
+    }
+  });
+
+  const deleteCategoryMutation = useMutation({
+    mutationFn: deleteCategory,
+    onSettled: () => {
+      setActionWindowIsLoading(false);
+    },
+    onMutate: () => {
+      setActionWindowIsLoading(true);
+      setActivityWindowMessage(isEn ? 'Deleting the Category...' : 'جاري حذف القسم...')
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['categories']});
+      displayAlert(data.message[isEn ? 'en' : 'ar'], "success");
+      setActionWindowToggle(false);
+    },
+    onError: () => {
+      displayAlert(
+        isEn 
+          ? "Couldn't delete Category, please try again." 
+          : "فشل في محاوله حذف القسم, الرجاء محاوله مره اخرى."
+      , "error");
+    }
+  })
+
+  const deleteSubCategoryMutation = useMutation({
+    mutationFn: deleteSubCategory,
+    onSettled: () => {
+      setActivityWindowToggle(false);
+    },
+    onMutate: () => {
+      setActivityWindowToggle(true);
+      setActivityWindowMessage(isEn ? 'Deleting the SubCategory...' : 'جاري حذف القسم الفرعي...')
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['sub-categories']});
+      displayAlert(data.message[isEn ? 'en' : 'ar'], "success");
+    },
+    onError: () => {
+      displayAlert(
+        isEn 
+          ? "Couldn't delete Sub-Category, please try again." 
+          : "فشل في محاوله حذف القسم الفرعي, الرجاء محاوله مره اخرى."
+      , "error");
+    }
+  })
+
+  const uploadCategoryImageMutation = useMutation({
+    mutationFn: uploadStorageFile,
+    onSettled: () => {
+      setActivityWindowToggle(false);
+    },
+    onMutate: () => {
+      setActivityWindowToggle(true);
+      setActivityWindowMessage(isEn ? 'Uploading the Image...' : 'جاري رفع الصوره...');
+    },
+    onSuccess: (results) => {
+      const { publicUrl } = results.data;
+      displayAlert(results.message[isEn ? 'en' : 'ar'], "success");
+      if (targetedCategorySlug.current && targetedCategoryImageType.current) updateCategoryMutation.mutate({ 
+        slug: targetedCategorySlug.current, 
+        data: { [targetedCategoryImageType.current]: publicUrl } 
+      });
+
+      // DEBUG
+      // console.log('upload image data result: ', data);
+    },
+    onError: () => {
+      displayAlert(isEn ? 'An Error has accured during uploading the image, please try again.' : 'هناك مشكله خلال رفع الصوره, الرجاء المحاوله مره اخرى.', "error");
+    }
+  })
+
+  const setFilePath = (filePath: string, imageType: any) => `${filePath}/${Date.now()}-${imageType}`;
+
+  const displayAlert = (message: any, type: string) => {
+    setAlertMessage(message);
+    setAlertType(type);
+    setAlertToggle(Date.now());
+  };
+
+  const handleClick = async (e: React.MouseEvent<HTMLButtonElement | HTMLLIElement | SVGElement>) => {
+    const { type, categorySlug, subCategorySlug, categoryNameEn, categoryNameAr, imageUrl } = e.currentTarget.dataset;
+
+    switch (type) {
+      case 'sub_category_block_is_clicked':
+        console.log('categorySlug: ', categorySlug);
+        console.log('subCategorySlug: ', subCategorySlug);
+        if (subCategorySlug) deleteSubCategoryMutation.mutate(subCategorySlug)
+        break;
+      case 'add_new_sub_category_button_is_clicked':
+        setNewSubCategoryToggle(true);
+        if (categorySlug) setNewSubCategoryType(categorySlug);
+        break;
+      case 'expand_image_button_is_clicked':
+        setImageDisplayerToggle(true);
+        if (imageUrl) setImageDisplayerUrl(imageUrl);
+        break;
+      case 'edit_image_url_button_is_clicked':
+        setEditImageUrlWindowToggle(true);
+        if (imageUrl) setEditImageUrlWindowImageUrl(imageUrl);
+        if (categorySlug) setNewSubCategorySetSlug(categorySlug);
+        break;
+      case 'delete_product_button_is_clicked':
+        setActionWindowToggle(true);
+        if (categorySlug) setAction({ name: "remove category", categorySlug, isConfirmed: false });
+        setTitle({ en: `Delete Category?`, ar: "حذف القسم؟" });
+        setDescription({ 
+          en: `Are you sure you want to delete "${categoryNameEn}"? This action cannot be undone.`, 
+          ar: `هل أنت متأكد أنك تريد حذف "${categoryNameAr}"؟ لا يمكن التراجع عن هذا الإجراء.` }
+        );
+        setBtnTitle({ en: `Confirm (Delete)`, ar: "تأكيد (حذف)" });      
+        break;
+      default:
+        console.error('Unknown type: ', type);
+    }
+  }
+
+  const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, files } = e.currentTarget;
+    const { categorySlug, imageType, variableName } = e.currentTarget.dataset;
+
+    switch (name) {
+      case 'navBarImgEditInpt':
+      case 'navBarLgImgEditInpt':
+        if (!files) return;
+        const file: any = files[0];
+        uploadCategoryImageMutation.mutate({
+          bucketName: 'assets',
+          filePath: setFilePath(`images/categories/${categorySlug}`, imageType),
+          file
+        });
+        if (categorySlug) (targetedCategorySlug.current = categorySlug);
+        if (variableName)  (targetedCategoryImageType.current = variableName);
+
+        // DEBUG
+        // console.log('file: ', file);
+        break;
+      default:
+        console.error('Unknown name: ', name);
+    }
+  }
+
+  // DEBUG & UI
+  // console.log('themes data: ', data);
+  // console.log('categories: ', categories);
+  // console.log('subCategories: ', subCategories);
+
+  if (isLoading) return (
+    <LoadingTable />
+  )
+
+  if (isError) return (
+    <ErrorLayout 
+      title={isEn ? 'Unable To Load' : 'لم يتم التحميل'}
+      description={isEn ? 'Please Refresh the page or try again later' : 'الرجاء اعاده تحميل الصفحه او حاول مره اخرى لاحقا'}
+    />
+  )
+  
+  return (
+    <div 
+      className="relative flex flex-col gap-4 overflow-x-auto"
+      ref={mainRef}
+    >
+      <table
+        className="
+          min-w-full overflow-hidden
+          divide-y divide-underline bg-white rounded-lg whitespace-nowrap
+        "
+        ref={mainRef}
+      >
+        <thead className="text-body">
+          <tr>
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'ORDER' : 'ترتيب'}
+            </th>
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'IMAGE SMALL' : 'الصوره'}
+            </th>
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'IMAGE MEDIUM' : 'الصوره'}
+            </th>
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'IMAGE LARGE' : 'الصوره'}
+            </th>
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'ALT' : 'وصف الصوره'}
+            </th>
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'URL' : 'الرابط'}
+            </th>
+            <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
+              {isEn ? 'OPTIONS' : 'الخيارات'}
+            </th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-underline">
+          {album?.sort((a, b) => a.order - b.order)
+            .map((image: Record<string, any>) =>
+            <tr 
+              key={image.id}
+              className="px-6"
+            >
+              <td 
+                className="
+                  px-6 py-4 text-heading font-bold
+                "
+              >
+                {image.order}
+              </td>
+              <td
+                className={`
+                  px-6 py-4 text-sm text-body min-w-[500px] min-h-[250px]
+                  transition-all duration-300 ease-in-out
+                `}
+              >
+                <div
+                  className="
+                    group relative w-[400px] aspect-[2/1] rounded-lg overflow-hidden
+                  "
+                >
+                  <div
+                    className="
+                      absolute top-0 left-0 w-full h-full bg-shade
+                      flex flex-row gap-4 items-center justify-center
+                      text-heading-invert
+                      unvisible group-hover:visible opacity-0 group-hover:opacity-100
+                      transition-all duration-300 ease-in-out
+                    "
+                  >
+                    <LineMdTrash
+                      className="
+                        w-10 h-10 hover:bg-shade-v2 p-2
+                        rounded-md active:opacity-80 cursor-pointer
+                        transition-all duration-200 ease-out
+                      "
+                    />
+                    <label
+                      className=""
+                      htmlFor={`navBarLgImgEditInpt_${image.alt}`}
+                    >
+                      <LineMdEdit
+                        className="
+                          w-10 h-10 hover:bg-shade-v2 p-2
+                          rounded-md active:opacity-80 cursor-pointer
+                          transition-all duration-200 ease-out
+                        "
+                      />
+                      <input
+                        className="
+                          absolute top-1/2 left-1/2
+                          translate-x-[-50%] translate-y-[-50%] w-0 h-0
+                          unvisible opacity-0
+                        "
+                        type="file"
+                        accept="image/*"
+                        id={`navBarLgImgEditInpt_${image.alt}`}
+                        name="navBarLgImgEditInpt"
+                        data-image-type="hero"
+                        data-variable-name="navbarLgImg"
+                        data-category-slug={image.alt}
+                        onChange={handleChange}
+                      />
+                    </label>
+                    <FluentZoomFit24Regular
+                      className="
+                        w-10 h-10 hover:bg-shade-v2 p-2
+                        rounded-md active:opacity-80 cursor-pointer
+                        transition-all duration-200 ease-out
+                      "
+                      role="button"
+                      data-type="expand_image_button_is_clicked"
+                      data-image-url={image.image}
+                      onClick={handleClick}
+                    />
+                  </div>
+                  <img 
+                    src={image.image_lg}
+                    className="w-full object-center object-cover"
+                  />
+                </div>
+              </td>
+              <td
+                className={`
+                  px-6 py-4 text-sm text-body min-w-[500px] min-h-[250px]
+                  transition-all duration-300 ease-in-out
+                `}
+              >
+                <div
+                  className="
+                    group relative w-[400px] aspect-[2/1] rounded-lg overflow-hidden
+                  "
+                >
+                  <div
+                    className="
+                      absolute top-0 left-0 w-full h-full bg-shade
+                      flex flex-row gap-4 items-center justify-center
+                      text-heading-invert
+                      unvisible group-hover:visible opacity-0 group-hover:opacity-100
+                      transition-all duration-300 ease-in-out
+                    "
+                  >
+                    <LineMdTrash
+                      className="
+                        w-10 h-10 hover:bg-shade-v2 p-2
+                        rounded-md active:opacity-80 cursor-pointer
+                        transition-all duration-200 ease-out
+                      "
+                    />
+                    <label
+                      className=""
+                      htmlFor={`navBarLgImgEditInpt_${image.alt}`}
+                    >
+                      <LineMdEdit
+                        className="
+                          w-10 h-10 hover:bg-shade-v2 p-2
+                          rounded-md active:opacity-80 cursor-pointer
+                          transition-all duration-200 ease-out
+                        "
+                      />
+                      <input
+                        className="
+                          absolute top-1/2 left-1/2
+                          translate-x-[-50%] translate-y-[-50%] w-0 h-0
+                          unvisible opacity-0
+                        "
+                        type="file"
+                        accept="image/*"
+                        id={`navBarLgImgEditInpt_${image.alt}`}
+                        name="navBarLgImgEditInpt"
+                        data-image-type="hero"
+                        data-variable-name="navbarLgImg"
+                        data-category-slug={image.alt}
+                        onChange={handleChange}
+                      />
+                    </label>
+                    <FluentZoomFit24Regular
+                      className="
+                        w-10 h-10 hover:bg-shade-v2 p-2
+                        rounded-md active:opacity-80 cursor-pointer
+                        transition-all duration-200 ease-out
+                      "
+                      role="button"
+                      data-type="expand_image_button_is_clicked"
+                      data-image-url={image.image_md}
+                      onClick={handleClick}
+                    />
+                  </div>
+                  <img 
+                    src={image.image_md}
+                    className="w-full object-center object-cover"
+                  />
+                </div>
+              </td>
+              <td
+                className={`
+                  px-6 py-4 text-sm text-body min-w-[500px] min-h-[250px]
+                  transition-all duration-300 ease-in-out
+                `}
+              >
+                <div
+                  className="
+                    group relative w-[400px] aspect-[2/1] rounded-lg overflow-hidden
+                  "
+                >
+                  <div
+                    className="
+                      absolute top-0 left-0 w-full h-full bg-shade
+                      flex flex-row gap-4 items-center justify-center
+                      text-heading-invert
+                      unvisible group-hover:visible opacity-0 group-hover:opacity-100
+                      transition-all duration-300 ease-in-out
+                    "
+                  >
+                    <LineMdTrash
+                      className="
+                        w-10 h-10 hover:bg-shade-v2 p-2
+                        rounded-md active:opacity-80 cursor-pointer
+                        transition-all duration-200 ease-out
+                      "
+                    />
+                    <label
+                      className=""
+                      htmlFor={`navBarLgImgEditInpt_${image.alt}`}
+                    >
+                      <LineMdEdit
+                        className="
+                          w-10 h-10 hover:bg-shade-v2 p-2
+                          rounded-md active:opacity-80 cursor-pointer
+                          transition-all duration-200 ease-out
+                        "
+                      />
+                      <input
+                        className="
+                          absolute top-1/2 left-1/2
+                          translate-x-[-50%] translate-y-[-50%] w-0 h-0
+                          unvisible opacity-0
+                        "
+                        type="file"
+                        accept="image/*"
+                        id={`navBarLgImgEditInpt_${image.alt}`}
+                        name="navBarLgImgEditInpt"
+                        data-image-type="hero"
+                        data-variable-name="navbarLgImg"
+                        data-category-slug={image.alt}
+                        onChange={handleChange}
+                      />
+                    </label>
+                    <FluentZoomFit24Regular
+                      className="
+                        w-10 h-10 hover:bg-shade-v2 p-2
+                        rounded-md active:opacity-80 cursor-pointer
+                        transition-all duration-200 ease-out
+                      "
+                      role="button"
+                      data-type="expand_image_button_is_clicked"
+                      data-image-url={image.image_sm}
+                      onClick={handleClick}
+                    />
+                  </div>
+                  <img 
+                    src={image.image_sm}
+                    className="w-full object-center object-cover"
+                  />
+                </div>
+              </td>
+              <td className="px-6">
+                {image.alt 
+                  ? <Link
+                    className="
+                      text-body-light text-sm
+                      transition-all duraiton-200 ease-in-out
+                    "
+                    href="category.imgUrl"
+                    target="_blank"
+                  >
+                    {image.alt}
+                  </Link>
+                  : <span>
+                    --
+                  </span>
+                }
+              </td>
+              <td className="px-6">
+                {image.url 
+                  ? <Link
+                    className="
+                      text-content text-sm underline hover:text-heading
+                      transition-all duraiton-200 ease-in-out
+                    "
+                    href="category.imgUrl"
+                    target="_blank"
+                  >
+                    {image.url}
+                  </Link>
+                  : <span>
+                    --
+                  </span>
+                }
+              </td>
+              <td className="px-6">
+                <div 
+                  className="flex gap-2"
+                >
+                  <button 
+                    data-type="edit_image_url_button_is_clicked"
+                    data-image-url={'any'}
+                    data-category-slug={'any'}
+                    onClick={handleClick}
+                  >
+                    <EvaArrowUpFill 
+                      className={`
+                        w-7 h-7 p-1 text-heading rounded-md cursor-pointer rotate-180
+                        bg-background-light hover:bg-background-deep-light active:opacity-60
+                        transition-all duration-200 ease-out
+                      `}
+                    />
+                  </button>
+                  <button 
+                    data-type="edit_image_url_button_is_clicked"
+                    data-image-url={'any'}
+                    data-category-slug={'any'}
+                    onClick={handleClick}
+                  >
+                    <EvaArrowUpFill 
+                      className={`
+                        w-7 h-7 p-1 text-heading rounded-md cursor-pointer
+                        bg-background-light hover:bg-background-deep-light active:opacity-60
+                        transition-all duration-200 ease-out
+                      `}
+                    />
+                  </button>
+                  <button 
+                    data-type="edit_image_url_button_is_clicked"
+                    data-image-url={'any'}
+                    data-category-slug={'any'}
+                    onClick={handleClick}
+                  >
+                    <MdiLinkEdit 
+                      className={`
+                        w-7 h-7 p-1 text-heading rounded-md cursor-pointer
+                        bg-background-light hover:bg-background-deep-light active:opacity-60
+                        transition-all duration-200 ease-out
+                      `}
+                    />
+                  </button>
+                  <button 
+                    data-type="edit_image_url_button_is_clicked"
+                    data-image-url={'any'}
+                    data-category-slug={'any'}
+                    onClick={handleClick}
+                  >
+                    <MdiImageEditOutline 
+                      className={`
+                        w-7 h-7 p-1 text-heading rounded-md cursor-pointer
+                        bg-background-light hover:bg-background-deep-light active:opacity-60
+                        transition-all duration-200 ease-out
+                      `}
+                    />
+                  </button>
+                </div>
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div> 
+  );
+}

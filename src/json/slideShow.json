@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1,
+    "order" : 1,
+    "alt": "some title",
+    "image_sm": "/assets/img/background(4).webp",
+    "image_md": "/assets/img/background(4).webp",
+    "image_lg": "/assets/img/background(7).webp",
+    "url": "google.com"
+  },{
+    "id": 2,
+    "order" : 2,
+    "alt": "some title",
+    "image_sm": "/assets/img/background(3).webp",
+    "image_md": "/assets/img/background(8).webp",
+    "image_lg": "/assets/img/background(9).webp",
+    "url": "google.com"
+  },{
+    "id": 3,
+    "order" : 3,
+    "alt": "some title",
+    "image_sm": "/assets/img/background(6).webp",
+    "image_md": "/assets/img/background(6).webp",
+    "image_lg": "/assets/img/background(10).webp",
+    "url": "google.com"
+  },{
+    "id": 4,
+    "order" : 4,
+    "alt": "some title",
+    "image_sm": "/assets/img/background(10).webp",
+    "image_md": "/assets/img/background(10).webp",
+    "image_lg": "/assets/img/background(10).webp",
+    "url": "google.com"
+  }
+]
