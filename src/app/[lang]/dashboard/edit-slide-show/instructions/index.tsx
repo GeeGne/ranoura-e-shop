@@ -1,8 +1,9 @@
 // COMPONENTS
+import DesktopMode from '@/components/svgs/DesktopMode';
+import MingcuteAspectRatioFill from '@/components/svgs/MingcuteAspectRatioFill';
 import SolarSliderVerticalMinimalisticBold from '@/components/svgs/SolarSliderVerticalMinimalisticBold';
 import SmartPhoneMode from '@/components/svgs/SmartPhoneMode';
-import MingcuteAspectRatioFill from '@/components/svgs/MingcuteAspectRatioFill';
-import Description from '@/app/[lang]/dashboard/edit-categories/instructions/Description';
+import Description from '@/app/[lang]/dashboard/edit-slide-show/instructions/Description';
 
 // STORES
 import { useLanguageStore } from '@/stores/index';
@@ -10,6 +11,9 @@ import { useLanguageStore } from '@/stores/index';
 // ASSETS
 const NavBarLgImg = '/assets/img/NavBarImg-example.avif';
 const NavBarCompactImg = '/assets/img/NavBarCompactImg-example.avif';
+const imageLG = "/assets/img/slide-show-lg.webp";
+const imageMD = "/assets/img/slide-show-md.webp";
+const imageSM = "/assets/img/slide-show-sm.webp";
 
 export default function Instructions () {
   
@@ -35,7 +39,8 @@ export default function Instructions () {
             className="
               absolute top-0 left-0 w-[75px] h-[75px] 
               flex items-center justify-center
-              bg-body-light rounded-lg"
+              bg-body-light rounded-lg
+            "
           >
             <span
               className="text-heading-invert font-bold text-[70px]"
@@ -44,9 +49,9 @@ export default function Instructions () {
             </span>
           </div>
           <div
-            className="relative"
+            className="hidden relative"
           >
-            <SolarSliderVerticalMinimalisticBold className="w-[200px] h-auto text-body z-[10]" />
+            <DesktopMode className="w-[200px] h-auto text-body z-[10]" />
             <MingcuteAspectRatioFill 
               className="
                 absolute bottom-0 left-0 
@@ -65,7 +70,48 @@ export default function Instructions () {
             isEn={isEn} 
           />
           <img 
-            src={NavBarLgImg}
+            src={imageLG}
+            className="w-[600px] object-cover obejct-center shrink-0 rounded-lg"
+          />
+        </div>
+        <div
+          className="relative flex flex-col lg:flex-1 items-center gap-4 bg-white p-4 rounded-lg"
+        >
+          <div
+            className="
+              absolute top-0 left-0 w-[75px] h-[75px] 
+              flex items-center justify-center
+              bg-body-light rounded-lg"
+          >
+            <span
+              className="text-heading-invert font-bold text-[70px]"
+            >
+              2
+            </span>
+          </div>
+          <div
+            className="relative"
+          >
+            <DesktopMode className="w-[200px] h-auto text-body z-[10]" />
+            <MingcuteAspectRatioFill 
+              className="
+                absolute bottom-0 left-0 
+                translate-x-[-50%] translate-y-[25%]
+                w-[130px] h-[130px] text-shade
+              "
+            />
+          </div>
+          <span
+            className="text-content font-bold"
+          >
+            {isEn ? 'Hybrid Mode (Tablet & Desktop)' : 'وضع متوسط (شاشه & تابلت)'}
+          </span>
+          <Description 
+            type="hybrid"
+            isEn={isEn} 
+          />
+          <img 
+            src={imageMD}
             className="w-[600px] object-cover obejct-center shrink-0 rounded-lg"
           />
         </div>
@@ -81,12 +127,11 @@ export default function Instructions () {
             <span
               className="text-heading-invert font-bold text-[70px]"
             >
-              2
+              3
             </span>
           </div>
-
           <div
-            className="relative"
+            className="hidden relative"
           >
             <SmartPhoneMode className="w-[100px] h-auto text-content" />
             <MingcuteAspectRatioFill 
@@ -107,8 +152,8 @@ export default function Instructions () {
             isEn={isEn} 
           />
           <img 
-            src={NavBarCompactImg}
-            className="w-[400px] object-cover object-center shrink-0 rounded-lg"
+            src={imageSM}
+            className="w-[250px] object-cover object-center shrink-0 rounded-lg"
           />
         </div>
       </div>

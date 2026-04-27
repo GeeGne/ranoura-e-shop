@@ -40,8 +40,9 @@ import uploadStorageFile from '@/lib/api/object/bucketName/filePath/post';
 import getMessage from '@/lib/messages/index';
 
 // ASSETS
-const navBarImg = "/assets/img/background(5).webp";
-const navBarLgImg = "/assets/img/background(7).webp";
+const imageLG = "/assets/img/slide-show-lg.webp";
+const imageMD = "/assets/img/slide-show-md.webp";
+const imageSM = "/assets/img/slide-show-sm.webp";
 
 type Props = {
   scroll?: string;
