@@ -1,8 +1,10 @@
 // SVGS
 import DesktopMode from '@/components/svgs/DesktopMode';
 import SmartPhoneMode from '@/components/svgs/SmartPhoneMode';
+import MdiFileImageOutline from '@/components/svgs/MdiFileImageOutline';
 import MingcuteAspectRatioFill from '@/components/svgs/MingcuteAspectRatioFill';
 import IconoirWebpFormat from '@/components/svgs/IconoirWebpFormat';
+import TabletView from '@/components/svgs/TabletView';
 
 type Props = {
   type: string;
@@ -25,8 +27,9 @@ export default function Description ({ type, isEn }: Props) {
         <div
           className="grid grid-cols-3 divide divide-primary divide-x-[1px] w-full"
         >
-          <div className="flex items-center justify-center">
-            <IconoirWebpFormat className="w-14 h-14 text-body" />
+          <div className="flex flex-col items-center justify-center">
+            <MdiFileImageOutline className="w-14 h-14 text-body" />
+            <span className="text-body font-bold text-2xl">AVIF</span>
           </div>
           <div className="flex justify-center items-center font-bold text-3xl text-body">2:1</div>
           <div className="flex items-center justify-center">
@@ -48,13 +51,13 @@ export default function Description ({ type, isEn }: Props) {
           className="list-disc px-4"
         >
           <li>
-            <span className="font-bold">Aspect Ratio: 2:1</span> (Width must be exactly twice the height. For example: 1200px wide x 600px high).
+            <span className="font-bold">Aspect Ratio: 2:1</span> Standard: 1200px wide x 600px high, High quality: 1920px wide x 960px high.
           </li>
           <li>
-            <span className="font-bold">Recommended Format: WEBP</span> (For the best quality and fastest loading). PNG or high-quality JPG are also accepted.
+            <span className="font-bold">Recommended Format: AVIF</span> (WEBP is also accepted).
           </li>
           <li>
-            <span className="font-bold">Max File Size:</span> Aim for under 400 KB.
+            <span className="font-bold">Max File Size:</span> Aim for under 1 MB.
           </li>
           <li>
             <span className="font-bold">Tips:</span>
@@ -65,7 +68,7 @@ export default function Description ({ type, isEn }: Props) {
                 Use a wide, landscape-oriented image that represents the entire frame.
               </li>
               <li>
-                Ensure any important details are centered, as the edges may be cropped on some screens.
+                Adding a button symbol says "SHOP NOW", "CHECK OFFER" etc.. is a good practice.
               </li>
             </ul>
           </li>
@@ -116,15 +119,16 @@ export default function Description ({ type, isEn }: Props) {
       <div
         className="grid grid-cols-3 divide divide-primary divide-x-[1px] w-full"
       >
-        <div className="flex items-center justify-center">
-          <IconoirWebpFormat className="w-14 h-14 text-body" />
+        <div className="flex flex-col items-center justify-center">
+          <MdiFileImageOutline className="w-14 h-14 text-body" />
+          <span className="text-body font-bold text-2xl">AVIF</span>
         </div>
         <div className="flex justify-center items-center font-bold text-3xl text-body">4:3</div>
         <div className="flex items-center justify-center">
           <div
             className="relative"
           >
-            <SmartPhoneMode className="w-[100px] h-auto text-body z-[10]" />
+            <TabletView className="w-[100px] h-auto text-body z-[10]" />
             <MingcuteAspectRatioFill 
               className="
                 absolute bottom-0 left-0 
@@ -209,8 +213,9 @@ export default function Description ({ type, isEn }: Props) {
       <div
         className="grid grid-cols-3 divide divide-primary divide-x-[1px] w-full"
       >
-        <div className="flex items-center justify-center">
-          <IconoirWebpFormat className="w-14 h-14 text-body" />
+        <div className="flex flex-col items-center justify-center">
+          <MdiFileImageOutline className="w-14 h-14 text-body" />
+          <span className="text-body font-bold text-2xl">AVIF</span>
         </div>
         <div className="flex justify-center items-center font-bold text-3xl text-body">3:4</div>
         <div className="flex items-center justify-center">

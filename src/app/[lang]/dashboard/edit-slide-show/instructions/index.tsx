@@ -90,7 +90,7 @@ export default function Instructions () {
             </span>
           </div>
           <div
-            className="relative"
+            className="hidden relative"
           >
             <DesktopMode className="w-[200px] h-auto text-body z-[10]" />
             <MingcuteAspectRatioFill 
