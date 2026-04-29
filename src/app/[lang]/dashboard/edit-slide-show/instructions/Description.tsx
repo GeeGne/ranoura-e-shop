@@ -25,7 +25,7 @@ export default function Description ({ type, isEn }: Props) {
         className="text-body text-sm flex flex-col gap-2 max-w-[550px]"
       >
         <div
-          className="grid grid-cols-3 divide divide-primary divide-x-[1px] w-full"
+          className="grid grid-cols-3 divide divide-body divide-x-[1px] w-full"
         >
           <div className="flex flex-col items-center justify-center">
             <MdiFileImageOutline className="w-14 h-14 text-body" />
@@ -51,7 +51,15 @@ export default function Description ({ type, isEn }: Props) {
           className="list-disc px-4"
         >
           <li>
-            <span className="font-bold">Aspect Ratio: 2:1</span> Standard: 1200px wide x 600px high, High quality: 1920px wide x 960px high.
+            <span className="font-bold">Aspect Ratio: 2:1</span> 
+            <ul className="list-disc list-inside">
+              <li>
+                Standard: 1200px wide x 600px high.
+              </li>
+              <li>
+                High quality: 1920px wide x 960px high.
+              </li>
+            </ul>
           </li>
           <li>
             <span className="font-bold">Recommended Format: AVIF</span> (WEBP is also accepted).
@@ -117,7 +125,7 @@ export default function Description ({ type, isEn }: Props) {
       className="flex flex-col gap-4"
     >
       <div
-        className="grid grid-cols-3 divide divide-primary divide-x-[1px] w-full"
+        className="grid grid-cols-3 divide divide-body divide-x-[1px] w-full"
       >
         <div className="flex flex-col items-center justify-center">
           <MdiFileImageOutline className="w-14 h-14 text-body" />
@@ -146,13 +154,13 @@ export default function Description ({ type, isEn }: Props) {
           className="list-disc px-4"
         >
           <li>
-            <span className="font-bold">Aspect Ratio: 4:3</span> (Image must be a perfect square. For example: 400px wide x 400px high).
+            <span className="font-bold">Aspect Ratio: 4:3</span> Standard: 1024px wide x 768px high, Hight quality: 1440px wide x 1080px high.
           </li>
           <li>
-            <span className="font-bold">Recommended Format: AVIF</span> (For the best quality and fastest loading). PNG or high-quality JPG are also accepted.
+            <span className="font-bold">Recommended Format: AVIF</span> (WEBP is also accepted).
           </li>
           <li>
-            <span className="font-bold">Max File Size:</span> Aim for under 400 KB.
+            <span className="font-bold">Max File Size:</span> Aim for under 1 MB.
           </li>
           <li>
             <span className="font-bold">Tips:</span>
@@ -211,7 +219,7 @@ export default function Description ({ type, isEn }: Props) {
       className="flex flex-col gap-4"
     >
       <div
-        className="grid grid-cols-3 divide divide-primary divide-x-[1px] w-full"
+        className="grid grid-cols-3 divide divide-body divide-x-[1px] w-full"
       >
         <div className="flex flex-col items-center justify-center">
           <MdiFileImageOutline className="w-14 h-14 text-body" />
@@ -243,10 +251,10 @@ export default function Description ({ type, isEn }: Props) {
             <span className="font-bold">Aspect Ratio: 3:4</span> (Image must be a perfect square. For example: 400px wide x 400px high).
           </li>
           <li>
-            <span className="font-bold">Recommended Format: AVIF</span> (For the best quality and fastest loading). PNG or high-quality JPG are also accepted.
+            <span className="font-bold">Recommended Format: AVIF</span> (WEBP is also accepted).
           </li>
           <li>
-            <span className="font-bold">Max File Size:</span> Aim for under 400 KB.
+            <span className="font-bold">Max File Size:</span> Aim for under 1 MB.
           </li>
           <li>
             <span className="font-bold">Tips:</span>
