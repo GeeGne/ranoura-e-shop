@@ -3,6 +3,9 @@ import DesktopMode from '@/components/svgs/DesktopMode';
 import SmartPhoneMode from '@/components/svgs/SmartPhoneMode';
 import MdiFileImageOutline from '@/components/svgs/MdiFileImageOutline';
 import MingcuteAspectRatioFill from '@/components/svgs/MingcuteAspectRatioFill';
+import MdiLessThanOrEqual from '@/components/svgs/MdiLessThanOrEqual';
+import FluentSlideSize24Regular from '@/components/svgs/FluentSlideSize24Regular';
+import HugeiconsFileDown from '@/components/svgs/HugeiconsFileDown';
 import IconoirWebpFormat from '@/components/svgs/IconoirWebpFormat';
 import TabletView from '@/components/svgs/TabletView';
 
@@ -25,13 +28,23 @@ export default function Description ({ type, isEn }: Props) {
         className="text-body text-sm flex flex-col gap-2 max-w-[550px]"
       >
         <div
-          className="grid grid-cols-3 divide divide-body divide-x-[1px] w-full"
+          className="grid grid-cols-4 divide divide-body divide-x-[1px] w-full"
         >
           <div className="flex flex-col items-center justify-center">
             <MdiFileImageOutline className="w-14 h-14 text-body" />
             <span className="text-body font-bold text-2xl">AVIF</span>
           </div>
-          <div className="flex justify-center items-center font-bold text-3xl text-body">2:1</div>
+          <div className="flex flex-col items-center justify-center">
+            <HugeiconsFileDown className="w-14 h-14 text-body" strokeWidth={2}/>
+            <div className="flex items-center gap-1">
+              <span className="text-body font-bold text-2xl">1 MB</span>
+              <MdiLessThanOrEqual className="font-body w-6 h-6" strokeWidth={1} />
+            </div>
+          </div>
+          <div className="flex flex-col items-center justify-center">
+            <FluentSlideSize24Regular className="text-body w-14 h-14" strokeWidth={0.3} />
+            <div className="flex justify-center items-center font-bold text-2xl text-body">2:1</div>
+          </div>
           <div className="flex items-center justify-center">
             <div
               className="relative"
@@ -52,20 +65,14 @@ export default function Description ({ type, isEn }: Props) {
         >
           <li>
             <span className="font-bold">Aspect Ratio: 2:1</span> 
-            <ul className="list-disc list-inside">
+            <ul className="list-[circle] list-inside">
               <li>
-                Standard: 1200px wide x 600px high.
+                <b className="font-semibold">Standard: &nbsp;</b>1200px wide x 600px high.
               </li>
               <li>
-                High quality: 1920px wide x 960px high.
+                <b className="font-semibold">High quality: &nbsp;</b>1920px wide x 960px high.
               </li>
             </ul>
-          </li>
-          <li>
-            <span className="font-bold">Recommended Format: AVIF</span> (WEBP is also accepted).
-          </li>
-          <li>
-            <span className="font-bold">Max File Size:</span> Aim for under 1 MB.
           </li>
           <li>
             <span className="font-bold">Tips:</span>
