@@ -23,23 +23,25 @@ import getAllProducts from '@/lib/api/products/get';
 
 export default function Home() {
 
-  const { lang } = useParams();
+  // const { lang } = useParams();
+  const lang = useLanguageStore((state: any) => state.lang);
   const isEn = lang === 'en';
   const setTabName = useTabNameStore((state: any) => state.setTabName);
   const setLang = useLanguageStore((state: any) => state.setLang);
-  const setDefaultLanguage = () => {
-    setLang(lang);
-    document.cookie = `preferredLang=${lang}; path=/; max-age=31536000`
-  }
+  // const setDefaultLanguage = () => {
+    // setLang(lang);
+    // document.cookie = `preferredLang=${lang}; path=/; max-age=31536000`
+  // }
 
   useEffect(() => {
     setTabName('home');
     // console.log('tab name refresh test');
   }, []);
 
-  useEffect(() => {
-    setDefaultLanguage();
-  }, [ lang ]);
+  // useEffect(() => {
+    // setDefaultLanguage();
+    // console.log('lang trigger:', lang);
+  // }, [ lang ]);
 
   const { 
     data: productsData, 

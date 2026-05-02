@@ -48,7 +48,7 @@ export async function proxy(req: NextRequest) {
       // }
       return NextResponse.next();
     default:
-      const preferredLocale = req.cookies.get('preferredLang')?.value;
+      const preferredLocale: any = req.cookies.get('preferredLang')?.value;
       const authToken = req.cookies.get('accessToken')?.value;
 
       const redirectUrl = await getAuthRedirect(pathname, authToken);
@@ -57,11 +57,14 @@ export async function proxy(req: NextRequest) {
       if (redirectUrl) 
         return NextResponse.redirect(new URL(redirectUrl, req.url));
     
-      const localToUse = preferredLocale && locales.includes(preferredLocale) 
+      const localToUse = preferredLocale && locales.includes(preferredLocale)
         ? preferredLocale
         : defaultLocale
+      ;
     
-      if (hasLocalePrefix(pathname)) return NextResponse.next();
+      if (hasLocalePrefix(pathname)) {
+        return NextResponse.next()
+      };
     
       // Navigate to profile tab by default
       const hasDashboard = req.url.endsWith('dashboard');
@@ -75,7 +78,7 @@ export async function proxy(req: NextRequest) {
       
       // adjust the url by adding the user language tag
       const newUrl = new URL(
-        pathname === '/' ? `/${localToUse}` : `/${localToUse}${pathname}`,
+        pathname === '/' ? `/${localToUse}` : `/${localToUse}/${pathname}`,
         req.url
       );
     
