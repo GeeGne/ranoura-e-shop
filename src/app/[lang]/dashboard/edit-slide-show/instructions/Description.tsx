@@ -194,7 +194,7 @@ export default function Description ({ type, isEn }: Props) {
           <span className="font-bold">Aspect Ratio: 4:3</span>
           <ul className="list-[circle] list-inside">
             <li>
-              <b className="font-semibold">Standard: &nbsp;</b>1024px wide x 768px high.
+              <b className="font-semibold">Standard: &nbsp;</b>960px wide x 720px high.
             </li>
             <li>
               <b className="font-semibold">High quality: &nbsp;</b>1440px wide x 1080px high.
@@ -257,13 +257,12 @@ export default function Description ({ type, isEn }: Props) {
       <ul className="list-disc px-4 text-body text-sm max-w-[550px]">
         <li>
           <span className="font-bold">نسبة العرض إلى الارتفاع: 4:3</span> 
-          القياسي: 1024 بكسل عرض × 768 بكسل ارتفاع، جودة عالية: 1440 بكسل عرض × 1080 بكسل ارتفاع.
           <ul className="list-[circle] list-inside">
             <li>
-              <b className="font-semibold">القياسي: &nbsp;</b>1024 بكسل عرض × 600 بكسل ارتفاع.
+              <b className="font-semibold">القياسي: &nbsp;</b>960 بكسل عرض × 720 بكسل ارتفاع.
             </li>
             <li>
-              <b className="font-semibold">جودة عالية: &nbsp;</b>1920 بكسل عرض × 960 بكسل ارتفاع.
+              <b className="font-semibold">جودة عالية: &nbsp;</b>1440 بكسل عرض × 1080 بكسل ارتفاع.
             </li>
           </ul>
         </li>
@@ -328,8 +327,16 @@ export default function Description ({ type, isEn }: Props) {
         className="list-disc px-4 text-body text-sm max-w-[550px]"
       >
         <li>
-          <span className="font-bold">Aspect Ratio: 3:4</span> (Image must be a perfect square. For example: 400px wide x 400px high).
+          <span className="font-bold">Aspect Ratio: 3:4</span>
         </li>
+        <ul className="list-[circle] list-inside">
+          <li>
+            <b className="font-semibold">Standard: &nbsp;</b>600px wide x 800px high.
+          </li>
+          <li>
+            <b className="font-semibold">High quality: &nbsp;</b>1200px wide x 1600px high.
+          </li>
+        </ul>
         <li>
           <span className="font-bold">Tips:</span>
           <ul
@@ -349,36 +356,61 @@ export default function Description ({ type, isEn }: Props) {
 
   if (isCompact && !isEn) return (
     <div className="flex flex-col gap-4">
-      <div className="text-body text-sm flex flex-col gap-2 max-w-[550px]">
-        <span className="text-heading">
-          ستُستخدم هذه الصورة في قائمة التنقل على الأجهزة المحمولة وكأيقونة في المساحات المضغوطة.
-        </span>  
-        <ul className="list-disc px-4">
+      <div className="grid grid-cols-4 divide divide-body divide-x-[1px] direction-ltr w-full">
+        <div className="flex flex-col gap-2 items-center justify-center">
+          <PhFileImage className="w-14 h-14 text-body" strokeWidth={3.5} />
+          <span className="text-body font-bold text-2xl">AVIF</span>
+        </div>
+        <div className="flex flex-col gap-2 items-center justify-center">
+          <StashImageArrowUp className="w-14 h-14 text-body" strokeWidth={0.5} />
+          <div className="flex items-center gap-1">
+            <span className="text-body font-bold text-2xl">600 KB</span>
+            <MdiLessThanOrEqual className="text-body w-6 h-6" strokeWidth={1} />
+          </div>
+        </div>
+        <div className="flex flex-col gap-2 items-center justify-center">
+          <FluentSlideSize24Regular className="text-body w-14 h-14" strokeWidth={0.3} />
+          <div className="flex justify-center items-center font-bold text-2xl text-body">3:4</div>
+        </div>
+        <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center">
+            <div className="relative">
+              <SmartPhoneMode className="w-[100px] h-auto text-body z-[10]" />
+              <MingcuteAspectRatioFill
+                className="
+                  absolute bottom-0 left-0
+                  translate-x-[-50%] translate-y-[25%]
+                  w-[50px] h-[50px] text-shade
+                "
+              />
+            </div>
+          </div>
+        </div>
+      </div>  
+      <ul className="list-disc px-4 text-body text-sm max-w-[550px]">
+        <li>
+          <span className="font-bold">نسبة العرض إلى الارتفاع: 3:4</span>
+        </li>
+        <ul className="list-[circle] list-inside">
           <li>
-            <span className="font-bold">الغرض:</span> أيقونة صغيرة أو صورة مصغرة.
+            <b className="font-semibold">القياسي: &nbsp;</b>600 بكسل عرض × 800 بكسل ارتفاع.
           </li>
           <li>
-            <span className="font-bold">نسبة العرض إلى الارتفاع: 1:1</span> (يجب أن تكون الصورة مربعًا مثاليًا. على سبيل المثال: 400 بكسل عرض × 400 بكسل ارتفاع).
-          </li>
-          <li>
-            <span className="font-bold">التنسيق الموصى به: AVIF</span> (للحصول على أفضل جودة وأسرع تحميل). يتم قبول PNG أو JPG عالي الجودة أيضًا.
-          </li>
-          <li>
-            <span className="font-bold">الحد الأقصى لحجم الملف:</span> استهدف أقل من 400 كيلوبايت.
-          </li>
-          <li>
-            <span className="font-bold">نصائح:</span>
-            <ul className="list-disc px-4">
-              <li>
-                استخدم رمزًا بسيطًا يمكن التعرف عليه أو صورة منتج مقطوعة بإحكام من فئتك.
-              </li>
-              <li>
-                تجنب النصوص الصغيرة أو التفاصيل المعقدة، حيث سيتم عرضها بحجم صغير.
-              </li>
-            </ul>
+            <b className="font-semibold">جودة عالية: &nbsp;</b>1200 بكسل عرض × 1600 بكسل ارتفاع.
           </li>
         </ul>
-      </div>
+        <li>
+          <span className="font-bold">نصائح:</span>
+          <ul className="list-[circle] px-4">
+            <li>
+              استخدم رمزًا بسيطًا وواضحًا أو صورة منتج مقصوصة بشكل جيد من فئتك.
+            </li>
+            <li>
+              إضافة رمز زر مثل "تسوق الآن" أو "عرض العرض" تعتبر ممارسة جيدة.
+            </li>
+          </ul>
+        </li>
+      </ul>
     </div>
   )
 }
