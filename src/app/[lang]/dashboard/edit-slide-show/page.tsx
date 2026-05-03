@@ -30,7 +30,7 @@ export default function page () {
   const handleScrollTableTrigger = (data: number) => setScrollTrigger(data);
 
   useEffect(() => {
-    setTabName('edit-slid-show');
+    setTabName('edit-slide-show');
   }, []);
 
   return (

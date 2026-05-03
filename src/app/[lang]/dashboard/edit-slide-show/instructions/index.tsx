@@ -30,20 +30,20 @@ export default function Instructions () {
         {isEn ? 'Image Display Instructions' : 'تفاصيل عرض الصوره'}
       </h3>
       <div
-        className="flex flex-col lg:flex-row justify-between lg:justify-normal gap-8 p-4"
+        className="flex flex-col lg:flex-row lg:flex-wrap justify-between lg:justify-normal gap-8 p-4"
       >
         <div
-          className="relative flex flex-col lg:flex-1 items-center gap-4 bg-white p-4 rounded-lg"
+          className="relative flex flex-col lg:flex-1 lg:min-w-[450px] items-center gap-4 bg-white p-4 rounded-lg"
         >
           <div
-            className="
-              absolute top-0 left-0 w-[75px] h-[75px] 
+            className={`
+              absolute top-0 ${isEn ? 'left-0' : 'right-0'} w-[50px] h-[50px] 
               flex items-center justify-center
               bg-body-light rounded-lg
-            "
+            `}
           >
             <span
-              className="text-heading-invert font-bold text-[70px]"
+              className="text-heading-invert font-bold text-[50px]"
             >
               1
             </span>
@@ -75,16 +75,17 @@ export default function Instructions () {
           />
         </div>
         <div
-          className="relative flex flex-col lg:flex-1 items-center gap-4 bg-white p-4 rounded-lg"
+          className="relative flex flex-col lg:flex-1 items-center lg:min-w-[500px] gap-4 bg-white p-4 rounded-lg"
         >
           <div
-            className="
-              absolute top-0 left-0 w-[75px] h-[75px] 
+            className={`
+              absolute top-0 ${isEn ? 'left-0' : 'right-0'} w-[50px] h-[50px] 
               flex items-center justify-center
-              bg-body-light rounded-lg"
+              bg-body-light rounded-lg
+            `}
           >
             <span
-              className="text-heading-invert font-bold text-[70px]"
+              className="text-heading-invert font-bold text-[50px]"
             >
               2
             </span>
@@ -116,16 +117,17 @@ export default function Instructions () {
           />
         </div>
         <div
-          className="relative flex flex-col lg:flex-1 items-center gap-4 bg-white p-4 rounded-lg"
+          className="relative flex flex-col lg:flex-1 items-center lg:min-w-[450px] gap-4 bg-white p-4 rounded-lg"
         >
         <div
-            className="
-              absolute top-0 left-0 w-[75px] h-[75px] 
+            className={`
+              absolute top-0 ${isEn ? 'left-0' : 'right-0'} w-[50px] h-[50px] 
               flex items-center justify-center
-              bg-body-light rounded-lg"
+              bg-body-light rounded-lg
+            `}
           >
             <span
-              className="text-heading-invert font-bold text-[70px]"
+              className="text-heading-invert font-bold text-[50px]"
             >
               3
             </span>

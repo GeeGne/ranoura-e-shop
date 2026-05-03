@@ -26,25 +26,25 @@ export default function Description ({ type, isEn }: Props) {
     <div
       className="flex flex-col gap-4"
     >
-      <div
+      <ul
         className="grid grid-cols-4 divide divide-body divide-x-[1px] w-full"
       >
-        <div className="flex flex-col gap-2 items-center justify-center">
+        <li className="flex flex-col gap-2 items-center justify-center">
           <PhFileImage className="w-14 h-14 text-body" strokeWidth={3.5} />
           <span className="text-body font-bold text-2xl">AVIF</span>
-        </div>
-        <div className="flex flex-col gap-2 items-center justify-center">
+        </li>
+        <li className="flex flex-col gap-2 items-center justify-center">
           <StashImageArrowUp className="w-14 h-14 text-body" strokeWidth={0.5}/>
           <div className="flex items-center gap-1">
             <span className="text-body font-bold text-2xl">1 MB</span>
             <MdiLessThanOrEqual className="text-body w-6 h-6" strokeWidth={1} />
           </div>
-        </div>
-        <div className="flex flex-col gap-2 items-center justify-center">
+        </li>
+        <li className="flex flex-col gap-2 items-center justify-center">
           <FluentSlideSize24Regular className="text-body w-14 h-14" strokeWidth={0.3} />
           <div className="flex justify-center items-center font-bold text-2xl text-body">2:1</div>
-        </div>
-        <div className="flex items-center justify-center">
+        </li>
+        <li className="flex items-center justify-center">
           <div
             className="relative"
           >
@@ -57,8 +57,8 @@ export default function Description ({ type, isEn }: Props) {
               "
             />
           </div>
-        </div>
-      </div>
+        </li>
+      </ul>
       <ul
         className="list-disc px-4 text-body text-sm max-w-[550px]"
       >
@@ -152,24 +152,24 @@ export default function Description ({ type, isEn }: Props) {
     <div
       className="flex flex-col gap-4"
     >
-      <div
+      <ul
         className="grid grid-cols-4 divide divide-body divide-x-[1px] w-full"
       >
-        <div className="flex flex-col gap-2 items-center justify-center">
+        <li className="flex flex-col gap-2 items-center justify-center">
           <PhFileImage className="w-14 h-14 text-body" strokeWidth={3.5} />
           <span className="text-body font-bold text-2xl">AVIF</span>
-        </div>
-        <div className="flex flex-col gap-2 items-center justify-center">
+        </li>
+        <li className="flex flex-col gap-2 items-center justify-center">
           <StashImageArrowUp className="w-14 h-14 text-body" strokeWidth={0.5}/>
           <div className="flex items-center gap-1">
             <span className="text-body font-bold text-2xl">800 KB</span>
             <MdiLessThanOrEqual className="text-body w-6 h-6" strokeWidth={1} />
           </div>
-        </div>
-        <div className="flex flex-col gap-2 items-center justify-center">
+        </li>
+        <li className="flex flex-col gap-2 items-center justify-center">
           <FluentSlideSize24Regular className="text-body w-14 h-14" strokeWidth={0.3} />
           <div className="flex justify-center items-center font-bold text-2xl text-body">4:3</div>
-        </div>
+        </li>
         <div className="flex items-center justify-center">
           <div className="flex items-center justify-center">
             <div
@@ -186,7 +186,7 @@ export default function Description ({ type, isEn }: Props) {
             </div>
           </div>
         </div>
-      </div>
+      </ul>
       <ul
         className="list-disc px-4 text-body text-sm max-w-[550px]"
       >
@@ -224,21 +224,21 @@ export default function Description ({ type, isEn }: Props) {
   if (isHybrid && !isEn) return (
     <div className="flex flex-col gap-4">
       <div className="grid grid-cols-4 divide divide-body divide-x-[1px] direction-ltr w-full">
-        <div className="flex flex-col gap-2 items-center justify-center">
+        <li className="flex flex-col gap-2 items-center justify-center">
           <PhFileImage className="w-14 h-14 text-body" strokeWidth={3.5} />
           <span className="text-body font-bold text-2xl">AVIF</span>
-        </div>
-        <div className="flex flex-col gap-2 items-center justify-center">
+        </li>
+        <li className="flex flex-col gap-2 items-center justify-center">
           <StashImageArrowUp className="w-14 h-14 text-body" strokeWidth={0.5} />
           <div className="flex items-center gap-1">
             <span className="text-body font-bold text-2xl">800 KB</span>
             <MdiLessThanOrEqual className="text-body w-6 h-6" strokeWidth={1} />
           </div>
-        </div>
-        <div className="flex flex-col gap-2 items-center justify-center">
+        </li>
+        <li className="flex flex-col gap-2 items-center justify-center">
           <FluentSlideSize24Regular className="text-body w-14 h-14" strokeWidth={0.3} />
           <div className="flex justify-center items-center font-bold text-2xl text-body">4:3</div>
-        </div>
+        </li>
         <div className="flex items-center justify-center">
           <div className="flex items-center justify-center">
             <div className="relative">
@@ -288,24 +288,24 @@ export default function Description ({ type, isEn }: Props) {
     <div
       className="flex flex-col gap-4"
     >
-      <div
+      <ul
         className="grid grid-cols-4 divide divide-body divide-x-[1px] w-full"
       >
-        <div className="flex flex-col gap-2 items-center justify-center">
+        <li className="flex flex-col gap-2 items-center justify-center">
           <PhFileImage className="w-14 h-14 text-body" strokeWidth={3.5} />
           <span className="text-body font-bold text-2xl">AVIF</span>
-        </div>
-        <div className="flex flex-col gap-2 items-center justify-center">
+        </li>
+        <li className="flex flex-col gap-2 items-center justify-center">
           <StashImageArrowUp className="w-14 h-14 text-body" strokeWidth={0.5}/>
           <div className="flex items-center gap-1">
             <span className="text-body font-bold text-2xl">600 KB</span>
             <MdiLessThanOrEqual className="text-body w-6 h-6" strokeWidth={1} />
           </div>
-        </div>
-        <div className="flex flex-col gap-2 items-center justify-center">
+        </li>
+        <li className="flex flex-col gap-2 items-center justify-center">
           <FluentSlideSize24Regular className="text-body w-14 h-14" strokeWidth={0.3} />
           <div className="flex justify-center items-center font-bold text-2xl text-body">3:4</div>
-        </div>
+        </li>
         <div className="flex items-center justify-center">
           <div className="flex items-center justify-center">
             <div
@@ -322,7 +322,7 @@ export default function Description ({ type, isEn }: Props) {
             </div>
           </div>
         </div>
-      </div>
+      </ul>
       <ul
         className="list-disc px-4 text-body text-sm max-w-[550px]"
       >
@@ -357,21 +357,21 @@ export default function Description ({ type, isEn }: Props) {
   if (isCompact && !isEn) return (
     <div className="flex flex-col gap-4">
       <div className="grid grid-cols-4 divide divide-body divide-x-[1px] direction-ltr w-full">
-        <div className="flex flex-col gap-2 items-center justify-center">
+        <li className="flex flex-col gap-2 items-center justify-center">
           <PhFileImage className="w-14 h-14 text-body" strokeWidth={3.5} />
           <span className="text-body font-bold text-2xl">AVIF</span>
-        </div>
-        <div className="flex flex-col gap-2 items-center justify-center">
+        </li>
+        <li className="flex flex-col gap-2 items-center justify-center">
           <StashImageArrowUp className="w-14 h-14 text-body" strokeWidth={0.5} />
           <div className="flex items-center gap-1">
             <span className="text-body font-bold text-2xl">600 KB</span>
             <MdiLessThanOrEqual className="text-body w-6 h-6" strokeWidth={1} />
           </div>
-        </div>
-        <div className="flex flex-col gap-2 items-center justify-center">
+        </li>
+        <li className="flex flex-col gap-2 items-center justify-center">
           <FluentSlideSize24Regular className="text-body w-14 h-14" strokeWidth={0.3} />
           <div className="flex justify-center items-center font-bold text-2xl text-body">3:4</div>
-        </div>
+        </li>
         <div className="flex items-center justify-center">
           <div className="flex items-center justify-center">
             <div className="relative">
