@@ -6,6 +6,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 // COMPONENTS
 import Instructions from '@/app/[lang]/dashboard/edit-slide-show/instructions/index';
+import AboutAlt from '@/app/[lang]/dashboard/edit-slide-show/AboutAlt';
 import NavTile from '@/app/[lang]/dashboard/edit-slide-show/NavTile';
 import Table from '@/app/[lang]/dashboard/edit-slide-show/Table';
 
@@ -34,8 +35,9 @@ export default function page () {
   }, []);
 
   return (
-    <div>
+    <div className="p-4">
       <Instructions />
+      <AboutAlt />
       <NavTile 
         onScrollTableData={handleScrollTableData} 
         onScrollTableTrigger={handleScrollTableTrigger} 

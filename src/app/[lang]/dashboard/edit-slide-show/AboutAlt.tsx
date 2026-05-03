@@ -1,0 +1,17 @@
+import StashImageSearchLight from '@/components/svgs/StashImageSearchLight';
+
+export default function AboutAlt () {
+  return (
+    <div
+      className="flex gap-4 w-full rounded-lg bg-background bg-white p-4"
+    >
+      <div
+        className="flex items-center justify-center shrink-0 w-[100px] h-[100px] bg-primary rounded-lg shadow-lg"
+      >
+        <StashImageSearchLight className="text-heading-invert w-12 h-12"/>
+        <span className="text-heading-invert font-bold text-2xl">ALT</span>
+      </div>
+      <h3 className="text-body">Alt text (alternative text) is a short, descriptive HTML attribute added to an image tag that describes its content for <b>screen readers</b>, <b>SEO</b>, and when images fail to load. It is <b>curcial for web accessibility</b>, allowing visually impaired users to understand visual content, and it <b>helps search engines index images</b>.</h3>
+    </div>
+  )
+}

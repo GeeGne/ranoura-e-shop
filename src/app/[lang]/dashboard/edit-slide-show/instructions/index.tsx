@@ -22,7 +22,7 @@ export default function Instructions () {
 
   return (
     <section
-      className="py-4 rounded-lg"
+      className="flex flex-col gap-4 py-4 rounded-lg"
     >
       <h3
         className="text-heading text-lg font-bold"
@@ -30,7 +30,7 @@ export default function Instructions () {
         {isEn ? 'Image Display Instructions' : 'تفاصيل عرض الصوره'}
       </h3>
       <div
-        className="flex flex-col lg:flex-row lg:flex-wrap justify-between lg:justify-normal gap-8 p-4"
+        className="flex flex-col lg:flex-row lg:flex-wrap justify-between lg:justify-normal gap-8"
       >
         <div
           className="relative flex flex-col lg:flex-1 lg:min-w-[450px] items-center gap-4 bg-white p-4 rounded-lg"
