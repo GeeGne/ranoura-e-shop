@@ -219,3 +219,13 @@ model SocialLinks {
   color    String
   icon     String @unique
 }
+
+model SlideShow {
+  id Int @id @default(autoincrement())
+  order Int @unique @default(autoincrement())
+  alt String @default("")
+  img_sm String?
+  img_md String?
+  img_lg String?
+  url String?
+}
