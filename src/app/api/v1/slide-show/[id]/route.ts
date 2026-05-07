@@ -18,7 +18,7 @@ async function nextError (code: string, message: string, status = 404) {
 // @route /api/v1/slide-show/:id
 // @access private (admin, owner)
 
-export default async function PUT (
+export async function PUT (
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
@@ -42,8 +42,7 @@ export default async function PUT (
       401
     );
 
-
-    const { role } = await prisma.user.fineUnique({
+    const { role } = await prisma.user.findUnique({
       where: { email },
       select: {
         role: {
@@ -64,10 +63,11 @@ export default async function PUT (
       403
     );
 
+    console.log('user role passed:', userRole);
     // update selected slider
     const data = await prisma.slideShow.update({
-      where: { id: selectedSlideID },
-      data: { requestedData }
+      where: { id: Number(selectedSlideID) },
+      data: requestedData 
     });
 
     const message = {
