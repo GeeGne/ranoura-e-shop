@@ -3,7 +3,7 @@ import StashImageSearchLight from '@/components/svgs/StashImageSearchLight';
 export default function AboutAlt () {
   return (
     <div
-      className="flex gap-4 w-full rounded-lg bg-background bg-white p-4"
+      className="flex gap-4 w-full rounded-lg bg-white p-4"
     >
       <div
         className="flex items-center justify-center shrink-0 w-[100px] h-[100px] bg-primary rounded-lg shadow-lg"

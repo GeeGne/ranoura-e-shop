@@ -22,7 +22,7 @@ export default function Instructions () {
 
   return (
     <section
-      className="flex flex-col gap-4 py-4 rounded-lg"
+      className="flex flex-col gap-4 rounded-lg"
     >
       <h3
         className="text-heading text-lg font-bold"

@@ -36,7 +36,7 @@ export default function page () {
   }, []);
 
   return (
-    <div className="p-4">
+    <div className="flex flex-col gap-8 p-4">
       <Instructions />
       <AboutAlt />
       <ImageSliderPreview />

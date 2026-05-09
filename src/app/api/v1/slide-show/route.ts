@@ -23,7 +23,6 @@ export async function GET(
   req: NextRequest,
 ) {
   try {
-    
     const data = await prisma.slideShow.findMany();
     if (!data) return nextError(
       'SLIDES_FETCH_FAIL',
@@ -32,11 +31,15 @@ export async function GET(
     );
 
     const message = "Slides are fetched succcessfully!";
-    return NextResponse.json({ data, message}, { status: 200 });
+    return NextResponse.json({ data, message }, { status: 200 });
   } catch (err) {
     const error = err as Error;
     console.error("Error while getting slides: ", error.message)
-    return err;
+    return nextError(
+      'SLIDES_FETCH_FAIL',
+      'unable to fetch slides',
+      404
+    );
   }
 };
 

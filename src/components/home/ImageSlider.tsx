@@ -2,10 +2,14 @@
 // HOOKS
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 // COMPONENTS
 import DisplayImg from "@/components/DisplayImg";
 import EpArrowLeft from "@/components/svgs/EpArrowLeft";
+
+// API
+import getSlideShows from "@/lib/api/slide-show/get";
 
 // ASSETS
 const small1 = "/assets/img/background(4).webp";
@@ -27,6 +31,11 @@ export default function ImageSlider({
 }: {
   className?: string;
 }) {
+  const { data, isLoading, isError} = useQuery({
+    queryKey: ['slide-show'],
+    queryFn: getSlideShows
+  })
+
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const array = [
     {
@@ -114,6 +123,7 @@ export default function ImageSlider({
 
   // DEBUG
   // console.log("currentIndex", currentIndex);
+  console.log("slide show data: ", data);
 
   return (
     <section
