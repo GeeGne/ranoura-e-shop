@@ -2,6 +2,7 @@
 // HOOKS
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 
 // COMPONENTS
@@ -31,11 +32,11 @@ export default function ImageSlider({
 }: {
   className?: string;
 }) {
-  const { data, isLoading, isError} = useQuery({
+  const { data: slideShowData, isLoading, isError} = useQuery({
     queryKey: ['slide-show'],
     queryFn: getSlideShows
   })
-
+  const data = slideShowData?.data;
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const array = [
     {
@@ -103,7 +104,7 @@ export default function ImageSlider({
     });
   };
 
-  const totalIndex = () => array.length - 1 || 0;
+  const totalIndex = () => data?.length - 1 || 0;
 
   const handleClick = (e: React.MouseEvent<HTMLOrSVGElement>) => {
     const { type, length } = e.currentTarget.dataset;
@@ -125,6 +126,9 @@ export default function ImageSlider({
   // console.log("currentIndex", currentIndex);
   console.log("slide show data: ", data);
 
+  if (isLoading || isError ) return (<div></div>)
+
+
   return (
     <section
       className={`
@@ -144,72 +148,78 @@ export default function ImageSlider({
         <li
           className="w-full aspect-[3/4] md:aspect-[4/3] lg:aspect-[2/1] shrink-0 cursor-pointer"
         >
-          <picture
-            className="w-full h-full object-cover object-center"
-          >
-            <source 
-              media="(min-width: 1200px)"
-              srcSet={array[totalIndex()].lg}
-            />
-            <source 
-              media="(min-width: 768px)"
-              srcSet={array[totalIndex()].md}
-            />
-            <img
-              className="w-full h-full object-cover object-center"
-              src={array[totalIndex()].sm}
-              alt="test"
-              fetchPriority="low"
-            />
-          </picture>
-        </li>
-        {array.map((itm, i) => (
-          <li
-            className="w-full aspect-[3/4] md:aspect-[4/3] lg:aspect-[2/1] shrink-0 cursor-pointer"
-            key={i}
-          >
+          <Link href={data[totalIndex()]?.url} target="_blank">
             <picture
               className="w-full h-full object-cover object-center"
             >
               <source 
                 media="(min-width: 1200px)"
-                srcSet={itm.lg}
+                srcSet={data[totalIndex()]?.img_lg}
               />
               <source 
                 media="(min-width: 768px)"
-                srcSet={itm.md}
+                srcSet={data[totalIndex()]?.img_md}
               />
               <img
                 className="w-full h-full object-cover object-center"
-                src={itm.sm}
+                src={data[totalIndex()]?.img_sm}
                 alt="test"
-                loading="eager"
-                fetchPriority={i === 0 ? "high" : "low"}
+                fetchPriority="low"
               />
             </picture>
+          </Link>
+        </li>
+        {data?.map((itm: Record<string, string>, i: number) => (
+          <li
+            className="w-full aspect-[3/4] md:aspect-[4/3] lg:aspect-[2/1] shrink-0 cursor-pointer"
+            key={i}
+          >
+            <Link href={itm?.url} target="_blank">
+              <picture
+                className="w-full h-full object-cover object-center"
+              >
+                <source 
+                  media="(min-width: 1200px)"
+                  srcSet={itm?.img_lg}
+                />
+                <source 
+                  media="(min-width: 768px)"
+                  srcSet={itm?.img_md}
+                />
+                <img
+                  className="w-full h-full object-cover object-center"
+                  src={itm?.img_sm}
+                  alt={itm?.alt}
+                  loading="eager"
+                  fetchPriority={i === 0 ? "high" : "low"}
+                />
+              </picture>
+            </Link>
           </li>
         ))}
         <li
           className="w-full aspect-[3/4] md:aspect-[4/3] lg:aspect-[2/1] shrink-0 cursor-pointer"
         >
-          <picture
-            className="w-full h-full object-cover object-center"
-          >
-            <source 
-              media="(min-width: 1200px)"
-              srcSet={array[0].lg}
-            />
-            <source 
-              media="(min-width: 768px)"
-              srcSet={array[0].md}
-            />
-            <img
+          <Link href={data[0]?.url} target="_blank">
+            <picture
               className="w-full h-full object-cover object-center"
-              src={array[0].sm}
-              alt="test"
-              fetchPriority="low"
-            />
-          </picture>
+            >
+              <source 
+                media="(min-width: 1200px)"
+                srcSet={data[0]?.img_lg}
+              />
+              <source 
+                media="(min-width: 768px)"
+                srcSet={data[0]?.img_md}
+              />
+              <img
+                className="w-full h-full object-cover object-center"
+                src={data[0]?.img_sm}
+                alt="test"
+                fetchPriority="low"
+              />
+            </picture>
+          </Link>
         </li>
       </ul>
       <ul
@@ -218,7 +228,7 @@ export default function ImageSlider({
           flex flex-row gap-2
         "
       >
-        {array.map((itm, i) => (
+        {data?.map((itm: Record<string, string>, i: number) => (
           <li
             className={`
               relative w-[40px] h-[4px] bg-inbetween 
@@ -246,7 +256,7 @@ export default function ImageSlider({
         width={32}
         height={32}
         role="button"
-        data-length={array.length}
+        data-length={data.length}
         data-type="left_arrow_button_is_clicked"
         onClick={handleClick}
       />
@@ -260,7 +270,7 @@ export default function ImageSlider({
         width={32}
         height={32}
         role="button"
-        data-length={array.length}
+        data-length={data.length}
         data-type="right_arrow_button_is_clicked"
         onClick={handleClick}
       />
