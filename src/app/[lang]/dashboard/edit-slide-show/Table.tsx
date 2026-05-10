@@ -434,7 +434,7 @@ export default function Table({
                     />
                   </div>
                   <img 
-                    src={image.image_lg}
+                    src={image.img_lg}
                     className="w-full object-center object-cover"
                   />
                 </div>
@@ -501,12 +501,12 @@ export default function Table({
                       "
                       role="button"
                       data-type="expand_image_button_is_clicked"
-                      data-image-url={image.image_md}
+                      data-image-url={image.img_md}
                       onClick={handleClick}
                     />
                   </div>
                   <img 
-                    src={image.image_md}
+                    src={image.img_md}
                     className="w-full object-center object-cover"
                   />
                 </div>
@@ -573,32 +573,25 @@ export default function Table({
                       "
                       role="button"
                       data-type="expand_image_button_is_clicked"
-                      data-image-url={image.image_sm}
+                      data-image-url={image.img_sm}
                       onClick={handleClick}
                     />
                   </div>
                   <img 
-                    src={image.image_sm}
+                    src={image.img_sm}
                     className="w-full object-center object-cover"
                   />
                 </div>
               </td>
               <td className="px-6">
-                {image.alt 
-                  ? <Link
-                    className="
-                      text-body-light text-sm
-                      transition-all duraiton-200 ease-in-out
-                    "
-                    href="category.imgUrl"
-                    target="_blank"
-                  >
-                    {image.alt}
-                  </Link>
-                  : <span>
-                    --
-                  </span>
-                }
+                <span
+                  className="
+                    text-body-light text-sm
+                    transition-all duraiton-200 ease-in-out
+                  "
+                >
+                  {image.alt || '--'}
+                </span>
               </td>
               <td className="px-6">
                 {image.url 
@@ -607,7 +600,7 @@ export default function Table({
                       text-content text-sm underline hover:text-heading
                       transition-all duraiton-200 ease-in-out
                     "
-                    href="category.imgUrl"
+                    href={image.url}
                     target="_blank"
                   >
                     {image.url}

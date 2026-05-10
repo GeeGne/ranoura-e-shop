@@ -12,9 +12,10 @@ import NavTile from '@/app/[lang]/dashboard/edit-slide-show/NavTile';
 import Table from '@/app/[lang]/dashboard/edit-slide-show/Table';
 
 // STORES
-import { useTabNameStore } from '@/stores/index';
+import { useLanguageStore, useTabNameStore } from '@/stores/index';
 
 // API
+import getSlideShows from "@/lib/api/slide-show/get";
 import getCategories from '@/lib/api/categories/get';
 import getSubCategories from '@/lib/api/sub-categories/get';
 
@@ -23,7 +24,15 @@ import slideData from '@/json/slideShow.json';
 
 export default function page () {  
   
+  const lang = useLanguageStore((state: any) => state.lang);
+  const isEn = lang === 'en';
   const setTabName = useTabNameStore((state: any) => state.setTabName);
+
+  const { data: slideShowData, isLoading, isError} = useQuery({
+    queryKey: ['slide-show'],
+    queryFn: getSlideShows
+  })
+  const data = slideShowData?.data;
 
   const [ scrollTable, setScrollTable ] = useState<string>("none")
   const handleScrollTableData = (data: string) => setScrollTable(data);
@@ -39,7 +48,7 @@ export default function page () {
     <div className="flex flex-col gap-8 p-4">
       <Instructions />
       <AboutAlt />
-      <ImageSliderPreview />
+      <ImageSliderPreview lang={lang} isEn={isEn} />
       <NavTile 
         onScrollTableData={handleScrollTableData} 
         onScrollTableTrigger={handleScrollTableTrigger} 
@@ -47,9 +56,9 @@ export default function page () {
       <Table
         scroll={scrollTable}
         scrollTrigger={scrollTrigger}
-        album={slideData}
-        isLoading={false}
-        isError={false}
+        album={data}
+        isLoading={isLoading}
+        isError={isError}
       />
     </div>
   )

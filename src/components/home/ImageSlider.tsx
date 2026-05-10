@@ -37,6 +37,7 @@ export default function ImageSlider({
     queryFn: getSlideShows
   })
   const data = slideShowData?.data;
+  
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const array = [
     {

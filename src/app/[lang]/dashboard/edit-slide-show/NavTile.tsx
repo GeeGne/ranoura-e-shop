@@ -19,6 +19,7 @@ import LineMdPlus from '@/components/svgs/LineMdPlus';
 
 // API
 import addProduct from '@/lib/api/products/post';
+import addSlide from '@/lib/api/slide-show/post';
 
 // UTILS
 import defaultProductData from '@/utils/defaultProductData';
@@ -46,6 +47,28 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
 
   const setAddCategoryWindowToggle = useAddCategoryWindowStore(state => state.setToggle);
 
+  const addSlideMutation = useMutation({
+    mutationFn: addSlide,
+    onSettled: () => {
+      setActivityWindowToggle(false);
+    },
+    onMutate: () => {
+      setActivityWindowToggle(true);
+      setActivityWindowMessage(isEn ? 'Creating new Slider...' : 'جاري انشاءالبوم جديد...')
+    },
+    onSuccess: (data: Record<string, any>) => {
+      queryClient.invalidateQueries({ queryKey: ['slide-show'] });
+      setAlertToggle(Date.now());
+      setAlertType("success");
+      setAlertMessage(data.message[lang]);
+    },
+    onError: (data: Record<string, any>) => {
+      setAlertToggle(Date.now());
+      setAlertType("error");
+      setAlertMessage(data.message[lang])
+    }
+  })
+
   const addProductMutation = useMutation({
     mutationFn: addProduct,
     onSettled: () => {
@@ -55,18 +78,18 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
       setActivityWindowToggle(true);
       setActivityWindowMessage(isEn ? 'Creating new Product...' : 'جاري انشاء منتج جديد...')
     },
-    onSuccess: (data: any) => {
+    onSuccess: (data: Record<string, any>) => {
       const { data: productData } = data;
       queryClient.invalidateQueries({ queryKey: ['products']});
       setAlertToggle(Date.now());
       setAlertType("success");
-      setAlertMessage(data?.message[isEn ? 'en' : 'ar']);
+      setAlertMessage(data?.message[lang]);
       
       setEditProductWindowToggle(true);
       setEditProductWindowTrigger(Date.now());
       setEditProductWindowProductData(productData);
     },
-    onError: (error: any) => {
+    onError: (error: Record<string, any>) => {
       setAlertToggle(Date.now());
       setAlertType("error");
       setAlertMessage(isEn ? "Couldn't create new product, please try again." : "فشل في محاوله انشاء مجتمع جديد, الرجاء محاوله مره اخرى.")
@@ -118,7 +141,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
         onScrollTableData(scrollDirection);
         onScrollTableTrigger(Date.now());
         break;
-      case 'add_category_button_is_clicked':
+      case 'add_image_button_is_clicked':
         setAddCategoryWindowToggle(true);
         break;
       default:
@@ -152,7 +175,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
       />
       <h3
         className={`
-          ${isMainRefStuck ? 'text-heading-invert' : 'text-heading'}
+          ${isMainRefStuck ? 'text-heading-invert' : 'text-heading'} font-semibold text-lg
           transition-all duration-200 ease-out
         `}
       >
@@ -168,7 +191,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
             bg-content p-2 rounded-lg hover:opacity-80
             transition-all duration-300 ease-in-out
           "
-          data-type="add_category_button_is_clicked"
+          data-type="add_image_button_is_clicked"
           onClick={handleClick}
         >
           <SvgSpinnersRingResize 
