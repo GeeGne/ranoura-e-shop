@@ -141,8 +141,8 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
         onScrollTableData(scrollDirection);
         onScrollTableTrigger(Date.now());
         break;
-      case 'add_image_button_is_clicked':
-        setAddCategoryWindowToggle(true);
+      case 'add_slide_button_is_clicked':
+        addSlideMutation.mutate();
         break;
       default:
         console.error('Unknown type: ', type);
@@ -191,7 +191,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
             bg-content p-2 rounded-lg hover:opacity-80
             transition-all duration-300 ease-in-out
           "
-          data-type="add_image_button_is_clicked"
+          data-type="add_slide_button_is_clicked"
           onClick={handleClick}
         >
           <SvgSpinnersRingResize 
@@ -206,7 +206,7 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
               ${activityWindowToggle ? 'invisible opacity-0' : 'visible opacity-100'}  
             `}
           >
-            {isEn ? 'ADD IMAGE' : 'اضف صوره'}
+            {isEn ? 'ADD SLIDE' : 'اضف لائحه'}
           </span> 
         </button>
         <div

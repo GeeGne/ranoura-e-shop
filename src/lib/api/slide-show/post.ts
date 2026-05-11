@@ -2,13 +2,12 @@ import getServerUrl from '@/utils/getServerUrl';
 
 // Create new Slider
 
-export default async function post (data: Record<string, any>) {
+export default async function post () {
   try {
     const url = `${getServerUrl()}/api/v1/slide-show`;
     const response = await fetch(url, {
       method: 'POST',
-      headers: { 'Content-type': 'application/json' },
-      body: JSON.stringify(data)
+      headers: { 'Content-type': 'application/json' }
     });
     if (!response.ok) throw new Error ('Error while creating new slider');
 

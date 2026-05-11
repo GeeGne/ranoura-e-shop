@@ -222,10 +222,10 @@ model SocialLinks {
 
 model SlideShow {
   id Int @id @default(autoincrement())
-  order Int @unique @default(autoincrement())
+  order Int
   alt String @default("")
-  img_sm String?
-  img_md String?
-  img_lg String?
-  url String?
+  img_sm String? @default("")
+  img_md String? @default("")
+  img_lg String? @default("")
+  url String? @default("")
 }

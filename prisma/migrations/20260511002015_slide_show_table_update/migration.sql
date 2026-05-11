@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "SlideShow" ALTER COLUMN "img_sm" SET DEFAULT '',
+ALTER COLUMN "img_md" SET DEFAULT '',
+ALTER COLUMN "img_lg" SET DEFAULT '',
+ALTER COLUMN "url" SET DEFAULT '';

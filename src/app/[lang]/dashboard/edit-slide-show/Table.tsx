@@ -362,226 +362,451 @@ export default function Table({
             >
               <td 
                 className="
-                  px-6 py-4 text-heading font-bold
+                  px-6 py-4 text-body font-semibold text-4xl 
                 "
               >
                 {image.order}
               </td>
               <td
                 className={`
-                  px-6 py-4 text-sm text-body min-w-[500px] min-h-[250px]
+                  px-6 py-4 text-sm text-body
                   transition-all duration-300 ease-in-out
                 `}
               >
-                <div
-                  className="
-                    group relative w-[400px] aspect-[2/1] rounded-lg overflow-hidden
-                  "
-                >
-                  <div
+                {image.img_lg  
+                  ? <div
                     className="
-                      absolute top-0 left-0 w-full h-full bg-shade
-                      flex flex-row gap-4 items-center justify-center
-                      text-heading-invert
-                      unvisible group-hover:visible opacity-0 group-hover:opacity-100
-                      transition-all duration-300 ease-in-out
+                      group relative h-[300px] aspect-[2/1] rounded-lg overflow-hidden
                     "
                   >
-                    <LineMdTrash
+                    <div
                       className="
-                        w-10 h-10 hover:bg-shade-v2 p-2
-                        rounded-md active:opacity-80 cursor-pointer
-                        transition-all duration-200 ease-out
+                        absolute top-0 left-0 w-full h-full bg-shade
+                        flex flex-row gap-4 items-center justify-center
+                        text-heading-invert
+                        unvisible group-hover:visible opacity-0 group-hover:opacity-100
+                        transition-all duration-300 ease-in-out
                       "
-                    />
-                    <label
-                      className=""
-                      htmlFor={`navBarLgImgEditInpt_${image.alt}`}
                     >
-                      <LineMdEdit
+                      <LineMdTrash
                         className="
                           w-10 h-10 hover:bg-shade-v2 p-2
                           rounded-md active:opacity-80 cursor-pointer
                           transition-all duration-200 ease-out
                         "
                       />
-                      <input
+                      <label
+                        className=""
+                        htmlFor={`navBarLgImgEditInpt_${image.alt}`}
+                      >
+                        <LineMdEdit
+                          className="
+                            w-10 h-10 hover:bg-shade-v2 p-2
+                            rounded-md active:opacity-80 cursor-pointer
+                            transition-all duration-200 ease-out
+                          "
+                        />
+                        <input
+                          className="
+                            absolute top-1/2 left-1/2
+                            translate-x-[-50%] translate-y-[-50%] w-0 h-0
+                            unvisible opacity-0
+                          "
+                          type="file"
+                          accept="image/*"
+                          id={`navBarLgImgEditInpt_${image.alt}`}
+                          name="navBarLgImgEditInpt"
+                          data-image-type="hero"
+                          data-variable-name="navbarLgImg"
+                          data-category-slug={image.alt}
+                          onChange={handleChange}
+                        />
+                      </label>
+                      <FluentZoomFit24Regular
                         className="
-                          absolute top-1/2 left-1/2
-                          translate-x-[-50%] translate-y-[-50%] w-0 h-0
-                          unvisible opacity-0
+                          w-10 h-10 hover:bg-shade-v2 p-2
+                          rounded-md active:opacity-80 cursor-pointer
+                          transition-all duration-200 ease-out
                         "
-                        type="file"
-                        accept="image/*"
-                        id={`navBarLgImgEditInpt_${image.alt}`}
-                        name="navBarLgImgEditInpt"
-                        data-image-type="hero"
-                        data-variable-name="navbarLgImg"
-                        data-category-slug={image.alt}
-                        onChange={handleChange}
+                        role="button"
+                        data-type="expand_image_button_is_clicked"
+                        data-image-url={image.image}
+                        onClick={handleClick}
                       />
-                    </label>
-                    <FluentZoomFit24Regular
-                      className="
-                        w-10 h-10 hover:bg-shade-v2 p-2
-                        rounded-md active:opacity-80 cursor-pointer
-                        transition-all duration-200 ease-out
-                      "
-                      role="button"
-                      data-type="expand_image_button_is_clicked"
-                      data-image-url={image.image}
-                      onClick={handleClick}
+                    </div>
+                    <img 
+                      src={image.img_lg}
+                      className="w-full object-center object-cover"
                     />
                   </div>
-                  <img 
-                    src={image.img_lg}
-                    className="w-full object-center object-cover"
-                  />
-                </div>
+                  : <label
+                    className="
+                      flex relative h-[300px] aspect-[2/1] rounded-lg overflow-hidden cursor-pointer
+                    "
+                    htmlFor="navBarImgEditInpt"
+                  >
+                    <input
+                      className="
+                        absolute top-1/2 left-1/2
+                        translate-x-[-50%] translate-y-[-50%] w-0 h-0
+                        unvisible opacity-0
+                      "
+                      type="file"
+                      accept="image/*"
+                      id="navBarImgEditInpt"
+                      name="navBarImgEditInpt"
+                      data-image-type="navbar"
+                      data-variable-name="navbarImg"
+                      // data-category-slug={category.slug}
+                      onChange={handleChange}
+                    />
+                    <div
+                      className="
+                        absolute top-0 left-0 w-full h-full bg-background-light
+                        border border-dashed border-[4px] border-body-light
+                        flex flex-row gap-4 items-center justify-center
+                        text-heading-invert
+                        transition-all duration-300 ease-in-out
+                      "
+                    />
+                    <LineMdPlus
+                      className="
+                        absolute top-1/2 left-1/2
+                        translate-x-[-50%] translate-y-[-50%]
+                        w-12 h-12 text-body-light
+                      "
+                    />
+                    <div
+                      className="
+                        absolute bottom-0 left-1/2 translate-x-[-50%]
+                        flex items-center justify-evenly w-full p-4
+                      "
+                    >
+                      <div
+                        className="relative bg-body-light p-1 rounded-lg"
+                      >
+                        <LineMdArrowsDiagonal className="text-background-light w-8 h-8" />
+                        <span
+                          className="
+                            absolute top-1/2 left-1/2
+                            translate-x-[-50%] translate-y-[-50%]
+                            text-base text-background-light font-bold
+                            bg-body-light rounded-full
+                          "
+                        >
+                          2:1
+                        </span>
+                      </div>
+                      <div
+                        className="flex items-center gap-2 bg-body-light p-2 rounded-lg"
+                      >
+                        <GardenFileImage26 className="text-background-light" />
+                        <span
+                          className="
+                            text-base text-background-light font-bold
+                            bg-body-light rounded-full
+                          "
+                        >
+                          AVIF
+                        </span>
+                      </div>
+                    </div>
+                  </label> 
+                }
               </td>
               <td
                 className={`
-                  px-6 py-4 text-sm text-body min-w-[500px] min-h-[250px]
+                  px-6 py-4 text-sm text-body  
                   transition-all duration-300 ease-in-out
                 `}
               >
-                <div
-                  className="
-                    group relative w-[400px] aspect-[2/1] rounded-lg overflow-hidden
-                  "
-                >
-                  <div
+                {image.img_md
+                  ? <div
                     className="
-                      absolute top-0 left-0 w-full h-full bg-shade
-                      flex flex-row gap-4 items-center justify-center
-                      text-heading-invert
-                      unvisible group-hover:visible opacity-0 group-hover:opacity-100
-                      transition-all duration-300 ease-in-out
+                      group relative w-[400px] aspect-[4/3] rounded-lg overflow-hidden
                     "
                   >
-                    <LineMdTrash
+                    <div
                       className="
-                        w-10 h-10 hover:bg-shade-v2 p-2
-                        rounded-md active:opacity-80 cursor-pointer
-                        transition-all duration-200 ease-out
+                        absolute top-0 left-0 w-full h-full bg-shade
+                        flex flex-row gap-4 items-center justify-center
+                        text-heading-invert
+                        unvisible group-hover:visible opacity-0 group-hover:opacity-100
+                        transition-all duration-300 ease-in-out
                       "
-                    />
-                    <label
-                      className=""
-                      htmlFor={`navBarLgImgEditInpt_${image.alt}`}
                     >
-                      <LineMdEdit
+                      <LineMdTrash
                         className="
                           w-10 h-10 hover:bg-shade-v2 p-2
                           rounded-md active:opacity-80 cursor-pointer
                           transition-all duration-200 ease-out
                         "
                       />
-                      <input
+                      <label
+                        className=""
+                        htmlFor={`navBarLgImgEditInpt_${image.alt}`}
+                      >
+                        <LineMdEdit
+                          className="
+                            w-10 h-10 hover:bg-shade-v2 p-2
+                            rounded-md active:opacity-80 cursor-pointer
+                            transition-all duration-200 ease-out
+                          "
+                        />
+                        <input
+                          className="
+                            absolute top-1/2 left-1/2
+                            translate-x-[-50%] translate-y-[-50%] w-0 h-0
+                            unvisible opacity-0
+                          "
+                          type="file"
+                          accept="image/*"
+                          id={`navBarLgImgEditInpt_${image.alt}`}
+                          name="navBarLgImgEditInpt"
+                          data-image-type="hero"
+                          data-variable-name="navbarLgImg"
+                          data-category-slug={image.alt}
+                          onChange={handleChange}
+                        />
+                      </label>
+                      <FluentZoomFit24Regular
                         className="
-                          absolute top-1/2 left-1/2
-                          translate-x-[-50%] translate-y-[-50%] w-0 h-0
-                          unvisible opacity-0
+                          w-10 h-10 hover:bg-shade-v2 p-2
+                          rounded-md active:opacity-80 cursor-pointer
+                          transition-all duration-200 ease-out
                         "
-                        type="file"
-                        accept="image/*"
-                        id={`navBarLgImgEditInpt_${image.alt}`}
-                        name="navBarLgImgEditInpt"
-                        data-image-type="hero"
-                        data-variable-name="navbarLgImg"
-                        data-category-slug={image.alt}
-                        onChange={handleChange}
+                        role="button"
+                        data-type="expand_image_button_is_clicked"
+                        data-image-url={image.img_md}
+                        onClick={handleClick}
                       />
-                    </label>
-                    <FluentZoomFit24Regular
-                      className="
-                        w-10 h-10 hover:bg-shade-v2 p-2
-                        rounded-md active:opacity-80 cursor-pointer
-                        transition-all duration-200 ease-out
-                      "
-                      role="button"
-                      data-type="expand_image_button_is_clicked"
-                      data-image-url={image.img_md}
-                      onClick={handleClick}
+                    </div>
+                    <img 
+                      src={image.img_md}
+                      className="w-full object-center object-cover"
                     />
                   </div>
-                  <img 
-                    src={image.img_md}
-                    className="w-full object-center object-cover"
-                  />
-                </div>
+                  : <label
+                    className="
+                      flex relative h-[300px] aspect-[4/3] rounded-lg overflow-hidden cursor-pointer
+                    "
+                    htmlFor="navBarImgEditInpt"
+                  >
+                    <input
+                      className="
+                        absolute top-1/2 left-1/2
+                        translate-x-[-50%] translate-y-[-50%] w-0 h-0
+                        unvisible opacity-0
+                      "
+                      type="file"
+                      accept="image/*"
+                      id="navBarImgEditInpt"
+                      name="navBarImgEditInpt"
+                      data-image-type="navbar"
+                      data-variable-name="navbarImg"
+                      // data-category-slug={category.slug}
+                      onChange={handleChange}
+                    />
+                    <div
+                      className="
+                        absolute top-0 left-0 w-full h-full bg-background-light
+                        border border-dashed border-[4px] border-body-light
+                        flex flex-row gap-4 items-center justify-center
+                        text-heading-invert
+                        transition-all duration-300 ease-in-out
+                      "
+                    />
+                    <LineMdPlus
+                      className="
+                        absolute top-1/2 left-1/2
+                        translate-x-[-50%] translate-y-[-50%]
+                        w-12 h-12 text-body-light
+                      "
+                    />
+                    <div
+                      className="
+                        absolute bottom-0 left-1/2 translate-x-[-50%]
+                        flex items-center justify-evenly w-full p-4
+                      "
+                    >
+                      <div
+                        className="relative bg-body-light p-1 rounded-lg"
+                      >
+                        <LineMdArrowsDiagonal className="text-background-light w-8 h-8" />
+                        <span
+                          className="
+                            absolute top-1/2 left-1/2
+                            translate-x-[-50%] translate-y-[-50%]
+                            text-base text-background-light font-bold
+                            bg-body-light rounded-full
+                          "
+                        >
+                          4:3
+                        </span>
+                      </div>
+                      <div
+                        className="flex items-center gap-2 bg-body-light p-2 rounded-lg"
+                      >
+                        <GardenFileImage26 className="text-background-light" />
+                        <span
+                          className="
+                            text-base text-background-light font-bold
+                            bg-body-light rounded-full
+                          "
+                        >
+                          AVIF
+                        </span>
+                      </div>
+                    </div>
+                  </label> 
+                }
               </td>
               <td
                 className={`
-                  px-6 py-4 text-sm text-body min-w-[500px] min-h-[250px]
+                  px-6 py-4 text-sm text-body
                   transition-all duration-300 ease-in-out
                 `}
               >
-                <div
-                  className="
-                    group relative w-[400px] aspect-[2/1] rounded-lg overflow-hidden
-                  "
-                >
-                  <div
+                {image.img_sm
+                  ? <div
                     className="
-                      absolute top-0 left-0 w-full h-full bg-shade
-                      flex flex-row gap-4 items-center justify-center
-                      text-heading-invert
-                      unvisible group-hover:visible opacity-0 group-hover:opacity-100
-                      transition-all duration-300 ease-in-out
+                      group relative h-[300px] aspect-[3/4] rounded-lg overflow-hidden
                     "
                   >
-                    <LineMdTrash
+                    <div
                       className="
-                        w-10 h-10 hover:bg-shade-v2 p-2
-                        rounded-md active:opacity-80 cursor-pointer
-                        transition-all duration-200 ease-out
+                        absolute top-0 left-0 w-full h-full bg-shade
+                        flex flex-row gap-4 items-center justify-center
+                        text-heading-invert
+                        unvisible group-hover:visible opacity-0 group-hover:opacity-100
+                        transition-all duration-300 ease-in-out
                       "
-                    />
-                    <label
-                      className=""
-                      htmlFor={`navBarLgImgEditInpt_${image.alt}`}
                     >
-                      <LineMdEdit
+                      <LineMdTrash
                         className="
                           w-10 h-10 hover:bg-shade-v2 p-2
                           rounded-md active:opacity-80 cursor-pointer
                           transition-all duration-200 ease-out
                         "
                       />
-                      <input
+                      <label
+                        className=""
+                        htmlFor={`navBarLgImgEditInpt_${image.alt}`}
+                      >
+                        <LineMdEdit
+                          className="
+                            w-10 h-10 hover:bg-shade-v2 p-2
+                            rounded-md active:opacity-80 cursor-pointer
+                            transition-all duration-200 ease-out
+                          "
+                        />
+                        <input
+                          className="
+                            absolute top-1/2 left-1/2
+                            translate-x-[-50%] translate-y-[-50%] w-0 h-0
+                            unvisible opacity-0
+                          "
+                          type="file"
+                          accept="image/*"
+                          id={`navBarLgImgEditInpt_${image.alt}`}
+                          name="navBarLgImgEditInpt"
+                          data-image-type="hero"
+                          data-variable-name="navbarLgImg"
+                          data-category-slug={image.alt}
+                          onChange={handleChange}
+                        />
+                      </label>
+                      <FluentZoomFit24Regular
                         className="
-                          absolute top-1/2 left-1/2
-                          translate-x-[-50%] translate-y-[-50%] w-0 h-0
-                          unvisible opacity-0
+                          w-10 h-10 hover:bg-shade-v2 p-2
+                          rounded-md active:opacity-80 cursor-pointer
+                          transition-all duration-200 ease-out
                         "
-                        type="file"
-                        accept="image/*"
-                        id={`navBarLgImgEditInpt_${image.alt}`}
-                        name="navBarLgImgEditInpt"
-                        data-image-type="hero"
-                        data-variable-name="navbarLgImg"
-                        data-category-slug={image.alt}
-                        onChange={handleChange}
+                        role="button"
+                        data-type="expand_image_button_is_clicked"
+                        data-image-url={image.img_sm}
+                        onClick={handleClick}
                       />
-                    </label>
-                    <FluentZoomFit24Regular
-                      className="
-                        w-10 h-10 hover:bg-shade-v2 p-2
-                        rounded-md active:opacity-80 cursor-pointer
-                        transition-all duration-200 ease-out
-                      "
-                      role="button"
-                      data-type="expand_image_button_is_clicked"
-                      data-image-url={image.img_sm}
-                      onClick={handleClick}
+                    </div>
+                    <img 
+                      src={image.img_sm}
+                      className="w-full object-center object-cover"
                     />
                   </div>
-                  <img 
-                    src={image.img_sm}
-                    className="w-full object-center object-cover"
-                  />
-                </div>
+                  : <label
+                    className="
+                      flex relative h-[300px] aspect-[3/4] rounded-lg overflow-hidden cursor-pointer
+                    "
+                    htmlFor="navBarImgEditInpt"
+                  >
+                    <input
+                      className="
+                        absolute top-1/2 left-1/2
+                        translate-x-[-50%] translate-y-[-50%] w-0 h-0
+                        unvisible opacity-0
+                      "
+                      type="file"
+                      accept="image/*"
+                      id="navBarImgEditInpt"
+                      name="navBarImgEditInpt"
+                      data-image-type="navbar"
+                      data-variable-name="navbarImg"
+                      // data-category-slug={category.slug}
+                      onChange={handleChange}
+                    />
+                    <div
+                      className="
+                        absolute top-0 left-0 w-full h-full bg-background-light
+                        border border-dashed border-[4px] border-body-light
+                        flex flex-row gap-4 items-center justify-center
+                        text-heading-invert
+                        transition-all duration-300 ease-in-out
+                      "
+                    />
+                    <LineMdPlus
+                      className="
+                        absolute top-1/2 left-1/2
+                        translate-x-[-50%] translate-y-[-50%]
+                        w-12 h-12 text-body-light
+                      "
+                    />
+                    <div
+                      className="
+                        absolute bottom-0 left-1/2 translate-x-[-50%]
+                        flex items-center justify-evenly w-full p-4
+                      "
+                    >
+                      <div
+                        className="relative bg-body-light p-1 rounded-lg"
+                      >
+                        <LineMdArrowsDiagonal className="text-background-light w-8 h-8" />
+                        <span
+                          className="
+                            absolute top-1/2 left-1/2
+                            translate-x-[-50%] translate-y-[-50%]
+                            text-base text-background-light font-bold
+                            bg-body-light rounded-full
+                          "
+                        >
+                          3:4
+                        </span>
+                      </div>
+                      <div
+                        className="flex items-center gap-2 bg-body-light p-2 rounded-lg"
+                      >
+                        <GardenFileImage26 className="text-background-light" />
+                        <span
+                          className="
+                            text-base text-background-light font-bold
+                            bg-body-light rounded-full
+                          "
+                        >
+                          AVIF
+                        </span>
+                      </div>
+                    </div>
+                  </label>   
+                }
               </td>
               <td className="px-6">
                 <span
