@@ -9,7 +9,10 @@ export default async function post () {
       method: 'POST',
       headers: { 'Content-type': 'application/json' }
     });
-    if (!response.ok) throw new Error ('Error while creating new slider');
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error (error.message);
+    };
 
     const result = await response.json();
     return result;

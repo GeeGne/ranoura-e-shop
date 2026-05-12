@@ -31,7 +31,7 @@ import {
 } from '@/stores/index';
 
 // API
-import updateCategory from '@/lib/api/categories/slug/put';
+import updateSlideShow from '@/lib/api/slide-show/[id]/put';
 import deleteCategory from '@/lib/api/categories/slug/delete';
 import deleteSubCategory from '@/lib/api/sub-categories/slug/delete';
 import uploadStorageFile from '@/lib/api/object/bucketName/filePath/post';
@@ -66,8 +66,8 @@ export default function Table({
   
   const mainRef = useRef<any>(null);
   const layoutRef = useLayoutRefStore(state => state.layoutRef);
-  const targetedCategorySlug = useRef<string | null>(null);
-  const targetedCategoryImageType = useRef<string | null>(null);
+  const targetedID = useRef<number | null>(null);
+  const targetedImgType = useRef<string | null>(null);
 
   const setEditImageUrlWindowToggle = useEditImageUrlCategoryWindowStore(state => state.setToggle);
   const setEditImageUrlWindowImageUrl = useEditImageUrlCategoryWindowStore(state => state.setImageUrl);
@@ -138,24 +138,24 @@ export default function Table({
     if (categorySlug) deleteCategoryMutation.mutate(categorySlug.toString());
   }, [action])
 
-  const updateCategoryMutation = useMutation({
-    mutationFn: updateCategory,
+  const updateSlideShowMutation = useMutation({
+    mutationFn: updateSlideShow,
     onSettled: () => {
       setActivityWindowToggle(false);
     },
     onMutate: () => {
       setActivityWindowToggle(true);
-      setActivityWindowMessage(isEn ? 'Updating the Category...' : 'جاري تحديث القسم...')
+      setActivityWindowMessage(isEn ? 'Updating the Slide...' : 'جاري تحديث الائحه...')
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['categories']});
+      queryClient.invalidateQueries({ queryKey: ['slide-show']});
       displayAlert(data.message[isEn ? 'en' : 'ar'], "success");
     },
     onError: () => {
       displayAlert(
         isEn 
-          ? "Couldn't update Category, please try again." 
-          : "فشل في محاوله تحديث القسم, الرجاء محاوله مره اخرى."
+          ? "Couldn't update slide, please try again." 
+          : "فشل في محاوله تحديث الائحه, الرجاء محاوله مره اخرى."
       , "error");
     }
   });
@@ -217,9 +217,9 @@ export default function Table({
     onSuccess: (results) => {
       const { publicUrl } = results.data;
       displayAlert(results.message[isEn ? 'en' : 'ar'], "success");
-      if (targetedCategorySlug.current && targetedCategoryImageType.current) updateCategoryMutation.mutate({ 
-        slug: targetedCategorySlug.current, 
-        data: { [targetedCategoryImageType.current]: publicUrl } 
+      if (targetedID.current && targetedImgType.current) updateSlideShowMutation.mutate({ 
+        id: targetedID.current,
+        [targetedImgType.current]: publicUrl 
       });
 
       // DEBUG
@@ -277,21 +277,21 @@ export default function Table({
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, files } = e.currentTarget;
-    const { categorySlug, imageType, variableName } = e.currentTarget.dataset;
+    const { categorySlug, imageType, variableName, id } = e.currentTarget.dataset;
 
     switch (name) {
-      case 'navBarImgEditInpt':
-      case 'navBarLgImgEditInpt':
+      case 'slideShowImgLG':
+      case 'slideShowImgMD':
+      case 'slideShowImgSM':
         if (!files) return;
         const file: any = files[0];
         uploadCategoryImageMutation.mutate({
           bucketName: 'assets',
-          filePath: setFilePath(`images/categories/${categorySlug}`, imageType),
+          filePath: setFilePath(`images/slide-show/${categorySlug}`, imageType),
           file
         });
-        if (categorySlug) (targetedCategorySlug.current = categorySlug);
-        if (variableName)  (targetedCategoryImageType.current = variableName);
-
+        if (variableName) (targetedImgType.current = variableName);
+        if (id) (targetedID.current = Number(id))
         // DEBUG
         // console.log('file: ', file);
         break;
@@ -443,7 +443,7 @@ export default function Table({
                     className="
                       flex relative h-[300px] aspect-[2/1] rounded-lg overflow-hidden cursor-pointer
                     "
-                    htmlFor="navBarImgEditInpt"
+                    htmlFor={`slideShowImgLG-${image.id}`}
                   >
                     <input
                       className="
@@ -453,11 +453,11 @@ export default function Table({
                       "
                       type="file"
                       accept="image/*"
-                      id="navBarImgEditInpt"
-                      name="navBarImgEditInpt"
-                      data-image-type="navbar"
-                      data-variable-name="navbarImg"
-                      // data-category-slug={category.slug}
+                      id={`slideShowImgLG-${image.id}`}
+                      name="slideShowImgLG"
+                      data-image-type="LG"
+                      data-variable-name="img_lg"
+                      data-id={image.id}
                       onChange={handleChange}
                     />
                     <div
@@ -590,7 +590,7 @@ export default function Table({
                     className="
                       flex relative h-[300px] aspect-[4/3] rounded-lg overflow-hidden cursor-pointer
                     "
-                    htmlFor="navBarImgEditInpt"
+                    htmlFor={`slideShowImgMD-${image.id}`}
                   >
                     <input
                       className="
@@ -600,11 +600,11 @@ export default function Table({
                       "
                       type="file"
                       accept="image/*"
-                      id="navBarImgEditInpt"
-                      name="navBarImgEditInpt"
-                      data-image-type="navbar"
-                      data-variable-name="navbarImg"
-                      // data-category-slug={category.slug}
+                      id={`slideShowImgMD-${image.id}`}
+                      name="slideShowImgMD"
+                      data-image-type="MD"
+                      data-variable-name="img_md"
+                      data-id={image.id}
                       onChange={handleChange}
                     />
                     <div
@@ -737,7 +737,7 @@ export default function Table({
                     className="
                       flex relative h-[300px] aspect-[3/4] rounded-lg overflow-hidden cursor-pointer
                     "
-                    htmlFor="navBarImgEditInpt"
+                    htmlFor={`slideShowImgMD-${image.id}`}
                   >
                     <input
                       className="
@@ -747,11 +747,11 @@ export default function Table({
                       "
                       type="file"
                       accept="image/*"
-                      id="navBarImgEditInpt"
-                      name="navBarImgEditInpt"
-                      data-image-type="navbar"
-                      data-variable-name="navbarImg"
-                      // data-category-slug={category.slug}
+                      id={`slideShowImgMD-${image.id}`}
+                      name="slideShowImgMD"
+                      data-image-type="MD"
+                      data-variable-name="img_md"
+                      data-id={image.id}
                       onChange={handleChange}
                     />
                     <div

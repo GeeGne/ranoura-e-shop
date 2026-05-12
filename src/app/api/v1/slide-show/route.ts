@@ -23,7 +23,11 @@ export async function GET(
   req: NextRequest,
 ) {
   try {
-    const data = await prisma.slideShow.findMany();
+    const data = await prisma.slideShow.findMany({
+      orderBy: {
+        order: 'desc'
+      }
+    });
     if (!data) return nextError(
       'SLIDES_FETCH_FAIL',
       'unable to fetch slides',
@@ -52,12 +56,7 @@ export async function POST(
 ) {
   try {
     const totalRows = await prisma.$transaction(async (tx: any) => await tx.slideShow.count());
-    console.log('totalRows: ', totalRows);
-    const data = await prisma.slideShow.create({
-      data: {
-        order: totalRows + 1
-      }
-    });
+    const data = await prisma.slideShow.create({ data: { order: totalRows + 1 } });
     const message = "slider has been created successfully";
 
     return NextResponse.json({ data, message }, { status: 201 });

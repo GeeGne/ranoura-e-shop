@@ -6,7 +6,10 @@ export default async function get () {
   try {
     const url = `${getServerUrl()}/api/v1/slide-show`;
     const response = await fetch(url);
-    if (!response.ok) throw new Error ('Error while fetching slide shows');
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error (error.message);
+    };
 
     const result = await response.json();
     return result;
