@@ -88,4 +88,32 @@ export async function PUT (
       400
     )
   }
+};
+
+export async function DELETE (
+  req: NextResponse,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const selectedSlideID = (await params).id;
+    await prisma.slideShow.delete({
+      where: {
+        id: Number(selectedSlideID)
+      }
+    });
+
+    const message = {
+      en: 'Selected Slider deleted succcessfully!',
+      ar: 'تم حذف الشريحه بنجاح!'
+    };
+    return NextResponse.json({ message }, { status: 200 });
+  } catch (err) {
+    const error = err as Error;
+    console.error('unable to deleted selected slider: ', error.message);
+    return nextError(
+      'SLIDER_DELETE_FAIL',
+      'Failed to delete selected slider', 
+      400
+    );
+  }
 }

@@ -31,8 +31,8 @@ import {
 } from '@/stores/index';
 
 // API
-import updateSlideShow from '@/lib/api/slide-show/[id]/put';
-import deleteCategory from '@/lib/api/categories/slug/delete';
+import updateSlideShow from '@/lib/api/slide-show/id/put';
+import deleteSlideShow from '@/lib/api/slide-show/id/delete';
 import deleteSubCategory from '@/lib/api/sub-categories/slug/delete';
 import uploadStorageFile from '@/lib/api/object/bucketName/filePath/post';
 
@@ -149,7 +149,7 @@ export default function Table({
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['slide-show']});
-      displayAlert(data.message[isEn ? 'en' : 'ar'], "success");
+      displayAlert(data.message[lang], "success");
     },
     onError: () => {
       displayAlert(
@@ -161,7 +161,7 @@ export default function Table({
   });
 
   const deleteCategoryMutation = useMutation({
-    mutationFn: deleteCategory,
+    mutationFn: deleteSlideShow,
     onSettled: () => {
       setActionWindowIsLoading(false);
     },
@@ -436,7 +436,7 @@ export default function Table({
                     </div>
                     <img 
                       src={image.img_lg}
-                      className="w-full object-center object-cover"
+                      className="w-full aspect-[2/1] object-center object-cover"
                     />
                   </div>
                   : <label
@@ -583,7 +583,7 @@ export default function Table({
                     </div>
                     <img 
                       src={image.img_md}
-                      className="w-full object-center object-cover"
+                      className="w-full aspect-[4/3] object-center object-cover"
                     />
                   </div>
                   : <label
@@ -730,14 +730,14 @@ export default function Table({
                     </div>
                     <img 
                       src={image.img_sm}
-                      className="w-full object-center object-cover"
+                      className="w-full aspect-[3/4] object-center object-cover"
                     />
                   </div>
                   : <label
                     className="
                       flex relative h-[300px] aspect-[3/4] rounded-lg overflow-hidden cursor-pointer
                     "
-                    htmlFor={`slideShowImgMD-${image.id}`}
+                    htmlFor={`slideShowImgSM-${image.id}`}
                   >
                     <input
                       className="
@@ -747,10 +747,10 @@ export default function Table({
                       "
                       type="file"
                       accept="image/*"
-                      id={`slideShowImgMD-${image.id}`}
-                      name="slideShowImgMD"
-                      data-image-type="MD"
-                      data-variable-name="img_md"
+                      id={`slideShowImgSM-${image.id}`}
+                      name="slideShowImgSM"
+                      data-image-type="SM"
+                      data-variable-name="img_sm"
                       data-id={image.id}
                       onChange={handleChange}
                     />
