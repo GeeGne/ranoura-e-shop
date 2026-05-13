@@ -4,6 +4,7 @@ import getServerUrl from '@/utils/getServerUrl';
 
 type Props = {
   id: number;
+  [key: string]: any;
 };
 
 export default async function put ({ id, ...data }: Props) {

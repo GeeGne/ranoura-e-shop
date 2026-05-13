@@ -89,6 +89,7 @@ export default function Table({
   const setTitle = useActionConfirmWindowStore(state => state.setTitle);
   const setDescription = useActionConfirmWindowStore(state => state.setDescription);
   const setBtnTitle = useActionConfirmWindowStore(state => state.setBtnTitle);
+  const setIsActionWindowLoading = useActionConfirmWindowStore(state => state.setIsLoading);
 
   const setAlertToggle = useAlertMessageStore((state) => state.setToggle);
   const setAlertType = useAlertMessageStore((state) => state.setType);
@@ -133,19 +134,25 @@ export default function Table({
   }, [ scroll, scrollTrigger ]);
 
   useEffect(() => {
-    const { name, categorySlug, isConfirmed } = action;
-    if (name !== "remove category" || !isConfirmed) return;
-    if (categorySlug) deleteCategoryMutation.mutate(categorySlug.toString());
-  }, [action])
+    console.log('trigger')
+    const { name, id, isConfirmed, value } = action;
+    if (!isConfirmed) return;
+    if (name === 'remove slide' && id) return deleteSlideMutation.mutate(Number(id));
+    
+    if (name === 'slide alt' && id && value) return updateSlideShowMutation
+      .mutate({ id: Number(id), alt: value });
+  }, [action]);
 
   const updateSlideShowMutation = useMutation({
     mutationFn: updateSlideShow,
     onSettled: () => {
       setActivityWindowToggle(false);
+      setIsActionWindowLoading(false);
     },
     onMutate: () => {
       setActivityWindowToggle(true);
       setActivityWindowMessage(isEn ? 'Updating the Slide...' : 'جاري تحديث الائحه...')
+      setIsActionWindowLoading(true);
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['slide-show']});
@@ -160,25 +167,25 @@ export default function Table({
     }
   });
 
-  const deleteCategoryMutation = useMutation({
+  const deleteSlideMutation = useMutation({
     mutationFn: deleteSlideShow,
     onSettled: () => {
       setActionWindowIsLoading(false);
     },
     onMutate: () => {
       setActionWindowIsLoading(true);
-      setActivityWindowMessage(isEn ? 'Deleting the Category...' : 'جاري حذف القسم...')
+      setActivityWindowMessage(isEn ? 'Deleting the Category...' : 'جاري حذف الائحه...')
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['categories']});
+      queryClient.invalidateQueries({ queryKey: ['slide-show']});
       displayAlert(data.message[isEn ? 'en' : 'ar'], "success");
       setActionWindowToggle(false);
     },
     onError: () => {
       displayAlert(
         isEn 
-          ? "Couldn't delete Category, please try again." 
-          : "فشل في محاوله حذف القسم, الرجاء محاوله مره اخرى."
+          ? "Couldn't delete Slide, please try again." 
+          : "فشل في محاوله حذف الائحه, الرجاء محاوله مره اخرى."
       , "error");
     }
   })
@@ -239,7 +246,10 @@ export default function Table({
   };
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement | HTMLLIElement | SVGElement>) => {
-    const { type, categorySlug, subCategorySlug, categoryNameEn, categoryNameAr, imageUrl } = e.currentTarget.dataset;
+    const { 
+      type, categorySlug, subCategorySlug, 
+      imageUrl, id, alt
+    } = e.currentTarget.dataset;
 
     switch (type) {
       case 'sub_category_block_is_clicked':
@@ -251,22 +261,32 @@ export default function Table({
         setNewSubCategoryToggle(true);
         if (categorySlug) setNewSubCategoryType(categorySlug);
         break;
-      case 'expand_image_button_is_clicked':
-        setImageDisplayerToggle(true);
-        if (imageUrl) setImageDisplayerUrl(imageUrl);
-        break;
-      case 'edit_image_url_button_is_clicked':
+      case 'edit_slider_url_button_is_clicked':
         setEditImageUrlWindowToggle(true);
         if (imageUrl) setEditImageUrlWindowImageUrl(imageUrl);
         if (categorySlug) setNewSubCategorySetSlug(categorySlug);
         break;
-      case 'delete_product_button_is_clicked':
+      case 'edit_slider_alt_button_is_clicked':
         setActionWindowToggle(true);
-        if (categorySlug) setAction({ name: "remove category", categorySlug, isConfirmed: false });
-        setTitle({ en: `Delete Category?`, ar: "حذف القسم؟" });
+        const slideShowAlt = alt || null;
+        if (id) setAction({ 
+          name: "slide alt", id, isConfirmed: false, 
+          type: 'input', value: slideShowAlt
+        });
+        setTitle({ en: 'Describe the choosen Slider', ar: 'اوصف ماهو المتعلق بهذه الشريحه'})
+        setBtnTitle({ en: `Accept`, ar: "موافق" });
         setDescription({ 
-          en: `Are you sure you want to delete "${categoryNameEn}"? This action cannot be undone.`, 
-          ar: `هل أنت متأكد أنك تريد حذف "${categoryNameAr}"؟ لا يمكن التراجع عن هذا الإجراء.` }
+          en: `example: Follow us on our Facebook page!`, 
+          ar: `مثال: قم بمتابعتنا على الفيسبوك!` }
+        );
+        break;
+      case 'delete_slider_button_is_clicked':
+        setActionWindowToggle(true);
+        if (id) setAction({ name: "remove slide", id, isConfirmed: false, type: 'text' });
+        setTitle({ en: `Delete Slide?`, ar: "حذف الائحه؟" });
+        setDescription({ 
+          en: `Are you sure you want to delete selected Slide?`, 
+          ar: `هل انت فعلا تريد حذف الائحه المختاره؟` }
         );
         setBtnTitle({ en: `Confirm (Delete)`, ar: "تأكيد (حذف)" });      
         break;
@@ -868,9 +888,8 @@ export default function Table({
                     />
                   </button>
                   <button 
-                    data-type="edit_image_url_button_is_clicked"
-                    data-image-url={'any'}
-                    data-category-slug={'any'}
+                    data-type="edit_slider_url_button_is_clicked"
+                    data-id={'any'}
                     onClick={handleClick}
                   >
                     <MdiLinkEdit 
@@ -882,9 +901,9 @@ export default function Table({
                     />
                   </button>
                   <button 
-                    data-type="edit_image_url_button_is_clicked"
-                    data-image-url={'any'}
-                    data-category-slug={'any'}
+                    data-type="edit_slider_alt_button_is_clicked"
+                    data-id={image.id}
+                    data-alt={image.alt}
                     onClick={handleClick}
                   >
                     <MdiImageEditOutline 
@@ -894,6 +913,19 @@ export default function Table({
                         transition-all duration-200 ease-out
                       `}
                     />
+                  </button>
+                  <button 
+                    data-id={image.id}
+                    data-type="delete_slider_button_is_clicked"
+                    onClick={handleClick}
+                  >
+                    <LineMdTrash 
+                      className="
+                        w-7 h-7 p-1 text-heading rounded-md cursor-pointer
+                        bg-background-light hover:bg-background-deep-light active:opacity-60
+                        transition-all duration-200 ease-out
+                      "
+                    />    
                   </button>
                 </div>
               </td>

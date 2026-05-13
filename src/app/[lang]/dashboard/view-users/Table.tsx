@@ -401,7 +401,7 @@ export default function Table({
         break;
       case 'unBan_user_button_is_clicked':
         setActionWindowToggle(true);
-        if (userId) setAction({ name: "unban user", userId, isConfirmed: false });
+        if (userId) setAction({ name: "unban user", userId, isConfirmed: false, type: 'text' });
         setTitle({
           en: 'Un-Ban User?',
           ar: 'رفع الحظر عن العضو؟'

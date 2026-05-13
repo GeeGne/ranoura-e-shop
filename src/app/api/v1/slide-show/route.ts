@@ -57,7 +57,10 @@ export async function POST(
   try {
     const totalRows = await prisma.$transaction(async (tx: any) => await tx.slideShow.count());
     const data = await prisma.slideShow.create({ data: { order: totalRows + 1 } });
-    const message = "slider has been created successfully";
+    const message = {
+      en: "Slider has been created successfully!",
+      ar: "تم تحديث الائحه بنجاح!"
+    };
 
     return NextResponse.json({ data, message }, { status: 201 });
   } catch (err) {

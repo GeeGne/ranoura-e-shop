@@ -174,7 +174,7 @@ export default function Table({
     switch (type) {
       case 'delete_product_button_is_clicked':
         setActionWindowToggle(true);
-        if (productId) setAction({ name: "remove product", productId, isConfirmed: false });
+        if (productId) setAction({ name: "remove product", productId, isConfirmed: false, type: 'text' });
         setTitle({ en: `Delete Product?`, ar: "حذف المنتج؟" });
         setDescription({ 
           en: `Are you sure you want to delete "${productName}"? This action cannot be undone.`, 

@@ -435,7 +435,7 @@ type ActionConfirmWindowProps = {
   description: Record<string, string>;
   setDescription: (value: Record<string, string>) => void;
   action: Record<string, string | boolean>;
-  setAction: (value: Record<string, string | boolean>) => void;
+  setAction: (value: Record<string, any>) => void;
   btnTitle: Record<string, string | boolean>;
   setBtnTitle: (value: Record<string, string | boolean>) => void;
 }
@@ -446,11 +446,11 @@ const useActionConfirmWindowStore = create<ActionConfirmWindowProps>()(
     setToggle: (toggle) => set({ toggle }),
     isLoading: false,
     setIsLoading: (isLoading) => set({ isLoading }),
-    title: {en: "This is a title", ar: "هذا عنوان"},
+    title: { en: "This is a title", ar: "هذا عنوان" },
     setTitle: (title) => set({ title }),
-    description: {en: "This is a description", ar: "هذه رساله"},
+    description: { en: "This is a description", ar: "هذه رساله" },
     setDescription: (description) => set({ description }),
-    btnTitle: {en: "confirm", ar: "تأكيد"},
+    btnTitle: { en: "confirm", ar: "تأكيد" },
     setBtnTitle: (btnTitle) => set({ btnTitle }),
     action: { name: "some name", isConfirmed: false },
     setAction: (action) => set({ action })

@@ -4,7 +4,7 @@ import getServerUrl from '@/utils/getServerUrl';
 
 export default async function deleted (id: number) {
   try {
-    const url = `${getServerUrl()}/api/v1/${id}`
+    const url = `${getServerUrl()}/api/v1/slide-show/${id}`
     const response = await fetch(url, {
       method: 'DELETE',
       credentials: 'include'

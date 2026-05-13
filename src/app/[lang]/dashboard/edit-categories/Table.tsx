@@ -268,7 +268,7 @@ export default function Table({
         break;
       case 'delete_product_button_is_clicked':
         setActionWindowToggle(true);
-        if (categorySlug) setAction({ name: "remove category", categorySlug, isConfirmed: false });
+        if (categorySlug) setAction({ name: "remove category", categorySlug, isConfirmed: false, type: 'text' });
         setTitle({ en: `Delete Category?`, ar: "حذف القسم؟" });
         setDescription({ 
           en: `Are you sure you want to delete "${categoryNameEn}"? This action cannot be undone.`, 
