@@ -134,13 +134,14 @@ export default function Table({
   }, [ scroll, scrollTrigger ]);
 
   useEffect(() => {
-    console.log('trigger')
     const { name, id, isConfirmed, value } = action;
     if (!isConfirmed) return;
     if (name === 'remove slide' && id) return deleteSlideMutation.mutate(Number(id));
     
     if (name === 'slide alt' && id && value) return updateSlideShowMutation
       .mutate({ id: Number(id), alt: value });
+    if (name === 'slide url' && id && value) return updateSlideShowMutation
+      .mutate({ id: Number(id), url: value });
   }, [action]);
 
   const updateSlideShowMutation = useMutation({
@@ -151,12 +152,13 @@ export default function Table({
     },
     onMutate: () => {
       setActivityWindowToggle(true);
-      setActivityWindowMessage(isEn ? 'Updating the Slide...' : 'جاري تحديث الائحه...')
       setIsActionWindowLoading(true);
+      setActivityWindowMessage(isEn ? 'Updating the Slide...' : 'جاري تحديث الائحه...')
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['slide-show']});
       displayAlert(data.message[lang], "success");
+      setActionWindowToggle(false);
     },
     onError: () => {
       displayAlert(
@@ -248,13 +250,11 @@ export default function Table({
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement | HTMLLIElement | SVGElement>) => {
     const { 
       type, categorySlug, subCategorySlug, 
-      imageUrl, id, alt
+      imageUrl, id, alt, url
     } = e.currentTarget.dataset;
 
     switch (type) {
       case 'sub_category_block_is_clicked':
-        console.log('categorySlug: ', categorySlug);
-        console.log('subCategorySlug: ', subCategorySlug);
         if (subCategorySlug) deleteSubCategoryMutation.mutate(subCategorySlug)
         break;
       case 'add_new_sub_category_button_is_clicked':
@@ -262,9 +262,19 @@ export default function Table({
         if (categorySlug) setNewSubCategoryType(categorySlug);
         break;
       case 'edit_slider_url_button_is_clicked':
-        setEditImageUrlWindowToggle(true);
-        if (imageUrl) setEditImageUrlWindowImageUrl(imageUrl);
-        if (categorySlug) setNewSubCategorySetSlug(categorySlug);
+        setActionWindowToggle(true);
+        const slideShowUrl = url || null;
+        if (id) setAction({ 
+          name: "slide url", id, isConfirmed: false, 
+          type: 'input', value: slideShowUrl
+        });
+        setTitle({ en: 'Add link for the choosen Slider', ar: 'اضف رابط للشريحه المختاره'})
+        setBtnTitle({ en: `Accept`, ar: "موافق" });
+        setDescription({ 
+          en: `example: ranoura-website.com/clothing/hot-sales`, 
+          ar: `مثال: ranoura-website.com/clothing/hot-sales` 
+        }
+        );
         break;
       case 'edit_slider_alt_button_is_clicked':
         setActionWindowToggle(true);
@@ -289,6 +299,10 @@ export default function Table({
           ar: `هل انت فعلا تريد حذف الائحه المختاره؟` }
         );
         setBtnTitle({ en: `Confirm (Delete)`, ar: "تأكيد (حذف)" });      
+        break;
+      case 'expand_image_button_is_clicked': 
+        setImageDisplayerToggle(true);
+        if (imageUrl) setImageDisplayerUrl(imageUrl);
         break;
       default:
         console.error('Unknown type: ', type);
@@ -417,7 +431,7 @@ export default function Table({
                       />
                       <label
                         className=""
-                        htmlFor={`navBarLgImgEditInpt_${image.alt}`}
+                        htmlFor={`slideShowImgLG-${image.id}`}
                       >
                         <LineMdEdit
                           className="
@@ -434,11 +448,11 @@ export default function Table({
                           "
                           type="file"
                           accept="image/*"
-                          id={`navBarLgImgEditInpt_${image.alt}`}
-                          name="navBarLgImgEditInpt"
-                          data-image-type="hero"
-                          data-variable-name="navbarLgImg"
-                          data-category-slug={image.alt}
+                          id={`slideShowImgLG-${image.id}`}
+                          name="slideShowImgLG"
+                          data-image-type="LG"
+                          data-variable-name="img_lg"
+                          data-id={image.id}
                           onChange={handleChange}
                         />
                       </label>
@@ -450,7 +464,7 @@ export default function Table({
                         "
                         role="button"
                         data-type="expand_image_button_is_clicked"
-                        data-image-url={image.image}
+                        data-image-url={image.img_lg}
                         onClick={handleClick}
                       />
                     </div>
@@ -564,7 +578,7 @@ export default function Table({
                       />
                       <label
                         className=""
-                        htmlFor={`navBarLgImgEditInpt_${image.alt}`}
+                        htmlFor={`slideShowImgMD-${image.id}`}
                       >
                         <LineMdEdit
                           className="
@@ -581,10 +595,11 @@ export default function Table({
                           "
                           type="file"
                           accept="image/*"
-                          id={`navBarLgImgEditInpt_${image.alt}`}
-                          name="navBarLgImgEditInpt"
-                          data-image-type="hero"
-                          data-variable-name="navbarLgImg"
+                          id={`slideShowImgMD-${image.id}`}
+                          name="slideShowImgMD"
+                          data-image-type="MD"
+                          data-variable-name="img_md"
+                          data-id={image.id}
                           data-category-slug={image.alt}
                           onChange={handleChange}
                         />
@@ -711,7 +726,7 @@ export default function Table({
                       />
                       <label
                         className=""
-                        htmlFor={`navBarLgImgEditInpt_${image.alt}`}
+                        htmlFor={`slideShowImgSM-${image.id}`}
                       >
                         <LineMdEdit
                           className="
@@ -728,11 +743,11 @@ export default function Table({
                           "
                           type="file"
                           accept="image/*"
-                          id={`navBarLgImgEditInpt_${image.alt}`}
-                          name="navBarLgImgEditInpt"
-                          data-image-type="hero"
-                          data-variable-name="navbarLgImg"
-                          data-category-slug={image.alt}
+                          id={`slideShowImgSM-${image.id}`}
+                          name="slideShowImgSM"
+                          data-image-type="SM"
+                          data-variable-name="img_sm"
+                          data-id={image.id}
                           onChange={handleChange}
                         />
                       </label>
@@ -889,7 +904,8 @@ export default function Table({
                   </button>
                   <button 
                     data-type="edit_slider_url_button_is_clicked"
-                    data-id={'any'}
+                    data-id={image.id}
+                    data-url={image.url}
                     onClick={handleClick}
                   >
                     <MdiLinkEdit 
