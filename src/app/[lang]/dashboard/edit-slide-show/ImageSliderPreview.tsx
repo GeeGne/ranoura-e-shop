@@ -9,6 +9,7 @@ type Props = {
 export default function ImageSliderPreview({ lang, isEn }: Props) {
   return (
     <div
+      id="previewSlideShow"
       className="
         flex flex-col p-4 bg-white rounded-lg gap-4
       "

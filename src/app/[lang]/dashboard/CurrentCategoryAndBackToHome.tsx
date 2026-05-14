@@ -7,6 +7,8 @@ import Link from 'next/link';
 // COMPONENTS
 import IconoirHomeAltSlim from '@/components/svgs/IconoirHomeAltSlim';
 import EpUser from "@/components/svgs/EpUser";
+import SquooshVector from "@/components/svgs/SquooshVector";
+import CarbonJumpLink from "@/components/svgs/CarbonJumpLink";
 import BtnB from "@/components/BtnB";
 
 // STORES
@@ -40,6 +42,45 @@ export default function CurrentCategoryAndBackToHome () {
       <div 
         className="flex gap-4"
       >
+        {tabName === 'edit-slide-show' &&
+          <>
+            <Link
+              href="#previewSlideShow"
+            >
+              <BtnB
+                className="
+                  group bg-transparent hover:bg-heading
+                  transition-all duration-300 ease-in-out
+                "
+              >
+                <CarbonJumpLink 
+                  className="
+                    w-6 h-6 rotate-[-45deg] group-hover:text-heading-invert
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+              </BtnB>
+            </Link>
+            <Link
+              href="https://squoosh.app"
+              target="_blank"
+            >
+              <BtnB
+                className="
+                  group bg-transparent hover:bg-heading
+                  transition-all duration-300 ease-in-out
+                "
+              >
+                <SquooshVector 
+                  className="
+                    w-6 h-6 rotate-[-45deg] group-hover:text-heading-invert
+                    transition-all duration-300 ease-in-out
+                  "
+                />
+              </BtnB>
+            </Link>
+          </>
+        }
         <Link
           href="/"
         >

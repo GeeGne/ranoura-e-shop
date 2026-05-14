@@ -2,6 +2,7 @@
 
 // HOOKS
 import { useEffect, useState, useRef } from 'react';
+import Link from 'next/link';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 // STORES
@@ -15,6 +16,7 @@ import {
 import SvgSpinnersRingResize from '@/components/svgs/activity/SvgSpinnersRingResize';
 import LineMdChevronSmallRight from '@/components/svgs/LineMdChevronSmallRight';
 import LineMdChevronSmallDown from '@/components/svgs/LineMdChevronSmallDown';
+import SquooshVector from "@/components/svgs/SquooshVector";
 import LineMdPlus from '@/components/svgs/LineMdPlus';
 
 // API
@@ -184,6 +186,30 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
       <div
         className="flex items-center gap-8"
       >
+        <Link
+          className="
+            relative flex items-center justify-center gap-2
+            text-sm text-heading-invert font-bold 
+            bg-primary p-2 rounded-lg hover:opacity-80
+            transition-all duration-300 ease-in-out
+          "
+          href="https://squoosh.app"
+        >
+          <SvgSpinnersRingResize 
+            className={`
+              absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]
+              ${activityWindowToggle ? 'visible opacity-100' : 'invisible opacity-0'}  
+            `}
+          /> 
+          <SquooshVector className="w-5 h-5"/>
+          <span
+            className={`
+              ${activityWindowToggle ? 'invisible opacity-0' : 'visible opacity-100'}  
+            `}
+          >
+            {isEn ? 'DECOMPOSE' : 'خفض الحجم'}
+          </span> 
+        </Link>
         <button
           className="
             relative flex items-center justify-center gap-2

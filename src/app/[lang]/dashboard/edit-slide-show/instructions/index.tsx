@@ -11,9 +11,9 @@ import { useLanguageStore } from '@/stores/index';
 // ASSETS
 const NavBarLgImg = '/assets/img/NavBarImg-example.avif';
 const NavBarCompactImg = '/assets/img/NavBarCompactImg-example.avif';
-const imageLG = "/assets/img/slide-show-lg.webp";
-const imageMD = "/assets/img/slide-show-md.webp";
-const imageSM = "/assets/img/slide-show-sm.webp";
+const imageLG = "/assets/img/slide-show-lg.avif";
+const imageMD = "/assets/img/slide-show-md.avif";
+const imageSM = "/assets/img/slide-show-sm.avif";
 
 export default function Instructions () {
   

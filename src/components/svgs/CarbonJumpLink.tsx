@@ -1,0 +1,21 @@
+import React from "react";
+import type { SVGProps } from "react";
+
+export default function CarbonJumpLink(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={32}
+      height={32}
+      viewBox="0 0 32 32"
+      {...props}
+    >
+      <path
+        fill="currentColor"
+        d="M13.414 17.586L18 22.172V8H8V6h10a2 2 0 0 1 2 2v14.172l4.586-4.586L26 19l-7 7l-7-7Z"
+        strokeWidth={1}
+        stroke="currentColor"
+      ></path>
+    </svg>
+  );
+}
