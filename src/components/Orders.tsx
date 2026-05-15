@@ -363,7 +363,7 @@ export default function Orders ({
 
   if (type === 'orders_table') return (
     <div 
-      className={`overflow-x-auto ${className}`} 
+      className={`overflow-x-auto ${className} rounded-lg`} 
       ref={mainRef}
       { ...props }
     >

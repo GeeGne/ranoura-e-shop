@@ -248,18 +248,43 @@ export default function Table({
   };
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement | HTMLLIElement | SVGElement>) => {
-    const { 
-      type, categorySlug, subCategorySlug, 
-      imageUrl, id, alt, url
-    } = e.currentTarget.dataset;
+    const { type, imageUrl, id, alt, url, order } = e.currentTarget.dataset;
 
     switch (type) {
-      case 'sub_category_block_is_clicked':
-        if (subCategorySlug) deleteSubCategoryMutation.mutate(subCategorySlug)
+      case 'down_arrow_button_is_clicked':
+        if (!id || !order) return;
+        const isSlideLast = Number(order) === album?.length;
+        const isSlidesMoreLessTwo = album?.length < 2;
+        if (isSlideLast || isSlidesMoreLessTwo) return; 
+        try {
+          const albumOfNextOrder = album?.find((itm) => itm.order === Number(order) + 1);
+          await updateSlideShowMutation.mutateAsync({ 
+            id: Number(id), order: Number(order) + 1 
+          });
+
+          await updateSlideShowMutation.mutateAsync({ 
+            id: albumOfNextOrder?.id, order: albumOfNextOrder?.order - 1 
+          });
+        } catch (error) {
+          console.error('One of the myutaitons faield', error);
+        }
         break;
-      case 'add_new_sub_category_button_is_clicked':
-        setNewSubCategoryToggle(true);
-        if (categorySlug) setNewSubCategoryType(categorySlug);
+      case 'up_arrow_button_is_clicked':
+        if (!id || !order) return;
+        const isSlideFirst = Number(order) === 1;
+        const isSlidesLessThanTwo = album?.length < 2;
+        if (isSlideFirst || isSlidesLessThanTwo) return;
+        try {
+          const albumOfNextOrder = album?.find((itm) => itm.order === Number(order) - 1);
+          await updateSlideShowMutation.mutateAsync({ 
+            id: Number(id), order: Number(order) - 1 
+          });
+         await updateSlideShowMutation.mutateAsync({ 
+            id: albumOfNextOrder?.id, order: albumOfNextOrder?.order + 1 
+          });
+        } catch (error) {
+          console.error('One of the myutaitons faield', error);
+        }
         break;
       case 'edit_slider_url_button_is_clicked':
         setActionWindowToggle(true);
@@ -875,28 +900,30 @@ export default function Table({
                   className="flex gap-2"
                 >
                   <button 
-                    data-type="edit_image_url_button_is_clicked"
-                    data-image-url={'any'}
-                    data-category-slug={'any'}
+                    className={`${image.order === album.length ? 'opacity-50 cursor-not-allowed' : 'opacity-100 cursor-pointer'}`}
+                    data-type="down_arrow_button_is_clicked"
+                    data-id={image.id}
+                    data-order={image.order}
                     onClick={handleClick}
                   >
                     <EvaArrowUpFill 
                       className={`
-                        w-7 h-7 p-1 text-heading rounded-md cursor-pointer rotate-180
+                        w-7 h-7 p-1 text-heading rounded-md rotate-180
                         bg-background-light hover:bg-background-deep-light active:opacity-60
                         transition-all duration-200 ease-out
                       `}
                     />
                   </button>
                   <button 
-                    data-type="edit_image_url_button_is_clicked"
-                    data-image-url={'any'}
-                    data-category-slug={'any'}
+                    className={`${image.order === 1 ? 'opacity-50 cursor-not-allowed' : 'opacity-100 cursor-pointer'}`}
+                    data-type="up_arrow_button_is_clicked"
+                    data-id={image.id}
+                    data-order={image.order}
                     onClick={handleClick}
                   >
                     <EvaArrowUpFill 
                       className={`
-                        w-7 h-7 p-1 text-heading rounded-md cursor-pointer
+                        w-7 h-7 p-1 text-heading rounded-md
                         bg-background-light hover:bg-background-deep-light active:opacity-60
                         transition-all duration-200 ease-out
                       `}

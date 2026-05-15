@@ -313,7 +313,7 @@ export default function AdvertTile ({
         className="flex items-center justify-between"
       >
         <Link
-          className="relative flex items-center text-3xl text-heading font-bold transform"
+          className="relative flex items-center text-3xl text-primary font-bold transform"
           href={`/shop/category/${type}/${slug}`}
           data-type="navigate_to_category"
           onClick={handleClick}
@@ -411,7 +411,7 @@ export default function AdvertTile ({
               >
                 <div className="relative w-full h-full rounded-lg overflow-hidden">
                   <img 
-                    className={`
+                  className={`
                       w-full peer aspect-[2/3] object-cover object-center
                       transition-all ease-in-out duration-200
                       ${imgScaleToggle === i? 'scale-[130%]' : 'scale-[100%]'}  

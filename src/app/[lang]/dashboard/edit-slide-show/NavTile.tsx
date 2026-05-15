@@ -195,17 +195,9 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
           "
           href="https://squoosh.app"
         >
-          <SvgSpinnersRingResize 
-            className={`
-              absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]
-              ${activityWindowToggle ? 'visible opacity-100' : 'invisible opacity-0'}  
-            `}
-          /> 
           <SquooshVector className="w-5 h-5"/>
           <span
-            className={`
-              ${activityWindowToggle ? 'invisible opacity-0' : 'visible opacity-100'}  
-            `}
+            className="text-heading-invert font-semibold"
           >
             {isEn ? 'DECOMPOSE' : 'خفض الحجم'}
           </span> 
@@ -220,17 +212,9 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
           data-type="add_slide_button_is_clicked"
           onClick={handleClick}
         >
-          <SvgSpinnersRingResize 
-            className={`
-              absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]
-              ${activityWindowToggle ? 'visible opacity-100' : 'invisible opacity-0'}  
-            `}
-          /> 
           <LineMdPlus className="w-5 h-5"/>
           <span
-            className={`
-              ${activityWindowToggle ? 'invisible opacity-0' : 'visible opacity-100'}  
-            `}
+            className="text-heading-invert font-semibold"
           >
             {isEn ? 'ADD SLIDE' : 'اضف لائحه'}
           </span> 
