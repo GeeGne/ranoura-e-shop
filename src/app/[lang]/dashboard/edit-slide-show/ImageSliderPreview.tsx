@@ -1,5 +1,5 @@
 // COMPONENTS
-import ImageSlider from '@/components/home/ImageSlider';
+import ImageSlider from '@/components/home/imageSlider/index';
 
 type Props = {
   lang?: string;

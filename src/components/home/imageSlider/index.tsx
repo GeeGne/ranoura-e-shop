@@ -1,30 +1,20 @@
 "use client";
 // HOOKS
-import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 
 // COMPONENTS
+import LoadingLayout from "@/components/home/imageSlider/LoadingLayout";
+import ErrorLayout from "@/components/home/imageSlider/ErrorLayout";
 import DisplayImg from "@/components/DisplayImg";
 import EpArrowLeft from "@/components/svgs/EpArrowLeft";
 
+// STORES
+import { useLanguageStore } from '@/stores/index';
+
 // API
 import getSlideShows from "@/lib/api/slide-show/get";
-
-// ASSETS
-const small1 = "/assets/img/background(4).webp";
-const small2 = "/assets/img/background(3).avif";
-const small3 = "/assets/img/background(6).avif";
-const medium1 = "/assets/img/background(4).webp";
-const medium2 = "/assets/img/background(8).webp";
-const medium3 = "/assets/img/background(6).avif";
-const large1 = "/assets/img/background(7).webp";
-const large2 = "/assets/img/background(9).webp";
-const large3 = "/assets/img/background(10).webp";
-const img1 = "/assets/img/background(7).webp";
-const cover1 = "/assets/img/cover-1.avif";
-const cover2 = "/assets/img/cover-2.webp";
 
 export default function ImageSlider({
   className = "",
@@ -32,28 +22,16 @@ export default function ImageSlider({
 }: {
   className?: string;
 }) {
-  const { data: slideShowData, isLoading, isError} = useQuery({
+  const lang = useLanguageStore(state => state.lang);
+  const isEn = lang === 'en';
+
+  const { data: slideShowData, isLoading, isError } = useQuery({
     queryKey: ['slide-show'],
     queryFn: getSlideShows
   })
   const data = slideShowData?.data;
-  
+
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const array = [
-    {
-      sm: small1,
-      md: medium1,
-      lg: large1 
-    },{
-      sm: small2,
-      md: medium2,
-      lg: large2 
-    },{
-      sm: small3,
-      md: medium3,
-      lg: large3 
-    }
-  ];
   const contentUlRef = useRef<any>(null);
   const slideDuration = 8000;
 
@@ -125,9 +103,10 @@ export default function ImageSlider({
 
   // DEBUG
   // console.log("currentIndex", currentIndex);
-  console.log("slide show data: ", data);
+  // console.log("slide show data: ", data);
 
-  if (isLoading || isError ) return (<div></div>)
+  if (isLoading) return ( <LoadingLayout /> )
+  if (isError) return ( <ErrorLayout isEn={isEn} /> )
 
 
   return (
@@ -277,4 +256,4 @@ export default function ImageSlider({
       />
     </section>
   );
-}
+};

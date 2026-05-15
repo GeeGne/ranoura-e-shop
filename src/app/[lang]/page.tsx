@@ -8,7 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 // COMPONENTS
 import Image from "next/image";
 import Hero from '@/components/home/Hero';
-import ImageSlider from '@/components/home/ImageSlider';
+import ImageSlider from '@/components/home/imageSlider/index';
 import MainSlider from '@/components/home/MainSlider';
 import CategoryPicker from '@/components/home/CategoryPicker';
 import CategoryPickerV2 from '@/components/home/CategoryPickerV2';
@@ -23,25 +23,14 @@ import getAllProducts from '@/lib/api/products/get';
 
 export default function Home() {
 
-  // const { lang } = useParams();
   const lang = useLanguageStore((state: any) => state.lang);
   const isEn = lang === 'en';
   const setTabName = useTabNameStore((state: any) => state.setTabName);
-  const setLang = useLanguageStore((state: any) => state.setLang);
-  // const setDefaultLanguage = () => {
-    // setLang(lang);
-    // document.cookie = `preferredLang=${lang}; path=/; max-age=31536000`
-  // }
 
   useEffect(() => {
     setTabName('home');
     // console.log('tab name refresh test');
   }, []);
-
-  // useEffect(() => {
-    // setDefaultLanguage();
-    // console.log('lang trigger:', lang);
-  // }, [ lang ]);
 
   const { 
     data: productsData, 
