@@ -34,6 +34,12 @@ export default function ImageSlider({
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const contentUlRef = useRef<any>(null);
   const slideDuration = 8000;
+  const slideAnimationDuration = 300;
+  
+  const totalIndexRef = useRef<number>(0);
+  useEffect(() => {
+    totalIndexRef.current = data?.length - 1 || 0;
+  }, [ data ])
 
   useEffect(() => {
     const intervalId = setInterval(indexIncrement, slideDuration);
@@ -56,13 +62,13 @@ export default function ImageSlider({
     };
 
     switch (true) {
-      case currentIndex === totalIndex() + 1:
+      case currentIndex === totalIndexRef.current + 1:
         setTransitionToNone();  
-        setTimeout(() => setCurrentIndex(0), 300);
+        setTimeout(() => setCurrentIndex(0), slideAnimationDuration);
         break;
       case currentIndex === -1:
         setTransitionToNone();  
-        setTimeout(() => setCurrentIndex(totalIndex()), 300);
+        setTimeout(() => setCurrentIndex(totalIndexRef.current), slideAnimationDuration);
         break;
       default:
         setTransitionToAll();
@@ -71,7 +77,7 @@ export default function ImageSlider({
 
   const indexIncrement = () => {
     setCurrentIndex((val: number) => {
-      if (val >= totalIndex() + 1) return totalIndex() + 1;
+      if (val >= totalIndexRef.current + 1) return totalIndexRef.current + 1;
       return val + 1;
     });
   };
@@ -83,11 +89,8 @@ export default function ImageSlider({
     });
   };
 
-  const totalIndex = () => data?.length - 1 || 0;
-
   const handleClick = (e: React.MouseEvent<HTMLOrSVGElement>) => {
     const { type, length } = e.currentTarget.dataset;
-    const totalIndex = Number(length) - 1;
 
     switch (type) {
       case "left_arrow_button_is_clicked":
@@ -104,10 +107,10 @@ export default function ImageSlider({
   // DEBUG
   // console.log("currentIndex", currentIndex);
   // console.log("slide show data: ", data);
+  // console.log("slide show data length: ", data?.length);
 
   if (isLoading) return ( <LoadingLayout /> )
   if (isError) return ( <ErrorLayout isEn={isEn} /> )
-
 
   return (
     <section
@@ -122,27 +125,27 @@ export default function ImageSlider({
           flex w-full
           duration-300 ease-in-out
         `}
-        style={{ transform: `translateX(-${(currentIndex + 1) * 100}%)` }}
+        style={{ transform: `translateX(-${ (currentIndex + 1) * 100}%)` }}
         ref={contentUlRef}
       >
         <li
-          className="w-full aspect-[3/4] md:aspect-[4/3] lg:aspect-[2/1] shrink-0 cursor-pointer"
+          className="w-full bg-red-500 aspect-[3/4] md:aspect-[4/3] lg:aspect-[2/1] shrink-0 cursor-pointer"
         >
-          <Link href={data[totalIndex()]?.url} target="_blank">
+          <Link href={data[totalIndexRef.current]?.url} target="_blank">
             <picture
               className="w-full h-full object-cover object-center"
             >
               <source 
                 media="(min-width: 1200px)"
-                srcSet={data[totalIndex()]?.img_lg}
+                srcSet={data[totalIndexRef.current]?.img_lg}
               />
               <source 
                 media="(min-width: 768px)"
-                srcSet={data[totalIndex()]?.img_md}
+                srcSet={data[totalIndexRef.current]?.img_md}
               />
               <img
                 className="w-full h-full object-cover object-center"
-                src={data[totalIndex()]?.img_sm}
+                src={data[totalIndexRef.current]?.img_sm}
                 alt="test"
                 fetchPriority="low"
               />
@@ -221,7 +224,7 @@ export default function ImageSlider({
                 absolute top-0 left-0 h-full bg-primary
                 ${currentIndex === i && "--fill-slider-bar"}
               `}
-              style={{ animationDuration: slideDuration + 'ms' }}
+              style={{ animationDuration: (currentIndex === 0 ? slideDuration - slideAnimationDuration : slideDuration) + 'ms' }}
             />
           </li>
         ))}
