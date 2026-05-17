@@ -36,7 +36,7 @@ export default function Description ({ type, isEn }: Props) {
         <li className="flex flex-col gap-2 items-center justify-center">
           <StashImageArrowUp className="w-14 h-14 text-body" strokeWidth={0.5}/>
           <div className="flex items-center gap-1">
-            <span className="text-body font-bold text-2xl">1 MB</span>
+            <span className="text-body font-bold text-2xl">500 KB</span>
             <MdiLessThanOrEqual className="text-body w-6 h-6" strokeWidth={1} />
           </div>
         </li>
@@ -100,7 +100,7 @@ export default function Description ({ type, isEn }: Props) {
         <li className="flex flex-col gap-2 items-center justify-center">
           <StashImageArrowUp className="w-14 h-14 text-body" strokeWidth={0.5} />
           <div className="flex items-center gap-1">
-            <span className="text-body font-bold text-2xl">1 MB</span>
+            <span className="text-body font-bold text-2xl">500 KB</span>
             <MdiLessThanOrEqual className="text-body w-6 h-6" strokeWidth={1} />
           </div>
         </li>
@@ -162,7 +162,7 @@ export default function Description ({ type, isEn }: Props) {
         <li className="flex flex-col gap-2 items-center justify-center">
           <StashImageArrowUp className="w-14 h-14 text-body" strokeWidth={0.5}/>
           <div className="flex items-center gap-1">
-            <span className="text-body font-bold text-2xl">800 KB</span>
+            <span className="text-body font-bold text-2xl">400 KB</span>
             <MdiLessThanOrEqual className="text-body w-6 h-6" strokeWidth={1} />
           </div>
         </li>
@@ -231,7 +231,7 @@ export default function Description ({ type, isEn }: Props) {
         <li className="flex flex-col gap-2 items-center justify-center">
           <StashImageArrowUp className="w-14 h-14 text-body" strokeWidth={0.5} />
           <div className="flex items-center gap-1">
-            <span className="text-body font-bold text-2xl">800 KB</span>
+            <span className="text-body font-bold text-2xl">400 KB</span>
             <MdiLessThanOrEqual className="text-body w-6 h-6" strokeWidth={1} />
           </div>
         </li>
@@ -298,7 +298,7 @@ export default function Description ({ type, isEn }: Props) {
         <li className="flex flex-col gap-2 items-center justify-center">
           <StashImageArrowUp className="w-14 h-14 text-body" strokeWidth={0.5}/>
           <div className="flex items-center gap-1">
-            <span className="text-body font-bold text-2xl">600 KB</span>
+            <span className="text-body font-bold text-2xl">300 KB</span>
             <MdiLessThanOrEqual className="text-body w-6 h-6" strokeWidth={1} />
           </div>
         </li>
@@ -364,7 +364,7 @@ export default function Description ({ type, isEn }: Props) {
         <li className="flex flex-col gap-2 items-center justify-center">
           <StashImageArrowUp className="w-14 h-14 text-body" strokeWidth={0.5} />
           <div className="flex items-center gap-1">
-            <span className="text-body font-bold text-2xl">600 KB</span>
+            <span className="text-body font-bold text-2xl">300 KB</span>
             <MdiLessThanOrEqual className="text-body w-6 h-6" strokeWidth={1} />
           </div>
         </li>
