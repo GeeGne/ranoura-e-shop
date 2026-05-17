@@ -194,6 +194,8 @@ export default function NavTile ({ onScrollTableData, onScrollTableTrigger }: an
             transition-all duration-300 ease-in-out
           "
           href="https://squoosh.app"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           <SquooshVector className="w-5 h-5"/>
           <span

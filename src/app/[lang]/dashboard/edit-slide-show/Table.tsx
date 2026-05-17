@@ -393,13 +393,13 @@ export default function Table({
               {isEn ? 'ORDER' : 'ترتيب'}
             </th>
             <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
-              {isEn ? 'IMAGE SMALL' : 'الصوره'}
+              {isEn ? 'IMAGE SMALL' : 'الصوره (حجم صغير)'}
             </th>
             <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
-              {isEn ? 'IMAGE MEDIUM' : 'الصوره'}
+              {isEn ? 'IMAGE MEDIUM' : 'الصوره (حجم متوسط)'}
             </th>
             <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
-              {isEn ? 'IMAGE LARGE' : 'الصوره'}
+              {isEn ? 'IMAGE LARGE' : 'الصوره (حجم كبير)'}
             </th>
             <th scope="col" className={`px-6 py-3 font-medium ${isEn ? 'text-left' : 'text-right'} text-xs font-medium tracking-wider`}>
               {isEn ? 'ALT' : 'وصف الصوره'}

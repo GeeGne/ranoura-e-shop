@@ -47,7 +47,7 @@ export default function page () {
   return (
     <div className="flex flex-col gap-8 p-4">
       <Instructions />
-      <AboutAlt />
+      <AboutAlt lang={lang} isEn={isEn} />
       <ImageSliderPreview lang={lang} isEn={isEn} />
       <NavTile 
         onScrollTableData={handleScrollTableData} 
