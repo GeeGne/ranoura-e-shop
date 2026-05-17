@@ -131,22 +131,22 @@ export default function ImageSlider({
         <li
           className="w-full bg-red-500 aspect-[3/4] md:aspect-[4/3] lg:aspect-[2/1] shrink-0 cursor-pointer"
         >
-          <Link href={data[totalIndexRef.current]?.url} target="_blank" rel="noopener noreferrer">
+          <Link href={data[totalIndexRef.current]?.url || '/'} target="_blank" rel="noopener noreferrer">
             <picture
               className="w-full h-full object-cover object-center"
             >
               <source 
                 media="(min-width: 1200px)"
-                srcSet={data[totalIndexRef.current]?.img_lg}
+                srcSet={data[totalIndexRef.current]?.img_lg || null}
               />
               <source 
                 media="(min-width: 768px)"
-                srcSet={data[totalIndexRef.current]?.img_md}
+                srcSet={data[totalIndexRef.current]?.img_md || null}
               />
               <img
                 className="w-full h-full object-cover object-center"
-                src={data[totalIndexRef.current]?.img_sm}
-                alt="test"
+                src={data[totalIndexRef.current]?.img_sm || null}
+                alt={data?.alt}
                 fetchPriority="low"
               />
             </picture>
@@ -157,7 +157,7 @@ export default function ImageSlider({
             className="w-full aspect-[3/4] md:aspect-[4/3] lg:aspect-[2/1] shrink-0 cursor-pointer"
             key={i}
           >
-            <Link href={itm?.url} target="_blank" rel="noopener noreferrer">
+            <Link href={itm?.url || '/'} target="_blank" rel="noopener noreferrer">
               <picture
                 className="w-full h-full object-cover object-center"
               >
@@ -183,22 +183,22 @@ export default function ImageSlider({
         <li
           className="w-full aspect-[3/4] md:aspect-[4/3] lg:aspect-[2/1] shrink-0 cursor-pointer"
         >
-          <Link href={data[0]?.url} target="_blank" rel="noopener noreferrer">
+          <Link href={data[0]?.url || '/'} target="_blank" rel="noopener noreferrer">
             <picture
               className="w-full h-full object-cover object-center"
             >
               <source 
                 media="(min-width: 1200px)"
-                srcSet={data[0]?.img_lg}
+                srcSet={data[0]?.img_lg || null}
               />
               <source 
                 media="(min-width: 768px)"
-                srcSet={data[0]?.img_md}
+                srcSet={data[0]?.img_md || null}
               />
               <img
                 className="w-full h-full object-cover object-center"
-                src={data[0]?.img_sm}
-                alt="test"
+                src={data[0]?.img_sm || null}
+                alt={data?.alt}
                 fetchPriority="low"
               />
             </picture>
