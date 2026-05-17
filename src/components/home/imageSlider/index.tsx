@@ -131,7 +131,7 @@ export default function ImageSlider({
         <li
           className="w-full bg-red-500 aspect-[3/4] md:aspect-[4/3] lg:aspect-[2/1] shrink-0 cursor-pointer"
         >
-          <Link href={data[totalIndexRef.current]?.url} target="_blank">
+          <Link href={data[totalIndexRef.current]?.url} target="_blank" rel="noopener noreferrer">
             <picture
               className="w-full h-full object-cover object-center"
             >
@@ -157,7 +157,7 @@ export default function ImageSlider({
             className="w-full aspect-[3/4] md:aspect-[4/3] lg:aspect-[2/1] shrink-0 cursor-pointer"
             key={i}
           >
-            <Link href={itm?.url} target="_blank">
+            <Link href={itm?.url} target="_blank" rel="noopener noreferrer">
               <picture
                 className="w-full h-full object-cover object-center"
               >
@@ -183,7 +183,7 @@ export default function ImageSlider({
         <li
           className="w-full aspect-[3/4] md:aspect-[4/3] lg:aspect-[2/1] shrink-0 cursor-pointer"
         >
-          <Link href={data[0]?.url} target="_blank">
+          <Link href={data[0]?.url} target="_blank" rel="noopener noreferrer">
             <picture
               className="w-full h-full object-cover object-center"
             >
